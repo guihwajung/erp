@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="605" height="680" titletext="주택-약정관리" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" cssclass="div_DATA_Bg" text="" width="605" height="680" top="0">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrd1" taborder="18" left="5" top="30" width="595" height="250"/>
+              <Static id="sta04" taborder="11" width="178" height="30" cssclass="sta_WF_tablebg" left="422" top="577"/>
+              <Static id="sta05" taborder="14" width="476" height="30" cssclass="sta_WF_tablebg" left="124" top="606"/>
+              <Static id="staDS_RM" taborder="13" text="비고" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="606"/>
+              <Static id="staNO_DSN_SCO" taborder="7" text="설계점수" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="577"/>
+              <Static id="staNO_COST_SCO" taborder="10" text="가격점수" left="303" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="577"/>
+              <Static id="sta01" taborder="8" width="180" height="30" cssclass="sta_WF_tablebg" left="124" top="577"/>
+              <Edit id="ctxtDS_RM" taborder="15" width="468" height="20" value="" left="128" top="611" enable="true"/>
+              <Static id="staTitle1" taborder="0" text="참여사" left="5" top="0" height="22" cssclass="sta_TITLE_Bg" width="500"/>
+              <Static id="staTitle00" taborder="3" text="설계사" left="5" top="285" height="22" cssclass="sta_TITLE_Bg" width="500"/>
+              <Grid id="objGrd2" taborder="6" left="5" top="315" width="595" height="250"/>
+              <Button id="btnSave" taborder="16" text="저장" left="36.86%" width="60" height="24" top="648" onclick="divData_btnSave_onclick"/>
+              <Button id="btnCancel" taborder="17" text="취소" left="49.75%" width="60" height="24" top="648" onclick="divData_btnCancel_onclick"/>
+              <MaskEdit id="ctxtNO_COST_SCO" taborder="12" width="171" height="20" value="" textAlign="right" top="582" left="425" autoselect="true" format="0.##0" displaynulltext=" 0"/>
+              <MaskEdit id="ctxtNO_DSN_SCO" taborder="9" width="171" height="20" value="" textAlign="right" format="0.##0" top="582" left="128" autoselect="true" displaynulltext="0"/>
+              <Button id="btnAdd01" taborder="1" text="추가" left="473" width="60" height="20" top="5" onclick="divData_btnAdd01_onclick"/>
+              <Button id="btnDelete01" taborder="2" text="삭제" left="540" width="60" height="20" top="5" onclick="divData_btnDelete01_onclick"/>
+              <Button id="btnAdd02" taborder="4" text="추가" left="473" width="60" height="20" top="290" onclick="divData_btnAdd01_onclick"/>
+              <Button id="btnDelete02" taborder="5" text="삭제" left="540" width="60" height="20" top="290" onclick="divData_btnDelete01_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+this.DSN_CONSOR_GUBUN = this.getOwnerFrame().DSN_CONSOR_GUBUN;
+this.NO_CONSOR = this.getOwnerFrame().NO_CONSOR;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);	
+	// ---------------------------//
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	
+	this.fnSetVariable();
+	this.fnSetParameter();
+	this.fnSetEvent();
+	
+	// 첨부파일
+	this.dsSearch.setColumn(0, "CD_PROJ", this.getOwnerFrame().CD_PROJ);
+	this.dsSearch.setColumn(0, "NO_CONSOR", this.NO_CONSOR);
+	
+	//if(this.DSN_CONSOR_GUBUN == "U"){
+		this.FormBtns.Select.click();
+	//}
+};
+
+/************************************************************************
+ * 담당자 여부 검사
+ ************************************************************************/
+ this.fnGetYNCharge = function(){
+	
+	this.dsReqYNCharge = new Dataset();
+	this.dsReqYNCharge.addColumn("CD_PROJ", "string");
+	this.dsReqYNCharge.addColumn("ID_USER", "string");
+	
+	this.dsReqYNCharge.addRow();
+	this.dsReqYNCharge.setColumn(0, "CD_PROJ", this.getOwnerFrame().CD_PROJ);
+	this.dsReqYNCharge.setColumn(0, "ID_USER", this.objApp.gdsUserInfo.getColumn(0, "ID_USER"));
+		
+	var strSvcId    = "selectCharge";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+		inData      = "selectCharge=dsReqYNCharge";
+		outData     = "dsRcvYNCharge=selectCharge0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+		
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+ }
+ 
+
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	if(this.FormInfo.TY_AUTH == "R") {
+		this.divData.form.btnAdd01.set_enable(false);
+		this.divData.form.btnDelete01.set_enable(false);
+		this.divData.form.btnAdd02.set_enable(false);
+		this.divData.form.btnDelete02.set_enable(false);
+		this.divData.form.btnSave.set_enable(false);
+	}
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.CD_CORP = "";
+	
+	this.dxGrid1 = this.divData.form.objGrd1;	// 참여사	
+	this.dxGrid2 = this.divData.form.objGrd2;	// 설계사
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid1, this.dsList1, "DO", "DOA_DSN_CONSOR_N");	// 참여사
+	this.gfnGridInit(this.dxGrid2, this.dsList2, "DO", "DOA_DSN_CONSOR_Y");	// 설계사
+	
+	this.dxGrid1.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";	
+	this.dxGrid2.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam2";	
+	
+	// 그리드 코드파인드 값 변경
+	this.dxGrid1.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+	this.dxGrid2.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+};
+
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+//참여사
+this.fnGrid_BeforeUserDataSetParam = function(id, dsUserParam, nrow) 
+ {
+	dsUserParam.setColumn(nrow, "CD_CORP", "");
+	dsUserParam.setColumn(nrow, "CD_SITE", "");
+	dsUserParam.setColumn(nrow, "TY_VENDOR", "CIVL");
+	return true;
+ }
+ 
+ //설계사
+ this.fnGrid_BeforeUserDataSetParam2 = function(id, dsUserParam, nrow) 
+ {
+	dsUserParam.setColumn(nrow, "CD_CORP", "");
+	dsUserParam.setColumn(nrow, "CD_SITE", "");
+	dsUserParam.setColumn(nrow, "TY_VENDOR", "DSGN");
+	return true;
+ }
+
+this.fnGrid_AfterCDTextChanged = function(id, codeFindData) {
+	
+	if(id == "DOX_CFVENDOR_DH") {
+		var arr = codeFindData;
+		if(arr.length > 0) {
+			var CD_VENDOR = arr[0].CD_VENDOR;
+			var chkCnt1 = this.dsList1.getCaseCount("CD_CONST_CO == '" + CD_VENDOR + "'");
+			if(chkCnt1 > 1){
+				this.gfnAlert("참여사 코드가 중복입니다.");
+				this.dsList1.setColumn(this.dsList1.rowposition,"CD_CONST_CO","")
+				this.dsList1.setColumn(this.dsList1.rowposition,"DS_CONST_CO","")
+				return false;
+			}
+			
+			var CD_VENDOR = arr[0].CD_VENDOR;
+			var chkCnt2 = this.dsList2.getCaseCount("CD_CONST_CO == '" + CD_VENDOR + "'");
+			if(chkCnt2 > 1){
+				this.gfnAlert("설계사 코드가 중복입니다.");
+				this.dsList2.setColumn(this.dsList2.rowposition,"CD_CONST_CO","")
+				this.dsList2.setColumn(this.dsList2.rowposition,"DS_CONST_CO","")
+				return false;
+			}
+		}
+	}
+	
+	return true;
+}
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsDetailSave = new Dataset();
+	
+	this.dsDetailSave.addColumn("TY_WRK", "string");	// 
+	this.dsDetailSave.addColumn("CD_PROJ", "string");		// 프로젝트코드
+	this.dsDetailSave.addColumn("NO_CONSOR", "string");		// 설계심의 컨소시엄번호
+	this.dsDetailSave.addColumn("NO_COST_SCO", "bigdecimal");
+	this.dsDetailSave.addColumn("NO_DSN_SCO", "bigdecimal");
+	this.dsDetailSave.addColumn("DS_RM", "string");
+	this.dsDetailSave.addColumn("ID_USER", "string");	
+	this.dsDetailSave.addRow();
+	
+	this.dsList1Save = new Dataset();
+	
+	this.dsList1Save.addColumn("TY_WRK", "string");			// 
+	this.dsList1Save.addColumn("CD_PROJ", "string");		// 프로젝트코드
+	this.dsList1Save.addColumn("NO_CONSOR", "string");		// 설계심의 컨소시엄번호
+	this.dsList1Save.addColumn("NO_CONSOR_CO", "string");	// 설계심의 컨소시엄상세번호
+	this.dsList1Save.addColumn("CD_CONST_CO", "string");	// 건설사코드
+	this.dsList1Save.addColumn("YN_JUGAN", "string");		// 주간사여부
+	this.dsList1Save.addColumn("YN_DSN", "string");			// 설계사여부
+	this.dsList1Save.addColumn("RT_OUR", "bigdecimal");			// 지분율
+	this.dsList1Save.addColumn("ID_USER", "string");
+		
+	this.dsNmSave = new Dataset();
+	
+	this.dsNmSave.addColumn("CD_PROJ", "string");		// 프로젝트코드
+	this.dsNmSave.addColumn("NO_CONSOR", "string");		// 설계심의 컨소시엄번호
+	this.dsNmSave.addRow();
+}
+
+
+/************************************************************************
+ * 트렌젝션 버튼 이벤트
+ ************************************************************************/
+this.fnSelect = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+
+	this.dsSelect1 = new Dataset();
+	this.dsSelect2 = new Dataset();
+	this.dsSelect3 = new Dataset();
+	this.dsSelect1.copyData(this.dsSearch);	
+	this.dsSelect2.copyData(this.dsSearch);
+	this.dsSelect3.copyData(this.dsSearch);
+	
+	this.dsSelect1.setColumn(0, "YN_DSN", "N");
+	this.dsSelect2.setColumn(0, "YN_DSN", "Y");	
+	this.dsSelect3.setColumn(0, "YN_DSN", "X");	
+
+	var strSvcId    = "select";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect1 select1=dsSelect2 detail=dsSelect3";
+	var outData     = "dsList1=select0 dsList2=select10 dsDetail=detail0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";	
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnSave = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+		
+	// 가격점수/ 설계점수/ 비고 Dataset
+	this.dsDetailSave.setColumn(0, "TY_WRK", this.DSN_CONSOR_GUBUN);
+	this.dsDetailSave.setColumn(0, "CD_PROJ", this.getOwnerFrame().CD_PROJ);	
+	this.dsDetailSave.setColumn(0, "NO_CONSOR", this.NO_CONSOR);
+	this.dsDetailSave.setColumn(0, "NO_COST_SCO", this.dsDetail.getColumn(0, "NO_COST_SCO"));
+	this.dsDetailSave.setColumn(0, "NO_DSN_SCO", this.dsDetail.getColumn(0, "NO_DSN_SCO"));
+	this.dsDetailSave.setColumn(0, "DS_RM", this.dsDetail.getColumn(0, "DS_RM"));
+	this.dsDetailSave.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+			
+	var strSvcId    = "saveMst";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "saveMst=dsDetailSave";
+	var outData     = "dsDetailRst=saveMst";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+}
+
+this.fnSaveDtl = function(P_NO_CONSOR){
+	// 참여사 목록 Dataset
+	
+	var noConsor = P_NO_CONSOR;
+	if(this.DSN_CONSOR_GUBUN == "U"){
+		noConsor = this.NO_CONSOR;
+	}
+	
+	for (var i = 0; i < this.dsList1.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList1, i);
+		switch(flag) {
+			case "I":
+			case "U":
+			case "D":
+				var nrow = this.dsList1Save.addRow();		
+				this.dsList1Save.setColumn(nrow, "TY_WRK", flag);
+				this.dsList1Save.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+				this.dsList1Save.setColumn(nrow, "CD_PROJ", this.getOwnerFrame().CD_PROJ);		// 프로젝트코드
+				this.dsList1Save.setColumn(nrow, "NO_CONSOR", noConsor);	// 설계심의 컨소시엄번호
+				this.dsList1Save.setColumn(nrow, "NO_CONSOR_CO", this.dsList1.getColumn(i, "NO_CONSOR_CO"));	// 설계심의 컨소시엄상세번호
+				this.dsList1Save.setColumn(nrow, "CD_CONST_CO", this.dsList1.getColumn(i, "CD_CONST_CO"));	// 건설사코드
+				this.dsList1Save.setColumn(nrow, "YN_JUGAN", this.dsList1.getColumn(i, "YN_JUGAN"));		// 주간사여부
+				this.dsList1Save.setColumn(nrow, "YN_DSN", "N");		// 설계사여부
+				this.dsList1Save.setColumn(nrow, "RT_OUR", this.dsList1.getColumn(i, "RT_OUR"));		// 지분율				
+				break;
+		}
+	}
+	
+	// 설계사 목록 Dataset
+	for (var i = 0; i < this.dsList2.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList2, i);
+		switch(flag) {
+			case "I":
+			case "U":
+			case "D":
+				var nrow = this.dsList1Save.addRow();		
+				this.dsList1Save.setColumn(nrow, "TY_WRK", flag);
+				this.dsList1Save.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+				this.dsList1Save.setColumn(nrow, "CD_PROJ", this.getOwnerFrame().CD_PROJ);		// 프로젝트코드
+				this.dsList1Save.setColumn(nrow, "NO_CONSOR", noConsor);	// 설계심의 컨소시엄번호
+				this.dsList1Save.setColumn(nrow, "NO_CONSOR_CO", this.dsList2.getColumn(i, "NO_CONSOR_CO"));	// 설계심의 컨소시엄상세번호
+				this.dsList1Save.setColumn(nrow, "CD_CONST_CO", this.dsList2.getColumn(i, "CD_CONST_CO"));	// 건설사코드
+				this.dsList1Save.setColumn(nrow, "YN_JUGAN", this.dsList2.getColumn(i, "YN_JUGAN"));		// 주간사여부
+				this.dsList1Save.setColumn(nrow, "YN_DSN", "Y");		// 설계사여부
+				break;
+		}
+	}
+	
+	var strSvcId    = "saveDtl";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "saveDtl=dsList1Save";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+}
+
+
+this.fnSaveDsnConsorNm = function(P_NO_CONSOR){
+	// 참여사 목록 Dataset
+	
+	var noConsor = P_NO_CONSOR;
+	if(this.DSN_CONSOR_GUBUN == "U"){
+		noConsor = this.NO_CONSOR;
+	}
+	
+	this.dsNmSave.setColumn(0, "CD_PROJ", this.getOwnerFrame().CD_PROJ);
+	this.dsNmSave.setColumn(0, "NO_CONSOR", noConsor);
+	
+	var strSvcId    = "saveNm";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "saveNm=dsNmSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg){
+	if (errorCode == 0) {	
+		if(svcID == "select") {
+			if(this.DSN_CONSOR_GUBUN == "I"){
+				this.dsDetail.insertRow(0);
+			}
+		} else if(svcID == "saveMst") {
+			this.fnSaveDtl(this.dsDetailRst.getColumn(0, "OUT_DATA"));		
+		} else if(svcID == "saveDtl") {
+			this.fnSaveDsnConsorNm(this.dsDetailRst.getColumn(0, "OUT_DATA"));
+			this.getParentContext().close(true);
+		} else if(svcID == "saveNm") {
+			this.DSN_CONSOR_GUBUN = "U";
+			this.FormBtns.Select.click();
+		} else if(svcID == "delete") {
+			this.getParentContext().close(true);
+		}
+		this.fnSetButton();	
+	} else {
+		this.gfnAlert(errorMsg);
+	}			
+};
+
+/************************************************************************
+ * 기타 이벤트 설정
+ ************************************************************************/
+// 닫기버튼 이벤트
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){	
+	this.getParentContext().close(true);
+};
+
+//추가 버튼 이벤트
+this.divData_btnAdd01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){	
+	var dxGridName = "this.dxGrid"; 
+	if(obj.name == "btnAdd01"){
+		dxGridName = dxGridName + "1";
+		var nrow = this.gfnGridAdd(eval(dxGridName));
+		this.dsList1.setColumn(nrow,"YN_JUGAN","N");
+		this.dsList1.setColumn(nrow,"RT_OUR",0);
+	}else if(obj.name == "btnAdd02"){
+		dxGridName = dxGridName + "2";
+		var nrow = this.gfnGridAdd(eval(dxGridName));
+		this.dsList2.setColumn(nrow,"YN_JUGAN","N");
+	}
+};
+
+//삭제 버튼 이벤트
+this.divData_btnDelete01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	var dxGridName = "this.dxGrid"; 
+	if(obj.name == "btnDelete01"){
+		dxGridName = dxGridName + "1";
+	}else if(obj.name == "btnDelete02"){
+		dxGridName = dxGridName + "2";
+	}
+	this.gfnGridDel(eval(dxGridName));	
+};
+
+//저장 버튼 이벤트
+this.divData_btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	//if(!this.gfnDataValidate(this.dsDetail, this.dsRequired))return;	
+	
+	var dsList1Cnt = this.dsList1.rowcount;
+	var dsList2Cnt = this.dsList2.rowcount;
+	
+	if(dsList1Cnt > 0){
+		
+		var YN_JUGAN_COUNT = 0;
+		var RT_OUR_TOTAL = 0;
+		var TOTAL_CNT = 0;
+		
+		for(var i = 0; i < dsList1Cnt; i++){			
+			if(this.gfnGetFlag(this.dsList1, i) != "D"){
+				TOTAL_CNT++;
+				if(this.dsList1.getColumn(i, "YN_JUGAN") == "Y"){
+					YN_JUGAN_COUNT++;
+				}						
+				RT_OUR_TOTAL = RT_OUR_TOTAL + this.dsList1.getColumn(i, "RT_OUR");		
+				
+				if(this.gfnIsNull(this.dsList1.getColumn(i, "CD_CONST_CO"))){
+					this.gfnAlert("참여사 회사코드는 필수 입력 입니다.");
+					return;
+				}
+			}
+		}
+		
+		if(YN_JUGAN_COUNT != 1 && TOTAL_CNT != 0){
+			this.gfnAlert("참여사 목록중 Main사는 반드시 1건 지정되어야 합니다.");
+			return;
+		}				
+		
+		if(RT_OUR_TOTAL != 100 && RT_OUR_TOTAL != 0 && TOTAL_CNT != 0){
+			this.gfnAlert("참여사 지분율(%)의 합이 0 또는 100 이어야합니다.");
+			return;
+		}
+		
+	}else{
+		this.gfnAlert("참여사를 등록하세요.");
+		return;
+	}
+	
+	if(dsList2Cnt > 0){
+		
+		var YN_JUGAN_COUNT = 0;
+		
+		for(var i = 0; i < dsList2Cnt; i++){
+			if(this.gfnGetFlag(this.dsList2, i) != "D"){			
+				if(this.dsList2.getColumn(i, "YN_JUGAN") == "Y"){
+					YN_JUGAN_COUNT++;
+				}		
+			
+				if(this.gfnIsNull(this.dsList2.getColumn(i, "CD_CONST_CO"))){
+					this.gfnAlert("설계사 회사코드는 필수 입력 입니다.");
+					return;
+				}			
+			}
+		}
+		
+// 		if(YN_JUGAN_COUNT != 1){
+// 			this.gfnAlert("설계사 목록중 Main사는 반드시 1건 지정되어야 합니다.");
+// 			return;
+// 		}		
+				
+	}
+// 	else{
+// 		this.gfnAlert("설계사를 등록하세요.");
+// 		return;
+// 	}
+	
+	this.FormBtns.Save.click();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_DSN_CONSOR_DTL_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select1</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_DSN_CONSOR_DTL_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">detail</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_DSN_CONSOR_DTL_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">saveMst</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_DSN_CONSOR_MST_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">saveDtl</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_DSN_CONSOR_DTL_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">saveNm</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_DSN_CONSOR_NM_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectCharge</Col>
+            <Col id="SP">DOAPR_PROJ_YNCHARGE_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList1"/>
+      <Dataset id="dsList2"/>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_PROJ" type="STRING" size="256"/>
+          <Column id="NO_CONSOR" type="STRING" size="256"/>
+          <Column id="YN_DSN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDetail">
+        <ColumnInfo>
+          <Column id="NO_COST_SCO" type="STRING" size="256"/>
+          <Column id="NO_DSN_SCO" type="STRING" size="256"/>
+          <Column id="DS_RM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRequired">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="DS_FIELD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_FIELD">NO_COST_SCO</Col>
+            <Col id="DS_FIELD">가격점수</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">NO_DSN_SCO</Col>
+            <Col id="DS_FIELD">설계점수</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">DS_RM</Col>
+            <Col id="DS_FIELD">비고</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDetailRst"/>
+      <Dataset id="dsRcvYNCharge">
+        <ColumnInfo>
+          <ConstColumn id="YN_EXISTS" type="STRING" size="30"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item8" compid="divData.form.ctxtDS_RM" propid="value" datasetid="dsDetail" columnid="DS_RM"/>
+      <BindItem id="item0" compid="divData.form.ctxtNO_COST_SCO" propid="value" datasetid="dsDetail" columnid="NO_COST_SCO"/>
+      <BindItem id="item1" compid="divData.form.ctxtNO_DSN_SCO" propid="value" datasetid="dsDetail" columnid="NO_DSN_SCO"/>
+    </Bind>
+  </Form>
+</FDL>

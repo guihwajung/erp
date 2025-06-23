@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DCC_STAMP_VIEWER" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <WebBrowser id="webStockViewer" taborder="0" left="0" top="0" bottom="0" width="50%"/>
+        <WebBrowser id="webStockViewer2" taborder="1" left="webStockViewer:0" top="0" bottom="0" width="50.00%"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+// 	this.gfnFormOnLoad(this);	
+// 	this.gfnFormInfo(this);		
+	// ---------------------------//
+	this.fnSetParameter();
+	this.fnSelect();
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	// 보증관련
+	this.dsTransure = new Dataset();
+	this.dsTransure.addColumn("CD_SITE", "string");
+	this.dsTransure.addColumn("NO_CONT", "string");
+	this.dsTransure.addColumn("SN_SEQ", "string");
+	this.dsTransure.addColumn("TY_STOCK", "string");
+	this.dsTransure.addColumn("MODULE", "string");
+	
+	this.dsTransureView = new Dataset();
+};
+
+this.fnSelect = function() {
+	
+	this.dsTransure.clearData();
+	this.dsTransure.addRow();
+	this.dsTransure.setColumn(0, "CD_SITE",	this.getOwnerFrame().CD_SITE);
+	this.dsTransure.setColumn(0, "NO_CONT",	this.getOwnerFrame().NO_CONT);
+	this.dsTransure.setColumn(0, "SN_SEQ", 	this.getOwnerFrame().SN_SEQ);
+	this.dsTransure.setColumn(0, "TY_STOCK", this.getOwnerFrame().TY_STOCK);
+	this.dsTransure.setColumn(0, "MODULE", 	this.getOwnerFrame().MODULE);
+	
+	var strSvcId    = "transureView";
+	var strSvcType  = "dcc_transure_" + this.getOwnerFrame().TY_PUBLICATION.toLowerCase() + "_view";
+	var inProc		= "";
+	var inData      = "dsTransure=dsTransure";
+	var outData     = "dsTransureView=dsTransureView";
+	var strArg      = "";
+	var callBackFnc = "fnTransureCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.fnTransureCallback = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "transureView"){
+		if(errorCode != 0) {
+			this.gfnAlert(errorMsg);
+			return;
+		};
+		
+		this.fnTransureViewerMake();
+	};
+};
+
+this.arrViewer = [this.webStockViewer,this.webStockViewer2];
+this.fnTransureViewerMake = function(svcID, errorCode, errorMsg)
+{
+	for(var i = 0; i < this.dsTransureView.rowcount; ++i) {
+		this.arrViewer[i].set_url(this.dsTransureView.getColumn(i,"urlView"));
+	};
+	
+};]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

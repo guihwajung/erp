@@ -1,0 +1,1347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="건강보험 확정 및 전표발행" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SITE" taborder="1" text="현장/부서 코드" left="0.0" top="10.0" width="144.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFDEPTCORP" CDTextWidth="60" taborder="2" left="staCD_SITE:0.0" top="10.0" width="220" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staYM_WORK" taborder="3" text="년월" left="ccfCD_SITE:0.0" top="10.0" width="144.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYM_WORK" taborder="4" left="staYM_WORK:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalMM.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Div id="divSplitter" taborder="0" left="530" top="0" width="5" height="100%" background="skyblue" cursor="ew-resize" ondrag="divData_divSplitter_ondrag"/>
+              <Button id="btnCancel" taborder="0" text="취소" right="divSplitter:5" top="0" width="54" height="24" onclick="fnCancel"/>
+              <Button id="btnConfirm" taborder="0" text="확정" right="btnCancel:5" top="0" width="54" height="24" onclick="fnConfirm"/>
+              <Div id="divDataLeft" taborder="1" left="0" top="btnConfirm:5" bottom="0" right="divSplitter:5">
+                <Layouts>
+                  <Layout>
+                    <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataRight" taborder="0" left="divSplitter:5" top="0" bottom="0" right="0" maxheight="">
+                <Layouts>
+                  <Layout>
+                    <Edit id="ctxtNO_ERPKEY" taborder="0" left="0" top="0" width="1" height="1" value="" enable="false" visible="false"/>
+                    <Static id="staTitle" taborder="0" text="사용자 분담금 및 Network 지정" left="0" top="0" width="597" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Static id="staAM_MEDICARE_USER" taborder="1" text="가입자분(건강)" left="0" top="staTitle:5" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg01" taborder="2" left="staAM_MEDICARE_USER:-1" top="staTitle:5" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staAM_MEDICARE_COMPANY" taborder="3" text="사용자분(건강)" left="staBg01:-1" top="staTitle:5" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg02" taborder="4" left="staAM_MEDICARE_COMPANY:-1" top="staTitle:5" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staCD_COST" taborder="5" text="공종코드" left="0" top="staAM_MEDICARE_USER:-1" width="95" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staBg03" taborder="6" left="staCD_COST:-1" top="staBg01:-1" width="503" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staDS_COMMENT" taborder="7" text="적요" left="0" top="staCD_COST:-1" width="95" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staBg04" taborder="8" left="staDS_COMMENT:-1" top="staBg03:-1" width="503" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staAM_SILVER_USER" taborder="9" text="가입자분(요양)" left="0" top="staDS_COMMENT:-1" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg05" taborder="10" left="staAM_SILVER_USER:-1" top="staBg04:-1" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staAM_SILVER_COMPANY" taborder="11" text="사용자분(요양)" left="staBg05:-1" top="staDS_COMMENT:-1" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg06" taborder="12" left="staAM_SILVER_COMPANY:-1" top="staBg04:-1" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staCD_COST_SILVER" taborder="13" text="공종코드" left="0" top="staAM_SILVER_USER:-1" width="95" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staBg07" taborder="14" left="staCD_COST_SILVER:-1" top="staBg05:-1" width="503" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staDS_COMMENT_SILVER" taborder="15" text="적요" left="0" top="staCD_COST_SILVER:-1" width="95" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staBg08" taborder="16" left="staDS_COMMENT_SILVER:-1" top="staBg07:-1" width="503" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staAM_MEDICARE" taborder="17" text="납부금액" left="0" top="staDS_COMMENT_SILVER:-1" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg09" taborder="18" left="staAM_MEDICARE:-1" top="staBg08:-1" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staSPACE01" taborder="19" text="" left="staBg09:-1" top="staBg08:-1" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg10" taborder="20" left="staSPACE01:-1" top="staBg08:-1" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <MaskEdit id="ctxtAM_MEDICARE_USER" taborder="21" left="staAM_MEDICARE_USER:5" top="staTitle:10" width="195" height="20" value="" format="#,0" readonly="true"/>
+                    <MaskEdit id="ctxtAM_MEDICARE_COMPANY" taborder="22" left="staAM_MEDICARE_COMPANY:5" top="staTitle:10" width="195" height="20" value="" format="#,0" readonly="true"/>
+                    <Div id="ccfCD_COST" CodeFindName="DWX_CFCOST_TREE_01" CDTextWidth="160" taborder="23" left="staCD_COST_SILVER:5" top="ctxtAM_MEDICARE_USER:9" width="493" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                    <Edit id="ctxtDS_COMMENT" taborder="24" left="staDS_COMMENT:5" top="ccfCD_COST:9" width="493" height="20" value=""/>
+                    <MaskEdit id="ctxtAM_SILVER_USER" taborder="25" left="staAM_MEDICARE_USER:5" top="ctxtDS_COMMENT:9" width="195" height="20" value="" format="#,0" readonly="true"/>
+                    <MaskEdit id="ctxtAM_SILVER_COMPANY" taborder="26" left="staAM_MEDICARE_COMPANY:5" top="ctxtDS_COMMENT:9" width="195" height="20" value="" format="#,0" readonly="true"/>
+                    <Div id="ccfCD_COST_SILVER" CodeFindName="DWX_CFCOST_TREE_01" CDTextWidth="160" taborder="27" left="staCD_COST_SILVER:5" top="ctxtAM_SILVER_USER:9" width="493" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                    <Edit id="ctxtDS_COMMENT_SILVER" taborder="28" left="staDS_COMMENT_SILVER:5" top="ccfCD_COST_SILVER:9" width="493" height="20" value=""/>
+                    <MaskEdit id="ctxtAM_MEDICARE" taborder="29" left="staAM_MEDICARE:5" top="ctxtDS_COMMENT_SILVER:9" width="195" height="20" value="" format="#,0" readonly="true"/>
+                    <Static id="staTitle01" taborder="30" text="환급분 처리" left="0" top="staBg09:5" width="597" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Static id="staAM_MEDICARE_BACK_USER" taborder="31" text="가입자분(건강)" left="0" top="staTitle01:5" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg11" taborder="32" left="staAM_MEDICARE_BACK_USER:-1" top="staTitle01:5" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staAM_MEDICARE_BACK_COMPANY" taborder="33" text="사용자분(건강)" left="staBg11:-1" top="staTitle01:5" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg12" taborder="34" left="staAM_MEDICARE_BACK_COMPANY:-1" top="staTitle01:5" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staCD_COST_BACK" taborder="35" text="공종코드" left="0" top="staAM_MEDICARE_BACK_USER:-1" width="95" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staBg13" taborder="36" left="staCD_COST_BACK:-1" top="staBg11:-1" width="503" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staDS_COMMENT_BACK" taborder="37" text="적요" left="0" top="staCD_COST_BACK:-1" width="95" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staBg14" taborder="38" left="staDS_COMMENT_BACK:-1" top="staBg13:-1" width="503" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staAM_SILVER_BACK_USER" taborder="39" text="가입자분(요양)" left="0" top="staDS_COMMENT_BACK:-1" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg15" taborder="40" left="staAM_SILVER_BACK_USER:-1" top="staBg14:-1" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staAM_SILVER_BACK_COMPANY" taborder="41" text="사용자분(요양)" left="staBg15:-1" top="staDS_COMMENT_BACK:-1" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg16" taborder="42" left="staAM_SILVER_BACK_COMPANY:-1" top="staBg14:-1" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staCD_COST_SILVER_BACK" taborder="43" text="공종코드" left="0" top="staAM_SILVER_BACK_USER:-1" width="95" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staBg17" taborder="44" left="staCD_COST_SILVER_BACK:-1" top="staBg15:-1" width="503" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staDS_COMMENT_SILVER_BACK" taborder="45" text="적요" left="0" top="staCD_COST_SILVER_BACK:-1" width="95" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staBg18" taborder="46" left="staDS_COMMENT_SILVER_BACK:-1" top="staBg17:-1" width="503" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staAM_MEDICARE_BACK" taborder="47" text="환급금액" left="0" top="staDS_COMMENT_SILVER_BACK:-1" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg19" taborder="48" left="staAM_MEDICARE_BACK:-1" top="staBg18:-1" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staSPACE02" taborder="49" text="" left="staBg09:-1" top="staBg18:-1" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg20" taborder="50" left="staSPACE02:-1" top="staBg18:-1" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <MaskEdit id="ctxtAM_MEDICARE_BACK_USER" taborder="51" left="staAM_MEDICARE_BACK_USER:5" top="staTitle01:10" width="195" height="20" value="" format="#,0" readonly="false"/>
+                    <MaskEdit id="ctxtAM_MEDICARE_BACK_COMPANY" taborder="52" left="staAM_MEDICARE_BACK_COMPANY:5" top="staTitle01:10" width="195" height="20" value="" format="#,0" readonly="false"/>
+                    <Div id="ccfCD_COST_BACK" CodeFindName="DWX_CFCOST_TREE_01" CDTextWidth="160" taborder="53" left="staCD_COST_SILVER_BACK:5" top="ctxtAM_MEDICARE_BACK_USER:9" width="493" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                    <Edit id="ctxtDS_COMMENT_BACK" taborder="54" left="staDS_COMMENT_BACK:5" top="ccfCD_COST_BACK:9" width="493" height="20" value=""/>
+                    <MaskEdit id="ctxtAM_SILVER_BACK_USER" taborder="55" left="staAM_MEDICARE_BACK_USER:5" top="ctxtDS_COMMENT_BACK:9" width="195" height="20" value="" format="#,0" readonly="false"/>
+                    <MaskEdit id="ctxtAM_SILVER_BACK_COMPANY" taborder="56" left="staAM_MEDICARE_BACK_COMPANY:5" top="ctxtDS_COMMENT_BACK:9" width="195" height="20" value="" format="#,0" readonly="false"/>
+                    <Div id="ccfCD_COST_SILVER_BACK" CodeFindName="DWX_CFCOST_TREE_01" CDTextWidth="160" taborder="57" left="staCD_COST_SILVER_BACK:5" top="ctxtAM_SILVER_BACK_USER:9" width="493" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                    <Edit id="ctxtDS_COMMENT_SILVER_BACK" taborder="58" left="staDS_COMMENT_SILVER_BACK:5" top="ccfCD_COST_SILVER_BACK:9" width="493" height="20" value=""/>
+                    <MaskEdit id="ctxtAM_MEDICARE_BACK" taborder="59" left="staAM_MEDICARE_BACK:5" top="ctxtDS_COMMENT_SILVER_BACK:9" width="195" height="20" value="" format="#,0" readonly="true"/>
+                    <Static id="staTitle02" taborder="60" text="내역" left="0" top="staBg20:5" width="597" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Static id="staAM_MEDICARE_TOTAL" taborder="61" text="최종납부금액" left="0" top="staTitle02:5" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg21" taborder="62" left="staAM_MEDICARE_TOTAL:-1" top="staTitle02:5" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staDT_SLIP" taborder="63" text="전기일자" left="staBg21:-1" top="staTitle02:5" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg22" taborder="64" left="staDT_SLIP:-1" top="staTitle02:5" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staNO_SLIP" taborder="65" text="발생전표번호" left="0" top="staAM_MEDICARE_TOTAL:-1" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg23" taborder="66" left="staNO_SLIP:-1" top="staBg21:-1" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staNO_SLIP_JIGUB" taborder="67" text="SAP전표번호" left="staBg23:-1" top="staDT_SLIP:-1" width="95" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBg24" taborder="68" left="staNO_SLIP_JIGUB:-1" top="staBg22:-1" width="205" height="30" cssclass="sta_WF_tablebg"/>
+                    <MaskEdit id="ctxtAM_MEDICARE_TOTAL" taborder="69" left="staAM_MEDICARE_TOTAL:5" top="staTitle02:10" width="195" height="20" value="" format="#,0" readonly="true"/>
+                    <Calendar id="ctclDT_SLIP" taborder="70" left="staDT_SLIP:5" top="staTitle02:10" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <Edit id="ctxtNO_SLIP" taborder="71" left="staNO_SLIP:5" top="ctxtAM_MEDICARE_TOTAL:9" width="195" height="20" value="" readonly="true"/>
+                    <Edit id="ctxtBELNR" taborder="72" left="staNO_SLIP_JIGUB:5" top="ctclDT_SLIP:9" width="195" height="20" value="" readonly="true"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this._checkMedi = false;
+this._checkSilver = false;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	var today = this.gfnGetDate();
+	this.dsSearch.setColumn(0, "YM_WORK", today.substr(0, 6));
+	
+	this.btnCostToja.set_enable(false); //원가투자
+	this.btnCostTojaCancel.set_enable(false); //원가투자취소
+	this.btnSlip.set_enable(false); //전표발행
+	this.btnSlipCancel.set_enable(false); //전표발행취소
+	this.btnShowSlip.set_enable(false); //전표조회
+	this.btnSapslip.set_enable(false); // 전표발행(SAP)
+	this.btnSapslipCncl.set_enable(false); //전표취소(SAP)
+	this.btnConfirm.set_enable(false); // 확정 (좌측)
+	this.btnCancel.set_enable(false); //취소 (좌측)
+	this.btnJundo.set_enable(false);	//전도금처리
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Add.set_enable(false);
+	this.FormBtns.Del.set_enable(false);
+	this.FormBtns.Save.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnCostToja = this.gfnFormButtonAdd("btnCostToja", "fnCostToja");
+	this.btnCostTojaCancel = this.gfnFormButtonAdd("btnCostTojaCancel", "fnCostTojaCancel");
+	this.btnSlip = this.gfnFormButtonAdd("btnSlip", "fnSlip");
+	this.btnSlipCancel = this.gfnFormButtonAdd("btnSlipCancel", "fnSlipCancel");
+	this.btnShowSlip = this.gfnFormButtonAdd("btnShowSlip", "fnShowSlip");
+	this.btnSapslip= this.gfnFormButtonAdd("btnSapslip", "fnSapslip"); //전표발행(SAP)
+	this.btnSapslipCncl= this.gfnFormButtonAdd("btnSapslipCncl", "fnSapslipCncl"); //전표취소(SAP)
+	this.btnJundo = this.gfnFormButtonAdd("btnJundo", "fnJundo");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ccfCD_COST = this.divData.form.divDataRight.form.ccfCD_COST;
+	this.ccfCD_COST_SILVER = this.divData.form.divDataRight.form.ccfCD_COST_SILVER;
+	this.ccfCD_COST_BACK = this.divData.form.divDataRight.form.ccfCD_COST_BACK;
+	this.ccfCD_COST_SILVER_BACK = this.divData.form.divDataRight.form.ccfCD_COST_SILVER_BACK;
+	this.btnConfirm = this.divData.form.btnConfirm;
+	this.btnCancel = this.divData.form.btnCancel;
+	
+	this.dxGrid = this.divData.form.divDataLeft.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DS", "DSB_MEDICARE");
+	this.dxGrid.set_selecttype("cell");	
+	this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+	this.dsList.addEventHandler("canrowposchange", this.dsList_canrowposchange, this);
+	
+	this.ccfCD_SITE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_COST.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_COST_SILVER.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_COST_BACK.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_COST_SILVER_BACK.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_COST.AfterCDTextChanged = "ccfCD_COST_AfterCDTextChanged";
+	this.ccfCD_COST_BACK.AfterCDTextChanged = "ccfCD_COST_BACK_AfterCDTextChanged";	
+	this.ccfCD_COST_SILVER.AfterCDTextChanged = "ccfCD_COST_SILVER_AfterCDTextChanged";
+	this.ccfCD_COST_SILVER_BACK.AfterCDTextChanged = "ccfCD_COST_SILVER_BACK_AfterCDTextChanged";	
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("YM_WORK", "string");
+	
+	this.dsCost = new Dataset();
+	this.dsCost.addColumn("CD_SITE", "string");
+	this.dsCost.addColumn("YM_WORK", "string");
+	this.dsCost.addColumn("DT_SLIP", "string");
+	this.dsCost.addColumn("AM_MEDICARE_USER", "bigdecimal");
+	this.dsCost.addColumn("AM_MEDICARE_COMPANY", "bigdecimal");
+	this.dsCost.addColumn("CD_COST", "string");
+	this.dsCost.addColumn("DS_COST", "string");
+	this.dsCost.addColumn("DS_COMMENT", "string");
+	this.dsCost.addColumn("AM_SILVER_USER", "bigdecimal");
+	this.dsCost.addColumn("AM_SILVER_COMPANY", "bigdecimal");
+	this.dsCost.addColumn("CD_COST_SILVER", "string");
+	this.dsCost.addColumn("DS_COST_SILVER", "string");
+	this.dsCost.addColumn("DS_COMMENT_SILVER", "string");
+	this.dsCost.addColumn("AM_MEDICARE", "bigdecimal");
+	this.dsCost.addColumn("AM_MEDICARE_BACK_USER", "bigdecimal");
+	this.dsCost.addColumn("AM_MEDICARE_BACK_COMPANY", "bigdecimal");
+	this.dsCost.addColumn("CD_COST_BACK", "string");
+	this.dsCost.addColumn("DS_COST_BACK", "string");
+	this.dsCost.addColumn("DS_COMMENT_BACK", "string");
+	this.dsCost.addColumn("AM_SILVER_BACK_USER", "bigdecimal");
+	this.dsCost.addColumn("AM_SILVER_BACK_COMPANY", "bigdecimal");
+	this.dsCost.addColumn("CD_COST_SILVER_BACK", "string");
+	this.dsCost.addColumn("DS_COST_SILVER_BACK", "string");
+	this.dsCost.addColumn("DS_COMMENT_SILVER_BACK", "string");
+	this.dsCost.addColumn("AM_MEDICARE_BACK", "bigdecimal");
+	this.dsCost.addColumn("AM_MEDICARE_TOTAL", "bigdecimal");
+	this.dsCost.addColumn("ID_CREATE", "string");
+
+	this.dsCostDelete = new Dataset();
+	this.dsCostDelete.addColumn("CD_SITE", "string");
+	this.dsCostDelete.addColumn("YM_WORK", "string");
+	this.dsCostDelete.addColumn("DT_DATE", "string");
+	this.dsCostDelete.addColumn("NO_ERPKEY", "string");
+	
+	this.dsSlip = new Dataset();
+	this.dsSlip.addColumn("CD_CORP", "string");
+	this.dsSlip.addColumn("CD_SITE", "string");
+	this.dsSlip.addColumn("YM_WORK", "string");
+	this.dsSlip.addColumn("CD_DEPT_BH", "string");
+	this.dsSlip.addColumn("DT_ACCOUNT", "string");
+	this.dsSlip.addColumn("DT_REQUEST", "string");
+	this.dsSlip.addColumn("NO_ERPKEY", "string");
+	this.dsSlip.addColumn("ID_USER", "string");
+	
+	this.dsSlipCancel = new Dataset();
+	this.dsSlipCancel.addColumn("NO_ERPKEY", "string");
+	this.dsSlipCancel.addColumn("ID_USER", "string");
+	this.dsSlipCancel.addColumn("CD_GUBUN", "string");
+	
+	this.dsConfirm = new Dataset();
+	this.dsConfirm.addColumn("CD_SITE", "string");
+	this.dsConfirm.addColumn("YM_WORK", "string");
+	this.dsConfirm.addColumn("NO_ID", "string");
+	this.dsConfirm.addColumn("YM_MEDICARE", "string");
+	this.dsConfirm.addColumn("AM_MEDICARE", "bigdecimal");
+	this.dsConfirm.addColumn("AM_SILVER", "bigdecimal");
+	
+	this.dsCancel = new Dataset();
+	this.dsCancel.addColumn("CD_SITE", "string");
+	this.dsCancel.addColumn("YM_WORK", "string");
+}
+
+/************************************************************************
+ * 버튼 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK").substr(0,6));
+
+	this.dsList1.clearData();
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0 dsList1=select1";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	//this.gfnGridAdd(this.dxGrid);
+}
+
+/*
+ *	삭제 버튼
+ */ 
+this.fnDel = function() {
+	//this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	엑셀 버튼
+ */ 
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+ 
+/************************************************************************
+ * 서브 버튼 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnCostTojaValidate = function()
+{
+	var validate = true;
+
+	if(this.gfnIsNull(this.dsList1.getColumn(0, "CD_DKCOST")))
+	{
+		this.fnCostValidate = function()
+		{
+			this.divData.form.divDataRight.form.ccfCD_COST.form.CDTextBox.setFocus();
+		}
+	
+		validate = false;
+		
+		this.gfnAlert("사용자분담금 및 Network 지정(건강)의 공종코드를 입력해주세요.", "fnCostValidate");
+	}
+	else if(this.gfnIsNull(this.dsList1.getColumn(0, "DS_COMMENT")))
+	{
+		this.fnCostValidate = function()
+		{
+			this.divData.form.divDataRight.form.ctxtDS_COMMENT.setFocus();
+		}
+	
+		validate = false;
+		
+		this.gfnAlert("사용자분담금 및 Network 지정(건강)의 적요를 입력해주세요.", "fnCostValidate");
+	}
+	else if(this.gfnIsNull(this.dsList1.getColumn(0, "CD_DKCOST_SILVER")))
+	{
+		this.fnCostValidate = function()
+		{
+			this.divData.form.divDataRight.form.ccfCD_COST_SILVER.form.CDTextBox.setFocus();
+		}
+	
+		validate = false;
+		
+		this.gfnAlert("사용자분담금 및 Network 지정(요양)의 공종코드를 입력해주세요.", "fnCostValidate");
+	}
+	else if(this.gfnIsNull(this.dsList1.getColumn(0, "DS_COMMENT_SILVER")))
+	{
+		this.fnCostValidate = function()
+		{
+			this.divData.form.divDataRight.form.ctxtDS_COMMENT.setFocus();
+		}
+	
+		validate = false;
+		
+		this.gfnAlert("사용자분담금 및 Network 지정(요양)의 적요를 입력해주세요.", "fnCostValidate");
+	}
+	
+	if(validate == true)
+	{
+		// 환급분처리의 가입자분(건강), 사용자분(건강) 둘 중 하나라도 0이 아니라면.
+		if(this.dsList1.getColumn(0, "AM_MEDICARE_BACK_USER") != 0 || this.dsList1.getColumn(0, "AM_MEDICARE_BACK_COMPANY") != 0)
+		{
+			if(this.gfnIsNull(this.dsList1.getColumn(0, "CD_DKCOST_BACK")))
+			{
+				this.fnCostValidate = function()
+				{
+					this.divData.form.divDataRight.form.ccfCD_COST_BACK.form.CDTextBox.setFocus();
+					
+					return false;
+				}
+				validate = false;
+				this.gfnAlert("환급분 처리(건강)의 공종코드를 입력해주세요.", "fnCostValidate");
+			}
+			else if(this.gfnIsNull(this.dsList1.getColumn(0, "DS_COMMENT_BACK")))
+			{
+				this.fnCostValidate = function()
+				{
+					this.divData.form.divDataRight.form.ctxtDS_COMMENT_BACK.setFocus();
+					
+					return false;
+				}
+				validate = false;
+				this.gfnAlert("환급분 처리(건강)의 적요를 입력해주세요.", "fnCostValidate");
+			}
+		}
+	}
+	
+	if(validate == true)
+	{
+		// 환급분(요양)의 값이 둘중 하나라도 0이 아니라면.
+		if(nexacro.toNumber(this.dsList1.getColumn(0, "AM_SILVER_BACK_USER"),0) != 0 || nexacro.toNumber(this.dsList1.getColumn(0, "AM_SILVER_BACK_COMPANY"),0) != 0)
+		{
+			if(this.gfnIsNull(this.dsList1.getColumn(0, "CD_DKCOST_SILVER_BACK")))
+			{
+				this.fnCostValidate = function()
+				{
+					this.divData.form.divDataRight.form.ccfCD_COST_SILVER.form.CDTextBox.setFocus();
+					
+					return false;
+				}
+				validate = false;
+				
+				this.gfnAlert("환급분 처리(요양)의 공종코드를 입력해주세요.", "fnCostValidate");
+			}
+			else if(this.gfnIsNull(this.dsList1.getColumn(0, "DS_COMMENT_SILVER_BACK")))
+			{
+				this.fnCostValidate = function()
+				{
+					this.divData.form.divDataRight.form.ctxtDS_COMMENT_SILVER_BACK.setFocus();
+					
+					return false;
+				}
+				validate = false;
+				this.gfnAlert("환급분 처리(요양)의 적요를 입력해주세요.", "fnCostValidate");
+			}
+		}
+	}
+	
+	if(validate == true)
+	{
+		// 환급분 처리(건강)의 값이 다르다면.
+		if(nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE_BACK_USER"),0) 
+		!= nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE_BACK_COMPANY"),0)
+		&& _checkMedi == false)
+		{
+			validate = false;
+		
+			var msg = "환급분(건강) 처리의 가입자부담분과 사용자부담분 금액이 상이합니다."
+					+ "\n계속 진행하시겠습니까?";
+			this.gfnConfirm(msg, "fnMEDICARE_BACK_callback");
+			
+		}
+		// 환급분 처리(요양)의 값이 다르다면.
+		else if(nexacro.toNumber(this.dsList1.getColumn(0, "AM_SILVER_BACK_USER"),0) 
+		!= nexacro.toNumber(this.dsList1.getColumn(0, "AM_SILVER_BACK_COMPANY"),0)
+		&& _checkSilver == false)
+		{
+			validate = false;
+		
+			var msg = "환급분(요양) 처리의 가입자부담분과 사용자부담분 금액이 상이합니다."
+					+ "\n계속 진행하시겠습니까?";
+			this.gfnConfirm(msg, "fnSILVER_BACK_callback");	
+		}
+	}
+	
+	return validate;
+}
+
+this.fnMEDICARE_BACK_callback = function(strID, val)
+{
+	if(val == true)
+	{
+		_checkMedi = true;
+		this.fnCostToja();
+	}
+}
+
+this.fnSILVER_BACK_callback = function(strID, val)
+{
+	if(val == true)
+	{
+		_checkSilver = true;
+		this.fnCostToja();
+	}
+}
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		//this.gfnGridAfterSelect(this.dxGrid);	
+		this.fnSetBtnEnable();
+		
+		if(this.dsList1.rowcount > 0)
+		{
+			var am_medicare_back_user = nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE_BACK_USER"),0) 
+			var am_medicare_back_company = nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE_BACK_COMPANY"),0)
+		    var am_silver_back_user = nexacro.toNumber(this.dsList1.getColumn(0, "AM_SILVER_BACK_USER"),0);
+			var am_silver_back_company = nexacro.toNumber(this.dsList1.getColumn(0, "AM_SILVER_BACK_COMPANY"),0);
+			
+			if(am_medicare_back_user == am_medicare_back_company) _checkMedi = true;
+			else _checkMedi = false;
+			
+			if(am_silver_back_user == am_silver_back_company) _checkSilver = true;
+			else _checkSilver = false;
+			
+			if(am_medicare_back_user == 0 && am_medicare_back_company == 0) this.fnChangeUnderline(false);
+			else this.fnChangeUnderline(true);
+			
+			if(am_silver_back_user == 0 && am_silver_back_company == 0) this.fnChangeSilverUnderline(false);
+			else this.fnChangeSilverUnderline(true);
+			
+			this.dsList1.setColumn(0, "AM_MEDICARE_TOTAL", nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE"),0) - nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE_BACK"),0));
+		}
+		
+		return;
+	}
+	
+	if(errorCode == 0){
+		if(svcID == "costtoja")
+		{
+			this.fnCostCallback = function()
+			{
+				this.FormBtns.Select.click();
+			}
+			
+			this.gfnAlert("원가투자가 정상처리되었습니다.", "fnCostCallback");
+		}
+		else if(svcID == "costtoja_cancel")
+		{
+			this.fnCostCallback = function()
+			{
+				this.FormBtns.Select.click();
+			}
+			
+			this.gfnAlert("원가투자취소가 정상처리되었습니다.", "fnCostCallback");
+		}
+		else if(svcID == "slip")
+		{
+			this.fnSlipCallback = function()
+			{
+				this.FormBtns.Select.click();
+			}
+			
+			this.gfnAlert("전표발행이 정상처리되었습니다.", "fnSlipCallback");
+		}
+		else if(svcID == "slip_cancel")
+		{
+			this.fnSlipCallback = function()
+			{
+				this.FormBtns.Select.click();
+			}
+			
+			this.gfnAlert("전표발행취소가 정상처리되었습니다.", "fnSlipCallback");
+		}
+		else if(svcID == "confirm")
+		{
+			this.fnCallback_callback = function()
+			{
+				this.FormBtns.Select.click();
+			}
+			
+			this.gfnAlert("확정이 정상처리되었습니다.", "fnCallback_callback");
+		}
+		else if(svcID == "cancel")
+		{
+			this.fnCallback_callback = function()
+			{
+				this.FormBtns.Select.click();
+			}
+			
+			this.gfnAlert("확정취소가 정상처리되었습니다.", "fnCallback_callback");
+		}
+	}else
+	{
+		this.gfnAlert(errorMsg);
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	
+	if (id == "ccfCD_SITE") {
+		dsUserParam.setColumn(nrow, "CD_CORP", this.objApp.gdsUserInfo.getColumn(0, "CD_CORP"));	
+	}else if(id == "ccfCD_COST" || id == "ccfCD_COST_BACK" || id == "ccfCD_COST_SILVER" || id == "ccfCD_COST_SILVER_BACK")
+	{
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE") || this.dsSearch.getColumn(0, "CD_SITE") == ""))
+		{
+			this.gfnAlert("현장코드를 먼저 입력해주십시오.");
+			return false;
+		}
+		dsUserParam.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+		dsUserParam.setColumn(nrow, "CD_GBIMOK", "");
+		dsUserParam.setColumn(nrow, "CD_STDAGG", "");
+	}
+	return true;
+}
+
+this.ccfCD_COST_AfterCDTextChanged = function(id, codeFindData) {
+	// 코드,명칭 외 추가 컬럼 처리
+	var arr = codeFindData;
+
+	var cd_cost = "";
+	var cd_dkcost = "";
+	var ds_cost = "";
+	if (arr.length > 0) {
+		cd_cost = arr[0]["CD_COST"];
+		cd_dkcost = arr[0]["CD_DKCOST"];
+		ds_cost = arr[0]["DS_COST"];		
+	}
+	
+	this.dsList1.setColumn(0, "CD_DKCOST", cd_dkcost);
+	this.dsList1.setColumn(0, "CD_COST", cd_cost);
+	this.dsList1.setColumn(0, "DS_COST", ds_cost);
+}
+
+this.ccfCD_COST_SILVER_AfterCDTextChanged = function(id, codeFindData) {
+	// 코드,명칭 외 추가 컬럼 처리
+	var arr = codeFindData;
+
+	var cd_cost = "";
+	var cd_dkcost = "";
+	var ds_cost = "";
+	if (arr.length > 0) {
+		cd_cost = arr[0]["CD_COST"];
+		cd_dkcost = arr[0]["CD_DKCOST"];
+		ds_cost = arr[0]["DS_COST"];		
+	}
+	
+	this.dsList1.setColumn(0, "CD_DKCOST_SILVER", cd_dkcost);
+	this.dsList1.setColumn(0, "CD_COST_SILVER", cd_cost);
+	this.dsList1.setColumn(0, "DS_COST_SILVER", ds_cost);
+}
+
+this.ccfCD_COST_BACK_AfterCDTextChanged = function(id, codeFindData) {
+	// 코드,명칭 외 추가 컬럼 처리
+	var arr = codeFindData;
+
+	var cd_cost = "";
+	var cd_dkcost = "";
+	var ds_cost = "";
+	if (arr.length > 0) {
+		cd_cost = arr[0]["CD_COST"];
+		cd_dkcost = arr[0]["CD_DKCOST"];
+		ds_cost = arr[0]["DS_COST"];		
+	}
+	
+	this.dsList1.setColumn(0, "CD_DKCOST_BACK", cd_dkcost);
+	this.dsList1.setColumn(0, "CD_COST_BACK", cd_cost);
+	this.dsList1.setColumn(0, "DS_COST_BACK", ds_cost);
+}
+
+this.ccfCD_COST_SILVER_BACK_AfterCDTextChanged = function(id, codeFindData) {
+	// 코드,명칭 외 추가 컬럼 처리
+	var arr = codeFindData;
+
+	var cd_cost = "";
+	var cd_dkcost = "";
+	var ds_cost = "";
+	if (arr.length > 0) {
+		cd_cost = arr[0]["CD_COST"];
+		cd_dkcost = arr[0]["CD_DKCOST"];
+		ds_cost = arr[0]["DS_COST"];		
+	}
+	
+	this.dsList1.setColumn(0, "CD_DKCOST_SILVER_BACK", cd_dkcost);
+	this.dsList1.setColumn(0, "CD_COST_SILVER_BACK", cd_cost);
+	this.dsList1.setColumn(0, "DS_COST_SILVER_BACK", ds_cost);
+}
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+	}
+}
+
+this.divData_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	if(e.userdata == "splitter") {
+		this.divData.form.divSplitter.set_left(e.clientx);
+		this.divData.form.resetScroll();
+	}
+};
+
+this.divData_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	e.set_userdata("splitter");
+	return true;
+};
+
+
+this.fnCostToja = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(!this.fnCostTojaValidate()) return;
+	
+	this.dsCost.clearData();
+	var nrow = this.dsCost.addRow();
+	
+	this.dsCost.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsCost.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK").substr(0,6));
+	this.dsCost.setColumn(nrow, "DT_SLIP", this.dsList1.getColumn(0, "DT_SLIP"));
+	this.dsCost.setColumn(nrow, "AM_MEDICARE_USER", this.dsList1.getColumn(0, "AM_MEDICARE_USER"));
+	this.dsCost.setColumn(nrow, "AM_MEDICARE_COMPANY", this.dsList1.getColumn(0, "AM_MEDICARE_COMPANY"));
+	this.dsCost.setColumn(nrow, "CD_COST", this.dsList1.getColumn(0, "CD_COST"));
+	this.dsCost.setColumn(nrow, "DS_COST", this.dsList1.getColumn(0, "DS_COST"));
+	this.dsCost.setColumn(nrow, "DS_COMMENT", this.dsList1.getColumn(0, "DS_COMMENT"));
+	this.dsCost.setColumn(nrow, "AM_SILVER_USER", this.dsList1.getColumn(0, "AM_SILVER_USER"));
+	this.dsCost.setColumn(nrow, "AM_SILVER_COMPANY", this.dsList1.getColumn(0, "AM_SILVER_COMPANY"));
+	this.dsCost.setColumn(nrow, "CD_COST_SILVER", this.dsList1.getColumn(0, "CD_COST_SILVER"));
+	this.dsCost.setColumn(nrow, "DS_COST_SILVER", this.dsList1.getColumn(0, "DS_COST_SILVER"));
+	this.dsCost.setColumn(nrow, "DS_COMMENT_SILVER", this.dsList1.getColumn(0, "DS_COMMENT_SILVER"));
+	this.dsCost.setColumn(nrow, "AM_MEDICARE", this.dsList1.getColumn(0, "AM_MEDICARE"));
+	this.dsCost.setColumn(nrow, "AM_MEDICARE_BACK_USER", this.dsList1.getColumn(0, "AM_MEDICARE_BACK_USER"));
+	this.dsCost.setColumn(nrow, "AM_MEDICARE_BACK_COMPANY", this.dsList1.getColumn(0, "AM_MEDICARE_BACK_COMPANY"));
+	this.dsCost.setColumn(nrow, "CD_COST_BACK", this.dsList1.getColumn(0, "CD_COST_BACK"));
+	this.dsCost.setColumn(nrow, "DS_COST_BACK", this.dsList1.getColumn(0, "DS_COST_BACK"));
+	this.dsCost.setColumn(nrow, "DS_COMMENT_BACK", this.dsList1.getColumn(0, "DS_COMMENT_BACK"));
+	this.dsCost.setColumn(nrow, "AM_SILVER_BACK_USER", this.dsList1.getColumn(0, "AM_SILVER_BACK_USER"));
+	this.dsCost.setColumn(nrow, "AM_SILVER_BACK_COMPANY", this.dsList1.getColumn(0, "AM_SILVER_BACK_COMPANY"));
+	this.dsCost.setColumn(nrow, "CD_COST_SILVER_BACK", this.dsList1.getColumn(0, "CD_COST_SILVER_BACK"));
+	this.dsCost.setColumn(nrow, "DS_COST_SILVER_BACK", this.dsList1.getColumn(0, "DS_COST_SILVER_BACK"));
+	this.dsCost.setColumn(nrow, "DS_COMMENT_SILVER_BACK", this.dsList1.getColumn(0, "DS_COMMENT_SILVER_BACK"));
+	this.dsCost.setColumn(nrow, "AM_MEDICARE_BACK", this.dsList1.getColumn(0, "AM_MEDICARE_BACK"));
+	this.dsCost.setColumn(nrow, "AM_MEDICARE_TOTAL", this.dsList1.getColumn(0, "AM_MEDICARE_TOTAL"));
+	this.dsCost.setColumn(nrow, "ID_CREATE", this.dsList1.getColumn(0, "ID_CREATE"));
+	
+	if (this.dsCost.rowcount == 0) return;
+	
+	var strSvcId    = "costtoja";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "costtoja=dsCost";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnCostTojaCancel = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	this.dsCostDelete.clearData();
+	var nrow = this.dsCostDelete.addRow();	
+	
+	this.dsCostDelete.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsCostDelete.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK").substr(0,6));
+	this.dsCostDelete.setColumn(nrow, "DT_DATE", this.dsList1.getColumn(0, "DT_DATE"));
+	this.dsCostDelete.setColumn(nrow, "NO_ERPKEY", this.dsList1.getColumn(0, "NO_ERPKEY"));
+	
+	if (this.dsCostDelete.rowcount == 0) return;
+	
+	var strSvcId    = "costtoja_cancel";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "costtoja_cancel=dsCostDelete";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnSlip = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	this.gfnConfirm("전표발행을 진행하시겠습니까?", "fnSlip_callback");
+}
+
+this.fnSlip_callback = function(strID, val) {
+	if(val == true)
+	{
+		this.dsSlip.clearData();
+		var nrow = this.dsSlip.addRow();	
+		
+		this.dsSlip.setColumn(nrow, "CD_CORP", "01");
+		this.dsSlip.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+		this.dsSlip.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+		this.dsSlip.setColumn(nrow, "CD_DEPT_BH", this.dsSearch.getColumn(0, "CD_SITE"));
+		this.dsSlip.setColumn(nrow, "DT_ACCOUNT", this.dsList1.getColumn(0, "DT_SLIP"));
+		this.dsSlip.setColumn(nrow, "DT_REQUEST", "");
+		this.dsSlip.setColumn(nrow, "NO_ERPKEY", this.dsList1.getColumn(0, "NO_ERPKEY"));
+		this.dsSlip.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+		
+		if (this.dsSlip.rowcount == 0) return;
+	
+		var strSvcId    = "slip";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "slip=dsSlip";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}	
+}
+
+this.fnSlipCancel = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	this.gfnConfirm("전표발행취소를 진행하시겠습니까?", "fnSlipCancel_callback");
+}
+
+this.fnSlipCancel_callback = function(strID, val)
+{
+	if(val == true)
+	{
+		this.dsSlipCancel.clearData();
+		var nrow = this.dsSlipCancel.addRow();	
+		
+		this.dsSlipCancel.setColumn(nrow, "NO_ERPKEY", this.dsList1.getColumn(0, "NO_ERPKEY"));
+		this.dsSlipCancel.setColumn(nrow, "ID_USER", this.AuthClient.ID_SABUN);
+		this.dsSlipCancel.setColumn(nrow, "CD_GUBUN", "M");
+
+		if (this.dsSlipCancel.rowcount == 0) return;
+		
+		var strSvcId    = "slip_cancel";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "slip_cancel=dsSlipCancel";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}
+
+this.fnSapslip = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	this.gfnConfirm("전표발행(SAP)을 진행하시겠습니까?", "fnSapslip_callback");
+}
+
+this.fnSapslip_callback = function(strID, val)
+{
+	if(val == true)
+	{
+		var no_erpkey = this.dsList1.getColumn(0, "NO_ERPKEY");
+		var cd_trade = this.dsList1.getColumn(0, "NO_SLIP");
+		var id_user = this.AuthClient.ID_USER;
+		this.gfnSlipIssue(no_erpkey, cd_trade, id_user, "fnSapslipOk_callback");
+	}	
+}
+
+// gfnSlipIssue 전표발행 성공시 실행할 callback
+this.fnSapslipOk_callback = function() {
+	this.FormBtns.Select.click();
+	/*
+	this.fnSlipMsgCallback = function()
+	{
+		this.FormBtns.Select.click();
+	}	
+	this.gfnAlert("전표발행(SAP)이 정상처리되었습니다.", "fnSlipMsgCallback");
+	*/
+}
+
+
+this.fnSapslipCncl = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+
+	this.gfnConfirm("전표발행취소(SAP)를 진행하시겠습니까?", "fnSapslipCncl_callback");
+}
+
+this.fnSapslipCncl_callback = function(strID, val)
+{
+	if(val == true)
+	{
+		var no_erpkey = this.dsList1.getColumn(0, "NO_ERPKEY");
+		var cd_trade = this.dsList1.getColumn(0, "NO_SLIP");
+		var id_user = this.AuthClient.ID_USER;
+		var sap_slip = this.dsList1.getColumn(0, "BELNR");		// SAP 전표번호
+		var sap_slip_year = this.dsList1.getColumn(0, "GJAHR");	// SAP 전표의 회계연도
+		var sap_comp = "HD00";
+
+		this.gfnSlipCancel(no_erpkey, cd_trade, id_user, sap_comp, sap_slip, sap_slip_year, "fnSlipCancelOk_callback");
+	}
+	
+}
+
+
+// gfnSlipCancel 전표취소 성공시 실행할 callback
+this.fnSlipCancelOk_callback = function() {
+	this.FormBtns.Select.click();
+	/*
+	this.fnSlipMsgCallback = function()
+	{
+		this.FormBtns.Select.click();
+	}	
+	this.gfnAlert("전표발행취소(SAP)가 정상처리되었습니다.", "fnSlipMsgCallback");
+	*/
+}
+
+// 전표조회버튼
+this.fnShowSlip = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var param = {};
+	param.CD_TRADE = this.dsList1.getColumn(0, "NO_SLIP");
+	
+	this.gfnFormOpen("DHA", "DHA_ISSUESLIP", "", param); 
+}
+
+
+this.fnConfirm = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(this.dsList.rowcount < 1) return;
+	if(this.dsList.findRow("TY_CONFIRM", "1", 0) < 0)
+	{
+		this.gfnAlert("데이터를 선택해주세요.");
+		return;
+	}
+	
+	this.gfnConfirm("확정을 진행하시겠습니까?", "fnConfirm_callback");
+}
+
+this.fnConfirm_callback = function(strID, val)
+{
+	if(val == true)
+	{
+		this.dsConfirm.clearData();
+		
+		for(var i = 0 ; i < this.dsList.rowcount; i++)
+		{
+			if(this.dsList.getColumn(i, "TY_CONFIRM") == 1)
+			{
+				var nrow = this.dsConfirm.addRow();
+				this.dsConfirm.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+				this.dsConfirm.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+				this.dsConfirm.setColumn(nrow, "NO_ID", this.dsList.getColumn(i, "NO_ID"));
+				this.dsConfirm.setColumn(nrow, "YM_MEDICARE", this.dsList.getColumn(i, "YM_MEDICARE"));
+				this.dsConfirm.setColumn(nrow, "AM_MEDICARE", this.dsList.getColumn(i, "AM_MEDICARE"));
+				this.dsConfirm.setColumn(nrow, "AM_SILVER", this.dsList.getColumn(i, "AM_SILVER"));
+			}
+		}
+		
+		if (this.dsConfirm.rowcount == 0) return;
+	
+		var strSvcId    = "confirm";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "confirm=dsConfirm";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}
+
+
+this.fnCancel = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(this.dsList.rowcount < 1) return;
+	if(this.dsList.findRow("TY_CONFIRM", "1", 0) < 0)
+	{
+		this.gfnAlert("데이터를 선택해주세요.");
+		return;
+	}
+	
+	this.gfnConfirm("확정취소를 진행하시겠습니까?", "fnCancel_callback");
+}
+
+this.fnCancel_callback = function(strID, val)
+{
+	if(val == true)
+	{
+		this.dsCancel.clearData();
+		
+		var nrow = this.dsCancel.addRow();
+		this.dsCancel.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+		this.dsCancel.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK").substr(0,6));
+
+		if (this.dsCancel.rowcount == 0) return;
+	
+		var strSvcId    = "cancel";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "cancel=dsCancel";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}
+
+// 전도금처리 버튼
+this.fnJundo = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var param = {};
+	
+	param.CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+	param.YM_WORK = this.dsSearch.getColumn(0, "YM_WORK");
+	param.TY_GUBUN = "M";
+	
+	this.gfnFormOpen("DSB", "DSB_JUNDO", "", param, 630, 230); 
+}
+
+this.fnSetBtnEnable = function() {
+
+	this.btnCostToja.set_enable(false); //원가투자
+	this.btnCostTojaCancel.set_enable(false); //원가투자취소
+	this.btnSlip.set_enable(false); //전표발행
+	this.btnSlipCancel.set_enable(false); //전표발행취소
+	this.btnShowSlip.set_enable(false); //전표조회
+	this.btnSapslip.set_enable(false); // 전표발행(SAP)
+	this.btnSapslipCncl.set_enable(false); //전표취소(SAP)
+	this.btnJundo.set_enable(false);	//전도금처리
+	
+	var dt_Slip = this.dsList1.getColumn(0, "DT_SLIP"); //전기일자
+	var no_Slip = this.dsList1.getColumn(0, "NO_SLIP"); //현장발생전표
+	var no_BELNR = this.dsList1.getColumn(0, "BELNR"); // SAP전표번호
+	
+	if(dt_Slip == "" || this.gfnIsNull(dt_Slip))
+	{
+		if(this.dsList.getColumn(0, "TY_CONFIRM") == 1)
+		{
+			this.btnConfirm.set_enable(false);
+			this.btnCancel.set_enable(true);
+		}
+		else
+		{
+			this.btnConfirm.set_enable(true);
+			this.btnCancel.set_enable(false);
+		}	
+	}
+	else
+	{
+		this.btnConfirm.set_enable(false);
+		this.btnCancel.set_enable(false);
+	}	
+	
+	//전기 일자가 없다면.
+	if(dt_Slip == "" || this.gfnIsNull(dt_Slip))
+	{
+		// 원가투자 버튼만 활성화.
+		this.btnCostToja.set_enable(true);
+		this.divData.form.divDataRight.form.ctclDT_SLIP.set_readonly(false);
+		
+		if(this.dsList1.rowcount == 0)
+		{
+			this.dsList1.clearData();
+			this.dsList1.addRow();
+		}
+		
+		this.dsList1.setColumn(0, "DT_SLIP", this.gfnGetDate());
+		return;
+	}
+	else
+	{
+		this.divData.form.divDataRight.form.ctclDT_SLIP.set_readonly(true);
+		// 전기일자가 있으면서 발생전표가 없을 경우
+		if(no_Slip == "" || this.gfnIsNull(no_Slip))
+		{
+			//원가투자취소, 전표발행 버튼 활성화
+			this.btnCostTojaCancel.set_enable(true); //원가투자취소
+			this.btnSlip.set_enable(true); //전표발행
+		}
+		else
+		{
+			// 전기일자, 발생전표가 있고 지급전표가 없는 경우
+			if(no_BELNR == "" || this.gfnIsNull(no_BELNR))
+			{
+				// 전표발행취소 버튼을 활성화한다.
+				this.btnSlipCancel.set_enable(true);
+				this.btnShowSlip.set_enable(true);
+			}
+		}
+	}
+	
+	// 현장발생전표에 값이 있으면서 SAP전표번호에 값이 없으면 전표발행(SAP) 활성화
+	if(!this.gfnIsNull(no_Slip)){		
+		if (this.gfnIsNull(this.dsList1.getColumn(0, "BELNR"))) {
+			this.btnSapslip.set_enable(true);
+		}
+		this.btnShowSlip.set_enable(true);
+	}
+	
+	// SAP전표번호에 값이 있을경우 전표취소(SAP) 활성화
+	if (!this.gfnIsNull(this.dsList1.getColumn(0, "BELNR"))) {
+	    this.btnSapslipCncl.set_enable(true);
+		this.btnJundo.set_enable(true);
+	}
+}
+
+this.dsList1_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.newvalue != e.oldvalue)
+	{
+		if(e.columnid == "AM_MEDICARE_BACK")
+		{
+			var am_medicare = nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE"),0);
+			this.dsList1.setColumn(0, "AM_MEDICARE_TOTAL", am_medicare - nexacro.toNumber(e.newvalue,0));
+		}
+		else if(e.columnid == "AM_MEDICARE_BACK_USER")
+		{
+			var am_medicare_back_company = nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE_BACK_COMPANY"), 0);
+			var am_silver_back_user = nexacro.toNumber(this.dsList1.getColumn(0, "AM_SILVER_BACK_USER"), 0);
+			var am_silver_back_company = nexacro.toNumber(this.dsList1.getColumn(0, "AM_SILVER_BACK_COMPANY"), 0);
+			this.dsList1.setColumn(0, "AM_MEDICARE_BACK", nexacro.toNumber(e.newvalue,0) + am_medicare_back_company + am_silver_back_user + am_silver_back_company);
+		
+			if(e.newvalue == am_medicare_back_company) _checkMedi = true;
+			else _checkMedi = false;
+			
+			if(e.newvalue == 0 && am_medicare_back_company == 0) this.fnChangeUnderline(false);
+			else this.fnChangeUnderline(true);
+		}
+		else if(e.columnid == "AM_MEDICARE_BACK_COMPANY")
+		{
+			var am_medicare_back_user = nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE_BACK_USER"), 0);
+			var am_silver_back_user = nexacro.toNumber(this.dsList1.getColumn(0, "AM_SILVER_BACK_USER"), 0);
+			var am_silver_back_company = nexacro.toNumber(this.dsList1.getColumn(0, "AM_SILVER_BACK_COMPANY"), 0);
+			this.dsList1.setColumn(0, "AM_MEDICARE_BACK", nexacro.toNumber(e.newvalue,0) + am_medicare_back_user + am_silver_back_user + am_silver_back_company);
+		
+			if(e.newvalue == am_medicare_back_user) _checkMedi = true;
+			else _checkMedi = false;
+			
+			if(e.newvalue == 0 && am_medicare_back_user == 0) this.fnChangeUnderline(false);
+			else this.fnChangeUnderline(true);
+		}
+		else if(e.columnid == "AM_SILVER_BACK_USER")
+		{
+			var am_medicare_back_user = nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE_BACK_USER"), 0);
+			var am_medicare_back_company = nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE_BACK_COMPANY"), 0);
+			var am_silver_back_company = nexacro.toNumber(this.dsList1.getColumn(0, "AM_SILVER_BACK_COMPANY"), 0);
+			this.dsList1.setColumn(0, "AM_MEDICARE_BACK", nexacro.toNumber(e.newvalue,0) + am_medicare_back_user + am_medicare_back_company + am_silver_back_company);
+		
+			if(e.newvalue == am_silver_back_company) _checkSilver = true;
+			else _checkSilver = false;
+			
+			if(e.newvalue == 0 && am_silver_back_company == 0) this.fnChangeSilverUnderline(false);
+			else this.fnChangeSilverUnderline(true);
+		}
+		else if(e.columnid == "AM_SILVER_BACK_COMPANY")
+		{
+			var am_medicare_back_user = nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE_BACK_USER"), 0);
+			var am_medicare_back_company = nexacro.toNumber(this.dsList1.getColumn(0, "AM_MEDICARE_BACK_COMPANY"), 0);
+			var am_silver_back_user = nexacro.toNumber(this.dsList1.getColumn(0, "AM_SILVER_BACK_USER"), 0);
+			this.dsList1.setColumn(0, "AM_MEDICARE_BACK", nexacro.toNumber(e.newvalue,0) + am_medicare_back_user + am_medicare_back_company + am_silver_back_user);
+		
+			if(e.newvalue == am_silver_back_user) _checkSilver = true;
+			else _checkSilver = false;
+			
+			if(e.newvalue == 0 && am_silver_back_user == 0) this.fnChangeSilverUnderline(false);
+			else this.fnChangeSilverUnderline(true);
+		}
+	}
+};
+
+this.fnChangeUnderline = function(val)
+{
+	if(val == true)
+	{
+		this.divData.form.divDataRight.form.staCD_COST_BACK.set_textDecoration('underline');
+		this.divData.form.divDataRight.form.staDS_COMMENT_BACK.set_textDecoration('underline');			
+	}
+	else
+	{
+		this.divData.form.divDataRight.form.staCD_COST_BACK.set_textDecoration('none');
+		this.divData.form.divDataRight.form.staDS_COMMENT_BACK.set_textDecoration('none');			
+	}
+}
+
+this.fnChangeSilverUnderline = function(val)
+{
+	if(val == true)
+	{
+		this.divData.form.divDataRight.form.staCD_COST_SILVER_BACK.set_textDecoration('underline');
+		this.divData.form.divDataRight.form.staDS_COMMENT_SILVER_BACK.set_textDecoration('underline');			
+	}
+	else
+	{
+		this.divData.form.divDataRight.form.staCD_COST_SILVER_BACK.set_textDecoration('none');
+		this.divData.form.divDataRight.form.staDS_COMMENT_SILVER_BACK.set_textDecoration('none');			
+	}
+}
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DSBPR_MEDICARE_LIST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">costtoja</Col>
+            <Col id="SP">DSBPR_MEDICARE_COSTTOJA</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">costtoja_cancel</Col>
+            <Col id="SP">DSBPR_MEDICARE_COSTTOJA_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">slip</Col>
+            <Col id="SP">DSBPR_AUTOSLIP_ISSUE_MEDICARE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">slip_cancel</Col>
+            <Col id="SP">DSBPR_AUTOSLIP_ISSUE_CANCEL</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">confirm</Col>
+            <Col id="SP">DSBPR_MEDICARE_LIST_CONFIRM</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">cancel</Col>
+            <Col id="SP">DSBPR_MEDICARE_LIST_CANCEL</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList1" onvaluechanged="dsList1_onvaluechanged">
+        <ColumnInfo>
+          <Column id="NO_ERPKEY" type="STRING" size="256"/>
+          <Column id="DT_SLIP" type="STRING" size="256"/>
+          <Column id="NO_SLIP" type="STRING" size="256"/>
+          <Column id="NO_SLIP_JIGUB" type="STRING" size="256"/>
+          <Column id="AM_MEDICARE_USER" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_MEDICARE_COMPANY" type="BIGDECIMAL" size="256"/>
+          <Column id="CD_COST" type="STRING" size="256"/>
+          <Column id="CD_DKCOST" type="STRING" size="256"/>
+          <Column id="DS_COST" type="STRING" size="256"/>
+          <Column id="DS_COMMENT_SILVER" type="STRING" size="256"/>
+          <Column id="AM_SILVER_USER" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_SILVER_COMPANY" type="BIGDECIMAL" size="256"/>
+          <Column id="CD_COST_SILVER" type="STRING" size="256"/>
+          <Column id="CD_DKCOST_SILVER" type="STRING" size="256"/>
+          <Column id="DS_COST_SILVER" type="STRING" size="256"/>
+          <Column id="DS_COMMENT_SILVER1" type="STRING" size="256"/>
+          <Column id="AM_MEDICARE" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_MEDICARE_BACK_USER" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_MEDICARE_BACK_COMPANY" type="BIGDECIMAL" size="256"/>
+          <Column id="CD_COST_BACK" type="STRING" size="256"/>
+          <Column id="CD_DKCOST_BACK" type="STRING" size="256"/>
+          <Column id="DS_COST_BACK" type="STRING" size="256"/>
+          <Column id="DS_COMMENT_BACK" type="STRING" size="256"/>
+          <Column id="AM_SILVER_BACK_USER" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_SILVER_BACK_COMPANY" type="BIGDECIMAL" size="256"/>
+          <Column id="CD_COST_SILVER_BACK" type="STRING" size="256"/>
+          <Column id="CD_DKCOST_SILVER_BACK" type="STRING" size="256"/>
+          <Column id="DS_COST_SILVER_BACK" type="STRING" size="256"/>
+          <Column id="DS_COMMENT_SILVER_BACK" type="STRING" size="256"/>
+          <Column id="AM_MEDICARE_BACK" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_MEDICARE_TOTAL" type="BIGDECIMAL" size="256"/>
+          <Column id="BELNR" type="STRING" size="256"/>
+          <Column id="GJAHR" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="YM_WORK" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divSearch.form.ctclYM_WORK.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_WORK"/>
+      <BindItem id="item2" compid="divData.form.divDataRight.form.ctxtNO_ERPKEY" propid="value" datasetid="dsList1" columnid="NO_ERPKEY"/>
+      <BindItem id="item3" compid="divData.form.divDataRight.form.ctxtAM_MEDICARE_USER" propid="value" datasetid="dsList1" columnid="AM_MEDICARE_USER"/>
+      <BindItem id="item4" compid="divData.form.divDataRight.form.ctxtAM_MEDICARE_COMPANY" propid="value" datasetid="dsList1" columnid="AM_MEDICARE_COMPANY"/>
+      <BindItem id="item5" compid="divData.form.divDataRight.form.ccfCD_COST.form.CDTextBox" propid="value" datasetid="dsList1" columnid="CD_DKCOST"/>
+      <BindItem id="item6" compid="divData.form.divDataRight.form.ccfCD_COST.form.DSTextBox" propid="value" datasetid="dsList1" columnid="DS_COST"/>
+      <BindItem id="item7" compid="divData.form.divDataRight.form.ctxtDS_COMMENT" propid="value" datasetid="dsList1" columnid="DS_COMMENT"/>
+      <BindItem id="item8" compid="divData.form.divDataRight.form.ctxtAM_SILVER_USER" propid="value" datasetid="dsList1" columnid="AM_SILVER_USER"/>
+      <BindItem id="item9" compid="divData.form.divDataRight.form.ctxtAM_SILVER_COMPANY" propid="value" datasetid="dsList1" columnid="AM_SILVER_COMPANY"/>
+      <BindItem id="item10" compid="divData.form.divDataRight.form.ccfCD_COST_SILVER.form.CDTextBox" propid="value" datasetid="dsList1" columnid="CD_DKCOST_SILVER"/>
+      <BindItem id="item11" compid="divData.form.divDataRight.form.ccfCD_COST_SILVER.form.DSTextBox" propid="value" datasetid="dsList1" columnid="DS_COST_SILVER"/>
+      <BindItem id="item12" compid="divData.form.divDataRight.form.ctxtAM_MEDICARE" propid="value" datasetid="dsList1" columnid="AM_MEDICARE"/>
+      <BindItem id="item13" compid="divData.form.divDataRight.form.ctxtDS_COMMENT_SILVER" propid="value" datasetid="dsList1" columnid="DS_COMMENT_SILVER"/>
+      <BindItem id="item14" compid="divData.form.divDataRight.form.ctxtAM_MEDICARE_BACK_USER" propid="value" datasetid="dsList1" columnid="AM_MEDICARE_BACK_USER"/>
+      <BindItem id="item15" compid="divData.form.divDataRight.form.ctxtAM_MEDICARE_BACK_COMPANY" propid="value" datasetid="dsList1" columnid="AM_MEDICARE_BACK_COMPANY"/>
+      <BindItem id="item16" compid="divData.form.divDataRight.form.ccfCD_COST_BACK.form.CDTextBox" propid="value" datasetid="dsList1" columnid="CD_DKCOST_BACK"/>
+      <BindItem id="item17" compid="divData.form.divDataRight.form.ccfCD_COST_BACK.form.DSTextBox" propid="value" datasetid="dsList1" columnid="DS_COST_BACK"/>
+      <BindItem id="item18" compid="divData.form.divDataRight.form.ctxtDS_COMMENT_BACK" propid="value" datasetid="dsList1" columnid="DS_COMMENT_BACK"/>
+      <BindItem id="item19" compid="divData.form.divDataRight.form.ctxtAM_SILVER_BACK_USER" propid="value" datasetid="dsList1" columnid="AM_SILVER_BACK_USER"/>
+      <BindItem id="item20" compid="divData.form.divDataRight.form.ctxtAM_SILVER_BACK_COMPANY" propid="value" datasetid="dsList1" columnid="AM_SILVER_BACK_COMPANY"/>
+      <BindItem id="item21" compid="divData.form.divDataRight.form.ccfCD_COST_SILVER_BACK.form.CDTextBox" propid="value" datasetid="dsList1" columnid="CD_DKCOST_SILVER_BACK"/>
+      <BindItem id="item22" compid="divData.form.divDataRight.form.ccfCD_COST_SILVER_BACK.form.DSTextBox" propid="value" datasetid="dsList1" columnid="DS_COST_SILVER_BACK"/>
+      <BindItem id="item23" compid="divData.form.divDataRight.form.ctxtDS_COMMENT_SILVER_BACK" propid="value" datasetid="dsList1" columnid="DS_COMMENT_SILVER_BACK"/>
+      <BindItem id="item24" compid="divData.form.divDataRight.form.ctxtAM_MEDICARE_BACK" propid="value" datasetid="dsList1" columnid="AM_MEDICARE_BACK"/>
+      <BindItem id="item25" compid="divData.form.divDataRight.form.ctxtAM_MEDICARE_TOTAL" propid="value" datasetid="dsList1" columnid="AM_MEDICARE_TOTAL"/>
+      <BindItem id="item26" compid="divData.form.divDataRight.form.ctclDT_SLIP" propid="value" datasetid="dsList1" columnid="DT_SLIP"/>
+      <BindItem id="item27" compid="divData.form.divDataRight.form.ctxtNO_SLIP" propid="value" datasetid="dsList1" columnid="NO_SLIP"/>
+      <BindItem id="item28" compid="divData.form.divDataRight.form.ctxtBELNR" propid="value" datasetid="dsList1" columnid="BELNR"/>
+    </Bind>
+  </Form>
+</FDL>

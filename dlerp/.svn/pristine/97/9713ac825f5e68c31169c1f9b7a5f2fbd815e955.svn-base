@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="일반관리비예산실적" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0" top="10" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staYM_ACCOUNT" text="조회년월" left="0" top="10.0" width="92" height="24.0" taborder="0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYM_ACCOUNT" taborder="1" left="staYM_ACCOUNT:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalMM.xfdl" text=""/>
+              <Static id="staTY_GUBUN" text="구분" left="ctclYM_ACCOUNT:0.0" top="10.0" width="66" height="24.0" taborder="4" cssclass="sta_WF_SchLabel" visible="false"/>
+              <Combo id="ccboTY_GUBUN" left="staTY_GUBUN:0.0" top="10.0" width="100" height="24.0" taborder="5" innerdataset="dsTY_GUBUN" datacolumn="VALUE" codecolumn="CODE" value="" onitemchanged="fnSearchInit" index="0" visible="false"/>
+              <Static id="staCD_ACTIVE00" text="(단위:천원)" top="10.0" height="24.0" taborder="2" cssclass="sta_WF_SchLabel" right="10" width="100" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0" oncelldblclick="divData_objGrid_oncelldblclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsSearch.setColumn(0, "YM_ACCOUNT", this.gfnGetDate().substr(0,6));
+	this.divSearch.form.ccboTY_GUBUN.set_value("B");
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	//this.btnExcelD = this.gfnFormButtonAdd("btnExcelD", "fnbtnExcelD");
+	//this.btnExcelU = this.gfnFormButtonAdd("btnExcelU", "fnbtnExcelU");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ctclYM_ACCOUNT = this.divSearch.form.ctclYM_ACCOUNT;
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DI", "DIQ_BUDGET_YEAR");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	// SELECT
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("YM_ACCOUNT", "string");
+	this.dsSelect.addColumn("TY_GUBUN", "string");	
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "YM_ACCOUNT", this.dsSearch.getColumn(0, "YM_ACCOUNT"));
+	this.dsSelect.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"YM_ACCOUNT"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ctclYM_ACCOUNT.setFocus();
+		}
+		this.gfnAlert("조회년월을 입력하세요.", "fnVaidateCallback");
+	}
+	
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+		this.fnColor();
+		
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+ 
+
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		if(e.columnid == "YM_ACCOUNT"){this.fnSetHeadTitle();}
+	}
+};
+
+
+this.fnSetHeadTitle = function(){
+ 	var ymAccount = this.dsSearch.getColumn(0, "YM_ACCOUNT");
+ 	var budgetTotal = "";
+	var execTotal = "";
+	var totalBal = "";
+
+ 	if(!this.gfnIsNull(ymAccount)){
+ 		var Mon = ymAccount.substr(4,2);
+ 		budgetTotal += Mon+"월 누계예산";
+		execTotal += Mon+"월 누계실적";
+		totalBal += Mon+"월 누계차이";
+ 	}
+	
+ 	this.dxGrid.setCellProperty("head", 18, "text", budgetTotal);
+	this.dxGrid.setCellProperty("head", 19, "text", execTotal);
+	this.dxGrid.setCellProperty("head", 20, "text", totalBal);
+}
+
+this.fnColor = function() 
+{
+	this.dxGrid.set_enableredraw(false);	
+	// BACK_KuBun 
+	//var expr = "DS_ACTIVE != '소계' && DS_ACCOUNT != '중계 &&' DS_ACCOUNT_M != '합계' && (CD_GUBUN == '계획' || CD_GUBUN == '실적')";
+	this.gfnGridColumnColor(this.dxGrid, "ST_PROGRESS", "BACK_SoKe", "DS_ACCOUNT == '소계'", true);
+	this.gfnGridColumnColor(this.dxGrid, "ST_PROGRESS", "BACK_Sum", "DS_ACCOUNT == '합계'", true);
+	//this.gfnGridColumnColor(this.dxGrid, "ST_PROGRESS", "BACK_SoKe", "DS_ACCOUNT == '중계'", true);
+
+	this.dxGrid.set_enableredraw(true);	
+}
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DIQPR_BUDGET_YEAR_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="YM_ACCOUNT" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_GUBUN">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">B</Col>
+            <Col id="VALUE">본사</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">H</Col>
+            <Col id="VALUE">현장</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">S</Col>
+            <Col id="VALUE">수주영업비</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divSearch.form.ctclYM_ACCOUNT.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_ACCOUNT"/>
+      <BindItem id="item0" compid="divSearch.form.ccboTY_GUBUN" propid="value" datasetid="dsSearch" columnid="TY_GUBUN"/>
+    </Bind>
+  </Form>
+</FDL>

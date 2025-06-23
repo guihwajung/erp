@@ -1,0 +1,1180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_CORP" taborder="0" text="법인" left="0" top="10.0" width="66" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_CORP" CodeFindName="DAX_CFCORP_CODEFIND" CDTextWidth="50" taborder="4" left="staCD_CORP:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" enable="false"/>
+              <Static id="staID_SABUN_BZTP" taborder="5" text="출장자" left="ccfCD_CORP:0" top="10.0" width="79" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfID_SABUN_BZTP" CodeFindName="DAX_CFBASEINFO_ALL" CDTextWidth="90" taborder="6" left="staID_SABUN_BZTP:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" enable="false"/>
+              <Static id="staDT_BZTP" taborder="7" text="출장일" left="ccfID_SABUN_BZTP:0.0" top="10.0" width="79" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Calendar id="ctclDT_BZTP_FROM" taborder="1" left="staDT_BZTP:10" top="10" width="105" height="24" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="false" enable="false"/>
+              <Static id="staDT_BUSINESS_range" taborder="2" text="~" left="ctclDT_BZTP_FROM:10" top="10" width="10" height="20"/>
+              <Calendar id="ctclDT_BZTP_TO" taborder="3" left="staDT_BUSINESS_range:10" top="10" width="105" height="24" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" enable="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="1" text="※ 주의사항 ※" left="0" width="932" right="5" height="48" top="0" textAlign="left" color="#ff0000"/>
+              <Static id="sta01" taborder="1" text="※ 법인카드와 잡비를 제외한 모든 사용내역에 대한 증빙은 필수입니다." width="732" right="5" height="24" top="0" textAlign="right" color="#ff0000"/>
+              <Grid id="objGrid" taborder="0" left="0" top="sta00:5" bottom="0" right="0" autofittype="col"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.checkCurrencyRatio = true;
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+    this.fnSetCombo();
+	this.fnInit();
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출 
+ ************************************************************************/
+this.fnSetButton = function() {
+	
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnRule   		 = this.gfnFormButtonAdd("btnRule"  , "fnRule");				// 출장규정 버튼
+	this.btnCardContents = this.gfnFormButtonAdd("btnCardContents", "fnCardContents");	// 법인카드 내역 조회 버튼
+}
+
+this.fnUpdateStatusExtendButton = function() {
+	
+}
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	// 그리드영역
+	this.dxGrid = this.divData.form.objGrid;
+	
+	// 검색영역
+	this.ccfCD_CORP       = this.divSearch.form.ccfCD_CORP;			// 법인
+	this.ccfID_SABUN_BZTP = this.divSearch.form.ccfID_SABUN_BZTP;	// 신청자
+	this.ctclDT_BZTP_FROM = this.divSearch.form.ctclDT_BZTP_FROM;	// 출장일(FROM)
+	this.ctclDT_BZTP_TO   = this.divSearch.form.ctclDT_BZTP_TO;		// 출장일(TO)
+	this.sta00	   		  = this.divData.form.sta00;
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {	
+	// 그리드영역
+	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAB_BZTP_RPT_PROF");
+	this.dxGrid.BeforeUserDataSetParam = "fnGridBeforeUserDataSetParam";
+	this.dxGrid.AfterCDTextChanged     = "fnGridAfterCDTextChanged";
+	this.dxGrid.ExpandUp               = "fnGridExpandUp";
+	this.dxGrid.EnterCell              = "fnGridEnterCell";
+	this.dxGrid.AfterEdit              = "fnGridAfterEdit";
+	this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "AM_PMT"), "maskeditformat", "expr:dataset.getColumn(currow, 'CD_PMT_MNEY')=='KRW'?'#,##0':'#,##0.00'");
+	
+	// 검색영역
+	this.ccfCD_CORP.BeforeUserDataSetParam       = "fnBeforeUserDataSetParam";
+	this.ccfCD_CORP.AfterCDTextChanged           = "fnAfterCDTextChanged";
+	this.ccfID_SABUN_BZTP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfID_SABUN_BZTP.AfterCDTextChanged     = "fnAfterCDTextChanged";
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	// 출장비용증빙 조회
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("SN_BZTPSEQ", "string");
+	this.dsSelect.addColumn("ID_SABUN_BZTP", "string");
+	this.dsSelect.addColumn("TY_BZTP", "string");
+	
+	// 출장비용증빙 저장
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("TY_WRK", "string");
+	this.dsSave.addColumn("CD_CORP", "string");
+	this.dsSave.addColumn("SEQ_BZTP", "string");
+	this.dsSave.addColumn("ID_SABUN_CPNYDUTY", "string");
+	this.dsSave.addColumn("CD_PLN_RTP", "string");
+	this.dsSave.addColumn("SEQ_PROF", "int");
+	this.dsSave.addColumn("NO_COL", "int");
+	this.dsSave.addColumn("DT_PMT", "string");
+	this.dsSave.addColumn("CD_PMT_NTN", "string");
+	this.dsSave.addColumn("CD_PMT_TYPE", "string");
+	this.dsSave.addColumn("CD_PMT_MEAN", "string");
+	this.dsSave.addColumn("CD_PMT_MNEY", "string");
+	this.dsSave.addColumn("AM_PMT", "bigdecimal");
+	this.dsSave.addColumn("EXRT_PMT", "string");
+	this.dsSave.addColumn("AM_PMT_KRW", "bigdecimal");
+	this.dsSave.addColumn("YN_APLT", "string");
+	this.dsSave.addColumn("DS_RMK", "string");
+	this.dsSave.addColumn("CD_PMT_PROF", "string");
+	this.dsSave.addColumn("ID_SABUN", "string");
+	
+	// 집행화 및 환율 조회
+	this.dsSelectExchangeRatio = new Dataset();
+	this.dsSelectExchangeRatio.addColumn("TY_GUBUN", "string");
+	this.dsSelectExchangeRatio.addColumn("CN_ROW", "int");
+	this.dsSelectExchangeRatio.addColumn("VALUE", "string");
+	this.dsSelectExchangeRatio.addColumn("MIN_VALUE", "string");
+	this.dsSelectExchangeRatio.addColumn("CD_PREFIX", "string");
+	this.dsSelectExchangeRatio.addColumn("DT_EXCH", "string");
+	this.dsSelectExchangeRatio.addColumn("CD_NATION", "string");
+	
+	// 사용된 법인카드 내역 조회
+	this.dsSelectProfCard = new Dataset();
+	this.dsSelectProfCard.addColumn("CD_CORP", "string");
+	this.dsSelectProfCard.addColumn("TY_BZTP", "string");
+	this.dsSelectProfCard.addColumn("CD_PMT_PROF", "string");
+	
+	// 국가
+	this.dsSelectBztpNation = new Dataset();
+	this.dsSelectBztpNation.addColumn("TY_GUBUN", "string");
+	this.dsSelectBztpNation.addColumn("CN_ROW", "int");
+	this.dsSelectBztpNation.addColumn("VALUE", "string");
+	this.dsSelectBztpNation.addColumn("MIN_VALUE", "string");
+	this.dsSelectBztpNation.addColumn("CD_PREFIX", "string");
+	this.dsSelectBztpNation.addColumn("DT_EXCH", "string");
+	this.dsSelectBztpNation.addColumn("CD_NATION", "string");
+	
+	// 구분
+	this.dsSelectBztpItemType = new Dataset();
+	this.dsSelectBztpItemType.addColumn("TY_GUBUN", "string");
+	this.dsSelectBztpItemType.addColumn("CN_ROW", "int");
+	this.dsSelectBztpItemType.addColumn("VALUE", "string");
+	this.dsSelectBztpItemType.addColumn("MIN_VALUE", "string");
+	this.dsSelectBztpItemType.addColumn("CD_PREFIX", "string");
+	
+	// 지불수단
+	this.dsSelectBztpPayType = new Dataset();
+	this.dsSelectBztpPayType.addColumn("TY_GUBUN", "string");
+	this.dsSelectBztpPayType.addColumn("CN_ROW", "int");
+	this.dsSelectBztpPayType.addColumn("VALUE", "string");
+	this.dsSelectBztpPayType.addColumn("MIN_VALUE", "string");
+	this.dsSelectBztpPayType.addColumn("CD_PREFIX", "string");
+}
+
+/************************************************************************
+ * 콤보 데이터 조회 및 설정
+ ************************************************************************/
+this.fnSetCombo = function() {
+	
+}
+
+/************************************************************************
+ * 화면 및 검색영역 초기화
+ ************************************************************************/
+var READONLY = false;
+this.fnInit = function() {
+	if (typeof this.getOwnerFrame().READONLY == "string") {
+		if (this.getOwnerFrame().READONLY == "true" || this.getOwnerFrame().READONLY == undefined) {
+			this.READONLY = true;
+			this.btnCardContents.set_enable(false);
+		} else {
+			this.READONLY = false;
+		}
+	} else {
+		this.READONLY = false;
+	}
+	
+	this.dsSearch.setColumn(0, "CD_CORP"      , this.getOwnerFrame().CD_CORP);			// 법인코드
+	this.dsSearch.setColumn(0, "DS_CORP"      , this.getOwnerFrame().DS_CORP);			// 법인이름
+	this.dsSearch.setColumn(0, "SN_BZTPSEQ"   , this.getOwnerFrame().SN_BZTPSEQ);		// 출장순번
+	this.dsSearch.setColumn(0, "ID_SABUN_BZTP", this.getOwnerFrame().ID_SABUN_BZTP);	// 출장자사번
+	this.dsSearch.setColumn(0, "DS_HNAME_BZTP", this.getOwnerFrame().DS_HNAME_BZTP);	// 출장자이름
+	this.dsSearch.setColumn(0, "TY_BZTP"      , this.getOwnerFrame().TY_BZTP);			// 계획/보고유형
+	this.dsSearch.setColumn(0, "DT_BZTP_FROM" , this.getOwnerFrame().DT_BZTP_FROM);		// 출장시작일
+	this.dsSearch.setColumn(0, "DT_BZTP_TO"   , this.getOwnerFrame().DT_BZTP_TO);		// 출장종료일
+	
+	// 출장계획서에 명시된 금액 설정
+	this.dsSearch.setColumn(0, "AM_IOUTBRUFLGTNOT_EST_KRW", this.getOwnerFrame().AM_IOUTBRUFLGTNOT_EST_KRW);	// 입출국항공료
+	this.dsSearch.setColumn(0, "AM_RAILNOT_EST_KRW"       , this.getOwnerFrame().AM_RAILNOT_EST_KRW);			// 철도비
+	this.dsSearch.setColumn(0, "AM_SHIPNOT_EST_KRW"       , this.getOwnerFrame().AM_SHIPNOT_EST_KRW);			// 선박비
+	this.dsSearch.setColumn(0, "AM_FLGTNOT_EST_KRW"       , this.getOwnerFrame().AM_FLGTNOT_EST_KRW);			// 항공비
+	this.dsSearch.setColumn(0, "AM_CARNOT_EST_KRW"        , this.getOwnerFrame().AM_CARNOT_EST_KRW);			// 자동차비
+	this.dsSearch.setColumn(0, "AM_LDGGNOT_EST_KRW"       , this.getOwnerFrame().AM_LDGGNOT_EST_KRW);			// 숙박비
+	this.dsSearch.setColumn(0, "AM_CRMNNOT_EST_KRW"       , this.getOwnerFrame().AM_CRMNNOT_EST_KRW);			// 식비
+	this.dsSearch.setColumn(0, "AM_ETCNOT_EST_KRW"        , this.getOwnerFrame().AM_ETCNOT_EST_KRW);			// 잡비
+	this.dsSearch.setColumn(0, "AM_COMMNOT_EST_KRW"       , this.getOwnerFrame().AM_COMMNOT_EST_KRW);			// 통신비(로밍)
+	this.dsSearch.setColumn(0, "AM_VISAPBCNCMMS_EST_KRW"  , this.getOwnerFrame().AM_VISAPBCNCMMS_EST_KRW);		// Visa 발급수수료
+	this.dsSearch.setColumn(0, "AM_INSRCOST_EST_KRW"      , this.getOwnerFrame().AM_INSRCOST_EST_KRW);			// 추가비용1
+	this.dsSearch.setColumn(0, "AM_ETCADTNCOST_EST_KRW"   , this.getOwnerFrame().AM_ETCADTNCOST_EST_KRW);		// 추가비용2
+	this.dsSearch.setColumn(0, "AM_TCHMCOST_EST_KRW"      , this.getOwnerFrame().AM_TCHMCOST_EST_KRW);			// 교제비
+	
+	this.sta00.set_text(this.getOwnerFrame().DS_RULE);
+	
+	this.fnSelect();
+}
+
+/************************************************************************
+ * 버튼 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.gfnSearchValidate(this.divSearch, this.dsSearch)) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_CORP"      , this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSelect.setColumn(0, "SN_BZTPSEQ"   , this.dsSearch.getColumn(0, "SN_BZTPSEQ"));
+	this.dsSelect.setColumn(0, "ID_SABUN_BZTP", this.dsSearch.getColumn(0, "ID_SABUN_BZTP"));
+	this.dsSelect.setColumn(0, "TY_BZTP"      , this.dsSearch.getColumn(0, "TY_BZTP"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);	// 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	this.dsList.set_enableevent(false);
+	var nrow;
+	if (this.dsList.rowposition == -1) {
+		nrow = this.gfnGridAdd(this.dxGrid, "bottom");
+	} else {
+		nrow = this.gfnGridAdd(this.dxGrid, "current");
+	}
+	this.dsList.setColumn(nrow, "DT_PMT"           , this.dsSearch.getColumn(0, "DT_BZTP_FROM"));	// 출장시작일
+	this.dsList.setColumn(nrow, "CD_CORP"          , this.dsSearch.getColumn(0, "CD_CORP"));		// 법인코드
+	this.dsList.setColumn(nrow, "SEQ_BZTP"         , this.dsSearch.getColumn(0, "SN_BZTPSEQ"));		// 출장순번
+	this.dsList.setColumn(nrow, "ID_SABUN_CPNYDUTY", this.dsSearch.getColumn(0, "ID_SABUN_BZTP"));	// 출장자사번
+	this.dsList.setColumn(nrow, "CD_PLN_RTP"       , this.dsSearch.getColumn(0, "TY_BZTP"));		// 계획/보고 여부
+	this.dsList.setColumn(nrow, "SEQ_PROF"         , this.getNextSeqProf());
+	this.dsList.setColumn(nrow, "NO_COL"           , this.getNextNoCol());
+	this.dsList.setColumn(nrow, "DS_HNAME_CPNYDUTY", this.dsSearch.getColumn(0, "DS_HNAME_BZTP"));	// 출장자이름
+	if (this.getOwnerFrame().LOCATION == "DOMESTIC") {
+		this.dsList.setColumn(nrow, "CD_PMT_NTN" , "KR");
+		this.dsList.setColumn(nrow, "DS_PMT_NTN" , "국내");
+		this.dsList.setColumn(nrow, "CD_PMT_MNEY", "KRW");
+	}
+	this.dsList.setColumn(nrow, "CNT_FILE", "증빙(0)");
+	this.dsList.set_enableevent(true);
+}
+
+/*
+ *	삭제 버튼 
+ */ 
+this.fnDel = function() {
+	var CD_PMT_MEAN = this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_MEAN");
+	var CNT_FILE = this.dsList.getColumn(this.dsList.rowposition, "CNT_FILE").trim();
+	if (CD_PMT_MEAN == "B801" || CD_PMT_MEAN == "B802" || CD_PMT_MEAN == "B805" || CD_PMT_MEAN == "B806") {
+		if (CNT_FILE != "증빙(0)") {
+			this.gfnAlert("증빙을 먼저 삭제해야 합니다.");
+			return;
+		}
+	}
+	
+	this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	저장 버튼
+ */ 
+this.fnSave = function() {
+	if (!this.gfnGridValidate(this.dxGrid)) return;
+
+	this.dxGrid.updateToDataset();
+	this.dsSave.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch (flag) {
+		case "I":
+		case "U":
+		case "D":
+			var nrow = this.dsSave.addRow();
+			this.dsSave.setColumn(nrow, "TY_WRK"           , flag);
+			this.dsSave.setColumn(nrow, "CD_CORP"          , this.dsList.getColumn(i, "CD_CORP"));
+			this.dsSave.setColumn(nrow, "SEQ_BZTP"         , this.dsList.getColumn(i, "SEQ_BZTP"));
+			this.dsSave.setColumn(nrow, "ID_SABUN_CPNYDUTY", this.dsList.getColumn(i, "ID_SABUN_CPNYDUTY"));
+			this.dsSave.setColumn(nrow, "CD_PLN_RTP"       , this.dsList.getColumn(i, "CD_PLN_RTP"));
+			this.dsSave.setColumn(nrow, "SEQ_PROF"         , this.dsList.getColumn(i, "SEQ_PROF"));
+			this.dsSave.setColumn(nrow, "NO_COL"           , this.dsList.getColumn(i, "NO_COL"));
+			this.dsSave.setColumn(nrow, "DT_PMT"           , this.dsList.getColumn(i, "DT_PMT"));
+			this.dsSave.setColumn(nrow, "CD_PMT_NTN"       , this.dsList.getColumn(i, "CD_PMT_NTN"));
+			this.dsSave.setColumn(nrow, "CD_PMT_TYPE"      , this.dsList.getColumn(i, "CD_PMT_TYPE"));
+			this.dsSave.setColumn(nrow, "CD_PMT_MEAN"      , this.dsList.getColumn(i, "CD_PMT_MEAN"));
+			this.dsSave.setColumn(nrow, "CD_PMT_MNEY"      , this.dsList.getColumn(i, "CD_PMT_MNEY"));
+			this.dsSave.setColumn(nrow, "AM_PMT"           , this.dsList.getColumn(i, "AM_PMT"));
+			this.dsSave.setColumn(nrow, "EXRT_PMT"         , this.dsList.getColumn(i, "EXRT_PMT"));
+			this.dsSave.setColumn(nrow, "AM_PMT_KRW"       , this.dsList.getColumn(i, "AM_PMT_KRW"));
+			this.dsSave.setColumn(nrow, "YN_APLT"          , this.dsList.getColumn(i, "YN_APLT"));
+			this.dsSave.setColumn(nrow, "DS_RMK"           , this.dsList.getColumn(i, "DS_RMK"));
+			this.dsSave.setColumn(nrow, "CD_PMT_PROF"      , this.dsList.getColumn(i, "CD_PMT_PROF"));
+			this.dsSave.setColumn(nrow, "ID_SABUN"         , this.AuthClient.ID_USER);
+			
+			break;
+		}
+	}
+	
+	if (this.dsSave.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);	// 통신방법 정의 [생략가능]
+}
+
+/*
+ *	엑셀 버튼
+ */ 
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+	return true;
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+	return true;
+}
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+// 법인카드 내역 조회 버튼 클릭 이벤트 핸들러
+this.fnCardContents = function() {
+	var param = {};
+	param.YN_BZTP = "Y";
+	param.ID_SABUN_BZTP = this.dsSearch.getColumn(0, "ID_SABUN_BZTP");
+	param.DS_HNAME_BZTP = this.dsSearch.getColumn(0, "DS_HNAME_BZTP");
+	param.NO_CARDS = '4101202009241425';
+	param.DT_FR = this.gfnGetFirstDate(this.ctclDT_BZTP_FROM.value);
+	
+	this.checkCurrencyRatio = false; 
+	this.gfnFormOpen("DHA", "DHA_BUBINCARDSAAPP_SITE", "fnCardContents_callback", param);
+}
+
+// 출장규정 버튼
+this.fnRule = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	
+	var fileManager = {};
+	
+    fileManager.CD_GUBUN = "DZ01";
+	fileManager.CD_DIR = ["3"];
+	//fileManager.CD_REF = ["0"];
+	// 권한설정
+	if (this.FormInfo.GR_SEARCH == "1") {
+		fileManager.IS_READONLY = false;
+	} else {
+		fileManager.IS_READONLY = true;
+	}
+    this.gfnFileManager(fileManager, "");
+	
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg, strArg) {
+	if (errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return;
+	}
+	
+	if (svcID == "select") {
+		//this.sta00.set_text(this.dsList.getColumn(0, "DS_RULE"));
+		this.dsList.set_enableevent(false);
+		for (var i = 0; i < this.dsList.rowcount; i++) {
+			if (this.dsList.getColumn(i, "CD_PMT_TYPE") == "B708" && this.dsList.getColumn(i, "CNT_FILE") == "증빙(0)") {
+				this.dsList.setColumn(i, "CNT_FILE", "증빙(0) ");
+			}
+		}
+		this.dsList.set_enableevent(true);
+		
+		this.gfnGridAfterSelect(this.dxGrid);
+		
+		if (this.READONLY) {
+			this.gfnSetEnable(this.FormBtns.Select, false);
+			this.gfnSetEnable(this.FormBtns.Save, false);
+			this.gfnSetEnable(this.FormBtns.Add, false);
+			this.gfnSetEnable(this.FormBtns.Del, false);
+			this.gfnSetEnable(this.FormBtns.Excel, false);
+			this.gfnSetEnable(this.FormBtns.Print, false);
+		} else {
+			this.gfnSetEnable(this.FormBtns.Add, true);
+			this.gfnSetEnable(this.FormBtns.Del, true);
+			this.gfnSetEnable(this.FormBtns.Excel, true);
+		}
+		
+		if (this.dsList.rowcount > 1) {
+			this.dsSearch.set_enableevent(false);
+			this.dsSearch.setColumn(0, "DS_CORP"      , this.dsList.getColumn(1, "DS_CORP"));
+			this.dsSearch.setColumn(0, "DS_HNAME_BZTP", this.dsList.getColumn(1, "DS_HNAME_CPNYDUTY"));
+			this.dsSearch.set_enableevent(true);
+		}
+		
+		var cnt = 0;
+		for (var i = 0; i < this.dsList.rowcount; i++) {
+			if (this.dsList.getColumn(i, "CNT_FILE") == "증빙(0)") {
+				cnt++;
+			}
+		}
+		if (cnt > 0) {
+			var msg = "증빙이 누락된 사용내역이 " + cnt + "건 존재합니다.\n법인카드와 잡비를 제외한 모든 사용내역에 대한\n증빙은 필수입니다."
+			this.gfnAlert(msg);
+		}
+	} else if (svcID == "save") {
+		this.FormBtns.Select.click();
+	} else if (svcID == "select_exchange_ratio") {
+		this.dsList.set_enableevent(false);
+		this.dsList.setColumn(this.dsList.rowposition, "CD_PMT_MNEY", this.dsListExchangeRatio.getColumn(0, "CURNCY_UNIT"));
+		if (this.dsListExchangeRatio.getColumn(0, "AM_BUY") != 0) {
+			this.dsList.setColumn(this.dsList.rowposition, "EXRT_PMT", this.gfnAppendComma(this.dsListExchangeRatio.getColumn(0, "AM_BUY")));
+		} else {
+			this.dsList.setColumn(this.dsList.rowposition, "EXRT_PMT", "");
+			if (this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_NTN") != "KR") {	// this.checkCurrencyRatio) {
+				this.gfnConfirm("집행화에 대한 환율이 존재하지 않기 때문에\n미국 기준의 집행화 및 환율로 설정하시겠습니까?", function(strId, val) {
+					if (val) {
+						this.fnSetExchangeRatio("US");
+					}
+				});
+			}
+		}
+		this.dsList.setColumn(this.dsList.rowposition, "AM_BASE", this.dsListExchangeRatio.getColumn(0, "CURNCY_RATIO"));
+		this.fnCalculate(this.dsList.getColumn(this.dsList.rowposition, "AM_PMT"));
+		this.dsList.set_enableevent(true);
+	}
+}
+
+// 법인카드 내역 조회 버튼 클릭 이벤트 핸들러 콜백 함수
+this.fnCardContents_callback = function(svcID, value) {
+	if (value != undefined) {
+		var results = JSON.parse(value);
+		
+		// 등록된 법인카드 사용 내역 제외
+		var BusinessCreditCards = this.fnRemoveAddedBusinessCreditCard(results);
+		
+		// 다른 사용자가 등록한 법인카드 내역 여부를 확인
+		var newBusinessCreditCards = this.fnIsUsedBusinessCreditCard(BusinessCreditCards);
+		
+		// 이미 첨부된 법인카드 사용 내역을 사용자에게 노출시킴
+		if (newBusinessCreditCards.USED.length > 0) {
+			var msg = "선택된 법인카드 사용 내역 중 " + newBusinessCreditCards.USED.length + "건은 이미 다른 출장보고서에 첨부되었습니다. " +
+					  "확인버튼을 누르면 첨부되지 않은 법인사드 사용 내역만 등록됩니다.\n\n";
+			for (var i = 0; i < newBusinessCreditCards.USED.length; i++) {
+				msg += (i + 1) + ") " + newBusinessCreditCards.USED[i].DT_APPROVAL.substring(0, 4) + "년 " +
+					   newBusinessCreditCards.USED[i].DT_APPROVAL.substring(4, 6) + "월 " + 
+					   newBusinessCreditCards.USED[i].DT_APPROVAL.substring(6, 8) + "일 / " + 
+					   this.gfnAppendComma(newBusinessCreditCards.USED[i].AM_APPROVAL.hi.toString()) + " / " + 
+					   newBusinessCreditCards.USED[i].DS_HNAME + "\n" + 
+					   "    사용처: " + newBusinessCreditCards.USED[i].DS_VENDOR + "\n";
+			}
+			this.gfnConfirm(msg, function(strId, val) {
+				if (val) {
+					this.fnAddBusinessCreditCard(newBusinessCreditCards.NOT_USED);
+				}
+			});
+		} else {
+			this.fnAddBusinessCreditCard(newBusinessCreditCards.NOT_USED);
+		}
+	}
+}
+
+this.fnIsUsedBusinessCreditCard = function(BusinessCreditCards) {
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	var CD_PMT_PROF = []
+	for (var i = 0; i < BusinessCreditCards.length; i++) {
+		CD_PMT_PROF.push(BusinessCreditCards[i].NO_SEQ.hi.toString());
+	}
+	
+	this.dsSelectProfCard.clearData();
+	this.dsSelectProfCard.addRow();
+	this.dsSelectProfCard.setColumn(0, "CD_CORP"    , this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSelectProfCard.setColumn(0, "TY_BZTP"    , this.dsSearch.getColumn(0, "TY_BZTP"));
+	this.dsSelectProfCard.setColumn(0, "CD_PMT_PROF", CD_PMT_PROF);
+	
+	var strSvcId    = "select_prof_card";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select_prof_card=dsSelectProfCard";
+	var outData     = "dsListProfCard=select_prof_card0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,	// 통신방법 정의 [생략가능]
+						false);
+	
+	// 사용되지 않은 법인카드 내역만 newBusinessCreditCards 객체에 담는다.
+	var NOT_USED = []
+	var USED = []
+	for (var i = 0; i < BusinessCreditCards.length; i++) {
+		this.dsListProfCard.filter("CD_PMT_PROF == '" + BusinessCreditCards[i].NO_SEQ.hi.toString() + "'");
+		if (this.dsListProfCard.rowcount == 0) {
+			NOT_USED.push(BusinessCreditCards[i]);
+		} else {
+			USED.push(BusinessCreditCards[i]);
+		}
+	}
+	this.dsListProfCard.filter("");
+	this.dsListProfCard.clearData();
+	
+	return {
+		USED: USED,
+		NOT_USED: NOT_USED,
+	}
+}
+
+// 법인카드 사용 내역 추가
+this.fnAddBusinessCreditCard = function(BusinessCreditCards) {
+	this.checkCurrencyRatio = false;
+	this.dsList.set_enableevent(false);
+	
+	// 출장계획서 대비 출장보고서의 금액의 차이 확인
+	for (var i = 0; i < BusinessCreditCards.length; i++) {
+		var nrow = this.gfnGridAdd(this.dxGrid);
+		
+		this.dsList.setColumn(nrow, "CD_CORP"          , this.dsSearch.getColumn(0, "CD_CORP"));												// 법인코드
+		this.dsList.setColumn(nrow, "SEQ_BZTP"         , this.dsSearch.getColumn(0, "SN_BZTPSEQ"));												// 출장순번
+		this.dsList.setColumn(nrow, "ID_SABUN_CPNYDUTY", this.dsSearch.getColumn(0, "ID_SABUN_BZTP"));											// 출장자사번
+		this.dsList.setColumn(nrow, "CD_PLN_RTP"       , this.dsSearch.getColumn(0, "TY_BZTP"));												// 계획/보고 여부
+		this.dsList.setColumn(nrow, "SEQ_PROF"         , this.getNextSeqProf());																// 증빙순번
+		this.dsList.setColumn(nrow, "NO_COL"           , this.getNextNoCol());																	// 정렬순번
+		this.dsList.setColumn(nrow, "DS_HNAME_CPNYDUTY", this.dsSearch.getColumn(0, "DS_HNAME_BZTP"));											// 출장자이름
+		this.dsList.setColumn(nrow, "DT_PMT"           , BusinessCreditCards[i].DT_APPROVAL);													// 결제일자(승인일자)
+		this.dsList.setColumn(nrow, "CD_PMT_NTN"       , "KR");																					// 국가코드
+		this.dsList.setColumn(nrow, "DS_PMT_NTN"       , "국내");																				// 국가코드
+		this.dsList.setColumn(nrow, "CD_PMT_TYPE"      , BusinessCreditCards[i].DS_PUBLIC == "공용" ? "B701" : "");																				// 대구분코드
+		this.dsList.setColumn(nrow, "DS_PMT_TYPE"      , BusinessCreditCards[i].DS_PUBLIC == "공용" ? "입출국항공료" : "");																		// 대구분코드
+		this.dsList.setColumn(nrow, "CD_PMT_MEAN"      , BusinessCreditCards[i].DS_PUBLIC == "공용" ? "B803" : BusinessCreditCards[i].DS_PUBLIC == "연구" ? "B807" : "B804");							// 지불수단코드
+		this.dsList.setColumn(nrow, "DS_PMT_MEAN"      , BusinessCreditCards[i].DS_PUBLIC == "공용" ? "법인카드(공용)" : BusinessCreditCards[i].DS_PUBLIC == "연구" ? "법인카드(연구)" : "법인카드(개인)");	// 지불수단코드
+		this.dsList.setColumn(nrow, "CD_PMT_MNEY"      , "KRW");																				// 집행화폐
+		this.dsList.setColumn(nrow, "AM_BASE"          , 1);
+		this.dsList.setColumn(nrow, "EXRT_PMT"         , "");																					// 환율
+		this.dsList.setColumn(nrow, "AM_PMT"           , BusinessCreditCards[i].AM_APPROVAL.hi);												// 집행화
+		this.fnCalculate(BusinessCreditCards[i].AM_APPROVAL.hi, nrow);																			// 집행금액(KRW)
+		this.dsList.setColumn(nrow, "YN_APLT"          , "N");																					// 직원 신청금액 여부
+		this.dsList.setColumn(nrow, "CNT_FILE"         , "증빙(1)");																			// 증빙
+		this.dsList.setColumn(nrow, "CD_PMT_PROF"      , BusinessCreditCards[i].NO_SEQ.hi.toString());											// 법인카드 키
+	}
+	
+	this.dsList.set_enableevent(true);
+	this.checkCurrencyRatio = true;
+}
+
+this.getNextSeqProf = function() {
+	var MAX = 0;
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		if (this.dsList.getColumn(i, "SEQ_PROF") > MAX) {
+			MAX = this.dsList.getColumn(i, "SEQ_PROF");
+		}
+	}
+	return MAX + 1;
+}
+
+this.getNextNoCol = function() {
+	var MAX = 0;
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		if (this.dsList.getColumn(i, "NO_COL") > MAX) {
+			MAX = this.dsList.getColumn(i, "NO_COL");
+		}
+	}
+	return MAX + 1;
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+ 	return true;
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGridBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	switch (id) {
+	// 국가
+	case "DAX_CFBZTP_NATION":
+		if (this.dsList.getColumn(this.dsList.rowposition, "DT_PMT") == undefined || this.dsList.getColumn(this.dsList.rowposition, "DT_PMT") == "") {
+			this.gfnAlert("결제일자를 선택하십시오.");
+			return false;
+		}
+		
+ 		dsUserParam.setColumn(nrow, "CD_PREFIX", "NT");
+ 		dsUserParam.setColumn(nrow, "DT_EXCH", this.fnGetYesterday(this.dsList.getColumn(this.dsList.rowposition, "DT_PMT")));
+ 		dsUserParam.setColumn(nrow, "CD_NATION", '');
+		break;
+		
+	// 대구분
+	case "DAX_CFBZTP_ITEM_TYPE":
+ 		dsUserParam.setColumn(nrow, "CD_PREFIX", "B7");
+		break;
+		
+	// 지불수단
+	case "DAX_CFBZTP_PAY_TYPE":
+ 		dsUserParam.setColumn(nrow, "CD_PREFIX", "B8");
+		break;
+		
+	// 집행화폐1
+	case "DAX_CFBZTP_EXCHANGE_MONEY":
+		if (this.dsList.getColumn(this.dsList.rowposition, "DT_PMT") == undefined || this.dsList.getColumn(this.dsList.rowposition, "DT_PMT") == "") {
+			this.gfnAlert("결제일자를 선택하십시오.");
+			return false;
+		}
+		
+ 		dsUserParam.setColumn(nrow, "DT_EXCH", this.fnGetYesterday(this.dsList.getColumn(this.dsList.rowposition, "DT_PMT")));
+		break;
+ 	}
+	
+	return true;
+}
+
+this.fnGridAfterCDTextChanged = function(id, codeFindData) {
+	switch (id) {
+	// 국가
+	case "DAX_CFBZTP_NATION":
+			this.dsList.set_enableevent(false);
+			if (this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_MEAN") == "" || this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_MEAN") == undefined
+				|| this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_MEAN") == "B801" || this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_MEAN") == "B802"
+				|| this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_MEAN") == "B805" || this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_MEAN") == "B806") {
+				this.dsList.setColumn(this.dsList.rowposition, "CD_PMT_MNEY", codeFindData[0]["CURNCY_UNIT"]);
+				
+				if (codeFindData[0]["AM_BUY"] != 0) {
+					this.dsList.setColumn(this.dsList.rowposition, "EXRT_PMT", this.gfnAppendComma(codeFindData[0]["AM_BUY"]));
+				} else {
+					this.dsList.setColumn(this.dsList.rowposition, "EXRT_PMT", "");
+					if (codeFindData[0]["CD_CODE"] != "KR") {	// && this.checkCurrencyRatio) {
+						this.gfnConfirm("집행화에 대한 환율이 존재하지 않기 때문에\n미국 기준의 집행화 및 환율로 설정하시겠습니까?", function(strId, val) {
+							if (val) {
+								this.fnSetExchangeRatio("US");
+							}
+						});
+					}
+				}
+				this.dsList.setColumn(this.dsList.rowposition, "AM_BASE", codeFindData[0]["CURNCY_RATIO"]);
+				
+				if (this.dsList.getColumn(this.dsList.rowposition, "AM_PMT") > 0) {
+					this.fnCalculate(this.dsList.getColumn(this.dsList.rowposition, "AM_PMT"));
+				}
+			}
+			this.dsList.set_enableevent(true);
+		break;
+	
+	// 지불수단:
+	case "DAX_CFBZTP_PAY_TYPE":
+		if (codeFindData[0]["CD_CODE"] == "B801" || codeFindData[0]["CD_CODE"] == "B802") {
+			// B801 현금(개인)
+			// B802 신용카드(개인)
+			this.dsList.setColumn(this.dsList.rowposition, "YN_APLT", "Y");
+		} else if (codeFindData[0]["CD_CODE"] == "B803" || codeFindData[0]["CD_CODE"] == "B804" || codeFindData[0]["CD_CODE"] == "B807") {
+			this.gfnAlert("법인카드는 법인카드전표발행을 이용하여 입력할 수 있습니다.")
+			this.dsList.setColumn(this.dsList.rowposition, "CD_PMT_MEAN", "");
+			this.dsList.setColumn(this.dsList.rowposition, "DS_PMT_MEAN", "");
+			
+			// B803 법인카드(공용)
+			// B804 법인카드(개인)
+			// B807 법인카드(연구)
+			this.dsList.setColumn(this.dsList.rowposition, "YN_APLT", "N");
+		} else if (codeFindData[0]["CD_CODE"] == "B805" || codeFindData[0]["CD_CODE"] == "B806") {
+			// B805 현금(법인) 20240313 신규추가
+			// B806 선지급(직원) 20240322 신규추가
+			this.dsList.setColumn(this.dsList.rowposition, "YN_APLT", "N");
+		}
+		break;
+		
+	// 집행화폐
+	case "DAX_CFBZTP_EXCHANGE_MONEY":
+		if (this.dsList.getColumn(this.dsList.rowposition, "AM_PMT") > 0) {
+			this.fnCalculate(this.dsList.getColumn(this.dsList.rowposition, "AM_PMT"))
+		}
+		break;
+	
+	// 구분
+	case "DAX_CFBZTP_ITEM_TYPE":
+ 		if (this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_TYPE") == "B708") {
+			this.dsList.setColumn(this.dsList.rowposition, "CNT_FILE", "증빙(0) ");
+		}
+		break;
+	}
+}
+
+this.fnGridEnterCell = function(obj:nexacro.Grid, row, cell) {
+	var colnm = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, cell);	// 클릭한 cell의 컬럼명
+	
+	if (colnm == "EXRT_PMT" || (this.READONLY && colnm != "CNT_FILE")) {
+		return false;
+	}
+	
+	if (this.dsList.getColumn(row, "CD_PMT_MEAN") == "B803" ||
+	    this.dsList.getColumn(row, "CD_PMT_MEAN") == "B804" ||
+		this.dsList.getColumn(row, "CD_PMT_MEAN") == "B807") {
+		var flag = this.gfnGetFlag(this.dsList, this.dsList.rowposition);
+		if (colnm == "DS_HNAME_CPNYDUTY" || colnm == "DT_PMT" || colnm == "DS_PMT_NTN" || colnm == "DS_PMT_MEAN" || colnm == "AM_PMT" || colnm == "EXRT_PMT"
+		 || colnm == "AM_PMT_KRW" || colnm == "YN_APLT" || colnm == "DS_RMK" || colnm == "CD_PMT_MNEY") {
+			return false;
+		} else if (colnm == "CNT_FILE" || colnm == "NO_COL" || flag == "I") {
+			return true;
+		}
+	}
+	
+	if ((colnm == "DS_PMT_NTN" || colnm == "CD_PMT_MNEY") && this.getOwnerFrame().LOCATION == "DOMESTIC") {
+		return false;
+	}
+}
+
+this.fnGridExpandUp = function(obj:nexacro.Grid, e:nexacro.GridMouseEventInfo) {
+ 	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, e.cell);
+	if (colnm == "CNT_FILE") {
+		var CD_PMT_MEAN = this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_MEAN");
+		if (CD_PMT_MEAN == "B803" || CD_PMT_MEAN == "B804" || CD_PMT_MEAN == "B807") {	// 법인카드
+			this.gfnCardBill(this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_PROF"), "fnCardBill_callback");
+		} else {
+			var CD_CORP = this.dsList.getColumn(e.row, "CD_CORP");
+			var SEQ_BZTP = this.dsList.getColumn(e.row, "SEQ_BZTP");
+			var ID_SABUN_CPNYDUTY = this.dsList.getColumn(e.row, "ID_SABUN_CPNYDUTY");
+			var CD_PLN_RTP = this.dsList.getColumn(e.row, "CD_PLN_RTP");
+			var SEQ_PROF = this.dsList.getColumn(e.row, "SEQ_PROF");
+			var KEY = CD_CORP + SEQ_BZTP + ID_SABUN_CPNYDUTY + CD_PLN_RTP + SEQ_PROF;
+			
+			var fileManager = {};
+			fileManager.CD_GUBUN = "DA84";
+			fileManager.CD_DIR = [KEY];
+			fileManager.CD_REF = [KEY];
+			fileManager.IS_READONLY = this.READONLY;
+			console.log('fileManager', fileManager);
+			
+			this.gfnFileManager(fileManager, "fnFileCallback");
+		}
+	}
+}
+
+// 첨부파일 콜백
+this.fnFileCallback = function(strID, val) {
+	this.dsList.set_enableevent(false);
+	if (val.Cnt == 0) {
+		if (this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_TYPE") == "B708") {
+			this.dsList.setColumn(this.dsList.rowposition, "CNT_FILE", "증빙(0) ");
+		} else {
+			this.dsList.setColumn(this.dsList.rowposition, "CNT_FILE", "증빙(0)");
+		}
+	} else {
+		this.dsList.setColumn(this.dsList.rowposition, "CNT_FILE", "증빙(" + val.Cnt + ")");
+	}
+	this.dsList.set_enableevent(true);
+}
+
+// 법인카드 사용내역 콜백
+this.fnCardBill_callback = function(strID, val) {
+	
+}
+
+this.fnGridAfterEdit = function(obj:nexacro.NormalDataset, e:nexacro.DSColChangeEventInfo) {
+console.log('fnGridAfterEdit', e);
+	if (e.columnid == "DT_PMT") {			// 결제일
+		if (this.getOwnerFrame().LOCATION == "OVERSEAS" && this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_NTN") != undefined) {
+			this.fnSetExchangeRatio(this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_NTN"));
+		}
+	} else if (e.columnid == "AM_PMT") {	// 집행화
+		this.fnCalculate(e.newvalue, e.row);
+	} else if (e.columnid == "CD_PMT_TYPE" || e.columnid == "DS_PMT_TYPE") {	// 구분
+		this.fnCalculate(this.dsList.getColumn(this.dsList.rowposition, "AM_PMT"));
+	} else if (e.columnid == "NO_COL") {	// 순번
+		if (e.oldvalue != e.newvalue) {
+			var oldRow = e.row;
+			var oldNO_COL = e.oldvalue;
+			var newNO_COL = e.newvalue;
+			var newRow = oldRow;
+			for (var i = 0; i < obj.rowcount; i++) {
+				if (oldRow == i) continue;
+				var no_col = obj.getColumn(i, "NO_COL");
+				if (no_col < newNO_COL) {
+					newRow = i + (oldNO_COL > newNO_COL ? 1 : 0);
+				}
+			}
+			if (newRow >= obj.rowcount) newRow -= 1;
+			
+			obj.moveRow(oldRow, newRow);
+			this.dxGrid.setCellPos(0, newRow);
+			
+			var no_col = newNO_COL;
+			this.dsList.set_enableevent(false);
+			for (var i = newRow; i < this.dsList.rowcount; i++) {
+				var flag = this.gfnGetFlag(this.dsList, i);
+				var oldNO_COL = this.dsList.getColumn(i, "NO_COL");
+				if (no_col != oldNO_COL) {
+					if (flag != "I" && flag != "D") {
+						this.dsList.setColumn(i, this.ucFlag, "U");
+					}
+					this.dsList.setColumn(i, "NO_COL", no_col);
+				}
+				no_col++;
+			}
+			this.dsList.set_enableevent(true);
+		}
+	}
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo){
+	if(e.oldvalue != e.newvalue){
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);
+	}
+}
+
+this.fnGetYesterday = function(theDay) {
+	var yesterday = theDay;
+	while (true) {
+		var yesterday = this.gfnAddDate(yesterday, -1);
+		var day = this.gfnGetDay(yesterday);
+		if (day > 0 && day < 6) {
+			break;
+		}
+	}
+	return yesterday
+}
+
+this.fnCalculate = function(AM_PMT, nrow) {
+	var index = this.dsList.rowposition;
+	if (nrow != undefined) {
+		index = nrow;
+	}
+	
+	var EXRT_PMT = parseFloat(this.gfnRemoveComma(this.dsList.getColumn(index, "EXRT_PMT") == undefined || this.dsList.getColumn(index, "EXRT_PMT") == '' ? '0' : this.dsList.getColumn(index, "EXRT_PMT")));
+	if (EXRT_PMT == 0.0) {
+		EXRT_PMT = 1;
+	}
+		
+	var AM_BASE = this.dsList.getColumn(index, "AM_BASE") || 1;
+	
+	var CD_PMT_MNEY = this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_MNEY");
+	if (CD_PMT_MNEY == "KRW")
+	{
+		AM_BASE = 1;
+	}
+	
+	var AM_PMT_KRW = Math.round(parseFloat(AM_PMT) / AM_BASE * EXRT_PMT);
+
+	this.dsList.setColumn(index, "AM_PMT_KRW", AM_PMT_KRW);
+	
+	// 대구분의 집행금액(KRW) 합이 출장계획서의 대구분의 합과 비교하여 클 경우 경고팝업 호출
+	var CD_PMT_TYPE = this.dsList.getColumn(this.dsList.rowposition, "CD_PMT_TYPE");
+	if (CD_PMT_TYPE == "B701" && this.checkCurrencyRatio) {			// 입출국항공료
+		this.dsList.filter("CD_PMT_TYPE == 'B701'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_IOUTBRUFLGTNOT_EST_KRW")) {
+			this.gfnAlert(
+				"입출국항공료[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 입출국항공료[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_IOUTBRUFLGTNOT_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_IOUTBRUFLGTNOT_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	} else if (CD_PMT_TYPE == "B702" && this.checkCurrencyRatio) {		// 철도비
+		this.dsList.filter("CD_PMT_TYPE == 'B702'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_RAILNOT_EST_KRW")) {
+			this.gfnAlert(
+				"철도비[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 철도비[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_RAILNOT_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_RAILNOT_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	} else if (CD_PMT_TYPE == "B703" && this.checkCurrencyRatio) {		// 선박비
+		this.dsList.filter("CD_PMT_TYPE == 'B703'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_SHIPNOT_EST_KRW")) {
+			this.gfnAlert(
+				"선박비[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 선박비[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_SHIPNOT_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_SHIPNOT_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	} else if (CD_PMT_TYPE == "B704" && this.checkCurrencyRatio) {		// 항공비
+		this.dsList.filter("CD_PMT_TYPE == 'B704'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_FLGTNOT_EST_KRW")) {
+			this.gfnAlert(
+				"항공비[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 항공비[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_FLGTNOT_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_FLGTNOT_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	} else if (CD_PMT_TYPE == "B705" && this.checkCurrencyRatio) {		// 자동차비
+		this.dsList.filter("CD_PMT_TYPE == 'B705'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_CARNOT_EST_KRW")) {
+			this.gfnAlert(
+				"자동차비[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 자동차비[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_CARNOT_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_CARNOT_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	} else if (CD_PMT_TYPE == "B706" && this.checkCurrencyRatio) {		// 숙박비
+		this.dsList.filter("CD_PMT_TYPE == 'B706'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_LDGGNOT_EST_KRW")) {
+			this.gfnAlert(
+				"숙박비[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 숙박비[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_LDGGNOT_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_LDGGNOT_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	} else if (CD_PMT_TYPE == "B707" && this.checkCurrencyRatio) {		// 식비
+		this.dsList.filter("CD_PMT_TYPE == 'B707'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_CRMNNOT_EST_KRW")) {
+			this.gfnAlert(
+				"식비[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 식비[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_CRMNNOT_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_CRMNNOT_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	} else if (CD_PMT_TYPE == "B708" && this.checkCurrencyRatio) {		// 잡비
+		this.dsList.filter("CD_PMT_TYPE == 'B708'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_ETCNOT_EST_KRW")) {
+			this.gfnAlert(
+				"잡비[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 잡비[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_ETCNOT_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_ETCNOT_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	} else if (CD_PMT_TYPE == "B709" && this.checkCurrencyRatio) {		// 기타 - 통신비(로밍)
+		this.dsList.filter("CD_PMT_TYPE == 'B709'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_COMMNOT_EST_KRW")) {
+			this.gfnAlert(
+				"[기타]통신비(로밍)[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 [기타]통신비(로밍)[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_COMMNOT_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_COMMNOT_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	} else if (CD_PMT_TYPE == "B710" && this.checkCurrencyRatio) {		// 기타 - Visa 발급수수료
+		this.dsList.filter("CD_PMT_TYPE == 'B710'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_VISAPBCNCMMS_EST_KRW")) {
+			this.gfnAlert(
+				"[기타]Visa 발급수수료[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 [기타]Visa 발급수수료[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_VISAPBCNCMMS_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_VISAPBCNCMMS_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	} else if (CD_PMT_TYPE == "B711" && this.checkCurrencyRatio) {		// 기타 - 추가비용1
+		this.dsList.filter("CD_PMT_TYPE == 'B711'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_INSRCOST_EST_KRW")) {
+			this.gfnAlert(
+				"[기타]추가비용(1)[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 [기타]추가비용(1)[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_INSRCOST_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_INSRCOST_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	} else if (CD_PMT_TYPE == "B712" && this.checkCurrencyRatio) {		// 기타 - 추가비용2
+		this.dsList.filter("CD_PMT_TYPE == 'B712'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_ETCADTNCOST_EST_KRW")) {
+			this.gfnAlert(
+				"[기타]추가비용(2)[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 [기타]추가비용(2)[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_ETCADTNCOST_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_ETCADTNCOST_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	} else if ((CD_PMT_TYPE == "B713" || CD_PMT_TYPE == "B714"|| CD_PMT_TYPE == "B715"|| CD_PMT_TYPE == "B716" ) && this.checkCurrencyRatio) {		// 교제비(별도계정)
+		this.dsList.filter("CD_PMT_TYPE == 'B713' || CD_PMT_TYPE == 'B714' || CD_PMT_TYPE == 'B715'|| CD_PMT_TYPE == 'B716'");
+		var AM_PMT_KRW_TOTAL = this.fnGetTotal(this.dsList);
+		if (AM_PMT_KRW_TOTAL > this.dsSearch.getColumn(0, "AM_TCHMCOST_EST_KRW")) {
+			this.gfnAlert(
+				"교제비(별도계정)[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL) + " 원]가\n" +
+				"출장계획서의 교제비(별도계정)[" + this.gfnAppendComma(this.dsSearch.getColumn(0, "AM_TCHMCOST_EST_KRW")) + " 원]보다\n" +
+				"[" + this.gfnAppendComma(AM_PMT_KRW_TOTAL - this.dsSearch.getColumn(0, "AM_TCHMCOST_EST_KRW")) + " 원] 큽니다."
+			);
+		}
+	}
+	this.dsList.filter("");
+}
+
+this.fnGetTotal = function(dsList) {
+	var total = 0;
+	for (var i = 0; i < dsList.rowcount; i++) {
+		var AM_PMT_KRW = parseInt(dsList.getColumn(i, "AM_PMT_KRW"));
+		total += AM_PMT_KRW;
+	}
+	
+	return total;
+}
+
+this.fnSetExchangeRatio = function(CD_NATION) {
+	this.dsSelectExchangeRatio.clearData();
+	this.dsSelectExchangeRatio.addRow();
+	this.dsSelectExchangeRatio.setColumn(0, "TY_GUBUN" , "1");
+	this.dsSelectExchangeRatio.setColumn(0, "CN_ROW"   , 1000000);
+	this.dsSelectExchangeRatio.setColumn(0, "VALUE"    , "");
+	this.dsSelectExchangeRatio.setColumn(0, "MIN_VALUE", "");
+	this.dsSelectExchangeRatio.setColumn(0, "CD_PREFIX", "NT");
+	this.dsSelectExchangeRatio.setColumn(0, "DT_EXCH"  , this.fnGetYesterday(this.dsList.getColumn(this.dsList.rowposition, "DT_PMT")));
+	this.dsSelectExchangeRatio.setColumn(0, "CD_NATION", CD_NATION);
+	
+	var strSvcId    = "select_exchange_ratio";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select_exchange_ratio=dsSelectExchangeRatio";
+	var outData     = "dsListExchangeRatio=select_exchange_ratio0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);	// 통신방법 정의 [생략가능]
+}
+
+this.fnRemoveAddedBusinessCreditCard = function(CreditCardContents) {
+	// 이미 등록된 법인카드 사용분 제외
+	var newCreditCardContents = [];
+	for (var i = 0; i < CreditCardContents.length; i++) {
+		this.dsList.filter("CD_PMT_PROF == '" + CreditCardContents[i].NO_SEQ.hi.toString() + "'")
+		if (this.dsList.rowcount == 0) {
+			newCreditCardContents.push(CreditCardContents[i]);
+		}
+	}
+	this.dsList.filter("");
+	
+	return newCreditCardContents;
+}
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="dsListExchangeRatio"/>
+      <Dataset id="dsListProfCard"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DABPR_BZTP_RPT_PROOF_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DABPR_BZTP_RPT_PROOF_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select_exchange_ratio</Col>
+            <Col id="SP">DAXPR_BZTP_NATION_CODEFIND</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select_prof_card</Col>
+            <Col id="SP">DABPR_BZTP_RPT_PROOF_CARD_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="SN_BZTPSEQ" type="STRING" size="256"/>
+          <Column id="ID_SABUN_BZTP" type="STRING" size="256"/>
+          <Column id="DS_HNAME_BZTP" type="STRING" size="256"/>
+          <Column id="TY_BZTP" type="STRING" size="256"/>
+          <Column id="DT_BZTP_FROM" type="STRING" size="256"/>
+          <Column id="DT_BZTP_TO" type="STRING" size="256"/>
+          <Column id="AM_IOUTBRUFLGTNOT_EST_KRW" type="INT" size="256"/>
+          <Column id="AM_RAILNOT_EST_KRW" type="INT" size="256"/>
+          <Column id="AM_SHIPNOT_EST_KRW" type="INT" size="256"/>
+          <Column id="AM_FLGTNOT_EST_KRW" type="INT" size="256"/>
+          <Column id="AM_CARNOT_EST_KRW" type="INT" size="256"/>
+          <Column id="AM_LDGGNOT_EST_KRW" type="INT" size="256"/>
+          <Column id="AM_CRMNNOT_EST_KRW" type="INT" size="256"/>
+          <Column id="AM_ETCNOT_EST_KRW" type="INT" size="256"/>
+          <Column id="AM_COMMNOT_EST_KRW" type="INT" size="256"/>
+          <Column id="AM_VISAPBCNCMMS_EST_KRW" type="INT" size="256"/>
+          <Column id="AM_INSRCOST_EST_KRW" type="INT" size="256"/>
+          <Column id="AM_ETCADTNCOST_EST_KRW" type="INT" size="256"/>
+          <Column id="AM_TCHMCOST_EST_KRW" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+      <BindItem id="item2" compid="divSearch.form.ccfID_SABUN_BZTP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="ID_SABUN_BZTP"/>
+      <BindItem id="item3" compid="divSearch.form.ccfID_SABUN_BZTP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_HNAME_BZTP"/>
+      <BindItem id="item4" compid="divSearch.form.ctclDT_BZTP_FROM" propid="value" datasetid="dsSearch" columnid="DT_BZTP_FROM"/>
+      <BindItem id="item5" compid="divSearch.form.ctclDT_BZTP_TO" propid="value" datasetid="dsSearch" columnid="DT_BZTP_TO"/>
+    </Bind>
+  </Form>
+</FDL>

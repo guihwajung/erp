@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:template match="/">
+    <html>
+      <SCRIPT LANGUAGE="JavaScript" type="text/javascript">
+        function openAttachFilePopup(HOST, PARAM) {
+          var w = 580;
+          var h = 300;
+          var URL = HOST + '/api/approval/files.do?PARAM=' + PARAM;
+          var dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
+          var dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
+          var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+          var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+          var systemZoom = width / window.screen.availWidth;
+          var left = (width - w) / 2 / systemZoom + dualScreenLeft;
+          var top = (height - h) / 2 / systemZoom + dualScreenTop;
+          
+          window.open(
+            URL,
+            '첨부파일',
+            'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, ' +
+            'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left
+          );
+        }
+
+        function openBztpDetailFilePopup(HOST, PARAM) {
+          var w = 1500;
+          var h = 900;
+          var URL = HOST + '/api/approval/files.do?PARAM=' + PARAM;
+          var dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
+          var dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
+          var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+          var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+          var systemZoom = width / window.screen.availWidth;
+          var left = (width - w) / 2 / systemZoom + dualScreenLeft;
+          var top = (height - h) / 2 / systemZoom + dualScreenTop;
+          
+          window.open(
+            URL,
+            '출장보고서 상세내역',
+            'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, ' +
+            'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left
+          );
+        }
+
+        function openTaxPopup(HOST, PARAM) {
+          var w = 850;
+          var h = 580;
+          var URL = HOST + '/api/approval/tax.do?PARAM=' + PARAM;
+          var dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
+          var dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
+          var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+          var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+          var systemZoom = width / window.screen.availWidth;
+          var left = (width - w) / 2 / systemZoom + dualScreenLeft;
+          var top = (height - h) / 2 / systemZoom + dualScreenTop;
+
+          window.open(
+            URL,
+            '전자세금계산서',
+            'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, ' +
+            'width=' + (w / systemZoom) + ', height=' + (h / systemZoom) + ', top=' + top + ', left=' + left
+          );
+        }
+      </SCRIPT>
+      <body>
+        <xsl:for-each select="NewDataSet/table_1/item">
+		 <xsl:if test="DS_EMPTYPE != 'N'">
+          <table class="table_10" style="width: 1186px;">
+            <thead>
+              <tr>
+                <th colspan="2">직급구분</th>
+                <td width="140px" style="text-align: center;"><xsl:value-of select="DS_EMPTYPE"/></td>
+                <th width="140px">출장자</th>
+                <td colspan="4" width="140px" style="text-align: center;"><xsl:value-of select="DS_HNAME"/></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th colspan="2" rowspan="2">구분</th>
+                <th colspan="2">금회출장예산</th>
+                <th colspan="3">집행금액(KRW)</th>
+                <th rowspan="2" width="150px">예산대비<br/>집행율(%)</th>
+              </tr>
+              <tr>
+                <th width="140px">USD</th>
+                <th width="140px">KRW</th>
+                <th width="140px">신청금액</th>
+                <th width="140px">신청제외금액<br/>(법인카드 등)</th>
+                <th width="140px">소계</th>
+              </tr>
+              <tr>
+                <th colspan="2">입출국항공료</th>
+                <td style="text-align: right;"><xsl:if test="AM_IOUTBRUFLGTNOT_BDGT_USD != ''"><xsl:value-of select="AM_IOUTBRUFLGTNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_IOUTBRUFLGTNOT_BDGT_KRW != ''"><xsl:value-of select="AM_IOUTBRUFLGTNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_IOUTBRUFLGTNOT_APLT != ''"><xsl:value-of select="AM_IOUTBRUFLGTNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_IOUTBRUFLGTNOT_APLTXCLS != ''"><xsl:value-of select="AM_IOUTBRUFLGTNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_IOUTBRUFLGTNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_IOUTBRUFLGTNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_IOUTBRUFLGTNOT_EXECRT != ''"><xsl:value-of select="AM_IOUTBRUFLGTNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th rowspan="4">교통비</th>
+                <th>철도비</th>
+                <td style="text-align: right;"><xsl:if test="AM_RAILNOT_BDGT_USD != ''"><xsl:value-of select="AM_RAILNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_RAILNOT_BDGT_KRW != ''"><xsl:value-of select="AM_RAILNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_RAILNOT_APLT != ''"><xsl:value-of select="AM_RAILNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_RAILNOT_APLTXCLS != ''"><xsl:value-of select="AM_RAILNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_RAILNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_RAILNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_RAILNOT_EXECRT != ''"><xsl:value-of select="AM_RAILNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th>선박비</th>
+                <td style="text-align: right;"><xsl:if test="AM_SHIPNOT_BDGT_USD != ''"><xsl:value-of select="AM_SHIPNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_SHIPNOT_BDGT_KRW != ''"><xsl:value-of select="AM_SHIPNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_SHIPNOT_APLT != ''"><xsl:value-of select="AM_SHIPNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_SHIPNOT_APLTXCLS != ''"><xsl:value-of select="AM_SHIPNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_SHIPNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_SHIPNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_SHIPNOT_EXECRT != ''"><xsl:value-of select="AM_SHIPNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th>항공비</th>
+                <td style="text-align: right;"><xsl:if test="AM_FLGTNOT_BDGT_USD != ''"><xsl:value-of select="AM_FLGTNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_FLGTNOT_BDGT_KRW != ''"><xsl:value-of select="AM_FLGTNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_FLGTNOT_APLT != ''"><xsl:value-of select="AM_FLGTNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_FLGTNOT_APLTXCLS != ''"><xsl:value-of select="AM_FLGTNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_FLGTNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_FLGTNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_FLGTNOT_EXECRT != ''"><xsl:value-of select="AM_FLGTNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th>자동차비</th>
+                <td style="text-align: right;"><xsl:if test="AM_CARNOT_BDGT_USD != ''"><xsl:value-of select="AM_CARNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CARNOT_BDGT_KRW != ''"><xsl:value-of select="AM_CARNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CARNOT_APLT != ''"><xsl:value-of select="AM_CARNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CARNOT_APLTXCLS != ''"><xsl:value-of select="AM_CARNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CARNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_CARNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CARNOT_EXECRT != ''"><xsl:value-of select="AM_CARNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th colspan="2">숙박비</th>
+                <td style="text-align: right;"><xsl:if test="AM_LDGGNOT_BDGT_USD != ''"><xsl:value-of select="AM_LDGGNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_LDGGNOT_BDGT_KRW != ''"><xsl:value-of select="AM_LDGGNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_LDGGNOT_APLT != ''"><xsl:value-of select="AM_LDGGNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_LDGGNOT_APLTXCLS != ''"><xsl:value-of select="AM_LDGGNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_LDGGNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_LDGGNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_LDGGNOT_EXECRT != ''"><xsl:value-of select="AM_LDGGNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th colspan="2">식비</th>
+                <td style="text-align: right;"><xsl:if test="AM_CRMNNOT_BDGT_USD != ''"><xsl:value-of select="AM_CRMNNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CRMNNOT_BDGT_KRW != ''"><xsl:value-of select="AM_CRMNNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CRMNNOT_APLT != ''"><xsl:value-of select="AM_CRMNNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CRMNNOT_APLTXCLS != ''"><xsl:value-of select="AM_CRMNNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CRMNNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_CRMNNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CRMNNOT_EXECRT != ''"><xsl:value-of select="AM_CRMNNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th colspan="2">잡비</th>
+                <td style="text-align: right;"><xsl:if test="AM_ETCNOT_BDGT_USD != ''"><xsl:value-of select="AM_ETCNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCNOT_BDGT_KRW != ''"><xsl:value-of select="AM_ETCNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCNOT_APLT != ''"><xsl:value-of select="AM_ETCNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCNOT_APLTXCLS != ''"><xsl:value-of select="AM_ETCNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_ETCNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCNOT_EXECRT != ''"><xsl:value-of select="AM_ETCNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th rowspan="4">기타</th>
+                <th>통신비<br/>(로밍)</th>
+                <td style="text-align: right;"><xsl:if test="AM_COMMNOT_BDGT_USD != ''"><xsl:value-of select="AM_COMMNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_COMMNOT_BDGT_KRW != ''"><xsl:value-of select="AM_COMMNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_COMMNOT_APLT != ''"><xsl:value-of select="AM_COMMNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_COMMNOT_APLTXCLS != ''"><xsl:value-of select="AM_COMMNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_COMMNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_COMMNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_COMMNOT_EXECRT != ''"><xsl:value-of select="AM_COMMNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th>Visa<br/>발급수수료</th>
+                <td style="text-align: right;"><xsl:if test="AM_VISAPBCNCMMS_BDGT_USD != ''"><xsl:value-of select="AM_VISAPBCNCMMS_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_VISAPBCNCMMS_BDGT_KRW != ''"><xsl:value-of select="AM_VISAPBCNCMMS_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_VISAPBCNCMMS_APLT != ''"><xsl:value-of select="AM_VISAPBCNCMMS_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_VISAPBCNCMMS_APLTXCLS != ''"><xsl:value-of select="AM_VISAPBCNCMMS_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_VISAPBCNCMMS_EXEC_SBTT != ''"><xsl:value-of select="AM_VISAPBCNCMMS_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_VISAPBCNCMMS_EXECRT != ''"><xsl:value-of select="AM_VISAPBCNCMMS_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th>추가비용1</th>
+                <td style="text-align: right;"><xsl:if test="AM_INSRCOST_BDGT_USD != ''"><xsl:value-of select="AM_INSRCOST_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_INSRCOST_BDGT_KRW != ''"><xsl:value-of select="AM_INSRCOST_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_INSRCOST_APLT != ''"><xsl:value-of select="AM_INSRCOST_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_INSRCOST_APLTXCLS != ''"><xsl:value-of select="AM_INSRCOST_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_INSRCOST_EXEC_SBTT != ''"><xsl:value-of select="AM_INSRCOST_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_INSRCOST_EXECRT != ''"><xsl:value-of select="AM_INSRCOST_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th>추가비용2</th>
+                <td style="text-align: right;"><xsl:if test="AM_ETCADTNCOST_BDGT_USD != ''"><xsl:value-of select="AM_ETCADTNCOST_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCADTNCOST_BDGT_KRW != ''"><xsl:value-of select="AM_ETCADTNCOST_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCADTNCOST_APLT != ''"><xsl:value-of select="AM_ETCADTNCOST_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCADTNCOST_APLTXCLS != ''"><xsl:value-of select="AM_ETCADTNCOST_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCADTNCOST_EXEC_SBTT != ''"><xsl:value-of select="AM_ETCADTNCOST_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCADTNCOST_EXECRT != ''"><xsl:value-of select="AM_ETCADTNCOST_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th colspan="2">합계</th>
+                <th colspan="2" style="text-align: right;"><xsl:if test="AM_TT_BDGT_KRW != ''"><xsl:value-of select="AM_TT_BDGT_KRW"/></xsl:if></th>
+                <th style="text-align: right;"><xsl:if test="AM_TT_APLT_NOTTCHMCOST!= ''"><xsl:value-of select="AM_TT_APLT_NOTTCHMCOST"/></xsl:if></th>
+                <th style="text-align: right;"><xsl:if test="AM_TT_APLTXCLS != ''"><xsl:value-of select="AM_TT_APLTXCLS"/></xsl:if></th>
+                <th style="text-align: right;"><xsl:if test="AM_TT_EXEC_SBTT != ''"><xsl:value-of select="AM_TT_EXEC_SBTT"/></xsl:if></th>
+                <th style="text-align: right;"><xsl:if test="AM_TT_EXECRT != ''"><xsl:value-of select="AM_TT_EXECRT"/></xsl:if></th>
+              </tr>
+              <tr>
+                <th colspan="2">[별도계정] 교제비</th>
+                <td style="text-align: right;"><xsl:if test="AM_TCHMCOST_BDGT_USD != ''"><xsl:value-of select="AM_TCHMCOST_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_TCHMCOST_BDGT_KRW != ''"><xsl:value-of select="AM_TCHMCOST_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_TCHMCOST_APLT != ''"><xsl:value-of select="AM_TCHMCOST_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_TCHMCOST_APLTXCLS != ''"><xsl:value-of select="AM_TCHMCOST_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_TCHMCOST_EXEC_SBTT != ''"><xsl:value-of select="AM_TCHMCOST_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_TCHMCOST_EXECRT != ''"><xsl:value-of select="AM_TCHMCOST_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th colspan="2">신청금액</th>
+                <th colspan="2" style="text-align: right;"><xsl:if test="AM_TT_APLT != ''"><xsl:value-of select="AM_TT_APLT"/></xsl:if></th>
+                <th>가불금(원)</th>
+                <th style="text-align: right;"><xsl:if test="AM_ADVPGLD != ''"><xsl:value-of select="AM_ADVPGLD"/></xsl:if></th>
+                <th>최종정산금(원)</th>
+                <th style="text-align: right;"><xsl:if test="AM_FNALSOAGLD != ''"><xsl:value-of select="AM_FNALSOAGLD"/></xsl:if></th>
+              </tr>
+            </tbody>
+          </table>
+          <xsl:if test="DS_EMPTYPE = '임원'">
+            <table class="table_10" style="width: 1186px;">
+              <thead>
+                <tr>
+                  <th style="width: 230px">출장자</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <xsl:for-each select="/NewDataSet/table_2/item">
+                  <tr>
+                    <th><xsl:value-of select="DS_HNAME"/></th>
+                    <td><xsl:value-of select="DS_RMK"/></td>
+                  </tr>
+				  <xsl:if test="DS_RESON != ''">
+                  <tr>
+                    <th>예산 초과 사유</th>
+                    <td><xsl:value-of select="DS_RESON"/></td>
+                  </tr>
+				  </xsl:if>
+                </xsl:for-each>
+              </tbody>
+            </table>
+          </xsl:if>
+          <xsl:if test="DS_EMPTYPE = '직원'">
+            <table class="table_10" style="width: 1186px;">
+              <thead>
+                <tr>
+                  <th style="width: 230px">출장자</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <xsl:for-each select="/NewDataSet/table_3/item">
+                  <tr>
+                    <th><xsl:value-of select="DS_HNAME"/></th>
+                    <td><xsl:value-of select="DS_RMK"/></td>
+                  </tr>
+				  <xsl:if test="DS_RESON != ''">
+                  <tr>
+                    <th>예산 초과 사유</th>
+                    <td><xsl:value-of select="DS_RESON"/></td>
+                  </tr>
+				  </xsl:if>
+                </xsl:for-each>
+              </tbody>
+            </table>
+          </xsl:if>
+          <br/>
+		 </xsl:if>
+        </xsl:for-each>
+          <xsl:for-each select="NewDataSet/table_4/item">
+          <table class="table_10" style="width: 1186px;">
+            <thead>
+              <tr>
+                <th colspan="2">직급구분</th>
+                <td width="140px" style="text-align: center;"><xsl:value-of select="DS_EMPTYPE"/></td>
+                <th width="140px">출장자</th>
+                <td colspan="2" width="140px" style="text-align: center;"><xsl:value-of select="DS_HNAME"/></td>
+                <th>증빙</th>
+                <td style="text-align: center;"><input type="button" class="buttonoff" name="ATTACH" value="증빙" style="border:1px solid grey; width: 50px;" onclick="openBztpDetailFilePopup('{ATTACHED_FILE_HOST_URL}', '{BZTP_PROF_DETAIL_URL}');"/></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th colspan="2" rowspan="2">구분</th>
+                <th colspan="2">금회출장예산</th>
+                <th colspan="3">집행금액(KRW)</th>
+                <th rowspan="2" width="150px">예산대비<br/>집행율(%)</th>
+              </tr>
+              <tr>
+                <th width="140px">USD</th>
+                <th width="140px">KRW</th>
+                <th width="140px">신청금액</th>
+                <th width="140px">신청제외금액<br/>(법인카드 등)</th>
+                <th width="140px">소계</th>
+              </tr>
+              <tr>
+                <th colspan="2">입출국항공료</th>
+                <td style="text-align: right;"><xsl:if test="AM_IOUTBRUFLGTNOT_BDGT_USD != ''"><xsl:value-of select="AM_IOUTBRUFLGTNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_IOUTBRUFLGTNOT_BDGT_KRW != ''"><xsl:value-of select="AM_IOUTBRUFLGTNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_IOUTBRUFLGTNOT_APLT != ''"><xsl:value-of select="AM_IOUTBRUFLGTNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_IOUTBRUFLGTNOT_APLTXCLS != ''"><xsl:value-of select="AM_IOUTBRUFLGTNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_IOUTBRUFLGTNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_IOUTBRUFLGTNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_IOUTBRUFLGTNOT_EXECRT != ''"><xsl:value-of select="AM_IOUTBRUFLGTNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th rowspan="4">교통비</th>
+                <th>철도비</th>
+                <td style="text-align: right;"><xsl:if test="AM_RAILNOT_BDGT_USD != ''"><xsl:value-of select="AM_RAILNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_RAILNOT_BDGT_KRW != ''"><xsl:value-of select="AM_RAILNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_RAILNOT_APLT != ''"><xsl:value-of select="AM_RAILNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_RAILNOT_APLTXCLS != ''"><xsl:value-of select="AM_RAILNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_RAILNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_RAILNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_RAILNOT_EXECRT != ''"><xsl:value-of select="AM_RAILNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th>선박비</th>
+                <td style="text-align: right;"><xsl:if test="AM_SHIPNOT_BDGT_USD != ''"><xsl:value-of select="AM_SHIPNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_SHIPNOT_BDGT_KRW != ''"><xsl:value-of select="AM_SHIPNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_SHIPNOT_APLT != ''"><xsl:value-of select="AM_SHIPNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_SHIPNOT_APLTXCLS != ''"><xsl:value-of select="AM_SHIPNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_SHIPNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_SHIPNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_SHIPNOT_EXECRT != ''"><xsl:value-of select="AM_SHIPNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th>항공비</th>
+                <td style="text-align: right;"><xsl:if test="AM_FLGTNOT_BDGT_USD != ''"><xsl:value-of select="AM_FLGTNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_FLGTNOT_BDGT_KRW != ''"><xsl:value-of select="AM_FLGTNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_FLGTNOT_APLT != ''"><xsl:value-of select="AM_FLGTNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_FLGTNOT_APLTXCLS != ''"><xsl:value-of select="AM_FLGTNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_FLGTNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_FLGTNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_FLGTNOT_EXECRT != ''"><xsl:value-of select="AM_FLGTNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th>자동차비</th>
+                <td style="text-align: right;"><xsl:if test="AM_CARNOT_BDGT_USD != ''"><xsl:value-of select="AM_CARNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CARNOT_BDGT_KRW != ''"><xsl:value-of select="AM_CARNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CARNOT_APLT != ''"><xsl:value-of select="AM_CARNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CARNOT_APLTXCLS != ''"><xsl:value-of select="AM_CARNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CARNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_CARNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CARNOT_EXECRT != ''"><xsl:value-of select="AM_CARNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th colspan="2">숙박비</th>
+                <td style="text-align: right;"><xsl:if test="AM_LDGGNOT_BDGT_USD != ''"><xsl:value-of select="AM_LDGGNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_LDGGNOT_BDGT_KRW != ''"><xsl:value-of select="AM_LDGGNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_LDGGNOT_APLT != ''"><xsl:value-of select="AM_LDGGNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_LDGGNOT_APLTXCLS != ''"><xsl:value-of select="AM_LDGGNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_LDGGNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_LDGGNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_LDGGNOT_EXECRT != ''"><xsl:value-of select="AM_LDGGNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th colspan="2">식비</th>
+                <td style="text-align: right;"><xsl:if test="AM_CRMNNOT_BDGT_USD != ''"><xsl:value-of select="AM_CRMNNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CRMNNOT_BDGT_KRW != ''"><xsl:value-of select="AM_CRMNNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CRMNNOT_APLT != ''"><xsl:value-of select="AM_CRMNNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CRMNNOT_APLTXCLS != ''"><xsl:value-of select="AM_CRMNNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CRMNNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_CRMNNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_CRMNNOT_EXECRT != ''"><xsl:value-of select="AM_CRMNNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th colspan="2">잡비</th>
+                <td style="text-align: right;"><xsl:if test="AM_ETCNOT_BDGT_USD != ''"><xsl:value-of select="AM_ETCNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCNOT_BDGT_KRW != ''"><xsl:value-of select="AM_ETCNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCNOT_APLT != ''"><xsl:value-of select="AM_ETCNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCNOT_APLTXCLS != ''"><xsl:value-of select="AM_ETCNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_ETCNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCNOT_EXECRT != ''"><xsl:value-of select="AM_ETCNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th rowspan="4">기타</th>
+                <th>통신비<br/>(로밍)</th>
+                <td style="text-align: right;"><xsl:if test="AM_COMMNOT_BDGT_USD != ''"><xsl:value-of select="AM_COMMNOT_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_COMMNOT_BDGT_KRW != ''"><xsl:value-of select="AM_COMMNOT_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_COMMNOT_APLT != ''"><xsl:value-of select="AM_COMMNOT_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_COMMNOT_APLTXCLS != ''"><xsl:value-of select="AM_COMMNOT_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_COMMNOT_EXEC_SBTT != ''"><xsl:value-of select="AM_COMMNOT_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_COMMNOT_EXECRT != ''"><xsl:value-of select="AM_COMMNOT_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th>Visa<br/>발급수수료</th>
+                <td style="text-align: right;"><xsl:if test="AM_VISAPBCNCMMS_BDGT_USD != ''"><xsl:value-of select="AM_VISAPBCNCMMS_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_VISAPBCNCMMS_BDGT_KRW != ''"><xsl:value-of select="AM_VISAPBCNCMMS_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_VISAPBCNCMMS_APLT != ''"><xsl:value-of select="AM_VISAPBCNCMMS_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_VISAPBCNCMMS_APLTXCLS != ''"><xsl:value-of select="AM_VISAPBCNCMMS_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_VISAPBCNCMMS_EXEC_SBTT != ''"><xsl:value-of select="AM_VISAPBCNCMMS_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_VISAPBCNCMMS_EXECRT != ''"><xsl:value-of select="AM_VISAPBCNCMMS_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th>추가비용1</th>
+                <td style="text-align: right;"><xsl:if test="AM_INSRCOST_BDGT_USD != ''"><xsl:value-of select="AM_INSRCOST_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_INSRCOST_BDGT_KRW != ''"><xsl:value-of select="AM_INSRCOST_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_INSRCOST_APLT != ''"><xsl:value-of select="AM_INSRCOST_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_INSRCOST_APLTXCLS != ''"><xsl:value-of select="AM_INSRCOST_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_INSRCOST_EXEC_SBTT != ''"><xsl:value-of select="AM_INSRCOST_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_INSRCOST_EXECRT != ''"><xsl:value-of select="AM_INSRCOST_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th>추가비용2</th>
+                <td style="text-align: right;"><xsl:if test="AM_ETCADTNCOST_BDGT_USD != ''"><xsl:value-of select="AM_ETCADTNCOST_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCADTNCOST_BDGT_KRW != ''"><xsl:value-of select="AM_ETCADTNCOST_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCADTNCOST_APLT != ''"><xsl:value-of select="AM_ETCADTNCOST_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCADTNCOST_APLTXCLS != ''"><xsl:value-of select="AM_ETCADTNCOST_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCADTNCOST_EXEC_SBTT != ''"><xsl:value-of select="AM_ETCADTNCOST_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_ETCADTNCOST_EXECRT != ''"><xsl:value-of select="AM_ETCADTNCOST_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th colspan="2">합계</th>
+                <th colspan="2" style="text-align: right;"><xsl:if test="AM_TT_BDGT_KRW != ''"><xsl:value-of select="AM_TT_BDGT_KRW"/></xsl:if></th>
+                <th style="text-align: right;"><xsl:if test="AM_TT_APLT_NOTTCHMCOST!= ''"><xsl:value-of select="AM_TT_APLT_NOTTCHMCOST"/></xsl:if></th>
+                <th style="text-align: right;"><xsl:if test="AM_TT_APLTXCLS != ''"><xsl:value-of select="AM_TT_APLTXCLS"/></xsl:if></th>
+                <th style="text-align: right;"><xsl:if test="AM_TT_EXEC_SBTT != ''"><xsl:value-of select="AM_TT_EXEC_SBTT"/></xsl:if></th>
+                <th style="text-align: right;"><xsl:if test="AM_TT_EXECRT != ''"><xsl:value-of select="AM_TT_EXECRT"/></xsl:if></th>
+              </tr>
+              <tr>
+                <th colspan="2">[별도계정] 교제비</th>
+                <td style="text-align: right;"><xsl:if test="AM_TCHMCOST_BDGT_USD != ''"><xsl:value-of select="AM_TCHMCOST_BDGT_USD"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_TCHMCOST_BDGT_KRW != ''"><xsl:value-of select="AM_TCHMCOST_BDGT_KRW"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_TCHMCOST_APLT != ''"><xsl:value-of select="AM_TCHMCOST_APLT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_TCHMCOST_APLTXCLS != ''"><xsl:value-of select="AM_TCHMCOST_APLTXCLS"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_TCHMCOST_EXEC_SBTT != ''"><xsl:value-of select="AM_TCHMCOST_EXEC_SBTT"/></xsl:if></td>
+                <td style="text-align: right;"><xsl:if test="AM_TCHMCOST_EXECRT != ''"><xsl:value-of select="AM_TCHMCOST_EXECRT"/></xsl:if></td>
+              </tr>
+              <tr>
+                <th colspan="2">신청금액</th>
+                <th colspan="2" style="text-align: right;"><xsl:if test="AM_TT_APLT != ''"><xsl:value-of select="AM_TT_APLT"/></xsl:if></th>
+                <th>가불금(원)</th>
+                <th style="text-align: right;"><xsl:if test="AM_ADVPGLD != ''"><xsl:value-of select="AM_ADVPGLD"/></xsl:if></th>
+                <th>최종정산금(원)</th>
+                <th style="text-align: right;"><xsl:if test="AM_FNALSOAGLD != ''"><xsl:value-of select="AM_FNALSOAGLD"/></xsl:if></th>
+              </tr>
+              <tr>
+                <th colspan="2">비고</th>
+                <td colspan="7"><xsl:value-of select="DS_RMK"/></td>
+              </tr>
+			  <xsl:if test="DS_RESON != ''">
+              <tr>
+                <th colspan="2">예산 초과 사유</th>
+                <td colspan="5"><xsl:value-of select="DS_RESON"/></td>
+              </tr>
+			  </xsl:if>
+            </tbody>
+          </table>
+          <br/>
+        </xsl:for-each>
+      </body>
+    </html>
+  </xsl:template>
+</xsl:stylesheet>

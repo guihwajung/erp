@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="샘플7" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staYM_WORK" taborder="0" text="기준년월" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYM_ACT" taborder="1" left="staYM_WORK:0.0" top="10.0" width="80" height="24.0" dateformat="yyyy-mm" editformat="yyyymm" url="cmm::cmmCalMM.xfdl"/>
+              <Static id="staCD_SITE" taborder="2" text="현장코드" left="ctclYM_ACT:0.0" top="10.0" width="92.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFSITE" CDTextWidth="80" taborder="3" left="staCD_SITE:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="staCD_VENDOR" taborder="4" text="업체코드" left="ccfCD_SITE:0.0" top="10.0" width="92.0" height="24.0" textDecoration="none" textAlign="center" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_VENDOR" CodeFindName="DCX_CFVENDOR_DC" CDTextWidth="120" taborder="5" left="staCD_VENDOR:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Div id="divSplitter" taborder="1" left="0" top="70%" width="100%" height="5" background="skyblue" cursor="ns-resize" ondrag="divData_tabData_tab2_divSplitter_ondrag"/>
+              <Div id="divDataTop" taborder="0" left="0" top="5" bottom="divSplitter:5" right="0" cssclass="div_DATA_Bg">
+                <Layouts>
+                  <Layout>
+                    <Grid id="objGrid" taborder="2" left="0" top="0" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataBottom" taborder="0" left="0" bottom="5" top="divSplitter:5" right="0" cssclass="div_DATA_Bg">
+                <Layouts>
+                  <Layout>
+                    <Grid id="objGridSub" taborder="3" left="0" top="0" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+
+<Tab id="tabData" taborder="0" tabindex="0" left="0" top="0" bottom="0" right="0" onchanged="divData_tabData_onchanged" ondragmove="divData_tabData_ondragmove">
+<Tabpages>
+<Tabpage id="tab2" text="전자">
+<Layouts>
+<Layout>
+<Div id="divSplitter" taborder="1" left="0" top="70%" width="100%" height="5" background="skyblue" cursor="ns-resize" ondrag="divData_tabData_tab2_divSplitter_ondrag"/>
+<Div id="divDataTab2Top" taborder="0" left="0" top="5" bottom="divSplitter:5" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+<Layouts>
+<Layout>
+<Grid id="objGrid1" taborder="2" left="0" top="0" bottom="0" right="0"/>
+</Layout>
+</Layouts>
+</Div>
+<Div id="divDataTab2Bottom" taborder="0" left="5" bottom="5" top="divSplitter:5" right="5" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+<Layouts>
+<Layout>
+<Grid id="objGrid1Sub" taborder="3" left="0" top="0" bottom="0" right="0"/>
+</Layout>
+</Layouts>
+</Div>
+</Layout>
+</Layouts>
+</Tabpage>
+<Tabpage id="tab1" text="일반">
+<Layouts>
+<Layout>
+<Grid id="objGrid" taborder="1" left="5" top="5" bottom="5" right="5"/>
+</Layout>
+</Layouts>
+</Tabpage>
+</Tabpages>
+</Tab>
+
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsSearch.setColumn(0, "YM_WORK", this.gfnGetDate().substr(0,6));
+	
+	//this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	//this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.dxGrid 	= this.divData.form.divDataTop.form.objGrid;
+	this.dxGridSub 	= this.divData.form.divDataBottom.form.objGridSub;
+	
+	//this.dxGrid1.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DC", "DCC_HDLEDGER_VIEW_MASTER");
+	this.dxGrid.set_selecttype("cell");   
+	this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+	
+	this.gfnGridInit(this.dxGridSub, this.dsListSub, "DC", "DCC_HDLEDGER_VIEW_DETAIL");
+};
+	
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelectSub = new Dataset();
+	this.dsSelectSub.addColumn("CD_SITE", "string");
+	this.dsSelectSub.addColumn("NO_HADOCONT", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);		
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSearch";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+}
+
+this.fnSelectSub = function() {
+   
+  if (this.dxGrid.rowcount == 0 || this.dxGrid.currentrow < 0) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGridSub);
+	
+	//디테일 데이터셋 데이터 삭제
+	this.dsListSub.clearData();
+	
+	// 디테일 파마리터 데이터셋 셋팅
+	this.dsSelectSub.clearData();
+	this.dsSelectSub.addRow();
+
+	this.dsSelectSub.setColumn(0, "CD_SITE", 		this.dsList.getColumn(this.dsList.rowposition, "CD_SITE"));
+	this.dsSelectSub.setColumn(0, "NO_HADOCONT", 	this.dsList.getColumn(this.dsList.rowposition, "NO_HADOCONT"));
+		
+	var strSvcId    = "detail";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "d_select=dsSelectSub";
+	var outData     = "dsListSub=d_select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+
+
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "YM_WORK")))
+	{
+		this.fnValidate_callback = function()
+		{
+			this.divSearch.form.ctclYMD_FROM.setFocus();
+		}
+	
+		this.gfnAlert("기준년월을 입력해주십시오.", "fnValidate_callback");
+		
+		validate = false;
+	}
+	
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+	}
+	else if (svcID == "selectSub") {
+		this.gfnGridAfterSelect(this.dxGridSub);	
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+this.fnGrid_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo, event:nexacro.KeyEventInfo)
+{
+	if ((obj.oldrow > -1 && obj.oldrow == e.row)
+		|| (obj.oldrow == -1 && e.oldrow != e.row)) {
+		
+		this.fnSelectSub();
+		
+		obj.oldrow = -1;
+	}
+}
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		this.gfnGridClear(this.dxGridSub);	
+	}
+};
+
+this.divData_tabData_tab2_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	e.set_userdata("splitter");
+	return true;
+};
+
+
+this.divData_ondragmove = function(obj:nexacro.Tab,e:nexacro.DragEventInfo)
+{
+	if(e.userdata == "splitter") {
+		this.divData.form.divSplitter.set_top(e.clienty);
+		this.divData.form.resetScroll();
+		//this.divData.form.tabData.resetScroll();
+	}
+};
+
+this.fnGridSub_ExpandUp = function(obj:nexacro.Grid, e:nexacro.GridMouseEventInfo) {
+	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, e.cell);	
+	if(colnm != "paymentConfirmBtn") return;
+	
+	window.open(this.dsListSub.getColumn(this.dsListSub.rowposition, "paymentConfirmUrl"));
+};]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DWBPR_HDLEDGER_VIEW_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">d_select</Col>
+            <Col id="SP">DWBPR_HDLEDGER_VIEW_DETAIL</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="YM_WORK" type="STRING" size="6"/>
+          <Column id="CD_SITE" type="STRING" size="20"/>
+          <Column id="CD_VENDOR" type="STRING" size="20"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListSub"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctclYM_ACT.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_WORK"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item2" compid="divSearch.form.ccfCD_VENDOR.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_VENDOR"/>
+    </Bind>
+  </Form>
+</FDL>

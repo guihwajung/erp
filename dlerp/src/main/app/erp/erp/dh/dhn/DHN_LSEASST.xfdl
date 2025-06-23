@@ -1,0 +1,1242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1400" height="740" titletext="리스계약관리" onload="form_onload" onclick="form_onclick">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static cssclass="sta_WF_SchLabelE" id="staCD_CORP" taborder="0" text="법인코드" left="0.0" top="10.0" width="92.0" height="24.0"/>
+              <Div id="ccfCD_CORP" CodeFindName="DHX_CFCORP" CDTextWidth="50" taborder="1" left="staCD_CORP:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" FitToContents="true"/>
+              <Static id="staACNTUNIT" taborder="2" text="귀속부서" left="ccfCD_CORP:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfACNTUNIT" CodeFindName="DHX_CFACNTUNIT" CDTextWidth="80" taborder="3" left="staACNTUNIT:0.0" top="10.0" width="259" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" FitToContents="true"/>
+              <Static id="staLSECLS" taborder="4" text="자산분류" left="ccfACNTUNIT:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfLSECLS" CodeFindName="DHX_CFLSECLS" CDTextWidth="50" taborder="5" left="staLSECLS:0.0" top="10.0" width="240" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" FitToContents="true"/>
+              <Static id="staLSEASST" taborder="6" text="자산번호" left="ccfLSECLS:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel" onclick="divSearch_staLSEASST_onclick"/>
+              <Div id="ccfLSEASST" CodeFindName="DHX_CFLSEASST" CDTextWidth="90" taborder="7" left="staLSEASST:0.0" top="10.0" width="259" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" FitToContents="true"/>
+              <Static id="staYN_LAST" taborder="8" text="최종차수" left="ccfLSEASST:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel" visible="false"/>
+              <CheckBox id="cchkYN_LAST" taborder="9" text="" left="staYN_LAST:0.0" top="10.0" width="28" height="24.0" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:20" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove" text="">
+          <Layouts>
+            <Layout>
+              <Div id="divSplitter" taborder="2" top="0" width="13" background="url('theme://images/slt_WF_SplitterV.png') no-repeat center center" cursor="ew-resize" bottom="0" ondrag="divData_divSplitter_ondrag" visible="false" right="650"/>
+              <Div id="divDataLeft" taborder="0" left="0" top="0" bottom="0" right="divSplitter:6">
+                <Layouts>
+                  <Layout>
+                    <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0">
+                      <Formats>
+                        <Format id="default"/>
+                      </Formats>
+                    </Grid>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataRight" taborder="1" left="divSplitter:6" top="0" text="" bottom="0" right="0">
+                <Layouts>
+                  <Layout>
+                    <Tab id="tab1" taborder="1" tabindex="0" left="0" top="0" bottom="0" right="0" onchanged="divData_divDataRight_tab1_onchanged" tabbuttonheight="33">
+                      <Tabpages>
+                        <Tabpage id="Tabpage1" text="자산정보">
+                          <Layouts>
+                            <Layout>
+                              <Static id="staBgCD_DEPT" taborder="16" left="124" top="199" height="34" cssclass="sta_WF_tablebg" text="" right="1"/>
+                              <Static id="staBgCD_VENDOR" taborder="19" left="124" top="232" height="34" cssclass="sta_WF_tablebg" text="" right="1"/>
+                              <Static id="staBgDT_LSECNTRC" taborder="22" left="124" top="265" height="34" cssclass="sta_WF_tablebg" right="1"/>
+                              <Static id="staBgDT_LSE" taborder="25" left="124" top="298" height="34" cssclass="sta_WF_tablebg" text="" right="1"/>
+                              <Static id="staBgAM_LSE" taborder="33" left="124" top="331" height="34" cssclass="sta_WF_tablebg" text="" right="1"/>
+                              <Static id="staBgAM_DMNY" taborder="41" left="124" top="364" width="209" height="34" cssclass="sta_WF_tablebg"/>
+                              <Static id="staBgCD_ACCOUNT_ASST" taborder="48" left="124" top="430" width="209" height="34" cssclass="sta_WF_tablebg" visible="false"/>
+                              <Static id="staBgTY_CNTRC" taborder="57" left="124" top="463" height="34" cssclass="sta_WF_tablebg" text="" right="1" visible="false"/>
+                              <Static id="staBgDS_RMKS" taborder="61" left="124" top="397" height="34" cssclass="sta_WF_tablebg" text="" right="1" visible="true"/>
+                              <Static id="staBgCD_ACCOUNT_PAY" taborder="54" left="124" top="496" width="209" height="34" cssclass="sta_WF_tablebg" visible="false"/>
+                              <Static id="staTitle01" taborder="0" text="기본정보" left="0" top="0" height="35" right="423" cssclass="sta_TITLE_Bg" onclick="divData_divDataRight_staTitle01_onclick"/>
+                              <Static id="staDS_LSEASST" taborder="1" text="자산번호" left="0" top="35" width="135" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Static id="staBgNO_LSEASST" taborder="2" left="134" top="35" height="34" cssclass="sta_WF_tablebg" text="" right="0"/>
+                              <Static id="staCD_LSECLS" taborder="5" text="자산분류코드" left="0" top="68" width="135" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Edit id="edtNO_LSEASST" taborder="3" left="staDS_LSEASST:4" top="40" height="24" width="100" readonly="true" cssclass="borderBG"/>
+                              <Edit id="edtNO_CHNG" taborder="79" left="edtNO_LSEASST:3" top="40" height="24" width="40" readonly="true" cssclass="borderBG"/>
+                              <Edit id="edtDS_LSEASST" taborder="4" left="edtNO_CHNG:3" top="40" height="24" right="4"/>
+                              <Static id="staBgCD_LSECLS" taborder="6" left="134" top="68" width="200" height="34" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfCD_LSECLS" CDTextWidth="40" taborder="7" CodeFindName="DHX_CFLSECLS" left="staCD_LSECLS:4" top="73" height="24" url="cmm::cmmCodeFind.xfdl" readonly="" Readonly="" text="" width="191"/>
+                              <Static id="staCD_LSECLSDTLS" taborder="8" text="세부분류코드" left="333" top="68" width="130" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Static id="staBgCD_LSECLSDTLS" taborder="9" left="462" top="68" height="34" cssclass="sta_WF_tablebg" right="0"/>
+                              <Div id="cfCD_LSECLSDTLS" CDTextWidth="50" taborder="10" CodeFindName="DHX_CFLSECLS" left="staCD_LSECLSDTLS:4" top="73" height="24" url="cmm::cmmCodeFind.xfdl" readonly="" Readonly="" text="" right="4"/>
+                              <Static id="staCD_TRADE_ASST" taborder="11" text="전표번호" left="0" top="101" width="135" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Static id="staBgCD_TRADE_ASST" taborder="12" left="134" top="101" height="34" cssclass="sta_WF_tablebg" right="0"/>
+                              <Edit id="edtCD_TRADE_ASST" taborder="13" left="staCD_TRADE_ASST:4" top="106" height="24" width="198" textAlign="right" readonly="true" cssclass="borderBG"/>
+                              <Static id="staTitle02" taborder="14" text="취득정보" left="0" top="165" height="35" right="423" cssclass="sta_TITLE_Bg" onclick="divData_divDataRight_staTitle01_onclick"/>
+                              <Static id="staCD_DEPT" taborder="15" text="귀속부서" left="0" top="199" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Div id="cfCD_DEPT" CDTextWidth="73" taborder="17" CodeFindName="DHX_CFACNTUNIT" left="staCD_DEPT:4" top="204" height="24" url="cmm::cmmCodeFind.xfdl" readonly="" Readonly="" text="" width="350"/>
+                              <Static id="staCD_VENDOR" taborder="18" text="임대거래처" left="0" top="232" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Div id="cfCD_VENDOR" CDTextWidth="73" taborder="20" CodeFindName="DHX_CFVENDOR" left="staCD_VENDOR:4" top="237" height="24" url="cmm::cmmCodeFind.xfdl" readonly="" Readonly="" text="" width="350"/>
+                              <Static id="staDT_LSECNTRC" taborder="21" text="계약일자" left="0" top="265" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Calendar id="calDT_LSECNTRC" taborder="23" left="staDT_LSECNTRC:4" top="270" width="100" height="24" dateformat="yyyy-MM-dd"/>
+                              <Static id="staDT_LSEFR" taborder="24" text="임대기간" left="0" top="298" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Calendar id="calDT_LSEFR" taborder="26" left="staDT_LSEFR:4" top="303" width="100" height="24" dateformat="yyyy-MM-dd" onchanged="divData_divDataRight_tab1_Tabpage1_calDT_LSEFR_onchanged"/>
+                              <Static id="staDT_LSE1" taborder="27" text="~" left="calDT_LSEFR:0" top="303" width="20" height="24" textAlign="center"/>
+                              <Calendar id="calDT_LSETO" taborder="28" left="staDT_LSE1:0" top="303" width="100" height="24" dateformat="yyyy-MM-dd" onchanged="divData_divDataRight_tab1_Tabpage1_calDT_LSETO_onchanged"/>
+                              <Static id="staEdNO_MCNT" taborder="29" text="(기간)" left="calDT_LSETO:5" top="303" width="31" height="24"/>
+                              <Edit id="edtNO_MCNT" taborder="30" left="staEdNO_MCNT:15" top="303" height="24" width="35" textAlign="right" readonly="true"/>
+                              <Static id="staEdNO_MCNT1" taborder="31" text="개월 )" left="edtNO_MCNT:5" top="303" width="35" height="24"/>
+                              <Static id="staAM_LSEMLY" taborder="32" text="임대료" left="0" top="331" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Static id="staEdtAM_LSETOT" taborder="34" text="(총액)" left="staAM_LSEMLY:5" top="336" width="33" height="24"/>
+                              <Static id="staEdtAM_LSEYLY" taborder="36" text="(연간)" left="311" top="336" width="33" height="24"/>
+                              <Static id="staEdtAM_LSEMLY" taborder="38" text="(월간)" left="462" top="336" width="33" height="24"/>
+                              <Static id="staAM_DMNY" taborder="40" text="보증금액" left="0" top="364" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Static id="staRT_INTRT" taborder="43" text="이자율" left="332" top="364" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Static id="staBgRT_INTRT" taborder="44" left="456" top="364" height="34" cssclass="sta_WF_tablebg" right="1"/>
+                              <Edit id="edtRT_INTRT" taborder="45" left="staRT_INTRT:4" top="369" height="24" width="80" textAlign="right"/>
+                              <Static id="staEdRT_INTRT" taborder="46" text="%" left="edtRT_INTRT:3" top="369" width="10" height="24"/>
+                              <Static id="staCD_ACCOUNT_ASST" taborder="47" text="자산계정" left="0" top="430" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" visible="false"/>
+                              <Div id="cfCD_ACCOUNT_ASST" CDTextWidth="65" taborder="49" CodeFindName="DHX_CFLSEASSTACNT" left="staCD_ACCOUNT_ASST:4" top="435" height="24" url="cmm::cmmCodeFind.xfdl" readonly="" Readonly="" text="" width="190" visible="false"/>
+                              <Static id="staCD_ACCOUNT_CST" taborder="50" text="비용계정" left="332" top="430" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" visible="false"/>
+                              <Static id="staBgCD_ACCOUNT_CST" taborder="51" left="456" top="430" height="34" cssclass="sta_WF_tablebg" right="1" visible="false"/>
+                              <Div id="cfCD_ACCOUNT_CST" CDTextWidth="60" taborder="52" CodeFindName="DHX_CFLSECSTACNT" left="staCD_ACCOUNT_CST:4" top="435" height="24" url="cmm::cmmCodeFind.xfdl" readonly="" Readonly="" text="" right="4" visible="false"/>
+                              <Static id="staTY_CNTRC" taborder="56" text="계약번호" left="0" top="496" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" visible="false"/>
+                              <Combo id="cboTY_CNTRC" taborder="58" left="staTY_CNTRC:4" top="501" width="93" height="24" datacolumn="DS_CODE" codecolumn="CD_CODE" value="" index="-1" text="" innerdataset="dsTY_CNTRC" onitemchanged="divData_divDataRight_tab1_Tabpage1_cboTY_CNTRC_onitemchanged" visible="false"/>
+                              <Div id="cfNO_CNTRC" CDTextWidth="73" taborder="59" left="cboTY_CNTRC:3" top="501" height="24" url="cmm::cmmCodeFind.xfdl" readonly="" Readonly="" text="" right="4" CodeFindName="DHX_CFLSECONT" visible="false"/>
+                              <Static id="staDS_RMKS" taborder="60" text="비고" left="0" top="397" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Edit id="edtDS_RMKS" taborder="62" left="staDS_RMKS:4" top="402" height="24" right="4"/>
+                              <Static id="staTitle03" taborder="63" text="내역정보" left="0" top="488" height="35" right="423" cssclass="sta_TITLE_Bg" onclick="divData_divDataRight_staTitle01_onclick"/>
+                              <Static id="staTY_STATS" taborder="64" text="진행상태" left="0" top="589" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" visible="false"/>
+                              <Static id="staBgTY_STATS" taborder="65" left="124" top="589" width="175" height="34" cssclass="sta_WF_tablebg" visible="false"/>
+                              <Static id="staYN_LCNSASST" taborder="67" text="사용권자산" left="0" top="523" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Static id="staBgYN_LCNSASST" taborder="68" left="124" top="523" height="34" cssclass="sta_WF_tablebg" visible="true" width="200"/>
+                              <Combo id="cboTY_STATS" taborder="66" left="128" width="93" height="24" datacolumn="DS_CODE" codecolumn="CD_CODE" value="" index="-1" text="" innerdataset="dsTY_STATS" readonly="true" bottom="21" visible="false"/>
+                              <Combo id="cboYN_LCNSASST" taborder="69" left="129" top="528" width="93" height="24" datacolumn="DS_CODE" codecolumn="CD_CODE" value="" index="-1" text="" innerdataset="dsYN_LCNSASST" readonly="true"/>
+                              <Static id="staDT_MIDTRMN" taborder="70" text="중도해지일자" left="0" top="556" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Static id="staBgDT_MIDTRMN" taborder="71" left="124" top="556" width="200" height="34" cssclass="sta_WF_tablebg"/>
+                              <Calendar id="calDT_MIDTRMN" taborder="72" left="129" top="561" width="110" height="24" dateformat="yyyy-MM-dd" readonly="true"/>
+                              <Static id="staYN_END" taborder="73" text="종료여부" left="308" top="523" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Static id="staBgYN_END" taborder="74" left="432" top="523" cssclass="sta_WF_tablebg" width="210" height="34"/>
+                              <Combo id="cboYN_END" taborder="75" left="437" top="528" width="93" height="24" datacolumn="DS_CODE" codecolumn="CD_CODE" value="" index="-1" text="" innerdataset="dsYN_END" readonly="true"/>
+                              <MaskEdit id="edtAM_LSETOT" taborder="35" left="staEdtAM_LSETOT:5" top="336" width="120" height="24" maskchar="_" format="#,#" onchanged="divData_divDataRight_tab1_Tabpage1_edtAM_LSETOT_onchanged"/>
+                              <MaskEdit id="edtAM_LSEYLY" taborder="37" left="staEdtAM_LSEYLY:5" top="336" width="100" height="24" maskchar="_" format="#,#" readonly="true"/>
+                              <MaskEdit id="edtAM_LSEMLY" taborder="39" left="staEdtAM_LSEMLY:5" top="336" width="100" height="24" maskchar="_" format="#,#" readonly="true"/>
+                              <MaskEdit id="edtAM_DMNY" taborder="42" left="staAM_DMNY:4" top="369" width="190" height="24" maskchar="_" format="#,#"/>
+                              <Static id="staCD_ACCOUNT_PAY" taborder="53" text="지급계정코드" left="0" top="463" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" visible="false"/>
+                              <Div id="cfCD_ACCOUNT_PAY" CDTextWidth="65" taborder="55" CodeFindName="DHX_CFAUTOSLIPJOURNAL" left="staCD_ACCOUNT_PAY:4" top="467" height="24" url="cmm::cmmCodeFind.xfdl" readonly="" Readonly="" text="" width="190" visible="false"/>
+                              <Static id="staEdNO_MCNTMLY" taborder="80" text="(월간계산)" left="staEdNO_MCNT1:5" top="304" width="55" height="24" visible="false"/>
+                              <MaskEdit id="edtNO_MCNTMLY" taborder="81" left="staEdNO_MCNTMLY:5" top="304" width="50" height="24" maskchar="_" format="#,#.#" onchanged="divData_divDataRight_tab1_Tabpage1_edtNO_MCNTMLY_onchanged" visible="false"/>
+                              <Static id="staEdNO_MCNTMLY1" taborder="82" text="개월" left="edtNO_MCNTMLY:5" top="303" width="25" height="24" visible="false"/>
+                              <Static id="staYN_MIDTRMN" taborder="76" text="중도해지여부" left="308" top="556" width="125" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Static id="staBgYN_MIDTRMN" taborder="77" left="432" top="556" width="210" height="34" cssclass="sta_WF_tablebg"/>
+                              <Combo id="cboYN_MIDTRMN" taborder="78" left="437" top="561" width="93" height="24" datacolumn="DS_CODE" codecolumn="CD_CODE" value="" index="-1" text="" innerdataset="dsYN_MIDTRMN" readonly="true"/>
+                              <Button id="btnAttachFile" taborder="83" text="첨부파일관리" left="240" top="271" width="83" height="24" onclick="fnAttachFile" enable="true"/>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="Tabpage2" text="자산부가정보">
+                          <Layouts>
+                            <Layout>
+                              <Static id="staBgNO_ZIP" taborder="2" left="139" top="35" height="34" cssclass="sta_WF_tablebg" text="" right="0"/>
+                              <Static id="staBgNO_ZIP00" taborder="5" left="139" top="68" height="34" cssclass="sta_WF_tablebg" text="" right="0"/>
+                              <Static id="staBgNO_CAR" taborder="11" left="472" top="101" height="34" cssclass="sta_WF_tablebg" right="0"/>
+                              <Static id="staTitle01" taborder="0" text="추가관리사항" left="0" top="0" height="35" right="423" cssclass="sta_TITLE_Bg" onclick="divData_divDataRight_staTitle01_onclick"/>
+                              <Static id="staNO_ZIP" taborder="1" text="주소" left="0" top="35" width="140" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Div id="cfNO_ZIP" CDTextWidth="73" taborder="3" CodeFindName="DZX_CFZIP_STREET" left="staNO_ZIP:4" top="40" height="24" url="cmm::cmmCodeFind.xfdl" readonly="" Readonly="" text="" right="4"/>
+                              <Static id="staDS_ADDRDTLS" taborder="4" text="상세주소" left="0" top="68" width="140" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Edit id="edtDS_ADDRDTLS" taborder="6" left="staDS_ADDRDTLS:4" top="73" height="24" right="4"/>
+                              <Static id="staCD_CARTP" taborder="7" text="차종" left="0" top="101" width="140" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Static id="staBgCD_CARTP" taborder="8" left="139" top="101" width="205" height="34" cssclass="sta_WF_tablebg"/>
+                              <Combo id="cboCD_CARTP" taborder="9" left="staCD_CARTP:4" top="106" width="195" height="24" datacolumn="DS_CODE" codecolumn="CD_CODE" value="" index="-1" text="" innerdataset="dsCD_CARTP"/>
+                              <Static id="staNO_CAR" taborder="10" text="차량번호" left="343" top="101" width="130" height="34" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                              <Edit id="edtNO_CAR" taborder="12" left="staNO_CAR:4" top="106" height="24" right="4"/>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                      </Tabpages>
+                    </Tab>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetCombo();
+	this.gfnSetAllEnable(this.divDataRightTab1, false);
+	this.divData.form.divDataRight.form.tab1.Tabpage1.form.btnAttachFile.set_enable(true);
+	
+	//타화면에서 호출되었을 경우
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_CORP || this.getOwnerFrame().CD_DEPT || this.getOwnerFrame().CD_LSECLS || this.getOwnerFrame().NO_LSEASST)){
+		
+		this.dsSearch.setColumn(0, "CD_CORP", this.getOwnerFrame().CD_CORP);
+		this.dsSearch.setColumn(0, "DS_CORP", this.getOwnerFrame().DS_CORP);
+		
+		this.dsSearch.setColumn(0, "CD_DEPT_ACNT", this.getOwnerFrame().CD_DEPT);
+		this.dsSearch.setColumn(0, "DS_DEPT_ACNT", this.getOwnerFrame().DS_DEPT);
+		
+		this.dsSearch.setColumn(0, "CD_LSECLS", this.getOwnerFrame().CD_LSECLS);
+		this.dsSearch.setColumn(0, "DS_LSECLS", this.getOwnerFrame().DS_LSECLS);
+	
+		this.dsSearch.setColumn(0, "NO_LSEASST", this.getOwnerFrame().NO_LSEASST);
+		this.dsSearch.setColumn(0, "DS_LSEASST", this.getOwnerFrame().DS_LSEASST);
+		
+		this.dsSearch.setColumn(0, "YN_LAST", true);
+		
+		this.FormBtns.Select.click();
+	}else{
+		this.dsSearch.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+		this.dsSearch.setColumn(0, "DS_CORP", this.AuthClient.DS_CORP);
+		
+		this.dsSearch.setColumn(0, "YN_LAST", true);
+	}
+	
+	//법인코드 포커스
+	this.ccfCD_CORP.form.CDTextBox.setFocus();	
+};
+
+/************************************************************************
+ * 버튼 설정 
+ * 서브버튼 사용 처리. 공통 및 확장버튼 버튼관리화면에서 셋팅.
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	//this.btnAttachFile 		= this.gfnFormButtonAdd("btnAttachFile"	 	, "fnAttachFile"); 		// 첨부파일관리
+	this.btnLseMlyPayDtls 	= this.gfnFormButtonAdd("btnLseMlyPayDtls"	, "fnLseMlyPayDtls"); 	// 월납부내역관리
+	this.btnLseClsngDtls 	= this.gfnFormButtonAdd("btnLseClsngDtls"	, "fnLseClsngDtls"); 	// 결산내역관리
+	this.btnVldtReq 		= this.gfnFormButtonAdd("btnVldtReq"		, "fnVldtReq"); 		// 검증요청/취소
+	this.btnVldtCnf 		= this.gfnFormButtonAdd("btnVldtCnf"		, "fnVldtCnf"); 		// 검증확인/취소
+	this.btnSlipIssueAsst 	= this.gfnFormButtonAdd("btnSlipIssueAsst"	, "fnSlipIssueAsst"); 	// 전표발행(자산설정)
+	this.btnSlipSearchAsst	= this.gfnFormButtonAdd("btnSlipSearchAsst"	, "fnSlipSearchAsst"); 	// 전표조회(자산설정)
+	this.btnSlipCancelAsst	= this.gfnFormButtonAdd("btnSlipCancelAsst"	, "fnSlipCancelAsst"); 	// 전표취소(자산설정)
+	this.btnLseChng			= this.gfnFormButtonAdd("btnLseChng"		, "fnLseChng"); 		// 변경계약생성
+	this.btnMidTrmn			= this.gfnFormButtonAdd("btnMidTrmn"		, "fnMidTrmn"); 		// 중도해지
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.dxGrid = this.divData.form.divDataLeft.form.objGrid;
+	this.dxGridHeader = this.divData.form.divDataLeft.form.objGridHeader;
+	
+	//검색조건
+	this.ccfCD_CORP  = this.divSearch.form.ccfCD_CORP;  	//법인코드
+	this.ccfACNTUNIT = this.divSearch.form.ccfACNTUNIT; 	//귀속부서
+	this.ccfLSECLS	 = this.divSearch.form.ccfLSECLS;		//자산분류
+	this.ccfLSEASST	 = this.divSearch.form.ccfLSEASST;		//자산번호
+	
+	//상세DIV, tab1
+	this.divDataRightTab1 = this.divData.form.divDataRight.form.tab1.Tabpage1.form;
+	this.divDataRightTab2 = this.divData.form.divDataRight.form.tab1.Tabpage2.form;
+	
+	this.cboTY_CNTRC = this.divDataRightTab1.cboTY_CNTRC;
+	this.cboCD_CARTP = this.divDataRightTab2.cboCD_CARTP;
+	
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {		
+	this.dxGrid.AfterInit = "fnGrid_AfterInit";	// AfterInit 은 반드시 gfnGridInit 전에 선언.
+	//this.dxGridHeader.AfterInit = "fnGridHeader_AfterInit";	// AfterInit 은 반드시 gfnGridInit 전에 선언.
+	
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHN_LSEASST");
+	//this.gfnGridInit(this.dxGridHeader, this.dsList, "DH", "DHN_LSEASSTHEADER");
+	
+	this.ccfCD_CORP.BeforeUserDataSetParam  = "fnBeforeUserDataSetParam";
+	this.ccfACNTUNIT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfLSECLS.BeforeUserDataSetParam 	= "fnBeforeUserDataSetParam";
+	this.ccfLSEASST.BeforeUserDataSetParam 	= "fnBeforeUserDataSetParam";
+	
+	this.divDataRightTab1.cfCD_LSECLS.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.divDataRightTab1.cfCD_LSECLSDTLS.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.divDataRightTab1.cfCD_DEPT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.divDataRightTab1.cfCD_VENDOR.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.divDataRightTab1.cfCD_ACCOUNT_ASST.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.divDataRightTab1.cfCD_ACCOUNT_CST.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.divDataRightTab1.cfCD_ACCOUNT_PAY.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.divDataRightTab1.cfNO_CNTRC.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.divDataRightTab2.cfNO_ZIP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.divDataRightTab1.cfCD_VENDOR.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+	this.dsList.addEventHandler("canrowposchange", this.dsList_canrowposchange, this);
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("TY_WRK", "string");
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("CD_DEPT", "string");
+	this.dsSelect.addColumn("CD_LSECLS", "string");
+	this.dsSelect.addColumn("NO_LSEASST", "string");
+	this.dsSelect.addColumn("YN_LAST", "string");
+
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("TY_WRK", "string");
+	this.dsSave.addColumn("ID_USER", "string");
+	this.dsSave.addColumn("CD_CORP", "string");
+	this.dsSave.addColumn("NO_LSEASST", "string");
+	this.dsSave.addColumn("NO_CHNG", "string");
+	this.dsSave.addColumn("DS_LSEASST", "string");
+	this.dsSave.addColumn("CD_LSECLS", "string");
+	this.dsSave.addColumn("CD_LSECLSDTLS", "string");
+	this.dsSave.addColumn("CD_TRADE_ASST", "string");
+	this.dsSave.addColumn("CD_DEPT", "string");
+	this.dsSave.addColumn("CD_VENDOR", "string");
+	this.dsSave.addColumn("DT_LSECNTRC", "string");
+	this.dsSave.addColumn("DT_LSEFR", "string");
+	this.dsSave.addColumn("DT_LSETO", "string");
+	this.dsSave.addColumn("NO_MCNT", "int");
+	this.dsSave.addColumn("NO_MCNTMLY", "bigdecimal");
+	this.dsSave.addColumn("AM_LSETOT", "bigdecimal");
+	this.dsSave.addColumn("AM_LSEYLY", "bigdecimal");
+	this.dsSave.addColumn("AM_LSEMLY", "bigdecimal");
+	this.dsSave.addColumn("AM_DMNY", "bigdecimal");
+	this.dsSave.addColumn("RT_INTRT", "bigdecimal");
+	this.dsSave.addColumn("CD_ACCOUNT_ASST", "string");
+	this.dsSave.addColumn("CD_ACCOUNT_CST", "string");
+	this.dsSave.addColumn("CD_ACCOUNT_PAY", "string");
+	this.dsSave.addColumn("TY_CNTRC", "string");
+	this.dsSave.addColumn("NO_CNTRC", "string");
+	this.dsSave.addColumn("DS_CNTRC", "string");
+	this.dsSave.addColumn("DS_RMKS", "string");
+	this.dsSave.addColumn("TY_STATS", "string");
+	this.dsSave.addColumn("YN_LCNSASST", "string");
+	this.dsSave.addColumn("YN_MIDTRMN", "string");
+	this.dsSave.addColumn("DT_MIDTRMN", "string");
+	this.dsSave.addColumn("YN_END", "string");
+	this.dsSave.addColumn("NO_ZIP", "string");
+	this.dsSave.addColumn("DS_ADDR", "string");
+	this.dsSave.addColumn("DS_ADDRDTLS", "string");
+	this.dsSave.addColumn("CD_CARTP", "string");
+	this.dsSave.addColumn("NO_CAR", "string");
+	
+	this.dsSrcMsg = new Dataset();
+	this.dsSrcMsg.addColumn("TY_WRK", "string");
+	this.dsSrcMsg.addColumn("CD_SYSTEM", "string");
+	this.dsSrcMsg.addColumn("CD_TYPE", "string");
+	
+	this.dsSaveExecute = new Dataset();
+	this.dsSaveExecute.addColumn("TY_WRK", "string");
+	this.dsSaveExecute.addColumn("ID_USER", "string");
+	this.dsSaveExecute.addColumn("CD_CORP", "string");
+	this.dsSaveExecute.addColumn("NO_LSEASST", "string");
+	this.dsSaveExecute.addColumn("NO_CHNG", "string");
+	this.dsSaveExecute.addColumn("CD_DEPT", "string");
+	this.dsSaveExecute.addColumn("CD_TRADE", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if(!this.gfnSearchValidate(this.divSearch, this.dsSearch)) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	this.gfnSetAllEnable(this.divDataRightTab1, true);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+
+	this.dsSelect.setColumn(0, "TY_WRK" 			, "Q");
+	this.dsSelect.setColumn(0, "CD_CORP"			, this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSelect.setColumn(0, "CD_DEPT" 			, this.dsSearch.getColumn(0, "CD_DEPT_ACNT"));
+	this.dsSelect.setColumn(0, "CD_LSECLS" 			, this.dsSearch.getColumn(0, "CD_LSECLS"));
+	this.dsSelect.setColumn(0, "NO_LSEASST" 		, this.dsSearch.getColumn(0, "NO_LSEASST"));
+	this.dsSelect.setColumn(0, "YN_LAST"			, this.dsSearch.getColumn(0, "YN_LAST") == "true" ? "Y" : "");
+	
+	var strSvcId    = "select";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	var nRow = this.gfnGridAdd(this.dxGrid, "current_bottom", true);
+
+	this.dsList.set_enableevent(false);
+	
+	this.dsList.setColumn(nRow, "CD_CORP"	  		, this.dsSearch.getColumn(0, "CD_CORP"));	//법인코드
+	this.dsList.setColumn(nRow, "TY_STATS"	  		, "00");									//회계팀검증
+	this.dsList.setColumn(nRow, "CD_LSECLS"	  		, this.dsSearch.getColumn(0, "CD_LSECLS"));	//자산분류코드
+	this.dsList.setColumn(nRow, "DS_LSECLS"	  		, this.dsSearch.getColumn(0, "DS_LSECLS"));	//자산분류명
+	this.dsList.setColumn(nRow, "CD_DEPT"	  		, this.AuthClient.CD_DEPT_ACNT);			//귀속부서코드
+	this.dsList.setColumn(nRow, "DS_DEPT"	  		, this.AuthClient.DS_DEPT_ACNT);			//귀속부서명
+	this.dsList.setColumn(nRow, "YN_LCNSASST"	  	, "");										//사용권자산
+	this.dsList.setColumn(nRow, "DT_MIDTRMN"	  	, "");										//중도해지일자
+	this.dsList.setColumn(nRow, "YN_END"	  		, "N");										//종료여부
+	this.dsList.setColumn(nRow, "NO_CHNG"	  		, "000");									//변경차수
+	
+	this.dsList.set_enableevent(true);
+	
+	//상세내역 활성처리
+	this.gfnSetAllEnable(this.divDataRightTab1, true);
+	this.gfnSetAllEnable(this.divDataRightTab2, true);
+	
+	this.cboTY_CNTRC.set_index(0);
+	this.cboCD_CARTP.set_index(0);
+	
+	this.dsList.set_rowposition(nRow);
+	this.dxGrid.setCellPos(2);
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	if (!this.gfnGridValidate(this.dxGrid)) return;
+	//if (!this.gfnGridValidate(this.dxGridHeader)) return;
+	
+	this.dxGrid.updateToDataset();
+	
+	this.dsSave.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+			case "I":			
+			case "U":
+			case "D":
+				var nrow = this.dsSave.addRow();
+				this.dsSave.setColumn(nrow, "TY_WRK", flag);
+				this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+				this.dsSave.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+				this.dsSave.setColumn(nrow, "NO_LSEASST", this.dsList.getColumn(i, "NO_LSEASST"));
+				this.dsSave.setColumn(nrow, "NO_CHNG", this.dsList.getColumn(i, "NO_CHNG"));
+				this.dsSave.setColumn(nrow, "DS_LSEASST", this.dsList.getColumn(i, "DS_LSEASST"));
+				this.dsSave.setColumn(nrow, "CD_LSECLS", this.dsList.getColumn(i, "CD_LSECLS"));
+				this.dsSave.setColumn(nrow, "CD_LSECLSDTLS", this.dsList.getColumn(i, "CD_LSECLSDTLS"));
+				this.dsSave.setColumn(nrow, "CD_TRADE_ASST", this.dsList.getColumn(i, "CD_TRADE_ASST"));
+				this.dsSave.setColumn(nrow, "CD_DEPT", this.dsList.getColumn(i, "CD_DEPT"));
+				this.dsSave.setColumn(nrow, "CD_VENDOR", this.dsList.getColumn(i, "CD_VENDOR"));
+				this.dsSave.setColumn(nrow, "DT_LSECNTRC", this.dsList.getColumn(i, "DT_LSECNTRC"));
+				this.dsSave.setColumn(nrow, "DT_LSEFR", this.dsList.getColumn(i, "DT_LSEFR"));
+				this.dsSave.setColumn(nrow, "DT_LSETO", this.dsList.getColumn(i, "DT_LSETO"));
+				this.dsSave.setColumn(nrow, "NO_MCNT", this.dsList.getColumn(i, "NO_MCNT"));
+				this.dsSave.setColumn(nrow, "NO_MCNTMLY", this.dsList.getColumn(i, "NO_MCNTMLY"));
+				this.dsSave.setColumn(nrow, "AM_LSETOT", this.dsList.getColumn(i, "AM_LSETOT"));
+				this.dsSave.setColumn(nrow, "AM_LSEYLY", this.dsList.getColumn(i, "AM_LSEYLY"));
+				this.dsSave.setColumn(nrow, "AM_LSEMLY", this.dsList.getColumn(i, "AM_LSEMLY"));
+				this.dsSave.setColumn(nrow, "AM_DMNY", this.dsList.getColumn(i, "AM_DMNY"));
+				this.dsSave.setColumn(nrow, "RT_INTRT", this.dsList.getColumn(i, "RT_INTRT"));
+				this.dsSave.setColumn(nrow, "CD_ACCOUNT_ASST", this.dsList.getColumn(i, "CD_ACCOUNT_ASST"));
+				this.dsSave.setColumn(nrow, "CD_ACCOUNT_CST", this.dsList.getColumn(i, "CD_ACCOUNT_CST"));
+				this.dsSave.setColumn(nrow, "CD_ACCOUNT_PAY", this.dsList.getColumn(i, "CD_ACCOUNT_PAY"));
+				this.dsSave.setColumn(nrow, "TY_CNTRC", this.dsList.getColumn(i, "TY_CNTRC"));
+				this.dsSave.setColumn(nrow, "NO_CNTRC", this.dsList.getColumn(i, "NO_CNTRC"));
+				this.dsSave.setColumn(nrow, "DS_CNTRC", this.dsList.getColumn(i, "DS_CNTRC"));
+				this.dsSave.setColumn(nrow, "DS_RMKS", this.dsList.getColumn(i, "DS_RMKS"));
+				this.dsSave.setColumn(nrow, "TY_STATS", this.dsList.getColumn(i, "TY_STATS"));
+				this.dsSave.setColumn(nrow, "YN_LCNSASST", this.dsList.getColumn(i, "YN_LCNSASST"));
+				this.dsSave.setColumn(nrow, "YN_MIDTRMN", this.dsList.getColumn(i, "YN_MIDTRMN"));
+				this.dsSave.setColumn(nrow, "DT_MIDTRMN", this.dsList.getColumn(i, "DT_MIDTRMN"));
+				this.dsSave.setColumn(nrow, "YN_END", this.dsList.getColumn(i, "YN_END"));
+				this.dsSave.setColumn(nrow, "NO_ZIP", this.dsList.getColumn(i, "NO_ZIP"));
+				this.dsSave.setColumn(nrow, "DS_ADDR", this.dsList.getColumn(i, "DS_ADDR"));
+				this.dsSave.setColumn(nrow, "DS_ADDRDTLS", this.dsList.getColumn(i, "DS_ADDRDTLS"));
+				this.dsSave.setColumn(nrow, "CD_CARTP", this.dsList.getColumn(i, "CD_CARTP"));
+				this.dsSave.setColumn(nrow, "NO_CAR", this.dsList.getColumn(i, "NO_CAR"));
+				break;
+		}
+	}	
+	
+	if (this.dsSave.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/*
+ *	메세지 처리(검증요청)
+ */
+ this.fnSetMsg = function(msgFlag) {
+	
+	this.dsSrcMsg.clearData();
+	this.dsSrcMsg.addRow();
+	
+	if(msgFlag == 1) {
+		// 검증요청/취소(확인메세지) : 요청(N006), 요청취소(N007)
+		this.dsSrcMsg.setColumn(0, "TY_WRK" 		, this.dsList.getColumn(this.dsList.rowposition, "MSG_VLDTREQ"));
+	}
+	if(msgFlag == 2) {
+		// 검증확인/취소(확인메세지) : 요청(N008), 요청취소(N009)
+		this.dsSrcMsg.setColumn(0, "TY_WRK" 		, this.dsList.getColumn(this.dsList.rowposition, "MSG_VLDTCNF"));
+	}
+	if(msgFlag == 3) {
+		this.dsSrcMsg.setColumn(0, "TY_WRK" 		, "N010");
+	}
+	if(msgFlag == 4) {
+		this.dsSrcMsg.setColumn(0, "TY_WRK" 		, "N011");
+	}
+	if(msgFlag == 5) {
+		this.dsSrcMsg.setColumn(0, "TY_WRK" 		, "N035");
+	}
+	if(msgFlag == 6) {
+		this.dsSrcMsg.setColumn(0, "TY_WRK" 		, "N050");
+	}
+	
+	this.dsSrcMsg.setColumn(0, "CD_SYSTEM"		, "DH");
+	this.dsSrcMsg.setColumn(0, "CD_TYPE" 		, "Z99");
+	
+	var strSvcId    = "select_m";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select_m=dsSrcMsg";
+	var outData     = "dsMsgList=select_m0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+}
+
+// 처리
+this.fn_execute = function(exeFlag) {
+	
+	this.dsSaveExecute.clearData();
+	this.dsSaveExecute.addRow();
+	
+	if(exeFlag == 1) {
+		this.dsSaveExecute.setColumn(0, "TY_WRK" 			, this.dsList.getColumn(this.dsList.rowposition, "CHK_VLDTREQ"));
+	}
+	if(exeFlag == 2) {
+		this.dsSaveExecute.setColumn(0, "TY_WRK" 			, this.dsList.getColumn(this.dsList.rowposition, "CHK_VLDTCNF"));
+	}
+	if(exeFlag == 3) {
+		this.dsSaveExecute.setColumn(0, "TY_WRK" 			, "SLPPUBASST");
+		this.dsSaveExecute.setColumn(0, "CD_DEPT" 			, this.AuthClient.CD_DEPT_ACNT);
+		this.dsSaveExecute.setColumn(0, "CD_TRADE" 			, this.dsList.getColumn(this.dsList.rowposition, "CD_TRADE_ASST"));
+	}
+	if(exeFlag == 4) {
+		this.dsSaveExecute.setColumn(0, "TY_WRK" 			, "SLPCNCASST");
+		this.dsSaveExecute.setColumn(0, "CD_DEPT" 			, this.AuthClient.CD_DEPT_ACNT);
+		this.dsSaveExecute.setColumn(0, "CD_TRADE" 			, this.dsList.getColumn(this.dsList.rowposition, "CD_TRADE_ASST"));
+	}
+	if(exeFlag == 5) {
+		this.dsSaveExecute.setColumn(0, "TY_WRK" 			, "LSECHNG");
+	}	
+	if(exeFlag == 6) {
+		this.dsSaveExecute.setColumn(0, "TY_WRK" 			, "MIDTRMN");
+	}
+	
+	this.dsSaveExecute.setColumn(0, "ID_U"			, this.AuthClient.ID_USER);
+	this.dsSaveExecute.setColumn(0, "CD_CORP" 			, this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSaveExecute.setColumn(0, "NO_LSEASST" 		, this.dsList.getColumn(this.dsList.rowposition, "NO_LSEASST"));
+	this.dsSaveExecute.setColumn(0, "NO_CHNG" 			, this.dsList.getColumn(this.dsList.rowposition, "NO_CHNG"));
+	
+	var strSvcId    = "save_e";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save_e=dsSaveExecute";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+}
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+// 		this.gfnSetAllEnable(this.divDataRightTab1, (this.dsList.getColumn(this.dsList.rowposition, "YN_EDIT") == "N") ? false : true);
+// 		this.gfnSetAllEnable(this.divDataRightTab2, (this.dsList.getColumn(this.dsList.rowposition, "YN_EDIT") == "N") ? false : true);
+		this.gfnSetAllReadonly(this.divDataRightTab1, (this.dsList.getColumn(this.dsList.rowposition, "YN_EDIT") == "N") ? true : false, true);
+		this.gfnSetAllReadonly(this.divDataRightTab2, (this.dsList.getColumn(this.dsList.rowposition, "YN_EDIT") == "N") ? true : false, true);
+		this.fnBtnCheckAll();
+	} else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if(svcID == "select_m") {
+		if(this.dsMsgList.rowcount > 0){
+			var msgCnfr = this.dsMsgList.getColumn(0, "MSG_CNFR");
+			msgCnfr = msgCnfr.replace("@CD_DEPT", this.dsList.getColumn(this.dsList.rowposition, "CD_DEPT"));
+			msgCnfr = msgCnfr.replace("@DS_DEPT", this.dsList.getColumn(this.dsList.rowposition, "DS_DEPT"));
+			msgCnfr = msgCnfr.replace("@NO_LSEASST", this.dsList.getColumn(this.dsList.rowposition, "NO_LSEASST"));
+			msgCnfr = msgCnfr.replace("@DS_LSEASST", this.dsList.getColumn(this.dsList.rowposition, "DS_LSEASST"));
+			var msgCd = this.dsMsgList.getColumn(0, "MSG_CODE");
+			if(msgCd == "N035" || msgCd == "N050") {
+				msgCnfr = msgCnfr.replace("@NO_CHNG", this.dsList.getColumn(this.dsList.rowposition, "NO_CHNG"));
+			}
+		
+			this.gfnConfirm(msgCnfr, "dsMsgList_canrowposchange_callback", msgCd);				
+		}
+
+	} else if(svcID == "save_e") {
+		if(errorCode != 0) {
+			this.gfnAlert(errorMsg);
+		} else {
+			this.gfnAlert(this.dsMsgList.getColumn(0, "MSG_CMPL"), "fnCallback_Callback", "");
+		}
+	}	
+};
+
+this.fnCallback_Callback = function(svcID, errorCode, errorMsg) {
+	this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	var cdCorp = this.dsSearch.getColumn(0, "CD_CORP");
+	switch(id) {
+		case "ccfCD_CORP" : 		//법인코드(조회조건)
+			dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+		break;
+		
+		case "ccfACNTUNIT": 		//귀속부서(조회조건)
+		case "cfCD_DEPT": 			//귀속부서(싱글폼)
+			if(this.gfnIsNull(cdCorp)){
+				this.gfnAlert("법인코드를 선택하세요.");
+				return false;
+			}
+			
+			dsUserParam.setColumn(nrow, "CD_DEPT_UPPER"	, "");						//상위부서
+			dsUserParam.setColumn(nrow, "YN_SLIPACCEPT"	, "Y");						//전표발행여부
+			dsUserParam.setColumn(nrow, "CD_CORP"		, cdCorp);					//법인코드
+			dsUserParam.setColumn(nrow, "YN_USE"		, "Y");						//사용여부
+			dsUserParam.setColumn(nrow, "GR_DEPT_ACNT"	, "");						//현장/본사여부	
+			dsUserParam.setColumn(nrow, "ID_USER"	    , this.AuthClient.ID_USER);
+			dsUserParam.setColumn(nrow, "GR_SEARCH"     , this.FormInfo.GR_SEARCH);
+			dsUserParam.setColumn(nrow, "CD_DEPT"	    , this.AuthClient.CD_DEPT);	
+		break;
+		
+		case "ccfLSECLS": 			//자산분류(조회조건)
+			dsUserParam.setColumn(nrow, "CD_CORP" 		, this.dsSearch.getColumn(0, "CD_CORP"));
+			dsUserParam.setColumn(nrow, "TY_LSECLS" 	, "C");
+			dsUserParam.setColumn(nrow, "CD_LSECLS"  	, "");
+		break;
+		
+		case "ccfLSEASST": 			//자산번호(조회조건)
+			dsUserParam.setColumn(nrow, "CD_CORP" 		, this.dsSearch.getColumn(0, "CD_CORP"));
+			dsUserParam.setColumn(nrow, "CD_DEPT" 		, this.dsSearch.getColumn(0, "CD_DEPT_ACNT"));
+			dsUserParam.setColumn(nrow, "CD_LSECLS"  	, this.dsSearch.getColumn(0, "CD_LSECLS"));
+			dsUserParam.setColumn(nrow, "NO_LSEASST"  	, this.dsSearch.getColumn(0, "NO_LSEASST"));
+		break;
+		
+		case "cfCD_LSECLS": 		//자산분류코드(싱글폼)
+			dsUserParam.setColumn(nrow, "CD_CORP" 		, this.dsSearch.getColumn(0, "CD_CORP"));
+			dsUserParam.setColumn(nrow, "TY_LSECLS" 	, "C");
+			dsUserParam.setColumn(nrow, "CD_LSECLS"  	, "");
+		break;
+		
+		case "cfCD_LSECLSDTLS": 	//세부분류코드(싱글폼)
+			dsUserParam.setColumn(nrow, "CD_CORP" 		, this.dsSearch.getColumn(0, "CD_CORP"));
+			dsUserParam.setColumn(nrow, "TY_LSECLS" 	, "D");
+			dsUserParam.setColumn(nrow, "CD_LSECLS"  	, this.dsList.getColumn(this.dsList.rowposition, "CD_LSECLS"));
+		break;
+
+		case "cfCD_VENDOR": 		//임대거래처(싱글폼)
+			dsUserParam.setColumn(nrow, "CD_CORP" 		, this.dsSearch.getColumn(0, "CD_CORP"));
+			dsUserParam.setColumn(nrow, "TY_VENDOR" 	, "F");
+			dsUserParam.setColumn(nrow, "YN_USE"  		, "Y");
+		break;
+		
+		case "cfCD_ACCOUNT_ASST": 	//자산계정(싱글폼)
+			dsUserParam.setColumn(nrow, "CD_CORP" 		, this.dsSearch.getColumn(0, "CD_CORP"));
+		break;
+		
+		case "cfCD_ACCOUNT_CST": 	//비용계정(싱글폼)
+			dsUserParam.setColumn(nrow, "CD_CORP" 		, this.dsSearch.getColumn(0, "CD_CORP"));
+			dsUserParam.setColumn(nrow, "CD_DEPT" 		, this.dsList.getColumn(this.dsList.rowposition, "CD_DEPT"));
+		break;
+		
+		case "cfCD_ACCOUNT_PAY": 	//지급계정(싱글폼)
+			dsUserParam.setColumn(nrow, "CD_CORP" 		, this.dsSearch.getColumn(0, "CD_CORP"));
+			dsUserParam.setColumn(nrow, "CD_AUTOSLIP"   , "DHN0034");
+			dsUserParam.setColumn(nrow, "TY_CRDR"   	, "C");
+		break;
+		
+		case "cfNO_CNTRC": 			//계약번호(싱글폼)
+			dsUserParam.setColumn(nrow, "CD_CORP" 		, this.dsSearch.getColumn(0, "CD_CORP"));
+			dsUserParam.setColumn(nrow, "CD_DEPT" 		, this.dsList.getColumn(this.dsList.rowposition, "CD_DEPT"));
+		break;
+		
+		case "cfNO_ZIP": 			//주소(싱글폼)
+			dsUserParam.setColumn(nrow, "CD_CORP" 		, this.dsSearch.getColumn(0, "CD_CORP"));
+		break;
+	}
+	
+	return true;
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+	if(arr.length > 0) {
+		this.dsList.setColumn(this.dsList.rowposition, "CD_VENDOR", arr[0]["CD_VENDOR"]);
+		this.dsList.setColumn(this.dsList.rowposition, "DS_VENDOR", arr[0]["DS_VENDOR"]);
+	}
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ this.fnGrid_AfterInit = function(obj:nexacro.Grid) {
+	// 그리드 셋팅 기준으로 해당 Div내의 Static 텍스트, 필수값 셋팅. 
+	// (static 컨트롤 id가 sta컬럼명 으로 지정되어야 함)
+	this.gfnGridRequiredMark(obj, this.divData.form.divDataRight.form.tab1.Tabpage1);
+	this.gfnGridRequiredMark(obj, this.divData.form.divDataRight.form.tab1.Tabpage2);
+};
+ this.fnGridHeader_AfterInit = function(obj:nexacro.Grid) {
+	// 그리드 셋팅 기준으로 해당 Div내의 Static 텍스트, 필수값 셋팅. 
+	// (static 컨트롤 id가 sta컬럼명 으로 지정되어야 함)
+	this.gfnGridRequiredMark(obj, this.divData.form.divDataRight.form.tab1.Tabpage1);
+	this.gfnGridRequiredMark(obj, this.divData.form.divDataRight.form.tab1.Tabpage2);
+};
+
+this.fnGrid_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+    if ((obj.oldrow > -1 && obj.oldrow == e.row) || (obj.oldrow == -1 && e.oldrow != e.row)) {	 
+		//this.gfnSetAllEnable(this.divDataRightTab1, (this.dsList.getColumn(this.dsList.rowposition, "YN_EDIT") == "N") ? false : true);
+		//this.gfnSetAllEnable(this.divDataRightTab2, (this.dsList.getColumn(this.dsList.rowposition, "YN_EDIT") == "N") ? false : true);
+		this.gfnSetAllReadonly(this.divDataRightTab1, (this.dsList.getColumn(this.dsList.rowposition, "YN_EDIT") == "N") ? true : false, true);
+		this.gfnSetAllReadonly(this.divDataRightTab2, (this.dsList.getColumn(this.dsList.rowposition, "YN_EDIT") == "N") ? true : false, true);
+		this.fnBtnCheckAll();
+		obj.oldrow = -1;
+   }
+};
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+//콤보박스 셋팅
+this.fnSetCombo = function() {
+
+	var arrComms = [];	
+	arrComms.push({col: "TY_CNTRC"			, code: "DHN04"  	, yn_all: "C"});		//계약번호구분(싱글폼)
+	arrComms.push({col: "TY_STATS"			, code: "DHN05"  	, yn_all: "C"});		//회계팀검증(싱글폼)
+	//arrComms.push({col: "YN_LCNSASST"		, code: "DH90"  	, yn_all: "C"});		//사용권자산(싱글폼)
+	//arrComms.push({col: "YN_END"			, code: "DH90"  	, yn_all: "C"});		//종료여부(싱글폼)
+	arrComms.push({col: "CD_CARTP"			, code: "DHN07"  	, yn_all: "C"});		//차종(싱글폼)
+	//arrComms.push({col: "YN_MIDTRMN"		, code: "DH90"  	, yn_all: "C"});		//중도해지여부(싱글폼)
+	
+	this.gfnLoadCommonCode(arrComms, false);
+};
+
+// 스플리터 함수
+this.divData_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	e.set_userdata("splitter");
+	return true;
+};
+
+this.divData_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	if(e.userdata == "splitter") {
+		this.divData.form.divSplitter.set_left(e.clientx);
+		this.divData.form.resetScroll();
+	}
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+
+this.divData_divDataRight_tab1_Tabpage1_cboTY_CNTRC_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	var ty_cntrc = obj.value;
+	if(ty_cntrc == "CONT") {
+		this.divDataRightTab1.cfNO_CNTRC.CodeFindName = "DHX_CFLSECONT";
+	}
+	if(ty_cntrc == "DMNY") {
+		this.divDataRightTab1.cfNO_CNTRC.CodeFindName = "DHX_CFLSEDMNY";
+	}
+};
+
+// 임대시작일시 변경 시
+this.divData_divDataRight_tab1_Tabpage1_calDT_LSEFR_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	this.fnCalcAmount('DT');
+};
+
+// 임대종료일시 변경 시
+this.divData_divDataRight_tab1_Tabpage1_calDT_LSETO_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	this.fnCalcAmount('DT');
+};
+
+// 월간계산 변경 시
+this.divData_divDataRight_tab1_Tabpage1_edtNO_MCNTMLY_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	this.fnCalcAmount('MCNT');
+};
+
+// 임대료(총액) 변경 시
+this.divData_divDataRight_tab1_Tabpage1_edtAM_LSETOT_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	this.fnCalcAmount('AMT');
+};
+
+/************************************************************************
+* 임대료 계산 처리
+************************************************************************/
+this.fnCalcAmount = function(gubun)
+{
+	var dateFr = this.dsList.getColumn(this.dsList.rowposition, "DT_LSEFR");	// 임대기간(FROM)
+	var dateTo = this.dsList.getColumn(this.dsList.rowposition, "DT_LSETO");	// 임대기간(TO)
+	var noMcnt = 0;
+	var noMcntMly = 0.0;
+	var noMcntMlyDay = 0.0;
+	var lseTot = 0;
+	var lseYly = 0;
+	var lseMly = 0;
+	
+	// 리스기간(개월수)
+	if (!this.gfnIsNull(dateFr) && !this.gfnIsNull(dateTo) && gubun == "DT") {	
+		var dateTransFr = new Date(dateFr.substr(0,4), dateFr.substr(4,2)-1, dateFr.substr(6,2));
+		var dateTransTo = new Date(dateTo.substr(0,4), dateTo.substr(4,2)-1, dateTo.substr(6,2));
+		noMcnt = parseInt((dateTransTo.getFullYear() * 12 + dateTransTo.getMonth()) - (dateTransFr.getFullYear() * 12 + dateTransFr.getMonth())) + 1;
+		this.dsList.setColumn(this.dsList.rowposition, "NO_MCNT", noMcnt);
+		noMcntMlyDay = Math.floor(dateTransTo.valueOf()/(24*60*60*1000) - dateTransFr.valueOf()/(24*60*60*1000));
+		noMcntMly = (noMcntMlyDay / 365) * 12;
+		this.dsList.setColumn(this.dsList.rowposition, "NO_MCNTMLY", noMcntMly);
+	}
+	
+	noMcnt = this.dsList.getColumn(this.dsList.rowposition, "NO_MCNT"); 	// 리스기간
+	noMcntMly = this.dsList.getColumn(this.dsList.rowposition, "NO_MCNTMLY"); 	// 리스기간(임대료(월간))
+	lseTot = this.dsList.getColumn(this.dsList.rowposition, "AM_LSETOT");	// 임대료(총액)
+	
+	if(noMcnt != 0 && lseTot != 0) {
+		lseYly = (lseTot*12)/noMcnt; //임대료(연간)
+		lseMly = lseTot/noMcnt; //임대료(월간)
+		
+// 		if(noMcntMly != 0) {
+// 			lseMly = Math.floor(lseTot/noMcntMly); //임대료(월간)
+// 			lseYly = lseMly * 12; //임대료(연간)
+// 		}
+		
+		this.dsList.setColumn(this.dsList.rowposition, "AM_LSEYLY", lseYly);
+		this.dsList.setColumn(this.dsList.rowposition, "AM_LSEMLY", lseMly);
+	}
+}
+
+this.fnGrid_FlagCheck = function()
+{
+	var flag = this.gfnGetFlag(this.dsList, this.dsList.rowposition);
+	
+	if(flag == "I")
+		return false;
+	
+	return true;
+}
+
+this.dsMsgList_canrowposchange_callback = function(strId, val) {
+
+	if(val) {
+		if(strId == "N006" || strId == "N007") {
+			this.fn_execute(1);
+		}
+		if(strId == "N008" || strId == "N009") {
+			this.fn_execute(2);
+		}
+		if(strId == "N010") {
+			this.fn_execute(3);
+		}
+		if(strId == "N011") {
+			this.fn_execute(4);
+		}
+		if(strId == "N035") {
+			this.fn_execute(5);
+		}
+		if(strId == "N050") {
+			this.fn_execute(6);
+		}
+	}
+	
+}
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+// 첨부파일관리
+this.fnAttachFile = function (obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+	if (!this.fnGrid_FlagCheck()) { this.gfnAlert("저장 후 사용 가능합니다."); return false; }
+	
+	var fileManager = {};
+	fileManager.CD_GUBUN = "DHN1";
+	fileManager.CD_DIR = [this.dsSearch.getColumn(0,"CD_CORP"), 
+					this.dsList.getColumn(this.dsList.rowposition, "NO_LSEASST"), this.dsList.getColumn(this.dsList.rowposition, "NO_CHNG")];
+	
+	if(this.dsList.getColumn(this.dsList.rowposition, "YN_EDIT") == "Y") {
+		fileManager.IS_READONLY = false;
+	} else {
+		fileManager.IS_READONLY = true;
+	}
+	
+	this.gfnFileManager(fileManager, "fnFileCallback");
+};
+ 
+// 월납부내역관리
+this.fnLseMlyPayDtls = function (obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var objDs = this.dxGrid.getBindDataset();
+	if(!this.gfnGridIsRow(this.dxGrid)) {return false;}
+	
+	var param = {};			
+	param.CD_CORP = objDs.getColumn(objDs.rowposition, "CD_CORP");
+	param.DS_CORP = objDs.getColumn(objDs.rowposition, "DS_CORP");	
+	param.CD_DEPT = objDs.getColumn(objDs.rowposition, "CD_DEPT");	
+	param.DS_DEPT = objDs.getColumn(objDs.rowposition, "DS_DEPT");
+	param.NO_LSEASST = objDs.getColumn(objDs.rowposition, "NO_LSEASST");
+	param.NO_CHNG = objDs.getColumn(objDs.rowposition, "NO_CHNG");
+	param.DS_LSEASST = objDs.getColumn(objDs.rowposition, "DS_LSEASST");
+
+	this.gfnFormOpen("DHN", "DHN_LSEMLYPAYDTLS", "", param); 
+};
+
+// 결산내역관리
+this.fnLseClsngDtls = function (obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var objDs = this.dxGrid.getBindDataset();
+	if(!this.gfnGridIsRow(this.dxGrid)) {return false;}
+	/*
+	var param = {};			
+	param.CD_CORP = objDs.getColumn(objDs.rowposition, "CD_CORP");	
+	param.DS_CORP = objDs.getColumn(objDs.rowposition, "DS_CORP");
+	param.CD_DEPT = objDs.getColumn(objDs.rowposition, "CD_DEPT");	
+	param.DS_DEPT = objDs.getColumn(objDs.rowposition, "DS_DEPT");
+	param.NO_LSEASST = objDs.getColumn(objDs.rowposition, "NO_LSEASST");
+	param.NO_CHNG = objDs.getColumn(objDs.rowposition, "NO_CHNG");
+	param.DS_LSEASST = objDs.getColumn(objDs.rowposition, "DS_LSEASST");
+	*/
+	var pos = this.dsList.rowposition;
+	var param = {};
+	param.CD_CORP    = this.dsSearch.getColumn(0, "CD_CORP");		// 법인코드(조회조건)
+	param.DS_CORP    = this.dsSearch.getColumn(0, "DS_CORP");		// 법인명(조회조건)
+	param.CD_DEPT    = this.dsList.getColumn(pos, "CD_DEPT");		// 그리드 선택 ROW 귀속부서코드(CD_DEPT)
+	param.DS_DEPT    = this.dsList.getColumn(pos, "DS_DEPT");		// 그리드 선택 ROW 귀속부서명(DS_DEPT)
+	param.NO_LSEASST = this.dsList.getColumn(pos, "NO_LSEASST");	// 그리드 선택 ROW 자산번호(NO_LSEASST)
+	param.DS_LSEASST = this.dsList.getColumn(pos, "DS_LSEASST");	// 그리드 선택 ROW 자산명(DS_LSEASST)
+	param.NO_CHNG    = this.dsList.getColumn(pos, "NO_CHNG");		// 그리드 선택 ROW 변경차수(NO_CHNG)
+
+	this.gfnFormOpen("DHN", "DHN_LSECLSNGDTLS", "", param); 
+};
+
+// 검증요청/취소
+this.fnVldtReq = function (obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(this.dsList.rowcount == 0) return false;
+	
+	this.fnSetMsg(1);
+};
+
+// 검증확인/취소
+this.fnVldtCnf = function (obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(this.dsList.rowcount == 0) return false;
+	
+	this.fnSetMsg(2);
+};
+
+//전표발행(자산설정)
+this.fnSlipIssueAsst = function (obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(this.dsList.rowcount == 0) return false;
+	
+	this.fnSetMsg(3);
+};
+
+// 전표조회(자산설정)
+this.fnSlipSearchAsst = function (obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var objDs = this.dxGrid.getBindDataset();
+	if(!this.gfnGridIsRow(this.dxGrid)) {return false;}
+	
+	var param = {};			
+	param.CD_CORP = objDs.getColumn(objDs.rowposition, "CD_CORP");	
+	param.DS_CORP = objDs.getColumn(objDs.rowposition, "DS_CORP");	
+	param.CD_TRADE_ASST = objDs.getColumn(objDs.rowposition, "CD_TRADE_ASST");
+
+	this.gfnFormOpen("DHN", "", "", param); 
+};
+
+//전표취소(자산설정)
+this.fnSlipCancelAsst = function (obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(this.dsList.rowcount == 0) return false;
+	
+	this.fnSetMsg(4);
+};
+
+//변경계약생성
+this.fnLseChng = function (obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(this.dsList.rowcount == 0) return false;
+	
+	this.fnSetMsg(5);
+};
+
+//중도해지
+this.fnMidTrmn = function (obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(this.dsList.rowcount == 0) return false;
+	
+	this.fnSetMsg(6);
+};
+/************************************************************************
+* 확장버튼 그리드컬럼 설정관련
+************************************************************************/
+this.fnBtnCheckAll = function()
+{
+	
+	this.divData.form.divDataRight.form.tab1.Tabpage1.form.btnAttachFile.set_enable(true);
+	//this.gfnBtnCheck(this.btnAttachFile, this.dsList);		// 첨부파일관리
+	this.gfnBtnCheck(this.btnLseMlyPayDtls, this.dsList);	// 월납부내역관리
+	this.gfnBtnCheck(this.btnLseClsngDtls, this.dsList);	// 결산내역관리
+	this.gfnBtnCheck(this.btnVldtReq, this.dsList);			// 검증요청/취소
+	this.gfnBtnCheck(this.btnVldtCnf, this.dsList);			// 검증확인/취소
+	this.gfnBtnCheck(this.btnSlipIssueAsst, this.dsList);	// 전표발행(자산설정)
+	this.gfnBtnCheck(this.btnSlipSearchAsst, this.dsList);	// 전표조회(자산설정)
+	this.gfnBtnCheck(this.btnSlipCancelAsst, this.dsList);	// 전표취소(자산설정)
+	this.gfnBtnCheck(this.btnLseChng, this.dsList);			// 변경계약생성
+	this.gfnBtnCheck(this.btnMidTrmn, this.dsList);			// 중도해지
+}]]></Script>
+    <Objects>
+      <Dataset id="dsList" canrowposchange="dsList_canrowposchange"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DHNPR_LSEASST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DHNPR_LSEASST_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select_m</Col>
+            <Col id="SP">DHZPR_SRNMSG_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save_e</Col>
+            <Col id="SP">DHNPR_LSEASST_EXECUTE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="CD_DEPT_ACNT" type="STRING" size="256"/>
+          <Column id="DS_DEPT_ACNT" type="STRING" size="256"/>
+          <Column id="CD_LSECLS" type="STRING" size="256"/>
+          <Column id="DS_LSECLS" type="STRING" size="256"/>
+          <Column id="NO_LSEASST" type="STRING" size="256"/>
+          <Column id="DS_LSEASST" type="STRING" size="256"/>
+          <Column id="YN_LAST" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_CNTRC"/>
+      <Dataset id="dsTY_STATS"/>
+      <Dataset id="dsYN_LCNSASST">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">예</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">아니오</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_END">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">예</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">아니오</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCD_CARTP"/>
+      <Dataset id="dsMsgList"/>
+      <Dataset id="dsYN_MIDTRMN">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">예</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">아니오</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+      <BindItem id="item2" compid="divSearch.form.ccfACNTUNIT.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_DEPT_ACNT"/>
+      <BindItem id="item3" compid="divSearch.form.ccfACNTUNIT.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_DEPT_ACNT"/>
+      <BindItem id="item4" compid="divSearch.form.ccfLSECLS.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_LSECLS"/>
+      <BindItem id="item5" compid="divSearch.form.ccfLSECLS.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_LSECLS"/>
+      <BindItem id="item6" compid="divSearch.form.ccfLSEASST.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="NO_LSEASST"/>
+      <BindItem id="item7" compid="divSearch.form.ccfLSEASST.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_LSEASST"/>
+      <BindItem id="item8" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.edtNO_LSEASST" propid="value" datasetid="dsList" columnid="NO_LSEASST"/>
+      <BindItem id="item9" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.edtDS_LSEASST" propid="value" datasetid="dsList" columnid="DS_LSEASST"/>
+      <BindItem id="item10" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_LSECLS.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_LSECLS"/>
+      <BindItem id="item11" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_LSECLS.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_LSECLS"/>
+      <BindItem id="item12" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_LSECLSDTLS.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_LSECLSDTLS"/>
+      <BindItem id="item13" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_LSECLSDTLS.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_LSECLSDTLS"/>
+      <BindItem id="item14" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.edtCD_TRADE_ASST" propid="value" datasetid="dsList" columnid="CD_TRADE"/>
+      <BindItem id="item15" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_DEPT.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_DEPT"/>
+      <BindItem id="item16" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_DEPT.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_DEPT"/>
+      <BindItem id="item17" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_VENDOR.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_VENDOR"/>
+      <BindItem id="item18" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_VENDOR.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_VENDOR"/>
+      <BindItem id="item19" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.calDT_LSECNTRC" propid="value" datasetid="dsList" columnid="DT_LSECNTRC"/>
+      <BindItem id="item20" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.calDT_LSEFR" propid="value" datasetid="dsList" columnid="DT_LSEFR"/>
+      <BindItem id="item21" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.calDT_LSETO" propid="value" datasetid="dsList" columnid="DT_LSETO"/>
+      <BindItem id="item22" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.edtNO_MCNT" propid="value" datasetid="dsList" columnid="NO_MCNT"/>
+      <BindItem id="item27" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.edtRT_INTRT" propid="value" datasetid="dsList" columnid="RT_INTRT"/>
+      <BindItem id="item28" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_ACCOUNT_ASST.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_ACCOUNT_ASST"/>
+      <BindItem id="item29" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_ACCOUNT_ASST.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_ACCOUNT_ASST"/>
+      <BindItem id="item30" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_ACCOUNT_CST.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_ACCOUNT_CST"/>
+      <BindItem id="item31" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_ACCOUNT_CST.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_ACCOUNT_CST"/>
+      <BindItem id="item32" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cboTY_CNTRC" propid="value" datasetid="dsList" columnid="TY_CNTRC"/>
+      <BindItem id="item33" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfNO_CNTRC.form.CDTextBox" propid="value" datasetid="dsList" columnid="NO_CNTRC"/>
+      <BindItem id="item34" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfNO_CNTRC.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_CNTRC"/>
+      <BindItem id="item35" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.edtDS_RMKS" propid="value" datasetid="dsList" columnid="DS_RMKS"/>
+      <BindItem id="item36" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cboTY_STATS" propid="value" datasetid="dsList" columnid="TY_STATS"/>
+      <BindItem id="item37" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cboYN_LCNSASST" propid="value" datasetid="dsList" columnid="YN_LCNSASST"/>
+      <BindItem id="item38" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.calDT_MIDTRMN" propid="value" datasetid="dsList" columnid="DT_MIDTRMN"/>
+      <BindItem id="item39" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cboYN_END" propid="value" datasetid="dsList" columnid="YN_END"/>
+      <BindItem id="item40" compid="divData.form.divDataRight.form.tab1.Tabpage2.form.cfNO_ZIP.form.CDTextBox" propid="value" datasetid="dsList" columnid="NO_ZIP"/>
+      <BindItem id="item41" compid="divData.form.divDataRight.form.tab1.Tabpage2.form.cfNO_ZIP.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_ADDR"/>
+      <BindItem id="item42" compid="divData.form.divDataRight.form.tab1.Tabpage2.form.edtDS_ADDRDTLS" propid="value" datasetid="dsList" columnid="DS_ADDRDTLS"/>
+      <BindItem id="item43" compid="divData.form.divDataRight.form.tab1.Tabpage2.form.cboCD_CARTP" propid="value" datasetid="dsList" columnid="CD_CARTP"/>
+      <BindItem id="item44" compid="divData.form.divDataRight.form.tab1.Tabpage2.form.edtNO_CAR" propid="value" datasetid="dsList" columnid="NO_CAR"/>
+      <BindItem id="item45" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.edtAM_LSETOT" propid="value" datasetid="dsList" columnid="AM_LSETOT"/>
+      <BindItem id="item23" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.edtAM_LSEYLY" propid="value" datasetid="dsList" columnid="AM_LSEYLY"/>
+      <BindItem id="item24" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.edtAM_LSEMLY" propid="value" datasetid="dsList" columnid="AM_LSEMLY"/>
+      <BindItem id="item25" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.edtAM_DMNY" propid="value" datasetid="dsList" columnid="AM_DMNY"/>
+      <BindItem id="item26" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.edtNO_CHNG" propid="value" datasetid="dsList" columnid="NO_CHNG"/>
+      <BindItem id="item46" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_ACCOUNT_PAY.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_ACCOUNT_PAY"/>
+      <BindItem id="item47" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cfCD_ACCOUNT_PAY.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_ACCOUNT_PAY"/>
+      <BindItem id="item48" compid="divSearch.form.cchkYN_LAST" propid="value" datasetid="dsSearch" columnid="YN_LAST"/>
+      <BindItem id="item49" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.edtNO_MCNTMLY" propid="value" datasetid="dsList" columnid="NO_MCNTMLY"/>
+      <BindItem id="item50" compid="divData.form.divDataRight.form.tab1.Tabpage1.form.cboYN_MIDTRMN" propid="value" datasetid="dsList" columnid="YN_MIDTRMN"/>
+    </Bind>
+  </Form>
+</FDL>

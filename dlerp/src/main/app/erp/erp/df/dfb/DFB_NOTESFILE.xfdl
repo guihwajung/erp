@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_CORP" taborder="1" text="법인코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_CORP" CDTextWidth="50" taborder="0" left="staCD_CORP:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staDT_EXEC" taborder="1" text="집행일자" left="ccfCD_CORP:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Calendar id="ctclDT_EXEC" taborder="1" left="staDT_EXEC:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true"/>
+              <Static id="staCD_BANK" taborder="1" text="은행" left="ctclDT_EXEC:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Combo id="cboCD_BANK" taborder="1" text="" left="staCD_BANK:0.0" top="10.0" width="140" height="24.0" innerdataset="dsCD_BANK" codecolumn="CD_CODE" datacolumn="DS_CODE" value="" index="0" onitemchanged="divSearch_cboCD_BANK_onitemchanged"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DFBPR_NOTESFILE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="DT_EXEC" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DT_EXEC"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCD_BANK"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	//this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();	
+	this.fnSetCombo();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Add.set_enable(false);
+ 	this.FormBtns.Save.set_enable(false);
+ 	this.FormBtns.Del.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+	
+	this.cboCD_BANK = this.divSearch.form.cboCD_BANK;
+	
+	//this.ctclDT_EXEC = this.divSearch.form.ctclDT_EXEC;
+	
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_CORP.CodeFindName = "DZX_CFCORP";
+	
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+		this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP); 
+		this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);	
+	}
+	this.dsSearch.set_enableevent(false);
+	this.dsSearch.setColumn(0, "DT_EXEC", this.gfnGetFirstDate(this.gfnGetDate()));
+	//this.ctclDT_EXEC.set_value(this.gfnGetFirstDate(this.gfnGetDate()));
+	this.dsSearch.set_enableevent(true);
+	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DF", "DFB_NOTESFILE1");
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("DT_EXEC", "string");
+	this.dsSelect.addColumn("CD_BANK", "string");
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn('', "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+	//this.dsSelect.setColumn('', "DT_EXEC", this.ctclDT_EXEC.value);	
+	this.dsSelect.setColumn('', "DT_EXEC", this.dsSearch.getColumn(0, "DT_EXEC"));	
+	this.dsSelect.setColumn('', "CD_BANK", this.cboCD_BANK.value);	
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.text)) {
+		this.gfnAlert("법인코드를 입력 하세요.");
+		this.ccfCD_CORP.form.CDTextBox.setFocus();
+		return false;
+	}
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "DT_EXEC"))) {
+		this.gfnAlert("일자를 입력 하세요.");
+		return false;
+	}
+	
+	if (this.gfnIsNull(this.cboCD_BANK.value)) {
+		this.gfnAlert("은행을 선택 하세요.");
+		this.cboCD_BANK.setFocus();
+		return false;
+	}
+		
+	return true;
+};
+
+this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	// 계좌구분
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DF");
+	this.dsCombo.setColumn(0, "CD_TYPE", "B3");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsCD_BANK=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		if (this.dsList.rowcount == 0) {
+			this.gfnAlert("자료가 존재하지 않습니다.");
+		} else {
+			this.gfnGridAfterSelect(this.dxGrid);	
+		}
+	}else if(svcID == "combo"){
+		this.cboCD_BANK.set_value('088');
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ this.fnAfterCDTextChanged = function(id, codeFindData) {
+	if(id == "ccfCD_CORP") {
+		this.gfnSetFormStatus(this);	
+		this.gfnGridClear(this.dxGrid);
+	}
+	
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+	
+		// 폼상태 초기화
+		this.gfnSetFormStatus(this);	
+		this.gfnGridClear(this.dxGrid);
+	}
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+
+this.divSearch_cboCD_BANK_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if(e.prevalue != e.postvalue) {
+		if(e.postvalue == '088'){
+			this.gfnGridInit(this.dxGrid, this.dsList, "DF", "DFB_NOTESFILE1"); //신한
+		}
+		else if(e.postvalue == '020'){
+			this.gfnGridInit(this.dxGrid, this.dsList, "DF", "DFB_NOTESFILE2"); //우리
+		}
+		else if(e.postvalue == '004'){
+			this.gfnGridInit(this.dxGrid, this.dsList, "DF", "DFB_NOTESFILE3"); //국민
+		}
+		this.gfnSetFormStatus(this);	
+		this.gfnGridClear(this.dxGrid);
+	}
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctclDT_EXEC" propid="value" datasetid="dsSearch" columnid="DT_EXEC"/>
+    </Bind>
+  </Form>
+</FDL>

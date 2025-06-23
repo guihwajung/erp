@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1400" height="720" titletext="자동전표 코드등록" onload="form_onload">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" taborder="0" left="staDT_FROM:0.0" top="staDT_FROM:10.0" height="78.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SYSTEM" taborder="0" text="회계년월" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Calendar id="ctclYM_BASE" taborder="2" left="staCD_SYSTEM:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true"/>
+              <Static id="staCD_SUB_SYSTEM" taborder="1" text="기준통화" left="ctclYM_BASE:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="ccboCURR_CD" taborder="3" left="staCD_SUB_SYSTEM:0.0" top="10.0" width="80" height="24.0" innerdataset="dsCURR_CD" datacolumn="CURR_CD" codecolumn="CURR_CD"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="30" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="15" right="0" bottom="0"/>
+              <Radio id="rdoYN_DEP" taborder="1" left="75" top="-34" width="200" height="20" onitemchanged="rdo00_onitemchanged" index="-1" text="" value="" innerdataset="dsYN_DEP" datacolumn="VALUE" codecolumn="CODE" fittocontents="width" direction="vertical"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	
+	var today = this.gfnGetDate().substring(0,6);
+	this.dsSearch.setColumn(0, "YM_BASE", today);
+	this.fnCombo();
+	
+	this.FormBtns.Select.click();
+};
+
+this.fnSetButton = function() {
+
+}
+
+this.fnSetExtendButton = function() {
+	this.btnCopy = this.gfnFormButtonAdd("Copy", "fnCopy", "전월자료복사"); 
+	this.btnUpload = this.gfnFormButtonAdd("Upload", "fnUpload", "Excel Upload");
+	
+	this.btnCopy.set_enable(false);
+	this.btnUpload.set_enable(false);
+};
+
+this.fnSetVariable = function() {
+	this.ctclYM_BASE = this.divSearch.form.ctclYM_BASE;
+	this.ccboCURR_CD = this.divSearch.form.ccboCURR_CD;
+		
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHZ_EXRATE");
+	
+}
+
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();	
+	this.dsSelect.addColumn("YM_BASE", "string");
+	this.dsSelect.addColumn("CURR_CD", "string");
+	
+	this.dsInsert = new Dataset();		
+	this.dsInsert.addColumn("YM_BASE", "string");
+	this.dsInsert.addColumn("CURR_CD", "string");
+	this.dsInsert.addColumn("LAST_EXRATE", "bigdecimal");
+	this.dsInsert.addColumn("AVG_EXRATE", "bigdecimal");
+	this.dsInsert.addColumn("GEN_SIZE", "bigdecimal");
+	this.dsInsert.addColumn("ID_INSERT", "string");
+	
+	this.dsUpdate = new Dataset();		
+	this.dsUpdate.addColumn("YM_BASE", "string");
+	this.dsUpdate.addColumn("CURR_CD", "string");
+	this.dsUpdate.addColumn("LAST_EXRATE", "bigdecimal");
+	this.dsUpdate.addColumn("AVG_EXRATE", "bigdecimal");
+	this.dsUpdate.addColumn("GEN_SIZE", "bigdecimal");
+	this.dsUpdate.addColumn("ID_UPDATE", "string");
+	
+	this.dsDelete = new Dataset();		
+	this.dsDelete.addColumn("YM_BASE", "string");
+	this.dsDelete.addColumn("CURR_CD", "string");
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+this.fnSelect = function() {
+	if (!this.fnSelectValidation()) return;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "YM_BASE", this.dsSearch.getColumn(0, "YM_BASE")); 
+	this.dsSelect.setColumn(0, "CURR_CD", this.dsSearch.getColumn(0, "CURR_CD")); 
+		
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect"; 
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnAdd = function() {
+	var nrow = this.gfnGridAdd(this.dxGrid, "top");
+}
+
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+this.fnSave = function() {
+	if (!this.gfnGridValidate(this.dxGrid)) return;
+
+	this.dxGrid.updateToDataset();
+	
+	this.dsInsert.clearData();
+	this.dsUpdate.clearData();
+	this.dsDelete.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+			case "I":
+				var nrow = this.dsInsert.addRow();
+				this.dsInsert.setColumn(nrow, "YM_BASE", this.dsSearch.getColumn(0, "YM_BASE"));
+				this.dsInsert.setColumn(nrow, "CURR_CD", this.dsList.getColumn(i, "CURR_CD"));
+				this.dsInsert.setColumn(nrow, "LAST_EXRATE", this.dsList.getColumn(i, "LAST_EXRATE"));
+				this.dsInsert.setColumn(nrow, "AVG_EXRATE", this.dsList.getColumn(i, "AVG_EXRATE"));
+				this.dsInsert.setColumn(nrow, "GEN_SIZE", this.dsList.getColumn(i, "GEN_SIZE"));
+				this.dsInsert.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+				break;
+				
+			case "U":
+				var nrow = this.dsUpdate.addRow();
+				this.dsUpdate.setColumn(nrow, "YM_BASE", this.dsSearch.getColumn(0, "YM_BASE"));
+				this.dsUpdate.setColumn(nrow, "CURR_CD", this.dsList.getColumn(i, "CURR_CD"));
+				this.dsUpdate.setColumn(nrow, "LAST_EXRATE", this.dsList.getColumn(i, "LAST_EXRATE"));
+				this.dsUpdate.setColumn(nrow, "AVG_EXRATE", this.dsList.getColumn(i, "AVG_EXRATE"));
+				this.dsUpdate.setColumn(nrow, "GEN_SIZE", this.dsList.getColumn(i, "GEN_SIZE"));
+				this.dsUpdate.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+				break;
+				
+			case "D":
+				var nrow = this.dsDelete.addRow();
+				this.dsDelete.setColumn(nrow, "YM_BASE", this.dsSearch.getColumn(0, "YM_BASE"));
+				this.dsDelete.setColumn(nrow, "CURR_CD", this.dsList.getColumn(i, "CURR_CD"));
+				break;
+		}
+	}
+	
+	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+this.fnPrint = function() {
+
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidation = function() {
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"YM_BASE"))) {
+		// Alert후 실행할 처리
+		this.fnVaidateCallback1 = function() {
+			this.ctclYM_BASE.setFocus();
+		}
+		this.gfnAlert("회계년월은 반드시 입력 하셔야 합니다.", "fnVaidateCallback1");
+		return false;
+	}
+	return true;
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */ 
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if(svcID == "select") {		
+		this.gfnGridAfterSelect(this.dxGrid);	
+	}
+	else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.btnCopy.set_enable(true);
+			this.btnUpload.set_enable(true);
+			
+			this.FormBtns.Select.click();
+		}
+		else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+ 
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	if (e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		
+		this.btnCopy.set_enable(false);
+		this.btnUpload.set_enable(false);
+		
+		if (e.columnid == "YM_BASE") {
+			this.fnCombo();
+		}
+	}
+};
+
+this.fnCopy = function() {
+	if (this.dsSearch.getColumn(0, "YM_BASE") == "") {
+		this.gfnAlert("회계년월은 반드시 입력 하셔야 합니다.");
+		return;
+	}
+	
+	var msg = "";
+	if (this.dsList.rowcount > 0)
+		msg = "기존자료가 존재합니다. 변경하시겠습니까?";
+	else
+		msg = "전월자료를 복사하시겠습니까?";
+	
+	this.gfnConfirm(msg, "fnCopyCallback");
+}
+
+this.fnCopyCallback = function(id, val){
+	if (val) {
+		
+	}
+}
+
+this.fnUpload = function() {
+}
+
+this.fnCombo = function() {
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("YM_BASE", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "YM_BASE", this.dsSearch.getColumn(0, "YM_BASE"));
+
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsCURR_CD=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+}]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DHZPR_EXRATE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DHZPR_EXRATE_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DHZPR_EXRATE_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DHZPR_EXRATE_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">copy</Col>
+            <Col id="SP">DHZPR_EXRATE_COPY</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">deleteall</Col>
+            <Col id="SP">DHZPR_EXRATE_DELETEALL</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DHZPR_EXRATE_CURRCD_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="YM_BASE" type="STRING" size="256"/>
+          <Column id="CURR_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="YM_BASE"/>
+            <Col id="CURR_CD"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCURR_CD">
+        <ColumnInfo>
+          <Column id="CURR_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctclYM_BASE" propid="value" datasetid="dsSearch" columnid="YM_BASE"/>
+      <BindItem id="item1" compid="divSearch.form.ccboCURR_CD" propid="value" datasetid="dsSearch" columnid="CURR_CD"/>
+    </Bind>
+  </Form>
+</FDL>

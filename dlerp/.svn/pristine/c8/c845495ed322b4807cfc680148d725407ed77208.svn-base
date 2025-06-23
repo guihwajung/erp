@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="sta01" taborder="0" text="작업년도" top="10" width="92" height="24" textDecoration="none" left="5" cssclass="sta_WF_SchLabel"/>
+              <Div id="ctclDT_WORK" taborder="1" left="sta01:0" top="10" width="60" height="24" url="cmm::cmmCalYY.xfdl" cssclass="sta_WF_SchLabel"/>
+              <Static id="sta00" taborder="3" text="현장코드" left="ctclDT_WORK:0" top="10" width="92" height="24" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFSITE" AutoSet="false" CDTextWidth="80" taborder="2" left="sta00:0" top="10" width="250" height="24" url="cmm::cmmCodeFind.xfdl" text="" cssclass="sta_WF_SchLabel"/>
+              <Static id="sta02" taborder="4" text="( 단위 : 백만 )" left="ccfCD_SITE:5" top="10" width="80" height="24" textDecoration="none"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" top="divSearch:5" right="0" bottom="0" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Div id="divSplitter" taborder="2" left="0" top="50%" width="100.00%" height="5" background="skyblue" cursor="ns-resize" ondrag="divData_divSplitter_ondrag"/>
+              <Div id="divA" taborder="0" left="0" top="0" right="0" text="" bottom="divSplitter:5">
+                <Layouts>
+                  <Layout>
+                    <Grid id="grdA" taborder="0" left="0" top="0" right="0" bottom="0" autosizingtype="none" oncellclick="divData_divA_grdA_oncellclick" oncelldblclick="divData_divA_grdA_oncelldblclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divB" taborder="1" left="0" top="divSplitter:5" right="0" bottom="0">
+                <Layouts>
+                  <Layout>
+                    <BasicChart id="BasicChart" taborder="0" left="0" top="0" right="0" bottom="0" binddataset="dsChart" categorycolumn="bind:MM">
+                      <Contents><![CDATA[{
+	"title": {
+		"id": "title",
+		"textfont": "20pt/normal '맑은 고딕'",
+		"padding": "0px 0px 5px"
+	},
+	"legend": {
+		"id": "legend",
+		"padding": "3px 10px 3px 10px",
+		"itemtextfont": "9pt '맑은 고딕'",
+		"itemtextcolor": "#4c4c4c"
+	},
+	"tooltip": {
+		"id": "tooltip",
+		"background": "#4b4b4b",
+		"linestyle": "0px none",
+		"textcolor": "white",
+		"textfont": "10pt/normal '맑은 고딕'",
+		"padding": "5px"
+	},
+	"board": {
+		"id": "board"
+	},
+	"categoryaxis": {
+		"id": "categoryaxis",
+		"titletextcolor": "#4c4c4c",
+		"titletextfont": "bold 12pt '맑은 고딕'",
+		"labeltextcolor": "#6f6f6f",
+		"labeltextfont": "11pt '맑은 고딕'",
+		"axislinestyle": "1px solid #525252",
+		"ticklinestyle": "1px solid #525252",
+		"boardlinestyle": "1px solid #d0d0d0"
+	},
+	"valueaxes": [
+		{
+			"id": "valueaxis0",
+			"boardlinevisible": true,
+			"boardlinestyle": "1px solid #d0d0d0",
+			"labeltextcolor": "#6f6f6f",
+			"labeltextfont": "10pt/normal '맑은 고딕'",
+			"titletextcolor": "#4c4c4c",
+			"titletextfont": "bold 12pt '맑은 고딕'",
+			"ticklinestyle": "1px solid #525252",
+			"axislinestyle": "1px solid #525252"
+		}
+	],
+	"seriesset": [
+		{
+			"id": "series0",
+			"barvisible": true,
+			"barsize": "65",
+			"itemtextvisible": "true",
+			"itemtextcolor": "#003860",
+			"itemtextfont": "bold 12pt '맑은 고딕'",
+			"valuecolumn": "bind:VALUE",
+			"barlinestyle": "1px solid #3182bd",
+			"barfillstyle": "#3182bd",
+			"tooltiptexttype": "number",
+			"titletext": "기성",
+			"itemtextmask": "###,###",
+			"itemtexttype": "number"
+		}
+	]
+}]]></Contents>
+                    </BasicChart>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item2" compid="divSearch.form.ctclDT_WORK.form.TextBox" propid="value" datasetid="dsSearch" columnid="DT_WORK"/>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_SITE.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_SITE"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo){
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	
+	this.fnSetParameter();
+	
+	this.fnSetEvent();
+	
+	this.FormBtns.Select.click();
+	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ctclDT_WORK = this.divSearch.form.ctclDT_WORK;
+	
+	this.dxGridA = this.divData.form.divA.form.grdA;
+	
+	this.BasicChart = this.divData.form.divB.form.BasicChart;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_SITE.CodeFindName = "DZX_CFSITE";
+	
+	this.gfnGridInit(this.dxGridA, this.dsList, "EI", "EIW_GISUNG");
+	
+	var date = this.gfnGetDate();
+	this.dsSearch.setColumn(0, "DT_WORK", date.substring(0, 4));
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("DT_WORK", "string");
+
+	
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGridA);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "DT_WORK", this.dsSearch.getColumn(0, "DT_WORK"));
+	
+	trace(this.dsSelect.saveXML());
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+};
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	
+};
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+
+};
+
+this.fnSave = function() {
+	
+};
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGridA);
+};
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {	
+	var validate = true;
+	
+// 	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_SITE"))) {
+// 		validate = false;
+// 		// Alert후 실행할 처리
+// 		this.fnVaidateCallback = function() {
+// 			this.ccfCD_SITE.form.CDTextBox.setFocus();
+// 		}
+// 		this.gfnAlert("현장코드는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+// 		return validate;
+// 	}
+
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"DT_WORK"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ctclDT_WORK.form.TextBox.setFocus();
+		}
+		this.gfnAlert("작업년도는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+		return validate;
+	}
+	
+	return validate;
+	
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ***********************************************************************
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg){
+	if (errorCode == 0) {
+	} else {
+		this.gfnAlert(errorMsg);
+	}
+		
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGridA);
+		
+		if(this.dsList.rowcount > 0){
+			this.fnSetChart(0);
+		}else{
+			this.dsChart.clearData();
+		}
+		
+	} 
+	
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ *************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.divData_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo){
+	if(e.userdata == "splitter") {
+		this.divData.form.divSplitter.set_top(e.clienty);
+		this.divData.form.resetScroll();	
+	}
+};
+
+this.divData_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo){
+	e.set_userdata("splitter");
+	return true;
+};
+
+this.divData_divA_grdA_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo){
+	if(e.oldrow != e.row){
+		this.fnSetChart(e.row);
+	}
+};
+
+this.fnSetChart = function (row){
+	this.dsChart.clearData();
+	
+	for(var i=0; i < 12; i++){
+		var nrow = this.dsChart.addRow();
+		this.dsChart.setColumn(nrow, "MM", (i+1) + "월");
+		
+		var col = "M" + (i+1);
+		this.dsChart.setColumn(nrow, "VALUE", this.dsList.getColumn(row, col));
+	}
+	
+	trace(this.dsChart.saveXML());
+	
+};
+
+this.divData_divA_grdA_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo){
+	var param = {};
+	var cd = this.dsList.getColumn(e.row, "CD_SITE");
+	
+	if(cd != "Z99999"){
+
+		param.CD_SITE = this.dsList.getColumn(e.row, "CD_SITE");
+		param.DT_WORK = this.dsSelect.getColumn(0, "DT_WORK");
+		
+		// 화면 오픈. 
+		// CD_MODULE은 보통 같은 모듈에서 호출하는 경우가 많으니 this.FormInfo.CD_MODULE 사용
+		// 타 모듈 화면 호출시 지정할것.
+		//this.gfnFormOpen("DWZ", "DWZ_SITE", "", param, 1280, 800); 
+		this.gfnFormOpen(this.FormInfo.CD_MODULE, "DWB_R_GISUNG06", "", param, 1280, 800); 
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">EIWPR_GISUNG_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="DT_WORK" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged"/>
+      <Dataset id="dsChart" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="MM" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

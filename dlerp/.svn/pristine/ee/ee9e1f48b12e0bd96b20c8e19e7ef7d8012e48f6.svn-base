@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="373" height="170" maxwidth="413" maxheight="245" titletext="대상자 생성" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staTitle" taborder="1" text="대상자 생성" left="0" top="-10" width="359" height="35" cssclass="sta_TITLE_Bg" textAlign="left"/>
+        <Div id="divData" taborder="0" left="0" top="staTitle:0" height="104" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staYyHospital" taborder="0" left="0" top="0" width="100" height="34" cssclass="sta_WF_tablelabelTE" text="검진년도"/>
+              <Static id="staYyHospitalBg" taborder="1" left="99" top="0" height="34" cssclass="sta_WF_tablebgT" textAlign="right" right="0"/>
+              <Static id="staCdCorp" taborder="2" left="0" top="33" width="100" height="34" cssclass="sta_WF_tablelabelE" text="법인"/>
+              <Static id="staCdCorpBg" taborder="3" left="99" top="33" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0" text=""/>
+              <Div id="ctclYY_HOSPITAL" taborder="4" left="staYyHospital:4" top="5" width="80" height="24" url="cmm::cmmCalYY.xfdl"/>
+              <Div id="cfCD_CORP" CodeFindName="DZX_CFCORP_STD" CDTextWidth="70" FitToContents="false" taborder="5" left="staCdCorp:4" top="38" width="264" height="24" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="sta00" taborder="6" text="신규 대상자만 추가로 등록됩니다." left="0" top="82" height="22" cssclass="sta_WF_notice" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtns" width="200" height="26" taborder="2" right="0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnCANCLE" taborder="0" text="취소" top="0" width="52" height="26" onclick="btnCancle_onclick" right="0"/>
+              <Button id="btnOK" taborder="1" text="확인" left="93" top="0" width="52" height="26" onclick="btnOk_onclick" cssclass="btn_WF_action"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+
+	this.fnSetButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	var today = this.gfnGetDate().substr(0,4);
+	this.dsList.setColumn(0,"YY_HOSPITAL",!this.gfnIsNull(this.getOwnerFrame().YY_HOSPITAL) ? this.getOwnerFrame().YY_HOSPITAL : today);
+
+};
+
+/************************************************************************
+ * 버튼 설정 
+ * 서브버튼 사용 처리. 공통 및 확장버튼 버튼관리화면에서 셋팅.
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ctclYY_HOSPITAL = this.divData.form.ctclYY_HOSPITAL;
+	this.cfCD_CORP       = this.divData.form.cfCD_CORP;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsCreate = new Dataset();
+	this.dsCreate.addColumn("YY_HOSPITAL", "INT");
+	this.dsCreate.addColumn("CD_CORP", "string");
+	this.dsCreate.addColumn("ID_USER", "STRING");
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * Validate
+ ************************************************************************/
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return false;
+	}
+	
+	switch(svcID) {
+		case "create":		// 저장
+			if (errorCode == 0) {				
+				this.fnVaidateCallback = function() {
+					this.getParentContext().close(true);
+				}
+				this.gfnAlert("대상자생성이 완료되었습니다.", "fnVaidateCallback");
+			}
+
+		default:
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ // 확인 버튼
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+	if(this.gfnIsNull(this.dsList.getColumn(0, "YY_HOSPITAL"))) {
+		this.gfnAlert("적용년도를 입력하세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsList.getColumn(0, "CD_CORP"))) {
+		this.gfnAlert("법인을 입력하세요.");
+		return false;
+	}
+	
+	this.dsCreate.clearData();	
+	var nrow = this.dsCreate.addRow();
+	this.dsCreate.setColumn(nrow, "YY_HOSPITAL", this.dsList.getColumn(0, "YY_HOSPITAL"));
+	this.dsCreate.setColumn(nrow, "CD_CORP", this.dsList.getColumn(0, "CD_CORP"));	
+	this.dsCreate.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	
+	if (this.dsCreate.rowcount == 0) return;
+		
+	var strSvcId    = "create";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "create=dsCreate";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+// 취소버튼
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="YY_HOSPITAL" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CORP"/>
+            <Col id="YY_HOSPITAL"/>
+            <Col id="DS_CORP"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">create</Col>
+            <Col id="SP">DABPR_HOSPITAL_CREATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.ctclYY_HOSPITAL.form.TextBox" propid="value" datasetid="dsList" columnid="YY_HOSPITAL"/>
+      <BindItem id="item1" compid="divData.form.cfCD_CORP.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_CORP"/>
+      <BindItem id="item2" compid="divData.form.cfCD_CORP.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_CORP"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,1729 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("New Form");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DQDPR_CUSTOMER_AR_IF_SELECT</Col></Row><Row><Col id=\"TARGET\">insert</Col><Col id=\"SP\">DQDPR_CUSTOMER_AR_IF_INSERT</Col></Row><Row><Col id=\"TARGET\">update</Col><Col id=\"SP\">DQDPR_CUSTOMER_AR_IF_UPDATE</Col></Row><Row><Col id=\"TARGET\">delete</Col><Col id=\"SP\">DQDPR_CUSTOMER_AR_IF_DELETE</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTYPE_SELECT", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"VALUE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CODE\">C</Col><Col id=\"VALUE\">코드</Col></Row><Row><Col id=\"CODE\">N</Col><Col id=\"VALUE\">명칭</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"TY_SELECT\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SEARCH\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TY_SELECT\">C</Col><Col id=\"DS_SEARCH\"/></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProcSap", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsFunc", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsExport", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsOT_ITAB", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsOT_ADDR", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0.0","10.0",null,"46.0","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_SEARCH_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("sta00","0.0","10.0","79.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("2");
+            obj.set_text("거래처");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Radio("rdoTY_SELECT","sta00:0.0","10.0","90","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_innerdataset("dsTYPE_SELECT");
+            obj.set_datacolumn("VALUE");
+            obj.set_codecolumn("CODE");
+            obj.set_direction("vertical");
+            obj.set_fittocontents("width");
+            obj.set_text("코드");
+            obj.set_value("C");
+            obj.set_index("0");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_SEARCH","rdoTY_SELECT:0.0","10.0","140","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("0");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:10",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item1","divSearch.form.rdoTY_SELECT","value","dsSearch","TY_SELECT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divSearch.form.edtDS_SEARCH","value","dsSearch","DS_SEARCH");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("DQD_CUSTOMER_AR_SAP.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+
+        	this.divSearch.form.rdoTYPE_SELECT.set_index(0);
+        	//this.FormBtns.Select.click();
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         ************************************************************************/
+        this.fnSetButton = function() {
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+         	this.btnCREATE = this.gfnFormButtonAdd("btnCREATE", "fnCREATE");
+        	this.btnUPDATE = this.gfnFormButtonAdd("btnUPDATE", "fnUPDATE");
+        	this.btnQUERY = this.gfnFormButtonAdd("btnQUERY", "fnQUERY");
+        	this.btnALLVENDER = this.gfnFormButtonAdd("btnALLVENDER", "fnALLVENDER");
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.dxGrid = this.divData.form.objGrid;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DQ", "DQD_VENDOR_AR_SAP");
+
+        }
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("TY_SELECT", "string");
+        	this.dsSelect.addColumn("DS_SEARCH", "string");
+
+        	this.dsInsert = new Dataset();
+        	this.dsInsert.addColumn("STR_SUPPL1", "string");
+        	this.dsInsert.addColumn("STR_SUPPL2", "string");
+        	this.dsInsert.addColumn("KUNNR", "string");
+        	this.dsInsert.addColumn("MANDT", "string");
+        	this.dsInsert.addColumn("LAND1", "string");
+        	this.dsInsert.addColumn("NAME1", "string");
+        	this.dsInsert.addColumn("NAME2", "string");
+        	this.dsInsert.addColumn("ORT01", "string");
+        	this.dsInsert.addColumn("LIFNR", "string");
+        	this.dsInsert.addColumn("PSTLZ", "string");
+        	this.dsInsert.addColumn("REGIO", "string");
+        	this.dsInsert.addColumn("SORTL", "string");
+        	this.dsInsert.addColumn("STRAS", "string");
+        	this.dsInsert.addColumn("TELF1", "string");
+        	this.dsInsert.addColumn("TELFX", "string");
+        	this.dsInsert.addColumn("XCPDK", "string");
+        	this.dsInsert.addColumn("ADRNR", "string");
+        	this.dsInsert.addColumn("MCOD1", "string");
+        	this.dsInsert.addColumn("MCOD2", "string");
+        	this.dsInsert.addColumn("MCOD3", "string");
+        	this.dsInsert.addColumn("SI_KNA1", "string");
+        	this.dsInsert.addColumn("ANRED", "string");
+        	this.dsInsert.addColumn("AUFSD", "string");
+        	this.dsInsert.addColumn("BAHNE", "string");
+        	this.dsInsert.addColumn("BAHNS", "string");
+        	this.dsInsert.addColumn("BBBNR", "string");
+        	this.dsInsert.addColumn("BBSNR", "string");
+        	this.dsInsert.addColumn("BEGRU", "string");
+        	this.dsInsert.addColumn("BRSCH", "string");
+        	this.dsInsert.addColumn("BUBKZ", "string");
+        	this.dsInsert.addColumn("DATLT", "string");
+        	this.dsInsert.addColumn("ERDAT", "string");
+        	this.dsInsert.addColumn("ERNAM", "string");
+        	this.dsInsert.addColumn("EXABL", "string");
+        	this.dsInsert.addColumn("FAKSD", "string");
+        	this.dsInsert.addColumn("FISKN", "string");
+        	this.dsInsert.addColumn("KNAZK", "string");
+        	this.dsInsert.addColumn("KNRZA", "string");
+        	this.dsInsert.addColumn("KONZS", "string");
+        	this.dsInsert.addColumn("KTOKD", "string");
+        	this.dsInsert.addColumn("KUKLA", "string");
+        	this.dsInsert.addColumn("LIFSD", "string");
+        	this.dsInsert.addColumn("LOCCO", "string");
+        	this.dsInsert.addColumn("LOEVM", "string");
+        	this.dsInsert.addColumn("NAME3", "string");
+        	this.dsInsert.addColumn("NAME4", "string");
+        	this.dsInsert.addColumn("NIELS", "string");
+        	this.dsInsert.addColumn("ORT02", "string");
+        	this.dsInsert.addColumn("PFACH", "string");
+        	this.dsInsert.addColumn("PSTL2", "string");
+        	this.dsInsert.addColumn("COUNC", "string");
+        	this.dsInsert.addColumn("CITYC", "string");
+        	this.dsInsert.addColumn("RPMKR", "string");
+        	this.dsInsert.addColumn("SPERR", "string");
+        	this.dsInsert.addColumn("SPRAS", "string");
+        	this.dsInsert.addColumn("STCD1", "string");
+        	this.dsInsert.addColumn("STCD2", "string");
+        	this.dsInsert.addColumn("STKZA", "string");
+        	this.dsInsert.addColumn("STKZU", "string");
+        	this.dsInsert.addColumn("TELBX", "string");
+        	this.dsInsert.addColumn("TELF2", "string");
+        	this.dsInsert.addColumn("TELTX", "string");
+        	this.dsInsert.addColumn("TELX1", "string");
+        	this.dsInsert.addColumn("LZONE", "string");
+        	this.dsInsert.addColumn("XZEMP", "string");
+        	this.dsInsert.addColumn("VBUND", "string");
+        	this.dsInsert.addColumn("STCEG", "string");
+        	this.dsInsert.addColumn("DEAR1", "string");
+        	this.dsInsert.addColumn("DEAR2", "string");
+        	this.dsInsert.addColumn("DEAR3", "string");
+        	this.dsInsert.addColumn("DEAR4", "string");
+        	this.dsInsert.addColumn("DEAR5", "string");
+        	this.dsInsert.addColumn("GFORM", "string");
+        	this.dsInsert.addColumn("BRAN1", "string");
+        	this.dsInsert.addColumn("BRAN2", "string");
+        	this.dsInsert.addColumn("BRAN3", "string");
+        	this.dsInsert.addColumn("BRAN4", "string");
+        	this.dsInsert.addColumn("BRAN5", "string");
+        	this.dsInsert.addColumn("EKONT", "string");
+        	this.dsInsert.addColumn("UMSAT", "string");
+        	this.dsInsert.addColumn("UMJAH", "string");
+        	this.dsInsert.addColumn("UWAER", "string");
+        	this.dsInsert.addColumn("JMZAH", "string");
+        	this.dsInsert.addColumn("JMJAH", "string");
+        	this.dsInsert.addColumn("KATR1", "string");
+        	this.dsInsert.addColumn("KATR2", "string");
+        	this.dsInsert.addColumn("KATR3", "string");
+        	this.dsInsert.addColumn("KATR4", "string");
+        	this.dsInsert.addColumn("KATR5", "string");
+        	this.dsInsert.addColumn("KATR6", "string");
+        	this.dsInsert.addColumn("KATR7", "string");
+        	this.dsInsert.addColumn("KATR8", "string");
+        	this.dsInsert.addColumn("KATR9", "string");
+        	this.dsInsert.addColumn("KATR10", "string");
+        	this.dsInsert.addColumn("STKZN", "string");
+        	this.dsInsert.addColumn("UMSA1", "string");
+        	this.dsInsert.addColumn("TXJCD", "string");
+        	this.dsInsert.addColumn("PERIV", "string");
+        	this.dsInsert.addColumn("ABRVW", "string");
+        	this.dsInsert.addColumn("INSPBYDEBI", "string");
+        	this.dsInsert.addColumn("INSPATDEBI", "string");
+        	this.dsInsert.addColumn("KTOCD", "string");
+        	this.dsInsert.addColumn("PFORT", "string");
+        	this.dsInsert.addColumn("WERKS", "string");
+        	this.dsInsert.addColumn("DTAMS", "string");
+        	this.dsInsert.addColumn("DTAWS", "string");
+        	this.dsInsert.addColumn("DUEFL", "string");
+        	this.dsInsert.addColumn("HZUOR", "string");
+        	this.dsInsert.addColumn("SPERZ", "string");
+        	this.dsInsert.addColumn("ETIKG", "string");
+        	this.dsInsert.addColumn("CIVVE", "string");
+        	this.dsInsert.addColumn("MILVE", "string");
+        	this.dsInsert.addColumn("KDKG1", "string");
+        	this.dsInsert.addColumn("KDKG2", "string");
+        	this.dsInsert.addColumn("KDKG3", "string");
+        	this.dsInsert.addColumn("KDKG4", "string");
+        	this.dsInsert.addColumn("KDKG5", "string");
+        	this.dsInsert.addColumn("XKNZA", "string");
+        	this.dsInsert.addColumn("FITYP", "string");
+        	this.dsInsert.addColumn("STCDT", "string");
+        	this.dsInsert.addColumn("STCD3", "string");
+        	this.dsInsert.addColumn("STCD4", "string");
+        	this.dsInsert.addColumn("XICMS", "string");
+        	this.dsInsert.addColumn("XXIPI", "string");
+        	this.dsInsert.addColumn("XSUBT", "string");
+        	this.dsInsert.addColumn("CFOPC", "string");
+        	this.dsInsert.addColumn("TXLW1", "string");
+        	this.dsInsert.addColumn("TXLW2", "string");
+        	this.dsInsert.addColumn("CCC01", "string");
+        	this.dsInsert.addColumn("CCC02", "string");
+        	this.dsInsert.addColumn("CCC03", "string");
+        	this.dsInsert.addColumn("CCC04", "string");
+        	this.dsInsert.addColumn("CASSD", "string");
+        	this.dsInsert.addColumn("KNURL", "string");
+        	this.dsInsert.addColumn("J_1KFREPRE", "string");
+        	this.dsInsert.addColumn("J_1KFTBUS", "string");
+        	this.dsInsert.addColumn("J_1KFTIND", "string");
+        	this.dsInsert.addColumn("CONFS", "string");
+        	this.dsInsert.addColumn("UPDAT", "string");
+        	this.dsInsert.addColumn("UPTIM", "string");
+        	this.dsInsert.addColumn("NODEL", "string");
+        	this.dsInsert.addColumn("DEAR6", "string");
+        	this.dsInsert.addColumn("R_KNA1_A", "string");
+        	this.dsInsert.addColumn("R_KNA1_I", "string");
+        	this.dsInsert.addColumn("R_PALHGT", "string");
+        	this.dsInsert.addColumn("R_PAL_UL", "string");
+        	this.dsInsert.addColumn("R_PK_MAT", "string");
+        	this.dsInsert.addColumn("R_MATPAL", "string");
+        	this.dsInsert.addColumn("R_I_NO_LYR", "string");
+        	this.dsInsert.addColumn("R_ONE_MAT", "string");
+        	this.dsInsert.addColumn("R_ONE_SORT", "string");
+        	this.dsInsert.addColumn("R_ULD_SIDE", "string");
+        	this.dsInsert.addColumn("R_LOAD_PREF", "string");
+        	this.dsInsert.addColumn("R_DPOINT", "string");
+        	this.dsInsert.addColumn("AKNA1_FMFG", "string");
+        	this.dsInsert.addColumn("ALC", "string");
+        	this.dsInsert.addColumn("PMT_OFFICE", "string");
+        	this.dsInsert.addColumn("SI_FMFG_VP2", "string");
+        	this.dsInsert.addColumn("AKNA1_PSO", "string");
+        	this.dsInsert.addColumn("PSOFG", "string");
+        	this.dsInsert.addColumn("PSOIS", "string");
+        	this.dsInsert.addColumn("IADDR_PSO", "string");
+        	this.dsInsert.addColumn("PSON1", "string");
+        	this.dsInsert.addColumn("PSON2", "string");
+        	this.dsInsert.addColumn("PSON3", "string");
+        	this.dsInsert.addColumn("PSOVN", "string");
+        	this.dsInsert.addColumn("PSOTL", "string");
+        	this.dsInsert.addColumn("PSOHS", "string");
+        	this.dsInsert.addColumn("PSOST", "string");
+        	this.dsInsert.addColumn("PSO21", "string");
+        	this.dsInsert.addColumn("PSOO1", "string");
+        	this.dsInsert.addColumn("PSOO2", "string");
+        	this.dsInsert.addColumn("PSOO3", "string");
+        	this.dsInsert.addColumn("PSOO4", "string");
+        	this.dsInsert.addColumn("PSOO5", "string");
+        	this.dsInsert.addColumn("ID_USER", "string");
+
+        	this.dsUpdate = new Dataset();
+        	this.dsUpdate.addColumn("STR_SUPPL1", "string");
+        	this.dsUpdate.addColumn("STR_SUPPL2", "string");
+        	this.dsUpdate.addColumn("KUNNR", "string");
+        	this.dsUpdate.addColumn("MANDT", "string");
+        	this.dsUpdate.addColumn("LAND1", "string");
+        	this.dsUpdate.addColumn("NAME1", "string");
+        	this.dsUpdate.addColumn("NAME2", "string");
+        	this.dsUpdate.addColumn("ORT01", "string");
+        	this.dsUpdate.addColumn("LIFNR", "string");
+        	this.dsUpdate.addColumn("PSTLZ", "string");
+        	this.dsUpdate.addColumn("REGIO", "string");
+        	this.dsUpdate.addColumn("SORTL", "string");
+        	this.dsUpdate.addColumn("STRAS", "string");
+        	this.dsUpdate.addColumn("TELF1", "string");
+        	this.dsUpdate.addColumn("TELFX", "string");
+        	this.dsUpdate.addColumn("XCPDK", "string");
+        	this.dsUpdate.addColumn("ADRNR", "string");
+        	this.dsUpdate.addColumn("MCOD1", "string");
+        	this.dsUpdate.addColumn("MCOD2", "string");
+        	this.dsUpdate.addColumn("MCOD3", "string");
+        	this.dsUpdate.addColumn("SI_KNA1", "string");
+        	this.dsUpdate.addColumn("ANRED", "string");
+        	this.dsUpdate.addColumn("AUFSD", "string");
+        	this.dsUpdate.addColumn("BAHNE", "string");
+        	this.dsUpdate.addColumn("BAHNS", "string");
+        	this.dsUpdate.addColumn("BBBNR", "string");
+        	this.dsUpdate.addColumn("BBSNR", "string");
+        	this.dsUpdate.addColumn("BEGRU", "string");
+        	this.dsUpdate.addColumn("BRSCH", "string");
+        	this.dsUpdate.addColumn("BUBKZ", "string");
+        	this.dsUpdate.addColumn("DATLT", "string");
+        	this.dsUpdate.addColumn("ERDAT", "string");
+        	this.dsUpdate.addColumn("ERNAM", "string");
+        	this.dsUpdate.addColumn("EXABL", "string");
+        	this.dsUpdate.addColumn("FAKSD", "string");
+        	this.dsUpdate.addColumn("FISKN", "string");
+        	this.dsUpdate.addColumn("KNAZK", "string");
+        	this.dsUpdate.addColumn("KNRZA", "string");
+        	this.dsUpdate.addColumn("KONZS", "string");
+        	this.dsUpdate.addColumn("KTOKD", "string");
+        	this.dsUpdate.addColumn("KUKLA", "string");
+        	this.dsUpdate.addColumn("LIFSD", "string");
+        	this.dsUpdate.addColumn("LOCCO", "string");
+        	this.dsUpdate.addColumn("LOEVM", "string");
+        	this.dsUpdate.addColumn("NAME3", "string");
+        	this.dsUpdate.addColumn("NAME4", "string");
+        	this.dsUpdate.addColumn("NIELS", "string");
+        	this.dsUpdate.addColumn("ORT02", "string");
+        	this.dsUpdate.addColumn("PFACH", "string");
+        	this.dsUpdate.addColumn("PSTL2", "string");
+        	this.dsUpdate.addColumn("COUNC", "string");
+        	this.dsUpdate.addColumn("CITYC", "string");
+        	this.dsUpdate.addColumn("RPMKR", "string");
+        	this.dsUpdate.addColumn("SPERR", "string");
+        	this.dsUpdate.addColumn("SPRAS", "string");
+        	this.dsUpdate.addColumn("STCD1", "string");
+        	this.dsUpdate.addColumn("STCD2", "string");
+        	this.dsUpdate.addColumn("STKZA", "string");
+        	this.dsUpdate.addColumn("STKZU", "string");
+        	this.dsUpdate.addColumn("TELBX", "string");
+        	this.dsUpdate.addColumn("TELF2", "string");
+        	this.dsUpdate.addColumn("TELTX", "string");
+        	this.dsUpdate.addColumn("TELX1", "string");
+        	this.dsUpdate.addColumn("LZONE", "string");
+        	this.dsUpdate.addColumn("XZEMP", "string");
+        	this.dsUpdate.addColumn("VBUND", "string");
+        	this.dsUpdate.addColumn("STCEG", "string");
+        	this.dsUpdate.addColumn("DEAR1", "string");
+        	this.dsUpdate.addColumn("DEAR2", "string");
+        	this.dsUpdate.addColumn("DEAR3", "string");
+        	this.dsUpdate.addColumn("DEAR4", "string");
+        	this.dsUpdate.addColumn("DEAR5", "string");
+        	this.dsUpdate.addColumn("GFORM", "string");
+        	this.dsUpdate.addColumn("BRAN1", "string");
+        	this.dsUpdate.addColumn("BRAN2", "string");
+        	this.dsUpdate.addColumn("BRAN3", "string");
+        	this.dsUpdate.addColumn("BRAN4", "string");
+        	this.dsUpdate.addColumn("BRAN5", "string");
+        	this.dsUpdate.addColumn("EKONT", "string");
+        	this.dsUpdate.addColumn("UMSAT", "string");
+        	this.dsUpdate.addColumn("UMJAH", "string");
+        	this.dsUpdate.addColumn("UWAER", "string");
+        	this.dsUpdate.addColumn("JMZAH", "string");
+        	this.dsUpdate.addColumn("JMJAH", "string");
+        	this.dsUpdate.addColumn("KATR1", "string");
+        	this.dsUpdate.addColumn("KATR2", "string");
+        	this.dsUpdate.addColumn("KATR3", "string");
+        	this.dsUpdate.addColumn("KATR4", "string");
+        	this.dsUpdate.addColumn("KATR5", "string");
+        	this.dsUpdate.addColumn("KATR6", "string");
+        	this.dsUpdate.addColumn("KATR7", "string");
+        	this.dsUpdate.addColumn("KATR8", "string");
+        	this.dsUpdate.addColumn("KATR9", "string");
+        	this.dsUpdate.addColumn("KATR10", "string");
+        	this.dsUpdate.addColumn("STKZN", "string");
+        	this.dsUpdate.addColumn("UMSA1", "string");
+        	this.dsUpdate.addColumn("TXJCD", "string");
+        	this.dsUpdate.addColumn("PERIV", "string");
+        	this.dsUpdate.addColumn("ABRVW", "string");
+        	this.dsUpdate.addColumn("INSPBYDEBI", "string");
+        	this.dsUpdate.addColumn("INSPATDEBI", "string");
+        	this.dsUpdate.addColumn("KTOCD", "string");
+        	this.dsUpdate.addColumn("PFORT", "string");
+        	this.dsUpdate.addColumn("WERKS", "string");
+        	this.dsUpdate.addColumn("DTAMS", "string");
+        	this.dsUpdate.addColumn("DTAWS", "string");
+        	this.dsUpdate.addColumn("DUEFL", "string");
+        	this.dsUpdate.addColumn("HZUOR", "string");
+        	this.dsUpdate.addColumn("SPERZ", "string");
+        	this.dsUpdate.addColumn("ETIKG", "string");
+        	this.dsUpdate.addColumn("CIVVE", "string");
+        	this.dsUpdate.addColumn("MILVE", "string");
+        	this.dsUpdate.addColumn("KDKG1", "string");
+        	this.dsUpdate.addColumn("KDKG2", "string");
+        	this.dsUpdate.addColumn("KDKG3", "string");
+        	this.dsUpdate.addColumn("KDKG4", "string");
+        	this.dsUpdate.addColumn("KDKG5", "string");
+        	this.dsUpdate.addColumn("XKNZA", "string");
+        	this.dsUpdate.addColumn("FITYP", "string");
+        	this.dsUpdate.addColumn("STCDT", "string");
+        	this.dsUpdate.addColumn("STCD3", "string");
+        	this.dsUpdate.addColumn("STCD4", "string");
+        	this.dsUpdate.addColumn("XICMS", "string");
+        	this.dsUpdate.addColumn("XXIPI", "string");
+        	this.dsUpdate.addColumn("XSUBT", "string");
+        	this.dsUpdate.addColumn("CFOPC", "string");
+        	this.dsUpdate.addColumn("TXLW1", "string");
+        	this.dsUpdate.addColumn("TXLW2", "string");
+        	this.dsUpdate.addColumn("CCC01", "string");
+        	this.dsUpdate.addColumn("CCC02", "string");
+        	this.dsUpdate.addColumn("CCC03", "string");
+        	this.dsUpdate.addColumn("CCC04", "string");
+        	this.dsUpdate.addColumn("CASSD", "string");
+        	this.dsUpdate.addColumn("KNURL", "string");
+        	this.dsUpdate.addColumn("J_1KFREPRE", "string");
+        	this.dsUpdate.addColumn("J_1KFTBUS", "string");
+        	this.dsUpdate.addColumn("J_1KFTIND", "string");
+        	this.dsUpdate.addColumn("CONFS", "string");
+        	this.dsUpdate.addColumn("UPDAT", "string");
+        	this.dsUpdate.addColumn("UPTIM", "string");
+        	this.dsUpdate.addColumn("NODEL", "string");
+        	this.dsUpdate.addColumn("DEAR6", "string");
+        	this.dsUpdate.addColumn("R_KNA1_A", "string");
+        	this.dsUpdate.addColumn("R_KNA1_I", "string");
+        	this.dsUpdate.addColumn("R_PALHGT", "string");
+        	this.dsUpdate.addColumn("R_PAL_UL", "string");
+        	this.dsUpdate.addColumn("R_PK_MAT", "string");
+        	this.dsUpdate.addColumn("R_MATPAL", "string");
+        	this.dsUpdate.addColumn("R_I_NO_LYR", "string");
+        	this.dsUpdate.addColumn("R_ONE_MAT", "string");
+        	this.dsUpdate.addColumn("R_ONE_SORT", "string");
+        	this.dsUpdate.addColumn("R_ULD_SIDE", "string");
+        	this.dsUpdate.addColumn("R_LOAD_PREF", "string");
+        	this.dsUpdate.addColumn("R_DPOINT", "string");
+        	this.dsUpdate.addColumn("AKNA1_FMFG", "string");
+        	this.dsUpdate.addColumn("ALC", "string");
+        	this.dsUpdate.addColumn("PMT_OFFICE", "string");
+        	this.dsUpdate.addColumn("SI_FMFG_VP2", "string");
+        	this.dsUpdate.addColumn("AKNA1_PSO", "string");
+        	this.dsUpdate.addColumn("PSOFG", "string");
+        	this.dsUpdate.addColumn("PSOIS", "string");
+        	this.dsUpdate.addColumn("IADDR_PSO", "string");
+        	this.dsUpdate.addColumn("PSON1", "string");
+        	this.dsUpdate.addColumn("PSON2", "string");
+        	this.dsUpdate.addColumn("PSON3", "string");
+        	this.dsUpdate.addColumn("PSOVN", "string");
+        	this.dsUpdate.addColumn("PSOTL", "string");
+        	this.dsUpdate.addColumn("PSOHS", "string");
+        	this.dsUpdate.addColumn("PSOST", "string");
+        	this.dsUpdate.addColumn("PSO21", "string");
+        	this.dsUpdate.addColumn("PSOO1", "string");
+        	this.dsUpdate.addColumn("PSOO2", "string");
+        	this.dsUpdate.addColumn("PSOO3", "string");
+        	this.dsUpdate.addColumn("PSOO4", "string");
+        	this.dsUpdate.addColumn("PSOO5", "string");
+        	this.dsUpdate.addColumn("ID_USER", "string");
+
+        	this.dsDelete = new Dataset();
+        	this.dsDelete.addColumn("LIFNR", "string");
+
+        	this.dsSap = new Dataset();
+        	this.dsSap.addColumn("IV_KUNNR", "string");
+
+        	this.dsSelectSap = new Dataset();
+        	this.dsSelectSap.addColumn("KTOKD", "string");
+        	this.dsSelectSap.addColumn("NAME1", "string");
+        	this.dsSelectSap.addColumn("SUPPL1", "string");
+        	this.dsSelectSap.addColumn("SUPPL2", "string");
+        	this.dsSelectSap.addColumn("LAND1", "string");
+        	this.dsSelectSap.addColumn("REGIO", "string");
+        	this.dsSelectSap.addColumn("STCD1", "string");
+        	this.dsSelectSap.addColumn("STCD2", "string");
+        	this.dsSelectSap.addColumn("J_1KFREPRE", "string");
+        	this.dsSelectSap.addColumn("J_1KFTBUS", "string");
+        	this.dsSelectSap.addColumn("J_1KFTIND", "string");
+        	this.dsSelectSap.addColumn("ZSALES", "string");
+        	this.dsSelectSap.addColumn("VKBUR", "string");
+        	this.dsSelectSap.addColumn("INCO1", "string");
+        	this.dsSelectSap.addColumn("ZTERM", "string");
+        	this.dsSelectSap.addColumn("TAXKD", "string");
+        	this.dsSelectSap.addColumn("LIFNR", "string");
+        	this.dsSelectSap.addColumn("ZSUBRC", "string");
+        	this.dsSelectSap.addColumn("TXT", "string");
+        	this.dsSelectSap.addColumn("PSTLZ", "string");
+
+        }
+
+        /************************************************************************
+         * 버튼 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+        	this.gfnGridBeforeSelect(this.dxGrid);
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+
+        	this.dsSelect.setColumn(0, "TY_SELECT", this.dsSearch.getColumn(0, "TY_SELECT"));
+        	this.dsSelect.setColumn(0, "DS_SEARCH", this.dsSearch.getColumn(0, "DS_SEARCH"));
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+        	this.gfnGridAdd(this.dxGrid);
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+        	this.gfnGridDel(this.dxGrid);
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+        	if (!this.gfnGridValidate(this.dxGrid)) return;
+
+        	this.dxGrid.updateToDataset();
+
+        	this.dsInsert.clearData();
+        	this.dsUpdate.clearData();
+        	this.dsDelete.clearData();
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var flag = this.gfnGetFlag(this.dsList, i);
+        		switch(flag) {
+        			case "I":
+        				var nrow = this.dsInsert.addRow();
+        				this.dsInsert.setColumn(nrow, "STR_SUPPL1", this.dsList.getColumn(i, "STR_SUPPL1"));
+        				this.dsInsert.setColumn(nrow, "STR_SUPPL2", this.dsList.getColumn(i, "STR_SUPPL2"));
+        				this.dsInsert.setColumn(nrow, "KUNNR", this.dsList.getColumn(i, "KUNNR"));
+        				this.dsInsert.setColumn(nrow, "MANDT", this.dsList.getColumn(i, "MANDT"));
+        				this.dsInsert.setColumn(nrow, "LAND1", this.dsList.getColumn(i, "LAND1"));
+        				this.dsInsert.setColumn(nrow, "NAME1", this.dsList.getColumn(i, "NAME1"));
+        				this.dsInsert.setColumn(nrow, "NAME2", this.dsList.getColumn(i, "NAME2"));
+        				this.dsInsert.setColumn(nrow, "ORT01", this.dsList.getColumn(i, "ORT01"));
+        				this.dsInsert.setColumn(nrow, "LIFNR", this.dsList.getColumn(i, "LIFNR"));
+        				this.dsInsert.setColumn(nrow, "PSTLZ", this.dsList.getColumn(i, "PSTLZ"));
+        				this.dsInsert.setColumn(nrow, "REGIO", this.dsList.getColumn(i, "REGIO"));
+        				this.dsInsert.setColumn(nrow, "SORTL", this.dsList.getColumn(i, "SORTL"));
+        				this.dsInsert.setColumn(nrow, "STRAS", this.dsList.getColumn(i, "STRAS"));
+        				this.dsInsert.setColumn(nrow, "TELF1", this.dsList.getColumn(i, "TELF1"));
+        				this.dsInsert.setColumn(nrow, "TELFX", this.dsList.getColumn(i, "TELFX"));
+        				this.dsInsert.setColumn(nrow, "XCPDK", this.dsList.getColumn(i, "XCPDK"));
+        				this.dsInsert.setColumn(nrow, "ADRNR", this.dsList.getColumn(i, "ADRNR"));
+        				this.dsInsert.setColumn(nrow, "MCOD1", this.dsList.getColumn(i, "MCOD1"));
+        				this.dsInsert.setColumn(nrow, "MCOD2", this.dsList.getColumn(i, "MCOD2"));
+        				this.dsInsert.setColumn(nrow, "MCOD3", this.dsList.getColumn(i, "MCOD3"));
+        				this.dsInsert.setColumn(nrow, "SI_KNA1", this.dsList.getColumn(i, "SI_KNA1"));
+        				this.dsInsert.setColumn(nrow, "ANRED", this.dsList.getColumn(i, "ANRED"));
+        				this.dsInsert.setColumn(nrow, "AUFSD", this.dsList.getColumn(i, "AUFSD"));
+        				this.dsInsert.setColumn(nrow, "BAHNE", this.dsList.getColumn(i, "BAHNE"));
+        				this.dsInsert.setColumn(nrow, "BAHNS", this.dsList.getColumn(i, "BAHNS"));
+        				this.dsInsert.setColumn(nrow, "BBBNR", this.dsList.getColumn(i, "BBBNR"));
+        				this.dsInsert.setColumn(nrow, "BBSNR", this.dsList.getColumn(i, "BBSNR"));
+        				this.dsInsert.setColumn(nrow, "BEGRU", this.dsList.getColumn(i, "BEGRU"));
+        				this.dsInsert.setColumn(nrow, "BRSCH", this.dsList.getColumn(i, "BRSCH"));
+        				this.dsInsert.setColumn(nrow, "BUBKZ", this.dsList.getColumn(i, "BUBKZ"));
+        				this.dsInsert.setColumn(nrow, "DATLT", this.dsList.getColumn(i, "DATLT"));
+        				this.dsInsert.setColumn(nrow, "ERDAT", this.dsList.getColumn(i, "ERDAT"));
+        				this.dsInsert.setColumn(nrow, "ERNAM", this.dsList.getColumn(i, "ERNAM"));
+        				this.dsInsert.setColumn(nrow, "EXABL", this.dsList.getColumn(i, "EXABL"));
+        				this.dsInsert.setColumn(nrow, "FAKSD", this.dsList.getColumn(i, "FAKSD"));
+        				this.dsInsert.setColumn(nrow, "FISKN", this.dsList.getColumn(i, "FISKN"));
+        				this.dsInsert.setColumn(nrow, "KNAZK", this.dsList.getColumn(i, "KNAZK"));
+        				this.dsInsert.setColumn(nrow, "KNRZA", this.dsList.getColumn(i, "KNRZA"));
+        				this.dsInsert.setColumn(nrow, "KONZS", this.dsList.getColumn(i, "KONZS"));
+        				this.dsInsert.setColumn(nrow, "KTOKD", this.dsList.getColumn(i, "KTOKD"));
+        				this.dsInsert.setColumn(nrow, "KUKLA", this.dsList.getColumn(i, "KUKLA"));
+        				this.dsInsert.setColumn(nrow, "LIFSD", this.dsList.getColumn(i, "LIFSD"));
+        				this.dsInsert.setColumn(nrow, "LOCCO", this.dsList.getColumn(i, "LOCCO"));
+        				this.dsInsert.setColumn(nrow, "LOEVM", this.dsList.getColumn(i, "LOEVM"));
+        				this.dsInsert.setColumn(nrow, "NAME3", this.dsList.getColumn(i, "NAME3"));
+        				this.dsInsert.setColumn(nrow, "NAME4", this.dsList.getColumn(i, "NAME4"));
+        				this.dsInsert.setColumn(nrow, "NIELS", this.dsList.getColumn(i, "NIELS"));
+        				this.dsInsert.setColumn(nrow, "ORT02", this.dsList.getColumn(i, "ORT02"));
+        				this.dsInsert.setColumn(nrow, "PFACH", this.dsList.getColumn(i, "PFACH"));
+        				this.dsInsert.setColumn(nrow, "PSTL2", this.dsList.getColumn(i, "PSTL2"));
+        				this.dsInsert.setColumn(nrow, "COUNC", this.dsList.getColumn(i, "COUNC"));
+        				this.dsInsert.setColumn(nrow, "CITYC", this.dsList.getColumn(i, "CITYC"));
+        				this.dsInsert.setColumn(nrow, "RPMKR", this.dsList.getColumn(i, "RPMKR"));
+        				this.dsInsert.setColumn(nrow, "SPERR", this.dsList.getColumn(i, "SPERR"));
+        				this.dsInsert.setColumn(nrow, "SPRAS", this.dsList.getColumn(i, "SPRAS"));
+        				this.dsInsert.setColumn(nrow, "STCD1", this.dsList.getColumn(i, "STCD1"));
+        				this.dsInsert.setColumn(nrow, "STCD2", this.dsList.getColumn(i, "STCD2"));
+        				this.dsInsert.setColumn(nrow, "STKZA", this.dsList.getColumn(i, "STKZA"));
+        				this.dsInsert.setColumn(nrow, "STKZU", this.dsList.getColumn(i, "STKZU"));
+        				this.dsInsert.setColumn(nrow, "TELBX", this.dsList.getColumn(i, "TELBX"));
+        				this.dsInsert.setColumn(nrow, "TELF2", this.dsList.getColumn(i, "TELF2"));
+        				this.dsInsert.setColumn(nrow, "TELTX", this.dsList.getColumn(i, "TELTX"));
+        				this.dsInsert.setColumn(nrow, "TELX1", this.dsList.getColumn(i, "TELX1"));
+        				this.dsInsert.setColumn(nrow, "LZONE", this.dsList.getColumn(i, "LZONE"));
+        				this.dsInsert.setColumn(nrow, "XZEMP", this.dsList.getColumn(i, "XZEMP"));
+        				this.dsInsert.setColumn(nrow, "VBUND", this.dsList.getColumn(i, "VBUND"));
+        				this.dsInsert.setColumn(nrow, "STCEG", this.dsList.getColumn(i, "STCEG"));
+        				this.dsInsert.setColumn(nrow, "DEAR1", this.dsList.getColumn(i, "DEAR1"));
+        				this.dsInsert.setColumn(nrow, "DEAR2", this.dsList.getColumn(i, "DEAR2"));
+        				this.dsInsert.setColumn(nrow, "DEAR3", this.dsList.getColumn(i, "DEAR3"));
+        				this.dsInsert.setColumn(nrow, "DEAR4", this.dsList.getColumn(i, "DEAR4"));
+        				this.dsInsert.setColumn(nrow, "DEAR5", this.dsList.getColumn(i, "DEAR5"));
+        				this.dsInsert.setColumn(nrow, "GFORM", this.dsList.getColumn(i, "GFORM"));
+        				this.dsInsert.setColumn(nrow, "BRAN1", this.dsList.getColumn(i, "BRAN1"));
+        				this.dsInsert.setColumn(nrow, "BRAN2", this.dsList.getColumn(i, "BRAN2"));
+        				this.dsInsert.setColumn(nrow, "BRAN3", this.dsList.getColumn(i, "BRAN3"));
+        				this.dsInsert.setColumn(nrow, "BRAN4", this.dsList.getColumn(i, "BRAN4"));
+        				this.dsInsert.setColumn(nrow, "BRAN5", this.dsList.getColumn(i, "BRAN5"));
+        				this.dsInsert.setColumn(nrow, "EKONT", this.dsList.getColumn(i, "EKONT"));
+        				this.dsInsert.setColumn(nrow, "UMSAT", this.dsList.getColumn(i, "UMSAT"));
+        				this.dsInsert.setColumn(nrow, "UMJAH", this.dsList.getColumn(i, "UMJAH"));
+        				this.dsInsert.setColumn(nrow, "UWAER", this.dsList.getColumn(i, "UWAER"));
+        				this.dsInsert.setColumn(nrow, "JMZAH", this.dsList.getColumn(i, "JMZAH"));
+        				this.dsInsert.setColumn(nrow, "JMJAH", this.dsList.getColumn(i, "JMJAH"));
+        				this.dsInsert.setColumn(nrow, "KATR1", this.dsList.getColumn(i, "KATR1"));
+        				this.dsInsert.setColumn(nrow, "KATR2", this.dsList.getColumn(i, "KATR2"));
+        				this.dsInsert.setColumn(nrow, "KATR3", this.dsList.getColumn(i, "KATR3"));
+        				this.dsInsert.setColumn(nrow, "KATR4", this.dsList.getColumn(i, "KATR4"));
+        				this.dsInsert.setColumn(nrow, "KATR5", this.dsList.getColumn(i, "KATR5"));
+        				this.dsInsert.setColumn(nrow, "KATR6", this.dsList.getColumn(i, "KATR6"));
+        				this.dsInsert.setColumn(nrow, "KATR7", this.dsList.getColumn(i, "KATR7"));
+        				this.dsInsert.setColumn(nrow, "KATR8", this.dsList.getColumn(i, "KATR8"));
+        				this.dsInsert.setColumn(nrow, "KATR9", this.dsList.getColumn(i, "KATR9"));
+        				this.dsInsert.setColumn(nrow, "KATR10", this.dsList.getColumn(i, "KATR10"));
+        				this.dsInsert.setColumn(nrow, "STKZN", this.dsList.getColumn(i, "STKZN"));
+        				this.dsInsert.setColumn(nrow, "UMSA1", this.dsList.getColumn(i, "UMSA1"));
+        				this.dsInsert.setColumn(nrow, "TXJCD", this.dsList.getColumn(i, "TXJCD"));
+        				this.dsInsert.setColumn(nrow, "PERIV", this.dsList.getColumn(i, "PERIV"));
+        				this.dsInsert.setColumn(nrow, "ABRVW", this.dsList.getColumn(i, "ABRVW"));
+        				this.dsInsert.setColumn(nrow, "INSPBYDEBI", this.dsList.getColumn(i, "INSPBYDEBI"));
+        				this.dsInsert.setColumn(nrow, "INSPATDEBI", this.dsList.getColumn(i, "INSPATDEBI"));
+        				this.dsInsert.setColumn(nrow, "KTOCD", this.dsList.getColumn(i, "KTOCD"));
+        				this.dsInsert.setColumn(nrow, "PFORT", this.dsList.getColumn(i, "PFORT"));
+        				this.dsInsert.setColumn(nrow, "WERKS", this.dsList.getColumn(i, "WERKS"));
+        				this.dsInsert.setColumn(nrow, "DTAMS", this.dsList.getColumn(i, "DTAMS"));
+        				this.dsInsert.setColumn(nrow, "DTAWS", this.dsList.getColumn(i, "DTAWS"));
+        				this.dsInsert.setColumn(nrow, "DUEFL", this.dsList.getColumn(i, "DUEFL"));
+        				this.dsInsert.setColumn(nrow, "HZUOR", this.dsList.getColumn(i, "HZUOR"));
+        				this.dsInsert.setColumn(nrow, "SPERZ", this.dsList.getColumn(i, "SPERZ"));
+        				this.dsInsert.setColumn(nrow, "ETIKG", this.dsList.getColumn(i, "ETIKG"));
+        				this.dsInsert.setColumn(nrow, "CIVVE", this.dsList.getColumn(i, "CIVVE"));
+        				this.dsInsert.setColumn(nrow, "MILVE", this.dsList.getColumn(i, "MILVE"));
+        				this.dsInsert.setColumn(nrow, "KDKG1", this.dsList.getColumn(i, "KDKG1"));
+        				this.dsInsert.setColumn(nrow, "KDKG2", this.dsList.getColumn(i, "KDKG2"));
+        				this.dsInsert.setColumn(nrow, "KDKG3", this.dsList.getColumn(i, "KDKG3"));
+        				this.dsInsert.setColumn(nrow, "KDKG4", this.dsList.getColumn(i, "KDKG4"));
+        				this.dsInsert.setColumn(nrow, "KDKG5", this.dsList.getColumn(i, "KDKG5"));
+        				this.dsInsert.setColumn(nrow, "XKNZA", this.dsList.getColumn(i, "XKNZA"));
+        				this.dsInsert.setColumn(nrow, "FITYP", this.dsList.getColumn(i, "FITYP"));
+        				this.dsInsert.setColumn(nrow, "STCDT", this.dsList.getColumn(i, "STCDT"));
+        				this.dsInsert.setColumn(nrow, "STCD3", this.dsList.getColumn(i, "STCD3"));
+        				this.dsInsert.setColumn(nrow, "STCD4", this.dsList.getColumn(i, "STCD4"));
+        				this.dsInsert.setColumn(nrow, "XICMS", this.dsList.getColumn(i, "XICMS"));
+        				this.dsInsert.setColumn(nrow, "XXIPI", this.dsList.getColumn(i, "XXIPI"));
+        				this.dsInsert.setColumn(nrow, "XSUBT", this.dsList.getColumn(i, "XSUBT"));
+        				this.dsInsert.setColumn(nrow, "CFOPC", this.dsList.getColumn(i, "CFOPC"));
+        				this.dsInsert.setColumn(nrow, "TXLW1", this.dsList.getColumn(i, "TXLW1"));
+        				this.dsInsert.setColumn(nrow, "TXLW2", this.dsList.getColumn(i, "TXLW2"));
+        				this.dsInsert.setColumn(nrow, "CCC01", this.dsList.getColumn(i, "CCC01"));
+        				this.dsInsert.setColumn(nrow, "CCC02", this.dsList.getColumn(i, "CCC02"));
+        				this.dsInsert.setColumn(nrow, "CCC03", this.dsList.getColumn(i, "CCC03"));
+        				this.dsInsert.setColumn(nrow, "CCC04", this.dsList.getColumn(i, "CCC04"));
+        				this.dsInsert.setColumn(nrow, "CASSD", this.dsList.getColumn(i, "CASSD"));
+        				this.dsInsert.setColumn(nrow, "KNURL", this.dsList.getColumn(i, "KNURL"));
+        				this.dsInsert.setColumn(nrow, "J_1KFREPRE", this.dsList.getColumn(i, "J_1KFREPRE"));
+        				this.dsInsert.setColumn(nrow, "J_1KFTBUS", this.dsList.getColumn(i, "J_1KFTBUS"));
+        				this.dsInsert.setColumn(nrow, "J_1KFTIND", this.dsList.getColumn(i, "J_1KFTIND"));
+        				this.dsInsert.setColumn(nrow, "CONFS", this.dsList.getColumn(i, "CONFS"));
+        				this.dsInsert.setColumn(nrow, "UPDAT", this.dsList.getColumn(i, "UPDAT"));
+        				this.dsInsert.setColumn(nrow, "UPTIM", this.dsList.getColumn(i, "UPTIM"));
+        				this.dsInsert.setColumn(nrow, "NODEL", this.dsList.getColumn(i, "NODEL"));
+        				this.dsInsert.setColumn(nrow, "DEAR6", this.dsList.getColumn(i, "DEAR6"));
+        				this.dsInsert.setColumn(nrow, "R_KNA1_A", this.dsList.getColumn(i, "R_KNA1_A"));
+        				this.dsInsert.setColumn(nrow, "R_KNA1_I", this.dsList.getColumn(i, "R_KNA1_I"));
+        				this.dsInsert.setColumn(nrow, "R_PALHGT", this.dsList.getColumn(i, "R_PALHGT"));
+        				this.dsInsert.setColumn(nrow, "R_PAL_UL", this.dsList.getColumn(i, "R_PAL_UL"));
+        				this.dsInsert.setColumn(nrow, "R_PK_MAT", this.dsList.getColumn(i, "R_PK_MAT"));
+        				this.dsInsert.setColumn(nrow, "R_MATPAL", this.dsList.getColumn(i, "R_MATPAL"));
+        				this.dsInsert.setColumn(nrow, "R_I_NO_LYR", this.dsList.getColumn(i, "R_I_NO_LYR"));
+        				this.dsInsert.setColumn(nrow, "R_ONE_MAT", this.dsList.getColumn(i, "R_ONE_MAT"));
+        				this.dsInsert.setColumn(nrow, "R_ONE_SORT", this.dsList.getColumn(i, "R_ONE_SORT"));
+        				this.dsInsert.setColumn(nrow, "R_ULD_SIDE", this.dsList.getColumn(i, "R_ULD_SIDE"));
+        				this.dsInsert.setColumn(nrow, "R_LOAD_PREF", this.dsList.getColumn(i, "R_LOAD_PREF"));
+        				this.dsInsert.setColumn(nrow, "R_DPOINT", this.dsList.getColumn(i, "R_DPOINT"));
+        				this.dsInsert.setColumn(nrow, "AKNA1_FMFG", this.dsList.getColumn(i, "AKNA1_FMFG"));
+        				this.dsInsert.setColumn(nrow, "ALC", this.dsList.getColumn(i, "ALC"));
+        				this.dsInsert.setColumn(nrow, "PMT_OFFICE", this.dsList.getColumn(i, "PMT_OFFICE"));
+        				this.dsInsert.setColumn(nrow, "SI_FMFG_VP2", this.dsList.getColumn(i, "SI_FMFG_VP2"));
+        				this.dsInsert.setColumn(nrow, "AKNA1_PSO", this.dsList.getColumn(i, "AKNA1_PSO"));
+        				this.dsInsert.setColumn(nrow, "PSOFG", this.dsList.getColumn(i, "PSOFG"));
+        				this.dsInsert.setColumn(nrow, "PSOIS", this.dsList.getColumn(i, "PSOIS"));
+        				this.dsInsert.setColumn(nrow, "IADDR_PSO", this.dsList.getColumn(i, "IADDR_PSO"));
+        				this.dsInsert.setColumn(nrow, "PSON1", this.dsList.getColumn(i, "PSON1"));
+        				this.dsInsert.setColumn(nrow, "PSON2", this.dsList.getColumn(i, "PSON2"));
+        				this.dsInsert.setColumn(nrow, "PSON3", this.dsList.getColumn(i, "PSON3"));
+        				this.dsInsert.setColumn(nrow, "PSOVN", this.dsList.getColumn(i, "PSOVN"));
+        				this.dsInsert.setColumn(nrow, "PSOTL", this.dsList.getColumn(i, "PSOTL"));
+        				this.dsInsert.setColumn(nrow, "PSOHS", this.dsList.getColumn(i, "PSOHS"));
+        				this.dsInsert.setColumn(nrow, "PSOST", this.dsList.getColumn(i, "PSOST"));
+        				this.dsInsert.setColumn(nrow, "PSO21", this.dsList.getColumn(i, "PSO21"));
+        				this.dsInsert.setColumn(nrow, "PSOO1", this.dsList.getColumn(i, "PSOO1"));
+        				this.dsInsert.setColumn(nrow, "PSOO2", this.dsList.getColumn(i, "PSOO2"));
+        				this.dsInsert.setColumn(nrow, "PSOO3", this.dsList.getColumn(i, "PSOO3"));
+        				this.dsInsert.setColumn(nrow, "PSOO4", this.dsList.getColumn(i, "PSOO4"));
+        				this.dsInsert.setColumn(nrow, "PSOO5", this.dsList.getColumn(i, "PSOO5"));
+        				this.dsInsert.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        				break;
+
+        			case "U":
+        				var nrow = this.dsUpdate.addRow();
+        				this.dsUpdate.setColumn(nrow, "STR_SUPPL1", this.dsList.getColumn(i, "STR_SUPPL1"));
+        				this.dsUpdate.setColumn(nrow, "STR_SUPPL2", this.dsList.getColumn(i, "STR_SUPPL2"));
+        				this.dsUpdate.setColumn(nrow, "KUNNR", this.dsList.getColumn(i, "KUNNR"));
+        				this.dsUpdate.setColumn(nrow, "MANDT", this.dsList.getColumn(i, "MANDT"));
+        				this.dsUpdate.setColumn(nrow, "LAND1", this.dsList.getColumn(i, "LAND1"));
+        				this.dsUpdate.setColumn(nrow, "NAME1", this.dsList.getColumn(i, "NAME1"));
+        				this.dsUpdate.setColumn(nrow, "NAME2", this.dsList.getColumn(i, "NAME2"));
+        				this.dsUpdate.setColumn(nrow, "ORT01", this.dsList.getColumn(i, "ORT01"));
+        				this.dsUpdate.setColumn(nrow, "LIFNR", this.dsList.getColumn(i, "LIFNR"));
+        				this.dsUpdate.setColumn(nrow, "PSTLZ", this.dsList.getColumn(i, "PSTLZ"));
+        				this.dsUpdate.setColumn(nrow, "REGIO", this.dsList.getColumn(i, "REGIO"));
+        				this.dsUpdate.setColumn(nrow, "SORTL", this.dsList.getColumn(i, "SORTL"));
+        				this.dsUpdate.setColumn(nrow, "STRAS", this.dsList.getColumn(i, "STRAS"));
+        				this.dsUpdate.setColumn(nrow, "TELF1", this.dsList.getColumn(i, "TELF1"));
+        				this.dsUpdate.setColumn(nrow, "TELFX", this.dsList.getColumn(i, "TELFX"));
+        				this.dsUpdate.setColumn(nrow, "XCPDK", this.dsList.getColumn(i, "XCPDK"));
+        				this.dsUpdate.setColumn(nrow, "ADRNR", this.dsList.getColumn(i, "ADRNR"));
+        				this.dsUpdate.setColumn(nrow, "MCOD1", this.dsList.getColumn(i, "MCOD1"));
+        				this.dsUpdate.setColumn(nrow, "MCOD2", this.dsList.getColumn(i, "MCOD2"));
+        				this.dsUpdate.setColumn(nrow, "MCOD3", this.dsList.getColumn(i, "MCOD3"));
+        				this.dsUpdate.setColumn(nrow, "SI_KNA1", this.dsList.getColumn(i, "SI_KNA1"));
+        				this.dsUpdate.setColumn(nrow, "ANRED", this.dsList.getColumn(i, "ANRED"));
+        				this.dsUpdate.setColumn(nrow, "AUFSD", this.dsList.getColumn(i, "AUFSD"));
+        				this.dsUpdate.setColumn(nrow, "BAHNE", this.dsList.getColumn(i, "BAHNE"));
+        				this.dsUpdate.setColumn(nrow, "BAHNS", this.dsList.getColumn(i, "BAHNS"));
+        				this.dsUpdate.setColumn(nrow, "BBBNR", this.dsList.getColumn(i, "BBBNR"));
+        				this.dsUpdate.setColumn(nrow, "BBSNR", this.dsList.getColumn(i, "BBSNR"));
+        				this.dsUpdate.setColumn(nrow, "BEGRU", this.dsList.getColumn(i, "BEGRU"));
+        				this.dsUpdate.setColumn(nrow, "BRSCH", this.dsList.getColumn(i, "BRSCH"));
+        				this.dsUpdate.setColumn(nrow, "BUBKZ", this.dsList.getColumn(i, "BUBKZ"));
+        				this.dsUpdate.setColumn(nrow, "DATLT", this.dsList.getColumn(i, "DATLT"));
+        				this.dsUpdate.setColumn(nrow, "ERDAT", this.dsList.getColumn(i, "ERDAT"));
+        				this.dsUpdate.setColumn(nrow, "ERNAM", this.dsList.getColumn(i, "ERNAM"));
+        				this.dsUpdate.setColumn(nrow, "EXABL", this.dsList.getColumn(i, "EXABL"));
+        				this.dsUpdate.setColumn(nrow, "FAKSD", this.dsList.getColumn(i, "FAKSD"));
+        				this.dsUpdate.setColumn(nrow, "FISKN", this.dsList.getColumn(i, "FISKN"));
+        				this.dsUpdate.setColumn(nrow, "KNAZK", this.dsList.getColumn(i, "KNAZK"));
+        				this.dsUpdate.setColumn(nrow, "KNRZA", this.dsList.getColumn(i, "KNRZA"));
+        				this.dsUpdate.setColumn(nrow, "KONZS", this.dsList.getColumn(i, "KONZS"));
+        				this.dsUpdate.setColumn(nrow, "KTOKD", this.dsList.getColumn(i, "KTOKD"));
+        				this.dsUpdate.setColumn(nrow, "KUKLA", this.dsList.getColumn(i, "KUKLA"));
+        				this.dsUpdate.setColumn(nrow, "LIFSD", this.dsList.getColumn(i, "LIFSD"));
+        				this.dsUpdate.setColumn(nrow, "LOCCO", this.dsList.getColumn(i, "LOCCO"));
+        				this.dsUpdate.setColumn(nrow, "LOEVM", this.dsList.getColumn(i, "LOEVM"));
+        				this.dsUpdate.setColumn(nrow, "NAME3", this.dsList.getColumn(i, "NAME3"));
+        				this.dsUpdate.setColumn(nrow, "NAME4", this.dsList.getColumn(i, "NAME4"));
+        				this.dsUpdate.setColumn(nrow, "NIELS", this.dsList.getColumn(i, "NIELS"));
+        				this.dsUpdate.setColumn(nrow, "ORT02", this.dsList.getColumn(i, "ORT02"));
+        				this.dsUpdate.setColumn(nrow, "PFACH", this.dsList.getColumn(i, "PFACH"));
+        				this.dsUpdate.setColumn(nrow, "PSTL2", this.dsList.getColumn(i, "PSTL2"));
+        				this.dsUpdate.setColumn(nrow, "COUNC", this.dsList.getColumn(i, "COUNC"));
+        				this.dsUpdate.setColumn(nrow, "CITYC", this.dsList.getColumn(i, "CITYC"));
+        				this.dsUpdate.setColumn(nrow, "RPMKR", this.dsList.getColumn(i, "RPMKR"));
+        				this.dsUpdate.setColumn(nrow, "SPERR", this.dsList.getColumn(i, "SPERR"));
+        				this.dsUpdate.setColumn(nrow, "SPRAS", this.dsList.getColumn(i, "SPRAS"));
+        				this.dsUpdate.setColumn(nrow, "STCD1", this.dsList.getColumn(i, "STCD1"));
+        				this.dsUpdate.setColumn(nrow, "STCD2", this.dsList.getColumn(i, "STCD2"));
+        				this.dsUpdate.setColumn(nrow, "STKZA", this.dsList.getColumn(i, "STKZA"));
+        				this.dsUpdate.setColumn(nrow, "STKZU", this.dsList.getColumn(i, "STKZU"));
+        				this.dsUpdate.setColumn(nrow, "TELBX", this.dsList.getColumn(i, "TELBX"));
+        				this.dsUpdate.setColumn(nrow, "TELF2", this.dsList.getColumn(i, "TELF2"));
+        				this.dsUpdate.setColumn(nrow, "TELTX", this.dsList.getColumn(i, "TELTX"));
+        				this.dsUpdate.setColumn(nrow, "TELX1", this.dsList.getColumn(i, "TELX1"));
+        				this.dsUpdate.setColumn(nrow, "LZONE", this.dsList.getColumn(i, "LZONE"));
+        				this.dsUpdate.setColumn(nrow, "XZEMP", this.dsList.getColumn(i, "XZEMP"));
+        				this.dsUpdate.setColumn(nrow, "VBUND", this.dsList.getColumn(i, "VBUND"));
+        				this.dsUpdate.setColumn(nrow, "STCEG", this.dsList.getColumn(i, "STCEG"));
+        				this.dsUpdate.setColumn(nrow, "DEAR1", this.dsList.getColumn(i, "DEAR1"));
+        				this.dsUpdate.setColumn(nrow, "DEAR2", this.dsList.getColumn(i, "DEAR2"));
+        				this.dsUpdate.setColumn(nrow, "DEAR3", this.dsList.getColumn(i, "DEAR3"));
+        				this.dsUpdate.setColumn(nrow, "DEAR4", this.dsList.getColumn(i, "DEAR4"));
+        				this.dsUpdate.setColumn(nrow, "DEAR5", this.dsList.getColumn(i, "DEAR5"));
+        				this.dsUpdate.setColumn(nrow, "GFORM", this.dsList.getColumn(i, "GFORM"));
+        				this.dsUpdate.setColumn(nrow, "BRAN1", this.dsList.getColumn(i, "BRAN1"));
+        				this.dsUpdate.setColumn(nrow, "BRAN2", this.dsList.getColumn(i, "BRAN2"));
+        				this.dsUpdate.setColumn(nrow, "BRAN3", this.dsList.getColumn(i, "BRAN3"));
+        				this.dsUpdate.setColumn(nrow, "BRAN4", this.dsList.getColumn(i, "BRAN4"));
+        				this.dsUpdate.setColumn(nrow, "BRAN5", this.dsList.getColumn(i, "BRAN5"));
+        				this.dsUpdate.setColumn(nrow, "EKONT", this.dsList.getColumn(i, "EKONT"));
+        				this.dsUpdate.setColumn(nrow, "UMSAT", this.dsList.getColumn(i, "UMSAT"));
+        				this.dsUpdate.setColumn(nrow, "UMJAH", this.dsList.getColumn(i, "UMJAH"));
+        				this.dsUpdate.setColumn(nrow, "UWAER", this.dsList.getColumn(i, "UWAER"));
+        				this.dsUpdate.setColumn(nrow, "JMZAH", this.dsList.getColumn(i, "JMZAH"));
+        				this.dsUpdate.setColumn(nrow, "JMJAH", this.dsList.getColumn(i, "JMJAH"));
+        				this.dsUpdate.setColumn(nrow, "KATR1", this.dsList.getColumn(i, "KATR1"));
+        				this.dsUpdate.setColumn(nrow, "KATR2", this.dsList.getColumn(i, "KATR2"));
+        				this.dsUpdate.setColumn(nrow, "KATR3", this.dsList.getColumn(i, "KATR3"));
+        				this.dsUpdate.setColumn(nrow, "KATR4", this.dsList.getColumn(i, "KATR4"));
+        				this.dsUpdate.setColumn(nrow, "KATR5", this.dsList.getColumn(i, "KATR5"));
+        				this.dsUpdate.setColumn(nrow, "KATR6", this.dsList.getColumn(i, "KATR6"));
+        				this.dsUpdate.setColumn(nrow, "KATR7", this.dsList.getColumn(i, "KATR7"));
+        				this.dsUpdate.setColumn(nrow, "KATR8", this.dsList.getColumn(i, "KATR8"));
+        				this.dsUpdate.setColumn(nrow, "KATR9", this.dsList.getColumn(i, "KATR9"));
+        				this.dsUpdate.setColumn(nrow, "KATR10", this.dsList.getColumn(i, "KATR10"));
+        				this.dsUpdate.setColumn(nrow, "STKZN", this.dsList.getColumn(i, "STKZN"));
+        				this.dsUpdate.setColumn(nrow, "UMSA1", this.dsList.getColumn(i, "UMSA1"));
+        				this.dsUpdate.setColumn(nrow, "TXJCD", this.dsList.getColumn(i, "TXJCD"));
+        				this.dsUpdate.setColumn(nrow, "PERIV", this.dsList.getColumn(i, "PERIV"));
+        				this.dsUpdate.setColumn(nrow, "ABRVW", this.dsList.getColumn(i, "ABRVW"));
+        				this.dsUpdate.setColumn(nrow, "INSPBYDEBI", this.dsList.getColumn(i, "INSPBYDEBI"));
+        				this.dsUpdate.setColumn(nrow, "INSPATDEBI", this.dsList.getColumn(i, "INSPATDEBI"));
+        				this.dsUpdate.setColumn(nrow, "KTOCD", this.dsList.getColumn(i, "KTOCD"));
+        				this.dsUpdate.setColumn(nrow, "PFORT", this.dsList.getColumn(i, "PFORT"));
+        				this.dsUpdate.setColumn(nrow, "WERKS", this.dsList.getColumn(i, "WERKS"));
+        				this.dsUpdate.setColumn(nrow, "DTAMS", this.dsList.getColumn(i, "DTAMS"));
+        				this.dsUpdate.setColumn(nrow, "DTAWS", this.dsList.getColumn(i, "DTAWS"));
+        				this.dsUpdate.setColumn(nrow, "DUEFL", this.dsList.getColumn(i, "DUEFL"));
+        				this.dsUpdate.setColumn(nrow, "HZUOR", this.dsList.getColumn(i, "HZUOR"));
+        				this.dsUpdate.setColumn(nrow, "SPERZ", this.dsList.getColumn(i, "SPERZ"));
+        				this.dsUpdate.setColumn(nrow, "ETIKG", this.dsList.getColumn(i, "ETIKG"));
+        				this.dsUpdate.setColumn(nrow, "CIVVE", this.dsList.getColumn(i, "CIVVE"));
+        				this.dsUpdate.setColumn(nrow, "MILVE", this.dsList.getColumn(i, "MILVE"));
+        				this.dsUpdate.setColumn(nrow, "KDKG1", this.dsList.getColumn(i, "KDKG1"));
+        				this.dsUpdate.setColumn(nrow, "KDKG2", this.dsList.getColumn(i, "KDKG2"));
+        				this.dsUpdate.setColumn(nrow, "KDKG3", this.dsList.getColumn(i, "KDKG3"));
+        				this.dsUpdate.setColumn(nrow, "KDKG4", this.dsList.getColumn(i, "KDKG4"));
+        				this.dsUpdate.setColumn(nrow, "KDKG5", this.dsList.getColumn(i, "KDKG5"));
+        				this.dsUpdate.setColumn(nrow, "XKNZA", this.dsList.getColumn(i, "XKNZA"));
+        				this.dsUpdate.setColumn(nrow, "FITYP", this.dsList.getColumn(i, "FITYP"));
+        				this.dsUpdate.setColumn(nrow, "STCDT", this.dsList.getColumn(i, "STCDT"));
+        				this.dsUpdate.setColumn(nrow, "STCD3", this.dsList.getColumn(i, "STCD3"));
+        				this.dsUpdate.setColumn(nrow, "STCD4", this.dsList.getColumn(i, "STCD4"));
+        				this.dsUpdate.setColumn(nrow, "XICMS", this.dsList.getColumn(i, "XICMS"));
+        				this.dsUpdate.setColumn(nrow, "XXIPI", this.dsList.getColumn(i, "XXIPI"));
+        				this.dsUpdate.setColumn(nrow, "XSUBT", this.dsList.getColumn(i, "XSUBT"));
+        				this.dsUpdate.setColumn(nrow, "CFOPC", this.dsList.getColumn(i, "CFOPC"));
+        				this.dsUpdate.setColumn(nrow, "TXLW1", this.dsList.getColumn(i, "TXLW1"));
+        				this.dsUpdate.setColumn(nrow, "TXLW2", this.dsList.getColumn(i, "TXLW2"));
+        				this.dsUpdate.setColumn(nrow, "CCC01", this.dsList.getColumn(i, "CCC01"));
+        				this.dsUpdate.setColumn(nrow, "CCC02", this.dsList.getColumn(i, "CCC02"));
+        				this.dsUpdate.setColumn(nrow, "CCC03", this.dsList.getColumn(i, "CCC03"));
+        				this.dsUpdate.setColumn(nrow, "CCC04", this.dsList.getColumn(i, "CCC04"));
+        				this.dsUpdate.setColumn(nrow, "CASSD", this.dsList.getColumn(i, "CASSD"));
+        				this.dsUpdate.setColumn(nrow, "KNURL", this.dsList.getColumn(i, "KNURL"));
+        				this.dsUpdate.setColumn(nrow, "J_1KFREPRE", this.dsList.getColumn(i, "J_1KFREPRE"));
+        				this.dsUpdate.setColumn(nrow, "J_1KFTBUS", this.dsList.getColumn(i, "J_1KFTBUS"));
+        				this.dsUpdate.setColumn(nrow, "J_1KFTIND", this.dsList.getColumn(i, "J_1KFTIND"));
+        				this.dsUpdate.setColumn(nrow, "CONFS", this.dsList.getColumn(i, "CONFS"));
+        				this.dsUpdate.setColumn(nrow, "UPDAT", this.dsList.getColumn(i, "UPDAT"));
+        				this.dsUpdate.setColumn(nrow, "UPTIM", this.dsList.getColumn(i, "UPTIM"));
+        				this.dsUpdate.setColumn(nrow, "NODEL", this.dsList.getColumn(i, "NODEL"));
+        				this.dsUpdate.setColumn(nrow, "DEAR6", this.dsList.getColumn(i, "DEAR6"));
+        				this.dsUpdate.setColumn(nrow, "R_KNA1_A", this.dsList.getColumn(i, "R_KNA1_A"));
+        				this.dsUpdate.setColumn(nrow, "R_KNA1_I", this.dsList.getColumn(i, "R_KNA1_I"));
+        				this.dsUpdate.setColumn(nrow, "R_PALHGT", this.dsList.getColumn(i, "R_PALHGT"));
+        				this.dsUpdate.setColumn(nrow, "R_PAL_UL", this.dsList.getColumn(i, "R_PAL_UL"));
+        				this.dsUpdate.setColumn(nrow, "R_PK_MAT", this.dsList.getColumn(i, "R_PK_MAT"));
+        				this.dsUpdate.setColumn(nrow, "R_MATPAL", this.dsList.getColumn(i, "R_MATPAL"));
+        				this.dsUpdate.setColumn(nrow, "R_I_NO_LYR", this.dsList.getColumn(i, "R_I_NO_LYR"));
+        				this.dsUpdate.setColumn(nrow, "R_ONE_MAT", this.dsList.getColumn(i, "R_ONE_MAT"));
+        				this.dsUpdate.setColumn(nrow, "R_ONE_SORT", this.dsList.getColumn(i, "R_ONE_SORT"));
+        				this.dsUpdate.setColumn(nrow, "R_ULD_SIDE", this.dsList.getColumn(i, "R_ULD_SIDE"));
+        				this.dsUpdate.setColumn(nrow, "R_LOAD_PREF", this.dsList.getColumn(i, "R_LOAD_PREF"));
+        				this.dsUpdate.setColumn(nrow, "R_DPOINT", this.dsList.getColumn(i, "R_DPOINT"));
+        				this.dsUpdate.setColumn(nrow, "AKNA1_FMFG", this.dsList.getColumn(i, "AKNA1_FMFG"));
+        				this.dsUpdate.setColumn(nrow, "ALC", this.dsList.getColumn(i, "ALC"));
+        				this.dsUpdate.setColumn(nrow, "PMT_OFFICE", this.dsList.getColumn(i, "PMT_OFFICE"));
+        				this.dsUpdate.setColumn(nrow, "SI_FMFG_VP2", this.dsList.getColumn(i, "SI_FMFG_VP2"));
+        				this.dsUpdate.setColumn(nrow, "AKNA1_PSO", this.dsList.getColumn(i, "AKNA1_PSO"));
+        				this.dsUpdate.setColumn(nrow, "PSOFG", this.dsList.getColumn(i, "PSOFG"));
+        				this.dsUpdate.setColumn(nrow, "PSOIS", this.dsList.getColumn(i, "PSOIS"));
+        				this.dsUpdate.setColumn(nrow, "IADDR_PSO", this.dsList.getColumn(i, "IADDR_PSO"));
+        				this.dsUpdate.setColumn(nrow, "PSON1", this.dsList.getColumn(i, "PSON1"));
+        				this.dsUpdate.setColumn(nrow, "PSON2", this.dsList.getColumn(i, "PSON2"));
+        				this.dsUpdate.setColumn(nrow, "PSON3", this.dsList.getColumn(i, "PSON3"));
+        				this.dsUpdate.setColumn(nrow, "PSOVN", this.dsList.getColumn(i, "PSOVN"));
+        				this.dsUpdate.setColumn(nrow, "PSOTL", this.dsList.getColumn(i, "PSOTL"));
+        				this.dsUpdate.setColumn(nrow, "PSOHS", this.dsList.getColumn(i, "PSOHS"));
+        				this.dsUpdate.setColumn(nrow, "PSOST", this.dsList.getColumn(i, "PSOST"));
+        				this.dsUpdate.setColumn(nrow, "PSO21", this.dsList.getColumn(i, "PSO21"));
+        				this.dsUpdate.setColumn(nrow, "PSOO1", this.dsList.getColumn(i, "PSOO1"));
+        				this.dsUpdate.setColumn(nrow, "PSOO2", this.dsList.getColumn(i, "PSOO2"));
+        				this.dsUpdate.setColumn(nrow, "PSOO3", this.dsList.getColumn(i, "PSOO3"));
+        				this.dsUpdate.setColumn(nrow, "PSOO4", this.dsList.getColumn(i, "PSOO4"));
+        				this.dsUpdate.setColumn(nrow, "PSOO5", this.dsList.getColumn(i, "PSOO5"));
+        				this.dsUpdate.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        				break;
+
+        			case "D":
+        				var nrow = this.dsDelete.addRow();
+        				this.dsDelete.setColumn(nrow, "LIFNR", this.dsList.getColumn(i, "LIFNR"));
+        				break;
+        		}
+        	}
+
+        	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+         	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+         						strSvcType , 	// transaction을 요청할 구분
+         						inProc,			// Procedure 정보 Dataset 이름
+         						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+         						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+         						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * 서브 버튼 이벤트
+         ************************************************************************/
+
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg, strArg)
+        {
+        	if (svcID == "select") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+        	}
+        	else if(svcID == "save") {
+        		if (errorCode == 0) {
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        	else if(svcID == "sap_select")
+        	{
+        		if(this.dsExport.rowcount > 0) {
+        			var json = this.gfnArgsToJson(strArg);
+        			strArg = json.gubun;
+
+        			if(strArg == "insert")
+        			{
+        				this.fnSapInsert();
+        			}
+        			else if(strArg == "update")
+        			{
+        				if(this.dsExport.getColumn(0, "O_RTNCD") == "S")
+        				{
+        					this.fnSapUpdate();
+        				}
+        				else
+        				{
+        					this.gfnAlert(this.dsExport.getColumn(0, "O_RTNMSG"));
+        				}
+        			}
+        		}
+        		else
+        		{
+        			this.gfnAlert("반환된 데이터가 없습니다.");
+        		}
+        	}
+        	/*
+        	else if(svcID == "sap_update")
+        	{
+        		if(this.dsExport.rowcount > 0) {
+        			if(this.dsExport.getColumn(0, "O_RTNCD") == "S")
+        			{
+        				this.gfnAlert("거래처수정 완료되었습니다.");
+        			}
+        			else
+        			{
+        				this.gfnAlert(this.dsExport.getColumn(0, "O_RTNMSG"));
+        			}
+        		}
+        	}
+        	*/
+        	else if(svcID == "insert")
+        	{
+        		if (errorCode == 0) {
+        			this.fnInsert_callback = function()
+        			{
+        				//this.FormBtns.Select.click();
+        			}
+
+        			this.gfnAlert("전체 거래처 이관 완료되었습니다.", "", "", "fnInsert_callback");
+        		}
+        		else
+        		{
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        	else if(svcID == "update")
+        	{
+        		if (errorCode == 0) {
+        			this.fnUpdate_callback = function()
+        			{
+        				this.FormBtns.Select.click();
+        			}
+        			var msg1 = "회사명 : " + this.dsOT_ITAB.getColumn(0, "NAME1") + "\n사업자번호 : " + this.dsOT_ITAB.getColumn(0, "STCD2");
+        			this.gfnAlert(msg1, "fnUpdate_callback");
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+         //SAP거래처생성
+        this.fnCREATE = function(strId, val) {
+
+        	var param = {};
+
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DQD_VENDOR_AR_CREATE", "fnCreate_callback", param, 860, 370);
+        }
+
+        this.fnCreate_callback = function(strId, val)
+        {
+        	if(val){
+        		this.FormBtns.Select.click();
+        	}
+        }
+
+
+        // SAP거래처수정
+        this.fnUPDATE = function(strId, val) {
+        	if(this.dsList.rowcount < 1 || this.dsList.rowposition < 0)
+        	{
+        		this.gfnAlert("데이터를 선택해주세요.");
+        		return false;
+        	}
+
+        	var param = {};
+
+        	param.KUNNR = 	this.dsList.getColumn(this.dsList.rowposition, "KUNNR");
+
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DQD_VENDOR_AR_UPDATE", "fnUpdatePrc_callback", param, 860, 370);
+
+        	//this.fnSapVenderUpdate();
+        }
+
+         this.fnUpdatePrc_callback = function(svcID, value) {
+        	// 리턴값
+        	if(value){
+        		// 거래처 조회 실행(변경시킨 sap 데이터를 다시 조회해와서 erp DB에 저장시킨 후 조회한다)
+        		this.fnSapSelect(this.dsList.getColumn(this.dsList.rowposition, "KUNNR"));	//거래처번호
+        	}
+        };
+        /*
+        this.fnSapVenderUpdate = function() {
+        	this._dsProcSap.clearData();
+        	var nrow = this._dsProcSap.addRow();
+        	this._dsProcSap.setColumn(nrow, "TARGET", "select");
+        	this._dsProcSap.setColumn(nrow, "SP", "ZERP_SD_0002");
+
+        	var listRow = this.dsList.rowposition;
+
+        	this.dsSap.clearData();
+        	this.dsSap.addRow();
+        	this.dsSap.setColumn(0, "IV_KUNNR", this.dsList.getColumn(listRow, "KUNNR"));
+
+        	this.dsSelectSap.clearData();
+        	nrow = this.dsSelectSap.addRow();
+
+        	// IN 파라미터 셋팅
+        	this.dsSelectSap.setColumn(nrow, "KTOKD", this.dsList.getColumn(listRow, "KTOKD"));
+        	this.dsSelectSap.setColumn(nrow, "NAME1", this.dsList.getColumn(listRow, "SORTL"));
+        	this.dsSelectSap.setColumn(nrow, "SUPPL1", this.dsList.getColumn(listRow, "STR_SUPPL1"));	// 주소
+        	this.dsSelectSap.setColumn(nrow, "SUPPL2", this.dsList.getColumn(listRow, "STR_SUPPL2"));	// 상세주소
+        	this.dsSelectSap.setColumn(nrow, "LAND1", "KR");
+        	this.dsSelectSap.setColumn(nrow, "REGIO", this.dsList.getColumn(listRow, "REGIO"));
+        	this.dsSelectSap.setColumn(nrow, "STCD1", this.dsList.getColumn(listRow, "STCD1"));
+        	this.dsSelectSap.setColumn(nrow, "STCD2", this.dsList.getColumn(listRow, "STCD2"));
+        	this.dsSelectSap.setColumn(nrow, "J_1KFREPRE", this.dsList.getColumn(listRow, "J_1KFREPRE"));
+        	this.dsSelectSap.setColumn(nrow, "J_1KFTBUS", this.dsList.getColumn(listRow, "J_1KFTBUS"));
+        	this.dsSelectSap.setColumn(nrow, "J_1KFTIND", this.dsList.getColumn(listRow, "J_1KFTIND"));
+        	this.dsSelectSap.setColumn(nrow, "ZSALES", "");
+        	this.dsSelectSap.setColumn(nrow, "VKBUR", "");
+        	this.dsSelectSap.setColumn(nrow, "INCO1", "");
+        	this.dsSelectSap.setColumn(nrow, "ZTERM", "");
+        	this.dsSelectSap.setColumn(nrow, "TAXKD", "");
+        	this.dsSelectSap.setColumn(nrow, "LIFNR", this.dsList.getColumn(listRow, "LIFNR"));
+        	this.dsSelectSap.setColumn(nrow, "ZSUBRC", "");
+        	this.dsSelectSap.setColumn(nrow, "TXT", "");
+        	this.dsSelectSap.setColumn(nrow, "PSTLZ", this.dsList.getColumn(listRow, "PSTLZ"));
+
+
+        	// SAP 호출
+        	var strSvcId    = "sap_update";
+        	var strSvcType  = "sap";
+        	var inProc		= "_dsProcSap";
+        	var inData      = "select=dsSap ST_IS_DATA=dsSelectSap";
+        	//var outData     = "dsExport=export dsList1=TO_FD01";
+        	var outData     = "dsExport=export";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+        */
+
+        this.fnQUERY = function(strId, val) {
+        	if(this.dsList.rowcount < 1 || this.dsList.rowposition < 0)
+        	{
+        		this.gfnAlert("데이터를 선택해주세요.");
+        		return false;
+        	}
+
+        	this.fnSapSelect(this.dsList.getColumn(this.dsList.rowposition, "KUNNR"));	//거래처번호
+        }
+
+        this.fnSapSelect = function(plifnr) {
+        	this._dsProcSap.clearData();
+        	var nrow = this._dsProcSap.addRow();
+        	this._dsProcSap.setColumn(nrow, "TARGET", "select");
+        	this._dsProcSap.setColumn(nrow, "SP", "ZERP_SD_0001");
+
+        	this.dsSelectSap1 = new Dataset();
+        	this.dsSelectSap1.addColumn("I_KUNNR", "string");
+
+        	nrow = this.dsSelectSap1.addRow();
+        	// IN 파라미터 셋팅
+        	this.dsSelectSap1.setColumn(nrow, "I_KUNNR", plifnr);	// 거래처코드
+        	//this.dsSelectSap1.setColumn(nrow, "I_KUNNR", "0000305720");	// 거래처코드
+
+        	// SAP 호출
+        	var strSvcId    = "sap_select";
+        	var strSvcType  = "sap";
+        	var inProc		= "_dsProcSap";
+        	var inData      = "select=dsSelectSap1";
+        	var outData     = "dsExport=export dsOT_ITAB=OT_ITAB dsOT_ADDR=OT_ADDR";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+        	if(plifnr != "*"){
+        		strArg = "gubun=update";
+        	}else{
+        		strArg = "gubun=insert"
+        	}
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        this.fnSapInsert = function()
+        {
+        	this.dsInsert.clearData();
+
+        	for(var i = 0 ; i < this.dsOT_ITAB.rowcount; i++)
+        	{
+        		var nrow = this.dsInsert.addRow();
+        		this.dsInsert.setColumn(nrow, "STR_SUPPL1", this.dsOT_ADDR.getColumn(i, "STR_SUPPL1"));
+        		this.dsInsert.setColumn(nrow, "STR_SUPPL2", this.dsOT_ADDR.getColumn(i, "STR_SUPPL2"));
+        		this.dsInsert.setColumn(nrow, "KUNNR", this.dsOT_ITAB.getColumn(i, "KUNNR"));
+        		this.dsInsert.setColumn(nrow, "MANDT", this.dsOT_ITAB.getColumn(i, "MANDT"));
+        		this.dsInsert.setColumn(nrow, "LAND1", this.dsOT_ITAB.getColumn(i, "LAND1"));
+        		this.dsInsert.setColumn(nrow, "NAME1", this.dsOT_ITAB.getColumn(i, "NAME1"));
+        		this.dsInsert.setColumn(nrow, "NAME2", this.dsOT_ITAB.getColumn(i, "NAME2"));
+        		this.dsInsert.setColumn(nrow, "ORT01", this.dsOT_ITAB.getColumn(i, "ORT01"));
+        		this.dsInsert.setColumn(nrow, "LIFNR", this.dsOT_ITAB.getColumn(i, "KUNNR"));
+        		this.dsInsert.setColumn(nrow, "PSTLZ", this.dsOT_ITAB.getColumn(i, "PSTLZ"));
+        		this.dsInsert.setColumn(nrow, "REGIO", this.dsOT_ITAB.getColumn(i, "REGIO"));
+        		this.dsInsert.setColumn(nrow, "SORTL", this.dsOT_ITAB.getColumn(i, "SORTL"));
+        		this.dsInsert.setColumn(nrow, "STRAS", this.dsOT_ADDR.getColumn(0, "STR_SUPPL1"));
+        		this.dsInsert.setColumn(nrow, "TELF1", this.dsOT_ITAB.getColumn(i, "TELF1"));
+        		this.dsInsert.setColumn(nrow, "TELFX", this.dsOT_ITAB.getColumn(i, "TELFX"));
+        		this.dsInsert.setColumn(nrow, "XCPDK", this.dsOT_ITAB.getColumn(i, "XCPDK"));
+        		this.dsInsert.setColumn(nrow, "ADRNR", this.dsOT_ITAB.getColumn(i, "ADRNR"));
+        		this.dsInsert.setColumn(nrow, "MCOD1", this.dsOT_ITAB.getColumn(i, "MCOD1"));
+        		this.dsInsert.setColumn(nrow, "MCOD2", this.dsOT_ITAB.getColumn(i, "MCOD2"));
+        		this.dsInsert.setColumn(nrow, "MCOD3", this.dsOT_ITAB.getColumn(i, "MCOD3"));
+        		this.dsInsert.setColumn(nrow, "SI_KNA1", this.dsOT_ITAB.getColumn(i, "SI_KNA1"));
+        		this.dsInsert.setColumn(nrow, "ANRED", this.dsOT_ITAB.getColumn(i, "ANRED"));
+        		this.dsInsert.setColumn(nrow, "AUFSD", this.dsOT_ITAB.getColumn(i, "AUFSD"));
+        		this.dsInsert.setColumn(nrow, "BAHNE", this.dsOT_ITAB.getColumn(i, "BAHNE"));
+        		this.dsInsert.setColumn(nrow, "BAHNS", this.dsOT_ITAB.getColumn(i, "BAHNS"));
+        		this.dsInsert.setColumn(nrow, "BBBNR", this.dsOT_ITAB.getColumn(i, "BBBNR"));
+        		this.dsInsert.setColumn(nrow, "BBSNR", this.dsOT_ITAB.getColumn(i, "BBSNR"));
+        		this.dsInsert.setColumn(nrow, "BEGRU", this.dsOT_ITAB.getColumn(i, "BEGRU"));
+        		this.dsInsert.setColumn(nrow, "BRSCH", this.dsOT_ITAB.getColumn(i, "BRSCH"));
+        		this.dsInsert.setColumn(nrow, "BUBKZ", this.dsOT_ITAB.getColumn(i, "BUBKZ"));
+        		this.dsInsert.setColumn(nrow, "DATLT", this.dsOT_ITAB.getColumn(i, "DATLT"));
+        		this.dsInsert.setColumn(nrow, "ERDAT", this.dsOT_ITAB.getColumn(i, "ERDAT"));
+        		this.dsInsert.setColumn(nrow, "ERNAM", this.dsOT_ITAB.getColumn(i, "ERNAM"));
+        		this.dsInsert.setColumn(nrow, "EXABL", this.dsOT_ITAB.getColumn(i, "EXABL"));
+        		this.dsInsert.setColumn(nrow, "FAKSD", this.dsOT_ITAB.getColumn(i, "FAKSD"));
+        		this.dsInsert.setColumn(nrow, "FISKN", this.dsOT_ITAB.getColumn(i, "FISKN"));
+        		this.dsInsert.setColumn(nrow, "KNAZK", this.dsOT_ITAB.getColumn(i, "KNAZK"));
+        		this.dsInsert.setColumn(nrow, "KNRZA", this.dsOT_ITAB.getColumn(i, "KNRZA"));
+        		this.dsInsert.setColumn(nrow, "KONZS", this.dsOT_ITAB.getColumn(i, "KONZS"));
+        		this.dsInsert.setColumn(nrow, "KTOKD", this.dsOT_ITAB.getColumn(i, "KTOKD"));
+        		this.dsInsert.setColumn(nrow, "KUKLA", this.dsOT_ITAB.getColumn(i, "KUKLA"));
+        		this.dsInsert.setColumn(nrow, "LIFSD", this.dsOT_ITAB.getColumn(i, "LIFSD"));
+        		this.dsInsert.setColumn(nrow, "LOCCO", this.dsOT_ITAB.getColumn(i, "LOCCO"));
+        		this.dsInsert.setColumn(nrow, "LOEVM", this.dsOT_ITAB.getColumn(i, "LOEVM"));
+        		this.dsInsert.setColumn(nrow, "NAME3", this.dsOT_ITAB.getColumn(i, "NAME3"));
+        		this.dsInsert.setColumn(nrow, "NAME4", this.dsOT_ITAB.getColumn(i, "NAME4"));
+        		this.dsInsert.setColumn(nrow, "NIELS", this.dsOT_ITAB.getColumn(i, "NIELS"));
+        		this.dsInsert.setColumn(nrow, "ORT02", this.dsOT_ITAB.getColumn(i, "ORT02"));
+        		this.dsInsert.setColumn(nrow, "PFACH", this.dsOT_ITAB.getColumn(i, "PFACH"));
+        		this.dsInsert.setColumn(nrow, "PSTL2", this.dsOT_ITAB.getColumn(i, "PSTL2"));
+        		this.dsInsert.setColumn(nrow, "COUNC", this.dsOT_ITAB.getColumn(i, "COUNC"));
+        		this.dsInsert.setColumn(nrow, "CITYC", this.dsOT_ITAB.getColumn(i, "CITYC"));
+        		this.dsInsert.setColumn(nrow, "RPMKR", this.dsOT_ITAB.getColumn(i, "RPMKR"));
+        		this.dsInsert.setColumn(nrow, "SPERR", this.dsOT_ITAB.getColumn(i, "SPERR"));
+        		this.dsInsert.setColumn(nrow, "SPRAS", this.dsOT_ITAB.getColumn(i, "SPRAS"));
+        		this.dsInsert.setColumn(nrow, "STCD1", this.dsOT_ITAB.getColumn(i, "STCD1"));
+        		this.dsInsert.setColumn(nrow, "STCD2", this.dsOT_ITAB.getColumn(i, "STCD2"));
+        		this.dsInsert.setColumn(nrow, "STKZA", this.dsOT_ITAB.getColumn(i, "STKZA"));
+        		this.dsInsert.setColumn(nrow, "STKZU", this.dsOT_ITAB.getColumn(i, "STKZU"));
+        		this.dsInsert.setColumn(nrow, "TELBX", this.dsOT_ITAB.getColumn(i, "TELBX"));
+        		this.dsInsert.setColumn(nrow, "TELF2", this.dsOT_ITAB.getColumn(i, "TELF2"));
+        		this.dsInsert.setColumn(nrow, "TELTX", this.dsOT_ITAB.getColumn(i, "TELTX"));
+        		this.dsInsert.setColumn(nrow, "TELX1", this.dsOT_ITAB.getColumn(i, "TELX1"));
+        		this.dsInsert.setColumn(nrow, "LZONE", this.dsOT_ITAB.getColumn(i, "LZONE"));
+        		this.dsInsert.setColumn(nrow, "XZEMP", this.dsOT_ITAB.getColumn(i, "XZEMP"));
+        		this.dsInsert.setColumn(nrow, "VBUND", this.dsOT_ITAB.getColumn(i, "VBUND"));
+        		this.dsInsert.setColumn(nrow, "STCEG", this.dsOT_ITAB.getColumn(i, "STCEG"));
+        		this.dsInsert.setColumn(nrow, "DEAR1", this.dsOT_ITAB.getColumn(i, "DEAR1"));
+        		this.dsInsert.setColumn(nrow, "DEAR2", this.dsOT_ITAB.getColumn(i, "DEAR2"));
+        		this.dsInsert.setColumn(nrow, "DEAR3", this.dsOT_ITAB.getColumn(i, "DEAR3"));
+        		this.dsInsert.setColumn(nrow, "DEAR4", this.dsOT_ITAB.getColumn(i, "DEAR4"));
+        		this.dsInsert.setColumn(nrow, "DEAR5", this.dsOT_ITAB.getColumn(i, "DEAR5"));
+        		this.dsInsert.setColumn(nrow, "GFORM", this.dsOT_ITAB.getColumn(i, "GFORM"));
+        		this.dsInsert.setColumn(nrow, "BRAN1", this.dsOT_ITAB.getColumn(i, "BRAN1"));
+        		this.dsInsert.setColumn(nrow, "BRAN2", this.dsOT_ITAB.getColumn(i, "BRAN2"));
+        		this.dsInsert.setColumn(nrow, "BRAN3", this.dsOT_ITAB.getColumn(i, "BRAN3"));
+        		this.dsInsert.setColumn(nrow, "BRAN4", this.dsOT_ITAB.getColumn(i, "BRAN4"));
+        		this.dsInsert.setColumn(nrow, "BRAN5", this.dsOT_ITAB.getColumn(i, "BRAN5"));
+        		this.dsInsert.setColumn(nrow, "EKONT", this.dsOT_ITAB.getColumn(i, "EKONT"));
+        		this.dsInsert.setColumn(nrow, "UMSAT", this.dsOT_ITAB.getColumn(i, "UMSAT"));
+        		this.dsInsert.setColumn(nrow, "UMJAH", this.dsOT_ITAB.getColumn(i, "UMJAH"));
+        		this.dsInsert.setColumn(nrow, "UWAER", this.dsOT_ITAB.getColumn(i, "UWAER"));
+        		this.dsInsert.setColumn(nrow, "JMZAH", this.dsOT_ITAB.getColumn(i, "JMZAH"));
+        		this.dsInsert.setColumn(nrow, "JMJAH", this.dsOT_ITAB.getColumn(i, "JMJAH"));
+        		this.dsInsert.setColumn(nrow, "KATR1", this.dsOT_ITAB.getColumn(i, "KATR1"));
+        		this.dsInsert.setColumn(nrow, "KATR2", this.dsOT_ITAB.getColumn(i, "KATR2"));
+        		this.dsInsert.setColumn(nrow, "KATR3", this.dsOT_ITAB.getColumn(i, "KATR3"));
+        		this.dsInsert.setColumn(nrow, "KATR4", this.dsOT_ITAB.getColumn(i, "KATR4"));
+        		this.dsInsert.setColumn(nrow, "KATR5", this.dsOT_ITAB.getColumn(i, "KATR5"));
+        		this.dsInsert.setColumn(nrow, "KATR6", this.dsOT_ITAB.getColumn(i, "KATR6"));
+        		this.dsInsert.setColumn(nrow, "KATR7", this.dsOT_ITAB.getColumn(i, "KATR7"));
+        		this.dsInsert.setColumn(nrow, "KATR8", this.dsOT_ITAB.getColumn(i, "KATR8"));
+        		this.dsInsert.setColumn(nrow, "KATR9", this.dsOT_ITAB.getColumn(i, "KATR9"));
+        		this.dsInsert.setColumn(nrow, "KATR10", this.dsOT_ITAB.getColumn(i, "KATR10"));
+        		this.dsInsert.setColumn(nrow, "STKZN", this.dsOT_ITAB.getColumn(i, "STKZN"));
+        		this.dsInsert.setColumn(nrow, "UMSA1", this.dsOT_ITAB.getColumn(i, "UMSA1"));
+        		this.dsInsert.setColumn(nrow, "TXJCD", this.dsOT_ITAB.getColumn(i, "TXJCD"));
+        		this.dsInsert.setColumn(nrow, "PERIV", this.dsOT_ITAB.getColumn(i, "PERIV"));
+        		this.dsInsert.setColumn(nrow, "ABRVW", this.dsOT_ITAB.getColumn(i, "ABRVW"));
+        		this.dsInsert.setColumn(nrow, "INSPBYDEBI", this.dsOT_ITAB.getColumn(i, "INSPBYDEBI"));
+        		this.dsInsert.setColumn(nrow, "INSPATDEBI", this.dsOT_ITAB.getColumn(i, "INSPATDEBI"));
+        		this.dsInsert.setColumn(nrow, "KTOCD", this.dsOT_ITAB.getColumn(i, "KTOCD"));
+        		this.dsInsert.setColumn(nrow, "PFORT", this.dsOT_ITAB.getColumn(i, "PFORT"));
+        		this.dsInsert.setColumn(nrow, "WERKS", this.dsOT_ITAB.getColumn(i, "WERKS"));
+        		this.dsInsert.setColumn(nrow, "DTAMS", this.dsOT_ITAB.getColumn(i, "DTAMS"));
+        		this.dsInsert.setColumn(nrow, "DTAWS", this.dsOT_ITAB.getColumn(i, "DTAWS"));
+        		this.dsInsert.setColumn(nrow, "DUEFL", this.dsOT_ITAB.getColumn(i, "DUEFL"));
+        		this.dsInsert.setColumn(nrow, "HZUOR", this.dsOT_ITAB.getColumn(i, "HZUOR"));
+        		this.dsInsert.setColumn(nrow, "SPERZ", this.dsOT_ITAB.getColumn(i, "SPERZ"));
+        		this.dsInsert.setColumn(nrow, "ETIKG", this.dsOT_ITAB.getColumn(i, "ETIKG"));
+        		this.dsInsert.setColumn(nrow, "CIVVE", this.dsOT_ITAB.getColumn(i, "CIVVE"));
+        		this.dsInsert.setColumn(nrow, "MILVE", this.dsOT_ITAB.getColumn(i, "MILVE"));
+        		this.dsInsert.setColumn(nrow, "KDKG1", this.dsOT_ITAB.getColumn(i, "KDKG1"));
+        		this.dsInsert.setColumn(nrow, "KDKG2", this.dsOT_ITAB.getColumn(i, "KDKG2"));
+        		this.dsInsert.setColumn(nrow, "KDKG3", this.dsOT_ITAB.getColumn(i, "KDKG3"));
+        		this.dsInsert.setColumn(nrow, "KDKG4", this.dsOT_ITAB.getColumn(i, "KDKG4"));
+        		this.dsInsert.setColumn(nrow, "KDKG5", this.dsOT_ITAB.getColumn(i, "KDKG5"));
+        		this.dsInsert.setColumn(nrow, "XKNZA", this.dsOT_ITAB.getColumn(i, "XKNZA"));
+        		this.dsInsert.setColumn(nrow, "FITYP", this.dsOT_ITAB.getColumn(i, "FITYP"));
+        		this.dsInsert.setColumn(nrow, "STCDT", this.dsOT_ITAB.getColumn(i, "STCDT"));
+        		this.dsInsert.setColumn(nrow, "STCD3", this.dsOT_ITAB.getColumn(i, "STCD3"));
+        		this.dsInsert.setColumn(nrow, "STCD4", this.dsOT_ITAB.getColumn(i, "STCD4"));
+        		this.dsInsert.setColumn(nrow, "XICMS", this.dsOT_ITAB.getColumn(i, "XICMS"));
+        		this.dsInsert.setColumn(nrow, "XXIPI", this.dsOT_ITAB.getColumn(i, "XXIPI"));
+        		this.dsInsert.setColumn(nrow, "XSUBT", this.dsOT_ITAB.getColumn(i, "XSUBT"));
+        		this.dsInsert.setColumn(nrow, "CFOPC", this.dsOT_ITAB.getColumn(i, "CFOPC"));
+        		this.dsInsert.setColumn(nrow, "TXLW1", this.dsOT_ITAB.getColumn(i, "TXLW1"));
+        		this.dsInsert.setColumn(nrow, "TXLW2", this.dsOT_ITAB.getColumn(i, "TXLW2"));
+        		this.dsInsert.setColumn(nrow, "CCC01", this.dsOT_ITAB.getColumn(i, "CCC01"));
+        		this.dsInsert.setColumn(nrow, "CCC02", this.dsOT_ITAB.getColumn(i, "CCC02"));
+        		this.dsInsert.setColumn(nrow, "CCC03", this.dsOT_ITAB.getColumn(i, "CCC03"));
+        		this.dsInsert.setColumn(nrow, "CCC04", this.dsOT_ITAB.getColumn(i, "CCC04"));
+        		this.dsInsert.setColumn(nrow, "CASSD", this.dsOT_ITAB.getColumn(i, "CASSD"));
+        		this.dsInsert.setColumn(nrow, "KNURL", this.dsOT_ITAB.getColumn(i, "KNURL"));
+        		this.dsInsert.setColumn(nrow, "J_1KFREPRE", this.dsOT_ITAB.getColumn(i, "J_1KFREPRE"));
+        		this.dsInsert.setColumn(nrow, "J_1KFTBUS", this.dsOT_ITAB.getColumn(i, "J_1KFTBUS"));
+        		this.dsInsert.setColumn(nrow, "J_1KFTIND", this.dsOT_ITAB.getColumn(i, "J_1KFTIND"));
+        		this.dsInsert.setColumn(nrow, "CONFS", this.dsOT_ITAB.getColumn(i, "CONFS"));
+        		this.dsInsert.setColumn(nrow, "UPDAT", this.dsOT_ITAB.getColumn(i, "UPDAT"));
+        		this.dsInsert.setColumn(nrow, "UPTIM", this.dsOT_ITAB.getColumn(i, "UPTIM"));
+        		this.dsInsert.setColumn(nrow, "NODEL", this.dsOT_ITAB.getColumn(i, "NODEL"));
+        		this.dsInsert.setColumn(nrow, "DEAR6", this.dsOT_ITAB.getColumn(i, "DEAR6"));
+        		this.dsInsert.setColumn(nrow, "R_KNA1_A", this.dsOT_ITAB.getColumn(i, "R_KNA1_A"));
+        		this.dsInsert.setColumn(nrow, "R_KNA1_I", this.dsOT_ITAB.getColumn(i, "R_KNA1_I"));
+        		this.dsInsert.setColumn(nrow, "R_PALHGT", this.dsOT_ITAB.getColumn(i, "R_PALHGT"));
+        		this.dsInsert.setColumn(nrow, "R_PAL_UL", this.dsOT_ITAB.getColumn(i, "R_PAL_UL"));
+        		this.dsInsert.setColumn(nrow, "R_PK_MAT", this.dsOT_ITAB.getColumn(i, "R_PK_MAT"));
+        		this.dsInsert.setColumn(nrow, "R_MATPAL", this.dsOT_ITAB.getColumn(i, "R_MATPAL"));
+        		this.dsInsert.setColumn(nrow, "R_I_NO_LYR", this.dsOT_ITAB.getColumn(i, "R_I_NO_LYR"));
+        		this.dsInsert.setColumn(nrow, "R_ONE_MAT", this.dsOT_ITAB.getColumn(i, "R_ONE_MAT"));
+        		this.dsInsert.setColumn(nrow, "R_ONE_SORT", this.dsOT_ITAB.getColumn(i, "R_ONE_SORT"));
+        		this.dsInsert.setColumn(nrow, "R_ULD_SIDE", this.dsOT_ITAB.getColumn(i, "R_ULD_SIDE"));
+        		this.dsInsert.setColumn(nrow, "R_LOAD_PREF", this.dsOT_ITAB.getColumn(i, "R_LOAD_PREF"));
+        		this.dsInsert.setColumn(nrow, "R_DPOINT", this.dsOT_ITAB.getColumn(i, "R_DPOINT"));
+        		this.dsInsert.setColumn(nrow, "AKNA1_FMFG", this.dsOT_ITAB.getColumn(i, "AKNA1_FMFG"));
+        		this.dsInsert.setColumn(nrow, "ALC", this.dsOT_ITAB.getColumn(i, "ALC"));
+        		this.dsInsert.setColumn(nrow, "PMT_OFFICE", this.dsOT_ITAB.getColumn(i, "PMT_OFFICE"));
+        		this.dsInsert.setColumn(nrow, "SI_FMFG_VP2", this.dsOT_ITAB.getColumn(i, "SI_FMFG_VP2"));
+        		this.dsInsert.setColumn(nrow, "AKNA1_PSO", this.dsOT_ITAB.getColumn(i, "AKNA1_PSO"));
+        		this.dsInsert.setColumn(nrow, "PSOFG", this.dsOT_ITAB.getColumn(i, "PSOFG"));
+        		this.dsInsert.setColumn(nrow, "PSOIS", this.dsOT_ITAB.getColumn(i, "PSOIS"));
+        		this.dsInsert.setColumn(nrow, "IADDR_PSO", this.dsOT_ITAB.getColumn(i, "IADDR_PSO"));
+        		this.dsInsert.setColumn(nrow, "PSON1", this.dsOT_ITAB.getColumn(i, "PSON1"));
+        		this.dsInsert.setColumn(nrow, "PSON2", this.dsOT_ITAB.getColumn(i, "PSON2"));
+        		this.dsInsert.setColumn(nrow, "PSON3", this.dsOT_ITAB.getColumn(i, "PSON3"));
+        		this.dsInsert.setColumn(nrow, "PSOVN", this.dsOT_ITAB.getColumn(i, "PSOVN"));
+        		this.dsInsert.setColumn(nrow, "PSOTL", this.dsOT_ITAB.getColumn(i, "PSOTL"));
+        		this.dsInsert.setColumn(nrow, "PSOHS", this.dsOT_ITAB.getColumn(i, "PSOHS"));
+        		this.dsInsert.setColumn(nrow, "PSOST", this.dsOT_ITAB.getColumn(i, "PSOST"));
+        		this.dsInsert.setColumn(nrow, "PSO21", this.dsOT_ITAB.getColumn(i, "PSO21"));
+        		this.dsInsert.setColumn(nrow, "PSOO1", this.dsOT_ITAB.getColumn(i, "PSOO1"));
+        		this.dsInsert.setColumn(nrow, "PSOO2", this.dsOT_ITAB.getColumn(i, "PSOO2"));
+        		this.dsInsert.setColumn(nrow, "PSOO3", this.dsOT_ITAB.getColumn(i, "PSOO3"));
+        		this.dsInsert.setColumn(nrow, "PSOO4", this.dsOT_ITAB.getColumn(i, "PSOO4"));
+        		this.dsInsert.setColumn(nrow, "PSOO5", this.dsOT_ITAB.getColumn(i, "PSOO5"));
+        		this.dsInsert.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        	}
+
+        	if (this.dsInsert.rowcount == 0) return;
+
+        	var strSvcId    = "insert";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "insert=dsInsert";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+         	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+         						strSvcType , 	// transaction을 요청할 구분
+         						inProc,			// Procedure 정보 Dataset 이름
+         						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+         						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+         						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        this.fnSapUpdate = function()
+        {
+        	this.dsUpdate.clearData();
+
+        	var nrow = this.dsUpdate.addRow();
+
+        	this.dsUpdate.setColumn(nrow, "STR_SUPPL1", this.dsOT_ADDR.getColumn(0, "STR_SUPPL1"));
+        	this.dsUpdate.setColumn(nrow, "STR_SUPPL2", this.dsOT_ADDR.getColumn(0, "STR_SUPPL2"));
+        	this.dsUpdate.setColumn(nrow, "KUNNR", this.dsOT_ITAB.getColumn(0, "KUNNR"));
+        	this.dsUpdate.setColumn(nrow, "MANDT", this.dsOT_ITAB.getColumn(0, "MANDT"));
+        	this.dsUpdate.setColumn(nrow, "LAND1", this.dsOT_ITAB.getColumn(0, "LAND1"));
+        	this.dsUpdate.setColumn(nrow, "NAME1", this.dsOT_ITAB.getColumn(0, "NAME1"));
+        	this.dsUpdate.setColumn(nrow, "NAME2", this.dsOT_ITAB.getColumn(0, "NAME2"));
+        	this.dsUpdate.setColumn(nrow, "ORT01", this.dsOT_ITAB.getColumn(0, "ORT01"));
+        	this.dsUpdate.setColumn(nrow, "LIFNR", this.dsOT_ITAB.getColumn(0, "KUNNR"));	// LIFNR 컬럼에 값이 빈값으로 넘어와서 KUNNR 컬럼값을 넣어줌
+        	this.dsUpdate.setColumn(nrow, "PSTLZ", this.dsOT_ITAB.getColumn(0, "PSTLZ"));
+        	this.dsUpdate.setColumn(nrow, "REGIO", this.dsOT_ITAB.getColumn(0, "REGIO"));
+        	this.dsUpdate.setColumn(nrow, "SORTL", this.dsOT_ITAB.getColumn(0, "SORTL"));
+        	this.dsUpdate.setColumn(nrow, "STRAS", this.dsOT_ADDR.getColumn(0, "STR_SUPPL1"));
+        	this.dsUpdate.setColumn(nrow, "TELF1", this.dsOT_ITAB.getColumn(0, "TELF1"));
+        	this.dsUpdate.setColumn(nrow, "TELFX", this.dsOT_ITAB.getColumn(0, "TELFX"));
+        	this.dsUpdate.setColumn(nrow, "XCPDK", this.dsOT_ITAB.getColumn(0, "XCPDK"));
+        	this.dsUpdate.setColumn(nrow, "ADRNR", this.dsOT_ITAB.getColumn(0, "ADRNR"));
+        	this.dsUpdate.setColumn(nrow, "MCOD1", this.dsOT_ITAB.getColumn(0, "MCOD1"));
+        	this.dsUpdate.setColumn(nrow, "MCOD2", this.dsOT_ITAB.getColumn(0, "MCOD2"));
+        	this.dsUpdate.setColumn(nrow, "MCOD3", this.dsOT_ITAB.getColumn(0, "MCOD3"));
+        	this.dsUpdate.setColumn(nrow, "SI_KNA1", this.dsOT_ITAB.getColumn(0, "SI_KNA1"));
+        	this.dsUpdate.setColumn(nrow, "ANRED", this.dsOT_ITAB.getColumn(0, "ANRED"));
+        	this.dsUpdate.setColumn(nrow, "AUFSD", this.dsOT_ITAB.getColumn(0, "AUFSD"));
+        	this.dsUpdate.setColumn(nrow, "BAHNE", this.dsOT_ITAB.getColumn(0, "BAHNE"));
+        	this.dsUpdate.setColumn(nrow, "BAHNS", this.dsOT_ITAB.getColumn(0, "BAHNS"));
+        	this.dsUpdate.setColumn(nrow, "BBBNR", this.dsOT_ITAB.getColumn(0, "BBBNR"));
+        	this.dsUpdate.setColumn(nrow, "BBSNR", this.dsOT_ITAB.getColumn(0, "BBSNR"));
+        	this.dsUpdate.setColumn(nrow, "BEGRU", this.dsOT_ITAB.getColumn(0, "BEGRU"));
+        	this.dsUpdate.setColumn(nrow, "BRSCH", this.dsOT_ITAB.getColumn(0, "BRSCH"));
+        	this.dsUpdate.setColumn(nrow, "BUBKZ", this.dsOT_ITAB.getColumn(0, "BUBKZ"));
+        	this.dsUpdate.setColumn(nrow, "DATLT", this.dsOT_ITAB.getColumn(0, "DATLT"));
+        	this.dsUpdate.setColumn(nrow, "ERDAT", this.dsOT_ITAB.getColumn(0, "ERDAT"));
+        	this.dsUpdate.setColumn(nrow, "ERNAM", this.dsOT_ITAB.getColumn(0, "ERNAM"));
+        	this.dsUpdate.setColumn(nrow, "EXABL", this.dsOT_ITAB.getColumn(0, "EXABL"));
+        	this.dsUpdate.setColumn(nrow, "FAKSD", this.dsOT_ITAB.getColumn(0, "FAKSD"));
+        	this.dsUpdate.setColumn(nrow, "FISKN", this.dsOT_ITAB.getColumn(0, "FISKN"));
+        	this.dsUpdate.setColumn(nrow, "KNAZK", this.dsOT_ITAB.getColumn(0, "KNAZK"));
+        	this.dsUpdate.setColumn(nrow, "KNRZA", this.dsOT_ITAB.getColumn(0, "KNRZA"));
+        	this.dsUpdate.setColumn(nrow, "KONZS", this.dsOT_ITAB.getColumn(0, "KONZS"));
+        	this.dsUpdate.setColumn(nrow, "KTOKD", this.dsOT_ITAB.getColumn(0, "KTOKD"));
+        	this.dsUpdate.setColumn(nrow, "KUKLA", this.dsOT_ITAB.getColumn(0, "KUKLA"));
+        	this.dsUpdate.setColumn(nrow, "LIFSD", this.dsOT_ITAB.getColumn(0, "LIFSD"));
+        	this.dsUpdate.setColumn(nrow, "LOCCO", this.dsOT_ITAB.getColumn(0, "LOCCO"));
+        	this.dsUpdate.setColumn(nrow, "LOEVM", this.dsOT_ITAB.getColumn(0, "LOEVM"));
+        	this.dsUpdate.setColumn(nrow, "NAME3", this.dsOT_ITAB.getColumn(0, "NAME3"));
+        	this.dsUpdate.setColumn(nrow, "NAME4", this.dsOT_ITAB.getColumn(0, "NAME4"));
+        	this.dsUpdate.setColumn(nrow, "NIELS", this.dsOT_ITAB.getColumn(0, "NIELS"));
+        	this.dsUpdate.setColumn(nrow, "ORT02", this.dsOT_ITAB.getColumn(0, "ORT02"));
+        	this.dsUpdate.setColumn(nrow, "PFACH", this.dsOT_ITAB.getColumn(0, "PFACH"));
+        	this.dsUpdate.setColumn(nrow, "PSTL2", this.dsOT_ITAB.getColumn(0, "PSTL2"));
+        	this.dsUpdate.setColumn(nrow, "COUNC", this.dsOT_ITAB.getColumn(0, "COUNC"));
+        	this.dsUpdate.setColumn(nrow, "CITYC", this.dsOT_ITAB.getColumn(0, "CITYC"));
+        	this.dsUpdate.setColumn(nrow, "RPMKR", this.dsOT_ITAB.getColumn(0, "RPMKR"));
+        	this.dsUpdate.setColumn(nrow, "SPERR", this.dsOT_ITAB.getColumn(0, "SPERR"));
+        	this.dsUpdate.setColumn(nrow, "SPRAS", this.dsOT_ITAB.getColumn(0, "SPRAS"));
+        	this.dsUpdate.setColumn(nrow, "STCD1", this.dsOT_ITAB.getColumn(0, "STCD1"));
+        	this.dsUpdate.setColumn(nrow, "STCD2", this.dsOT_ITAB.getColumn(0, "STCD2"));
+        	this.dsUpdate.setColumn(nrow, "STKZA", this.dsOT_ITAB.getColumn(0, "STKZA"));
+        	this.dsUpdate.setColumn(nrow, "STKZU", this.dsOT_ITAB.getColumn(0, "STKZU"));
+        	this.dsUpdate.setColumn(nrow, "TELBX", this.dsOT_ITAB.getColumn(0, "TELBX"));
+        	this.dsUpdate.setColumn(nrow, "TELF2", this.dsOT_ITAB.getColumn(0, "TELF2"));
+        	this.dsUpdate.setColumn(nrow, "TELTX", this.dsOT_ITAB.getColumn(0, "TELTX"));
+        	this.dsUpdate.setColumn(nrow, "TELX1", this.dsOT_ITAB.getColumn(0, "TELX1"));
+        	this.dsUpdate.setColumn(nrow, "LZONE", this.dsOT_ITAB.getColumn(0, "LZONE"));
+        	this.dsUpdate.setColumn(nrow, "XZEMP", this.dsOT_ITAB.getColumn(0, "XZEMP"));
+        	this.dsUpdate.setColumn(nrow, "VBUND", this.dsOT_ITAB.getColumn(0, "VBUND"));
+        	this.dsUpdate.setColumn(nrow, "STCEG", this.dsOT_ITAB.getColumn(0, "STCEG"));
+        	this.dsUpdate.setColumn(nrow, "DEAR1", this.dsOT_ITAB.getColumn(0, "DEAR1"));
+        	this.dsUpdate.setColumn(nrow, "DEAR2", this.dsOT_ITAB.getColumn(0, "DEAR2"));
+        	this.dsUpdate.setColumn(nrow, "DEAR3", this.dsOT_ITAB.getColumn(0, "DEAR3"));
+        	this.dsUpdate.setColumn(nrow, "DEAR4", this.dsOT_ITAB.getColumn(0, "DEAR4"));
+        	this.dsUpdate.setColumn(nrow, "DEAR5", this.dsOT_ITAB.getColumn(0, "DEAR5"));
+        	this.dsUpdate.setColumn(nrow, "GFORM", this.dsOT_ITAB.getColumn(0, "GFORM"));
+        	this.dsUpdate.setColumn(nrow, "BRAN1", this.dsOT_ITAB.getColumn(0, "BRAN1"));
+        	this.dsUpdate.setColumn(nrow, "BRAN2", this.dsOT_ITAB.getColumn(0, "BRAN2"));
+        	this.dsUpdate.setColumn(nrow, "BRAN3", this.dsOT_ITAB.getColumn(0, "BRAN3"));
+        	this.dsUpdate.setColumn(nrow, "BRAN4", this.dsOT_ITAB.getColumn(0, "BRAN4"));
+        	this.dsUpdate.setColumn(nrow, "BRAN5", this.dsOT_ITAB.getColumn(0, "BRAN5"));
+        	this.dsUpdate.setColumn(nrow, "EKONT", this.dsOT_ITAB.getColumn(0, "EKONT"));
+        	this.dsUpdate.setColumn(nrow, "UMSAT", this.dsOT_ITAB.getColumn(0, "UMSAT"));
+        	this.dsUpdate.setColumn(nrow, "UMJAH", this.dsOT_ITAB.getColumn(0, "UMJAH"));
+        	this.dsUpdate.setColumn(nrow, "UWAER", this.dsOT_ITAB.getColumn(0, "UWAER"));
+        	this.dsUpdate.setColumn(nrow, "JMZAH", this.dsOT_ITAB.getColumn(0, "JMZAH"));
+        	this.dsUpdate.setColumn(nrow, "JMJAH", this.dsOT_ITAB.getColumn(0, "JMJAH"));
+        	this.dsUpdate.setColumn(nrow, "KATR1", this.dsOT_ITAB.getColumn(0, "KATR1"));
+        	this.dsUpdate.setColumn(nrow, "KATR2", this.dsOT_ITAB.getColumn(0, "KATR2"));
+        	this.dsUpdate.setColumn(nrow, "KATR3", this.dsOT_ITAB.getColumn(0, "KATR3"));
+        	this.dsUpdate.setColumn(nrow, "KATR4", this.dsOT_ITAB.getColumn(0, "KATR4"));
+        	this.dsUpdate.setColumn(nrow, "KATR5", this.dsOT_ITAB.getColumn(0, "KATR5"));
+        	this.dsUpdate.setColumn(nrow, "KATR6", this.dsOT_ITAB.getColumn(0, "KATR6"));
+        	this.dsUpdate.setColumn(nrow, "KATR7", this.dsOT_ITAB.getColumn(0, "KATR7"));
+        	this.dsUpdate.setColumn(nrow, "KATR8", this.dsOT_ITAB.getColumn(0, "KATR8"));
+        	this.dsUpdate.setColumn(nrow, "KATR9", this.dsOT_ITAB.getColumn(0, "KATR9"));
+        	this.dsUpdate.setColumn(nrow, "KATR10", this.dsOT_ITAB.getColumn(0, "KATR10"));
+        	this.dsUpdate.setColumn(nrow, "STKZN", this.dsOT_ITAB.getColumn(0, "STKZN"));
+        	this.dsUpdate.setColumn(nrow, "UMSA1", this.dsOT_ITAB.getColumn(0, "UMSA1"));
+        	this.dsUpdate.setColumn(nrow, "TXJCD", this.dsOT_ITAB.getColumn(0, "TXJCD"));
+        	this.dsUpdate.setColumn(nrow, "PERIV", this.dsOT_ITAB.getColumn(0, "PERIV"));
+        	this.dsUpdate.setColumn(nrow, "ABRVW", this.dsOT_ITAB.getColumn(0, "ABRVW"));
+        	this.dsUpdate.setColumn(nrow, "INSPBYDEBI", this.dsOT_ITAB.getColumn(0, "INSPBYDEBI"));
+        	this.dsUpdate.setColumn(nrow, "INSPATDEBI", this.dsOT_ITAB.getColumn(0, "INSPATDEBI"));
+        	this.dsUpdate.setColumn(nrow, "KTOCD", this.dsOT_ITAB.getColumn(0, "KTOCD"));
+        	this.dsUpdate.setColumn(nrow, "PFORT", this.dsOT_ITAB.getColumn(0, "PFORT"));
+        	this.dsUpdate.setColumn(nrow, "WERKS", this.dsOT_ITAB.getColumn(0, "WERKS"));
+        	this.dsUpdate.setColumn(nrow, "DTAMS", this.dsOT_ITAB.getColumn(0, "DTAMS"));
+        	this.dsUpdate.setColumn(nrow, "DTAWS", this.dsOT_ITAB.getColumn(0, "DTAWS"));
+        	this.dsUpdate.setColumn(nrow, "DUEFL", this.dsOT_ITAB.getColumn(0, "DUEFL"));
+        	this.dsUpdate.setColumn(nrow, "HZUOR", this.dsOT_ITAB.getColumn(0, "HZUOR"));
+        	this.dsUpdate.setColumn(nrow, "SPERZ", this.dsOT_ITAB.getColumn(0, "SPERZ"));
+        	this.dsUpdate.setColumn(nrow, "ETIKG", this.dsOT_ITAB.getColumn(0, "ETIKG"));
+        	this.dsUpdate.setColumn(nrow, "CIVVE", this.dsOT_ITAB.getColumn(0, "CIVVE"));
+        	this.dsUpdate.setColumn(nrow, "MILVE", this.dsOT_ITAB.getColumn(0, "MILVE"));
+        	this.dsUpdate.setColumn(nrow, "KDKG1", this.dsOT_ITAB.getColumn(0, "KDKG1"));
+        	this.dsUpdate.setColumn(nrow, "KDKG2", this.dsOT_ITAB.getColumn(0, "KDKG2"));
+        	this.dsUpdate.setColumn(nrow, "KDKG3", this.dsOT_ITAB.getColumn(0, "KDKG3"));
+        	this.dsUpdate.setColumn(nrow, "KDKG4", this.dsOT_ITAB.getColumn(0, "KDKG4"));
+        	this.dsUpdate.setColumn(nrow, "KDKG5", this.dsOT_ITAB.getColumn(0, "KDKG5"));
+        	this.dsUpdate.setColumn(nrow, "XKNZA", this.dsOT_ITAB.getColumn(0, "XKNZA"));
+        	this.dsUpdate.setColumn(nrow, "FITYP", this.dsOT_ITAB.getColumn(0, "FITYP"));
+        	this.dsUpdate.setColumn(nrow, "STCDT", this.dsOT_ITAB.getColumn(0, "STCDT"));
+        	this.dsUpdate.setColumn(nrow, "STCD3", this.dsOT_ITAB.getColumn(0, "STCD3"));
+        	this.dsUpdate.setColumn(nrow, "STCD4", this.dsOT_ITAB.getColumn(0, "STCD4"));
+        	this.dsUpdate.setColumn(nrow, "XICMS", this.dsOT_ITAB.getColumn(0, "XICMS"));
+        	this.dsUpdate.setColumn(nrow, "XXIPI", this.dsOT_ITAB.getColumn(0, "XXIPI"));
+        	this.dsUpdate.setColumn(nrow, "XSUBT", this.dsOT_ITAB.getColumn(0, "XSUBT"));
+        	this.dsUpdate.setColumn(nrow, "CFOPC", this.dsOT_ITAB.getColumn(0, "CFOPC"));
+        	this.dsUpdate.setColumn(nrow, "TXLW1", this.dsOT_ITAB.getColumn(0, "TXLW1"));
+        	this.dsUpdate.setColumn(nrow, "TXLW2", this.dsOT_ITAB.getColumn(0, "TXLW2"));
+        	this.dsUpdate.setColumn(nrow, "CCC01", this.dsOT_ITAB.getColumn(0, "CCC01"));
+        	this.dsUpdate.setColumn(nrow, "CCC02", this.dsOT_ITAB.getColumn(0, "CCC02"));
+        	this.dsUpdate.setColumn(nrow, "CCC03", this.dsOT_ITAB.getColumn(0, "CCC03"));
+        	this.dsUpdate.setColumn(nrow, "CCC04", this.dsOT_ITAB.getColumn(0, "CCC04"));
+        	this.dsUpdate.setColumn(nrow, "CASSD", this.dsOT_ITAB.getColumn(0, "CASSD"));
+        	this.dsUpdate.setColumn(nrow, "KNURL", this.dsOT_ITAB.getColumn(0, "KNURL"));
+        	this.dsUpdate.setColumn(nrow, "J_1KFREPRE", this.dsOT_ITAB.getColumn(0, "J_1KFREPRE"));
+        	this.dsUpdate.setColumn(nrow, "J_1KFTBUS", this.dsOT_ITAB.getColumn(0, "J_1KFTBUS"));
+        	this.dsUpdate.setColumn(nrow, "J_1KFTIND", this.dsOT_ITAB.getColumn(0, "J_1KFTIND"));
+        	this.dsUpdate.setColumn(nrow, "CONFS", this.dsOT_ITAB.getColumn(0, "CONFS"));
+        	this.dsUpdate.setColumn(nrow, "UPDAT", this.dsOT_ITAB.getColumn(0, "UPDAT"));
+        	this.dsUpdate.setColumn(nrow, "UPTIM", this.dsOT_ITAB.getColumn(0, "UPTIM"));
+        	this.dsUpdate.setColumn(nrow, "NODEL", this.dsOT_ITAB.getColumn(0, "NODEL"));
+        	this.dsUpdate.setColumn(nrow, "DEAR6", this.dsOT_ITAB.getColumn(0, "DEAR6"));
+        	this.dsUpdate.setColumn(nrow, "R_KNA1_A", this.dsOT_ITAB.getColumn(0, "R_KNA1_A"));
+        	this.dsUpdate.setColumn(nrow, "R_KNA1_I", this.dsOT_ITAB.getColumn(0, "R_KNA1_I"));
+        	this.dsUpdate.setColumn(nrow, "R_PALHGT", this.dsOT_ITAB.getColumn(0, "R_PALHGT"));
+        	this.dsUpdate.setColumn(nrow, "R_PAL_UL", this.dsOT_ITAB.getColumn(0, "R_PAL_UL"));
+        	this.dsUpdate.setColumn(nrow, "R_PK_MAT", this.dsOT_ITAB.getColumn(0, "R_PK_MAT"));
+        	this.dsUpdate.setColumn(nrow, "R_MATPAL", this.dsOT_ITAB.getColumn(0, "R_MATPAL"));
+        	this.dsUpdate.setColumn(nrow, "R_I_NO_LYR", this.dsOT_ITAB.getColumn(0, "R_I_NO_LYR"));
+        	this.dsUpdate.setColumn(nrow, "R_ONE_MAT", this.dsOT_ITAB.getColumn(0, "R_ONE_MAT"));
+        	this.dsUpdate.setColumn(nrow, "R_ONE_SORT", this.dsOT_ITAB.getColumn(0, "R_ONE_SORT"));
+        	this.dsUpdate.setColumn(nrow, "R_ULD_SIDE", this.dsOT_ITAB.getColumn(0, "R_ULD_SIDE"));
+        	this.dsUpdate.setColumn(nrow, "R_LOAD_PREF", this.dsOT_ITAB.getColumn(0, "R_LOAD_PREF"));
+        	this.dsUpdate.setColumn(nrow, "R_DPOINT", this.dsOT_ITAB.getColumn(0, "R_DPOINT"));
+        	this.dsUpdate.setColumn(nrow, "AKNA1_FMFG", this.dsOT_ITAB.getColumn(0, "AKNA1_FMFG"));
+        	this.dsUpdate.setColumn(nrow, "ALC", this.dsOT_ITAB.getColumn(0, "ALC"));
+        	this.dsUpdate.setColumn(nrow, "PMT_OFFICE", this.dsOT_ITAB.getColumn(0, "PMT_OFFICE"));
+        	this.dsUpdate.setColumn(nrow, "SI_FMFG_VP2", this.dsOT_ITAB.getColumn(0, "SI_FMFG_VP2"));
+        	this.dsUpdate.setColumn(nrow, "AKNA1_PSO", this.dsOT_ITAB.getColumn(0, "AKNA1_PSO"));
+        	this.dsUpdate.setColumn(nrow, "PSOFG", this.dsOT_ITAB.getColumn(0, "PSOFG"));
+        	this.dsUpdate.setColumn(nrow, "PSOIS", this.dsOT_ITAB.getColumn(0, "PSOIS"));
+        	this.dsUpdate.setColumn(nrow, "IADDR_PSO", this.dsOT_ITAB.getColumn(0, "IADDR_PSO"));
+        	this.dsUpdate.setColumn(nrow, "PSON1", this.dsOT_ITAB.getColumn(0, "PSON1"));
+        	this.dsUpdate.setColumn(nrow, "PSON2", this.dsOT_ITAB.getColumn(0, "PSON2"));
+        	this.dsUpdate.setColumn(nrow, "PSON3", this.dsOT_ITAB.getColumn(0, "PSON3"));
+        	this.dsUpdate.setColumn(nrow, "PSOVN", this.dsOT_ITAB.getColumn(0, "PSOVN"));
+        	this.dsUpdate.setColumn(nrow, "PSOTL", this.dsOT_ITAB.getColumn(0, "PSOTL"));
+        	this.dsUpdate.setColumn(nrow, "PSOHS", this.dsOT_ITAB.getColumn(0, "PSOHS"));
+        	this.dsUpdate.setColumn(nrow, "PSOST", this.dsOT_ITAB.getColumn(0, "PSOST"));
+        	this.dsUpdate.setColumn(nrow, "PSO21", this.dsOT_ITAB.getColumn(0, "PSO21"));
+        	this.dsUpdate.setColumn(nrow, "PSOO1", this.dsOT_ITAB.getColumn(0, "PSOO1"));
+        	this.dsUpdate.setColumn(nrow, "PSOO2", this.dsOT_ITAB.getColumn(0, "PSOO2"));
+        	this.dsUpdate.setColumn(nrow, "PSOO3", this.dsOT_ITAB.getColumn(0, "PSOO3"));
+        	this.dsUpdate.setColumn(nrow, "PSOO4", this.dsOT_ITAB.getColumn(0, "PSOO4"));
+        	this.dsUpdate.setColumn(nrow, "PSOO5", this.dsOT_ITAB.getColumn(0, "PSOO5"));
+        	this.dsUpdate.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+
+        	if (this.dsUpdate.rowcount == 0) return;
+
+        	var strSvcId    = "update";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "update=dsUpdate";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+         	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+         						strSvcType , 	// transaction을 요청할 구분
+         						inProc,			// Procedure 정보 Dataset 이름
+         						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+         						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+         						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        this.fnALLVENDER = function(strId, val) {
+        	this.gfnConfirm("전체거래처 이관을 진행하시겠습니까?", "fnALLVENDER_callback");
+        }
+
+        this.fnALLVENDER_callback = function(strID, val)
+        {
+        	if(val==true)
+        	{
+        		this.fnSapSelect("*");
+        	}
+        }
+
+        this.dsSearch_onvaluechanged = function(obj,e)
+        {
+        	if(e.oldvalue != e.newvalue) {
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.gfnGridClear(this.dxGrid);
+        	}
+        };
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divSearch.form.edtDS_SEARCH.addEventHandler("onchanged",this.fnSearchInit,this);
+            this.divData.addEventHandler("ondragmove",this.divData_ondragmove,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+        };
+        this.loadIncludeScript("DQD_CUSTOMER_AR_SAP.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

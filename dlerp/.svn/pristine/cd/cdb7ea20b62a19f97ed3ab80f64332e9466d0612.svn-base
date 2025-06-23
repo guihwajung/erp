@@ -1,0 +1,859 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload" ondragmove="form_ondragmove" ondrop="form_ondrop">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0" top="0" height="46" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SYSTEM" taborder="3" text="시스템" left="0" top="10" width="92" height="25" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_SYSTEM" CDTextWidth="50" readonly="true" taborder="0" left="staCD_SYSTEM:0" top="10" width="150" height="24" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staID_GRID" taborder="1" text="ID_GRID" left="ccfCD_SYSTEM:0" top="10" width="92" height="25" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtID_GRID" taborder="2" left="staID_GRID:0" top="10" width="200" height="24" onchanged="fnSearchInit" readonly="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="100" right="0" cssclass="div_DATA_Bg" text="" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Div id="divSplitter" taborder="2" left="0" top="30%" width="100.00%" height="23" background="url('theme://images/slt_WF_SplitterH.png') no-repeat center" cursor="ns-resize" ondrag="divData_divSplitter_ondrag"/>
+              <Div id="divDataTop" taborder="1" left="0" top="0" bottom="divSplitter:5" right="0" text="">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta01" taborder="0" text="레이아웃" left="0" top="0" width="10.16%" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Grid id="objGrid" taborder="0" left="0" top="sta01:5" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataBottom" taborder="0" left="0" top="divSplitter:5" bottom="0" right="0" text="">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta01" taborder="1" text="컬럼정보" left="0" top="0" width="11.00%" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Div id="div00" taborder="6" text="div00" left="452" top="sta01:5" width="40" bottom="20">
+                      <Layouts>
+                        <Layout>
+                          <Button id="btnDel" taborder="0" top="202" width="25" height="25" cssclass="btn_WF_prev" left="8" onclick="divData_divDataBottom_div00_btnDel_onclick"/>
+                          <Button id="btnAdd" taborder="1" top="170" width="25" height="25" cssclass="btn_WF_next" left="8" onclick="divData_divDataBottom_div00_btnAdd_onclick"/>
+                        </Layout>
+                      </Layouts>
+                    </Div>
+                    <Grid id="objGrid1" taborder="5" left="0" top="sta01:5" oncellclick="divData_divDataRight_objGrid_oncellclick" bottom="0" right="div00:0" autofittype="col"/>
+                    <Grid id="objGrid2" taborder="0" left="div00:0" top="sta01:5" right="0" oncellclick="divData_divDataRight_objGrid_oncellclick" bottom="0"/>
+                    <Static id="sta00" taborder="2" text="※ 컬럼 드래그로 순서 변경가능." left="div00:0" top="0" height="22" width="480"/>
+                    <Grid id="grdBackground" taborder="3" left="728" top="74" width="100" height="194" binddataset="dsBackground" selecttype="cell" cssclass="grd_color" visible="false" oncellclick="divData_divDataRight_grdBackground_oncellclick">
+                      <Formats>
+                        <Format id="default">
+                          <Columns>
+                            <Column size="80"/>
+                          </Columns>
+                          <Rows>
+                            <Row size="0" band="head"/>
+                            <Row size="24"/>
+                          </Rows>
+                          <Band id="head">
+                            <Cell text="CODE"/>
+                          </Band>
+                          <Band id="body">
+                            <Cell text="bind:CODE"/>
+                          </Band>
+                        </Format>
+                      </Formats>
+                    </Grid>
+                    <Grid id="grdForeground" taborder="4" left="920" top="74" width="100" height="194" binddataset="dsForeground" selecttype="cell" cssclass="grd_color" visible="false" oncellclick="divData_divDataRight_grdForeground_oncellclick">
+                      <Formats>
+                        <Format id="default">
+                          <Columns>
+                            <Column size="80"/>
+                          </Columns>
+                          <Rows>
+                            <Row size="0" band="head"/>
+                            <Row size="24"/>
+                          </Rows>
+                          <Band id="head">
+                            <Cell text="CODE"/>
+                          </Band>
+                          <Band id="body">
+                            <Cell text="bind:CODE"/>
+                          </Band>
+                        </Format>
+                      </Formats>
+                    </Grid>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00" taborder="2" left="530" top="314" width="500" height="30" visible="false" background="#ffffff" border="1px dotted"/>
+        <Div id="divData2" taborder="3" left="0" top="divData:5" bottom="0" right="0">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+this.ID_CUSTOM = "";
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	var CD_SYSTEM = this.gfnGetParam('CD_SYSTEM');
+	var DS_SYSTEM = this.gfnGetParam('DS_SYSTEM');
+	var ID_GRID = this.gfnGetParam('ID_GRID');
+		
+	if (!this.gfnIsNull(CD_SYSTEM) && !this.gfnIsNull(ID_GRID)) 
+	{
+		this.ccfCD_SYSTEM.form.CDTextBox.set_value(CD_SYSTEM);
+		this.ccfCD_SYSTEM.form.DSTextBox.set_value(DS_SYSTEM);
+
+		if (ID_GRID.indexOf('#') > -1) 
+		{
+			this.ctxtID_GRID.set_value(ID_GRID.substring(0, ID_GRID.lastIndexOf('#')));
+			this.ID_CUSTOM = ID_GRID.substring(ID_GRID.lastIndexOf('#')+1);
+		}
+		else
+		{
+			this.ctxtID_GRID.set_value(ID_GRID);
+		}
+	}
+
+	this.FormBtns.Select.click();
+};
+
+this.form_ondrop = function(obj:nexacro.Form,e:nexacro.DragEventInfo)
+{
+	this.IsDrag = false;
+	this.Static00.set_visible(false);	
+};
+
+this.form_ondragmove = function(obj:nexacro.Form,e:nexacro.DragEventInfo)
+{
+	this.IsDrag = true;
+    if( this.Static00.visible == true )
+    {	
+		if(e.fromobject.name == "objGrid2" || e.fromobject.name == "Static00") {
+			this.Static00.move(e.clientx+5, e.clienty-5);
+		} 
+    }
+};
+
+/************************************************************************
+ * 버튼 설정 
+ ************************************************************************/
+this.fnSetButton = function() 
+{
+// 	var id_group = this.FormInfo.ID_GROUP;
+// 	var gr_search = this.FormInfo.GR_SEARCH;
+// 	var cd_role = this.FormInfo.CD_ROLE;	
+//	this.gfnUseSubBtn(true, this.divData, this.divData.form.divSplitter); // divSplitter sync
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() 
+{
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() 
+{
+	this.ccfCD_SYSTEM = this.divSearch.form.ccfCD_SYSTEM;
+	this.ctxtID_GRID = this.divSearch.form.ctxtID_GRID;
+	
+	this.dxGrid = this.divData.form.divDataBottom.form.objGrid1;
+	this.dxGridInfo = this.divData.form.divDataTop.form.objGrid;	
+	this.dxGridSpec = this.divData.form.divDataBottom.form.objGrid2;
+
+	this.grdBackground = this.divData.form.divDataBottom.form.grdBackground;
+	this.grdForeground = this.divData.form.divDataBottom.form.grdForeground;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() 
+{
+	this.dxGridInfo.AfterInit = "fnGridLayout_AfterInit";
+	this.dxGridInfo.AfterLoad = "fnGridInfo_AfterLoad";
+	
+	this.dxGridInfo.layout = false;
+	this.dxGridSpec.layout = false;
+	
+	this.gfnGridInit(this.dxGridInfo, this.dsListInfo, "DZ", "DXX_NXGRIDINFO_LAYOUT");
+	this.gfnGridInit(this.dxGrid, this.dsList, "DZ", "DXX_NXGRIDSPEC_TARGET");	
+	this.gfnGridInit(this.dxGridSpec, this.dsListSpec, "DZ", "DXX_NXGRIDSPEC_LAYOUT");
+	
+	
+// 	this.gfnGridInitAsync(this.dxGrid, this.dsList, "DZ", "DXX_NXGRIDSPEC_TARGET");
+// 	this.gfnGridInitAsync(this.dxGridInfo, this.dsListInfo, "DZ", "DXX_NXGRIDINFO_LAYOUT");
+// 	this.gfnGridInitAsync(this.dxGridSpec, this.dsListSpec, "DZ", "DXX_NXGRIDSPEC_LAYOUT");
+	
+	this.dxGridInfo.EnterCell = "fnGridInfo_EnterCell";
+	this.dxGridSpec.EnterCell = "fnGridSpec_EnterCell";
+	this.dxGridSpec.AfterEdit = "fnGridSpec_AfterEdit";
+	
+	this.dxGridInfo.set_selecttype("cell");
+	this.dxGridInfo.addEventHandler("onselectchanged", this.fnGridInfo_RowCellChanged, this);
+	
+	this.dxGridSpec.addEventHandler("ondrag", this.dxGrid_ondrag, this);
+	this.dxGridSpec.addEventHandler("ondrop", this.dxGrid_ondrop, this);
+	this.dxGridSpec.addEventHandler("ondropdown", this.dxGrid_ondropdown, this);
+	this.dxGridSpec.addEventHandler("ondropdown", this.dxGrid_oncellclick, this);
+	
+	this.grdBackground.setCellProperty("body", 0, "cssclass", "expr:'BACK_'+CODE +','+FCODE");
+	this.grdForeground.setCellProperty("body", 0, "cssclass", "expr:'BACK_'+BCODE+','+CODE");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() 
+{
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("CD_SYSTEM", "string");
+	this.dsSelect.addColumn("ID_GRID", "string");
+	this.dsSelect.addColumn("ID_CUSTOM", "string");
+	this.dsSelect.addColumn("ID_USER", "string");
+	
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("TY_FLAG", "string");
+	this.dsSave.addColumn("CD_CORP", "string");
+	this.dsSave.addColumn("CD_SYSTEM", "string");
+	this.dsSave.addColumn("ID_GRID", "string");
+	this.dsSave.addColumn("ID_CUSTOM", "string");
+	this.dsSave.addColumn("NM_GRID", "string");
+	this.dsSave.addColumn("NO_FIXEDROWS", "int");
+	this.dsSave.addColumn("NO_FROZENCOL", "int");
+	this.dsSave.addColumn("TY_GROUP", "string");
+	this.dsSave.addColumn("YN_AUTOFILTER", "string");
+	this.dsSave.addColumn("YN_REVERSESUM", "string");
+	this.dsSave.addColumn("YN_NUM", "string");
+	this.dsSave.addColumn("YN_NOSORT", "string");
+	this.dsSave.addColumn("YN_USE", "string");
+	this.dsSave.addColumn("YN_AUTOFIT", "string");	
+	this.dsSave.addColumn("ID_USER", "string");
+	
+	this.dsSaveSpec = new Dataset();
+	this.dsSaveSpec.addColumn("TY_FLAG", "string");
+	this.dsSaveSpec.addColumn("NO_SEQ", "int");
+	this.dsSaveSpec.addColumn("CD_CORP", "string");
+	this.dsSaveSpec.addColumn("CD_SYSTEM", "string");
+	this.dsSaveSpec.addColumn("ID_GRID", "string");
+	this.dsSaveSpec.addColumn("ID_CUSTOM", "string");
+	this.dsSaveSpec.addColumn("DS_FIELD", "string");
+	this.dsSaveSpec.addColumn("NO_COL", "int");
+	this.dsSaveSpec.addColumn("DS_HEADER1", "string");
+	this.dsSaveSpec.addColumn("DS_HEADER2", "string");
+	this.dsSaveSpec.addColumn("DS_HEADER3", "string");
+	this.dsSaveSpec.addColumn("NO_WIDTH", "int");
+	this.dsSaveSpec.addColumn("YN_READONLY", "string");
+	this.dsSaveSpec.addColumn("AT_COLBACK", "string");
+	this.dsSaveSpec.addColumn("AT_COLFORE", "string");
+	this.dsSaveSpec.addColumn("TY_FIXED", "string");
+	this.dsSaveSpec.addColumn("TY_SUMMARY", "string");
+	this.dsSaveSpec.addColumn("NO_GROUP", "int");
+	this.dsSaveSpec.addColumn("NO_MERGE", "int");
+	this.dsSaveSpec.addColumn("EX_SUMMARY", "string");
+	this.dsSaveSpec.addColumn("ID_USER", "string");
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+this.fnSelect = function() 
+{
+	this.gfnGridClear(this.dxGrid);
+	this.gfnGridClear(this.dxGridSpec);
+	
+	this.gfnGridBeforeSelect(this.dxGridInfo);
+	
+	this.dsSearch.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+	this.dsSearch.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSearch";
+	var outData     = "dsListInfo=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+this.fnAdd = function() 
+{
+	var nRow = this.gfnGridAdd(this.dxGridInfo);
+	var dataset = this.dxGridInfo.getBindDataset();
+	dataset.setColumn(nRow, 'CD_SYSTEM', this.ccfCD_SYSTEM.form.CDTextBox.value);
+	dataset.setColumn(nRow, 'ID_GRID', this.ctxtID_GRID.value);
+	dataset.setColumn(nRow, 'YN_AUTOFILTER', 'N');
+	dataset.setColumn(nRow, 'YN_REVERSESUM', 'N');
+	dataset.setColumn(nRow, 'YN_NUM', 'N');
+	dataset.setColumn(nRow, 'YN_USE', 'Y');
+	dataset.setColumn(nRow, 'YN_AUTOFIT', 'N');
+	dataset.setColumn(nRow, 'YN_NOSORT', 'Y');
+};
+
+this.fnDel = function() 
+{
+	this.gfnGridDel(this.dxGridInfo);
+};
+
+this.fnSave = function() 
+{	
+	this.dsSave.clearData();
+	this.dsSaveSpec.clearData();
+	
+	if (!this.gfnGridValidate(this.dxGridInfo)) return;
+	if (!this.gfnGridValidate(this.dxGridSpec)) return;
+	
+	for (var i = 0; i < this.dsListInfo.rowcount; i++) 
+	{
+		var flag = this.gfnGetFlag(this.dsListInfo, i);
+		if (flag == 'I' || flag == 'U' || flag == 'D')
+		{
+			var nRow = this.dsSave.addRow();
+			this.dsSave.copyRow(nRow, this.dsListInfo, i);
+			this.dsSave.setColumn(nRow, "TY_FLAG", flag);
+			this.dsSave.setColumn(nRow, "CD_CORP", this.AuthClient.CD_CORP);
+			this.dsSave.setColumn(nRow, "ID_USER", this.AuthClient.ID_USER);
+		}
+	}
+	
+	for (var i = 0; i < this.dsListSpec.rowcount; i++) 
+	{
+		var flag = this.gfnGetFlag(this.dsListSpec, i);
+		if (flag == 'I' || flag == 'U' || flag == 'D')
+		{
+			var nRow = this.dsSaveSpec.addRow();
+			this.dsSaveSpec.copyRow(nRow, this.dsListSpec, i);
+			this.dsSaveSpec.setColumn(nRow, "TY_FLAG", flag);
+			this.dsSaveSpec.setColumn(nRow, "CD_CORP", this.AuthClient.CD_CORP);
+			this.dsSaveSpec.setColumn(nRow, "ID_USER", this.AuthClient.ID_USER);
+		}
+	}
+	
+	var arrIndata = [];
+	
+	if (this.dsSave.rowcount > 0)
+	{
+		arrIndata.push('save=dsSave');
+	}
+	
+	if (this.dsSaveSpec.rowcount > 0)
+	{
+		arrIndata.push('saveSpec=dsSaveSpec');
+	}
+	
+	if (arrIndata.length == 0) return false;	
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = arrIndata.join(' ');
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() 
+{
+};
+
+ /*
+  *	조회 버튼
+  */
+this.fnSelectSub = function() 
+{	
+	this.ID_CUSTOM = this.dsListInfo.getColumn(this.dsListInfo.rowposition, 'ID_CUSTOM');
+	
+	this.dsSelect.clearData();
+	
+	var nRow = this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+	this.dsSelect.setColumn(0, "CD_SYSTEM", this.ccfCD_SYSTEM.form.CDTextBox.value);
+	this.dsSelect.setColumn(0, "ID_GRID", this.ctxtID_GRID.value);
+	this.dsSelect.setColumn(0, "ID_CUSTOM", this.ID_CUSTOM);
+	this.dsSelect.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	
+	var strSvcId    = "selectSpec";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "selectSpec=dsSelect";
+	var outData     = "dsList=selectSpec0 dsListSpec=selectSpec1";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (errorCode != 0) 
+	{
+		this.gfnAlert(errorMsg);
+		return false;
+	}
+		
+	this.fnColorOff();
+	
+	if (svcID == "select") 
+	{
+		this.gfnGridAfterSelect(this.dxGridInfo);	
+	}
+	else if (svcID == "selectSpec") 
+	{
+		this.gfnGridAfterSelect(this.dxGridSpec);	
+		
+		if (this.objGridPreview != null) 
+		{
+			this.objGridPreview.destroy();
+			this.objGridPreview = null;
+		}
+		
+		if (this.dxGridSpec.rowcount > 0) 
+		{
+			this.objGridPreview = new Grid();
+			this.objGridPreview.init("objGridPreview", 0, 0, null, null, 0, 0);
+			this.divData2.addChild(this.objGridPreview.id, this.objGridPreview);
+			this.objGridPreview.show();
+			
+			var ID_GRID = this.ctxtID_GRID.text + "#" + this.ID_CUSTOM;
+			this.gfnGridInitAsync(this.objGridPreview, this.dsListPreview, this.ccfCD_SYSTEM.form.CDTextBox.text, ID_GRID);
+		}
+	}
+	else if (svcID == "save") 
+	{
+		this.FormBtns.Select.click();
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGridSpec_AfterEdit = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) 
+{
+	if (e.columnid == "NO_COL") 
+	{
+		if(e.oldvalue != e.newvalue) {
+			var oldRow = e.row;
+			var oldNO_COL = e.oldvalue;
+			var newNO_COL = e.newvalue;
+			var newRow = oldRow;
+			for(var i = 0; i < obj.rowcount; i++) 
+			{
+				if(oldRow == i) continue;
+				var no_col = obj.getColumn(i, "NO_COL");
+				if(no_col < newNO_COL) 
+				{
+					newRow = i + (oldNO_COL>newNO_COL?1:0);
+				}
+			}
+			if(newRow >= obj.rowcount) newRow -= 1;
+			
+			obj.moveRow(oldRow, newRow);
+			
+			this.dxGridSpec.setCellPos(0, newRow);
+
+			var no_col = newNO_COL;
+			obj.set_enableevent(false);
+			for(var i = newRow; i < obj.rowcount; i++) 
+			{
+				var flag = this.gfnGetFlag(obj, i);
+				var oldNO_COL = obj.getColumn(i, "NO_COL");
+				if(no_col != oldNO_COL) 
+				{
+					if(flag != "I" && flag != "D") 
+					{
+						obj.setColumn(i, this.ucFlag, "U");
+					}
+					obj.setColumn(i, "NO_COL", no_col);
+				}
+				no_col++;
+			}
+			obj.set_enableevent(true);
+		}
+	}
+}
+
+this.fnGridSpec_EnterCell = function(obj:nexacro.Grid, row, cell) 
+{
+	var cssclass = obj.getCellProperty("body", cell, "cssclass");
+	if(cssclass.indexOf("BACK_ReadOnly")>-1) {
+		return false;
+	}
+}
+ this.fnGridInfo_EnterCell = function(obj:nexacro.Grid, row, cell) 
+ {
+	var cssclass = obj.getCellProperty("body", cell, "cssclass");
+	if(cssclass.indexOf("BACK_ReadOnly")>-1) {
+		return false;
+	}
+}
+
+this.fnGridInfo_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+    if ((obj.oldrow > -1 && obj.oldrow == e.row)
+		|| (obj.oldrow == -1 && e.oldrow != e.row)) {
+		this.FormBtns.SubSelect.click();
+		obj.oldrow = -1;
+	}
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(id) 
+{
+	this.gfnSetFormStatus(this);
+	this.gfnGridClear(this.dxGrid);
+	this.gfnGridClear(this.dxGridInfo);
+	this.gfnGridClear(this.dxGridSpec);
+};
+
+/************************************************************************
+ * 로우 drag&drop 순번 정렬
+ ************************************************************************/
+this.dxGrid_ondrag = function(obj:nexacro.Grid, e:nexacro.GridDragEventInfo)
+{
+	if(obj.info == "Y" || (e.row < 0 || obj._showEditing))
+	{
+		return false;
+	}	
+	
+	this.dxGridSpec.set_selecttype("cell");
+	
+	sTextDragData = [];
+	sTextDragData.push(obj.getCellValue(e.row, obj.getBindCellIndex("body", "NO_COL")));
+	sTextDragData.push(obj.getCellValue(e.row, obj.getBindCellIndex("body", "DS_FIELD")));
+	sTextDragData.push(obj.getCellValue(e.row, obj.getBindCellIndex("body", "DS_HEADER1")));
+	sTextDragData.push(obj.getCellValue(e.row, obj.getBindCellIndex("body", "DS_HEADER2")));
+	sTextDragData.push(obj.getCellValue(e.row, obj.getBindCellIndex("body", "DS_HEADER3")));
+
+	var cell_rect = obj.getCellRect(e.row, e.cell);
+	this.Static00.set_left(cell_rect.left);
+	this.Static00.set_top(cell_rect.top);
+	//this.Static00.set_width(cell_rect.width);
+	this.Static00.set_height(cell_rect.height);
+	this.Static00.set_text(sTextDragData.join("     "));
+	this.Static00.set_tooltiptext(e.row);
+	
+	// 드래그가 민감해서 시간차 보이기
+	this.gfnSetTimer(this, function() {
+		if(this.IsDrag == true) {
+			this.Static00.set_visible(true);
+		}
+	}, 300);
+	return true;
+};
+
+this.dxGrid_ondrop = function(obj:nexacro.Grid,e:nexacro.GridDragEventInfo)
+{	
+	this.dxGridSpec.set_selecttype("multiarea");
+	trace("multiarea");
+	this.IsDrag = false;
+	if( this.Static00.visible == true )
+	{
+		this.Static00.set_visible(false);
+		if(e.row < 0) return false;
+		var dragRow = this.Static00.tooltiptext;
+		var objDs = obj.getBindDataset();
+		var oldRow = dragRow;
+		var newRow = e.row;
+		var minRow = 0;
+		if (dragRow > e.row) {
+			minRow = newRow;
+		} else {
+			minRow = oldRow;
+		}
+		var no_col = nexacro.toNumber(obj.getCellValue(minRow, obj.getBindCellIndex("body", "NO_COL")));
+		
+		objDs.moveRow(oldRow, newRow);
+		for(var i = minRow; i < obj.rowcount; i++) {
+			objDs.setColumn(i, "NO_COL", no_col++);		
+		}
+	}
+};
+
+this.dxGrid_ondropdown = function(obj:nexacro.Grid,e:nexacro.GridEditEventInfo) 
+{
+	var colnm = this._gfnGridGetBindColumnNameByIndex(obj, e.cell);
+	if (colnm == "AT_COLBACK") 
+	{
+		for (var i = 0; i < this.dsBackground.rowcount; i++) 
+		{
+			this.dsBackground.setColumn(i, "FCODE", this.dsListSpec.getColumn(this.dsListSpec.rowposition, "AT_COLFORE"));
+		}
+	
+		this.grdBackground.clearSelect();
+		this.grdBackground.scrollTo(0,0);
+		var xy = this.gfnConvertXY(this.divData.form.divDataBottom, [0,29], obj._getAccessibilityCurrentCell(e.row,e.cell));
+		this.grdBackground.move(xy[0], xy[1]);
+		this.grdBackground.set_visible(true);
+		return false;
+	}
+	else if (colnm == "AT_COLFORE") 
+	{
+		for (var i = 0; i < this.dsForeground.rowcount; i++) 
+		{
+			this.dsForeground.setColumn(i, "BCODE", this.dsListSpec.getColumn(this.dsListSpec.rowposition, "AT_COLBACK"));
+		}
+	
+		this.grdForeground.clearSelect();
+		this.grdForeground.scrollTo(0,0);
+		var xy = this.gfnConvertXY(this.divData.form.divDataBottom, [0,29], obj._getAccessibilityCurrentCell(e.row,e.cell));
+		this.grdForeground.move(xy[0], xy[1]);
+		this.grdForeground.set_visible(true);
+		return false;
+	}
+};
+
+this.divData_divDataRight_grdBackground_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.grdBackground.set_visible(false);
+	this.dsListSpec.setColumn(this.dsListSpec.rowposition, "AT_COLBACK", this.dsBackground.getColumn(e.row, "CODE"));
+};
+
+this.divData_divDataRight_grdForeground_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.grdForeground.set_visible(false);
+	this.dsListSpec.setColumn(this.dsListSpec.rowposition, "AT_COLFORE", this.dsForeground.getColumn(e.row, "CODE"));
+};
+
+this.dxGrid_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnColorOff();
+};
+
+this.fnColorOff = function() 
+{
+	if (this.grdBackground.visible) 
+	{
+		this.grdBackground.set_visible(false);
+	
+	}
+	if (this.grdForeground.visible) 
+	{
+		this.grdForeground.set_visible(false);	
+	}
+};
+
+this.divData_divDataBottom_div00_btnAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var source = this.dxGrid.getBindDataset();
+	var target = this.dxGridSpec.getBindDataset();
+	var arrSelected = this.dxGrid.getSelectedDatasetRows();
+	
+	if (arrSelected != null && arrSelected.length > 0)
+	{
+		for (var i = arrSelected.length; i > 0 ; i--)
+		{
+			var nSelected = arrSelected[i - 1];
+
+			var nRow = this.gfnGridAdd(this.dxGridSpec);
+			target.copyRow(nRow, source, nSelected);
+			target.setColumn(nRow, 'ID_CUSTOM', this.ID_CUSTOM);
+			target.setColumn(nRow, this.ucFlag, 'I');
+			
+			source.deleteRow(nSelected);
+		}
+	}
+};
+
+this.divData_divDataBottom_div00_btnDel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var source = this.dxGridSpec.getBindDataset();
+	var target = this.dxGrid.getBindDataset();
+	var arrSelected = this.dxGridSpec.getSelectedDatasetRows();
+	
+	if (arrSelected != null && arrSelected.length > 0)
+	{
+		for (var i = arrSelected.length; i > 0 ; i--)
+		{
+			var nSelected = arrSelected[i - 1];
+			
+			source.setColumn(nSelected, this.ucFlag, 'D');
+			source.setRowType(nSelected, Dataset.ROWTYPE_DELETE);
+		}
+		
+		this.gfnSetFormStatus(this, 'D');
+	}
+	
+};
+
+this.divData_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	if(e.userdata == "splitter") {
+		this.divData.form.divSplitter.set_top(e.clienty);
+		this.divData.form.resetScroll();
+	}
+};
+
+this.divData_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	e.set_userdata("splitter");
+	return true;
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DXXPR_NXGRIDINFO_LAYOUT_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectSpec</Col>
+            <Col id="SP">DXXPR_NXGRIDSPEC_LAYOUT_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DXXPR_NXGRIDINFO_LAYOUT_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">saveSpec</Col>
+            <Col id="SP">DXXPR_NXGRIDSPEC_LAYOUT_SAVE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListPreview"/>
+      <Dataset id="dsListInfo"/>
+      <Dataset id="dsListSpec"/>
+      <Dataset id="dsBackground">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="FCODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">ChongKe</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Fixed</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Footer</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Frozen</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">GangJo</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">KuBun</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Line</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">ReadOnly</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">SoKe</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Sum</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Title</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsForeground">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="BCODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Red</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Blue</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Green</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Yellow</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Gray</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Purple</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Pink</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Black</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">YGreen</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_SYSTEM" type="STRING" size="256"/>
+          <Column id="ID_GRID" type="STRING" size="256"/>
+          <Column id="ID_USER" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SYSTEM.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SYSTEM"/>
+      <BindItem id="item1" compid="divSearch.form.ctxtID_GRID" propid="value" datasetid="dsSearch" columnid="ID_GRID"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="/">
+        <html>
+ 
+        <SCRIPT LANGUAGE="JavaScript" type="text/javascript">
+            function openAttachFilePopup(HOST, PARAM) {
+                var w = 580;
+                var h = 300;
+                var URL = HOST + '/api/approval/files.do?PARAM=' + PARAM;
+                var dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
+                var dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
+                var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                var systemZoom = width / window.screen.availWidth;
+                var left = (width - w) / 2 / systemZoom + dualScreenLeft;
+                var top = (height - h) / 2 / systemZoom + dualScreenTop;
+
+                window.open(
+                    URL,
+                    '첨부파일',
+                    'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, ' +
+                    'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left
+                );
+            }
+
+            function openTaxPopup(HOST, PARAM) {
+                var w = 850;
+                var h = 580;
+                var URL = HOST + '/api/approval/tax.do?PARAM=' + PARAM;
+                var dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
+                var dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
+                var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                var systemZoom = width / window.screen.availWidth;
+                var left = (width - w) / 2 / systemZoom + dualScreenLeft;
+                var top = (height - h) / 2 / systemZoom + dualScreenTop;
+
+                window.open(
+                    URL,
+                    '전자세금계산서',
+                    'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, ' +
+                    'width=' + (w / systemZoom) + ', height=' + (h / systemZoom) + ', top=' + top + ', left=' + left
+                );  
+            }
+        </SCRIPT>
+        <body>
+            <br/>
+            <br/>
+            <p><xsl:value-of select="NewDataSet/table_1/item/DS_HEADER"/></p>
+            <table class="table_10" style="width: 748px;">
+                <thead>
+                <tr>
+                    <th style="width: 160px;">신청자</th>
+                    <td style="text-align: center; width: 200px;"><xsl:value-of select="NewDataSet/table_1/item/DS_FAM_HNAME"/></td>
+                    <th style="width: 160px;">신청자부서</th>
+                    <td style="text-align: center; width: 200px;"><xsl:value-of select="NewDataSet/table_1/item/DS_DEPT"/></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>신청일자</th>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/DT_REQ"/></td>
+                    <th>경조일자</th>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/DT_EVENT"/></td>
+                </tr>
+                <tr>
+                    <th>경조금액</th>
+                    <td colspan="3" style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/AM_FAMILYEVENT"/></td>
+                </tr>
+                <tr>
+                    <th>상조물품</th>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/DS_CONGRATULATION"/></td>
+                    <th>상조용품신청</th>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/YN_CONDOLENCE"/></td>
+                </tr>
+                </tbody>
+            </table>
+            <br/>
+            <div>
+              <xsl:if test="NewDataSet/table_1/item/YN_ATCH_FILE = 'Y'">
+                <xsl:text>증빙 </xsl:text>
+                <input type="button" class="buttonoff" name="ATTACH" value="다운로드" onclick="openAttachFilePopup('{NewDataSet/table_1/item/ATTACHED_FILE_HOST_URL}', '{NewDataSet/table_1/item/ATTF}');"/>
+              </xsl:if>
+            </div>
+            <br/>
+            <p><xsl:value-of select="NewDataSet/table_1/item/DS_FOOTER"/></p>
+        </body>
+        </html>
+    </xsl:template>
+</xsl:stylesheet>

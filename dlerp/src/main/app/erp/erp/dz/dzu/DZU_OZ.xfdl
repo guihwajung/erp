@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="900" titletext="오즈 레포트" onload="form_onload" ondragmove="form_ondragmove" ondrop="form_ondrop" height="700">
+    <Layouts>
+      <Layout>
+        <WebBrowser id="web00" taborder="0" left="10" top="10" onloadcompleted="web00_onloadcompleted" right="10" bottom="10"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    
+*  @FileName 	
+*  @Creator 	
+*  @CreateDate 	
+*  @Desction    html view
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier                Description
+*******************************************************************************
+*  
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = this.gfnGetApplication();
+ 
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+	var sUrl = this.gfnGetServerUrl() + "/oz80/sample_canvas.html";
+	
+	var reportname = this.getOwnerFrame().REPORT_NAME;
+	var queryString = "reportname=" + encodeURIComponent(reportname);
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().JSONPARAM))
+	{
+		var json= JSON.parse(this.getOwnerFrame().JSONPARAM);
+		var jsonLength = Object.keys(json).length;
+		var jsonArg = Object.keys(json);
+		
+		var url = "";
+		
+		for(var i = 0 ; i < jsonLength; i++)
+		{
+			url += "&" + jsonArg[i] + "=" + json[jsonArg[i]];
+		}
+		queryString += url;
+	}
+	
+	//webBrowser url 세팅
+	if (!this.gfnIsNull(sUrl)) {
+		this.web00.set_url(sUrl + "?" + queryString);
+	}
+};]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="410" height="130" titletext="차입금거래전표연결" onload="form_onload" maxwidth="450" maxheight="210">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staBar00" taborder="4" left="109" top="50" height="30" cssclass="sta_WF_tablebg" width="284"/>
+              <Static id="staItem00" taborder="3" text="전표번호" left="20" top="50" width="90" height="30" cssclass="sta_WF_tablelabel" textDecoration="underline"/>
+              <Static id="staTitle01" taborder="5" text="차입금거래전표연결" left="20" top="20" height="22" width="373" cssclass="sta_POP_Title"/>
+              <Div id="cfNO_SLIP" CDTextWidth="100" taborder="0" left="116" top="54" width="270" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Button id="btnOk" taborder="1" text="확인" left="143" width="45" height="21" onclick="btnOk_onclick" uWord="popup.ok" top="staItem00:15"/>
+              <Button id="btnCancle" taborder="2" text="취소" left="193" width="45" height="21" onclick="btnCancle_onclick" uWord="popup.cancel" top="staItem00:15"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmPopup.xfdl (공통 팝업페이지)
+*  @FileName 	cmmPopup.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.10.19
+*  @Desction         스크립트 표준 및 주석 표준 정의
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+//  this.pv_CD_CORP;
+//  this.pv_DS_CORP;
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this); //초기화[필수]
+	this.gfnFormInfo(this);
+
+	this.fnSetVariable();	
+	this.fnSetEvent();
+	this.fnSetParameter();
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.cfNO_SLIP = this.divData.form.cfNO_SLIP;
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.cfNO_SLIP.CodeFindName = "DFX_NO_SLIP_CHAIP";
+	this.cfNO_SLIP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	
+	this.cfNO_SLIP.AfterCDTextChanged = "fnAfterCDTextChanged";
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnValidation = function() {
+	if (this.gfnIsNull(this.cfNO_SLIP.form.CDTextBox.value) || this.gfnIsNull(this.cfNO_SLIP.form.DSTextBox.value)) {
+		this.gfnAlert("전표번호는 필수 입력 항목 입니다.");
+		this.cfNO_SLIP.form.CDtextBox.setFocus();
+		return false;
+	}
+	
+	return true;
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	switch(id) {
+	
+	case "cfNO_SLIP": 	
+		dsUserParam.setColumn(nrow, "CD_CORP", this.getOwnerFrame().CD_CORP);
+		dsUserParam.setColumn(nrow, "DT_SLIP", this.getOwnerFrame().DT_TRADE);
+		break;
+		
+	default:
+	}	
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {	
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* @ OK버튼이벤트
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnValidation()) return false;
+
+	// 확인
+	var json = {};
+	
+	json.NO_SLIP = this.cfNO_SLIP.form.CDTextBox.value;	// 전표번호
+	json.DT_SLIP = this.cfNO_SLIP.form.DSTextBox.value;	// 전표일자
+	
+	this.getParentContext().close(JSON.stringify(json));
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+]]></Script>
+    <Objects/>
+    <Bind>
+      <BindItem id="item0" compid="cfNO_SLIP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+    </Bind>
+  </Form>
+</FDL>

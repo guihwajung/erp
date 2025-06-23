@@ -1,0 +1,864 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("품의서");
+            this.getSetter("maxwidth").set("791");
+            this.getSetter("maxheight").set("960");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(751,924);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DAUPR_AUTOSLIPBASE_APRV_DLG_SELECT</Col></Row><Row><Col id=\"TARGET\">selectSingle</Col><Col id=\"SP\">DAUPR_AUTOSLIPBASE_APRV_DLG_SELECT</Col></Row><Row><Col id=\"TARGET\">save</Col><Col id=\"SP\">DAUPR_AUTOSLIPBASE_APRV_DLG_SAVE</Col></Row><Row><Col id=\"TARGET\">aprv_execute</Col><Col id=\"SP\">DAUPR_AUTOSLIPBASE_APRV_EXECUTE</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsDetail", this);
+            obj._setContents("<ColumnInfo><Column id=\"DS_HEADER\" type=\"STRING\" size=\"256\"/><Column id=\"DS_FOOTER\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CNT_NOW\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CNT_PRE\" type=\"STRING\" size=\"256\"/><Column id=\"QN_CNT_NOW\" type=\"STRING\" size=\"256\"/><Column id=\"QN_CNT_PRE\" type=\"STRING\" size=\"256\"/><Column id=\"QN_CNT_INCDEC\" type=\"STRING\" size=\"256\"/><Column id=\"RM_BIGO\" type=\"STRING\" size=\"256\"/><Column id=\"DS_TITLE_NOW\" type=\"STRING\" size=\"256\"/><Column id=\"DS_TITLE_PRE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_TITLE\" type=\"STRING\" size=\"256\"/><Column id=\"ST_APRV\" type=\"STRING\" size=\"256\"/><Column id=\"BTN_APRV\" type=\"STRING\" size=\"256\"/><Column id=\"BTN_DOC_Q\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY\" type=\"STRING\" size=\"256\"/><Column id=\"TY_SALARY\" type=\"STRING\" size=\"256\"/><Column id=\"SN_SALARY\" type=\"STRING\" size=\"256\"/><Column id=\"ID_SABUN\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divTop","0","0",null,"98","0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staTITLE","0","0","100%","25",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("0");
+            obj.set_text("인원 현황");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textAlign("left");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Static("staAprv",null,"0","135","25","10",null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("3");
+            obj.set_text("결재상태 : 상신 전");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textAlign("left");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Button("btnAprv",null,"staAprv:5","120","27","10",null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("1");
+            obj.set_text("품의서상신");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Button("btnDocQ",null,"btnAprv:5","120","27","10",null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("2");
+            obj.set_text("결재문서조회");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Static("stalDS_CNT_NOW_bg","0","staTITLE:5","120","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("1");
+            obj.set_cssclass("sta_WF_tablelabelC");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_CNT_NOW","0","staTITLE:5","120","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("1");
+            obj.set_textAlign("center");
+            obj.set_readonly("true");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Static("stalDS_CNT_PRE_bg","edtDS_CNT_NOW:-1","staTITLE:5","120","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("2");
+            obj.set_cssclass("sta_WF_tablelabelC");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_CNT_PRE","edtDS_CNT_NOW:-1","staTITLE:5","120","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("2");
+            obj.set_textAlign("center");
+            obj.set_readonly("true");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Static("stalDS_CNT_INCDEC","stalDS_CNT_PRE_bg:-1","staTITLE:5","120","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("3");
+            obj.set_text("증감");
+            obj.set_cssclass("sta_WF_tablelabelC");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Static("stalRM_BIGO","stalDS_CNT_INCDEC:-1","staTITLE:5","220","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("4");
+            obj.set_text("비고");
+            obj.set_cssclass("sta_WF_tablelabelC");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Static("stalQN_CNT_NOW_bg","0","stalDS_CNT_NOW_bg:-1","120","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("5");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Edit("edtQN_CNT_NOW","5","stalDS_CNT_NOW_bg:-1","120","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("6");
+            obj.set_textAlign("center");
+            obj.set_readonly("true");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Static("stalQN_CNT_PRE_bg","stalQN_CNT_NOW_bg:-1","stalDS_CNT_PRE_bg:-1","120","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("5");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Edit("edtQN_CNT_PRE","stalQN_CNT_NOW_bg:5","stalDS_CNT_PRE_bg:-1","120","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("6");
+            obj.set_textAlign("center");
+            obj.set_readonly("true");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Static("stalQN_CNT_INCDEC_bg","stalQN_CNT_PRE_bg:-1","stalDS_CNT_INCDEC:-1","120","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("5");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Edit("edtQN_CNT_INCDEC","stalQN_CNT_PRE_bg:10","stalDS_CNT_INCDEC:-1","110","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("6");
+            obj.set_textAlign("center");
+            obj.set_readonly("true");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Static("stalRM_BIGO_bg","stalQN_CNT_INCDEC_bg:-1","stalRM_BIGO:-1","220","27",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("5");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Edit("edtRM_BIGO","stalQN_CNT_INCDEC_bg:2","stalRM_BIGO:2","214","20",null,null,null,null,null,null,this.divTop.form);
+            obj.set_taborder("6");
+            this.divTop.addChild(obj.name, obj);
+
+            obj = new Static("staTITLE2","0","divTop:0","50%","25",null,null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_text("급여 내역");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textAlign("left");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staTITLE3",null,"divTop:0","50%","25","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_text("[단위 : 원]");
+            obj.set_font("normal 8.5pt/normal \"Malgun Gothic\"");
+            obj.set_cssclass("sta_WF_SchLabel");
+            obj.set_textAlign("right");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divTop:25",null,"725","0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("divBottom","0","divData:10",null,"25","0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("ctclYM_SALARY","0","0","80","24.0",null,null,null,null,null,null,this.divBottom.form);
+            obj.set_taborder("1");
+            obj.set_url("cmm::cmmCalMM.xfdl");
+            obj.getSetter("onchanged").set("fnSearchInit");
+            obj.set_visible("false");
+            this.divBottom.addChild(obj.name, obj);
+
+            obj = new Combo("cboTY_SALARY","0","0","70","24.0",null,null,null,null,null,null,this.divBottom.form);
+            obj.set_taborder("3");
+            obj.set_innerdataset("dsTY_SALARY");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_readonly("false");
+            obj.set_visible("false");
+            obj.set_value("S");
+            obj.set_index("0");
+            this.divBottom.addChild(obj.name, obj);
+
+            obj = new Combo("cboSN_SALARY","0","0","40","24.0",null,null,null,null,null,null,this.divBottom.form);
+            obj.set_taborder("4");
+            obj.set_datacolumn("datacolumn");
+            obj.set_codecolumn("codecolumn");
+            obj.set_readonly("false");
+            obj.set_visible("false");
+            var divBottom_form_cboSN_SALARY_innerdataset = new nexacro.NormalDataset("divBottom_form_cboSN_SALARY_innerdataset", obj);
+            divBottom_form_cboSN_SALARY_innerdataset._setContents("<ColumnInfo><Column id=\"codecolumn\" size=\"256\"/><Column id=\"datacolumn\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"codecolumn\">1</Col><Col id=\"datacolumn\">1</Col></Row><Row><Col id=\"codecolumn\">2</Col><Col id=\"datacolumn\">2</Col></Row><Row><Col id=\"codecolumn\">3</Col><Col id=\"datacolumn\">3</Col></Row><Row><Col id=\"codecolumn\">4</Col><Col id=\"datacolumn\">4</Col></Row><Row><Col id=\"codecolumn\">5</Col><Col id=\"datacolumn\">5</Col></Row><Row><Col id=\"codecolumn\">6</Col><Col id=\"datacolumn\">6</Col></Row><Row><Col id=\"codecolumn\">7</Col><Col id=\"datacolumn\">7</Col></Row><Row><Col id=\"codecolumn\">8</Col><Col id=\"datacolumn\">8</Col></Row><Row><Col id=\"codecolumn\">9</Col><Col id=\"datacolumn\">9</Col></Row><Row><Col id=\"codecolumn\">10</Col><Col id=\"datacolumn\">10</Col></Row></Rows>");
+            obj.set_innerdataset(divBottom_form_cboSN_SALARY_innerdataset);
+            obj.set_text("1");
+            obj.set_value("1");
+            obj.set_index("0");
+            this.divBottom.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_CORP","0","0","200","24.0",null,null,null,null,null,null,this.divBottom.form);
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("6");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.getSetter("CodeFindName").set("DAX_CFCORP2");
+            obj.getSetter("BeforeUserDataSetParam").set("fnBeforeUserDataSetParam");
+            obj.getSetter("AfterCDTextChanged").set("fnAfterCDTextChanged");
+            obj.set_visible("false");
+            this.divBottom.addChild(obj.name, obj);
+
+            obj = new Div("ccfID_SABUN","0","0","200","24.0",null,null,null,null,null,null,this.divBottom.form);
+            obj.getSetter("CDTextWidth").set("70");
+            obj.set_taborder("10");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.getSetter("CodeFindName").set("DAX_CFBASEINFO");
+            obj.getSetter("BeforeUserDataSetParam").set("fnBeforeUserDataSetParam");
+            obj.getSetter("AfterCDTextChanged").set("fnAfterCDTextChanged");
+            obj.set_visible("false");
+            this.divBottom.addChild(obj.name, obj);
+
+            obj = new Div("divBtns","0","0","100%","25",null,null,null,null,null,null,this.divBottom.form);
+            obj.set_taborder("2");
+            obj.set_text("");
+            this.divBottom.addChild(obj.name, obj);
+
+            obj = new Button("btnUpload","10","0","100","25",null,null,null,null,null,null,this.divBottom.form.divBtns.form);
+            obj.set_taborder("1");
+            obj.set_text("첨부파일");
+            this.divBottom.form.divBtns.addChild(obj.name, obj);
+
+            obj = new Button("btnSave","300","0","60","25",null,null,null,null,null,null,this.divBottom.form.divBtns.form);
+            obj.set_taborder("2");
+            obj.set_text("저장");
+            this.divBottom.form.divBtns.addChild(obj.name, obj);
+
+            obj = new Button("btnCancel","btnSave:10","0","60","25",null,null,null,null,null,null,this.divBottom.form.divBtns.form);
+            obj.set_taborder("3");
+            obj.set_text("닫기");
+            this.divBottom.form.divBtns.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divTop.form.edtDS_CNT_NOW","value","dsDetail","DS_CNT_NOW");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divTop.form.edtDS_CNT_PRE","value","dsDetail","DS_CNT_PRE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divTop.form.edtQN_CNT_NOW","value","dsDetail","QN_CNT_NOW");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divTop.form.edtQN_CNT_PRE","value","dsDetail","QN_CNT_PRE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","divTop.form.edtQN_CNT_INCDEC","value","dsDetail","QN_CNT_INCDEC");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item5","divTop.form.edtRM_BIGO","value","dsDetail","RM_BIGO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item6","divBottom.form.ctclYM_SALARY.form.TextBox","value","dsSearch","YM_SALARY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item7","divBottom.form.cboTY_SALARY","value","dsSearch","TY_SALARY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item8","divBottom.form.cboSN_SALARY","value","dsSearch","SN_SALARY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item9","divBottom.form.ccfID_SABUN.form.CDTextBox","value","dsSearch","ID_SABUN");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item10","divBottom.form.ccfCD_CORP.form.CDTextBox","value","dsSearch","CD_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCalMM.xfdl");
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DAU_SALARYAPRV_DLG.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+
+        	this.dsSearch.setColumn(0, "YM_SALARY", this.getOwnerFrame().YM_SALARY);
+        	this.dsSearch.setColumn(0, "TY_SALARY", this.getOwnerFrame().TY_SALARY);
+        	this.dsSearch.setColumn(0, "SN_SALARY", this.getOwnerFrame().SN_SALARY);
+        	this.dsSearch.setColumn(0, "CD_CORP", this.getOwnerFrame().CD_CORP);
+        	this.dsSearch.setColumn(0, "ID_SABUN", this.getOwnerFrame().ID_SABUN);
+
+        	this.FormBtns.Select.click();
+        };
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+        	// Select, Add, Del, Save, Excel, Print
+        	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+        	// this.FormBtns.Add.set_enable(false);
+        	// this.FormBtns.Del.set_enable(false);
+        	this.FormBtns.Reset.set_enable(true);
+        };
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        // 	this.btnAprv     = this.gfnFormButtonAdd("btnAprv", "divData_btnAprv_onclick");			// 결재상신 버튼
+        // 	this.btnDocQ     = this.gfnFormButtonAdd("btnAprv", "divData_btnDocQ_onclick");			// 결재문서조회
+        // 	this.btnSave     = this.gfnFormButtonAdd("btnSave", "divData_btnSave_onclick");			// 저장 버튼
+        };
+
+        this.fnUpdateStatusExtendButton = function() {
+        	this.divTop.form.btnAprv.set_enable(false);
+        	this.divTop.form.btnDocQ.set_enable(false);
+        	this.divBottom.form.divBtns.form.btnSave.set_enable(false);
+
+        	var ST_APRV    = this.dsDetail.getColumn(0, "ST_APRV");
+        	var DS_APRV    = this.dsDetail.getColumn(0, "DS_APRV");
+        	var AprvCnt    = this.dsDetail.getColumn(0, "BTN_APRV");
+        	var DocQCnt    = this.dsDetail.getColumn(0, "BTN_DOC_Q");
+
+        	this.divTop.form.btnAprv.set_enable(AprvCnt == "Y");	// 결재상신
+        	this.divTop.form.btnDocQ.set_enable(DocQCnt == "Y");	// 결재문서조회
+        	this.divBottom.form.divBtns.form.btnSave.set_enable(AprvCnt == "Y");	// 저장 버튼
+
+        	this.divTop.form.staAprv.set_text(DS_APRV);
+        	this.divTop.form.edtRM_BIGO.set_enable(AprvCnt == "Y")
+        }
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	// 그리드영역
+        	this.dxGrid = this.divData.form.objGrid;
+
+        	this.ccfCD_CORP = this.divBottom.form.ccfCD_CORP;
+        	this.ctclYM_SALARY = this.divBottom.form.ctclYM_SALARY;
+        	this.cboTY_SALARY = this.divBottom.form.cboTY_SALARY;
+        	this.cboSN_SALARY = this.divBottom.form.cboSN_SALARY;
+        	this.ccfID_SABUN = this.divBottom.form.ccfID_SABUN;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	this.ccfCD_CORP.CodeFindName = "DAX_CFCORP";
+        	this.ccfID_SABUN.CodeFindName = "DAX_CFBASEINFOCORP";
+
+        	/*******************************************************************/
+        	this.ccfID_SABUN.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAU_SALARYAPRV_DLG");	//"");
+        	this.dxGrid.EnterCell 				= "fnGrid_EnterCell";				// 셀 수정가능 여부
+
+        	this.dxGrid.set_enableredraw(false);
+        	this.gfnGridColumnColor(this.dxGrid, "CD_GUBUN", "BACK_Fixed", "CD_CODE == 'S'");
+        	this.gfnGridColumnColor(this.dxGrid, "SN_PRINT", "BACK_Fixed", "CD_CODE == 'S'");
+         	this.gfnGridColumnColor(this.dxGrid, "CD_CODE", "BACK_Fixed", "CD_CODE == 'S'");
+         	this.gfnGridColumnColor(this.dxGrid, "DS_ALLOW", "BACK_Fixed", "CD_CODE == 'S'");
+         	this.gfnGridColumnColor(this.dxGrid, "AM_NOW", "BACK_Fixed", "CD_CODE == 'S'");
+         	this.gfnGridColumnColor(this.dxGrid, "AM_PRE", "BACK_Fixed", "CD_CODE == 'S'");
+         	//this.gfnGridColumnColor(this.dxGrid, "AM_CHA", "BACK_GangJo", "CD_CODE == 'S'");
+        	this.gfnGridColumnColor(this.dxGrid, "AM_CHA", "BACK_Fixed,Red", "CD_CODE == 'S' && AM_CHA < 0");
+        	this.gfnGridColumnColor(this.dxGrid, "AM_CHA", "BACK_Fixed", "CD_CODE == 'S' && AM_CHA >= 0");
+         	this.gfnGridColumnColor(this.dxGrid, "DS_REMARK", "BACK_Fixed", "CD_CODE == 'S'");
+
+        	this.gfnGridColumnColor(this.dxGrid, "CD_GUBUN", "BACK_Title", "CD_GUBUN == '7'");
+        	this.gfnGridColumnColor(this.dxGrid, "SN_PRINT", "BACK_Title", "CD_GUBUN == '7'");
+        	this.gfnGridColumnColor(this.dxGrid, "CD_CODE", "BACK_Title", "CD_GUBUN == '7'");
+        	this.gfnGridColumnColor(this.dxGrid, "DS_ALLOW", "BACK_Title", "CD_GUBUN == '7'");
+         	this.gfnGridColumnColor(this.dxGrid, "AM_NOW", "BACK_Title", "CD_GUBUN == '7'");
+         	this.gfnGridColumnColor(this.dxGrid, "AM_PRE", "BACK_Title", "CD_GUBUN == '7'");
+         	//this.gfnGridColumnColor(this.dxGrid, "AM_CHA", "BACK_ChongKe", "CD_GUBUN == '7'");
+        	this.gfnGridColumnColor(this.dxGrid, "AM_CHA", "BACK_Title,Red", "CD_GUBUN == '7' && AM_CHA < 0");
+         	this.gfnGridColumnColor(this.dxGrid, "DS_REMARK", "BACK_Title", "CD_GUBUN == '7'");
+
+        	this.gfnGridColumnColor(this.dxGrid, "DS_ALLOW", "BACK_GangJo", "CD_GUBUN == '3' || CD_GUBUN == '4'");	//BACK_SoKe
+        	this.gfnGridColumnColor(this.dxGrid, "DS_ALLOW", "BACK_Line", "CD_CODE != 'S' || CD_GUBUN != '7' || CD_GUBUN != '3' || CD_GUBUN != '4'"); //BACK_Fixed
+
+         	this.gfnGridColumnColor(this.dxGrid, "AM_CHA", "Red", "AM_CHA < 0");
+
+        // 	this.gfnGridColumnColor(this.dxGrid, "DS_CHECK", "BACK_GangJo, Blue", "CD_CODE == 'S'");
+        // 	this.gfnGridColumnColor(this.dxGrid, "GU_CHK_H", "BACK_GangJo", "CD_CODE == 'S'");
+        // 	this.gfnGridColumnColor(this.dxGrid, "GU_CHK_S", "BACK_GangJo", "CD_CODE == 'S'");
+        // 	this.gfnGridColumnColor(this.dxGrid, "GU_CHK_G", "BACK_GangJo", "CD_CODE == 'S'");
+        // 	this.gfnGridColumnColor(this.dxGrid, "DS_BIGO", "BACK_GangJo", "CD_CODE == 'S'");
+        // 	this.gfnGridColumnColor(this.dxGrid, "DS_BIGO_SITE", "BACK_GangJo", "CD_CODE == 'S'");
+        //
+        //
+        // 	this.gfnGridColumnColor(this.dxGrid, "DS_PASS", "BACK_ReadOnly,Red", "FILE_PAGE_02 != ''");
+        // 	this.gfnGridColumnColor(this.dxGrid, "DS_CHECK", "BACK_ReadOnly,Red", "FILE_PAGE_03 != ''");
+
+        	this.dxGrid.set_enableredraw(true);
+        }
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("TY_WRK", "string");
+        	this.dsSelect.addColumn("CD_CORP", "string");
+        	this.dsSelect.addColumn("YM_SALARY", "string");
+        	this.dsSelect.addColumn("TY_SALARY", "string");
+        	this.dsSelect.addColumn("SN_SALARY", "int");
+
+        	//수정
+        	this.dsSave = new Dataset();
+        	this.dsSave.addColumn("TY_SAVE", "string");
+        	this.dsSave.addColumn("YM_SALARY", "string");
+        	this.dsSave.addColumn("TY_SALARY", "string");
+        	this.dsSave.addColumn("SN_SALARY", "int");
+        	this.dsSave.addColumn("CD_CORP", "string");
+        	this.dsSave.addColumn("CD_CODE", "string");
+        	this.dsSave.addColumn("DS_REMARK", "string");
+        	this.dsSave.addColumn("RM_BIGO", "string");
+        	this.dsSave.addColumn("ID_USER", "string");
+
+        	// 결재
+        	this.dsApproval = new Dataset();
+        	this.dsApproval.addColumn("TY_WRK", "string");
+        	this.dsApproval.addColumn("TY_SALARY", "string");
+        	this.dsApproval.addColumn("YM_SALARY", "string");
+        	this.dsApproval.addColumn("SN_SALARY", "int");
+        	this.dsApproval.addColumn("CD_CORP", "string");
+        	this.dsApproval.addColumn("ID_APRV", "string");
+        	this.dsApproval.addColumn("NO_APRV", "int");
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+
+        	if (!this.fnSelectValidate()) return false;
+
+        	this.gfnGridBeforeSelect(this.dxGrid);
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+        	this.dsSelect.setColumn(0, "TY_WRK", "Q");
+        	this.dsSelect.setColumn(0, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+        	this.dsSelect.setColumn(0, "YM_SALARY", this.ctclYM_SALARY.form.TextBox.value);
+        	this.dsSelect.setColumn(0, "TY_SALARY", this.cboTY_SALARY.value);
+        	this.dsSelect.setColumn(0, "SN_SALARY", this.cboSN_SALARY.value);
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+         	var inData      = "select=dsSelect";
+         	var outData     = "dsDetail=select0 dsList=select1";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// trabsaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        this.fnSelectDetail = function() {
+        	//if (this.dsList.rowcount == 0) return;
+
+        	//this.gfnSetFormStatus(this);
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+        	this.dsSelect.setColumn(0, "TY_WRK", "D");
+        	this.dsSelect.setColumn(0, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+        	this.dsSelect.setColumn(0, "YM_SALARY", this.ctclYM_SALARY.form.TextBox.value);
+        	this.dsSelect.setColumn(0, "TY_SALARY", this.cboTY_SALARY.value);
+        	this.dsSelect.setColumn(0, "SN_SALARY", this.cboSN_SALARY.value);
+
+        	var strSvcId    = "detail";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+         	var inData      = "selectSingle=dsSelect";
+         	var outData     = "dsDetail=selectSingle0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능
+        }
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+         */
+        this.fnSelectValidate = function() {
+        	return true;
+        };
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	if (svcID == "select") {
+        		if (this.dsList.rowcount == 0) {
+        			this.gfnAlert("자료가 존재하지 않습니다.");
+        		} else {
+        			this.gfnGridAfterSelect(this.dxGrid);
+
+        			//this.fnSelectDetail();
+
+        			var title1 = this.dsDetail.getColumn(0, "DS_TITLE_NOW");
+        			var title2 = this.dsDetail.getColumn(0, "DS_TITLE_PRE");
+        			this.dxGrid.set_enableredraw(false);
+        			this.dxGrid.setCellProperty("head", 5, "text", title1);
+        			this.dxGrid.setCellProperty("head", 6, "text", title2);
+        // 			for (var i = 0; i < this.dsList.rowcount; i++) {
+        // 				if (this.dsList.getColumn(i, "CD_GUBUN") == "3") {
+        // 					this.dxGrid.setCellProperty("body", 4, "textAlign", "right");
+        // 				} else {
+        // 					this.dxGrid.setCellProperty("body", 4, "textAlign", "left");
+        // 				}
+        //
+        // 			}
+        			this.dxGrid.set_enableredraw(true);
+
+        			this.fnUpdateStatusExtendButton();
+        		}
+        	} else if(svcID == "save") {
+        		if (errorCode == 0) {
+        			this.gfnAlert("저장되었습니다.");
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	} else if (svcID == "APRV" || svcID == "APRVCNC") {
+        		this.gfnOpenAppr(function() {
+        			this.FormBtns.Select.click();
+        		});
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+         this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+        	if (id == "ccfID_SABUN") {
+        		if (!this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+        			dsUserParam.setColumn(nrow, "GR_SEARCH", "");
+        			dsUserParam.setColumn(nrow, "CD_DEPT", "");
+        			dsUserParam.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+        		}else{
+        			this.gfnAlert("먼저 법인을 선택해주세요.");
+        			return false;
+        		}
+        	}
+
+        	return true;
+
+        };
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+        this.fnGrid_EnterCell = function(obj, row, cell) {
+
+        	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, cell);
+        	var objDs = obj.getBindDataset();
+        	var flag = this.gfnGetFlag(this.dsList, row);
+
+        };
+        //
+        // this.fnGrid_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+        // {
+        //     if ((obj.oldrow > -1 && obj.oldrow == e.row)
+        // 		|| (obj.oldrow == -1 && e.oldrow != e.row)) {
+        //
+        // 		if( e.columnid == "DS_REMARK" ) {
+        // 			if (e.oldvalue != e.newvalue) {
+        // 				this.dsList.setColumn(e.row, "DS_REMARK", e.newvalue);
+        // 			}
+        // 		}
+        //
+        // 		obj.oldrow = -1;
+        // 	}
+        // };
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        // 첨부파일 버튼 - 출장보고서 첨부파일(기타-통신비(로밍))
+        this.divData_btnUpload_onclick = function(obj, e) {
+        	var cdGubun = "DA22";
+        	var cdDir1 = this.dsSearch.getColumn(0, "YM_SALARY");
+        	var cdDir2 = this.dsSearch.getColumn(0, "TY_SALARY");
+        	var cdDir3 = this.dsSearch.getColumn(0, "SN_SALARY");
+
+        	var AprvCnt    = this.dsDetail.getColumn(0, "BTN_APRV");
+
+        	var fileManager = {};
+        	fileManager.CD_GUBUN = cdGubun;
+        	fileManager.CD_DIR = [cdDir1,cdDir2,cdDir3];
+        	// CD_DIR 만 지정시 CD_DIR 배열 순대로 키1,키2,키3 까지 자동지정
+        	// 저장되는 디렉토리와 키값이 다른경우 CD_REF 추가로 사용
+        	//fileManager.CD_REF = [ "A1" ];
+        	// 권한 및 상태에 따라 업로드,삭제 가능여부 지정 (기본: true)
+
+        	fileManager.IS_READONLY = (AprvCnt == "Y") ? false : true;	// this.getOwnerFrame().READ_ONLY;
+
+        	this.gfnFileManager(fileManager, "btnUpload_Callback");
+        }
+
+        this.btnUpload_Callback = function(strID, val) {
+        	this.divBottom.form.divBtns.form.btnUpload.set_text("첨부(" + val.Cnt + ")");
+        }
+
+        // 저장 버튼 클릭
+        this.divData_btnSave_onclick = function(obj,e)
+        {
+        	this.dxGrid.updateToDataset();
+
+        	this.dsSave.clearData();
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var flag = this.gfnGetFlag(this.dsList, i);
+        		switch(flag) {
+        			case "I":
+        			case "U":
+        			case "D":
+        				var nrow = this.dsSave.addRow();
+        				this.dsSave.setColumn(nrow, "TY_SAVE", flag);
+        				this.dsSave.setColumn(nrow, "YM_SALARY", this.dsSearch.getColumn(0, "YM_SALARY"));
+        				this.dsSave.setColumn(nrow, "TY_SALARY", this.dsSearch.getColumn(0, "TY_SALARY"));
+        				this.dsSave.setColumn(nrow, "SN_SALARY", this.dsSearch.getColumn(0, "SN_SALARY"));
+        				this.dsSave.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+        				this.dsSave.setColumn(nrow, "CD_CODE", this.dsList.getColumn(i, "CD_CODE"));
+        				this.dsSave.setColumn(nrow, "DS_REMARK", this.dsList.getColumn(i, "DS_REMARK"));
+        				this.dsSave.setColumn(nrow, "RM_BIGO", this.dsDetail.getColumn(0, "RM_BIGO"));
+        				this.dsSave.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+        				break;
+        		}
+        	}
+        	if (this.dsSave.rowcount == 0) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save=dsSave";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+
+        // 취소 버튼 클릭
+        this.divData_btnCancel_onclick = function(obj,e)
+        {
+        	// this.close()가 작동하지 않았고,
+        	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+        	this.getParentContext().close(false);
+        };
+
+
+        // 결재상신 버튼 클릭
+        this.divData_btnAprv_onclick = function(obj,e)
+        {
+        	if (!this.gfnGridIsRow(this.dxGrid)) return;
+
+        	this.gfnConfirm(this.fnAprvMsg(obj), function(strId, isOk) {
+        		if (isOk == false) {
+        			return;
+        		}
+        		var title = this.dsDetail.getColumn(0, "DS_TITLE");
+
+        		var initParam = {
+        			CD_CORP: this.dsSearch.getColumn(0, "CD_CORP"),
+        			ID_AP_TYPE: "DAU01",
+        			TY_WRK: "APRV",
+        			ID_APRV: this.AuthClient.ID_SABUN,
+        			TT_DOC: title,	// '23년 4월 급여 지급의 건
+        			CD_CORP_SUFFIX: this.gfnGetConfig("DZ" , "CD_CORP_SUFFIX"),
+        		}
+        		this.gfnAprv(initParam, "fnAprvCallback", "APRV");
+        	});
+        }
+
+        // 결재문서조회 버튼
+        this.divData_btnDocQ_onclick = function(obj, e) {
+        	var oParams = {
+        		CD_CORP: this.dsSearch.getColumn(0, "CD_CORP"),
+        		NO_APRV: this.dsDetail.getColumn(0, "NO_APRV"),
+        	}
+        	this.gfnAprvDoc(oParams, this.fnAprvDocQCallback);
+        }
+
+        this.fnAprvMsg = function(obj) {
+        	var title = this.dsDetail.getColumn(0, "DS_TITLE");
+        	var msg = title + "에 대하여 " + obj.text + " 하시겠습니까?";
+
+        	return msg;
+        }
+
+        this.fnAprvDocQCallback = function() {
+        	console.log('fnAprvDocQCallback');
+        	alert('fnAprvDocQCallback');
+        }
+
+        // 결재상신 버튼 콜백
+        // 취소결재상신 버튼 콜백
+        // 결재상태초기화 버튼 콜백
+        this.fnAprvCallback = function(strId, val) {
+        	this.dsApproval.clearData();
+        	this.dsApproval.addRow();
+
+        	this.dsApproval.setColumn(0, "TY_WRK",  strId);
+        	this.dsApproval.setColumn(0, "TY_SALARY", this.dsSearch.getColumn(0, "TY_SALARY"));
+        	this.dsApproval.setColumn(0, "YM_SALARY", this.dsSearch.getColumn(0, "YM_SALARY"));
+        	this.dsApproval.setColumn(0, "SN_SALARY", this.dsSearch.getColumn(0, "SN_SALARY"));
+        	this.dsApproval.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+        	this.dsApproval.setColumn(0, "ID_APRV", this.AuthClient.ID_SABUN);
+        	if (strId == "APRV" || strId == "APRVCNC") {
+        		this.dsApproval.setColumn(0, "NO_APRV", this.dsAprvOut.getColumn(0, "NO_APRV"));
+        	} else {
+        		this.dsApproval.setColumn(0, "NO_APRV", this.dsList.getColumn(this.dsList.rowposition, "NO_APRV"));
+        	}
+
+        	var strSvcId    = strId;
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "aprv_execute=dsApproval";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divTop.form.btnAprv.addEventHandler("onclick",this.divData_btnAprv_onclick,this);
+            this.divTop.form.btnDocQ.addEventHandler("onclick",this.divData_btnDocQ_onclick,this);
+            this.divBottom.form.cboTY_SALARY.addEventHandler("onitemchanged",this.fnSearchInit,this);
+            this.divBottom.form.cboSN_SALARY.addEventHandler("onitemchanged",this.fnSearchInit,this);
+            this.divBottom.form.divBtns.form.btnUpload.addEventHandler("onclick",this.divData_btnUpload_onclick,this);
+            this.divBottom.form.divBtns.form.btnSave.addEventHandler("onclick",this.divData_btnSave_onclick,this);
+            this.divBottom.form.divBtns.form.btnCancel.addEventHandler("onclick",this.divData_btnCancel_onclick,this);
+            this.dsList.addEventHandler("onvaluechanged",this.dsList_onvaluechanged,this);
+            this.dsSearch.addEventHandler("oncolumnchanged",this.dsSearch_oncolumnchanged,this);
+        };
+        this.loadIncludeScript("DAU_SALARYAPRV_DLG.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

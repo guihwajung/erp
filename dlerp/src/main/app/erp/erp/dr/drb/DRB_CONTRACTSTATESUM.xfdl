@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DRB_CONTRACTSTATESUM" width="1280" height="720" titletext="분양현황집계" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" text="" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_ACNTUNIT" taborder="1" text="사업지코드" left="0.0" top="10.0" width="105.0" height="24.0" textAlign="center" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_ACNTUNIT" CodeFindName="DRX_CFACNTUNIT" CDTextWidth="110" taborder="0" left="staCD_ACNTUNIT:0.0" top="10.0" width="339" height="24.0" FitToContents="true" url="cmm::cmmCodeFind.xfdl"/>
+              <CheckBox id="chkYN_DONG" taborder="2" text="동" left="ccfCD_ACNTUNIT:0.0" top="10.0" width="50" height="24.0" truevalue="Y" falsevalue="N"/>
+              <CheckBox id="chkYN_PYEONG" taborder="3" text="평형" left="chkYN_DONG:0.0" top="10.0" width="50" height="24.0" truevalue="Y" falsevalue="N"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staDS_SITE00" taborder="3" top="1" height="30" cssclass="sta_WF_tablelabel" textAlign="center" right="211" width="80"/>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="staDS_SITE00:9"/>
+              <Static id="staBg1" taborder="2" top="30" right="0.00%" height="30" cssclass="sta_WF_tablebg" width="212"/>
+              <Static id="staBUNYANG" taborder="1" text="분양" top="30" height="30" cssclass="sta_WF_tablelabel" textAlign="center" right="staBg1:-1" width="80"/>
+              <Static id="staCNT" taborder="4" text="세대" top="1" height="30" cssclass="sta_WF_tablelabel" textAlign="center" right="132" width="80"/>
+              <Static id="staAMT_SUM" taborder="5" text="약정금액" top="1" height="30" cssclass="sta_WF_tablelabel" textAlign="center" right="0" width="133"/>
+              <Static id="staMIBUNYANG" taborder="6" text="미분양" top="59" width="80" height="30" cssclass="sta_WF_tablelabel" textAlign="center" right="211"/>
+              <Static id="staBg1_00" taborder="7" top="59" right="0.00%" height="30" cssclass="sta_WF_tablebg" width="212"/>
+              <Static id="staTOTAL" taborder="8" text="총계" top="88" width="80" height="30" cssclass="sta_WF_tablelabel" textAlign="center" right="211"/>
+              <Static id="staBg1_00_00" taborder="9" top="88" right="0.00%" height="30" cssclass="sta_WF_tablebg" width="212"/>
+              <Static id="staRATE" taborder="10" text="비율(%)" top="117" width="80" height="30" cssclass="sta_WF_tablelabel" textAlign="center" right="211"/>
+              <Static id="staBg1_00_00_00" taborder="11" top="117" right="0.00%" height="30" cssclass="sta_WF_tablebg" width="212"/>
+              <MaskEdit id="mskBUNYANG_CNT" taborder="12" left="staBUNYANG:6" top="35" width="70" height="20" readonly="true" format="#,###"/>
+              <MaskEdit id="mskBUNYANG_SUM" taborder="13" left="mskBUNYANG_CNT:5" top="35" width="122" height="20" readonly="true" format="#,###"/>
+              <MaskEdit id="mskMIBUNYANG_CNT" taborder="14" left="staMIBUNYANG:6" top="64" width="70" height="20" readonly="true" format="#,###"/>
+              <MaskEdit id="mskMIBUNYANG_SUM" taborder="15" left="staMIBUNYANG:81" top="64" width="122" height="20" readonly="true" format="#,###"/>
+              <MaskEdit id="mskTOTAL_CNT" taborder="16" left="staTOTAL:6" top="93" width="70" height="20" readonly="true" format="#,###"/>
+              <MaskEdit id="mskTOTAL_SUM" taborder="17" left="mskTOTAL_CNT:5" top="93" width="122" height="20" readonly="true" format="#,###"/>
+              <MaskEdit id="mskRATE_CNT" taborder="18" left="staRATE:6" top="122" width="70" height="20" readonly="true" format="#,###.##"/>
+              <MaskEdit id="mskRATE_SUM" taborder="19" left="mskRATE_CNT:5" top="122" width="122" height="20" readonly="true" format="#,###.##"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DRBPR_CONTRACT_STATE_SUM</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectTotal</Col>
+            <Col id="SP">DRBPR_CONTRACT_STATE_TOTAL</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_ACNTUNIT" type="STRING" size="256"/>
+          <Column id="DS_ACNTUNIT" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+          <Column id="NO_CHASU" type="STRING" size="256"/>
+          <Column id="NO_DONG" type="STRING" size="256"/>
+          <Column id="NO_PYEONG" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_ACNTUNIT"/>
+            <Col id="TY_GUBUN"/>
+            <Col id="NO_DONG"/>
+            <Col id="NO_PYEONG"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTotal">
+        <ColumnInfo>
+          <Column id="BUNYANG_CNT" type="BIGDECIMAL" size="256"/>
+          <Column id="BUNYANG_SUM" type="BIGDECIMAL" size="256"/>
+          <Column id="MIBUNYANG_CNT" type="BIGDECIMAL" size="256"/>
+          <Column id="MIBUNYANG_SUM" type="BIGDECIMAL" size="256"/>
+          <Column id="TOTAL_CNT" type="BIGDECIMAL" size="256"/>
+          <Column id="TOTAL_SUM" type="BIGDECIMAL" size="256"/>
+          <Column id="RATE_CNT" type="BIGDECIMAL" size="256"/>
+          <Column id="RATE_SUM" type="BIGDECIMAL" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsSearch.setColumn(0, "NO_DONG"  , "Y");	//동
+	this.dsSearch.setColumn(0, "NO_PYEONG", "Y");	//평형
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_ACNTUNIT  = this.divSearch.form.ccfCD_ACNTUNIT;
+	this.chkYN_DONG      = this.divSearch.form.chkYN_DONG;
+	this.chkYN_PYEONG    = this.divSearch.form.chkYN_PYEONG;
+	this.dxGrid  		 = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid, this.dsList, "DR", "DRB_CONTRACTSTATESUM");
+	
+	this.ccfCD_ACNTUNIT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.gfnGridColumnColor(this.dxGrid, "RATE", "Red", "RATE <= 50");
+	this.gfnGridColumnColor(this.dxGrid, "RATE", "Blue", "RATE > 50");
+}
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_ACNTUNIT", "string");
+	this.dsSelect.addColumn("TY_GUBUN"   , "string");
+	this.dsSelect.addColumn("NO_CHASU"   , "string");
+	this.dsSelect.addColumn("NO_DONG"    , "string");
+	this.dsSelect.addColumn("NO_PYEONG"  , "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+
+	this.dsSelect.setColumn(0, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0, 6));
+	this.dsSelect.setColumn(0, "TY_GUBUN"	, this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6, 1));
+	this.dsSelect.setColumn(0, "NO_CHASU"	, this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7, 2));
+	this.dsSelect.setColumn(0, "NO_DONG"	, this.dsSearch.getColumn(0, "NO_DONG"));
+	this.dsSelect.setColumn(0, "NO_PYEONG"	, this.dsSearch.getColumn(0, "NO_PYEONG"));
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect selectTotal=dsSelect";
+	var outData     = "dsList=select0 dsTotal=selectTotal0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+  */
+this.fnSelectValidate = function() {
+	var validate = true;
+	
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_ACNTUNIT"))){
+		this.gfnAlert("사업지코드가 입력되지 않았습니다.");
+		this.ccfCD_ACNTUNIT.form.CDTextBox.setFocus();
+		validate = false;
+	}
+
+	return validate;
+};
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+		
+		trace("dsTotal :: "+this.dsTotal.saveXML());
+	}
+}
+ 
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow)  {
+	if (id == "ccfCD_ACNTUNIT") {
+		dsUserParam.setColumn(nrow, "CD_DEPT"	, this.AuthClient.CD_DEPT);
+		dsUserParam.setColumn(nrow, "ID_USER"	, this.AuthClient.ID_USER);
+		dsUserParam.setColumn(nrow, "ID_GROUP"	, this.FormInfo.ID_GROUP);
+		dsUserParam.setColumn(nrow, "GR_SEARCH"	, this.FormInfo.GR_SEARCH);
+	}
+	return true;
+}
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		this.dsTotal.clearData();
+		
+		trace("columnid ::"+e.columnid);
+		
+		if(e.columnid == "NO_DONG" || e.columnid == "NO_PYEONG"){	//동,평형
+			var noDong   = (e.columnid == "NO_DONG" ? e.newvalue : obj.getColumn(e.row, "NO_DONG"));
+			var noPyeong = (e.columnid == "NO_PYEONG" ? e.newvalue : obj.getColumn(e.row, "NO_PYEONG"));
+			
+			var noDongSize   = 0;
+			var noPyeongSize = 0;
+			if(noDong == "Y" && noPyeong == "Y"){
+				noDongSize   = 70;
+				noPyeongSize = 90;
+			}else if(noDong == "Y" && noPyeong == "N"){
+				noDongSize   = 70;
+				noPyeongSize = 0;
+			}else if(noDong == "N" && noPyeong == "Y"){
+				noDongSize   = 0;
+				noPyeongSize = 90;
+			}
+			
+			this.dxGrid.setFormatColProperty(this.dxGrid.getBindCellIndex("body", "NO_DONG"), "size", noDongSize);
+			this.dxGrid.setFormatColProperty(this.dxGrid.getBindCellIndex("body", "PYEONG"), "size", noPyeongSize);
+		}
+	}
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_ACNTUNIT.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_ACNTUNIT"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_ACNTUNIT.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_ACNTUNIT"/>
+      <BindItem id="item2" compid="divSearch.form.chkYN_DONG" propid="value" datasetid="dsSearch" columnid="NO_DONG"/>
+      <BindItem id="item3" compid="divSearch.form.chkYN_PYEONG" propid="value" datasetid="dsSearch" columnid="NO_PYEONG"/>
+      <BindItem id="item4" compid="divData.form.mskBUNYANG_CNT" propid="value" datasetid="dsTotal" columnid="BUNYANG_CNT"/>
+      <BindItem id="item5" compid="divData.form.mskBUNYANG_SUM" propid="value" datasetid="dsTotal" columnid="BUNYANG_SUM"/>
+      <BindItem id="item6" compid="divData.form.mskMIBUNYANG_CNT" propid="value" datasetid="dsTotal" columnid="MIBUNYANG_CNT"/>
+      <BindItem id="item7" compid="divData.form.mskMIBUNYANG_SUM" propid="value" datasetid="dsTotal" columnid="MIBUNYANG_SUM"/>
+      <BindItem id="item8" compid="divData.form.mskTOTAL_CNT" propid="value" datasetid="dsTotal" columnid="TOTAL_CNT"/>
+      <BindItem id="item9" compid="divData.form.mskTOTAL_SUM" propid="value" datasetid="dsTotal" columnid="TOTAL_SUM"/>
+      <BindItem id="item10" compid="divData.form.mskRATE_CNT" propid="value" datasetid="dsTotal" columnid="RATE_CNT"/>
+      <BindItem id="item11" compid="divData.form.mskRATE_SUM" propid="value" datasetid="dsTotal" columnid="RATE_SUM"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,719 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("미수미결조회");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DHEPR_MISUMIKYUL_SELECT</Col></Row><Row><Col id=\"TARGET\">selectSub</Col><Col id=\"SP\">DHEPR_MISUMIKYUL_JUNGSAN_SELECT</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_SEARCH", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">01</Col><Col id=\"DS_CODE\">코드</Col></Row><Row><Col id=\"CD_CODE\">02</Col><Col id=\"DS_CODE\">명칭</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_VENDOR", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListSub", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYN_APPR", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"DS_CODE\">전체</Col></Row><Row><Col id=\"CD_CODE\">Y</Col><Col id=\"DS_CODE\">승인</Col></Row><Row><Col id=\"CD_CODE\">N</Col><Col id=\"DS_CODE\">미승인</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"DT_FROM\" type=\"STRING\" size=\"256\"/><Column id=\"DT_TO\" type=\"STRING\" size=\"256\"/><Column id=\"CD_ACCOUNT\" type=\"STRING\" size=\"256\"/><Column id=\"CD_VENDOR\" type=\"STRING\" size=\"256\"/><Column id=\"YN_REMAIN\" type=\"STRING\" size=\"256\"/><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"CD_DEPT_BE\" type=\"STRING\" size=\"256\"/><Column id=\"YN_APPR\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DEPT_BE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"YN_APPR\"/></Row></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0","10.0",null,"78","0",null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_cssclass("div_SEARCH_Bg");
+            obj.set_formscrolltype("none");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("sta01","0","10.0","92","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("0");
+            obj.set_text("법인코드");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_CORP","sta01:0.0","10.0","219","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("1");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.getSetter("CodeFindName").set("DHX_CFCORP");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_DEPT_BE","ccfCD_CORP:0.0","10.0","105.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("2");
+            obj.set_text("귀속부서");
+            obj.set_usedecorate("false");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_DEPT_BE","staCD_DEPT_BE:0.0","10.0","269","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("70");
+            obj.set_taborder("3");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("sta03","ccfCD_DEPT_BE:0.0","10.0","92","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("4");
+            obj.set_text("기준일자");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Calendar("ctclDT_FROM","sta03:0.0","10.0","105","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("5");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("sta02","ctclDT_FROM:0.0","10.0","30.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("6");
+            obj.set_text("~");
+            obj.set_cssclass("sta_WF_AC");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Calendar("ctclDT_TO","sta02:0.0","10.0","105","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("7");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_REMAIN","ctclDT_TO:20","10.0","134","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("12");
+            obj.set_text("잔액여부");
+            obj.set_truevalue("Y");
+            obj.set_falsevalue("N");
+            obj.set_value("N");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_ACCOUNT","0","sta01:10.0","92","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("8");
+            obj.set_text("계정코드");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_ACCOUNT","staCD_ACCOUNT:0.0","sta01:10.0","220","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CodeFindName").set("DHX_CFACNT_TYPE_MULTI");
+            obj.getSetter("CDTextWidth").set("70");
+            obj.set_taborder("9");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_VENDOR","ccfCD_ACCOUNT:0.0","ccfCD_CORP:10.0","105.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("10");
+            obj.set_text("거래처코드");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_VENDOR","staCD_VENDOR:0.0","sta01:10.0","269","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("70");
+            obj.set_taborder("11");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staYN_APPR","ccfCD_VENDOR:0.0","sta01:10.0","92","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("12");
+            obj.set_text("승인여부");
+            obj.set_textDecoration("none");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Radio("rdoYN_APPR","staYN_APPR:0.0","sta01:10.0","200","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("15");
+            obj.set_innerdataset("dsYN_APPR");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_direction("vertical");
+            obj.set_text("전체");
+            obj.set_value("");
+            obj.set_index("0");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:10",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divSplitter","0","71.47%","100.00%","5",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("1");
+            obj.set_cssclass("div_Splitter");
+            obj.set_cursor("ns-resize");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("divDataBottom","0","divSplitter:5",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("sta02","0","0",null,"22","0",null,null,null,null,null,this.divData.form.divDataBottom.form);
+            obj.set_taborder("0");
+            obj.set_text("정산현황");
+            obj.set_cssclass("sta_TITLE_Bg");
+            this.divData.form.divDataBottom.addChild(obj.name, obj);
+
+            obj = new Grid("objGridSub","0","sta02:5",null,null,"0","0",null,null,null,null,this.divData.form.divDataBottom.form);
+            obj.getSetter("sub").set("true");
+            obj.set_taborder("1");
+            obj._setContents("");
+            this.divData.form.divDataBottom.addChild(obj.name, obj);
+
+            obj = new Div("divDataTop","0","0",null,null,"0","divSplitter:5",null,null,null,null,this.divData.form);
+            obj.set_taborder("2");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("sta01","0","0","100%","22",null,null,null,null,null,null,this.divData.form.divDataTop.form);
+            obj.set_taborder("0");
+            obj.set_text("미결현황");
+            obj.set_cssclass("sta_TITLE_Bg");
+            this.divData.form.divDataTop.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","sta01:4",null,null,"0","1",null,null,null,null,this.divData.form.divDataTop.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.divDataTop.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.ccfCD_CORP.form.CDTextBox","value","dsSearch","CD_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divSearch.form.ctclDT_FROM","value","dsSearch","DT_FROM");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divSearch.form.ctclDT_TO","value","dsSearch","DT_TO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","divSearch.form.ccfCD_ACCOUNT.form.CDTextBox","value","dsSearch","CD_ACCOUNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item5","divSearch.form.ccfCD_VENDOR.form.CDTextBox","value","dsSearch","CD_VENDOR");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item6","divSearch.form.chkYN_REMAIN","value","dsSearch","YN_REMAIN");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item7","divSearch.form.rdoYN_APPR","value","dsSearch","YN_APPR");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divSearch.form.ccfCD_DEPT_BE.form.CDTextBox","value","dsSearch","CD_DEPT_BE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item8","divSearch.form.ccfCD_DEPT_BE.form.DSTextBox","value","dsSearch","DS_DEPT_BE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DHE_MISUMIKYUL.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.vCD_TRADE = null;
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+
+        	this.rdoYN_APPR.set_index(0);
+
+        	this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+        	this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+
+        	//if (nexacro.toNumber(this.FormInfo.GR_SEARCH) >= 7) {
+        // 		this.ccfCD_DEPT_BE.form.CDTextBox.set_value(this.AuthClient.CD_DEPT);
+        // 		this.ccfCD_DEPT_BE.form.DSTextBox.set_value(this.AuthClient.DS_DEPT);
+        		//this.staCD_DEPT_BE.set_textDecoration("underline");
+        	//}
+
+        	var sCurrentDate = this.gfnGetDate();
+        	//this.ctclDT_FROM.set_value(this.gfnGetFirstDate(this.gfnGetDate()));
+        	this.ctclDT_FROM.set_value((sCurrentDate.substr(0,4)+"0101"));
+        	this.ctclDT_TO.set_value(sCurrentDate);
+
+        	this.dsSearch.setColumn(0, "CD_DEPT_BE", this.AuthClient.LEVCD_DEPT_UPPER);
+        	this.ccfCD_DEPT_BE.form.fnCodeFindLoad();
+
+        	//this.ccfCD_CORP.form.CDTextBox.setFocus();
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+         	this.FormBtns.Add.set_enable(false);
+         	this.FormBtns.Save.set_enable(false);
+         	this.FormBtns.Del.set_enable(false);
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        	this.btnIssueSlip = this.gfnFormButtonAdd("IssueSlip", "fnIssueSlip");  //전표조회
+        	//this.btn2 = this.gfnFormButtonAdd("ApplyCancel", "fnApply");
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+        	this.ccfCD_DEPT_BE = this.divSearch.form.ccfCD_DEPT_BE;
+        	this.ccfCD_VENDOR = this.divSearch.form.ccfCD_VENDOR;
+        	this.ccfCD_ACCOUNT = this.divSearch.form.ccfCD_ACCOUNT;
+        	this.ctclDT_FROM = this.divSearch.form.ctclDT_FROM;
+        	this.ctclDT_TO = this.divSearch.form.ctclDT_TO;
+        	this.chkYN_REMAIN = this.divSearch.form.chkYN_REMAIN;
+        	this.staCD_DEPT_BE = this.divSearch.form.staCD_DEPT_BE;
+        	this.rdoYN_APPR = this.divSearch.form.rdoYN_APPR;
+
+        	this.dxGrid = this.divData.form.divDataTop.form.objGrid;
+        	this.dxGridSub = this.divData.form.divDataBottom.form.objGridSub;
+
+        	this.vActiveGrid = this.dxGrid;
+
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	// 그리드 초기화
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHE_MISUMIKYUL");
+        	this.gfnGridInit(this.dxGridSub, this.dsListSub, "DH", "DHE_MISUMIKYUL_01");
+
+          	this.ccfCD_DEPT_BE.CodeFindName = "DHX_CFACNTUNIT";				// DHX_CFBALANCE_ACNTUNIT
+        	this.ccfCD_VENDOR.CodeFindName = "DHX_CFALLVENDOR_CODEFIND";	//DHX_CFVENDOR_BY_TYVENDOR
+
+        	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.ccfCD_DEPT_BE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.ccfCD_DEPT_BE.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.ccfCD_ACCOUNT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.ccfCD_ACCOUNT.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.ccfCD_VENDOR.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.ccfCD_VENDOR.AfterCDTextChanged = "fnAfterCDTextChanged";
+
+        	this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+
+        	this.dxGrid.addEventHandler("oncellclick", this.fnGrid_oncelldblclick, this);
+        	this.dxGridSub.addEventHandler("oncellclick", this.fnGrid_oncelldblclick, this);
+
+
+        	//검색조건 변경 이벤트
+        	this.dsSearch.addEventHandler("onvaluechanged", this.dsSearch_Valuechanged, this);
+        };
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("CD_CORP", "string");
+        	this.dsSelect.addColumn("CD_DEPT_BE", "string");
+        	this.dsSelect.addColumn("DT_FROM", "string");
+        	this.dsSelect.addColumn("DT_TO", "string");
+        	this.dsSelect.addColumn("CD_ACCOUNT", "string");
+        	this.dsSelect.addColumn("CD_VENDOR", "string");
+        	this.dsSelect.addColumn("YN_REMAIN", "string");
+        	this.dsSelect.addColumn("YN_APPR", "string");
+
+        	this.dsSelectSub = new Dataset();
+        	this.dsSelectSub.addColumn("CD_SLIP_MI", "string");
+
+        }
+
+        /************************************************************************
+         * 버튼 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+        	if (!this.fnSelectValidate()) return false;
+
+        	this.gfnGridBeforeSelect(this.dxGrid);
+
+        	this.dsSelect.clearData();
+        	var nRow = this.dsSelect.addRow();
+        	this.dsSelect.setColumn(nRow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+        	this.dsSelect.setColumn(nRow, "DT_FROM", this.dsSearch.getColumn(0, "DT_FROM"));
+        	this.dsSelect.setColumn(nRow, "DT_TO", this.dsSearch.getColumn(0, "DT_TO"));
+        	this.dsSelect.setColumn(nRow, "CD_ACCOUNT", this.dsSearch.getColumn(0, "CD_ACCOUNT"));
+        	this.dsSelect.setColumn(nRow, "CD_VENDOR", this.dsSearch.getColumn(0, "CD_VENDOR"));
+        	this.dsSelect.setColumn(nRow, "YN_REMAIN", this.dsSearch.getColumn(0, "YN_REMAIN"));
+        	this.dsSelect.setColumn(nRow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+        	this.dsSelect.setColumn(nRow, "CD_DEPT_BE", this.dsSearch.getColumn(0, "CD_DEPT_BE"));
+        	this.dsSelect.setColumn(nRow, "YN_APPR", this.dsSearch.getColumn(0, "YN_APPR"));
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        this.fnSelectSub = function()
+        {
+        	if (this.dxGrid.rowcount == 0) return false;
+
+        	this.dsListSub.clearData();
+        	var CD_SLIP_MI = this.dsList.getColumn(this.dsList.rowposition, "CD_SLIP_MI");
+        	this.gfnGridBeforeSelect(this.dxGridSub);
+
+        	if (this.gfnIsNull(CD_SLIP_MI)) return false;
+
+        	this.dsSelectSub.clearData();
+        	var nRow = this.dsSelectSub.addRow();
+        	this.dsSelectSub.setColumn(nRow, "CD_SLIP_MI", CD_SLIP_MI);
+
+        	var strSvcId    = "selectSub";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "selectSub=dsSelectSub";
+        	var outData     = "dsListSub=selectSub0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+         */
+        this.fnSelectValidate = function() {
+        	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.text))
+        	{
+        		this.gfnAlert("법인코드를 입력 하세요.");
+        		this.ccfCD_CORP.form.CDTextBox.setFocus();
+        		return false;
+        	}
+
+        // 	if (nexacro.toNumber(this.FormInfo.GR_SEARCH) >= 7) {
+        		if (this.gfnIsNull(this.ccfCD_DEPT_BE.form.CDTextBox.text))
+        		{
+        			this.gfnAlert("귀속부서를 입력 하세요.");
+        			this.ccfCD_DEPT_BE.form.CDTextBox.setFocus();
+        			return false;
+        		}
+        // 	}
+        	/*
+        	if (this.gfnIsNull(this.ctclDT_FROM.value) || this.gfnIsNull(this.ctclDT_TO.value) )
+        	{
+        		this.gfnAlert("기간을 입력 하세요.");
+        		this.ctclDT_FROM.setFocus();
+        		return false;
+        	}
+        	*/
+        	if (!this.gfnIsNull(this.ctclDT_FROM.value) && !this.gfnIsNull(this.ctclDT_TO.value) ) {
+        		if ( this.gfnGetDiffDate(this.ctclDT_FROM.value, this.ctclDT_TO.value) < 0 ) {
+        			this.gfnAlert("일자가 잘못 입력 되었습니다.");
+        			this.ctclDT_TO.setFocus();
+        			return false;
+        		}
+        	}
+
+        	return true;
+        };
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	if (svcID == "select") {
+        		this.fnSetButton();
+        		this.gfnGridAfterSelect(this.dxGrid);
+
+        		this.fnSelectSub();
+        	}
+        }
+
+        this.fnMsgCallback = function() {
+        	this.FormBtns.Select.click();
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow)
+        {
+        	var cdCorp = this.dsSearch.getColumn(0, "CD_CORP");
+
+        	if (id == "ccfCD_CORP")
+        	{
+        		//dsUserParam.setColumn(nrow, "LEVLV_DEPT", this.UserInfo.LEVLV_DEPT_ACNT);
+        		//dsUserParam.setColumn(nrow, "LEVCD_DEPT", this.UserInfo.LEVCD_DEPT_ACNT);
+        		dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+        	}
+        	else if (id == "ccfCD_DEPT_BE") {
+        		if(this.gfnIsNull(cdCorp)){
+        			this.gfnAlert("법인코드를 선택하세요.");
+        			return false;
+        		}
+
+        		dsUserParam.setColumn(nrow, "CD_DEPT_UPPER"	, "");						//상위부서
+        		dsUserParam.setColumn(nrow, "YN_SLIPACCEPT"	, "");						//전표발행여부
+        		dsUserParam.setColumn(nrow, "CD_CORP"		, cdCorp);					//법인코드
+        		dsUserParam.setColumn(nrow, "YN_USE"		, "Y");						//사용여부
+        		dsUserParam.setColumn(nrow, "GR_DEPT_ACNT"	, "");						//현장/본사여부
+        		dsUserParam.setColumn(nrow, "LEVCD_DEPT_UPPER", this.AuthClient.LEVCD_DEPT_UPPER);
+        		dsUserParam.setColumn(nrow, "ID_USER"	    , this.AuthClient.ID_USER);
+        		dsUserParam.setColumn(nrow, "GR_SEARCH"     , this.FormInfo.GR_SEARCH);
+        		dsUserParam.setColumn(nrow, "CD_DEPT"	    , this.AuthClient.CD_DEPT);
+
+        // 		dsUserParam.setColumn(nrow, "LEVEL"		, this.UserInfo.LV_3);	//법인코드
+        // 		dsUserParam.setColumn(nrow, "ACNTUNIT"	, this.UserInfo.LEVCD_DEPT_ACNT);	//법인코드
+        // 		dsUserParam.setColumn(nrow, "CD_CORP"	, this.ccfCD_CORP.form.CDTextBox.value);	//법인코드
+        	}
+        	else if(id == "ccfCD_ACCOUNT")
+        	{
+        		//dsUserParam.setColumn(nrow, "CD_CORP" , this.AuthClient.CD_CORP);		//X   CD_VENDOR
+        		dsUserParam.setColumn(nrow, "YN_MISU_MIBUL_ACNT", "Y");
+        	}
+        	else if (id == "ccfCD_VENDOR")
+        	{
+        		dsUserParam.setColumn(nrow, "TY_VENDOR"   , "");
+        		dsUserParam.setColumn(nrow, "CD_DEPT_REF" , this.AuthClient.CD_DEPT);
+        		dsUserParam.setColumn(nrow, "ORIGENTTAX"  , "");
+        	}
+
+        	return true;
+        };
+
+        this.fnAfterCDTextChanged = function(id, codeFindData) {
+        	var arr = codeFindData;
+        	//this.fnSearchInit();
+
+        	if(id == "ccfCD_CORP") {
+        		this.ccfCD_DEPT_BE.form.fnCodeFindClear();
+        	}
+
+        	if(id == "ccfCD_ACCOUNT") {
+
+        		var strCdAcnt = "";
+        		var strDsAcnt = "";
+        		if (arr.length > 0) {
+        			for(var r = 0; r < arr.length; r++) {
+        				strCdAcnt += arr[r]["CD_ACCOUNT"]+",";
+        				strDsAcnt += arr[r]["DS_ACCOUNT"]+",";
+        			}
+
+        			this.ccfCD_ACCOUNT.form.CDTextBox.set_value(strCdAcnt.substr(0,strCdAcnt.length-1));
+        			this.ccfCD_ACCOUNT.form.DSTextBox.set_value(strDsAcnt.substr(0,strDsAcnt.length-1));
+        		}
+        	}
+
+        }
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+        this.fnGrid_oncelldblclick = function(obj,e)
+        {
+        	var dsList = obj.getBindDataset();
+        	this.vCD_TRADE = dsList.getColumn(dsList.rowposition, "CD_TRADE").replace(/-/gi, "");
+        	//this.fnIssueSlip();
+        };
+
+        this.fnGrid_RowCellChanged = function(obj,e)
+        {
+        	//this.vActiveGrid = this.dxGrid;
+            if ((obj.oldrow > -1 && obj.oldrow == e.row)
+        		|| (obj.oldrow == -1 && e.oldrow != e.row)) {
+        		this.FormBtns.SubSelect.click();
+        		obj.oldrow = -1;
+        	}
+        };
+
+        /************************************************************************
+         * 서브 버튼 이벤트
+         ************************************************************************/
+        this.fnIssueSlip = function(obj,e)
+        {
+        	var param = {};
+        	var CD_TRADE = this.dsList.getColumn(this.dsList.rowposition, "CD_TRADE");
+        	if (this.gfnIsNull(CD_TRADE))
+        	//if (this.gfnIsNull(this.vCD_TRADE))
+        	{
+        		this.gfnAlert("발행된 전표가 없습니다.");
+        		return false;
+        	}
+
+        	var param = {
+        		 CD_TRADE : CD_TRADE
+        		,IUD_FLAG : "S"
+        		,strYN_JUNDO_START : ""
+        	};
+
+        	this.gfnFormOpen("DHA", "DHA_ISSUESLIP", "", param);
+        }
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        this.fnSearchInit = function(obj,e) {
+        	if(e == null || (e.pretext != e.posttext)) {
+        		this.gfnSetFormStatus(this);
+        		this.gfnGridClear(this.dxGrid);
+        	}
+        }
+
+        this.divData_ondragmove = function(obj,e)
+        {
+        	if(e.userdata == "splitter") {
+        		this.divData.form.divSplitter.set_top(e.clienty);
+        		this.divData.form.resetScroll();
+        	}
+        };
+
+        this.divData_divSplitter_ondrag = function(obj,e)
+        {
+        	e.set_userdata("splitter");
+        	return true;
+        };
+
+        //검색조건 변경 이벤트
+        this.dsSearch_Valuechanged = function(obj,e)
+        {
+        	if(e.oldvalue != e.newvalue) {
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.gfnGridClear(this.dxGrid);
+        		this.gfnGridClear(this.dxGridSub);
+        	}
+        };
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divData.addEventHandler("ondragmove",this.divData_ondragmove,this);
+            this.divData.form.divSplitter.addEventHandler("ondrag",this.divData_divSplitter_ondrag,this);
+            this.dsList.addEventHandler("onrowposchanged",this.dsList_onrowposchanged,this);
+        };
+        this.loadIncludeScript("DHE_MISUMIKYUL.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SITE" taborder="1" text="현장코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFSITE" CDTextWidth="80" taborder="1" left="staCD_SITE:0.0" top="10.0" width="200" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staDT_POST_FROM_TO" taborder="1" text="전기일자" left="ccfCD_SITE:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Calendar id="ctclDT_POST_FROM" taborder="1" left="staDT_POST_FROM_TO:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Static id="sta_range" taborder="1" text="~" left="ctclDT_POST_FROM:0.0" top="10.0" width="30.0" height="24.0" cssclass="sta_WF_AC"/>
+              <Calendar id="ctclDT_POST_TO" taborder="1" left="sta_range:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Static id="staTY_SELECT" taborder="1" text="조회구분" left="ctclDT_POST_TO:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Combo id="ccboTY_SELECT" taborder="1" left="staTY_SELECT:0.0" top="10.0" width="120" height="24.0" innerdataset="dsTY_SELECT" codecolumn="CD_CODE" datacolumn="DS_CODE" index="-1"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Div id="divDataTop" taborder="0" left="0" top="0" height="160" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+                <Layouts>
+                  <Layout>
+                    <Div id="divSplitter" taborder="1" left="50%" top="0" width="5" height="100%" background="skyblue" cursor="ew-resize" ondrag="divData_divSplitter_ondrag"/>
+                    <Div id="divDataLeft" taborder="0" left="0" top="0" bottom="0" right="divSplitter:5">
+                      <Layouts>
+                        <Layout>
+                          <Static id="staTitle" taborder="0" text="현금보유현황" left="0" top="0" width="100%" height="22" cssclass="sta_TITLE_Bg"/>
+                          <Grid id="objGrid" taborder="0" left="0" top="staTitle:5" bottom="0" right="0"/>
+                        </Layout>
+                      </Layouts>
+                    </Div>
+                    <Div id="divDataRight" taborder="0" left="divSplitter:5" top="0" bottom="0" right="0">
+                      <Layouts>
+                        <Layout>
+                          <Static id="staTitle" taborder="0" text="어음보유현황" left="0" top="0" width="100%" height="22" cssclass="sta_TITLE_Bg"/>
+                          <Grid id="objGrid1" taborder="0" left="0" top="staTitle:5" bottom="0" right="0"/>
+                        </Layout>
+                      </Layouts>
+                    </Div>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataBottom" taborder="0" left="0" top="divDataTop:10" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+                <Layouts>
+                  <Layout>
+                    <Static id="staTitle" taborder="0" text="금일 입출금 명세" left="0" top="0" width="100%" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Grid id="objGrid2" taborder="0" left="0" top="staTitle:5" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.fnSetCombo();
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_SITE))
+	{
+		this.dsSearch.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+		this.divSearch.form.ccfCD_SITE.form.DSTextBox.set_value(this.getOwnerFrame().DS_SITE);
+	}
+	
+	var today = this.gfnGetDate();
+	
+	this.dsSearch.setColumn(0, "DT_POST_FROM", today.substr(0,6) + "01");
+	this.dsSearch.setColumn(0, "DT_POST_TO", this.gfnGetLastDate(today.substr(0,6)));
+
+//	this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+	// 서브 버튼 사용
+	//this.gfnUseSubBtn(true, this.divData, this.divData.form.divDataTop.form.divSplitter); // divSplitter sync
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	//this.btn1 = this.gfnFormButtonAdd("Detail", "fnDetail1");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.dxGrid = this.divData.form.divDataTop.form.divDataLeft.form.objGrid;
+	this.dxGrid1 = this.divData.form.divDataTop.form.divDataRight.form.objGrid1;
+	this.dxGrid2 = this.divData.form.divDataBottom.form.objGrid2;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {	
+ 	this.gfnGridInit(this.dxGrid, this.dsList, "DW", "DWD_ZPSR1055_01");
+ 	this.gfnGridInit(this.dxGrid1, this.dsList1, "DW", "DWD_ZPSR1055_02");
+	this.gfnGridInit(this.dxGrid2, this.dsList2, "DW", "DWD_ZPSR1055_03");
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsInfoSap = new Dataset();	
+	this.dsInfoSap.addColumn("TY_WRK", "string");
+	this.dsInfoSap.addColumn("DS_PARAM", "string");
+	this.dsInfoSap.addColumn("DS_VALUE", "string");
+}
+
+/************************************************************************
+ * 버튼 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	this.dsInfoSap.clearData();
+	this.dsInfoSap.addRow();
+	
+	var ds_value = [];
+	ds_value.push(this.dsSearch.getColumn(0, "CD_SITE"));
+	ds_value.push(this.dsSearch.getColumn(0, "DT_POST_FROM"));
+	ds_value.push(this.dsSearch.getColumn(0, "DT_POST_TO"));
+	ds_value.push(this.dsSearch.getColumn(0, "TY_SELECT"));
+	
+	this.dsInfoSap.setColumn(0, "TY_WRK", "Q");
+	this.dsInfoSap.setColumn(0, "DS_PARAM", this.FormInfo.DS_PARAM);
+	this.dsInfoSap.setColumn(0, "DS_VALUE", ds_value.join(','));
+	
+	// SAP 호출
+	var strSvcId    = "select";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsInfoSap";
+	var outData     = "dsFunc=select0 dsInParam=select1 dsOutTables=select2";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnSap = function() {
+	
+	this.dsList.clearData();
+	this.dsList1.clearData();
+	this.dsList2.clearData();
+	
+	this._dsProcSap.clearData();
+	var nrow = this._dsProcSap.addRow();
+	this._dsProcSap.setColumn(nrow, "TARGET", "select");
+	this._dsProcSap.setColumn(nrow, "SP", this.dsFunc.getColumn(0, "NM_RFC"));
+	
+	this.dsSelectSap = new Dataset();
+	
+	// IN 파라미터 셋팅
+	for(var i = 0 ; i < this.dsInParam.rowcount; i++) {
+		this.dsSelectSap.addColumn(this.dsInParam.getColumn(i, "IN_PARAM"), "string");
+	}
+	
+	nrow = this.dsSelectSap.addRow();	
+	for(var i = 0 ; i < this.dsInParam.rowcount; i++) {
+		this.dsSelectSap.setColumn(nrow, this.dsInParam.getColumn(i, "IN_PARAM"), this.dsInParam.getColumn(i, "IN_VALUE"));
+	}	
+	
+// 	var outList = "";
+// 	for(var i = 0 ; i < this.dsOutTables.rowcount; i++) {
+// 		outList += " dsList" + (i+1) + "=" + this.dsOutTables.getColumn(i, "NM_OUT");
+// 	}
+	
+	// SAP 호출
+	var strSvcId    = "sap";
+	var strSvcType  = "sap";
+	var inProc		= "_dsProcSap";
+	var inData      = "select=dsSelectSap";
+	var outData     = "dsExport=export dsList2=OT_ITAB";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	//this.gfnGridAdd(this.dxGrid);
+}
+
+/*
+ *	삭제 버튼
+ */ 
+this.fnDel = function() {
+	//this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	저장 버튼
+ */ 
+this.fnSave = function() {
+	
+}
+
+/*
+ *	엑셀 버튼
+ */ 
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE")))
+	{
+		this.fnValidate = function()
+		{
+			this.divSearch.form.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		
+		this.gfnAlert("현장코드를 입력해주십시오.", "fnValidate");
+		return false;
+	}else if(this.gfnIsNull(this.dsSearch.getColumn(0, "DT_POST_FROM")))
+	{
+		this.fnValidate = function()
+		{
+			this.divSearch.form.ctclDT_POST_FROM.setFocus();
+		}
+	
+		this.gfnAlert("전기일자 시작일을 입력해주십시오.", "fnValidate");
+		return false;
+	}
+	else if(this.gfnIsNull(this.dsSearch.getColumn(0, "DT_POST_TO")))
+	{
+		this.fnValidate = function()
+		{
+			this.divSearch.form.ctclDT_POST_TO.setFocus();
+		}
+	
+		this.gfnAlert("전기일자 종료일을 입력해주십시오.", "fnValidate");
+		return false;
+	}
+	else if(this.gfnIsNull(this.dsSearch.getColumn(0, "TY_SELECT")))
+	{
+		this.fnValidate = function()
+		{
+			this.divSearch.form.ccboTY_SELECT.setFocus();
+		}
+	
+		this.gfnAlert("조회구분을 입력해주십시오.", "fnValidate");
+		return false;
+	}
+	
+	return validate;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		if (errorCode == 0) {
+			this.fnSap();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "sap")
+	{
+		if(this.dsExport.rowcount > 0)
+		{
+			var nrow = this.gfnGridAdd(this.dxGrid);
+ 			this.dsList.setColumn(nrow, "C_JUNIL_JAN", (nexacro.toNumber(this.dsExport.getColumn(0, "C_JUNIL_JAN"),0) * 100).toFixed(0));
+ 			this.dsList.setColumn(nrow, "C_IWRBTR", (nexacro.toNumber(this.dsExport.getColumn(0, "C_IWRBTR"),0) * 100).toFixed(0));
+ 			this.dsList.setColumn(nrow, "C_CWRBTR", (nexacro.toNumber(this.dsExport.getColumn(0, "C_CWRBTR"),0) * 100).toFixed(0));
+ 			this.dsList.setColumn(nrow, "C_JANEK", (nexacro.toNumber(this.dsExport.getColumn(0, "C_JANEK"),0) * 100).toFixed(0));
+ 			this.dsList.setColumn(nrow, "C_MI_PRICE", (nexacro.toNumber(this.dsExport.getColumn(0, "C_MI_PRICE"),0) * 100).toFixed(0));
+ 			this.dsList.setColumn(nrow, "C_JANEK_PURE", (nexacro.toNumber(this.dsExport.getColumn(0, "C_JANEK_PURE"),0) * 100).toFixed(0));
+		
+			//this.dsList.copyRow(nrow, this.dsExport, 0);
+			
+			var nrow = this.gfnGridAdd(this.dxGrid1);
+			//this.dsList1.copyRow(nrow, this.dsExport, 0);
+ 			this.dsList1.setColumn(nrow, "B_IWRBTR", (nexacro.toNumber(this.dsExport.getColumn(0, "B_IWRBTR"),0) * 100).toFixed(0));
+ 			this.dsList1.setColumn(nrow, "B_CWRBTR", (nexacro.toNumber(this.dsExport.getColumn(0, "B_CWRBTR"),0) * 100).toFixed(0));
+ 			this.dsList1.setColumn(nrow, "B_JANEK", (nexacro.toNumber(this.dsExport.getColumn(0, "B_JANEK"),0) * 100).toFixed(0));
+			
+			this.dsList2.set_enableevent(false);
+			for(var i = 0 ; i < this.dsList2.rowcount; i++)
+			{
+				this.dsList2.setColumn(i, "IWRBTR", (nexacro.toNumber(this.dsList2.getColumn(i, "IWRBTR"),0) * 100).toFixed(0));
+				this.dsList2.setColumn(i, "CWRBTR", (nexacro.toNumber(this.dsList2.getColumn(i, "CWRBTR"),0) * 100).toFixed(0));
+			}
+			this.dsList2.set_enableevent(true);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 콤보 이벤트 설정
+ ************************************************************************/
+this.fnSetCombo = function() {
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	this.dsCombo.addColumn("YN_USE", "string");
+	this.dsCombo.addColumn("YN_ALL", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DW");
+	this.dsCombo.setColumn(0, "CD_TYPE", "SAP05");
+	this.dsCombo.setColumn(0, "YN_USE", "Y");
+	this.dsCombo.setColumn(0, "YN_ALL", "N");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_SELECT=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.divData_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	if(e.userdata == "splitter") {
+		this.divData.form.divDataTop.form.divSplitter.set_left(e.clientx);
+		this.divData.form.divDataTop.form.resetScroll();
+		
+	}
+};
+
+this.divData_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	e.set_userdata("splitter");
+	return true;
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+		this.gfnGridClear(this.dxGrid1);
+		this.gfnGridClear(this.dxGrid2);
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="C_JUNIL_JAN" type="STRING" size="256"/>
+          <Column id="C_IWRBTR" type="STRING" size="256"/>
+          <Column id="C_CWRBTR" type="STRING" size="256"/>
+          <Column id="C_JANEK" type="STRING" size="256"/>
+          <Column id="C_MI_PRICE" type="STRING" size="256"/>
+          <Column id="C_JANEK_PURE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DWXPR_RFCINFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_COMMON_SELECT_01</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_SELECT">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList1">
+        <ColumnInfo>
+          <Column id="B_IWRBTR" type="STRING" size="256"/>
+          <Column id="B_CWRBTR" type="STRING" size="256"/>
+          <Column id="B_JANEK" type="STRING" size="256"/>
+          <Column id="D" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList2"/>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DT_POST_FROM" type="STRING" size="256"/>
+          <Column id="DT_POST_TO" type="STRING" size="256"/>
+          <Column id="TY_SELECT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TY_SELECT">1</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsExport"/>
+      <Dataset id="dsInParam"/>
+      <Dataset id="dsOutTables"/>
+      <Dataset id="dsInfoSap"/>
+      <Dataset id="_dsProcSap">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DWXPR_RFCINFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_COMMON_SELECT_01</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsFunc"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divSearch.form.ctclDT_POST_FROM" propid="value" datasetid="dsSearch" columnid="DT_POST_FROM"/>
+      <BindItem id="item2" compid="divSearch.form.ctclDT_POST_TO" propid="value" datasetid="dsSearch" columnid="DT_POST_TO"/>
+      <BindItem id="item3" compid="divSearch.form.ccboTY_SELECT" propid="value" datasetid="dsSearch" columnid="TY_SELECT"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="cmmMultiLine" width="230" height="160" onload="cmmMultiLine_onload" background="#ffffff" onsize="cmmMultiLine_onsize" onmousemove="cmmMultiLine_onmousemove">
+    <Layouts>
+      <Layout>
+        <TextArea id="txt00" taborder="0" left="0" top="0" right="0" bottom="32" scrolltype="vertical" border="1px solid darkgray"/>
+        <Static id="sta01" taborder="3" left="0" top="txt00:-1" right="0" bottom="0" border="1px solid darkgray" background="#C1C1C1"/>
+        <Div id="divBtns" taborder="4" left="50" top="txt00:5" width="130" height="21">
+          <Layouts>
+            <Layout>
+              <Button id="btnConfirm" taborder="3" text="확인" left="0" top="0" width="60" height="21" onclick="divBtns_btnConfirm_onclick"/>
+              <Button id="btnCancel" taborder="4" text="취소" left="btnConfirm:10" top="0" width="60" height="21" onclick="divBtns_btnCancel_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta00" taborder="2" width="15" bottom="0" right="0" height="20" onmouseenter="sta00_onmouseenter" onmousemove="sta00_onmousemove" text=":::" onlbuttondown="sta00_onlbuttondown" onlbuttonup="sta00_onlbuttonup" onmouseleave="sta00_onmouseleave"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.isLButtonPress = false;
+this.isReadonly = false;
+
+this.cmmMultiLine_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.cmmMultiLine_onsize(this, null);
+	this.resetScroll();
+	
+	this.oForm = this.getOwnerFrame();
+	this.parent.addEventHandler("oncloseup", this.cmmMultiLine_oncloseup, this);
+	
+	var popInfo = JSON.parse(this.parent.id);
+	if(!this.gfnIsNull(popInfo.ReadOnly) && popInfo.ReadOnly == true) {
+		this.isReadonly = true;
+		this.txt00.set_readonly(true);
+	}
+	if(!this.gfnIsNull(popInfo.MaxLength) && popInfo.MaxLength > 0) {
+		this.txt00.set_maxlength(popInfo.MaxLength);
+	}
+	if(new String(this.parent.initvalueid).valueOf() != "undefined") {
+		this.txt00.set_value(this.parent.initvalueid);
+	}
+	this.txt00.setFocus();
+	
+	if (popInfo.ReadOnly) {
+		this.divBtns.form.btnConfirm.set_left(35);
+		this.divBtns.form.btnCancel.set_visible(false);
+	}
+};
+
+this.divBtns_btnConfirm_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.isReadonly == false) {		
+		this.parent.closePopup(this.txt00.text);
+	} else {
+		this.parent.closePopup();
+	}
+};
+
+this.divBtns_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.parent.closePopup();
+};
+
+this.cmmMultiLine_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	var nLeft = (this.width - this.divBtns.width) / 2;
+	this.divBtns.set_left(nLeft);
+};
+
+this.sta00_onmouseenter = function(obj:nexacro.Static,e:nexacro.MouseEventInfo)
+{
+	this.set_cursor("nw-resize");
+};
+
+this.sta00_onmouseleave = function(obj:nexacro.Static,e:nexacro.MouseEventInfo)
+{	
+	this.set_cursor("default");
+};
+
+this.cmmMultiLine_onmousemove = function(obj:nexacro.PopupDiv,e:nexacro.MouseEventInfo)
+{
+	if (this.isLButtonPress == true) {
+   		this.parent.set_width(e.clientx+20);
+   		this.parent.set_height(e.clienty+20);
+	}
+};
+
+this.sta00_onlbuttondown = function(obj:nexacro.Static,e:nexacro.MouseEventInfo)
+{
+	this.isLButtonPress = true;
+};
+
+this.sta00_onlbuttonup = function(obj:nexacro.Static,e:nexacro.MouseEventInfo)
+{
+	this.isLButtonPress = false;	
+};
+
+this.cmmMultiLine_oncloseup= function(obj:nexacro.PopupDiv,e:nexacro.EventInfo)
+{
+	this.oForm._WIDTH_MULTILINE = obj.width;
+	this.oForm._HEIGHT_MULTILINE = obj.height;
+};
+]]></Script>
+  </Form>
+</FDL>

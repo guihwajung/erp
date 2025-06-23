@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="/">
+        <html> 
+        <SCRIPT LANGUAGE="JavaScript" type="text/javascript">            
+        </SCRIPT>
+        <body>
+            <p style="margin: 20pt 0pt 5pt 5pt;text-align: left;"><b>휴가 대상자</b></p>
+            <table class="table_10">
+                <colgroup>
+                    <col style="width:35%" />
+                    <col style="width:25%" />
+                    <col style="width:15%" />
+                    <col style="width:25%" />
+                </colgroup>
+                <tr style="height: 30px;">
+                    <th>부서</th>
+                    <th>성명</th>
+                    <th>직급</th>
+                    <th>사번</th>
+                </tr>
+                <tr style="height: 30px;">
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/DS_DEPT" /></td>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/DS_HNAME" /></td>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/DS_POSITION" /></td>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/ID_SABUN" /></td>
+                </tr>
+            </table>
+            <br />
+            <p style="margin: 10pt 0pt 5pt 5pt;text-align: left;"><b>휴가 내용</b></p>
+            <table class="table_10">
+                <colgroup>
+                    <col style="width:25%" />
+                    <col style="width:25%" />
+                    <col style="width:25%" />
+                    <col style="width:25%" />
+                </colgroup>
+                <tr style="height: 30px;">
+                    <th>휴가 구분</th>
+                    <th>휴가 시작일</th>
+                    <th>휴가 종료일</th>
+                    <th>휴가일수</th>
+                </tr>
+                <tr style="height: 30px;">
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/DS_VACATION" /></td>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/DT_VACAFROM" /></td>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/DT_VACATO" /></td>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/QN_VACATION" /></td>
+                </tr>
+                <tr style="height: 30px;">
+                    <th>직무 대행자</th>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/NM_TRANSFER" /></td>
+                    <th>비상연락처</th>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/NO_TEL" /></td>
+                </tr>
+            </table>
+            <br />
+            <table class="table_10">
+                <colgroup>
+                    <col style="width:25%" />
+                    <col style="width:25%" />
+                    <col style="width:25%" />
+                    <col style="width:25%" />
+                </colgroup>
+                <tr>
+                    <th>당해년도<br/>발생연차</th>
+                    <th>사용연차</th>
+                    <th>현재<br/>잔여 연차 일수</th>
+                    <th>연차 사용 후<br/>잔여 연차 일수</th>
+                </tr>
+                <tr style="height: 35px;">
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/QN_TOTAL" /></td>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/QN_USEVACA" /></td>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/QN_REMAIN_BE" /></td>
+                    <td style="text-align: center;"><xsl:value-of select="NewDataSet/table_1/item/QN_REMAIN_AF" /></td>
+                </tr>
+            </table>
+            <br />
+            <table class="table_10">
+                <colgroup>
+                    <col style="width:100%" />
+                </colgroup>
+                <tr style="height: 30px;">
+                    <th>비고</th>
+                </tr>
+                <tr>
+                    <td style="text-align: left;height: 100px;"><xsl:value-of select="NewDataSet/table_1/item/DS_REMARK" /></td>
+                </tr>
+            </table>
+        </body>
+        </html>
+    </xsl:template>
+</xsl:stylesheet>

@@ -1,0 +1,2251 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("계정코드 등록");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DHZPR_ACNT_SELECT</Col></Row><Row><Col id=\"TARGET\">insert</Col><Col id=\"SP\">DHZPR_ACNT_INSERT</Col></Row><Row><Col id=\"TARGET\">update</Col><Col id=\"SP\">DHZPR_ACNT_UPDATE</Col></Row><Row><Col id=\"TARGET\">delete</Col><Col id=\"SP\">DHZPR_ACNT_DELETE</Col></Row><Row><Col id=\"TARGET\">combo</Col><Col id=\"SP\">DZXPR_COMBO_SELECT</Col></Row><Row><Col id=\"TARGET\">comboFlag</Col><Col id=\"SP\">DHXPR_COMBO_SELECT</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYN_USE", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"VALUE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CODE\"/><Col id=\"VALUE\">전체</Col></Row><Row><Col id=\"CODE\">Y</Col><Col id=\"VALUE\">사용</Col></Row><Row><Col id=\"CODE\">N</Col><Col id=\"VALUE\">미사용</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYN_SLIP", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"NAME\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CODE\">Y</Col><Col id=\"NAME\">발행가능</Col></Row><Row><Col id=\"CODE\">N</Col><Col id=\"NAME\">발행불가</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsRequired", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_FIELD\" type=\"STRING\" size=\"256\"/><Column id=\"DS_FIELD\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_FIELD\">CD_ACCOUNT</Col><Col id=\"DS_FIELD\">계정코드</Col></Row><Row><Col id=\"CD_FIELD\">DS_ACCOUNT</Col><Col id=\"DS_FIELD\">계정명</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsCOMBO", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"NAME\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/><Row><Col id=\"CODE\">M</Col><Col id=\"NAME\">필수</Col></Row><Row><Col id=\"CODE\">O</Col><Col id=\"NAME\">선택</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYN_GONGSATUJA_ACNT", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"NAME\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CODE\">N</Col><Col id=\"NAME\">N</Col></Row><Row><Col id=\"CODE\">Y</Col><Col id=\"NAME\">Y</Col></Row><Row><Col id=\"CODE\">B</Col><Col id=\"NAME\">B</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYN_CASH", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"NAME\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CODE\">X</Col><Col id=\"NAME\">사용안함</Col></Row><Row><Col id=\"CODE\">I</Col><Col id=\"NAME\">수입</Col></Row><Row><Col id=\"CODE\">O</Col><Col id=\"NAME\">지출</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_MIGEUL", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_COMBO2", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_DCO", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"NAME\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"NAME\">차변</Col><Col id=\"CODE\">D</Col></Row><Row><Col id=\"NAME\">대변</Col><Col id=\"CODE\">C</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYN_TRIAL", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"NAME\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CODE\">G</Col><Col id=\"NAME\">과목</Col></Row><Row><Col id=\"CODE\">Y</Col><Col id=\"NAME\">시산</Col></Row><Row><Col id=\"CODE\">N</Col><Col id=\"NAME\">계정</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"YN_USE\" type=\"STRING\" size=\"256\"/><Column id=\"SEARCH\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsLV_ACNT", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"NAME\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CODE\">1</Col><Col id=\"NAME\">1</Col></Row><Row><Col id=\"CODE\">2</Col><Col id=\"NAME\">2</Col></Row><Row><Col id=\"CODE\">3</Col><Col id=\"NAME\">3</Col></Row><Row><Col id=\"CODE\">4</Col><Col id=\"NAME\">4</Col></Row><Row><Col id=\"CODE\">5</Col><Col id=\"NAME\">5</Col></Row><Row><Col id=\"CODE\">6</Col><Col id=\"NAME\">6</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0.0","10.0",null,"46.0","0",null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_cssclass("div_SEARCH_Bg");
+            obj.set_formscrolltype("none");
+            this.addChild(obj.name, obj);
+
+            obj = new Combo("ccboYN_USE","10","10.0","70","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("0");
+            obj.set_innerdataset("dsYN_USE");
+            obj.set_datacolumn("VALUE");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staSEARCH","ccboYN_USE:0.0","10.0","66.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("조회");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Edit("txtSEARCH","staSEARCH:0.0","10.0","140","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("2");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:10",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divSplitter","25.86%","0","5",null,null,"0",null,null,null,null,this.divData.form);
+            obj.set_taborder("3");
+            obj.set_cssclass("div_Splitter");
+            obj.set_cursor("ew-resize");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("divDataLeft","0","0",null,null,"divSplitter:5","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","0",null,null,null,null,this.divData.form.divDataLeft.form);
+            obj.set_taborder("0");
+            obj._setContents("<Formats><Format id=\"default\"/></Formats>");
+            this.divData.form.divDataLeft.addChild(obj.name, obj);
+
+            obj = new Div("divDataRightTop","divSplitter:5","0",null,"66","0",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("1");
+            obj.set_text("");
+            obj.set_formscrolltype("none");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staCD_ACCOUNT","0","2","95","30",null,null,null,null,null,null,this.divData.form.divDataRightTop.form);
+            obj.set_taborder("0");
+            obj.set_text("계정코드");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.divDataRightTop.addChild(obj.name, obj);
+
+            obj = new Static("staDS_ACCOUNT","0","staCD_ACCOUNT:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightTop.form);
+            obj.set_taborder("5");
+            obj.set_text("계정명칭");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.divDataRightTop.addChild(obj.name, obj);
+
+            obj = new Static("staBgCD_ACCOUNT","staCD_ACCOUNT:-1","2","394","30",null,null,null,null,null,null,this.divData.form.divDataRightTop.form);
+            obj.set_taborder("1");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.form.divDataRightTop.addChild(obj.name, obj);
+
+            obj = new Static("staBgDS_ACCOUNT","staDS_ACCOUNT:-1","staBgCD_ACCOUNT:-1","394","30",null,null,null,null,null,null,this.divData.form.divDataRightTop.form);
+            obj.set_taborder("6");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightTop.addChild(obj.name, obj);
+
+            obj = new Static("staDS_TRIAL","staBgCD_ACCOUNT:-1","2","95","30",null,null,null,null,null,null,this.divData.form.divDataRightTop.form);
+            obj.set_taborder("3");
+            obj.set_text("시산코드");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.divDataRightTop.addChild(obj.name, obj);
+
+            obj = new Static("staLV_ACNT","staBgDS_ACCOUNT:-1","staDS_TRIAL:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightTop.form);
+            obj.set_taborder("8");
+            obj.set_text("레벨");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.divDataRightTop.addChild(obj.name, obj);
+
+            obj = new Static("staBgDS_TRIAL","staDS_TRIAL:-1","2",null,"30","0",null,null,null,null,null,this.divData.form.divDataRightTop.form);
+            obj.set_taborder("11");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightTop.addChild(obj.name, obj);
+
+            obj = new Static("staBgLV_ACNT","staLV_ACNT:-1","staBgDS_TRIAL:-1",null,"30","0",null,null,null,null,null,this.divData.form.divDataRightTop.form);
+            obj.set_taborder("9");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightTop.addChild(obj.name, obj);
+
+            obj = new Edit("txtCD_ACCOUNT","staCD_ACCOUNT:5","7","383","20",null,null,null,null,null,null,this.divData.form.divDataRightTop.form);
+            obj.set_taborder("2");
+            obj.set_maxlength("8");
+            this.divData.form.divDataRightTop.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_ACCOUNT","staDS_ACCOUNT:5","txtCD_ACCOUNT:9","383","20",null,null,null,null,null,null,this.divData.form.divDataRightTop.form);
+            obj.set_taborder("7");
+            obj.set_maxlength("20");
+            this.divData.form.divDataRightTop.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_TRIAL","staDS_TRIAL:4","7",null,"20","9",null,null,null,null,null,this.divData.form.divDataRightTop.form);
+            obj.getSetter("CDTextWidth").set("80");
+            obj.set_taborder("4");
+            obj.getSetter("CodeFindName").set("DHX_CFACNT_YNTRIAL");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.divDataRightTop.addChild(obj.name, obj);
+
+            obj = new Combo("ccboLV_ACNT","staLV_ACNT:4","ccfCD_TRIAL:9","90","20",null,null,null,null,null,null,this.divData.form.divDataRightTop.form);
+            obj.set_taborder("10");
+            obj.set_innerdataset("dsLV_ACNT");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightTop.addChild(obj.name, obj);
+
+            obj = new Div("divDataRightBottom","divSplitter:5","65",null,null,"0","10",null,null,null,null,this.divData.form);
+            obj.set_taborder("2");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTitle01","487","0",null,"22","0",null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("49");
+            obj.set_text("명칭정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staTitle00","0","0",null,"22","staTitle01:0",null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("0");
+            obj.set_text("관리정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staYN_SLIP","0","staTitle00:5","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("1");
+            obj.set_text("전표발행여부");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgYN_SLIP","staYN_SLIP:-1","staTitle00:5","394","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("2");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_VENDOR_MO","staBgYN_SLIP:-1","staTitle01:5","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("50");
+            obj.set_text("거래처");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_VENDOR_MO","staCK_VENDOR_MO:-1","staTitle01:5",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("51");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staTY_DCO","0","staYN_SLIP:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("4");
+            obj.set_text("잔액구분");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgTY_DCO","staTY_DCO:-1","staBgYN_SLIP:-1","394","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("5");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_ETC1_MO","staBgTY_DCO:-1","staCK_VENDOR_MO:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("55");
+            obj.set_text("기타1");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_ETC1_MO","staCK_ETC1_MO:-1","staBgCK_VENDOR_MO:-1",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("56");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_ETC2_MO","staBgTY_DCO:-1","staCK_ETC1_MO:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("60");
+            obj.set_text("기타2");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_ETC2_MO","staCK_ETC2_MO:-1","staBgCK_ETC1_MO:-1",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("61");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staTitle02","0","staTY_DCO:0",null,"22","staCK_ETC2_MO:0",null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("7");
+            obj.set_text("관리정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgSPACE00","0","staTitle02:6",null,"30","0",null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("8");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgSPACE01","0","staBgSPACE00:-1",null,"30","0",null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("12");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_REFNO_MO","staTitle02:0","staCK_ETC2_MO:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("65");
+            obj.set_text("참고번호1");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_REFNO_MO","staCK_REFNO_MO:-1","staBgCK_ETC2_MO:-1",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("66");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_REFNO2_MO","staTitle02:0","staCK_REFNO_MO:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("70");
+            obj.set_text("참고번호2");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_REFNO2_MO","staCK_REFNO2_MO:-1","staBgCK_REFNO_MO:-1",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("71");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staTitle03","0","staBgSPACE01:0",null,"22","staCK_REFNO2_MO:0",null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("17");
+            obj.set_text("관리유형");
+            obj.set_cssclass("sta_TITLE_Bg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_REFAM1_MO","staTitle03:0","staCK_REFNO2_MO:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("75");
+            obj.set_text("참고금액1");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_REFAM1_MO","staCK_REFAM1_MO:-1","staBgCK_REFNO2_MO:-1",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("76");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgSPACE02","0","staTitle03:6","488","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("18");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_REFAM2_MO","staTitle03:0","staBgCK_REFAM1_MO:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("79");
+            obj.set_text("참고금액2");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_REFAM2_MO","staCK_REFAM2_MO:-1","staBgCK_REFAM1_MO:-1",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("80");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgSPACE03","0","staBgSPACE02:-1","488","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("22");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_REFDT1_MO","staTitle03:0","staCK_REFAM2_MO:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("83");
+            obj.set_text("참고일자1");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_REFDT1_MO","staCK_REFDT1_MO:-1","staBgCK_REFAM2_MO:-1",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("84");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgSPACE04","0","staBgSPACE03:-1","488","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("25");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_REFDT2_MO","staTitle03:0","staCK_REFDT1_MO:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("87");
+            obj.set_text("참고일자2");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_REFDT2_MO","staCK_REFDT2_MO:-1","staBgCK_REFDT1_MO:-1",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("88");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgSPACE05","0","staBgSPACE04:-1","488","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("31");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_REFRT1_MO","staTitle03:0","staCK_REFDT2_MO:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("91");
+            obj.set_text("참고율1");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_REFRT1_MO","staCK_REFRT1_MO:-1","staBgCK_REFDT2_MO:-1",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("92");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgSPACE06","0","staBgSPACE05:-1","488","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("37");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_REFRT2_MO","staTitle03:0","staCK_REFRT1_MO:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("95");
+            obj.set_text("참고율2");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_REFRT2_MO","staCK_REFRT2_MO:-1","staBgCK_REFRT1_MO:-1",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("96");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgSPACE07","0","staBgSPACE06:-1","488","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("44");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_SEMOK_MO","staTitle03:0","staCK_REFRT2_MO:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("99");
+            obj.set_text("세목코드");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_SEMOK_MO","staCK_SEMOK_MO:-1","staBgCK_REFRT2_MO:-1",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("100");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staCK_GONGJONG_MO","staTitle03:0","staCK_SEMOK_MO:-1","95","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("103");
+            obj.set_text("공종코드");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgCK_GONGJONG_MO","staCK_GONGJONG_MO:-1","staBgCK_SEMOK_MO:-1",null,"30","0",null,"360",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("104");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgSPACE08","0","staBgSPACE07:-1","488","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("48");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Radio("rdoYN_SLIP","staYN_SLIP:5","staTitle00:10","249","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("3");
+            obj.set_innerdataset("dsYN_SLIP");
+            obj.set_codecolumn("CODE");
+            obj.set_datacolumn("NAME");
+            obj.set_direction("vertical");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_VENDOR_MO","staCK_VENDOR_MO:5","staTitle01:10","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("52");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_VENDOR","ccboCK_VENDOR_MO:3","staTitle01:10",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("53");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboTY_VENDOR_FLAG","txtDS_VENDOR:3","staTitle01:10","94","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("54");
+            obj.set_innerdataset("dsTY_COMBO2");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Radio("rdoTY_DCO","staTY_DCO:5","rdoYN_SLIP:9","249","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("6");
+            obj.set_innerdataset("dsTY_DCO");
+            obj.set_codecolumn("CODE");
+            obj.set_datacolumn("NAME");
+            obj.set_direction("vertical");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_ETC1_MO","staCK_ETC1_MO:5","ccboCK_VENDOR_MO:9","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("57");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_ETC1","ccboCK_ETC1_MO:3","ccboCK_VENDOR_MO:9",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("58");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboTY_ETC1_FLAG","txtDS_ETC1:3","ccboCK_VENDOR_MO:9","94","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("59");
+            obj.set_innerdataset("dsTY_COMBO2");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_ETC2_MO","staCK_ETC2_MO:5","ccboCK_ETC1_MO:9","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("62");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_ETC2","ccboCK_ETC2_MO:3","ccboCK_ETC1_MO:9",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("63");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboTY_ETC2_FLAG","txtDS_ETC2:3","ccboCK_ETC1_MO:9","94","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("64");
+            obj.set_innerdataset("dsTY_COMBO2");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_DATE","8","staTitle02:11","105","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("9");
+            obj.set_text("회계일자별");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            obj.set_enable("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_VENDOR","chkYN_DATE:0","staTitle02:11","130","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("10");
+            obj.set_text("거래처별");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            obj.set_enable("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_ETC1","chkYN_VENDOR:0","staTitle02:11","150","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("11");
+            obj.set_text("기타1별");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_REFNO_MO","staCK_REFNO_MO:5","ccboCK_ETC2_MO:9","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("67");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_REFNO","ccboCK_REFNO_MO:3","ccboCK_ETC2_MO:9",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("68");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboTY_REFNO_FLAG","txtDS_REFNO:3","ccboCK_ETC2_MO:9","94","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("69");
+            obj.set_innerdataset("dsTY_COMBO2");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_ETC2","8","chkYN_DATE:5","105","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("13");
+            obj.set_text("기타2별");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_REFNO","chkYN_ETC2:0","chkYN_DATE:5","130","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("14");
+            obj.set_text("참고번호별");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staYN_TRIAL","chkYN_REFNO:0","chkYN_DATE:0","145","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("15");
+            obj.set_text("시산과목");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboYN_TRIAL","staYN_TRIAL:5","chkYN_DATE:5","90","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("16");
+            obj.set_innerdataset("dsYN_TRIAL");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_REFNO2_MO","staCK_REFNO2_MO:5","ccboCK_REFNO_MO:9","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("72");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_REFNO2","ccboCK_REFNO2_MO:3","ccboCK_REFNO_MO:9",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("73");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboTY_REFNO2_FLAG","txtDS_REFNO2:3","ccboCK_REFNO_MO:9","94","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("74");
+            obj.set_innerdataset("dsTY_COMBO2");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_REFAM1_MO","staCK_REFAM1_MO:5","ccboCK_REFNO2_MO:9","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("77");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_REFAM1","ccboCK_REFAM1_MO:3","ccboCK_REFNO2_MO:9",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("78");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_BUDGET_CTRL_ACNT","8","staTitle03:11","95","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("19");
+            obj.set_text("예산관리");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_IWOL_ACNT","chkYN_BUDGET_CTRL_ACNT:0","staTitle03:11","140","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("20");
+            obj.set_text("이월계정");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_FOREIGN_VALUATION","chkYN_IWOL_ACNT:0","staTitle03:11","140","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("20");
+            obj.set_text("외화자산평가");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_GONGSACOST_ACNT","245","264","150","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("21");
+            obj.set_text("공사원가관리(진행율)");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_REFAM2_MO","staCK_REFAM2_MO:5","ccboCK_REFAM1_MO:9","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("81");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_REFAM2","ccboCK_REFAM2_MO:3","ccboCK_REFAM1_MO:9",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("82");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_VAT_ACNT","8","chkYN_BUDGET_CTRL_ACNT:5","95","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("23");
+            obj.set_text("부가세관리");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_COST_ACNT","243","377","140","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("24");
+            obj.set_text("원가계정여부");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_REFDT1_MO","staCK_REFDT1_MO:5","ccboCK_REFAM2_MO:9","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("85");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_REFDT1","ccboCK_REFDT1_MO:3","ccboCK_REFAM2_MO:9",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("86");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_USE","8","chkYN_VAT_ACNT:5","95","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("26");
+            obj.set_text("사용여부");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_GONGSAINCOME_ACNT","chkYN_USE:0","chkYN_VAT_ACNT:5","140","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("27");
+            obj.set_text("공사수입관리(진행율)");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staYN_GONGSATUJA_ACNT","1","346","145","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("28");
+            obj.set_text("공사원가투자관리(공무)");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_background("#ffc0cb");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgYN_GONGSATUJA_ACNT","staYN_GONGSATUJA_ACNT:-5","staBgSPACE03:57","102","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("29");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboYN_GONGSATUJA_ACNT","5","323","90","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("30");
+            obj.set_innerdataset("dsYN_GONGSATUJA_ACNT");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_visible("false");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_REFDT2_MO","staCK_REFDT2_MO:5","ccboCK_REFDT1_MO:9","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("89");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_REFDT2","ccboCK_REFDT2_MO:3","ccboCK_REFDT1_MO:9",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("90");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_FIX_ACNT","364","375","95","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("32");
+            obj.set_text("고정자산관리");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_MISU_MIBUL_ACNT","103","235","140","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("33");
+            obj.set_text("미수/미불관리");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staTY_MIGEUL","242","230","145","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("34");
+            obj.set_text("미수미불구분");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgTY_MIGEUL","242","345","102","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("35");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboTY_MIGEUL","392","235","90","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("36");
+            obj.set_innerdataset("dsTY_MIGEUL");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_REFRT1_MO","staCK_REFRT1_MO:5","ccboCK_REFDT2_MO:9","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("93");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_REFRT1","ccboCK_REFRT1_MO:3","ccboCK_REFDT2_MO:9",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("94");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_TAXORIGIN","8","378","95","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("38");
+            obj.set_text("원천세관리");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_SAUPBUD","103","378","140","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("39");
+            obj.set_text("사업비예산관리");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staYN_CASH","242","317","145","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("40");
+            obj.set_text("자금관리");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staBgYN_CASH","staYN_CASH:-1","staTY_MIGEUL:28","102","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("41");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboYN_CASH","151","351","90","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("42");
+            obj.set_innerdataset("dsYN_CASH");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_visible("false");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_REFRT2_MO","staCK_REFRT2_MO:5","ccboCK_REFRT1_MO:9","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("97");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_REFRT2","ccboCK_REFRT2_MO:3","ccboCK_REFRT1_MO:9",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("98");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_SEMOK_MO","staCK_SEMOK_MO:5","ccboCK_REFRT2_MO:9","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("101");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_SEMOK","ccboCK_SEMOK_MO:3","ccboCK_REFRT2_MO:9",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("102");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCK_GONGJONG_MO","staCK_GONGJONG_MO:5","ccboCK_SEMOK_MO:9","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("105");
+            obj.set_innerdataset("dsCOMBO");
+            obj.set_datacolumn("NAME");
+            obj.set_codecolumn("CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_GONGJONG","ccboCK_GONGJONG_MO:3","ccboCK_SEMOK_MO:9",null,"20","106",null,"170",null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("106");
+            obj.set_maxlength("10");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Static("staTY_BOND","0","288","105","30",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("43");
+            obj.set_text("채권/채무 구분");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new Combo("ccboTY_BOND","109","293","70","20",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("45");
+            obj.set_datacolumn("datacolumn");
+            obj.set_codecolumn("codecolumn");
+            var divData_form_divDataRightBottom_form_ccboTY_BOND_innerdataset = new nexacro.NormalDataset("divData_form_divDataRightBottom_form_ccboTY_BOND_innerdataset", obj);
+            divData_form_divDataRightBottom_form_ccboTY_BOND_innerdataset._setContents("<ColumnInfo><Column id=\"codecolumn\" size=\"256\"/><Column id=\"datacolumn\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"datacolumn\">선택</Col></Row><Row><Col id=\"codecolumn\">B</Col><Col id=\"datacolumn\">채권</Col></Row><Row><Col id=\"codecolumn\">D</Col><Col id=\"datacolumn\">채무</Col></Row><Row><Col id=\"datacolumn\">수입</Col><Col id=\"codecolumn\">I</Col></Row><Row><Col id=\"datacolumn\">비용</Col><Col id=\"codecolumn\">C</Col></Row></Rows>");
+            obj.set_innerdataset(divData_form_divDataRightBottom_form_ccboTY_BOND_innerdataset);
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_FIX","245","291","122","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("46");
+            obj.set_text("관리항목고정");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            obj.set_visible("true");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_IFRS","374","351","122","24",null,null,null,null,null,null,this.divData.form.divDataRightBottom.form);
+            obj.set_taborder("47");
+            obj.set_text("IFRS사용여부");
+            obj.set_falsevalue("N");
+            obj.set_truevalue("Y");
+            obj.set_visible("false");
+            this.divData.form.divDataRightBottom.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divData.form.divDataRightTop.form.txtCD_ACCOUNT","value","dsList","CD_ACCOUNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divData.form.divDataRightTop.form.txtDS_ACCOUNT","value","dsList","DS_ACCOUNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divData.form.divDataRightBottom.form.rdoYN_SLIP","value","dsList","YN_SLIP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","divData.form.divDataRightBottom.form.chkYN_DATE","value","dsList","YN_DATE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item5","divData.form.divDataRightBottom.form.chkYN_VENDOR","value","dsList","YN_VENDOR");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item6","divData.form.divDataRightBottom.form.chkYN_ETC1","value","dsList","YN_ETC1");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item7","divData.form.divDataRightBottom.form.chkYN_ETC2","value","dsList","YN_ETC2");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item8","divData.form.divDataRightBottom.form.chkYN_REFNO","value","dsList","YN_REFNO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item10","divData.form.divDataRightBottom.form.chkYN_BUDGET_CTRL_ACNT","value","dsList","YN_BUDGET_CTRL_ACNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item11","divData.form.divDataRightBottom.form.chkYN_IWOL_ACNT","value","dsList","YN_IWOL_ACNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item12","divData.form.divDataRightBottom.form.chkYN_GONGSACOST_ACNT","value","dsList","YN_GONGSACOST_ACNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item13","divData.form.divDataRightBottom.form.chkYN_VAT_ACNT","value","dsList","YN_VAT_ACNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item14","divData.form.divDataRightBottom.form.chkYN_COST_ACNT","value","dsList","YN_COST_ACNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item15","divData.form.divDataRightBottom.form.chkYN_USE","value","dsList","YN_USE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item16","divData.form.divDataRightBottom.form.chkYN_GONGSAINCOME_ACNT","value","dsList","YN_GONGSAINCOME_ACNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item17","divData.form.divDataRightBottom.form.ccboYN_GONGSATUJA_ACNT","value","dsList","YN_GONGSATUJA_ACNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item18","divData.form.divDataRightBottom.form.chkYN_FIX_ACNT","value","dsList","YN_FIX_ACNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item19","divData.form.divDataRightBottom.form.chkYN_MISU_MIBUL_ACNT","value","dsList","YN_MISU_MIBUL_ACNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item20","divData.form.divDataRightBottom.form.ccboTY_MIGEUL","value","dsList","TY_MIGEUL");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item22","divData.form.divDataRightBottom.form.chkYN_SAUPBUD","value","dsList","YN_SAUPBUD");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item23","divData.form.divDataRightBottom.form.ccboYN_CASH","value","dsList","YN_CASH");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item24","divData.form.divDataRightBottom.form.chkYN_IFRS","value","dsList","YN_IFRS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item25","divData.form.divDataRightBottom.form.ccboCK_VENDOR_MO","value","dsList","CK_VENDOR_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item26","divData.form.divDataRightBottom.form.ccboTY_VENDOR_FLAG","value","dsList","TY_VENDOR_FLAG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item27","divData.form.divDataRightBottom.form.txtDS_VENDOR","value","dsList","DS_VENDOR");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item28","divData.form.divDataRightBottom.form.ccboCK_ETC1_MO","value","dsList","CK_ETC1_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item29","divData.form.divDataRightBottom.form.ccboTY_ETC1_FLAG","value","dsList","TY_ETC1_FLAG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item30","divData.form.divDataRightBottom.form.txtDS_ETC1","value","dsList","DS_ETC1");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item31","divData.form.divDataRightBottom.form.ccboCK_ETC2_MO","value","dsList","CK_ETC2_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item32","divData.form.divDataRightBottom.form.ccboTY_ETC2_FLAG","value","dsList","TY_ETC2_FLAG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item33","divData.form.divDataRightBottom.form.txtDS_ETC2","value","dsList","DS_ETC2");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item34","divData.form.divDataRightBottom.form.ccboCK_REFNO_MO","value","dsList","CK_REFNO_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item35","divData.form.divDataRightBottom.form.ccboTY_REFNO_FLAG","value","dsList","TY_REFNO_FLAG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item36","divData.form.divDataRightBottom.form.txtDS_REFNO","value","dsList","DS_REFNO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item37","divData.form.divDataRightBottom.form.ccboCK_REFNO2_MO","value","dsList","CK_REFNO2_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item38","divData.form.divDataRightBottom.form.ccboTY_REFNO2_FLAG","value","dsList","TY_REFNO2_FLAG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item39","divData.form.divDataRightBottom.form.txtDS_REFNO2","value","dsList","DS_REFNO2");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item40","divData.form.divDataRightBottom.form.ccboCK_REFAM1_MO","value","dsList","CK_REFAM1_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item41","divData.form.divDataRightBottom.form.txtDS_REFAM1","value","dsList","DS_REFAM1");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item42","divData.form.divDataRightBottom.form.ccboCK_REFAM2_MO","value","dsList","CK_REFAM2_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item43","divData.form.divDataRightBottom.form.txtDS_REFAM2","value","dsList","DS_REFAM2");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item44","divData.form.divDataRightBottom.form.ccboCK_REFDT1_MO","value","dsList","CK_REFDT1_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item45","divData.form.divDataRightBottom.form.txtDS_REFDT1","value","dsList","DS_REFDT1");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item46","divData.form.divDataRightBottom.form.ccboCK_REFDT2_MO","value","dsList","CK_REFDT2_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item47","divData.form.divDataRightBottom.form.txtDS_REFDT2","value","dsList","DS_REFDT2");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item48","divData.form.divDataRightBottom.form.ccboCK_REFRT1_MO","value","dsList","CK_REFRT1_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item49","divData.form.divDataRightBottom.form.txtDS_REFRT1","value","dsList","DS_REFRT1");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item50","divData.form.divDataRightBottom.form.ccboCK_REFRT2_MO","value","dsList","CK_REFRT2_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item51","divData.form.divDataRightBottom.form.txtDS_REFRT2","value","dsList","DS_REFRT2");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item52","divData.form.divDataRightBottom.form.ccboCK_SEMOK_MO","value","dsList","CK_SEMOK_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item53","divData.form.divDataRightBottom.form.txtDS_SEMOK","value","dsList","DS_SEMOK");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item54","divData.form.divDataRightBottom.form.ccboCK_GONGJONG_MO","value","dsList","CK_GONGJONG_MO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item55","divData.form.divDataRightBottom.form.txtDS_GONGJONG","value","dsList","DS_GONGJONG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item56","divData.form.divDataRightBottom.form.rdoTY_DCO","value","dsList","TY_DCO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item60","divData.form.divDataRightTop.form.ccfCD_TRIAL.form.CDTextBox","value","dsList","CD_TRIAL");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item58","divData.form.divDataRightTop.form.ccfCD_TRIAL.form.DSTextBox","value","dsList","DS_TRIAL");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item57","divData.form.divDataRightBottom.form.chkYN_TAXORIGIN","value","dsList","YN_TAXORIGIN");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divData.form.divDataRightTop.form.ccboLV_ACNT","value","dsList","LV_ACNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item21","divData.form.divDataRightBottom.form.ccboYN_TRIAL","value","dsList","YN_TRIAL");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item9","divSearch.form.ccboYN_USE","value","dsSearch","YN_USE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item59","divSearch.form.txtSEARCH","value","dsSearch","SEARCH");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item61","divData.form.divDataRightBottom.form.ccboTY_BOND","value","dsList","TY_BOND");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item62","divData.form.divDataRightBottom.form.chkYN_FIX","value","dsList","YN_FIX");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item63","divData.form.divDataRightBottom.form.chkYN_FOREIGN_VALUATION","value","dsList","YN_FOREIGN_VALUATION");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DHZ_ACNTNEW.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+        	this.fnSetCombo();
+
+        	//사용여부 사용
+        	this.dsSearch.setColumn(0, "YN_USE", "Y");
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+        	// Select, Add, Del, Save, Excel, Print
+        	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        //	this.btnRefAutoSlip = this.gfnFormButtonAdd("btnRefAutoSlip", "fnRefAutoSlip");  	//참조자동전표코드
+        	this.btnAccost = this.gfnFormButtonAdd("btnAccost", "fnAccost");  			// 원가항목코드관리
+        	this.btnAcbimok = this.gfnFormButtonAdd("btnAcbimok", "fnAcbimok");  		// 원가비목코드관리
+        //	this.btnAcsubject = this.gfnFormButtonAdd("btnAcsubject", "fnAcsubject");  	// 집합과목코드관리
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.dxGrid = this.divData.form.divDataLeft.form.objGrid;
+
+        	this.ccboYN_USE = this.divSearch.form.ccboYN_USE;
+        	this.txtTXT_SEARCH = this.divSearch.form.txtTXT_SEARCH;
+
+        	this.ccfCD_TRIAL = this.divData.form.divDataRightTop.form.ccfCD_TRIAL;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	this.ccfCD_TRIAL.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+
+        	// 그리드 초기화
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHZ_ACNT", "SUB", "LV_ACNT");
+
+        	//this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+        	this.dsList.addEventHandler("onrowposchanged", this.dsList_onrowposchanged, this);
+        	this.dsList.addEventHandler("oncolumnchanged", this.dsList_oncolumnchanged, this);
+
+        	this.dsSearch.addEventHandler("onvaluechanged", this.dsSearch_onvaluechanged, this);
+
+        	// 그리드 컬럼 css 설정
+        	var flag_cell = this.dxGrid.getBindCellIndex("body", this.ucFlag);
+        	var sort_cell = this.dxGrid.getBindCellIndex("body", this.ucSort);
+
+        	for(var i = 0; i < this.dxGrid.getCellCount("body"); i++) {
+        		if(i == flag_cell || i == sort_cell) continue;
+        		this.dxGrid.setCellProperty("body", i, "cssclass", "expr: LV_ACNT == '1' ? 'BACK_GangJo' : LV_ACNT == '2' ? 'BACK_KuBun' : LV_ACNT == '3' ? 'BACK_ChongKe' : LV_ACNT == '4' ? 'BACK_SoKe' : ''");
+        	}
+        };
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("SEARCH", "string");
+        	this.dsSelect.addColumn("YN_USE", "string");
+
+        	this.dsInsert = new Dataset();
+        	this.dsInsert.addColumn("CD_ACCOUNT", "string");
+        	this.dsInsert.addColumn("DS_ACCOUNT", "string");
+        	this.dsInsert.addColumn("DS_TRIAL", "string");
+        	this.dsInsert.addColumn("DS_DETAIL1", "string");
+        	this.dsInsert.addColumn("DS_DETAIL2", "string");
+        	this.dsInsert.addColumn("DS_DR", "string");
+        	this.dsInsert.addColumn("DS_CR", "string");
+        	this.dsInsert.addColumn("YN_SLIP", "string");
+        	this.dsInsert.addColumn("TY_DCO", "string");
+        	this.dsInsert.addColumn("YN_DATE", "string");
+        	this.dsInsert.addColumn("YN_VENDOR", "string");
+        	this.dsInsert.addColumn("YN_ETC1", "string");
+        	this.dsInsert.addColumn("YN_ETC2", "string");
+        	this.dsInsert.addColumn("YN_REFNO", "string");
+        	this.dsInsert.addColumn("YN_BUDGET", "string");
+        	this.dsInsert.addColumn("YN_TUJA", "string");
+        	this.dsInsert.addColumn("YN_COST", "string");
+        	this.dsInsert.addColumn("YN_INCOME", "string");
+        	this.dsInsert.addColumn("YN_MISUMIBUL", "string");
+        	this.dsInsert.addColumn("YN_VAT", "string");
+        	this.dsInsert.addColumn("YN_FIX_ACNT", "string");
+        	this.dsInsert.addColumn("YN_SERVICE", "string");
+        	this.dsInsert.addColumn("MO_VENDOR", "string");
+        	this.dsInsert.addColumn("DS_VENDOR", "string");
+        	this.dsInsert.addColumn("TY_VENDOR", "string");
+        	this.dsInsert.addColumn("MO_ETC1", "string");
+        	this.dsInsert.addColumn("DS_ETC1", "string");
+        	this.dsInsert.addColumn("TY_ETC1", "string");
+        	this.dsInsert.addColumn("MO_ETC2", "string");
+        	this.dsInsert.addColumn("DS_ETC2", "string");
+        	this.dsInsert.addColumn("TY_ETC2", "string");
+        	this.dsInsert.addColumn("MO_REFNO", "string");
+        	this.dsInsert.addColumn("DS_REFNO", "string");
+        	this.dsInsert.addColumn("TY_REFNO", "string");
+        	this.dsInsert.addColumn("MO_REFNO2", "string");
+        	this.dsInsert.addColumn("DS_REFNO2", "string");
+        	this.dsInsert.addColumn("TY_REFNO2", "string");
+        	this.dsInsert.addColumn("MO_REFAM1", "string");
+        	this.dsInsert.addColumn("DS_REFAM1", "string");
+        	this.dsInsert.addColumn("MO_REFAM2", "string");
+        	this.dsInsert.addColumn("DS_REFAM2", "string");
+        	this.dsInsert.addColumn("MO_REFDT1", "string");
+        	this.dsInsert.addColumn("DS_REFDT1", "string");
+        	this.dsInsert.addColumn("MO_REFDT2", "string");
+        	this.dsInsert.addColumn("DS_REFDT2", "string");
+        	this.dsInsert.addColumn("MO_REFRT1", "string");
+        	this.dsInsert.addColumn("DS_REFRT1", "string");
+        	this.dsInsert.addColumn("MO_REFRT2", "string");
+        	this.dsInsert.addColumn("DS_REFRT2", "string");
+        	this.dsInsert.addColumn("CK_GONGJONG_MO", "string");
+        	this.dsInsert.addColumn("DS_GONGJONG", "string");
+        	this.dsInsert.addColumn("YN_CONTROL", "string");
+        	this.dsInsert.addColumn("YN_TRIAL", "string");
+        	this.dsInsert.addColumn("YN_IWOL", "string");
+        	this.dsInsert.addColumn("ID_INSERT", "string");
+        	this.dsInsert.addColumn("YN_USE", "string");
+        	this.dsInsert.addColumn("TY_MIGEUL", "string");
+        	this.dsInsert.addColumn("YN_TAXORIGIN", "string");
+        	this.dsInsert.addColumn("YN_HISTORY", "string");
+        	this.dsInsert.addColumn("CK_SEMOK_MO", "string");
+        	this.dsInsert.addColumn("DS_SEMOK", "string");
+        	this.dsInsert.addColumn("CD_TRIAL", "string");
+        	this.dsInsert.addColumn("YN_COST_ACNT", "string");
+        	this.dsInsert.addColumn("CD_CON_ACNT", "string");
+        	this.dsInsert.addColumn("YN_SAUPBUD", "string");
+        	this.dsInsert.addColumn("YN_COMMONCOST", "string");
+        	this.dsInsert.addColumn("YN_CASH", "string");
+        	this.dsInsert.addColumn("YN_IFRS", "string");
+        	this.dsInsert.addColumn("TY_BOND", "string");
+        	this.dsInsert.addColumn("LV_ACNT", "string");
+        	this.dsInsert.addColumn("YN_FIX", "string");
+        	this.dsInsert.addColumn("YN_FOREIGN_VALUATION", "string");
+
+
+        	this.dsUpdate = new Dataset();
+        	this.dsUpdate.addColumn("CD_ACCOUNT", "string");
+        	this.dsUpdate.addColumn("DS_ACCOUNT", "string");
+        	this.dsUpdate.addColumn("DS_TRIAL", "string");
+        	this.dsUpdate.addColumn("DS_DETAIL1", "string");
+        	this.dsUpdate.addColumn("DS_DETAIL2", "string");
+        	this.dsUpdate.addColumn("DS_DR", "string");
+        	this.dsUpdate.addColumn("DS_CR", "string");
+        	this.dsUpdate.addColumn("YN_SLIP", "string");
+        	this.dsUpdate.addColumn("TY_DCO", "string");
+        	this.dsUpdate.addColumn("YN_DATE", "string");
+        	this.dsUpdate.addColumn("YN_VENDOR", "string");
+        	this.dsUpdate.addColumn("YN_ETC1", "string");
+        	this.dsUpdate.addColumn("YN_ETC2", "string");
+        	this.dsUpdate.addColumn("YN_REFNO", "string");
+        	this.dsUpdate.addColumn("YN_BUDGET", "string");
+        	this.dsUpdate.addColumn("YN_TUJA", "string");
+        	this.dsUpdate.addColumn("YN_COST", "string");
+        	this.dsUpdate.addColumn("YN_INCOME", "string");
+        	this.dsUpdate.addColumn("YN_MISUMIBUL", "string");
+        	this.dsUpdate.addColumn("YN_VAT", "string");
+        	this.dsUpdate.addColumn("YN_FIX_ACNT", "string");
+        	this.dsUpdate.addColumn("YN_SERVICE", "string");
+        	this.dsUpdate.addColumn("MO_VENDOR", "string");
+        	this.dsUpdate.addColumn("DS_VENDOR", "string");
+        	this.dsUpdate.addColumn("TY_VENDOR", "string");
+        	this.dsUpdate.addColumn("MO_ETC1", "string");
+        	this.dsUpdate.addColumn("DS_ETC1", "string");
+        	this.dsUpdate.addColumn("TY_ETC1", "string");
+        	this.dsUpdate.addColumn("MO_ETC2", "string");
+        	this.dsUpdate.addColumn("DS_ETC2", "string");
+        	this.dsUpdate.addColumn("TY_ETC2", "string");
+        	this.dsUpdate.addColumn("MO_REFNO", "string");
+        	this.dsUpdate.addColumn("DS_REFNO", "string");
+        	this.dsUpdate.addColumn("TY_REFNO", "string");
+        	this.dsUpdate.addColumn("MO_REFNO2", "string");
+        	this.dsUpdate.addColumn("DS_REFNO2", "string");
+        	this.dsUpdate.addColumn("TY_REFNO2", "string");
+        	this.dsUpdate.addColumn("MO_REFAM1", "string");
+        	this.dsUpdate.addColumn("DS_REFAM1", "string");
+        	this.dsUpdate.addColumn("MO_REFAM2", "string");
+        	this.dsUpdate.addColumn("DS_REFAM2", "string");
+        	this.dsUpdate.addColumn("MO_REFDT1", "string");
+        	this.dsUpdate.addColumn("DS_REFDT1", "string");
+        	this.dsUpdate.addColumn("MO_REFDT2", "string");
+        	this.dsUpdate.addColumn("DS_REFDT2", "string");
+        	this.dsUpdate.addColumn("MO_REFRT1", "string");
+        	this.dsUpdate.addColumn("DS_REFRT1", "string");
+        	this.dsUpdate.addColumn("MO_REFRT2", "string");
+        	this.dsUpdate.addColumn("DS_REFRT2", "string");
+        	this.dsUpdate.addColumn("CK_GONGJONG_MO", "string");
+        	this.dsUpdate.addColumn("DS_GONGJONG", "string");
+        	this.dsUpdate.addColumn("YN_CONTROL", "string");
+        	this.dsUpdate.addColumn("YN_TRIAL", "string");
+        	this.dsUpdate.addColumn("YN_IWOL", "string");
+        	this.dsUpdate.addColumn("ID_UPDATE", "string");
+        	this.dsUpdate.addColumn("YN_USE", "string");
+        	this.dsUpdate.addColumn("TY_MIGEUL", "string");
+        	this.dsUpdate.addColumn("YN_TAXORIGIN", "string");
+        	this.dsUpdate.addColumn("YN_HISTORY", "string");
+        	this.dsUpdate.addColumn("CK_SEMOK_MO", "string");
+        	this.dsUpdate.addColumn("DS_SEMOK", "string");
+        	this.dsUpdate.addColumn("CD_TRIAL", "string");
+        	this.dsUpdate.addColumn("YN_COST_ACNT", "string");
+        	this.dsUpdate.addColumn("CD_CON_ACNT", "string");
+        	this.dsUpdate.addColumn("YN_SAUPBUD", "string");
+        	this.dsUpdate.addColumn("YN_COMMONCOST", "string");
+        	this.dsUpdate.addColumn("YN_CASH", "string");
+        	this.dsUpdate.addColumn("YN_IFRS", "string");
+        	this.dsUpdate.addColumn("TY_BOND", "string");
+        	this.dsUpdate.addColumn("LV_ACNT", "string");
+        	this.dsUpdate.addColumn("YN_FIX", "string");
+        	this.dsUpdate.addColumn("YN_FOREIGN_VALUATION", "string");
+
+        	this.dsDelete = new Dataset();
+        	this.dsDelete.addColumn("CD_ACCOUNT", "string");
+
+        	//검색조건 포커스
+        	this.divSearch.form.txtSEARCH.setFocus();
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+        	if (!this.fnSelectValidate()) return false;
+
+        	this.gfnGridBeforeSelect(this.dxGrid);
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+
+
+        	this.dsSelect.setColumn(0, "YN_USE", this.dsSearch.getColumn(0, "YN_USE"));
+        	this.dsSelect.setColumn(0, "SEARCH", this.dsSearch.getColumn(0, "SEARCH"));
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+        	if(this.dsList.findRow(this.ucFlag, "I") > -1){
+        		this.gfnAlert("신규 추가된 데이터가 이미 있습니다.");
+        		return;
+        	}
+
+        	//var nRow = this.gfnGridAdd(this.dxGrid, "top", true);
+        	var nRow = this.gfnGridAdd(this.dxGrid, "current"); // top (default), bottom, current
+
+        	this.dsList.set_enableevent(false);
+
+        	//this.dsList.setColumn(0, "CD_UPPER", this.AuthClient.CD_ACCOUNT);
+        	this.dsList.setColumn(nRow, "YN_SLIP", "Y");
+        	this.dsList.setColumn(nRow, "TY_DCO", "D");
+         	this.dsList.setColumn(nRow, "YN_DATE", "Y");
+         	this.dsList.setColumn(nRow, "YN_VENDOR", "Y");
+         	this.dsList.setColumn(nRow, "YN_ETC1", "N");
+         	this.dsList.setColumn(nRow, "YN_ETC2", "N");
+         	this.dsList.setColumn(nRow, "YN_REFNO", "N");
+         	this.dsList.setColumn(nRow, "YN_TRIAL", "N");
+         	this.dsList.setColumn(nRow, "YN_BUDGET_CTRL_ACNT", "N");
+         	this.dsList.setColumn(nRow, "YN_IWOL_ACNT", "N");
+         	this.dsList.setColumn(nRow, "YN_GONGSACOST_ACNT", "N");
+         	this.dsList.setColumn(nRow, "YN_VAT_ACNT", "N");
+         	this.dsList.setColumn(nRow, "YN_COST_ACNT", "N");
+         	this.dsList.setColumn(nRow, "YN_USE", "N");
+         	this.dsList.setColumn(nRow, "YN_GONGSAINCOME_ACNT", "N");
+         	this.dsList.setColumn(nRow, "YN_GONGSATUJA_ACNT", "N");
+         	this.dsList.setColumn(nRow, "YN_FIX_ACNT", "N");
+         	this.dsList.setColumn(nRow, "YN_MISU_MIBUL_ACNT", "N");
+         	this.dsList.setColumn(nRow, "YN_SAUPBUD", "N");
+         	this.dsList.setColumn(nRow, "YN_IFRS", "N");
+         	// 거래처
+        	this.dsList.setColumn(nRow, "CK_VENDOR_MO", "M");
+        	this.dsList.setColumn(nRow, "DS_VENDOR", "거래처");
+        	this.dsList.setColumn(nRow, "TY_VENDOR_FLAG", "F");	// F 일반거래처
+
+        	this.dsList.setColumn(nRow, "YN_FIX", "N");
+        	this.dsList.setColumn(nRow, "YN_FOREIGN_VALUATION", "N");
+
+        	this.dsList.setColumn(nRow, "YN_USE", "Y");
+
+        //	this.dsList.setColumn(nRow, "TY_BOND", "");
+        	this.dsList.setColumn(nRow, "LV_ACNT", "5");
+
+
+        	this.dsList.set_enableevent(true);
+
+        	this.gfnSetAllEnable(this.divData.form.divDataRightTop.form, true);
+        	this.gfnSetAllEnable(this.divData.form.divDataRightBottom.form, true);
+
+        	this.gfnSetEnable(this.divData.form.divDataRightBottom.form.chkYN_DATE, false);
+        	this.gfnSetEnable(this.divData.form.divDataRightBottom.form.chkYN_VENDOR, false);
+
+        	//미수미불구분 처리
+        	this.fnSetTyMigeulEnable(this.dsList.getColumn(nRow, "YN_MISU_MIBUL_ACNT"));
+
+        	this.dsList.set_rowposition(nRow);
+        	this.dxGrid.setCellPos(2);
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+        	this.gfnGridDel(this.dxGrid);
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+        	//if (!this.gfnGridValidate(this.dxGrid)) return;
+        	//if (!this.gfnDataValidate(this.dsList, this.dsRequired)) return;
+        	if (!this.fnDataValidate()) return;
+
+        	this.dxGrid.updateToDataset();
+
+        	this.dsInsert.clearData();
+        	this.dsUpdate.clearData();
+        	this.dsDelete.clearData();
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var flag = this.gfnGetFlag(this.dsList, i);
+        		switch(flag) {
+        			case "I":
+        				var nrow = this.dsInsert.addRow();
+        				this.dsInsert.setColumn(nrow, "CD_ACCOUNT", this.dsList.getColumn(i, "CD_ACCOUNT"));
+        				this.dsInsert.setColumn(nrow, "DS_ACCOUNT", this.dsList.getColumn(i, "DS_ACCOUNT"));
+        				this.dsInsert.setColumn(nrow, "DS_TRIAL", this.dsList.getColumn(i, "DS_TRIAL"));
+        				this.dsInsert.setColumn(nrow, "DS_DETAIL1", this.dsList.getColumn(i, "DS_DETAIL1"));
+        				this.dsInsert.setColumn(nrow, "DS_DETAIL2", this.dsList.getColumn(i, "DS_DETAIL2"));
+        				this.dsInsert.setColumn(nrow, "DS_DR", this.dsList.getColumn(i, "DS_DR"));
+        				this.dsInsert.setColumn(nrow, "DS_CR", this.dsList.getColumn(i, "DS_CR"));
+        				this.dsInsert.setColumn(nrow, "YN_SLIP", this.gfnNvl(this.dsList.getColumn(i, "YN_SLIP"),"N"));
+        				this.dsInsert.setColumn(nrow, "TY_DCO", this.dsList.getColumn(i, "TY_DCO"));
+        				this.dsInsert.setColumn(nrow, "YN_DATE", this.gfnNvl(this.dsList.getColumn(i, "YN_DATE"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_VENDOR", this.gfnNvl(this.dsList.getColumn(i, "YN_VENDOR"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_ETC1", this.gfnNvl(this.dsList.getColumn(i, "YN_ETC1"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_ETC2", this.gfnNvl(this.dsList.getColumn(i, "YN_ETC2"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_REFNO", this.gfnNvl(this.dsList.getColumn(i, "YN_REFNO"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_BUDGET", this.gfnNvl(this.dsList.getColumn(i, "YN_BUDGET_CTRL_ACNT"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_TUJA", this.gfnNvl(this.dsList.getColumn(i, "YN_GONGSATUJA_ACNT"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_COST", this.gfnNvl(this.dsList.getColumn(i, "YN_GONGSACOST_ACNT"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_INCOME", this.gfnNvl(this.dsList.getColumn(i, "YN_GONGSAINCOME_ACNT"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_MISUMIBUL", this.gfnNvl(this.dsList.getColumn(i, "YN_MISU_MIBUL_ACNT"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_VAT", this.gfnNvl(this.dsList.getColumn(i, "YN_VAT_ACNT"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_FIX_ACNT", this.gfnNvl(this.dsList.getColumn(i, "YN_FIX_ACNT"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_SERVICE", this.gfnNvl(this.dsList.getColumn(i, "YN_SERVICE"),"N"));
+        				this.dsInsert.setColumn(nrow, "MO_VENDOR", this.dsList.getColumn(i, "CK_VENDOR_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_VENDOR", this.dsList.getColumn(i, "DS_VENDOR"));
+        				this.dsInsert.setColumn(nrow, "TY_VENDOR", this.dsList.getColumn(i, "TY_VENDOR_FLAG"));
+        				this.dsInsert.setColumn(nrow, "MO_ETC1", this.dsList.getColumn(i, "CK_ETC1_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_ETC1", this.dsList.getColumn(i, "DS_ETC1"));
+        				this.dsInsert.setColumn(nrow, "TY_ETC1", this.dsList.getColumn(i, "TY_ETC1_FLAG"));
+        				this.dsInsert.setColumn(nrow, "MO_ETC2", this.dsList.getColumn(i, "CK_ETC2_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_ETC2", this.dsList.getColumn(i, "DS_ETC2"));
+        				this.dsInsert.setColumn(nrow, "TY_ETC2", this.dsList.getColumn(i, "TY_ETC2_FLAG"));
+        				this.dsInsert.setColumn(nrow, "MO_REFNO", this.dsList.getColumn(i, "CK_REFNO_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_REFNO", this.dsList.getColumn(i, "DS_REFNO"));
+        				this.dsInsert.setColumn(nrow, "TY_REFNO", this.dsList.getColumn(i, "TY_REFNO_FLAG"));
+        				this.dsInsert.setColumn(nrow, "MO_REFNO2", this.dsList.getColumn(i, "CK_REFNO2_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_REFNO2", this.dsList.getColumn(i, "DS_REFNO2"));
+        				this.dsInsert.setColumn(nrow, "TY_REFNO2", this.dsList.getColumn(i, "TY_REFNO2_FLAG"));
+        				this.dsInsert.setColumn(nrow, "MO_REFAM1", this.dsList.getColumn(i, "CK_REFAM1_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_REFAM1", this.dsList.getColumn(i, "DS_REFAM1"));
+        				this.dsInsert.setColumn(nrow, "MO_REFAM2", this.dsList.getColumn(i, "CK_REFAM2_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_REFAM2", this.dsList.getColumn(i, "DS_REFAM2"));
+        				this.dsInsert.setColumn(nrow, "MO_REFDT1", this.dsList.getColumn(i, "CK_REFDT1_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_REFDT1", this.dsList.getColumn(i, "DS_REFDT1"));
+        				this.dsInsert.setColumn(nrow, "MO_REFDT2", this.dsList.getColumn(i, "CK_REFDT2_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_REFDT2", this.dsList.getColumn(i, "DS_REFDT2"));
+        				this.dsInsert.setColumn(nrow, "MO_REFRT1", this.dsList.getColumn(i, "CK_REFRT1_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_REFRT1", this.dsList.getColumn(i, "DS_REFRT1"));
+        				this.dsInsert.setColumn(nrow, "MO_REFRT2", this.dsList.getColumn(i, "CK_REFRT2_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_REFRT2", this.dsList.getColumn(i, "DS_REFRT2"));
+        				this.dsInsert.setColumn(nrow, "CK_GONGJONG_MO", this.dsList.getColumn(i, "CK_GONGJONG_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_GONGJONG", this.dsList.getColumn(i, "DS_GONGJONG"));
+        				this.dsInsert.setColumn(nrow, "YN_CONTROL", this.gfnNvl(this.dsList.getColumn(i, "YN_CONTROL"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_TRIAL", this.gfnNvl(this.dsList.getColumn(i, "YN_TRIAL"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_IWOL", this.gfnNvl(this.dsList.getColumn(i, "YN_IWOL_ACNT"),"N"));
+        				this.dsInsert.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+        				this.dsInsert.setColumn(nrow, "YN_USE", this.gfnNvl(this.dsList.getColumn(i, "YN_USE"),"N"));
+        				this.dsInsert.setColumn(nrow, "TY_MIGEUL", this.dsList.getColumn(i, "TY_MIGEUL"));
+        				this.dsInsert.setColumn(nrow, "YN_TAXORIGIN", this.gfnNvl(this.dsList.getColumn(i, "YN_TAXORIGIN"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_HISTORY", this.gfnNvl(this.dsList.getColumn(i, "YN_HISTORY"),"N"));
+        				this.dsInsert.setColumn(nrow, "CK_SEMOK_MO", this.dsList.getColumn(i, "CK_SEMOK_MO"));
+        				this.dsInsert.setColumn(nrow, "DS_SEMOK", this.dsList.getColumn(i, "DS_SEMOK"));
+        				this.dsInsert.setColumn(nrow, "CD_TRIAL", this.dsList.getColumn(i, "CD_TRIAL"));
+        				this.dsInsert.setColumn(nrow, "YN_COST_ACNT", this.gfnNvl(this.dsList.getColumn(i, "YN_COST_ACNT"),"N"));
+        				this.dsInsert.setColumn(nrow, "CD_CON_ACNT", this.dsList.getColumn(i, "CD_CON_ACNT"));
+        				this.dsInsert.setColumn(nrow, "YN_SAUPBUD", this.gfnNvl(this.dsList.getColumn(i, "YN_SAUPBUD"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_COMMONCOST", this.gfnNvl(this.dsList.getColumn(i, "YN_COMMONCOST"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_CASH", this.gfnNvl(this.dsList.getColumn(i, "YN_CASH"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_IFRS", this.gfnNvl(this.dsList.getColumn(i, "YN_IFRS"),"N"));
+        				this.dsInsert.setColumn(nrow, "TY_BOND", this.dsList.getColumn(i, "TY_BOND"));
+        				this.dsInsert.setColumn(nrow, "LV_ACNT", this.dsList.getColumn(i, "LV_ACNT"));
+        				this.dsInsert.setColumn(nrow, "YN_FIX", this.gfnNvl(this.dsList.getColumn(i, "YN_FIX"),"N"));
+        				this.dsInsert.setColumn(nrow, "YN_FOREIGN_VALUATION", this.gfnNvl(this.dsList.getColumn(i, "YN_FOREIGN_VALUATION"),"N"));
+
+        				break;
+
+        			case "U":
+        				var nrow = this.dsUpdate.addRow();
+        				this.dsUpdate.setColumn(nrow, "CD_ACCOUNT", this.dsList.getColumn(i, "CD_ACCOUNT"));
+        				this.dsUpdate.setColumn(nrow, "DS_ACCOUNT", this.dsList.getColumn(i, "DS_ACCOUNT"));
+        				this.dsUpdate.setColumn(nrow, "DS_TRIAL", this.dsList.getColumn(i, "DS_TRIAL"));
+        				this.dsUpdate.setColumn(nrow, "DS_DETAIL1", this.dsList.getColumn(i, "DS_DETAIL1"));
+        				this.dsUpdate.setColumn(nrow, "DS_DETAIL2", this.dsList.getColumn(i, "DS_DETAIL2"));
+        				this.dsUpdate.setColumn(nrow, "DS_DR", this.dsList.getColumn(i, "DS_DR"));
+        				this.dsUpdate.setColumn(nrow, "DS_CR", this.dsList.getColumn(i, "DS_CR"));
+        				this.dsUpdate.setColumn(nrow, "YN_SLIP", this.gfnNvl(this.dsList.getColumn(i, "YN_SLIP"),"N"));
+        				this.dsUpdate.setColumn(nrow, "TY_DCO", this.dsList.getColumn(i, "TY_DCO"));
+        				this.dsUpdate.setColumn(nrow, "YN_DATE", this.gfnNvl(this.dsList.getColumn(i, "YN_DATE"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_VENDOR", this.gfnNvl(this.dsList.getColumn(i, "YN_VENDOR"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_ETC1", this.gfnNvl(this.dsList.getColumn(i, "YN_ETC1"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_ETC2", this.gfnNvl(this.dsList.getColumn(i, "YN_ETC2"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_REFNO", this.gfnNvl(this.dsList.getColumn(i, "YN_REFNO"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_BUDGET", this.gfnNvl(this.dsList.getColumn(i, "YN_BUDGET_CTRL_ACNT"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_TUJA", this.gfnNvl(this.dsList.getColumn(i, "YN_GONGSATUJA_ACNT"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_COST", this.gfnNvl(this.dsList.getColumn(i, "YN_GONGSACOST_ACNT"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_INCOME", this.gfnNvl(this.dsList.getColumn(i, "YN_GONGSAINCOME_ACNT"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_MISUMIBUL", this.gfnNvl(this.dsList.getColumn(i, "YN_MISU_MIBUL_ACNT"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_VAT", this.gfnNvl(this.dsList.getColumn(i, "YN_VAT_ACNT"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_FIX_ACNT", this.gfnNvl(this.dsList.getColumn(i, "YN_FIX_ACNT"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_SERVICE", this.gfnNvl(this.dsList.getColumn(i, "YN_SERVICE"),"N"));
+        				this.dsUpdate.setColumn(nrow, "MO_VENDOR", this.dsList.getColumn(i, "CK_VENDOR_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_VENDOR", this.dsList.getColumn(i, "DS_VENDOR"));
+        				this.dsUpdate.setColumn(nrow, "TY_VENDOR", this.dsList.getColumn(i, "TY_VENDOR_FLAG"));
+        				this.dsUpdate.setColumn(nrow, "MO_ETC1", this.dsList.getColumn(i, "CK_ETC1_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_ETC1", this.dsList.getColumn(i, "DS_ETC1"));
+        				this.dsUpdate.setColumn(nrow, "TY_ETC1", this.dsList.getColumn(i, "TY_ETC1_FLAG"));
+        				this.dsUpdate.setColumn(nrow, "MO_ETC2", this.dsList.getColumn(i, "CK_ETC2_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_ETC2", this.dsList.getColumn(i, "DS_ETC2"));
+        				this.dsUpdate.setColumn(nrow, "TY_ETC2", this.dsList.getColumn(i, "TY_ETC2_FLAG"));
+        				this.dsUpdate.setColumn(nrow, "MO_REFNO", this.dsList.getColumn(i, "CK_REFNO_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_REFNO", this.dsList.getColumn(i, "DS_REFNO"));
+        				this.dsUpdate.setColumn(nrow, "TY_REFNO", this.dsList.getColumn(i, "TY_REFNO_FLAG"));
+        				this.dsUpdate.setColumn(nrow, "MO_REFNO2", this.dsList.getColumn(i, "CK_REFNO2_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_REFNO2", this.dsList.getColumn(i, "DS_REFNO2"));
+        				this.dsUpdate.setColumn(nrow, "TY_REFNO2", this.dsList.getColumn(i, "TY_REFNO2_FLAG"));
+        				this.dsUpdate.setColumn(nrow, "MO_REFAM1", this.dsList.getColumn(i, "CK_REFAM1_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_REFAM1", this.dsList.getColumn(i, "DS_REFAM1"));
+        				this.dsUpdate.setColumn(nrow, "MO_REFAM2", this.dsList.getColumn(i, "CK_REFAM2_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_REFAM2", this.dsList.getColumn(i, "DS_REFAM2"));
+        				this.dsUpdate.setColumn(nrow, "MO_REFDT1", this.dsList.getColumn(i, "CK_REFDT1_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_REFDT1", this.dsList.getColumn(i, "DS_REFDT1"));
+        				this.dsUpdate.setColumn(nrow, "MO_REFDT2", this.dsList.getColumn(i, "CK_REFDT2_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_REFDT2", this.dsList.getColumn(i, "DS_REFDT2"));
+        				this.dsUpdate.setColumn(nrow, "MO_REFRT1", this.dsList.getColumn(i, "CK_REFRT1_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_REFRT1", this.dsList.getColumn(i, "DS_REFRT1"));
+        				this.dsUpdate.setColumn(nrow, "MO_REFRT2", this.dsList.getColumn(i, "CK_REFRT2_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_REFRT2", this.dsList.getColumn(i, "DS_REFRT2"));
+        				this.dsUpdate.setColumn(nrow, "CK_GONGJONG_MO", this.dsList.getColumn(i, "CK_GONGJONG_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_GONGJONG", this.dsList.getColumn(i, "DS_GONGJONG"));
+        				this.dsUpdate.setColumn(nrow, "YN_CONTROL", this.gfnNvl(this.dsList.getColumn(i, "YN_CONTROL"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_TRIAL", this.gfnNvl(this.dsList.getColumn(i, "YN_TRIAL"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_IWOL", this.gfnNvl(this.dsList.getColumn(i, "YN_IWOL_ACNT"),"N"));
+        				this.dsUpdate.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+        				this.dsUpdate.setColumn(nrow, "YN_USE", this.gfnNvl(this.dsList.getColumn(i, "YN_USE"),"N"));
+        				this.dsUpdate.setColumn(nrow, "TY_MIGEUL", this.dsList.getColumn(i, "TY_MIGEUL"));
+        				this.dsUpdate.setColumn(nrow, "YN_TAXORIGIN", this.gfnNvl(this.dsList.getColumn(i, "YN_TAXORIGIN"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_HISTORY", this.gfnNvl(this.dsList.getColumn(i, "YN_HISTORY"),"N"));
+        				this.dsUpdate.setColumn(nrow, "CK_SEMOK_MO", this.dsList.getColumn(i, "CK_SEMOK_MO"));
+        				this.dsUpdate.setColumn(nrow, "DS_SEMOK", this.dsList.getColumn(i, "DS_SEMOK"));
+        				this.dsUpdate.setColumn(nrow, "CD_TRIAL", this.dsList.getColumn(i, "CD_TRIAL"));
+        				this.dsUpdate.setColumn(nrow, "YN_COST_ACNT", this.gfnNvl(this.dsList.getColumn(i, "YN_COST_ACNT"),"N"));
+        				this.dsUpdate.setColumn(nrow, "CD_CON_ACNT", this.dsList.getColumn(i, "CD_CON_ACNT"));
+        				this.dsUpdate.setColumn(nrow, "YN_SAUPBUD", this.gfnNvl(this.dsList.getColumn(i, "YN_SAUPBUD"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_COMMONCOST", this.gfnNvl(this.dsList.getColumn(i, "YN_COMMONCOST"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_CASH", this.gfnNvl(this.dsList.getColumn(i, "YN_CASH"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_IFRS", this.gfnNvl(this.dsList.getColumn(i, "YN_IFRS"),"N"));
+        				this.dsUpdate.setColumn(nrow, "TY_BOND", this.dsList.getColumn(i, "TY_BOND"));
+        				this.dsUpdate.setColumn(nrow, "LV_ACNT", this.dsList.getColumn(i, "LV_ACNT"));
+        				this.dsUpdate.setColumn(nrow, "YN_FIX", this.gfnNvl(this.dsList.getColumn(i, "YN_FIX"),"N"));
+        				this.dsUpdate.setColumn(nrow, "YN_FOREIGN_VALUATION", this.gfnNvl(this.dsList.getColumn(i, "YN_FOREIGN_VALUATION"),"N"));
+
+        				break;
+        			case "D":
+        				var nrow = this.dsDelete.addRow();
+        				this.dsDelete.setColumn(nrow, "CD_ACCOUNT", this.dsList.getColumn(i, "CD_ACCOUNT"));
+        				break;
+        		}
+        	}
+
+        	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+         */
+        this.fnSelectValidate = function() {
+        	var validate = true;
+
+
+        	return validate;
+        };
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	if (svcID == "select") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+        	} else if(svcID == "save") {
+        		if (errorCode == 0) {
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}else if(svcID == "combo"){
+        		if(this.dsTY_COMBO2.rowcount > 0){
+
+        		}
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        this.codefind_AfterCDTextChanged = function(id) {
+        	//this.fnSearchInit();
+        }
+
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+         	if (id == "ccfCD_TRIAL") {
+         		dsUserParam.setColumn(nrow, "YN_TRIAL", "Y");
+         		dsUserParam.setColumn(nrow, "CD_CORP",  this.AuthClient.CD_CORP);
+
+         	}
+        	return true;
+        }
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+        this.fnGrid_RowCellChanged = function(obj,e)
+        {
+
+        };
+
+        this.dsList_onrowposchanged = function(obj,e)
+        {
+        	if(obj.getColumn(e.newrow, "LV_ACNT") >= 3){
+        		this.gfnSetAllEnable(this.divData.form.divDataRightTop.form, true);
+        		this.gfnSetAllEnable(this.divData.form.divDataRightBottom.form, true);
+        	}else{
+        		this.gfnSetAllEnable(this.divData.form.divDataRightTop.form, false);
+        		this.gfnSetAllEnable(this.divData.form.divDataRightBottom.form, false);
+        	}
+
+        	this.gfnSetEnable(this.divData.form.divDataRightBottom.form.chkYN_DATE, false);
+        	this.gfnSetEnable(this.divData.form.divDataRightBottom.form.chkYN_VENDOR, false);
+
+        	//미수미불구분 처리
+        	this.fnSetTyMigeulEnable(obj.getColumn(e.newrow, "YN_MISU_MIBUL_ACNT"));
+        };
+
+        this.dsList_oncolumnchanged = function(obj,e)
+        {
+        	if(e.columnid == "YN_MISU_MIBUL_ACNT"){	//미수미불구분
+        		if(e.newvalue != e.oldvalue){
+        			this.fnSetTyMigeulEnable(e.newvalue);
+        			obj.setColumn(e.row, "TY_MIGEUL", "");
+        		}
+        	}
+
+        	if(e.columnid == "YN_TRIAL"){	//시산과목
+        		if(e.newvalue != e.oldvalue){
+        		trace(" YN_TRIAL =>" + obj.getColumn(e.row, "YN_TRIAL"));
+        			if (obj.getColumn(e.row, "YN_TRIAL") == "Y" && this.gfnIsNull(obj.getColumn(e.row, "CD_TRIAL")) )
+        			{
+        				obj.setColumn(e.row, "CD_TRIAL", obj.getColumn(e.row, "CD_ACCOUNT"));
+        			}
+        			if (obj.getColumn(e.row, "YN_TRIAL") == "N" && !this.gfnIsNull(obj.getColumn(e.row, "CD_TRIAL")) &&
+        				obj.getColumn(e.row, "CD_TRIAL") == obj.getColumn(e.row, "CD_ACCOUNT"))
+        			{
+        				obj.setColumn(e.row, "CD_TRIAL", "");
+        			}
+        		}
+        	}
+        };
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        this.fnDataValidate = function(){
+        	var pRow = this.dsList.rowposition;
+
+        	// 시산과목
+        	var YN_TRIAL = this.gfnTrim(this.dsList.getColumn(pRow, "YN_TRIAL"));
+        	if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "CD_ACCOUNT")))){
+        		this.gfnAlert("계정코드는 필수입력입니다.");
+        		this.divData.form.divDataRightTop.form.txtCD_ACCOUNT.setFocus();
+        		return false;
+        	}
+
+        	if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_ACCOUNT")))){
+        		this.gfnAlert("계정명칭은 필수입력입니다.");
+        		this.divData.form.divDataRightTop.form.txtDS_ACCOUNT.setFocus();
+        		return false;
+        	}
+
+        	if(YN_TRIAL == "G"){	// 시산과목(N:과목Y:시산G:과목)
+        	}else{
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "CD_TRIAL")))){
+        			this.gfnAlert("시산코드는 필수입력입니다.");
+        			this.ccfCD_TRIAL.form.CDTextBox.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "YN_MISU_MIBUL_ACNT") == "Y"){
+        		if(this.dsList.getColumn(pRow, "YN_VENDOR") != "Y"){
+        			this.gfnAlert("미수/미불관리를 하는 계정은 거래처별 관리도 해야합니다.");
+        			this.divData.form.divDataRightBottom.form.chkYN_VENDOR.setFocus();
+        			return false;
+        		}
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "TY_MIGEUL")))){
+        			this.gfnAlert("미수/미불관리를 하는 계정은 미수미불구분을 선택하셔야 합니다.");
+        			this.divData.form.divDataRightBottom.form.ccboTY_MIGEUL.setFocus();
+        			return false;
+        		}
+        	}
+        	if(this.dsList.getColumn(pRow, "YN_VENDOR") == "Y"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "CK_VENDOR_MO")))){
+        			this.gfnAlert("보조부 관리유형에 거래처별이 선택되었을때는   ☞ 명칭정보의 거래처 필수,선택을 입력하셔야 합니다.");
+        			this.divData.form.divDataRightBottom.form.ccboCK_VENDOR_MO.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "YN_ETC1") == "Y"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "CK_ETC1_MO")))){
+        			this.gfnAlert("보조부 관리유형에 기타1별이 선택되었을때는   ☞ 명칭정보의 기타1 필수,선택을 입력하셔야 합니다.");
+        			this.divData.form.divDataRightBottom.form.ccboCK_ETC1_MO.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "YN_ETC2") == "Y"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "CK_ETC2_MO")))){
+        			this.gfnAlert("보조부 관리유형에 기타2별이 선택되었을때는   ☞ 명칭정보의 기타2 필수,선택을 입력하셔야 합니다.");
+        			this.divData.form.divDataRightBottom.form.ccboCK_ETC2_MO.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "YN_REFNO") == "Y"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "CK_REFNO_MO")))){
+        			this.gfnAlert("보조부 관리유형에 참고번호별이 선택되었을때는   ☞ 명칭정보의 참고번호 필수,선택을 입력하셔야 합니다.");
+        			this.divData.form.divDataRightBottom.form.ccboCK_REFNO_MO.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(YN_TRIAL == "G"){	// 시산과목(N:과목Y:시산G:과목)
+        	}else{
+        		if(this.dsList.getColumn(pRow, "CK_VENDOR_MO") == "M"){
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_VENDOR")))){
+        				this.gfnAlert("거래처 필수는 내용을 입력하셔야 합니다!");
+        				this.divData.form.divDataRightBottom.form.txtDS_VENDOR.setFocus();
+        				return false;
+        			}
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "TY_VENDOR_FLAG")))){
+        				this.gfnAlert("거래처 필수는 항목을 선택하셔야 합니다!");
+        				this.divData.form.divDataRightBottom.form.ccboTY_VENDOR_FLAG.setFocus();
+        				return false;
+        			}
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "CK_ETC1_MO") == "M"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_ETC1")))){
+        			this.gfnAlert("기타1 필수는 내용을 입력하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.txtDS_ETC1.setFocus();
+        			return false;
+        		}
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "TY_ETC1_FLAG")))){
+        			this.gfnAlert("기타1 필수는 항목을 선택하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.ccboTY_ETC1_FLAG.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "CK_ETC2_MO") == "M"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_ETC2")))){
+        			this.gfnAlert("기타2 필수는 내용을 입력하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.txtDS_ETC2.setFocus();
+        			return false;
+        		}
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "TY_ETC2_FLAG")))){
+        			this.gfnAlert("기타2 필수는 항목을 선택하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.ccboTY_ETC2_FLAG.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "CK_REFNO_MO") == "M"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_REFNO")))){
+        			this.gfnAlert("참고번호1 필수는 내용을 입력하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.txtDS_REFNO.setFocus();
+        			return false;
+        		}
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "TY_REFNO_FLAG")))){
+        			this.gfnAlert("참고번호1 필수는 항목을 선택하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.ccboTY_REFNO_FLAG.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "CK_REFNO2_MO") == "M"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_REFNO2")))){
+        			this.gfnAlert("참고번호2 필수는 내용을 입력하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.txtDS_REFNO2.setFocus();
+        			return false;
+        		}
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "TY_REFNO2_FLAG")))){
+        			this.gfnAlert("참고번호2 필수는 항목을 선택하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.ccboTY_REFNO2_FLAG.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "CK_REFAM1_MO") == "M"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_REFAM1")))){
+        			this.gfnAlert("참고금액1 필수는 내용을 입력하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.txtDS_REFAM1.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "CK_REFAM2_MO") == "M"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_REFAM2")))){
+        			this.gfnAlert("참고금액2 필수는 내용을 입력하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.txtDS_REFAM2.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "CK_REFDT1_MO") == "M"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_REFDT1")))){
+        			this.gfnAlert("참고일자1 필수는 내용을 입력하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.txtDS_REFDT1.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "CK_REFDT2_MO") == "M"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_REFDT2")))){
+        			this.gfnAlert("참고일자2 필수는 내용을 입력하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.txtDS_REFDT2.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "CK_REFRT1_MO") == "M"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_REFRT1")))){
+        			this.gfnAlert("참고율1 필수는 내용을 입력하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.txtDS_REFRT1.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "CK_REFRT2_MO") == "M"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_REFRT2")))){
+        			this.gfnAlert("참고율2 필수는 내용을 입력하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.txtDS_REFRT2.setFocus();
+        			return false;
+        		}
+        	}
+
+        	if(this.dsList.getColumn(pRow, "CK_GONGJONG_MO") == "M"){
+        		if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(pRow, "DS_GONGJONG")))){
+        			this.gfnAlert("원가세목관리 필수는 내용을 입력하셔야 합니다!");
+        			this.divData.form.divDataRightBottom.form.txtDS_GONGJONG.setFocus();
+        			return false;
+        		}
+        	}
+        	return true;
+        }
+
+        this.fnSetCombo = function() {
+
+        	this.dsCombo = new Dataset();
+        	this.dsCombo.addColumn("CD_SYSTEM", "string");
+        	this.dsCombo.addColumn("CD_TYPE", "string");
+
+
+        	this.dsCombo2 = new Dataset();
+        	this.dsCombo2.addColumn("CD_SYSTEM", "string");
+        	this.dsCombo2.addColumn("CD_TYPE", "string");
+        	this.dsCombo2.addColumn("TY_SEL", "string");
+
+        	this.dsCombo.addRow();
+        	this.dsCombo.setColumn(0, "CD_SYSTEM", "DH");
+        	this.dsCombo.setColumn(0, "CD_TYPE", "A01");
+
+        	this.dsCombo2.addRow();
+        	//this.dsCombo2.setColumn(0, "CD_GROUP", "A");
+        	this.dsCombo2.setColumn(0, "CD_SYSTEM", "DH");
+        	this.dsCombo2.setColumn(0, "CD_TYPE", "A02");
+
+        	var strSvcId    = "combo";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "combo=dsCombo comboFlag=dsCombo2";
+        	var outData     = "dsTY_MIGEUL=combo0 dsTY_COMBO2=comboFlag0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        //미수미불구분
+        this.fnSetTyMigeulEnable =  function(sData){
+        	if(sData == "Y"){
+        		this.divData.form.divDataRightBottom.form.ccboTY_MIGEUL.set_enable(true);
+        	}else{
+        		this.divData.form.divDataRightBottom.form.ccboTY_MIGEUL.set_enable(false);
+        	}
+        }
+
+        // 스플리터 함수
+        this.divData_divSplitter_ondrag = function(obj,e)
+        {
+        	e.set_userdata("splitter");
+        	return true;
+        };
+
+        this.divData_ondragmove = function(obj,e)
+        {
+        	if(e.userdata == "splitter") {
+        		this.divData.form.divSplitter.set_left(e.clientx);
+        		this.divData.form.resetScroll();
+        	}
+        };
+
+        //검색어 키다운 이벤트
+        this.divSearch_txtSEARCH_onkeydown = function(obj,e)
+        {
+        // 	if(e.keycode == 13){
+        // 		this.fnSelect();
+        // 	}
+        };
+
+        this.dsSearch_onvaluechanged = function(obj,e)
+        {
+        	if(e.oldvalue != e.newvalue) {
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.gfnGridClear(this.dxGrid);
+        	}
+        };
+
+
+        // 참조자동전표코드 버튼 클릭 이벤트
+        this.fnRefAutoSlip = function(obj,e) {
+        	if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+
+        	var param = {};
+        	param.CD_ACCOUNT = this.dsList.getColumn(this.dsList.rowposition, "CODE");
+        	param.DS_ACCOUNT = this.dsList.getColumn(this.dsList.rowposition, "DS_ACCOUNT");
+
+        	// 화면 오픈.
+        	// CD_MODULE은 보통 같은 모듈에서 호출하는 경우가 많으니 this.FormInfo.CD_MODULE 사용
+        	// 타 모듈 화면 호출시 지정할것.
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DHZ_REFAUTOSLIP", "", param);
+        }
+
+        // 원가항목코드관리 버튼 클릭 이벤트
+        this.fnAccost = function(obj,e) {
+        	if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+
+        	var param = {};
+
+        	// 화면 오픈.
+        	// CD_MODULE은 보통 같은 모듈에서 호출하는 경우가 많으니 this.FormInfo.CD_MODULE 사용
+        	// 타 모듈 화면 호출시 지정할것.
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DHZ_ACCOST", "", param);
+        }
+
+        // 원가비목코드관리 버튼 클릭 이벤트
+        this.fnAcbimok = function(obj,e) {
+        	if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+
+        	var param = {};
+
+        	// 화면 오픈.
+        	// CD_MODULE은 보통 같은 모듈에서 호출하는 경우가 많으니 this.FormInfo.CD_MODULE 사용
+        	// 타 모듈 화면 호출시 지정할것.
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DHZ_ACBIMOK", "", param);
+        }
+
+        // 집합과목코드관리 버튼 클릭 이벤트
+        this.fnAcsubject = function(obj,e) {
+        	if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+
+        	var param = {};
+
+        	// 화면 오픈.
+        	// CD_MODULE은 보통 같은 모듈에서 호출하는 경우가 많으니 this.FormInfo.CD_MODULE 사용
+        	// 타 모듈 화면 호출시 지정할것.
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DHZ_ACSUBJECT", "", param);
+        }
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divData.addEventHandler("ondragmove",this.divData_ondragmove,this);
+            this.divData.form.divSplitter.addEventHandler("ondrag",this.divData_divSplitter_ondrag,this);
+            this.divData.form.divDataRightTop.form.staCD_ACCOUNT.addEventHandler("onclick",this.divData_divDataRight_sta01_onclick,this);
+            this.divData.form.divDataRightBottom.form.staYN_SLIP.addEventHandler("onclick",this.divData_divDataRight_sta01_onclick,this);
+            this.divData.form.divDataRightBottom.form.staTY_DCO.addEventHandler("onclick",this.divData_divDataRight_sta01_onclick,this);
+            this.divData.form.divDataRightBottom.form.staYN_TRIAL.addEventHandler("onclick",this.divData_divDataRight_sta01_onclick,this);
+            this.divData.form.divDataRightBottom.form.staYN_GONGSATUJA_ACNT.addEventHandler("onclick",this.divData_divDataRight_sta01_onclick,this);
+            this.divData.form.divDataRightBottom.form.staTY_MIGEUL.addEventHandler("onclick",this.divData_divDataRight_sta01_onclick,this);
+            this.divData.form.divDataRightBottom.form.staYN_CASH.addEventHandler("onclick",this.divData_divDataRight_sta01_onclick,this);
+            this.divData.form.divDataRightBottom.form.staTY_BOND.addEventHandler("onclick",this.divData_divDataRight_sta01_onclick,this);
+            this.dsList.addEventHandler("onrowposchanged",this.dsList_onrowposchanged,this);
+            this.dsList.addEventHandler("oncolumnchanged",this.dsList_oncolumnchanged,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+        };
+        this.loadIncludeScript("DHZ_ACNTNEW.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

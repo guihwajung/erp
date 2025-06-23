@@ -1,0 +1,688 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="450" height="400" maxwidth="485" maxheight="480" titletext="전표발행" onload="form_onload" onclick="form_onclick">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0" top="0" text="" bottom="0" right="0">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_PROOF_bg" taborder="34" left="109" top="231" height="30" cssclass="sta_WF_tablebg" visible="true" right="0"/>
+              <Static id="staDS_REM_bg00_00_00_01" taborder="31" left="109" top="116" height="30" cssclass="sta_WF_tablebg" visible="true" right="0"/>
+              <Static id="staAM_SUM_bg" taborder="29" left="109" top="318" height="30" cssclass="sta_WF_tablebg" visible="true" right="0"/>
+              <Static id="staAM_VAT" taborder="21" text="부가세액" left="0" top="289" width="110" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staDS_REM" taborder="25" text="적요" left="0" top="staAM_VAT:-175" width="110" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staDS_REM_bg" taborder="26" left="staDS_REM:-1" top="145" height="30" cssclass="sta_WF_tablebg" visible="true" right="0"/>
+              <Static id="staAM_SUPPLY" taborder="19" text="공급가액" left="0" top="260" width="110" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staAM_VAT_bg" taborder="22" left="staAM_VAT:-1" top="289" height="30" cssclass="sta_WF_tablebg" visible="true" right="0"/>
+              <Static id="staCD_PROOF" taborder="17" text="증빙선택" left="0" top="231" width="110" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staAM_SUPPLY_bg" taborder="20" left="staAM_SUPPLY:-1" top="260" height="30" cssclass="sta_WF_tablebg" visible="true" right="0"/>
+              <Static id="staID_ISSUE" taborder="13" text="전자세금계산서" left="0" top="202" width="110" height="30" visible="true" cssclass="sta_WF_tablelabel"/>
+              <Static id="staNO_ACCOUNT_bg" taborder="18" left="staCD_PROOF:-1" top="173" height="30" cssclass="sta_WF_tablebg" visible="true" right="0" text=""/>
+              <Static id="staDT_ACCOUNT" taborder="23" text="회계일자" left="0" top="29" width="110" height="30" visible="true" cssclass="sta_WF_tablelabelTE"/>
+              <Static id="staDT_ACCOUNT_bg" taborder="24" left="staDT_ACCOUNT:-1" top="29" cssclass="sta_WF_tablebgT" visible="true" height="30" right="0"/>
+              <Static id="staDT_REQUEST" taborder="11" text="자금집행일자" left="0" top="58" width="110" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staDT_ACCOUNT_bg00" taborder="12" left="staDT_REQUEST:-1" top="58" cssclass="sta_WF_tablebg" visible="true" right="0" height="30"/>
+              <Static id="staAM_ACCOUNT" taborder="15" text="교육지원금액" left="0" top="staDT_REQUEST:-1" width="110" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staAM_SUPPORT_bg" taborder="16" left="staAM_ACCOUNT:-1" top="87" cssclass="sta_WF_tablebg" visible="true" height="30" right="0"/>
+              <Static id="staID_ISSUE_bg" taborder="14" left="staID_ISSUE:-1" top="202" height="30" cssclass="sta_WF_tablebg" visible="true" right="0"/>
+              <Static id="staTITLE" taborder="1" text="전표발행" left="2" top="0" width="200" height="24" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Calendar id="tclDT_ACCOUNT" taborder="7" left="staDT_ACCOUNT:5" top="staDT_ACCOUNT:-25" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" enable="true"/>
+              <Edit id="edtDS_REM" taborder="10" left="staDS_REM:5" top="staDS_REM:-25" height="20" right="5"/>
+              <Div id="divBtns" left="160" width="130" text="" bottom="0" height="27">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnOK" taborder="1" text="확인" left="0" width="60" onclick="btnOK_onclick" height="27" top="0"/>
+                    <Button id="btnCANCLE" taborder="0" text="취소" left="btnOK:10" width="60" onclick="btnCANCLE_onclick" height="27" top="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Calendar id="tclDT_REQUEST" taborder="2" left="115" top="63" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" enable="true"/>
+              <MaskEdit id="mskAM_SUPPORT" taborder="3" left="190" top="92" width="120" height="20" format="###,###,###,###,###,##0" enable="false"/>
+              <Div id="ccfID_ISSUE" CDTextWidth="205" taborder="5" left="115" top="207" height="20" url="cmm::cmmCodeFind.xfdl" text="" width="231"/>
+              <Div id="ccfCD_PROOF" CDTextWidth="35" taborder="6" left="115" top="236" height="20" url="cmm::cmmCodeFind.xfdl" text="" right="5"/>
+              <MaskEdit id="mskAM_SUPPLY" taborder="8" left="115" top="265" width="120" height="20" format="###,###,###,###,###,##0" limitbymask="integer"/>
+              <MaskEdit id="mskAM_VAT" taborder="9" left="115" top="294" width="120" height="20" format="###,###,###,###,###,##0" limitbymask="integer"/>
+              <Static id="staAM_SUM" taborder="27" text="회계금액" left="0" top="318" width="110" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <MaskEdit id="mskAM_SUM" taborder="28" left="115" top="323" width="120" height="20" format="###,###,###,###,###,##0" limitbymask="integer" enable="false"/>
+              <Static id="staCD_PROOF00" taborder="30" text="거래처" left="0" top="116" width="110" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Div id="ccfCD_VENDOR" CDTextWidth="110" taborder="4" left="115" top="121" height="20" url="cmm::cmmCodeFind.xfdl" text="" right="5" enable="false"/>
+              <Static id="staCD_PROOF01" taborder="32" text="집행계좌" left="0" top="173" width="110" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Div id="ccfNO_ACCOUNT" CDTextWidth="110" taborder="33" left="115" top="179" height="20" url="cmm::cmmCodeFind.xfdl" text="" right="5" enable="false"/>
+              <Combo id="cboCD_CURR" taborder="35" left="115" top="92" width="73" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" value="" index="-1" text="KRW" innerdataset="dsCD_CURR" enable="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form, e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnInit();
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	
+}
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+
+	this.tclDT_ACCOUNT = this.divSearch.form.tclDT_ACCOUNT;	// 회계일자
+	this.tclDT_REQUEST = this.divSearch.form.tclDT_REQUEST;	// 자금집행일자
+	this.edtDS_REM     = this.divSearch.form.edtDS_REM;		// 적요
+	this.mskAM_SUM	   = this.divSearch.form.mskAM_SUM;		// 회계금액 
+	this.ccfID_ISSUE   = this.divSearch.form.ccfID_ISSUE;	// 전자세금계산서
+	this.ccfCD_PROOF   = this.divSearch.form.ccfCD_PROOF;	// 증빙구분
+	this.mskAM_SUPPLY  = this.divSearch.form.mskAM_SUPPLY;	// 공급가액 
+	this.mskAM_VAT     = this.divSearch.form.mskAM_VAT;		// 부가세액 
+	this.ccfCD_VENDOR  = this.divSearch.form.ccfCD_VENDOR;	// 거래처 
+	this.ccfNO_ACCOUNT = this.divSearch.form.ccfNO_ACCOUNT;
+	this.cboCD_CURR    = this.divSearch.form.cboCD_CURR; 
+	this.staAM_VAT     = this.divSearch.form.staAM_VAT;
+	this.staAM_SUPPLY  = this.divSearch.form.staAM_SUPPLY;
+	
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+    // 증빙선택
+	this.ccfCD_PROOF.CodeFindName = "DHX_COMMON_CODEFIND_SELECT";
+	this.ccfCD_PROOF.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_PROOF.AfterCDTextChanged = "fnAfterCDTextChanged";
+
+	//전자세금계산서번호
+	this.ccfID_ISSUE.CodeFindName = "DHX_CFEBILLBUY_ESERO";
+	this.ccfID_ISSUE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfID_ISSUE.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	this.ccfCD_VENDOR.CodeFindName = "DHX_CFALLVENDOR_CODEFIND"
+	this.ccfCD_VENDOR.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_VENDOR.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	this.ccfNO_ACCOUNT.CodeFindName = "DFX_CFACCOUNTMATCH"
+	this.ccfNO_ACCOUNT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfNO_ACCOUNT.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsCombo1 = new Dataset();
+	this.dsCombo1.addColumn("CD_SYSTEM", "string");
+	this.dsCombo1.addColumn("CD_TYPE", "string");
+	
+    this.dsCombo1.addRow();
+	this.dsCombo1.setColumn(0, "CD_SYSTEM", "DF");
+	this.dsCombo1.setColumn(0, "CD_TYPE", "40");
+
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo1";
+	var outData     = "dsCD_CURR=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/************************************************************************
+ * 화면 및 검색영역 초기화
+ ************************************************************************/
+this.fnInit = function() {
+	this.dsSearch.setColumn(0, "DT_ACCOUNT", this.getOwnerFrame().DT_ACCOUNT);
+	this.dsSearch.setColumn(0, "DT_REQUEST", this.getOwnerFrame().DT_ACCOUNT);
+	this.dsSearch.setColumn(0, "DS_REM"    , this.getOwnerFrame().DS_EDUCATION);
+	this.dsSearch.setColumn(0, "AM_SUPPORT", this.getOwnerFrame().AM_SUPPORT);
+	this.dsSearch.setColumn(0, "AM_SUPPLY" , this.getOwnerFrame().AM_SUPPLY);
+	this.dsSearch.setColumn(0, "AM_VAT"    , this.getOwnerFrame().AM_VAT);
+	this.dsSearch.setColumn(0, "CD_PROOF"  , this.getOwnerFrame().CD_PROOF);
+	this.dsSearch.setColumn(0, "CD_VENDOR" , this.getOwnerFrame().CD_VENDOR);
+	this.dsSearch.setColumn(0, "DS_VENDOR" , this.getOwnerFrame().DS_VENDOR);
+	this.dsSearch.setColumn(0, "CD_CORP"   , this.getOwnerFrame().CD_CORP);
+	this.dsSearch.setColumn(0, "NO_ACCOUNT", this.getOwnerFrame().NO_ACCOUNT);
+	this.dsSearch.setColumn(0, "DS_ACCOUNT", this.getOwnerFrame().DS_ACCOUNT);
+	this.dsSearch.setColumn(0, "TY_PAY"	   , this.getOwnerFrame().TY_PAY);
+	this.dsSearch.setColumn(0, "AM_SUM"	   , this.getOwnerFrame().AM_SUPPLY);
+	this.dsSearch.setColumn(0, "NO_EDU"	   , this.getOwnerFrame().NO_EDU);
+	this.dsSearch.setColumn(0, "CD_CURR"   , this.getOwnerFrame().CD_CURR);
+	
+	if (this.getOwnerFrame().TY_PAY == "4" )
+	{
+		this.ccfID_ISSUE.set_enable(false);
+		this.ccfCD_PROOF.set_enable(false);
+		this.mskAM_SUPPLY.set_enable(false);
+		this.mskAM_VAT.set_enable(false);
+		this.staAM_SUPPLY.set_cssclass("sta_WF_tablelabel");
+		this.staAM_VAT.set_cssclass("sta_WF_tablelabel");
+		this.dsSearch.setColumn(0, "CD_PROOF"  ,"23"); 
+		this.ccfCD_PROOF.form.fnCodeFindLoad();
+		
+	} else if (this.getOwnerFrame().CD_CURR != "KRW"){
+		this.ccfID_ISSUE.set_enable(false);
+		this.ccfCD_PROOF.set_enable(false);
+		this.mskAM_SUPPLY.set_enable(false);
+		this.mskAM_VAT.set_enable(false);
+		this.staAM_SUPPLY.set_cssclass("sta_WF_tablelabel");
+		this.staAM_VAT.set_cssclass("sta_WF_tablelabel");
+		this.dsSearch.setColumn(0, "CD_PROOF"  ,"24"); 
+		this.ccfCD_PROOF.form.fnCodeFindLoad();
+	}
+	
+	this.dsSearch.setColumn(0, "DT_ACCOUNT" , this.gfnGetDate());
+	
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValid = function() {
+	var strMsg = "";
+
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "DT_ACCOUNT"))) {
+		strMsg += "※회계일자가 입력되지 않았습니다.\n";
+	}
+	
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "DS_REM"))) {
+		strMsg += "※적요가 입력되지 않았습니다.\n";
+	}
+	
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "DT_REQUEST"))) {
+		strMsg += "※자금집행일자가 입력되지 않았습니다.\n";
+	}
+	
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "AM_SUM"))) {
+		strMsg += "※회계금액이 입력되지 않았습니다.\n";
+	}
+	
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_PROOF"))) {
+		strMsg += "※증빙구분이 입력되지 않았습니다.\n";
+	}
+	
+	if(!this.gfnIsNull(this.dsSearch.getColumn(0, "ID_ISSUE"))) {
+		
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_PROOF"))|| (this.dsSearch.getColumn(0, "CD_PROOF")>="16" && this.dsSearch.getColumn(0, "CD_PROOF")<="25" )) {
+			strMsg += "※전자세금계산서는 세금계산서 증빙코드를 선택해야 합니다..\n";
+		}
+		
+		if(this.dsSearch.getColumn(0, "AM_SUPPLY")==0) {
+			strMsg += "※공급가액이 입력되지 않았습니다.\n";
+		}
+	}	
+	
+	if(this.dsSearch.getColumn(0, "AM_SUM")==0) {
+			strMsg += "※전표발행 회계금액이 입력되지 않았습니다.\n";
+		}
+			
+	if( this.dsSearch.getColumn(0, "CD_CURR")=="KRW" && !this.dsSearch.getColumn(0, "AM_SUPPORT") == this.dsSearch.getColumn(0, "AM_SUM")) {
+		strMsg += "※ 교육비용이 전표발행금액과 일치하지 않습니다.\n";
+	}
+	
+	if(strMsg.length > 0) {
+		this.gfnAlert(strMsg);
+		return false;
+	}
+
+	return true;
+}
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	var sCdCorp = this.dsSearch.getColumn(0, "CD_CORP");
+	
+	if(this.gfnIsNull(sCdCorp)) {
+			this.gfnAlert("법인코드를 먼저 입력하세요.");
+			return false;
+		}
+	
+	if(id == "ccfCD_VENDOR") {
+		
+		//dsUserParam.setColumn(nrow, "TY_VENDOR", "F");
+		dsUserParam.setColumn(nrow, "CD_CORP"  , this.dsSearch.getColumn(0, "CD_CORP"));
+	}
+	
+	if(id == "ccfNO_ACCOUNT") {
+		
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_VENDOR"))) {
+			this.gfnAlert("거래처를 먼저 입력하세요.");			
+			return false;
+		}
+		
+		dsUserParam.setColumn(nrow, "CD_PAY", this.dsSearch.getColumn(0, "CD_VENDOR"));
+		dsUserParam.setColumn(nrow, "CD_CORP" , this.dsSearch.getColumn(0, "CD_CORP"));
+		dsUserParam.setColumn(nrow, "TY_CASH" , "C");	
+	}
+	
+	if(id == "ccfCD_PROOF") {	// 증빙선택(매입)
+		dsUserParam.setColumn(nrow, "CD_SYSTEM"	, "DH");				// 시스템코드
+		dsUserParam.setColumn(nrow, "CD_TYPE"	, "V10");				// 공통분류코드	
+		dsUserParam.setColumn(nrow, "DS_ETC1"	, "VAT");				
+	}
+
+	if(id == "ccfID_ISSUE") {	//
+		dsUserParam.setColumn(nrow, "CD_CORP"   , sCdCorp);
+		dsUserParam.setColumn(nrow, "TY_SALEBUY", "I");					//매입매출구분
+		dsUserParam.setColumn(nrow, "VALUE" ,  "");	// 검색조건 
+		//dsUserParam.setColumn(nrow, "VALUE" ,  this.dsSearch.getColumn(0, "CD_VENDOR"));	// 검색조건 
+	}
+	
+	return true;
+};	
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {	
+	var arr = codeFindData;
+	
+	if(id == "cfCD_VENDOR") {
+// 		var sTyVendor = "";
+// 		if(arr.length > 0) {
+// 			sTyVendor = arr[0]["TY_VENDOR"];
+// 		}
+		this.dsSearch.setColumn(0, "NO_ACCOUNT", "");
+		this.dsSearch.setColumn(0, "DS_ACCOUNT", "");
+		this.dsSearch.setColumn(0, "ID_ISSUE", "");
+		this.dsSearch.setColumn(0, "CD_PROOF", "");
+		this.dsSearch.setColumn(0, "DS_PROOF", "");
+		this.dsSearch.setColumn(0, "TY_VATBGJE", "");
+	}
+	
+	if(id == "ccfCD_PROOF") {	// 증빙선택
+		var vatRate = 0;
+		var cdProof = "";
+		if(arr.length > 0) {
+			var vatRate = nexacro.toNumber(arr[0]["DS_ETC2"],0);					//부가세율
+			this.dsSearch.setColumn(0, "VAT_RATE", vatRate);
+			cdProof = arr[0]["CD_CODE"];
+		}
+
+		var amSupply = nexacro.toNumber(this.dsSearch.getColumn(0, "AM_SUPPLY"),0);	// 공급가액
+		var amExtra = nexacro.toNumber(this.dsSearch.getColumn(0, "AM_EXTRA") ,0);	// 부대비용
+
+		//부가세
+		var amVat = (vatRate == 0 ? 0 : nexacro.floor(amSupply / vatRate));
+		this.dsSearch.setColumn(0, "AM_VAT", amVat);
+		this.dsSearch.setColumn(0, "AM_SUM", amSupply+amExtra+amVat);	// 합계
+
+		var sCssClass  = (cdProof == "13") ? "sta_WF_tablelabelE" : "sta_WF_tablelabel";
+		this.staAM_VAT.set_cssclass(sCssClass);		
+		vatRate == 0 ? this.mskAM_VAT.set_enable(false) : this.mskAM_VAT.set_enable(true);
+		
+	}
+
+	if(id == "ccfID_ISSUE") {	//전자세금계산서번호
+		if (arr.length > 0) {
+		
+			if (this.dsSearch.getColumn(0, "CD_VENDOR") != arr[0]["CD_VENDOR"])
+			{
+				this.gfnAlert("교육신청 자료와 거래처가 다릅니다. 선택할 수 없습니다. ");
+				this.ccfID_ISSUE.form.CDTextBox.setFocus();
+				return false 
+			}
+			
+			this.dsSearch.setColumn(0, "CD_VENDOR"	, arr[0]["CD_VENDOR"]);	// 거래처코드
+			this.dsSearch.setColumn(0, "DS_VENDOR"	, arr[0]["DS_VENDOR"]);	// 거래처명
+			this.dsSearch.setColumn(0, "AM_SUM"		, arr[0]["AM_TOTAL"]);
+			this.dsSearch.setColumn(0, "AM_SUPPLY"	, arr[0]["CHARGETOTAL"]);	// 공급가액
+			this.dsSearch.setColumn(0, "AM_VAT"		, arr[0]["TAXTOTAL"]);	// 부가세
+			this.dsSearch.setColumn(0, "CD_PROOF"	, arr[0]["CD_PROOF"]);	// 부가세
+			this.dsSearch.setColumn(0, "DS_PROOF"	, arr[0]["DS_PROOF"]);	// 부가세			
+			
+			this.dsSearch.setColumn(0, "DT_ACCOUNT"	, nexacro.replaceAll(this.gfnNvl(arr[0]["ISSUE_DATE"],""),"-",""));	// 회계일자
+			
+		}
+		var bEnable = (arr.length > 0) ? false : true;
+		
+		this.tclDT_ACCOUNT.set_enable(bEnable);	// 회계일자
+		this.mskAM_SUPPLY.set_enable(bEnable);	// 공급가액
+		this.mskAM_VAT.set_enable(bEnable);		// 부가세액
+	}
+}
+	
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+// 확인버튼
+this.btnOK_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	if (!this.fnSelectValid()) return; 
+	this.gfnConfirm("전표를 발행하시겠습니까?", "fnOKCallback");
+}
+
+this.fnOKCallback = function(svcID, val) {
+
+	// 전표발행 
+	if (val)
+	{	
+		this.dsIssueSlip = new Dataset();	
+		this.dsIssueSlip.addColumn("CD_CORP", "string");
+		this.dsIssueSlip.addColumn("NO_EDU", "string");
+		this.dsIssueSlip.addColumn("DT_ACCOUNT", "string");
+		this.dsIssueSlip.addColumn("DT_REQUEST", "string");
+		this.dsIssueSlip.addColumn("NO_ACCOUNT", "string");
+		this.dsIssueSlip.addColumn("CD_VENDOR", "string");
+		this.dsIssueSlip.addColumn("DS_REM", "string");
+		this.dsIssueSlip.addColumn("ID_ISSUE", "string");
+		this.dsIssueSlip.addColumn("CD_PROOF", "string");
+		this.dsIssueSlip.addColumn("AM_SUPPLY", "bigint");
+		this.dsIssueSlip.addColumn("AM_VAT", "bigint");
+		this.dsIssueSlip.addColumn("AM_SUM", "bigint");
+		this.dsIssueSlip.addColumn("CD_DEPT_BH", "string");
+		this.dsIssueSlip.addColumn("ID_USER", "string");
+		
+		this.dsIssueSlip.clearData();
+		var nRow = this.dsIssueSlip.addRow();
+		
+		//처리할 데이터 담기
+		this.dsIssueSlip.setColumn(nRow, "CD_CORP"		, this.dsSearch.getColumn(0, "CD_CORP"));
+		this.dsIssueSlip.setColumn(nRow, "NO_EDU" 		, this.dsSearch.getColumn(0, "NO_EDU"));
+		this.dsIssueSlip.setColumn(nRow, "DT_ACCOUNT" 	, this.dsSearch.getColumn(0, "DT_ACCOUNT"));
+		this.dsIssueSlip.setColumn(nRow, "DT_REQUEST" 	, this.dsSearch.getColumn(0, "DT_REQUEST"));
+		this.dsIssueSlip.setColumn(nRow, "NO_ACCOUNT" 	, this.dsSearch.getColumn(0, "NO_ACCOUNT"));
+		this.dsIssueSlip.setColumn(nRow, "CD_VENDOR" 	, this.dsSearch.getColumn(0, "CD_VENDOR"));
+		this.dsIssueSlip.setColumn(nRow, "DS_REM" 		, this.dsSearch.getColumn(0, "DS_REM"));	
+		this.dsIssueSlip.setColumn(nRow, "ID_ISSUE" 	, this.dsSearch.getColumn(0, "ID_ISSUE"));
+		this.dsIssueSlip.setColumn(nRow, "CD_PROOF" 	, this.dsSearch.getColumn(0, "CD_PROOF"));	
+		this.dsIssueSlip.setColumn(nRow, "AM_SUPPLY" 	, this.dsSearch.getColumn(0, "AM_SUPPLY"));
+		this.dsIssueSlip.setColumn(nRow, "AM_VAT" 		, this.dsSearch.getColumn(0, "AM_VAT"));	
+		this.dsIssueSlip.setColumn(nRow, "AM_SUM" 		, this.dsSearch.getColumn(0, "AM_SUM"));	
+		this.dsIssueSlip.setColumn(nRow, "CD_DEPT_BH"  	, this.AuthClient.CD_DEPT);
+		this.dsIssueSlip.setColumn(nRow, "ID_USER"  	, this.AuthClient.ID_USER);
+
+		var strSvcId    = "issueSlip";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "issueSlip=dsIssueSlip";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); 	// 통신방법 정의 [생략가능]
+	}
+}
+
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+
+	if (svcID == "issueSlip") {
+		if (errorCode == 0) {
+			this.getParentContext().close(true);
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if(svcID =="combo"){
+		if (errorCode == 0) {
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if (svcID =="selectExc"){
+		if (errorCode == 0) {
+			if (this.dsRtEx.rowcount > 0)
+			{
+				var rtExchange = this.dsRtEx.getColumn(0, "RT_KRW_EXCH");
+		
+				//trace("selectExc rtExchage=>" + rtExchange);
+		
+				var amContKrw = nexacro.toNumber(this.dsSearch.getColumn(0, "AM_SUPPORT" )) * rtExchange;
+	
+				this.dsSearch.setColumn(0, "AM_SUPPLY", this.fnGetTrunc(amContKrw, 1));
+				this.dsSearch.setColumn(0, "AM_SUM"	  , this.fnGetTrunc(amContKrw, 1));
+				this.dsSearch.setColumn(0, "RT_EXCH"  , this.dsRtEx.getColumn(0, "RT_KRW_EXCH"));
+				this.dsSearch.setColumn(0, "CD_PROOF"  ,"24");
+				this.ccfCD_PROOF.form.fnCodeFindLoad();
+			} else {
+				this.dsSearch.setColumn(0, "RT_EXCH"  , 0);
+				this.dsSearch.setColumn(0, "AM_SUPPLY", 0);
+				this.dsSearch.setColumn(0, "AM_SUM"	  , 0);
+			}
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+
+	}
+}
+
+// 취소버튼
+this.btnCANCLE_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	
+	this.getParentContext().close(false);
+}
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+   
+	if (e.oldvalue != e.newvalue) {
+		if (e.columnid == "DT_ACCOUNT" && !this.gfnIsNull(e.newvalue))
+		{
+			if (this.dsSearch.getColumn(0, "CD_CURR") != "KRW")
+			{
+				 trace(" dsSearch_onvaluechanged=>" + e.newvalue);
+				this.fnSetRtExchange();
+			}
+			var dtRequest = this.fnGetDtRequest( e.newvalue > this.gfnGetDate() ? e.newvalue : this.gfnGetDate()); 
+			this.dsSearch.setColumn(0, "DT_REQUEST" , dtRequest);			
+		}else if (e.columnid == "AM_SUPPLY" || e.columnid == "AM_VAT") {
+		
+			var amSum = this.dsSearch.getColumn(0, "AM_SUPPLY") + this.dsSearch.getColumn(0, "AM_VAT") ;
+			this.dsSearch.setColumn(0, "AM_SUM", amSum);
+		}
+	}
+};
+
+// 자금집행일 금요일로 셋팅 
+this.fnGetDtRequest = function (vDate)
+{
+	var vReturn = "";
+	var day = this.gfnGetDay(vDate);
+	
+	switch(day) {
+	case  0 :
+		vReturn = this.gfnAddDate(vDate , 5); 
+		break;
+	case 1 :
+		vReturn = this.gfnAddDate(vDate , 4); 
+		break;
+	case 2 : 
+		vReturn = this.gfnAddDate(vDate , 3); 
+		break;
+	case 3 : 
+		vReturn = this.gfnAddDate(vDate , 2); 
+		break;
+	case 4 :
+		vReturn = this.gfnAddDate(vDate , 1); 
+		break;
+	case 5 :
+		vReturn = this.gfnAddDate(vDate , 7); 
+		break;
+	case 6 : 
+		vReturn = this.gfnAddDate(vDate , 6); 
+		break;
+	default:
+	}
+	
+	return vReturn
+	
+};
+
+
+
+
+// 환율 가져오기 
+this.fnSetRtExchange = function ()
+{
+   
+	this.dsExchange = new Dataset();
+	this.dsExchange.addColumn("TY_GUBUN", "string");
+	this.dsExchange.addColumn("CN_ROW", "int");
+	this.dsExchange.addColumn("VALUE", "string");
+	this.dsExchange.addColumn("MIN_VALUE", "string");
+	this.dsExchange.addColumn("DT_BASE", "string");
+	this.dsExchange.addColumn("CD_LOCAL_CURR", "string");
+	this.dsExchange.addColumn("CD_EXEC_CURR", "string");
+	
+	this.dsExchange.addRow();
+	this.dsExchange.setColumn(0, "TY_GUBUN", "");
+	this.dsExchange.setColumn(0, "CN_ROW", 0);
+	this.dsExchange.setColumn(0, "VALUE", "");
+	this.dsExchange.setColumn(0, "MIN_VALUE", "");
+	this.dsExchange.setColumn(0, "DT_BASE", this.dsSearch.getColumn(0, "DT_ACCOUNT"));
+	this.dsExchange.setColumn(0, "CD_LOCAL_CURR", "KRW");
+	this.dsExchange.setColumn(0, "CD_EXEC_CURR", this.dsSearch.getColumn(0, "CD_CURR"));
+	
+	var strSvcId    = "selectExc";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "selectExc=dsExchange";
+	var outData     = "dsRtEx=selectExc0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+
+};
+
+
+// 절사 처리 
+this.fnGetTrunc = function(amVal, vCnt){
+	var returnVal = this.gfnNvl(amVal, 0);
+	if(returnVal > 0){
+		returnVal = Math.floor(amVal/vCnt) * vCnt;
+	}
+	return returnVal;
+}
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="DT_ACCOUNT" type="STRING" size="256"/>
+          <Column id="DS_REM" type="STRING" size="256"/>
+          <Column id="DT_REQUEST" type="STRING" size="256"/>
+          <Column id="AM_SUPPORT" type="FLOAT" size="256"/>
+          <Column id="ID_ISSUE" type="STRING" size="256"/>
+          <Column id="CD_PROOF" type="STRING" size="256"/>
+          <Column id="DS_PROOF" type="STRING" size="256"/>
+          <Column id="AM_SUPPLY" type="FLOAT" size="256"/>
+          <Column id="AM_VAT" type="FLOAT" size="256"/>
+          <Column id="VAT_RATE" type="FLOAT" size="256"/>
+          <Column id="TY_VATBGJE" type="STRING" size="256"/>
+          <Column id="CD_VENDOR" type="STRING" size="256"/>
+          <Column id="DS_VENDOR" type="STRING" size="256"/>
+          <Column id="AM_SUM" type="FLOAT" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="NO_ACCOUNT" type="STRING" size="256"/>
+          <Column id="DS_ACCOUNT" type="STRING" size="256"/>
+          <Column id="TY_PAY" type="STRING" size="256"/>
+          <Column id="NO_EDU" type="STRING" size="256"/>
+          <Column id="CD_CURR" type="STRING" size="256"/>
+          <Column id="RT_EXCH" type="FLOAT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">issueSlip</Col>
+            <Col id="SP">DABPR_EDU_REQ_AUTOSLIP</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectExc</Col>
+            <Col id="SP">DHXPR_CURRENCY_EXCHAGE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCD_CURR">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRtEx">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">Y</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.tclDT_ACCOUNT" propid="value" datasetid="dsSearch" columnid="DT_ACCOUNT"/>
+      <BindItem id="item1" compid="divSearch.form.edtDS_REM" propid="value" datasetid="dsSearch" columnid="DS_REM"/>
+      <BindItem id="item2" compid="divSearch.form.tclDT_REQUEST" propid="value" datasetid="dsSearch" columnid="DT_REQUEST"/>
+      <BindItem id="item3" compid="divSearch.form.ccfID_ISSUE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="ID_ISSUE"/>
+      <BindItem id="item4" compid="divSearch.form.ccfCD_PROOF.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_PROOF"/>
+      <BindItem id="item5" compid="divSearch.form.ccfCD_PROOF.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_PROOF"/>
+      <BindItem id="item6" compid="divSearch.form.mskAM_SUPPLY" propid="value" datasetid="dsSearch" columnid="AM_SUPPLY"/>
+      <BindItem id="item7" compid="divSearch.form.mskAM_VAT" propid="value" datasetid="dsSearch" columnid="AM_VAT"/>
+      <BindItem id="item8" compid="divSearch.form.mskAM_SUM" propid="value" datasetid="dsSearch" columnid="AM_SUM"/>
+      <BindItem id="item9" compid="divSearch.form.ccfCD_VENDOR.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_VENDOR"/>
+      <BindItem id="item10" compid="divSearch.form.ccfCD_VENDOR.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_VENDOR"/>
+      <BindItem id="item11" compid="divSearch.form.ccfNO_ACCOUNT.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="NO_ACCOUNT"/>
+      <BindItem id="item12" compid="divSearch.form.ccfNO_ACCOUNT.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_ACCOUNT"/>
+      <BindItem id="item13" compid="divSearch.form.mskAM_SUPPORT" propid="value" datasetid="dsSearch" columnid="AM_SUPPORT"/>
+      <BindItem id="item14" compid="divSearch.form.cboCD_CURR" propid="value" datasetid="dsList" columnid="CD_CURR"/>
+    </Bind>
+  </Form>
+</FDL>

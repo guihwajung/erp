@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="450" height="230" maxwidth="480" maxheight="240" titletext="부가세 마감" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" right="0" cssclass="div_DATA_Bg" height="128">
+          <Layouts>
+            <Layout>
+              <Static id="staTitle" taborder="1" text="투자유형일괄수정" left="10" top="0" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+              <Static id="staBg" taborder="2" left="0" top="staTitle:10" height="30" cssclass="sta_WF_tablebg" text="" right="0"/>
+              <Combo id="ccboTY_VATTUJA" taborder="3" left="10%" top="staTitle:15" right="10%" height="20" innerdataset="dsTY_VATTUJA" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+              <Button id="btnConf" taborder="4" text="확인" left="148" width="69" height="27" onclick="btnConf_onclick" top="staBg:20"/>
+              <Button id="btnCancel" taborder="5" text="취소" left="227" width="69" height="27" onclick="btnCancel_onclick" top="staBg:20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.fnSetCombo();
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+
+}
+
+ /*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	
+
+}
+
+ /*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	//this.gfnGridDel(this.dxGrid);
+}
+
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	//this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+	var validate = true;
+
+	return validate;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+*/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "magamCreate"){
+		if (errorCode == 0) {
+			this.gfnAlert("마감 작업이 완료되었습니다.", "fnMsgCallback");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	if(svcID == "magamCancel"){
+		if (errorCode == 0) {
+			this.gfnAlert("마감취소 작업이 완료되었습니다.", "fnMsgCallback");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+this.fnMsgCallback = function() {
+	this.getParentContext().close("SUSESS");
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	switch(id) {
+	
+		case "ccfCD_CORP": // 법인코드
+			dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+		break;		
+	
+		case "ccfCD_SELFACNT":	//세무단위
+			if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+				this.gfnAlert("법인코드를 먼저 선택하세요.");
+				this.ccfCD_CORP.form.CDTextBox.setFocus();
+				return false;
+			}		
+			dsUserParam.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+		break;
+	}
+	
+	return true;
+};
+
+
+ this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arrData = codeFindData;
+	
+	switch(id) {
+	
+	case "ccfCD_CORP": // 법인코드
+		this.ccfCD_SELFACNT.form.fnCodeFindClear();
+		break;	
+	
+		case "ccfCD_SELFACNT":	//세무단위
+			if (arrData.length > 0) {
+				var strCdSelfAcnt = "";
+				var strDsSelfAcnt = "";
+				for(var r = 0; r < arrData.length; r++) {
+					strCdSelfAcnt += arrData[r]["CD_DEPT_SELFACNT"]+",";
+					strDsSelfAcnt += arrData[r]["DS_DEPT_SELFACNT"]+",";
+				}
+				
+				strCdSelfAcnt = strCdSelfAcnt.substr(0,strCdSelfAcnt.length-1);
+				strDsSelfAcnt = strDsSelfAcnt.substr(0,strDsSelfAcnt.length-1);
+				
+				this.ccfCD_SELFACNT.form.CDTextBox.set_value(strCdSelfAcnt);
+				this.ccfCD_SELFACNT.form.DSTextBox.set_value(strDsSelfAcnt);
+
+			}		
+			break;
+	}
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+//취소버튼 클릭
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var param = {};
+	param.bSave = false;
+	this.getParentContext().close(param);
+};
+
+//확인버튼 클릭
+this.btnConf_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var param = {};
+	param.bSave = true;
+	param.TY_VATTUJA = this.dsSearch.getColumn(0, "TY_VATTUJA");
+	this.getParentContext().close(param);
+};
+
+this.fnSetCombo = function()
+{
+	this.dsCombo = new Dataset();
+	this.dsCombo.clearData();
+	this.dsCombo.addRow();
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_VATTUJA=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="SP">DHVPR_VATTUJA</Col>
+            <Col id="TARGET">combo</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_VATTUJA" onvaluechanged="dsMagam_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsMagam_onvaluechanged">
+        <ColumnInfo>
+          <Column id="TY_VATTUJA" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.ccboTY_VATTUJA" propid="value" datasetid="dsSearch" columnid="TY_VATTUJA"/>
+    </Bind>
+  </Form>
+</FDL>

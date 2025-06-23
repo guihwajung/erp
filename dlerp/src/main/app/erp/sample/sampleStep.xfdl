@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="sampleStep" width="1080" height="346" titletext="sampleStep" onload="form_onload" onstepchanged="sampleStep_onstepchanged" ontimer="sampleStep_ontimer">
+    <Layouts>
+      <Layout height="346" mobileorientation="landscape" width="1080" stepcount="3">
+        <Static id="staTobe" taborder="4" left="0" top="0" width="1080" height="346" background="URL(&quot;theme://images/img_main_banner01.png&quot;)" onclick="staTobe_onclick"/>
+        <Static id="staPlay" taborder="6" left="0" top="0" width="1080" height="346" background="URL(&quot;theme://images/img_main_banner03.png&quot;)" positionstep="2" onclick="staPlay_onclick"/>
+        <Static id="staSupport" taborder="5" left="0" top="0" width="1080" height="346" background="URL(&quot;theme://images/img_main_banner02.png&quot;)" positionstep="1" onclick="staSupport_onclick"/>
+        <Button id="btn01" taborder="0" top="20" width="30" height="20" positionstep="0" onclick="btnNext_onclick" left="1040" cssclass="btn_WF_ShuttleR"/>
+        <Button id="btn02" taborder="1" left="10" top="20" width="30" height="20" onclick="btnPre_onclick" positionstep="1" cssclass="btn_WF_ShuttleL"/>
+        <Button id="btn03" taborder="2" top="20" width="30" height="20" positionstep="1" onclick="btnNext_onclick" left="1037" cssclass="btn_WF_ShuttleR"/>
+        <Button id="btn04" taborder="3" left="10" top="20" width="30" height="20" onclick="btnPre_onclick" positionstep="2" cssclass="btn_WF_ShuttleL"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    샘플 > sampleStep
+*  @FileName 	sampleStep.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2018.01.01
+*  @Desction    sampleStep 예제
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2018.01.01     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fvStep = 0;
+this.elapseTime = 3000;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.stepselector.set_visible(false);
+	this.set_stepshowtype("action");
+	
+	//this.stepcontrol.set_visible(false);
+	this.setTimer(0, this.elapseTime);	
+};
+
+this.sampleStep_onstepchanged = function(obj:nexacro.Form,e:nexacro.StepChangeEventInfo)
+{
+// 	this.killTimer(0);
+// 	this.setTimer(0, this.elapseTime);	
+};
+
+this.sampleStep_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if (e.timerid == 0)
+	{
+		if (this.fvStep == 2) {
+			this.fvStep = 0;
+			this.stepselector.set_stepindex(0);
+		}
+		else {
+			this.stepselector.set_stepindex(++this.fvStep);
+		}
+	}
+};
+
+this.btnPre_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.killTimer(0);
+	this.stepselector.set_stepindex(--this.fvStep);
+	//this.setTimer(0, this.elapseTime);	
+};
+
+this.btnNext_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.killTimer(0);
+	this.stepselector.set_stepindex(++this.fvStep);
+	//this.setTimer(0, this.elapseTime);	
+};
+
+this.staTobe_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	system.execBrowser("http://www.tobesoft.co.kr/");
+};
+
+this.staSupport_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	system.execBrowser("http://support.tobesoft.co.kr/");
+};
+
+this.staPlay_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	system.execBrowser("http://www.playnexacro.com/");
+};]]></Script>
+  </Form>
+</FDL>

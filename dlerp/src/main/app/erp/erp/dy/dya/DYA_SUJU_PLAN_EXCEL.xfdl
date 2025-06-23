@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="420" height="170" titletext="수주계획관리 - 엑셀" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" right="0" cssclass="div_DATA_Bg" text="" bottom="0">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="수주계획등록" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staCD_SITE" taborder="1" text="법인코드" left="0" top="staTITLE:5" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staNO_BID" taborder="3" text="계획년도" left="0" top="staCD_SITE:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staDS_SUBCON" taborder="2" text="구분" left="0" top="staNO_BID:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staBg1" taborder="4" left="staCD_SITE:-1" top="staTITLE:5" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg2" taborder="5" left="staNO_BID:-1" top="staBg1:-1" right="0%" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="staBg3" taborder="6" left="staDS_SUBCON:-1" top="staBg2:-1" right="0%" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Button id="btnOk" taborder="7" text="양식업로드" left="39.52%" top="137" width="80" height="20" onclick="divData_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="8" text="닫기" left="62.62%" top="137" width="80" height="20" onclick="divData_btnCancel_onclick"/>
+              <Div id="ccfCD_CORP" CDTextWidth="70" taborder="9" left="92" top="40" width="219" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="true" enable="true"/>
+              <Div id="ccfSN_SEQ" CodeFindName="DYX_SUJU_PLAN" CDTextWidth="40" taborder="10" left="171" top="69" width="200" height="20" url="cmm::cmmCodeFind.xfdl"/>
+              <Grid id="objGrid" taborder="11" left="10" top="127" bottom="23" right="340" visible="false"/>
+              <Combo id="cboGUBUN" taborder="12" height="20" innerdataset="dsGUBUN" datacolumn="DS_CODE" codecolumn="CD_CODE" width="80" left="91" top="98"/>
+              <Button id="btnExcel" taborder="13" text="양식다운로드" left="16.67%" top="137" width="80" height="20" onclick="divData_btnExcel_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="ctclYR_PLAN" taborder="1" left="92" top="69" width="70" height="20" url="cmm::cmmCalYY.xfdl" text=""/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+var seq = "";
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 이전화면에서 데이터 받기.
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_CORP)) {
+	
+		this.dsSearch.setColumn(0, "CD_CORP", this.getOwnerFrame().CD_CORP);
+		this.dsSearch.setColumn(0, "YR_PLAN", this.getOwnerFrame().YR_PLAN);
+		this.dsSearch.setColumn(0, "SN_SEQ", this.getOwnerFrame().SN_SEQ);
+		this.dsSearch.setColumn(0, "GUBUN", "I");
+		
+		this.ccfCD_CORP.form.fnCodeFindLoad();
+		  
+		//var year1 = this.dsSearch.getColumn(0, "YR_PLAN");
+		//var year2 = this.gfnAddMonth(year1 + "0101" ,12).substr(0,4);
+		//var year3 = this.gfnAddMonth(year1 + "0101" ,24).substr(0,4);
+
+		//this.fnHeadNmCh(year1,year2,year3);
+		
+		//this.FormBtns.Select.click();
+	}	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+
+	this.ccfCD_CORP = this.divData.form.ccfCD_CORP;
+	this.ccfSN_SEQ = this.divData.form.ccfSN_SEQ;
+	
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_CORP.CodeFindName = "DHX_CFCORP";
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfSN_SEQ.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DY", "DYA_SUJU_PLAN_EXCEL");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP"      , "string");	//법인코드
+	this.dsSelect.addColumn("YR_PLAN"      , "string");
+	
+	this.dsCreate = new Dataset();
+	this.dsCreate.addColumn("GUBUN", "string");
+	this.dsCreate.addColumn("CD_CORP", "string");
+	this.dsCreate.addColumn("YR_PLAN", "string");
+	this.dsCreate.addColumn("SN_SEQ", "string");
+	
+	this.dsExcelUp = new Dataset();
+	this.dsExcelUp.addColumn("CD_CORP", "string");
+	this.dsExcelUp.addColumn("YR_PLAN", "string");
+	this.dsExcelUp.addColumn("CD_PROJ", "string");
+	this.dsExcelUp.addColumn("DS_PROJ", "string");
+	this.dsExcelUp.addColumn("SN_SEQ", "string");
+	this.dsExcelUp.addColumn("AM_MONTH01_01", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH01_02", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH01_03", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH01_04", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH01_05", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH01_06", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH01_07", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH01_08", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH01_09", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH01_10", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH01_11", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH01_12", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH02_01", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH02_02", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH02_03", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH02_04", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH02_05", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH02_06", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH02_07", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH02_08", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH02_09", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH02_10", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH02_11", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH02_12", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH03_01", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH03_02", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH03_03", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH03_04", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH03_05", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH03_06", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH03_07", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH03_08", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH03_09", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH03_10", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH03_11", "bigdecimal");
+	this.dsExcelUp.addColumn("AM_MONTH03_12", "bigdecimal");
+    this.dsExcelUp.addColumn("ID_USER", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	양식 조회 
+  */
+this.fnSelect = function() {
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));	//법인코드
+	this.dsSelect.setColumn(0, "YR_PLAN", this.dsSearch.getColumn(0, "YR_PLAN"));
+	
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+		
+		this.fnExcel();
+	} else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if(svcID == "excel") {
+		if (errorCode == 0) {
+			var objParentForm = this.parent.parent.opener.divWork.form;
+	        objParentForm.fnAfterUpExcel();
+	        this.getParentContext().close(true);
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+	if (id == "ccfCD_CORP") {
+		dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+	}
+	
+	if (id == "ccfSN_SEQ") {
+		var cdCorp = this.ccfCD_CORP.form.CDTextBox.value;
+		if(this.gfnIsNull(cdCorp)){
+			this.gfnAlert("법인코드를 선택하세요.");
+			return false;
+		}
+		
+		dsUserParam.setColumn(nrow, "CD_CORP"		, cdCorp);					//법인코드
+		dsUserParam.setColumn(nrow, "YR_PLAN"		, this.dsSearch.getColumn(0, "YR_PLAN"));
+		
+	}
+	
+	return true;
+
+}; 
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ 
+  // 라디오 버튼 설정
+ this.fnSetRadio = function()
+ {
+
+	
+ }
+ 
+
+
+this.fnHeadNmCh = function(yr1,yr2,yr3)
+{
+	// 해당 헤더컬럼 인덱스 구하기
+	var idx0 = ""; 
+	var idx1 = ""; 
+	var idx2 = ""; 
+	
+	// 해당 컬럼의 인덱스값을 구함
+	for(var i=0; i < this.dxGrid.getCellCount("head"); i++) { 
+		if(this.dxGrid.getCellText(-1,i) == "01"){ 
+			idx0 = i;
+		}else if(this.dxGrid.getCellText(-1,i) == "02"){ 
+			idx1 = i;
+		}else if(this.dxGrid.getCellText(-1,i) == "03"){ 
+			idx2 = i;
+		}
+	}	
+
+	this.dxGrid.setCellProperty("head", idx0, "text", yr1+"년");
+	this.dxGrid.setCellProperty("head", idx1, "text", yr2+"년");
+	this.dxGrid.setCellProperty("head", idx2, "text", yr3+"년");
+	
+	
+}
+
+this.fnHeadNmSet = function()
+{
+	// 해당 헤더컬럼 인덱스 구하기
+	var idx0 = "5"; 
+	var idx1 = "6"; 
+	var idx2 = "7"; 
+	
+
+	this.dxGrid.setCellProperty("head", idx0, "text", "01");
+	this.dxGrid.setCellProperty("head", idx1, "text", "02");
+	this.dxGrid.setCellProperty("head", idx2, "text", "03");
+}
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+
+this.divData_btnExcel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnHeadNmSet();
+	var year1 = this.dsSearch.getColumn(0, "YR_PLAN");
+	var year2 = this.gfnAddMonth(year1 + "0101" ,12).substr(0,4);
+	var year3 = this.gfnAddMonth(year1 + "0101" ,24).substr(0,4);
+
+	this.fnHeadNmCh(year1,year2,year3);
+	
+	this.FormBtns.Select.click();
+};
+
+this.fnExcel = function()
+{
+	this.gfnExcelExport(this.dxGrid);
+}
+
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnExcelImport("dsList","","A3","fnExcelImportCallback","import",this);
+};
+
+this.fnExcelImportCallback = function(sImportId, dsOut, dsSheet) {
+
+    if (dsOut.rowcount == 0)  {
+		this.gfnAlert("엑셀파일에 내용이 없습니다."); 
+		return false;
+	}
+
+	for (var i=0; i< this.dsList.getColCount(); i++)
+	{
+		sColumnId = "Column"+i;
+		var sColumnNm = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, i);
+		if (sColumnNm != "" && sColumnId != sColumnNm)
+		{
+			dsOut.updateColID(sColumnId, sColumnNm);
+		}
+	}
+	
+	// 양식이 일치하고 엑셀내역을 기존데이터에 Insert하지 않고
+	// 엑셀내역 그대로 그리드 반영할 시 copyData
+	this.dsList.copyData(dsOut);
+	
+	this.fnSaveCreate();
+	
+};
+
+/*
+ *	자동채번
+ */
+this.fnSaveCreate = function() {
+
+    this.dsCreate.clearData();
+	
+	var nrow = this.dsCreate.addRow();
+	this.dsCreate.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsCreate.setColumn(nrow, "YR_PLAN", this.dsSearch.getColumn(0, "YR_PLAN"));
+	this.dsCreate.setColumn(nrow, "SN_SEQ", this.dsSearch.getColumn(0, "SN_SEQ"));
+	this.dsCreate.setColumn(nrow, "GUBUN", this.dsSearch.getColumn(0, "GUBUN"));
+		
+	if (this.dsCreate.rowcount == 0) return;
+	
+	var strSvcId    = "create";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "create=dsCreate";
+	var outData     = "dsSeq=create0";
+	var strArg      = "";
+	var callBackFnc = "fnSaveExcel";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+    
+
+}
+
+/*
+ *	엑셀 저장.
+ */
+this.fnSaveExcel = function() {
+	
+	this.dsExcelUp.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var nrow = this.dsExcelUp.addRow();
+		this.dsExcelUp.setColumn(nrow, "CD_CORP", this.dsList.getColumn(i, "CD_CORP"));
+		this.dsExcelUp.setColumn(nrow, "YR_PLAN", this.dsList.getColumn(i, "YR_PLAN"));
+		this.dsExcelUp.setColumn(nrow, "CD_PROJ", this.dsList.getColumn(i, "CD_PROJ"));
+		this.dsExcelUp.setColumn(nrow, "DS_PROJ", this.dsList.getColumn(i, "DS_PROJ"));
+		this.dsExcelUp.setColumn(nrow, "SN_SEQ", this.dsSeq.getColumn(0, "SN_SEQ_NEW"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH01_01", this.dsList.getColumn(i, "AM_MONTH01_01"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH01_02", this.dsList.getColumn(i, "AM_MONTH01_02"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH01_03", this.dsList.getColumn(i, "AM_MONTH01_03"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH01_04", this.dsList.getColumn(i, "AM_MONTH01_04"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH01_05", this.dsList.getColumn(i, "AM_MONTH01_05"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH01_06", this.dsList.getColumn(i, "AM_MONTH01_06"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH01_07", this.dsList.getColumn(i, "AM_MONTH01_07"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH01_08", this.dsList.getColumn(i, "AM_MONTH01_08"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH01_09", this.dsList.getColumn(i, "AM_MONTH01_09"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH01_10", this.dsList.getColumn(i, "AM_MONTH01_10"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH01_11", this.dsList.getColumn(i, "AM_MONTH01_11"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH01_12", this.dsList.getColumn(i, "AM_MONTH01_12"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH02_01", this.dsList.getColumn(i, "AM_MONTH02_01"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH02_02", this.dsList.getColumn(i, "AM_MONTH02_02"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH02_03", this.dsList.getColumn(i, "AM_MONTH02_03"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH02_04", this.dsList.getColumn(i, "AM_MONTH02_04"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH02_05", this.dsList.getColumn(i, "AM_MONTH02_05"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH02_06", this.dsList.getColumn(i, "AM_MONTH02_06"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH02_07", this.dsList.getColumn(i, "AM_MONTH02_07"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH02_08", this.dsList.getColumn(i, "AM_MONTH02_08"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH02_09", this.dsList.getColumn(i, "AM_MONTH02_09"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH02_10", this.dsList.getColumn(i, "AM_MONTH02_10"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH02_11", this.dsList.getColumn(i, "AM_MONTH02_11"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH02_12", this.dsList.getColumn(i, "AM_MONTH02_12"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH03_01", this.dsList.getColumn(i, "AM_MONTH03_01"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH03_02", this.dsList.getColumn(i, "AM_MONTH03_02"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH03_03", this.dsList.getColumn(i, "AM_MONTH03_03"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH03_04", this.dsList.getColumn(i, "AM_MONTH03_04"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH03_05", this.dsList.getColumn(i, "AM_MONTH03_05"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH03_06", this.dsList.getColumn(i, "AM_MONTH03_06"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH03_07", this.dsList.getColumn(i, "AM_MONTH03_07"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH03_08", this.dsList.getColumn(i, "AM_MONTH03_08"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH03_09", this.dsList.getColumn(i, "AM_MONTH03_09"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH03_10", this.dsList.getColumn(i, "AM_MONTH03_10"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH03_11", this.dsList.getColumn(i, "AM_MONTH03_11"));
+		this.dsExcelUp.setColumn(nrow, "AM_MONTH03_12", this.dsList.getColumn(i, "AM_MONTH03_12"));
+		this.dsExcelUp.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	}
+		
+	if (this.dsExcelUp.rowcount == 0) return;
+	
+	var strSvcId    = "excel";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "excel=dsExcelUp";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DYAPR_SUJU_PLAN_EXCEL_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DCBPR_PREORDERPLAN_APPROVE_CANCEL</Col>
+            <Col id="TARGET">approve_cancel</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">create</Col>
+            <Col id="SP">DYAPR_SUJU_PLAN_CREATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">excel</Col>
+            <Col id="SP">DYAPR_SUJU_PLAN_EXCEL_INSERT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsGUBUN">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DS_CODE">신규생성</Col>
+            <Col id="CD_CODE">I</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">U</Col>
+            <Col id="DS_CODE">차수변경</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="YR_PLAN" type="STRING" size="256"/>
+          <Column id="SN_SEQ" type="STRING" size="256"/>
+          <Column id="GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" oncolumnchanged="dsList_oncolumnchanged"/>
+      <Dataset id="dsSeq" oncolumnchanged="dsList_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="SN_SEQ_NEW" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item1" compid="ctclYR_PLAN.form.TextBox" propid="value" datasetid="dsSearch" columnid="YR_PLAN"/>
+      <BindItem id="item2" compid="divData.form.ccfSN_SEQ.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="SN_SEQ"/>
+      <BindItem id="item3" compid="divData.form.cboGUBUN" propid="value" datasetid="dsSearch" columnid="GUBUN"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="280" height="250" maxwidth="315" maxheight="300" titletext="집행내역 변경" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="2" top="0" bottom="-2" right="-12" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="집행요청일자" left="20" top="40" width="112" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg1" taborder="1" left="129" top="40" height="30" cssclass="sta_WF_tablebg" width="131"/>
+              <Button id="btnSave" taborder="2" text="저장" left="86" top="174" width="50" onclick="divData_btnSave_onclick" height="20"/>
+              <Button id="btnCancel" taborder="3" text="취소" left="142" top="174" width="50" height="20" onclick="divData_btnCancel_onclick"/>
+              <Calendar id="tclDT_REQ" taborder="4" left="135" top="45" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" enable="true"/>
+              <Static id="staTitle" taborder="5" text="집행내역 변경" left="20" top="10" height="22" cssclass="sta_TITLE_Bg" width="220"/>
+              <Static id="sta00_00" taborder="6" text="집행통화" left="20" top="69" width="112" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg1_00" taborder="7" left="129" top="69" height="30" cssclass="sta_WF_tablebg" width="131"/>
+              <Combo id="ccboCD_CURR" taborder="8" left="135" top="74" width="105" height="20" datacolumn="CD_CURR" codecolumn="CD_CURR" innerdataset="dsCD_CURR" canitemchange="divData_ccboCD_CURR_canitemchange"/>
+              <Static id="sta00_00_00" taborder="9" text="집행금액(집행화)" left="20" top="98" width="112" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg1_00_00" taborder="10" left="129" top="98" height="30" cssclass="sta_WF_tablebg" width="131"/>
+              <Static id="sta00_00_00_00" taborder="11" text="집행금액(원화)" left="20" top="127" width="112" height="30" textAlign="right" cssclass="sta_WF_tablelabelE" visible="true"/>
+              <Static id="staBg1_00_00_00" taborder="12" left="129" top="127" height="30" cssclass="sta_WF_tablebg" width="131" visible="true"/>
+              <MaskEdit id="mskAM_EXEC_KRW" taborder="13" left="135" top="132" width="105" height="20" format="#,###,###,###,###,###,##0" limitbymask="integer" enable="false" visible="true"/>
+              <MaskEdit id="mskAM_EXEC" taborder="14" left="135" top="103" width="105" height="20" format="#,###,###,###,###,###,##0.00" limitbymask="integer"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.gubun = "";
+this.cdCurr = "";
+this.amAmt = 0;
+this.amAmtKrw = 0;
+this.amExec = 0;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 1.집행수정일자 버튼 클릭하여 수정시 (undefined)
+	// 청구 data 저장 처리 
+	this.gubun = this.getOwnerFrame().GUBUN;
+	this.cdCurr = this.getOwnerFrame().CD_CURR_EXEC;
+	this.amAmt = this.getOwnerFrame().AM_AMT;
+	this.amAmtKrw = this.getOwnerFrame().AM_AMT_KRW;
+	this.amExec = this.getOwnerFrame().AM_EXEC;
+// 	trace("this.cdCurr :: " + this.cdCurr);
+// 	trace("this.amAmt :: " + this.amAmt);
+	
+	//this.getOwnerFrame().set_width(300);
+	//this.getOwnerFrame().set_height(160);	
+	
+	// 이전 화면에서 데이터 받기.
+ 	this.dsList.setColumn(0, "SEQ_EXEC", this.getOwnerFrame().SEQ_EXEC);
+		
+	if (!this.gfnIsNull(this.getOwnerFrame().DT_REQ)) {
+		this.dsList.setColumn(0, "DT_REQ", this.getOwnerFrame().DT_REQ);
+	}
+	if (!this.gfnIsNull(this.getOwnerFrame().CD_CURR_EXEC)) {
+		this.dsList.setColumn(0, "CD_CURR_EXEC", this.getOwnerFrame().CD_CURR_EXEC);
+	}
+	if (!this.gfnIsNull(this.getOwnerFrame().AM_AMT)) {
+		this.dsList.setColumn(0, "AM_AMT", this.getOwnerFrame().AM_AMT);
+	}
+	if (!this.gfnIsNull(this.getOwnerFrame().AM_AMT_KRW)) {
+		this.dsList.setColumn(0, "AM_AMT_KRW", this.getOwnerFrame().AM_AMT_KRW);
+	}
+	
+	this.fnSetCombo();
+// 	this.divData.form.ccboCD_CURR.set_enable(false);
+// 	this.divData.form.mskAM_EXEC.set_enable(false);
+// 	this.divData.form.mskAM_EXEC_KRW.set_enable(false);
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+ this.ccboCD_CURR = this.divData.form.ccboCD_CURR;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+  this.dsList.addEventHandler("onvaluechanged", this.dsList_onvaluechanged, this);
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("SEQ_EXEC", "bigdecimal");
+	this.dsInsert.addColumn("DT_REQ", "string");
+	this.dsInsert.addColumn("CD_CURR_EXEC", "string");
+	this.dsInsert.addColumn("AM_AMT", "bigdecimal");
+	this.dsInsert.addColumn("AM_AMT_KRW", "bigdecimal");
+	this.dsInsert.addColumn("RT_LOCAL_EXCH", "bigdecimal");
+	this.dsInsert.addColumn("RT_KRW_EXCH", "bigdecimal");
+	this.dsInsert.addColumn("RT_USD_EXCH", "bigdecimal");
+	this.dsInsert.addColumn("RT_EUR_EXCH", "bigdecimal");
+	this.dsInsert.addColumn("AM_EXEC", "bigdecimal");
+	
+	//리턴 데이터셋
+ 	this.dsResult = new Dataset();		
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ 
+ /*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	
+}
+
+ /*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	//this.gfnGridDel(this.dxGrid);
+}
+
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	//this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+*/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "save") {
+		if(errorCode == 0)
+		{
+			// this.close()가 작동하지 않았고, 
+			// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+			this.getParentContext().close(true);
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}else if(svcID == "combo") {
+		this.dsList.setColumn(0, "CD_CURR_EXEC", this.getOwnerFrame().CD_CURR_EXEC);
+		this.dsList.setColumn(0, "AM_AMT_KRW", this.getOwnerFrame().AM_AMT_KRW);
+		this.dsList.setColumn(0, "AM_AMT", this.getOwnerFrame().AM_AMT);
+		//trace(" 환율->" + this.dsCD_CURR.saveXML());		
+		this.fnSetChange(this.getOwnerFrame().CD_CURR_EXEC);
+	}else
+	{
+		this.gfnAlert(errorMsg);
+	}
+
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ 
+// 저장 버튼 클릭
+this.divData_btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(!this.fnSaveValidate()) return;
+	
+	this.dsResult.clearData();	
+	this.dsResult.set_enableevent(false);
+	this.dsResult.assign(this.dsList);
+	this.dsResult.set_enableevent(true);
+	
+	this.getParentContext().close(this.dsResult.saveXML());
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+
+this.fnSaveValidate = function() {
+
+	var strMsg = "";
+	
+	
+	trace("집행금액은->" + this.dsList.getColumn(0, "AM_AMT"));
+	
+	if(this.gfnIsNull(this.dsList.getColumn(0, "DT_REQ"))) {
+		strMsg += "집행요청일자는 반드시 입력 하셔야 합니다.\n";
+	}
+	
+	if(this.gfnIsNull(this.dsList.getColumn(0, "AM_AMT"))) {
+		strMsg += "집행금액은 반드시 입력 하셔야 합니다.\n";
+	}
+	
+	if(strMsg.length > 0) {
+		this.gfnAlert(strMsg);
+		return false;
+	}
+
+	return true;
+}
+
+
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		switch(e.columnid) {
+		    case "DT_REQ":
+			    trace("DT_REQ=>"+  e.newvalue);
+			    this.fnSetCombo();
+			case "CD_CURR_EXEC":
+			   // trace("newvalue=>"+ e.newvalue);
+				this.fnSetChange(e.newvalue);		
+			case "AM_AMT":
+			   // trace("newvalue=>"+ e.newvalue);
+				this.fnSetAmt();	
+				
+			break;
+		}
+	}
+};
+
+this.fnSetChange = function(sCurr){
+    // trace("sCurr=>"+ sCurr);
+	var currRow = this.dsCD_CURR.findRowAs("CD_CURR", sCurr);
+	// trace("currRow=>"+ currRow);
+	if (currRow  > -1 ) {
+		this.dsList.setColumn(0, "RT_LOCAL_EXCH", this.dsCD_CURR.getColumn(currRow, "RT_LOCAL_EXCH"));	// 로컬환율
+		this.dsList.setColumn(0, "RT_KRW_EXCH", this.dsCD_CURR.getColumn(currRow, "RT_KRW_EXCH"));		// 원화환율
+		this.dsList.setColumn(0, "RT_USD_EXCH", this.dsCD_CURR.getColumn(currRow, "RT_USD_EXCH"));		// 미화환율
+		this.dsList.setColumn(0, "RT_EUR_EXCH", this.dsCD_CURR.getColumn(currRow, "RT_EUR_EXCH"));
+		//trace("RT_LOCAL_EXCH : " + this.dsList.getColumn(0, "RT_LOCAL_EXCH"));
+		this.fnSetAmAccouont(); 
+	}
+}
+
+ this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("TY_GUBUN", "string");
+	this.dsCombo.addColumn("CN_ROW", "int");
+	this.dsCombo.addColumn("VALUE", "string");
+	this.dsCombo.addColumn("MIN_VALUE", "string");
+	this.dsCombo.addColumn("DT_BASE", "string");
+	this.dsCombo.addColumn("CD_LOCAL_CURR", "string");
+	this.dsCombo.addColumn("CD_EXEC_CURR", "string");
+// 	this.dsCombo.addColumn("CD_SYSTEM", "string");
+// 	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "TY_GUBUN", "1");
+	this.dsCombo.setColumn(0, "CN_ROW", 0);
+	this.dsCombo.setColumn(0, "VALUE", "");
+	this.dsCombo.setColumn(0, "MIN_VALUE", "");
+	this.dsCombo.setColumn(0, "DT_BASE", this.dsList.getColumn(0, "DT_REQ"));
+	this.dsCombo.setColumn(0, "CD_LOCAL_CURR", this.getOwnerFrame().CD_CURR_EXEC);
+	this.dsCombo.setColumn(0, "CD_EXEC_CURR", "");
+// 	this.dsCombo.setColumn(0, "CD_SYSTEM", "DF");
+// 	this.dsCombo.setColumn(0, "CD_TYPE", "40");	
+		
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsCD_CURR=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+// 통화변경시 집행화, 원화 재계산
+this.fnSetAmAccouont = function(){
+	var nRow = 0;
+
+	var sCdLocalCurr = this.cdCurr;										// 로컬통화단위
+	var sCdExecCurr = this.dsList.getColumn(nRow, "CD_CURR_EXEC");		// 집행통화단위
+	
+	var nAmExec = nexacro.toNumber(this.amExec,0);						// 집행화- 최초 넘겨받은자료
+	
+	var rtLocalExch = nexacro.toNumber(this.dsList.getColumn(nRow, "RT_LOCAL_EXCH"));	// 로컬환율
+	var rtKrwExch = nexacro.toNumber(this.dsList.getColumn(nRow, "RT_KRW_EXCH"));		// 원화환율
+	var rtUsdExch = nexacro.toNumber(this.dsList.getColumn(nRow, "RT_USD_EXCH"));		// 미화환율
+	var rtEurExch = nexacro.toNumber(this.dsList.getColumn(nRow, "RT_EUR_EXCH"));		// 유로화환율
+	
+	var nAmLocal = 0;
+	var nAmAccount = 0;
+	var nAmUsd = 0;
+	var nAmEur = 0;
+
+	trace(" : fnSetAmAccouont " + "집행화, 원화 계산 시작!!!! : " + sCdExecCurr + nAmExec);
+
+	// 로컬화, 원화 계산
+	if(!this.gfnIsNull(sCdExecCurr) && !this.gfnIsNull(nAmExec)){
+		
+		//var bKrw = (sCdLocalCurr == "KRW" && sCdExecCurr == "KRW") ? true : false;
+		var bKrw = (sCdExecCurr == "KRW") ? true : false;
+
+		// ① 로컬화 : 집행화 * 로컬환율
+		trace("① 로컬화 : " + "집행화(" +nAmExec+ ") * " + "로컬환율(" +rtLocalExch+ ")" );
+		//nAmLocal = nAmExec * rtLocalExch;
+		nAmLocal = (bKrw == true) ? nAmExec * rtLocalExch : nAmExec / rtLocalExch ;
+		
+		// ② 원화 : 집행화 * 원화환율
+		trace("② 원화 : " + "집행화(" + nexacro.floor(nAmLocal,2) + ") * " + "원화환율(" +rtKrwExch+ ")" );
+		//nAmAccount = nAmExec * rtKrwExch;
+		nAmAccount = (bKrw == false) ? nAmLocal * rtKrwExch : nAmLocal / rtKrwExch;
+		trace(" 원화금액 : " + "집행화(" + nAmAccount+ ") * " + "(" +nAmAccount+ ")" );
+	}
+
+	//nexacro.round(, 0) 소수점 첫째자리
+	this.dsList.set_enableevent(false);
+	
+	this.dsList.setColumn(nRow, "AM_AMT", nexacro.floor(nAmLocal,2));			// 집행화
+	this.dsList.setColumn(nRow, "AM_AMT_KRW", nexacro.floor(nAmAccount));		// 원화
+
+	this.dsList.set_enableevent(true);
+}
+
+//발생화 금액 변경시 원화 재계산 
+this.fnSetAmt = function(){
+    var nRow = 0;
+	var sCdLocalCurr = this.cdCurr;										// 로컬통화단위
+	var sCdExecCurr = this.dsList.getColumn(nRow, "CD_CURR_EXEC");		// 집행통화단위
+	
+	var nAmLocal = nexacro.toNumber(this.dsList.getColumn(nRow, "AM_AMT"),2);  // 집행화- 입력값 	
+	var rtKrwExch = nexacro.toNumber(this.dsList.getColumn(nRow, "RT_KRW_EXCH"));		// 원화환율
+			
+	var nAmAccount = 0;
+	// 원화 계산
+	if(!this.gfnIsNull(sCdExecCurr) && !this.gfnIsNull(nAmLocal)){
+		
+		//var bKrw = (sCdLocalCurr == "KRW" && sCdExecCurr == "KRW") ? true : false;
+		var bKrw = (sCdExecCurr == "KRW") ? true : false;
+
+		// ② 원화 : 집행화 * 원화환율
+		trace("② 원화 : " + "집행화(" + nexacro.floor(nAmLocal,2) + ") * " + "원화환율(" +rtKrwExch+ ")" );
+		//nAmAccount = nAmExec * rtKrwExch;
+		nAmAccount = (bKrw == false) ? nAmLocal * rtKrwExch : nAmLocal / rtKrwExch;
+		trace(" 원화금액 : " + "집행화(" + nAmLocal+ ") * " + "(" +nAmAccount+ ")" );
+	}
+
+	this.dsList.setColumn(nRow, "AM_AMT_KRW", nexacro.floor(nAmAccount));		// 원화
+}
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DFBPR_EXECDTL_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DHXPR_CURRENCY_EXCHAGE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="SEQ_EXEC" type="STRING" size="256"/>
+          <Column id="DT_REQ" type="STRING" size="256"/>
+          <Column id="CD_CURR_EXEC" type="STRING" size="256"/>
+          <Column id="AM_AMT" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_AMT_KRW" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_LOCAL_EXCH" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_KRW_EXCH" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_USD_EXCH" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_EUR_EXCH" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_EXEC" type="BIGDECIMAL" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCD_CURR">
+        <ColumnInfo>
+          <Column id="DT_BASE" type="STRING" size="256"/>
+          <Column id="CD_CURR" type="STRING" size="256"/>
+          <Column id="DS_CURR" type="STRING" size="256"/>
+          <Column id="RT_LOCAL_EXCH" type="STRING" size="256"/>
+          <Column id="RT_KRW_EXCH" type="STRING" size="256"/>
+          <Column id="RT_USD_EXCH" type="STRING" size="256"/>
+          <Column id="RT_EUR_EXCH" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.tclDT_REQ" propid="value" datasetid="dsList" columnid="DT_REQ"/>
+      <BindItem id="item3" compid="divData.form.mskAM_EXEC_KRW" propid="value" datasetid="dsList" columnid="AM_AMT_KRW"/>
+      <BindItem id="item2" compid="divData.form.mskAM_EXEC" propid="value" datasetid="dsList" columnid="AM_AMT"/>
+      <BindItem id="item4" compid="divData.form.ccboCD_CURR" propid="value" datasetid="dsList" columnid="CD_CURR_EXEC"/>
+    </Bind>
+  </Form>
+</FDL>

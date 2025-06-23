@@ -1,0 +1,2982 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="990" titletext="입찰계획관리(본사)" onload="form_onload">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" taborder="1" left="0.0" top="10.0" height="46.0" right="4" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SITE" taborder="5" text="현장코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFSITE" FitToContents="true" AfterCDTextChanged="ccfCD_SITE_AfterCDTextChanged" CDTextWidth="80" taborder="0" left="staCD_SITE:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staNO_BID" taborder="1" text="입찰번호" left="ccfCD_SITE:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfNO_BID" CodeFindName="DCX_CFORDERPLAN_01" FitToContents="true" CDTextWidth="100" taborder="2" left="staNO_BID:0.0" top="10.0" width="270" height="24.0" url="cmm::cmmCodeFind.xfdl" maxwidth="300"/>
+              <Static id="staDS_BIDSTATUS" taborder="3" text="입찰진행" left="ccfNO_BID:0.0" top="10.0" width="92.0" height="24.0" visible="false" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtDS_BIDSTATUS" taborder="4" left="staDS_BIDSTATUS:0.0" top="10.0" width="1" height="24.0" FitToContents="true" value="" readonly="true" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta01" taborder="9" text="선정 및 승인사항" left="0" top="0" width="950" height="22" cssclass="sta_TITLE_Bg"/>
+              <Div id="divData01" taborder="1" left="0" top="sta01:10" width="949" height="365">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta001" taborder="0" text="구매유형" left="0" top="0" width="110" height="30" visible="false" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta002" taborder="1" text="구매요청번호" left="0" top="sta001:-1" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta008" taborder="2" text="통합대표번호" left="996" top="3" width="110" height="30" cssclass="sta_WF_tablelabel" visible="false"/>
+                    <Static id="sta009" taborder="3" text="통합입찰번호" left="996" top="32" width="110" height="30" cssclass="sta_WF_tablelabel" visible="false"/>
+                    <Static id="sta101" taborder="4" left="sta001:-1" top="0" width="181" height="30" cssclass="sta_WF_tablebg" visible="false"/>
+                    <Static id="sta102" taborder="5" left="sta002:-1" top="sta101:-1" width="181" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta108" taborder="6" left="sta008:-1" top="3" width="181" height="30" cssclass="sta_WF_tablebg" visible="false"/>
+                    <Static id="sta109" taborder="7" left="sta009:-1" top="32" width="181" height="30" cssclass="sta_WF_tablebg" visible="false"/>
+                    <Static id="sta201" taborder="8" text="계약유형" left="0" top="0" width="110" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta202" taborder="9" text="과세율" left="sta102:-1" top="sta201:-1" width="131" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta301" taborder="10" left="sta201:-1" top="0" width="181" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta302" taborder="11" left="sta202:-1" top="sta301:-1" width="181" height="30" cssclass="sta_WF_tablebg" text=" %"/>
+                    <Static id="sta401" taborder="12" text="과세구분" left="sta301:-1" top="0" width="131" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta402" taborder="13" text="하도급명" left="sta302:-1" top="0" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta403" taborder="14" text="부문" left="0" top="58" width="110" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta404" taborder="15" text="하도공종" left="289" top="58" width="131" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta405" taborder="16" text="공사기간" left="599" top="sta402:-1" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta406" taborder="17" left="599" top="sta405:-1" width="120" height="30" cssclass="sta_WF_tablelabel" visible="true" textDecoration="none" text="계약보증금율"/>
+                    <Static id="sta501" taborder="18" left="sta401:-1" top="0" width="181" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta502" taborder="19" left="sta402:-1" top="0" width="231" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta503" taborder="20" left="sta403:-1" top="58" width="181" height="35" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta504" taborder="21" left="sta404:-1" top="58" width="181" height="35" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta505" taborder="22" left="sta405:-1" top="sta502:-1" width="231" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta506" taborder="23" left="sta406:-1" top="sta505:-1" width="231" height="30" cssclass="sta_WF_tablebg" visible="true" text="계약금액의                    %"/>
+                    <Combo id="cboTY_ACCOUNT" taborder="24" left="sta001:5" top="5" width="165" height="20" innerdataset="dsTY_ACCOUNT" codecolumn="CD_CODE" datacolumn="DS_CODE" visible="false"/>
+                    <Edit id="txtNO_BID" taborder="25" left="sta002:5" top="sta101:4" width="165" height="20" value="" readonly="true"/>
+                    <Edit id="txtNO_UNION_HADO" taborder="26" left="sta008:5" top="8" width="165" height="20" value="" readonly="true" visible="false"/>
+                    <Edit id="txtNO_UNION_BID_CONNECT" taborder="27" left="1111" top="37" width="165" height="20" value="" readonly="true" visible="false"/>
+                    <Combo id="cboDS_CONTMETHOD" taborder="28" left="sta201:5" top="5" width="164" height="20" innerdataset="dsDS_CONTMETHOD" codecolumn="CD_CODE" datacolumn="DS_CODE" readonly="true"/>
+                    <MaskEdit id="txtRT_TAX" taborder="29" left="sta202:5" top="sta301:4" width="144" height="20" value="" format="9,999.99"/>
+                    <Combo id="cboTY_TAX" taborder="30" left="sta401:5" top="5" width="164" height="20" innerdataset="dsTY_TAX" codecolumn="CODE" datacolumn="DATA"/>
+                    <Calendar id="tclDT_FROM" taborder="31" left="sta405:5" top="35" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <Static id="sta00" taborder="35" text="~" left="tclDT_FROM:2" top="35" width="12" height="20" textAlign="center" verticalAlign="middle"/>
+                    <Calendar id="tclDT_TO" taborder="32" left="sta00:2" top="35" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <Edit id="txtDS_SUBCON" taborder="36" left="724" width="219" height="20" value="" top="5"/>
+                    <Div id="cfCD_COSTCLASS" CodeFindName="DCX_CFCOSTCLASS_01" CDTextWidth="70" taborder="33" left="114" top="63" width="166" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                    <Div id="cfCD_LICCOST" CodeFindName="DCX_CFLICCOST_01" CDTextWidth="70" taborder="34" left="sta404:5" top="63" width="165" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                    <MaskEdit id="txtRT_TAX00" taborder="37" left="sta406:90" top="63" width="51" height="20" value="" format="#,0.##"/>
+                    <Static id="sta01" taborder="38" text="하자보증금율" left="0" top="87" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta02" taborder="39" left="109" top="87" width="840" height="30" cssclass="sta_WF_tablebg" text="계약금액의                 %"/>
+                    <MaskEdit id="txtRT_TAX01" taborder="40" left="183" top="92" width="51" height="20" value="" format="#,0.##"/>
+                    <Static id="sta03" taborder="41" text="하자보증기간" left="289" top="87" width="131" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Edit id="txtDS_SUBCON00" taborder="42" left="425" top="92" width="165" height="20" value=""/>
+                    <Static id="sta07" taborder="43" text="지체보상금" left="0" top="116" width="110" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divData01_sta07_onclick"/>
+                    <Static id="sta08" taborder="44" left="109" top="116" width="840" height="30" cssclass="sta_WF_tablebg" text="매 지체 일수마다 계약금액의              % 현금 또는 기성공제"/>
+                    <Static id="sta08_00_01" taborder="52" left="109" top="145" width="840" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta07_00" taborder="46" text="선급금율" left="290" top="145" width="130" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divData01_sta07_00_onclick"/>
+                    <Static id="sta07_00_00" taborder="45" text="선급금대상" left="0" top="145" width="110" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divData01_sta07_00_00_onclick"/>
+                    <Radio id="rdoYN_PAYGUARANTEE" taborder="47" left="115" top="151" height="20" innerdataset="dsYN_PIL" direction="vertical" fittocontents="width" width="129" codecolumn="CODE" datacolumn="VALUE"/>
+                    <Static id="sta07_00_01" taborder="48" text="특기사항" left="0" top="174" width="110" height="60" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta08_00_00" taborder="49" left="109" top="174" width="840" height="60" cssclass="sta_WF_tablebg" text=""/>
+                    <TextArea id="txt00" taborder="50" left="114" top="179" width="829" height="50"/>
+                    <Static id="sta405_00" taborder="51" text="기성지불조건" left="599" top="116" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" usedecorate="false"/>
+                    <Static id="sta302_00" taborder="54" left="419" top="145" width="181" height="30" cssclass="sta_WF_tablebg" text=" %"/>
+                    <MaskEdit id="txtDS_PREPAY1" taborder="53" left="425" top="150" width="144" height="20" value="" format="9,999.99"/>
+                    <Static id="sta405_00_00" taborder="55" text="예산유무" left="599" top="145" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" usedecorate="false"/>
+                    <Radio id="rdoYN_SH" taborder="56" left="724" top="151" height="20" innerdataset="innerdataset" direction="vertical" width="129" codecolumn="codecolumn" datacolumn="datacolumn" fittocontents="width" readonly="true">
+                      <Dataset id="innerdataset">
+                        <ColumnInfo>
+                          <Column id="codecolumn" size="256"/>
+                          <Column id="datacolumn" size="256"/>
+                        </ColumnInfo>
+                        <Rows>
+                          <Row>
+                            <Col id="codecolumn">Y</Col>
+                            <Col id="datacolumn">예</Col>
+                          </Row>
+                          <Row>
+                            <Col id="datacolumn">아니오</Col>
+                            <Col id="codecolumn">N</Col>
+                          </Row>
+                        </Rows>
+                      </Dataset>
+                    </Radio>
+                    <Static id="sta402_00_00" taborder="57" text="결의번호" left="599" top="145" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Edit id="txtDS_SUBCON02_00" taborder="58" left="724" width="218" height="20" value="" top="150"/>
+                    <Static id="staTY_MAT" taborder="59" left="599" top="87" width="120" height="30" cssclass="sta_WF_tablelabel" visible="true" textDecoration="none" text="기성지불"/>
+                    <Combo id="cboTY_MAT" taborder="60" left="724" top="5" width="219" height="20" innerdataset="dsTY_MAT" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+                    <MaskEdit id="txtDS_SUBCON01" taborder="61" left="282" top="121" width="41" height="20" format="#,0.##"/>
+                    <Edit id="txtDS_PAYMET" taborder="62" left="724" width="218" height="20" value="" top="121"/>
+                    <Edit id="cboDS_PAY" taborder="63" left="724" width="218" height="20" value="" top="92"/>
+                    <Static id="sta07_00_01_00" taborder="64" text="공지사항" left="0" top="233" width="110" cssclass="sta_WF_tablelabel" bottom="11"/>
+                    <Static id="sta08_00_00_00" taborder="65" left="109" top="233" width="840" cssclass="sta_WF_tablebg" text="" bottom="11"/>
+                    <TextArea id="txt00_00" taborder="66" left="114" top="238" width="829" bottom="16"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divData02" taborder="4" left="0" top="divData01:-11" width="952" height="60">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta07_00" taborder="0" text="인도조건" left="0" top="-1" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta02" taborder="1" left="109" top="-1" width="840" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staCD_COSTCLASS00_00" taborder="2" text="근재보험필요" left="290" top="-1" width="130" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Radio id="rdoYN_PAYGUARANTEE" taborder="3" left="427" top="3" height="20" innerdataset="dsYN_PIL2" direction="vertical" fittocontents="width" width="129" codecolumn="CODE" datacolumn="VALUE"/>
+                    <Static id="sta03" taborder="4" text="기연단가" left="599" top="-1" width="111" height="30" cssclass="sta_WF_tablelabel" visible="false"/>
+                    <CheckBox id="chkYN_YEARDANGA" taborder="5" text="포함여부" left="716" top="2" width="80" height="25" truevalue="Y" falsevalue="N" onchanged="divSearch_chkYN_DOKUB_onchanged" visible="false"/>
+                    <Static id="staBgTY_SELECT00" taborder="6" left="109" top="28" width="840" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="txtDS_PREPAY1_00" taborder="7" left="114" top="33" width="481" height="20" value=""/>
+                    <Static id="sta07_00_00" taborder="8" text="납품장소" left="0" top="28" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta07_00_01" taborder="9" text="Buy - Back" left="599" top="28" width="111" height="30" cssclass="sta_WF_tablelabel" visible="false"/>
+                    <CheckBox id="chkYN_BUYBACK" taborder="10" text="해당여부" left="716" top="30" width="82" height="25" truevalue="Y" falsevalue="N" onchanged="divSearch_chkYN_DOKUB_onchanged" visible="false"/>
+                    <Combo id="txtDS_PAY2" taborder="11" left="124" top="4" width="171" height="20" innerdataset="dsTY_CONDITION_DELIVERY" codecolumn="CD_CODE" datacolumn="DS_CODE" visible="false"/>
+                    <Edit id="txtDS_PAY" taborder="12" left="114" top="4" width="171" height="20"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divData03" taborder="6" left="0" top="divData02:10" width="950" height="59">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta2001" taborder="0" text="현장요청일" left="0" top="0" width="159" height="30" cssclass="sta_WF_tablelabel" textAlign="center"/>
+                    <Static id="sta2002" taborder="1" text="본사접수일" left="sta2001:-1" top="0" width="159" height="30" cssclass="sta_WF_tablelabel" textAlign="center"/>
+                    <Static id="sta2003" taborder="2" text="승인일자" left="sta2002:-1" top="0" width="159" height="30" cssclass="sta_WF_tablelabel" textAlign="center"/>
+                    <Static id="sta2004" taborder="3" text="도급금액" left="sta2003:-1" top="0" width="159" height="30" cssclass="sta_WF_tablelabel" textAlign="center"/>
+                    <Static id="sta2005" taborder="4" text="실행금액" left="sta2004:-1" top="0" width="159" height="30" cssclass="sta_WF_tablelabel" textAlign="center"/>
+                    <Static id="sta2007" taborder="5" text="계약금액" left="sta2005:-1" top="0" width="159" height="30" cssclass="sta_WF_tablelabel" textAlign="center"/>
+                    <Static id="sta2101" taborder="6" left="0" top="sta2001:-1" width="159" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta2102" taborder="7" left="sta2101:-1" top="sta2002:-1" width="159" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta2103" taborder="8" left="sta2102:-1" top="sta2003:-1" width="159" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta2104" taborder="9" left="sta2103:-1" top="sta2004:-1" width="159" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta2105" taborder="10" left="sta2104:-1" top="sta2005:-1" width="159" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta2107" taborder="11" left="sta2105:-1" top="sta2007:-1" width="159" height="30" cssclass="sta_WF_tablebg"/>
+                    <Calendar id="tclDT_REQ_SITE" taborder="17" left="29" top="34" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="true"/>
+                    <Calendar id="tclDT_HQRECEIPT" taborder="12" left="sta2101:29" top="34" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="true"/>
+                    <Calendar id="tclDT_HQAPPR" taborder="13" left="sta2102:29" top="34" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="true"/>
+                    <MaskEdit id="txtAM_TT_DOKUB" taborder="14" left="sta2103:4" top="34" width="149" height="20" value="" readonly="true" format="9,990"/>
+                    <MaskEdit id="txtAM_TT_SILHENG" taborder="15" left="sta2104:4" top="34" width="149" height="20" value="" readonly="true" format="9,990"/>
+                    <MaskEdit id="txtAM_GONGSA" taborder="16" left="sta2105:4" top="34" width="149" height="20" value="" readonly="true" format="9,990"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Tab id="tabData" taborder="0" tabindex="0" left="0" top="divData03:10" bottom="0" minheight="300" maxheight="" width="950" onchanged="divData_tabData_onchanged">
+                <Tabpages>
+                  <Tabpage id="tab1" text="현장설명회">
+                    <Layouts>
+                      <Layout>
+                        <Div id="div00" taborder="1" left="10" top="5" right="10" height="100" formscrolltype="none">
+                          <Layouts>
+                            <Layout>
+                              <Static id="sta01" taborder="1" text="현장설명회" left="0" top="0" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+                              <Static id="sta001" taborder="1" text="현장실시여부" left="0" top="30" width="110" height="30" visible="false" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta101" taborder="1" left="109" top="30" width="283" height="30" cssclass="sta_WF_tablebg" visible="false"/>
+                              <Static id="sta00" taborder="1" text="현설유형" left="0" top="30" width="110" height="30" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta02" taborder="1" left="sta00:-1" top="30" width="283" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta03" taborder="1" text="현설일시" left="0" top="sta00:-1" width="110" height="30" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta04" taborder="1" left="sta03:-1" top="sta02:-1" width="283" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta06" taborder="1" text="현설장소" left="sta02:-1" top="30" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta07" taborder="1" text="현설공고일" left="sta04:-1" top="sta06:-1" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta05" taborder="1" left="sta06:-1" top="30" width="310" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta08" taborder="1" left="sta07:-1" top="sta05:-1" width="310" height="30" cssclass="sta_WF_tablebg"/>
+                              <Combo id="cboYN_EXPLAIN" taborder="2" left="sta001:5" top="35" width="165" height="20" innerdataset="dsYN_EXPLAIN" codecolumn="CODE" datacolumn="DATA" visible="false"/>
+                              <Combo id="cboONOFF_EXPLAIN" taborder="2" left="sta00:5" top="35" width="165" height="20" innerdataset="dsONOFF_EXPLAIN" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+                              <Edit id="txtAT_SITEEXPLAIN" taborder="2" left="sta06:5" top="35" width="295" height="20" value=""/>
+                              <Calendar id="tclDT_EXPLAIN" taborder="2" left="sta03:5" top="sta02:4" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" onchanged="divData_tabData_tab1_div00_tclDT_EXPLAIN_onchanged"/>
+                              <Combo id="ccboDT_EXPLAIN_HOUR" taborder="1" left="tclDT_EXPLAIN:5" top="sta02:4" width="45" height="20" innerdataset="dsHOUR" codecolumn="CD_CODE" datacolumn="DS_CODE" index="0" text="00" value="00"/>
+                              <Static id="staDT_EXPLAIN_HOUR" taborder="1" text="시" left="ccboDT_EXPLAIN_HOUR:3" top="sta02:4" width="20" height="20"/>
+                              <Combo id="ccboDT_EXPLAIN_MINUTE" taborder="1" left="staDT_EXPLAIN_HOUR:5" top="sta02:4" width="45" height="20" innerdataset="dsMINUTE" codecolumn="CD_CODE" datacolumn="DS_CODE" index="0" text="00" value="00"/>
+                              <Static id="staDT_EXPLAIN_MINUTE" taborder="1" text="분" left="ccboDT_EXPLAIN_MINUTE:3" top="sta02:4" width="20" height="20"/>
+                              <Calendar id="tclDT_EXPLAIN_GONGO" taborder="2" left="sta07:5" top="sta05:4" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="true"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                        <Div id="div01" taborder="1" text="div00" left="10" top="div00:5" right="10" height="118" formscrolltype="none">
+                          <Layouts>
+                            <Layout>
+                              <Static id="sta0111" taborder="0" text="현장담당" left="0" top="0" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+                              <Static id="sta00" taborder="1" text="현장담당자" left="0" top="29" width="110" height="30" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta03" taborder="2" text="기타사항" left="0" top="58" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta02" taborder="3" left="109" top="29" width="283" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta04" taborder="4" left="109" top="58" width="590" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta07" taborder="5" text="전화번호" left="sta02:-1" width="110" height="30" bottom="59" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta08" taborder="6" left="sta07:-1" width="199" height="30" cssclass="sta_WF_tablebg" bottom="59"/>
+                              <Edit id="txtRM_BIDREMARK" taborder="9" left="sta03:5" top="sta02:4" width="579" height="20" value=""/>
+                              <Div id="ccfID_SITESABUN" CodeFindName="DZX_CFUSER" CDTextWidth="70" taborder="7" left="sta00:5" width="272" height="20" url="cmm::cmmCodeFind.xfdl" bottom="64"/>
+                              <Edit id="txtNO_SITETEL" taborder="8" left="sta07:5" width="188" height="20" value="" bottom="64"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab2" text="현장설명 참여업체">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid" taborder="1" left="0" top="0" bottom="0" right="0"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab3" text="입찰일정">
+                    <Layouts>
+                      <Layout>
+
+<Div id="div00" taborder="0" text="div00" left="10" top="5" right="10" height="100">
+<Layouts>
+<Layout>
+<Static id="sta01" taborder="1" text="현장설명회" left="0" top="0" height="22" cssclass="sta_TITLE_Bg" right="0" visible="false"/>
+<Static id="sta001" taborder="1" text="현장실시여부" left="0" top="30" width="110" height="30" cssclass="sta_WF_tablelabel" visible="false"/>
+<Static id="sta101" taborder="1" left="109" top="30" width="283" height="30" cssclass="sta_WF_tablebg" visible="false"/>
+<Static id="sta00" taborder="1" text="현설유형" left="0" top="30" width="110" height="30" cssclass="sta_WF_tablelabel" textDecoration="underline" visible="false"/>
+<Static id="sta02" taborder="1" left="sta00:-1" top="30" width="283" height="30" cssclass="sta_WF_tablebg" visible="false"/>
+<Static id="sta03" taborder="1" text="현설일시" left="0" top="sta00:-1" width="110" height="30" cssclass="sta_WF_tablelabel" textDecoration="underline"/>
+<Static id="sta04" taborder="1" left="sta03:-1" top="sta02:-1" width="283" height="30" cssclass="sta_WF_tablebg"/>
+<Static id="sta06" taborder="1" text="현설장소" left="sta02:-1" top="30" width="110" height="30" cssclass="sta_WF_tablelabel" visible="false"/>
+<Static id="sta07" taborder="1" text="현설공고일" left="sta04:-1" top="sta06:-1" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+<Static id="sta05" taborder="1" left="sta06:-1" top="30" width="310" height="30" cssclass="sta_WF_tablebg" visible="false"/>
+<Static id="sta08" taborder="1" left="sta07:-1" top="sta05:-1" width="310" height="30" cssclass="sta_WF_tablebg"/>
+<Combo id="cboYN_EXPLAIN" taborder="2" left="sta001:5" top="35" width="165" height="20" innerdataset="dsYN_EXPLAIN" codecolumn="CODE" datacolumn="DATA" visible="false" readonly="false"/>
+<Combo id="cboONOFF_EXPLAIN" taborder="2" left="sta00:5" top="35" width="165" height="20" innerdataset="dsONOFF_EXPLAIN" codecolumn="CD_CODE" datacolumn="DS_CODE" readonly="false" visible="false"/>
+<Edit id="txtAT_SITEEXPLAIN" taborder="2" left="sta06:5" top="35" width="295" height="20" value="" readonly="false" visible="false"/>
+<Calendar id="tclDT_EXPLAIN" taborder="2" left="sta03:5" top="sta02:4" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="false"/>
+<Calendar id="tclDT_EXPLAIN_GONGO" taborder="2" left="sta07:5" top="sta05:4" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="true"/>
+<Combo id="ccboDT_EXPLAIN_HOUR" taborder="1" left="tclDT_EXPLAIN:5" top="sta02:4" width="45" height="20" innerdataset="dsHOUR" codecolumn="CD_CODE" datacolumn="DS_CODE" index="0" text="00" value="00" readonly="false"/>
+<Static id="staDT_EXPLAIN_HOUR" taborder="1" text="시" left="ccboDT_EXPLAIN_HOUR:3" top="sta02:4" width="20" height="20" readonly="false"/>
+<Combo id="ccboDT_EXPLAIN_MINUTE" taborder="1" left="staDT_EXPLAIN_HOUR:5" top="sta02:4" width="45" height="20" innerdataset="dsMINUTE" codecolumn="CD_CODE" datacolumn="DS_CODE" index="0" text="00" value="00" readonly="false"/>
+<Static id="staDT_EXPLAIN_MINUTE" taborder="1" text="분" left="ccboDT_EXPLAIN_MINUTE:3" top="sta02:4" width="20" height="20" readonly="false"/>
+</Layout>
+</Layouts>
+</Div>
+<Div id="div01" taborder="1" text="div00" left="10" top="div00:5" right="10" height="118">
+<Layouts>
+<Layout>
+<Static id="sta0111" taborder="1" text="현장담당" left="0" top="0" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+<Static id="sta001" taborder="1" text="원가관리자" left="0" top="30" width="110" height="30" cssclass="sta_WF_tablelabel" textDecoration="underline"/>
+<Static id="sta00" taborder="1" text="현장담당자" left="0" top="59" width="110" height="30" cssclass="sta_WF_tablelabel" textDecoration="underline"/>
+<Static id="sta03" taborder="1" text="기타사항" left="0" top="88" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+<Static id="sta101" taborder="1" left="109" top="30" width="283" height="30" cssclass="sta_WF_tablebg"/>
+<Static id="sta02" taborder="1" left="109" top="59" width="283" height="30" cssclass="sta_WF_tablebg"/>
+<Static id="sta04" taborder="1" left="109" top="88" width="590" height="30" cssclass="sta_WF_tablebg"/>
+<Static id="sta06" taborder="1" text="전화번호" left="sta101:-1" top="30" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+<Static id="sta07" taborder="1" text="전화번호" left="sta02:-1" top="sta06:-1" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+<Static id="sta05" taborder="1" left="sta06:-1" top="30" width="199" height="30" cssclass="sta_WF_tablebg"/>
+<Static id="sta08" taborder="1" left="sta07:-1" top="sta05:-1" width="199" height="30" cssclass="sta_WF_tablebg" readonly="false"/>
+<Edit id="txtRM_BIDREMARK" taborder="2" left="sta03:5" top="sta02:4" width="579" height="20" value="" readonly="false"/>
+<Div id="ccfID_SITESABUN_01" CodeFindName="DZX_CFUSER" CDTextWidth="70" taborder="1" left="sta00:5" top="sta101:4" width="272" height="20" url="cmm::cmmCodeFind.xfdl"/>
+<Div id="ccfID_MANAGER_01" CodeFindName="DZX_CFUSER" CDTextWidth="70" taborder="1" left="sta001:5" top="35" width="272" height="20" url="cmm::cmmCodeFind.xfdl"/>
+<Edit id="txtNO_MANAGERTEL" taborder="2" left="sta06:5" top="35" width="188" height="20" value="" readonly="false"/>
+<Edit id="txtNO_SITETEL" taborder="2" left="sta07:5" top="sta05:4" width="188" height="20" value="" readonly="false"/>
+</Layout>
+</Layouts>
+</Div>
+						
+<Div id="div02" taborder="2" text="div00" left="10" top="div01:5" right="10" height="217" formscrolltype="none">
+
+                        <Div id="div02" taborder="2" text="div00" left="10" top="5" right="10" height="217" formscrolltype="none">
+                          <Layouts>
+                            <Layout>
+                              <Static id="sta0111" taborder="0" text="입찰견적" left="0" top="0" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+                              <Static id="sta001" taborder="1" text="입찰공고일" left="0" top="30" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta00" taborder="6" text="입찰마감일시" left="0" top="59" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta101" taborder="7" left="109" top="30" width="283" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta02" taborder="8" left="109" top="59" width="283" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta06" taborder="9" text="선정방식" left="sta101:-1" top="30" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta07" taborder="10" text="입찰방식" left="sta02:-1" top="sta06:-1" width="110" height="30" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta05" taborder="11" left="sta06:-1" top="30" width="424" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta08" taborder="12" left="sta07:-1" top="sta05:-1" width="424" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta03" taborder="13" text="입찰담당1" left="0" top="sta00:38" width="110" height="30" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta09" taborder="14" left="109" top="sta02:38" width="283" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta11" taborder="15" text="전화번호" left="sta09:-1" top="sta07:38" width="110" height="30" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta13" taborder="16" left="sta11:-1" top="sta08:38" width="160" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta14" taborder="17" text="입찰담당2" left="0" top="sta03:-1" width="110" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="sta15" taborder="18" left="109" top="sta09:-1" width="283" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta16" taborder="19" text="전화번호" left="sta15:-1" top="sta11:-1" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta17" taborder="20" left="sta16:-1" top="sta13:-1" width="160" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta18" taborder="21" text="문의담당" left="0" top="sta14:-1" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta19" taborder="22" left="109" top="sta15:-1" width="283" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta20" taborder="23" text="전화번호" left="sta19:-1" top="sta16:-1" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta21" taborder="24" left="sta20:-1" top="sta17:-1" width="160" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta24" taborder="25" text="이메일" left="sta13:-1" top="sta08:38" width="71" height="30" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta25" taborder="26" left="sta24:-1" top="sta08:38" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta26" taborder="27" text="이메일" left="sta17:-1" top="sta24:-1" width="71" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta27" taborder="28" left="sta26:-1" top="sta25:-1" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="sta28" taborder="29" text="이메일" left="sta21:-1" top="sta26:-1" width="71" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta29" taborder="30" left="sta28:-1" top="sta27:-1" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                              <Combo id="cboONOFF_EXPLAIN" taborder="42" left="sta07:5" top="64" width="144" height="20" innerdataset="dsONOFF" codecolumn="CD_CODE" datacolumn="DS_CODE" readonly="false"/>
+                              <Edit id="txtNO_BIDDAM1TEL" taborder="41" left="sta11:5" top="cboONOFF_EXPLAIN:48" width="144" height="20" readonly="false"/>
+                              <Edit id="txtNO_BIDDAM2TEL" taborder="34" left="sta16:5" top="txtNO_BIDDAM1TEL:9" width="144" height="20" readonly="false"/>
+                              <Edit id="txtNO_QUESTIONTEL" taborder="35" left="sta20:5" top="txtNO_BIDDAM2TEL:9" width="144" height="20" readonly="false"/>
+                              <Edit id="txtEM_BIDDAM1" taborder="36" left="sta24:5" top="cboONOFF_EXPLAIN:48" width="184" height="20" readonly="false"/>
+                              <Edit id="txtEM_BIDDAM2" taborder="37" left="sta26:5" top="txtEM_BIDDAM1:9" width="184" height="20" readonly="false"/>
+                              <Edit id="txtEM_QUESTION" taborder="38" left="sta28:5" top="txtEM_BIDDAM2:9" width="184" height="20" readonly="false"/>
+                              <Calendar id="tclDT_BID_GONGO" taborder="39" left="115" top="35" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="true"/>
+                              <Calendar id="tclDT_BIDMAGAM" taborder="40" left="115" top="64" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="false" onchanged="divData_tabData_tab3_div02_tclDT_BIDMAGAM_onchanged"/>
+                              <Div id="ccfID_BIDDAM1" CodeFindName="DZX_CFUSER" CDTextWidth="70" taborder="33" left="115" top="tclDT_BIDMAGAM:48" width="174" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <Div id="ccfID_BIDDAM2" CodeFindName="DZX_CFUSER" CDTextWidth="70" taborder="32" left="115" top="ccfID_BIDDAM1:9" width="174" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <Div id="ccfID_QUESTION" CodeFindName="DZX_CFUSER" CDTextWidth="70" taborder="31" left="115" top="ccfID_BIDDAM2:9" width="174" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <Combo id="ccboDT_BIDMAGAM_HOUR" taborder="5" left="tclDT_BIDMAGAM:5" top="64" width="45" height="20" innerdataset="dsHOUR" codecolumn="CD_CODE" datacolumn="DS_CODE" index="0" text="00" value="00" readonly="false"/>
+                              <Static id="staDT_BIDMAGAM_HOUR" taborder="2" text="시" left="ccboDT_BIDMAGAM_HOUR:3" top="64" width="20" height="20" readonly="false"/>
+                              <Combo id="ccboDT_BIDMAGAM_MINUTE" taborder="3" left="staDT_BIDMAGAM_HOUR:5" top="64" width="45" height="20" innerdataset="dsMINUTE" codecolumn="CD_CODE" datacolumn="DS_CODE" index="0" text="00" value="00"/>
+                              <Static id="staDT_BIDMAGAM_MINUTE" taborder="4" text="분" left="ccboDT_BIDMAGAM_MINUTE:3" top="64" width="20" height="20"/>
+                              <Combo id="cboTY_BID" taborder="43" left="sta06:5" top="35" width="144" height="20" innerdataset="dsTY_BID" codecolumn="CD_CODE" datacolumn="DS_CODE" readonly="false"/>
+                              <Button id="btn00" taborder="44" text="첨부파일" top="34" width="60" height="23" fittocontents="width" padding="4px 7px 4px 7px" onclick="fnPRAttach" visible="false" left="cboTY_BID:5"/>
+                              <Static id="sta07_00" taborder="45" text="입찰장소" left="0" top="88" width="110" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta02_00" taborder="46" left="109" top="88" width="815" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtEM_BIDDAM1_00" taborder="47" left="115" top="93" width="271" height="20" readonly="false"/>
+                              <Static id="sta03_00" taborder="48" text="개찰자" left="391" top="88" width="110" height="30" cssclass="sta_WF_tablelabelE"/>
+                              <Div id="ccfID_BIDCOORDI" CodeFindName="DZX_CFUSER" CDTextWidth="70" taborder="49" left="506" top="93" width="174" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab4" text="현장설명회(통합입찰)">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid1" taborder="1" left="0" top="0" bottom="0" right="0"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+              <Button id="btn04" taborder="8" text="현설파일확정" left="tabData:-100" top="divData03:5" width="60" height="23" fittocontents="width" padding="4px 7px 4px 7px" onclick="divData_btn04_onclick" color="crimson" visible="false"/>
+              <Button id="btn03" taborder="7" text="불참메일발송" right="btn04:5" top="divData03:5" width="60" height="23" fittocontents="width" padding="4px 7px 4px 7px" onclick="divData_btn03_onclick" color="crimson" visible="false"/>
+              <Button id="btn02" taborder="5" text="현설참석여부확인" right="btn03:5" top="divData03:5" width="60" height="23" fittocontents="width" padding="4px 7px 4px 7px" onclick="divData_btn02_onclick" visible="false"/>
+              <Button id="btn01" taborder="3" text="현설질의응답" right="btn02:5" top="divData03:5" width="60" height="23" fittocontents="width" padding="4px 7px 4px 7px" onclick="divData_btn01_onclick" color="crimson" visible="false"/>
+              <Button id="btn00" taborder="2" text="현설참석자명단" right="btn01:5" top="divData03:5" width="60" height="23" fittocontents="width" padding="4px 7px 4px 7px" onclick="divData_btn00_onclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+this.singFormStat = "Q";	// 싱글폼 데이터 수정시 변경됨(싱글폼데이터와 그리드데이터를 같이 저장할지 각각 따로 저장할지 구분하기 위한변수)
+this._READONLY = "";
+this._SAVE_MSGCHK = false;  // 행당내역 체크를 위한 전역변수
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------// 
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();  
+	
+	this.fnSetCombo();
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_SITE) && !this.gfnIsNull(this.getOwnerFrame().NO_BID)) {
+		this.dsSearch.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+		this.dsSearch.setColumn(0, "NO_BID", this.getOwnerFrame().NO_BID);
+		// 코드파인드의 명칭부분은 직접 접근해서 셋팅
+		this.ccfCD_SITE.form.DSTextBox.set_value(this.getOwnerFrame().DS_SITE);
+		if(!this.gfnIsNull(this.getOwnerFrame().DS_SUBCON)) {
+			this.ccfNO_BID.form.DSTextBox.set_value(this.getOwnerFrame().DS_SUBCON);
+		}
+		
+		this.ccfCD_SITE.form.fnFitToContents();
+		this.ccfNO_BID.form.fnFitToContents();
+		
+		this.FormBtns.Select.click();
+	}		
+	
+	if(this.getOwnerFrame().READONLY == "Y")
+	{
+		this.divSearch.form.ccfCD_SITE.set_enable(false);
+		this.divSearch.form.ccfNO_BID.set_enable(false);
+	
+		this.fnAllReadonly(true);
+		this.fnReadOnlyTab1(true);
+		
+		this._READONLY = this.getOwnerFrame().READONLY;
+	}
+	
+};
+
+this.fnPRAttach = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if (!this.fnSelectValidate()) return false;
+	
+	if(this.dsList3.rowcount == 0)
+	{
+		this.gfnAlert("현설정보가 존재 하지 않습니다.");
+		return false;
+	}
+	
+	var nRow = this.dsList3.rowposition;
+	
+	var fileManager = {};
+	fileManager.CD_GUBUN = "DC49";
+	fileManager.CD_DIR = [this.dsList3.getColumn(nRow, "NO_PR"), "001"];
+	fileManager.IS_READONLY = false;
+	this.gfnFileManager(fileManager, "fnFileCallback");
+}
+
+this.fnPRAttach1 = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if (!this.fnSelectValidate()) return false;
+	
+	if(this.dsList3.rowcount == 0)
+	{
+		this.gfnAlert("현설정보가 존재 하지 않습니다.");
+		return false;
+	}
+	
+	var nRow = this.dsList3.rowposition;
+	
+	var fileManager = {};
+	fileManager.CD_GUBUN = "DC50";
+	fileManager.CD_DIR = [this.dsList3.getColumn(nRow, "NO_PR"), "001"];
+	fileManager.IS_READONLY = false;
+	this.gfnFileManager(fileManager, "fnFileCallback");
+}
+
+// 현설파일 클릭시 이벤트
+this.fnPRAttach2 = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if (!this.fnSelectValidate()) return false;
+	
+	if(this.dsList3.rowcount == 0)
+	{
+		this.gfnAlert("현설정보가 존재 하지 않습니다.");
+		return false;
+	}
+	
+	var nRow = this.dsList3.rowposition;
+	
+	var param = {};
+	
+	param.CD_SITE = this.dsList3.getColumn(nRow, "CD_SITE");
+	param.DS_SITE = this.dsList3.getColumn(nRow, "DS_SITE");
+	param.NO_PR   = this.dsList3.getColumn(nRow, "NO_PR");
+	param.DS_PR   = this.dsList.getColumn(nRow, "DS_SUBCON");
+	param.TY_SITE = "BONSA";
+	param.DS_PARAM = this.getOwnerFrame().DS_PARAM;
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DCB_PR_EXPLAIN_FILE", "", param, 750, 400);
+	
+	//this.fnSelectEPS("S");	// S : 현설조건/공내역서 등록 시
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// gfnCallAuthBtn 호출시 화면의 fnSetButton 호출이 되므로 
+	// 버튼들에 대한 권한 처리가 이뤄진후 fnSetButton에서는 false에 대한 처리만 해준다.
+	if(this.gfnGetFormStatus(this) != "") {
+		switch(this.divData.form.tabData.tabindex) {
+			case 0:
+			case 1:
+			case 2:
+// 				this.FormBtns.Add.set_enable(false);
+// 				this.FormBtns.Del.set_enable(false);
+				break;
+				
+		}
+	}
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnIndirect = this.gfnFormButtonAdd("btnIndirect", "fnIndirect");			// 간접비관리
+	this.btnRecVendor = this.gfnFormButtonAdd("btnRecVendor", "fnRecVendor");		// 입찰참여업체관리
+	this.btnPRAttachConfirm = this.gfnFormButtonAdd("btnPRAttachConfirm", "fnPRAttachConfirm");
+	this.btnReq = this.gfnFormButtonAdd("btnReq", "fnReq");
+	this.btnReqCancel = this.gfnFormButtonAdd("btnReqCancel", "fnReqCancel");
+	this.btnReqETC = this.gfnFormButtonAdd("btnReqETC", "fnReqETC");
+	this.btnPRAttachCancel = this.gfnFormButtonAdd("btnPRAttachCancel", "fnPRAttachCancel");
+	this.btnPRAttach = this.gfnFormButtonAdd("btnPRAttach", "fnPRAttach");
+	this.btnPRAttach1 = this.gfnFormButtonAdd("btnPRAttach1", "fnPRAttach1");
+	this.btnPRAttach2 = this.gfnFormButtonAdd("btnPRAttach2", "fnPRAttach2");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ccfNO_BID = this.divSearch.form.ccfNO_BID;
+	this.dxGrid = this.divData.form.tabData.tab2.form.objGrid;
+	this.dxGrid1 = this.divData.form.tabData.tab4.form.objGrid1;
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().DS_PARAM)) {
+		if(this.getOwnerFrame().DS_PARAM == "SU") { //외주
+			this.divData.form.divData01.form.sta002.set_text("시행결의번호");
+			this.divData.form.divData01.form.sta404.set_text("하도공종");
+			this.divData.form.divData01.form.sta405.set_text("공사기간");
+			
+			this.divData.form.divData01.form.sta402.set_text("하도급명");
+			this.divData.form.divData01.form.sta402.set_textDecoration("underline");
+			this.divData.form.divData01.form.txtDS_SUBCON.set_visible(true);
+			this.divData.form.divData01.form.cboTY_MAT.set_visible(false);
+		} else { // DS_PARAM == "MM" 자재
+			this.divData.form.divData01.form.sta002.set_text("발주의뢰번호");
+			this.divData.form.divData01.form.sta404.set_text("품목");
+			this.divData.form.divData01.form.sta405.set_text("납품기간");
+			
+			this.divData.form.divData01.form.sta402.set_text("비목");
+			this.divData.form.divData01.form.sta402.set_textDecoration("");
+			this.divData.form.divData01.form.txtDS_SUBCON.set_visible(false);
+			this.divData.form.divData01.form.cboTY_MAT.set_visible(true);
+		}
+	}	
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfNO_BID.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	
+	this.divData.form.divData01.form.cfCD_LICCOST.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	
+
+	this.ccfCD_SITE.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	//this.divData.form.tabData.tab1.form.div01.form.ccfID_MANAGER.AfterCDTextChanged = "fnAfterCDTextChanged";
+	//this.divData.form.tabData.tab1.form.div01.form.ccfID_SITESABUN.AfterCDTextChanged = "fnAfterCDTextChanged";
+
+	//this.divData.form.tabData.tab3.form.div01.form.ccfID_MANAGER_01.AfterCDTextChanged = "fnAfterCDTextChanged";
+	//this.divData.form.tabData.tab3.form.div01.form.ccfID_SITESABUN_01.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	//this.divData.form.tabData.tab3.form.div02.form.ccfID_BIDCOORD.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.divData.form.tabData.tab3.form.div02.form.ccfID_BIDDAM1.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.divData.form.tabData.tab3.form.div02.form.ccfID_BIDDAM2.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.divData.form.tabData.tab3.form.div02.form.ccfID_QUESTION.AfterCDTextChanged = "fnAfterCDTextChanged";
+
+	this.gfnGridInit(this.dxGrid, this.dsList2, "DC", "DCB_ORDERPLAN_BONSA_JOIN");
+	this.dxGrid.EnterCell = "fnGrid_EnterCell";
+	this.gfnGridInit(this.dxGrid1, this.dsList3, "DC", "DCB_PR_BY_SITEEXPLAIN");
+	this.dxGrid1.EnterCell = "fnGrid1_EnterCell";
+	this.dxGrid1.ExpandUp = "fnGrid1_ExpandUp";
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("NO_BID", "string");
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("CD_DEPT", "string");
+	this.dsSelect.addColumn("ID_USER", "string");
+
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("CD_SITE", "string");
+	this.dsUpdate.addColumn("NO_BID", "string");
+	this.dsUpdate.addColumn("NO_HADO", "string");
+	this.dsUpdate.addColumn("DS_SUBCON", "string");
+	this.dsUpdate.addColumn("TY_ACCOUNT", "string");
+	this.dsUpdate.addColumn("RT_TAX", "bigdecimal");
+	this.dsUpdate.addColumn("TY_TAX", "string");
+	this.dsUpdate.addColumn("DT_FROM", "string");
+	this.dsUpdate.addColumn("DT_TO", "string");
+	this.dsUpdate.addColumn("DS_FROMTO", "string");
+	this.dsUpdate.addColumn("AM_TT_SILHENG", "bigdecimal");
+	this.dsUpdate.addColumn("AM_TT_DOKUB", "bigdecimal");
+	this.dsUpdate.addColumn("RT_JIBUN", "bigdecimal");
+	this.dsUpdate.addColumn("CD_VENDOR", "string");
+	this.dsUpdate.addColumn("CD_COSTCLASS", "string");
+	this.dsUpdate.addColumn("CD_LICCOST", "string");
+	this.dsUpdate.addColumn("CD_LICCOSTSUB", "string");
+	this.dsUpdate.addColumn("CD_SPECCONST", "string");
+	this.dsUpdate.addColumn("CD_AREA", "string");
+	this.dsUpdate.addColumn("DS_GONSADESC", "string");
+	this.dsUpdate.addColumn("DS_LOCATION", "string");
+	this.dsUpdate.addColumn("OR_ORDER", "string");
+	this.dsUpdate.addColumn("AM_GONGSA", "bigdecimal");
+	this.dsUpdate.addColumn("NO_RFQ", "string");
+	this.dsUpdate.addColumn("UP_PYEONG", "bigdecimal");
+	this.dsUpdate.addColumn("DS_CONTMETHOD", "string");
+	this.dsUpdate.addColumn("AREA_SITE", "bigdecimal");
+	this.dsUpdate.addColumn("AM_BASIC", "bigdecimal");
+	this.dsUpdate.addColumn("YN_PUBLISH_BID", "string");
+	this.dsUpdate.addColumn("YN_ATTACH_ILSIK", "string");
+	this.dsUpdate.addColumn("YN_HASU", "string");
+	this.dsUpdate.addColumn("YN_EXFILE_SEPARATE", "string");
+	this.dsUpdate.addColumn("NO_UNION_HADO", "string");
+	this.dsUpdate.addColumn("NO_UNION_BID_CONNECT", "string");
+	this.dsUpdate.addColumn("YN_UNION_BID", "string");
+	this.dsUpdate.addColumn("YN_UNION_BID_ING", "string");
+	this.dsUpdate.addColumn("CT_GONGU", "int");
+	this.dsUpdate.addColumn("NUM_GONGU", "int");
+	this.dsUpdate.addColumn("AREA_SITE1", "bigdecimal");
+	this.dsUpdate.addColumn("AREA_SITE2", "bigdecimal");
+	this.dsUpdate.addColumn("AREA_SITE3", "bigdecimal");
+	this.dsUpdate.addColumn("AREA_SITE4", "bigdecimal");
+	this.dsUpdate.addColumn("AREA_SITEALL", "bigdecimal");
+	this.dsUpdate.addColumn("ID_MANAGER", "string");
+	this.dsUpdate.addColumn("NO_MANAGERTEL", "string");
+	this.dsUpdate.addColumn("ID_SITESABUN", "string");
+	this.dsUpdate.addColumn("NO_SITETEL", "string");
+	this.dsUpdate.addColumn("RM_BIDREMARK", "string");
+	this.dsUpdate.addColumn("RM_REMARK", "string");
+	this.dsUpdate.addColumn("YN_EXPLAIN", "string");
+	this.dsUpdate.addColumn("ONOFF_EXPLAIN", "string");
+	this.dsUpdate.addColumn("AT_SITEEXPLAIN", "string");
+	this.dsUpdate.addColumn("DT_EXPLAIN", "string");
+	this.dsUpdate.addColumn("DT_EXPLAIN_GONGO", "string");
+	this.dsUpdate.addColumn("DT_BIDMAGAM", "string");
+	this.dsUpdate.addColumn("DT_BIDMAGAM_GONGO", "string");
+	this.dsUpdate.addColumn("TY_BID", "string");
+	this.dsUpdate.addColumn("DS_BID_SUCCESS", "string");
+	this.dsUpdate.addColumn("ONOFF", "string");
+	this.dsUpdate.addColumn("ID_BIDCOORDI", "string");
+	this.dsUpdate.addColumn("NO_BIDCOORDITEL", "string");
+	this.dsUpdate.addColumn("EM_BIDCOORDI", "string");
+	this.dsUpdate.addColumn("ID_BIDDAM1", "string");
+	this.dsUpdate.addColumn("NO_BIDDAM1TEL", "string");
+	this.dsUpdate.addColumn("EM_BIDDAM1", "string");
+	this.dsUpdate.addColumn("ID_BIDDAM2", "string");
+	this.dsUpdate.addColumn("NO_BIDDAM2TEL", "string");
+	this.dsUpdate.addColumn("EM_BIDDAM2", "string");
+	this.dsUpdate.addColumn("ID_QUESTION", "string");
+	this.dsUpdate.addColumn("NO_QUESTIONTEL", "string");
+	this.dsUpdate.addColumn("EM_QUESTION", "string");
+	this.dsUpdate.addColumn("ID_USER", "string");
+	this.dsUpdate.addColumn("CT_HOUSEHOLDS", "bigdecimal");
+	this.dsUpdate.addColumn("RT_IND_01", "bigdecimal");
+	this.dsUpdate.addColumn("RT_IND_02", "bigdecimal");
+	
+	this.dsUpdate.addColumn("RT_CONTGUARANTEE", "bigdecimal");
+	this.dsUpdate.addColumn("RT_ASGUARANTEE", "bigdecimal");
+	this.dsUpdate.addColumn("DT_ASFROMTO", "string");
+	this.dsUpdate.addColumn("CT_JICHAE", "bigdecimal");
+	this.dsUpdate.addColumn("TY_RETIRE_BUGEUM", "string");
+	this.dsUpdate.addColumn("DS_PREPAY1", "string");
+	this.dsUpdate.addColumn("YN_PREPAY1", "string");
+	this.dsUpdate.addColumn("DS_PAY", "string");
+	
+	this.dsUpdate.addColumn("DS_CONDITION_DELIVERY", "string");
+	this.dsUpdate.addColumn("YN_BUYBACK", "string");
+	this.dsUpdate.addColumn("YN_LABORGUARANTEE", "string");
+	this.dsUpdate.addColumn("CD_INCREASE", "string");
+	this.dsUpdate.addColumn("YN_YEARDANGA", "string");
+	this.dsUpdate.addColumn("DS_PLACE", "string");
+	
+	this.dsUpdate.addColumn("AT_BIDMAGAM", "string");
+	this.dsUpdate.addColumn("YN_SH", "string");
+	
+	this.dsUpdate.addColumn("EPS_BID_NO", "string");
+	this.dsUpdate.addColumn("TY_MAT", "string");
+	this.dsUpdate.addColumn("DS_PAYMET", "string");
+	
+	this.dsUpdate.addColumn("DS_NOTICE", "string");
+	
+	
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("CD_SITE", "string");
+	this.dsDelete.addColumn("NO_BID", "string");
+
+	// 현설참석목록
+	this.dsSelect2 = new Dataset();
+	this.dsSelect2.addColumn("CD_GROUP", "string");
+	this.dsSelect2.addColumn("CD_SITE", "string");
+	this.dsSelect2.addColumn("NO_BID", "string");
+	this.dsSelect2.addColumn("CD_VENDOR", "string");
+	this.dsSelect2.addColumn("TY_BIDOREXPLAIN", "string");
+	
+	this.dsUpdate2 = new Dataset();
+	this.dsUpdate2.addColumn("NO_BID", "string");
+	this.dsUpdate2.addColumn("CD_VENDOR", "string");
+	this.dsUpdate2.addColumn("YN_JOIN", "string");
+	this.dsUpdate2.addColumn("DS_CONTACTNAME", "string");
+	this.dsUpdate2.addColumn("DT_CONTACTTEL", "string");
+	this.dsUpdate2.addColumn("DS_REASON", "string");
+	
+	this.dsSelectJodal = new Dataset();
+	this.dsSelectJodal.addColumn("NO_BID", "string");
+	this.dsSelectJodal.addColumn("YN_UNION", "string");
+	this.dsSelectJodal.addColumn("ID_USER", "string");
+	
+	this.dsSelect_tab4 = new Dataset();
+	this.dsSelect_tab4.addColumn("NO_BID", "string");
+	this.dsSelect_tab4.addColumn("NO_PR", "string");
+	
+	this.dsUpdate_tab4 = new Dataset();
+	this.dsUpdate_tab4.addColumn("NO_BID", "string");
+	this.dsUpdate_tab4.addColumn("NO_PR", "string");
+	this.dsUpdate_tab4.addColumn("ONOFF_EXPLAIN", "string");
+	this.dsUpdate_tab4.addColumn("DT_FROM", "string");
+	this.dsUpdate_tab4.addColumn("DT_TO", "string");
+	this.dsUpdate_tab4.addColumn("DS_FROMTO", "string");
+	this.dsUpdate_tab4.addColumn("DT_EXPLAIN", "string");
+	this.dsUpdate_tab4.addColumn("ID_SITESABUN", "string");
+	this.dsUpdate_tab4.addColumn("NO_SITETEL", "string");
+	this.dsUpdate_tab4.addColumn("AT_SITEEXPLAIN", "string");
+	this.dsUpdate_tab4.addColumn("DT_BIDMAGAM", "string");
+	this.dsUpdate_tab4.addColumn("ID_BIDDAM1", "string");
+	this.dsUpdate_tab4.addColumn("NO_BIDDAM1TEL", "string");
+	this.dsUpdate_tab4.addColumn("EM_BIDDAM1", "string");
+	this.dsUpdate_tab4.addColumn("ONOFF", "string");
+	this.dsUpdate_tab4.addColumn("DS_BIGO", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+	this.dsSelect.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+	this.dsSelect.setColumn(0, "CD_DEPT", this.AuthClient.CD_DEPT);
+	this.dsSelect.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+
+	this.dsSelect2.clearData();
+	this.dsSelect2.addRow();
+	this.dsSelect2.setColumn(0, "CD_GROUP", "");
+	this.dsSelect2.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect2.setColumn(0, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+	this.dsSelect2.setColumn(0, "CD_VENDOR", "");
+	this.dsSelect2.setColumn(0, "TY_BIDOREXPLAIN", "");
+	
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect d_select=dsSelect2";
+	var outData     = "dsList=select0 dsList2=d_select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnSelectTab4 = function()
+{
+	this.dsSelect_tab4.clearData();
+	this.dsSelect_tab4.addRow();
+	this.dsSelect_tab4.setColumn(0, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+	this.dsSelect_tab4.setColumn(0, "NO_PR", this.dsList.getColumn(0, "NO_BID"));
+	
+	var strSvcId    = "tab4_select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "tab4_select=dsSelect_tab4";
+	var outData     = "dsList3=tab4_select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnConfirm("삭제하시겠습니까?", "fnDel_callback");
+}
+
+this.fnDel_callback = function(strId, val) {
+	if(val == true) {
+		
+		this.dsDelete.clearData();
+		var nrow = this.dsDelete.addRow();
+		this.dsDelete.setColumn(nrow, "CD_SITE", this.dsList.getColumn(0, "CD_SITE"));
+		this.dsDelete.setColumn(nrow, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+
+		if (this.dsDelete.rowcount == 0) return;		
+			
+		var strSvcId    = "save";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "delete=dsDelete";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	// 싱글폼(Dataset) 필수입력 체크
+	
+	var arr_in = [];
+	
+	var update = false;
+	if (this.dsList.rowcount > 0) {
+		// 싱글폼쪽 update 유무 체크
+		/*
+		if(this.dsList.getRowType(0) == Dataset.ROWTYPE_UPDATE) {
+			update = true;
+		}
+		*/
+		
+		if(this.singFormStat == "Q") {
+			update = true;			
+		}
+		this.singFormStat = "Q";	// 초기화
+	}
+	
+	if (update) 
+	{
+		if(!this.fnSaveValidate1()) return;
+		// 싱글폼 변경 내역이 있으면 필수값 체크
+		if(!this.fnSaveValidate()) return;
+		
+		arr_in.push("update=dsUpdate");
+		
+		this.dsUpdate.clearData();
+		var nrow = this.dsUpdate.addRow();		
+		this.dsUpdate.setColumn(nrow, "CD_SITE", this.dsList.getColumn(0, "CD_SITE"));
+		this.dsUpdate.setColumn(nrow, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+		this.dsUpdate.setColumn(nrow, "NO_HADO", this.dsList.getColumn(0, "NO_HADO"));
+		this.dsUpdate.setColumn(nrow, "DS_SUBCON", this.dsList.getColumn(0, "DS_SUBCON"));
+		this.dsUpdate.setColumn(nrow, "TY_ACCOUNT", this.dsList.getColumn(0, "TY_ACCOUNT"));
+		this.dsUpdate.setColumn(nrow, "RT_TAX", this.dsList.getColumn(0, "RT_TAX"));
+		this.dsUpdate.setColumn(nrow, "TY_TAX", this.dsList.getColumn(0, "TY_TAX"));
+		this.dsUpdate.setColumn(nrow, "DT_FROM", this.dsList.getColumn(0, "DT_FROM"));
+		this.dsUpdate.setColumn(nrow, "DT_TO", this.dsList.getColumn(0, "DT_TO"));
+		this.dsUpdate.setColumn(nrow, "DS_FROMTO", this.dsList.getColumn(0, "DS_FROMTO"));
+		this.dsUpdate.setColumn(nrow, "AM_TT_SILHENG", this.dsList.getColumn(0, "AM_TT_SILHENG"));
+		this.dsUpdate.setColumn(nrow, "AM_TT_DOKUB", this.dsList.getColumn(0, "AM_TT_DOKUB"));
+		this.dsUpdate.setColumn(nrow, "RT_JIBUN", this.dsList.getColumn(0, "RT_JIBUN"));
+		this.dsUpdate.setColumn(nrow, "CD_VENDOR", this.dsList.getColumn(0, "CD_VENDOR"));
+		this.dsUpdate.setColumn(nrow, "CD_COSTCLASS", this.dsList.getColumn(0, "CD_COSTCLASS"));
+		this.dsUpdate.setColumn(nrow, "CD_LICCOST", this.dsList.getColumn(0, "CD_LICCOST"));
+		this.dsUpdate.setColumn(nrow, "CD_LICCOSTSUB", this.dsList.getColumn(0, "CD_LICCOSTSUB"));
+		this.dsUpdate.setColumn(nrow, "CD_SPECCONST", this.dsList.getColumn(0, "CD_SPECCONST"));
+		this.dsUpdate.setColumn(nrow, "CD_AREA", this.dsList.getColumn(0, "CD_AREA"));
+		this.dsUpdate.setColumn(nrow, "DS_GONSADESC", this.dsList.getColumn(0, "DS_GONSADESC"));
+		this.dsUpdate.setColumn(nrow, "DS_LOCATION", this.dsList.getColumn(0, "DS_LOCATION"));
+		this.dsUpdate.setColumn(nrow, "OR_ORDER", this.dsList.getColumn(0, "OR_ORDER"));
+		this.dsUpdate.setColumn(nrow, "AM_GONGSA", this.dsList.getColumn(0, "AM_GONGSA"));
+		this.dsUpdate.setColumn(nrow, "NO_RFQ", this.dsList.getColumn(0, "NO_RFQ"));
+		this.dsUpdate.setColumn(nrow, "UP_PYEONG", this.dsList.getColumn(0, "UP_PYEONG"));
+		this.dsUpdate.setColumn(nrow, "DS_CONTMETHOD", this.dsList.getColumn(0, "DS_CONTMETHOD"));
+		this.dsUpdate.setColumn(nrow, "AREA_SITE", this.dsList.getColumn(0, "AREA_SITE"));
+		this.dsUpdate.setColumn(nrow, "AM_BASIC", this.dsList.getColumn(0, "AM_BASIC"));
+		this.dsUpdate.setColumn(nrow, "YN_PUBLISH_BID", this.dsList.getColumn(0, "YN_PUBLISH_BID"));
+		this.dsUpdate.setColumn(nrow, "YN_ATTACH_ILSIK", this.dsList.getColumn(0, "YN_ATTACH_ILSIK"));
+		this.dsUpdate.setColumn(nrow, "YN_HASU", this.dsList.getColumn(0, "YN_HASU"));
+		this.dsUpdate.setColumn(nrow, "NO_UNION_HADO", this.dsList.getColumn(0, "NO_UNION_HADO"));
+		this.dsUpdate.setColumn(nrow, "NO_UNION_BID_CONNECT", this.dsList.getColumn(0, "NO_UNION_BID_CONNECT"));
+		this.dsUpdate.setColumn(nrow, "YN_UNION_BID", this.dsList.getColumn(0, "YN_UNION_BID"));
+		this.dsUpdate.setColumn(nrow, "YN_UNION_BID_ING", this.dsList.getColumn(0, "YN_UNION_BID_ING"));
+		this.dsUpdate.setColumn(nrow, "CT_GONGU", this.dsList.getColumn(0, "CT_GONGU"));
+		this.dsUpdate.setColumn(nrow, "NUM_GONGU", this.dsList.getColumn(0, "NUM_GONGU"));
+		this.dsUpdate.setColumn(nrow, "AREA_SITE1", this.dsList.getColumn(0, "AREA_SITE1"));
+		this.dsUpdate.setColumn(nrow, "AREA_SITE2", this.dsList.getColumn(0, "AREA_SITE2"));
+		this.dsUpdate.setColumn(nrow, "AREA_SITE3", this.dsList.getColumn(0, "AREA_SITE3"));
+		this.dsUpdate.setColumn(nrow, "AREA_SITE4", this.dsList.getColumn(0, "AREA_SITE4"));
+		this.dsUpdate.setColumn(nrow, "AREA_SITEALL", this.dsList.getColumn(0, "AREA_SITEALL"));
+		this.dsUpdate.setColumn(nrow, "ID_MANAGER", this.dsList.getColumn(0, "ID_MANAGER"));
+		this.dsUpdate.setColumn(nrow, "NO_MANAGERTEL", this.dsList.getColumn(0, "NO_MANAGERTEL"));
+		this.dsUpdate.setColumn(nrow, "ID_SITESABUN", this.dsList.getColumn(0, "ID_SITESABUN"));
+		this.dsUpdate.setColumn(nrow, "NO_SITETEL", this.dsList.getColumn(0, "NO_SITETEL"));
+		this.dsUpdate.setColumn(nrow, "RM_BIDREMARK", this.dsList.getColumn(0, "RM_BIDREMARK"));
+		this.dsUpdate.setColumn(nrow, "RM_REMARK", this.dsList.getColumn(0, "RM_REMARK"));
+		//this.dsUpdate.setColumn(nrow, "YN_EXPLAIN", this.dsList.getColumn(0, "YN_EXPLAIN"));
+		this.dsUpdate.setColumn(nrow, "YN_EXPLAIN", "Y");
+		this.dsUpdate.setColumn(nrow, "ONOFF_EXPLAIN", this.dsList.getColumn(0, "ONOFF_EXPLAIN"));
+		this.dsUpdate.setColumn(nrow, "AT_SITEEXPLAIN", this.dsList.getColumn(0, "AT_SITEEXPLAIN"));
+		this.dsUpdate.setColumn(nrow, "DT_EXPLAIN", this.dsList.getColumn(0, "DT_EXPLAIN")+ this.dsTempTime.getColumn(0, "EXPLAIN_HOUR") + this.dsTempTime.getColumn(0, "EXPLAIN_MINUTE"));
+		this.dsUpdate.setColumn(nrow, "DT_EXPLAIN_GONGO", this.dsList.getColumn(0, "DT_EXPLAIN_GONGO"));
+		this.dsUpdate.setColumn(nrow, "DT_BIDMAGAM", this.dsList.getColumn(0, "DT_BIDMAGAM") + this.dsTempTime.getColumn(0, "BIDMAGAM_HOUR") + this.dsTempTime.getColumn(0, "BIDMAGAM_MINUTE"));
+		this.dsUpdate.setColumn(nrow, "DT_BIDMAGAM_GONGO", this.dsList.getColumn(0, "DT_BIDMAGAM_GONGO"));
+		this.dsUpdate.setColumn(nrow, "TY_BID", this.dsList.getColumn(0, "TY_BID"));
+		//this.dsUpdate.setColumn(nrow, "TY_BID", "01");
+		this.dsUpdate.setColumn(nrow, "ONOFF", this.dsList.getColumn(0, "ONOFF"));
+		this.dsUpdate.setColumn(nrow, "ID_BIDCOORDI", this.dsList.getColumn(0, "ID_BIDCOORDI"));
+		this.dsUpdate.setColumn(nrow, "NO_BIDCOORDITEL", this.dsList.getColumn(0, "NO_BIDCOORDITEL"));
+		this.dsUpdate.setColumn(nrow, "EM_BIDCOORDI", this.dsList.getColumn(0, "EM_BIDCOORDI"));
+		this.dsUpdate.setColumn(nrow, "ID_BIDDAM1", this.dsList.getColumn(0, "ID_BIDDAM1"));
+		this.dsUpdate.setColumn(nrow, "NO_BIDDAM1TEL", this.dsList.getColumn(0, "NO_BIDDAM1TEL"));
+		this.dsUpdate.setColumn(nrow, "EM_BIDDAM1", this.dsList.getColumn(0, "EM_BIDDAM1"));
+		this.dsUpdate.setColumn(nrow, "ID_BIDDAM2", this.dsList.getColumn(0, "ID_BIDDAM2"));
+		this.dsUpdate.setColumn(nrow, "NO_BIDDAM2TEL", this.dsList.getColumn(0, "NO_BIDDAM2TEL"));
+		this.dsUpdate.setColumn(nrow, "EM_BIDDAM2", this.dsList.getColumn(0, "EM_BIDDAM2"));
+		this.dsUpdate.setColumn(nrow, "ID_QUESTION", this.dsList.getColumn(0, "ID_QUESTION"));
+		this.dsUpdate.setColumn(nrow, "NO_QUESTIONTEL", this.dsList.getColumn(0, "NO_QUESTIONTEL"));
+		this.dsUpdate.setColumn(nrow, "EM_QUESTION", this.dsList.getColumn(0, "EM_QUESTION"));
+		this.dsUpdate.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+		//this.dsUpdate.setColumn(nrow, "DS_BID_SUCCESS", this.dsList.getColumn(0, "DS_BID_SUCCESS"));
+		this.dsUpdate.setColumn(nrow, "DS_BID_SUCCESS", "");
+		this.dsUpdate.setColumn(nrow, "YN_EXFILE_SEPARATE", this.dsList.getColumn(0, "YN_EXFILE_SEPARATE"));
+		this.dsUpdate.setColumn(nrow, "CT_HOUSEHOLDS", this.dsList.getColumn(0, "CT_HOUSEHOLDS"));
+		
+		this.dsUpdate.setColumn(nrow, "RT_CONTGUARANTEE", this.dsList.getColumn(0, "RT_CONTGUARANTEE"));
+		this.dsUpdate.setColumn(nrow, "RT_ASGUARANTEE", this.dsList.getColumn(0, "RT_ASGUARANTEE"));
+		this.dsUpdate.setColumn(nrow, "DT_ASFROMTO", this.dsList.getColumn(0, "DT_ASFROMTO"));
+		this.dsUpdate.setColumn(nrow, "CT_JICHAE", this.dsList.getColumn(0, "CT_JICHAE"));
+		this.dsUpdate.setColumn(nrow, "TY_RETIRE_BUGEUM", this.dsList.getColumn(0, "TY_RETIRE_BUGEUM"));
+		
+		this.dsUpdate.setColumn(nrow, "RT_IND_01", this.dsList.getColumn(0, "RT_IND_01"));
+		this.dsUpdate.setColumn(nrow, "RT_IND_02", this.dsList.getColumn(0, "RT_IND_02"));
+		
+		this.dsUpdate.setColumn(nrow, "DS_PREPAY1", this.dsList.getColumn(0, "DS_PREPAY1"));
+		this.dsUpdate.setColumn(nrow, "YN_PREPAY1", this.dsList.getColumn(0, "YN_PREPAY1"));
+		this.dsUpdate.setColumn(nrow, "DS_PAY", this.dsList.getColumn(0, "DS_PAY"));
+		
+		this.dsUpdate.setColumn(nrow, "DS_CONDITION_DELIVERY", this.dsList.getColumn(0, "DS_CONDITION_DELIVERY"));
+		this.dsUpdate.setColumn(nrow, "YN_BUYBACK", this.dsList.getColumn(0, "YN_BUYBACK"));
+		this.dsUpdate.setColumn(nrow, "YN_LABORGUARANTEE", this.dsList.getColumn(0, "YN_LABORGUARANTEE"));
+		this.dsUpdate.setColumn(nrow, "CD_INCREASE", this.dsList.getColumn(0, "CD_INCREASE"));
+		this.dsUpdate.setColumn(nrow, "YN_YEARDANGA", this.dsList.getColumn(0, "YN_YEARDANGA"));
+		this.dsUpdate.setColumn(nrow, "DS_PLACE", this.dsList.getColumn(0, "DS_PLACE"));
+		
+		this.dsUpdate.setColumn(nrow, "AT_BIDMAGAM", this.dsList.getColumn(0, "AT_BIDMAGAM"));
+		this.dsUpdate.setColumn(nrow, "YN_SH", this.dsList.getColumn(0, "YN_SH"));
+		
+		this.dsUpdate.setColumn(nrow, "EPS_BID_NO", this.dsList.getColumn(0, "EPS_BID_NO"));
+		this.dsUpdate.setColumn(nrow, "TY_MAT", this.dsList.getColumn(0, "TY_MAT"));
+		this.dsUpdate.setColumn(nrow, "DS_PAYMET", this.dsList.getColumn(0, "DS_PAYMET"));
+		
+		this.dsUpdate.setColumn(nrow, "DS_NOTICE", this.dsList.getColumn(0, "DS_NOTICE"));
+	}
+	
+	// 현설참석목록 
+	this.dsUpdate2.clearData();
+	for (var i = 0; i < this.dsList2.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList2, i);
+		if(flag == "U") {
+			var nrow = this.dsUpdate2.addRow();
+			this.dsUpdate2.setColumn(nrow, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+			this.dsUpdate2.setColumn(nrow, "CD_VENDOR", this.dsList2.getColumn(i, "CD_VENDOR"));
+			this.dsUpdate2.setColumn(nrow, "YN_JOIN", this.dsList2.getColumn(i, "YN_JOIN"));
+			this.dsUpdate2.setColumn(nrow, "DS_CONTACTNAME", this.dsList2.getColumn(i, "DS_CONTACTNAME"));
+			this.dsUpdate2.setColumn(nrow, "DT_CONTACTTEL", this.dsList2.getColumn(i, "DT_CONTACTTEL"));
+			this.dsUpdate2.setColumn(nrow, "DS_REASON", this.dsList2.getColumn(i, "DS_REASON"));
+		}
+	}
+	
+	if(this.dsUpdate2.rowcount > 0) {
+		arr_in.push("d_update=dsUpdate2");
+	}
+	
+	// 현장설명회(통합입찰)
+	this.dsUpdate_tab4.clearData();
+	for (var i = 0; i < this.dsList3.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList3, i);
+		if(flag == "U") {
+			var nrow = this.dsUpdate_tab4.addRow();
+			this.dsUpdate_tab4.setColumn(nrow, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+			this.dsUpdate_tab4.setColumn(nrow, "NO_PR", this.dsList3.getColumn(i, "NO_PR"));
+			this.dsUpdate_tab4.setColumn(nrow, "ONOFF_EXPLAIN", this.dsList3.getColumn(i, "ONOFF_EXPLAIN"));
+			this.dsUpdate_tab4.setColumn(nrow, "DT_FROM", this.dsList3.getColumn(i, "DT_FROM"));
+			this.dsUpdate_tab4.setColumn(nrow, "DT_TO", this.dsList3.getColumn(i, "DT_TO"));
+			this.dsUpdate_tab4.setColumn(nrow, "DS_FROMTO", this.dsList3.getColumn(i, "DS_FROMTO"));
+			this.dsUpdate_tab4.setColumn(nrow, "DT_EXPLAIN", this.dsList3.getColumn(i, "DT_EXPLAIN"));
+			this.dsUpdate_tab4.setColumn(nrow, "ID_SITESABUN", this.dsList3.getColumn(i, "ID_SITESABUN"));
+			this.dsUpdate_tab4.setColumn(nrow, "NO_SITETEL", this.dsList3.getColumn(i, "NO_SITETEL"));
+			this.dsUpdate_tab4.setColumn(nrow, "AT_SITEEXPLAIN", this.dsList3.getColumn(i, "AT_SITEEXPLAIN"));
+			this.dsUpdate_tab4.setColumn(nrow, "DT_BIDMAGAM", this.dsList3.getColumn(i, "DT_BIDMAGAM"));
+			this.dsUpdate_tab4.setColumn(nrow, "ID_BIDDAM1", this.dsList3.getColumn(i, "ID_BIDDAM1"));
+			this.dsUpdate_tab4.setColumn(nrow, "NO_BIDDAM1TEL", this.dsList3.getColumn(i, "NO_BIDDAM1TEL"));
+			this.dsUpdate_tab4.setColumn(nrow, "EM_BIDDAM1", this.dsList3.getColumn(i, "EM_BIDDAM1"));
+			this.dsUpdate_tab4.setColumn(nrow, "ONOFF", this.dsList3.getColumn(i, "ONOFF"));
+			this.dsUpdate_tab4.setColumn(nrow, "DS_BIGO", this.dsList3.getColumn(i, "DS_BIGO"));
+			break;
+		}
+	}
+	
+	if(this.dsUpdate_tab4.rowcount > 0) {
+		arr_in.push("tab4_save=dsUpdate_tab4");
+	}
+	
+	if (this.dsUpdate.rowcount == 0 && this.dsUpdate2.rowcount == 0 && this.dsUpdate_tab4.rowcount == 0) return;		
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = arr_in.join(' ');
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	switch(this.divData.form.tabData.tabindex) {
+		case 0:
+			break;
+		case 1:
+			var nrow = this.gfnExcelExport(this.dxGrid);
+			break;
+		case 2:
+			break;
+	}
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_SITE"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.divSearch.form.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드를 입력하세요.", "fnVaidateCallback");
+	}
+	else if (this.gfnIsNull(this.dsSearch.getColumn(0,"NO_BID"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.divSearch.form.ccfNO_BID.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("입찰번호를 입력하세요.", "fnVaidateCallback");
+	}
+	return validate;
+};
+
+this.fnSaveValidate = function()
+{
+	var validate = true;
+	var msg = "";
+	
+	var err = this.gfnDataValidate(this.dsList, this.dsRequired, false);
+	if (!this.gfnIsNull(err))
+	{
+		validate = false;
+		msg += err;
+	}
+	
+	var d = new Date();
+	var s = d.getFullYear()
+	  + ((d.getMonth() + 1) + "").padLeft(2, '0')
+	  + (d.getDate() + "").padLeft(2, '0')
+	  + (d.getHours() + "").padLeft(2, '0')
+	  + (d.getMinutes() + "").padLeft(2, '0');
+	  
+	if(this.dsList.getColumn(0, "ONOFF_EXPLAIN") != "9")
+	{
+		if(this.gfnIsNull(this.dsList.getColumn(0, "DT_EXPLAIN")))
+		{
+			validate = false;
+			msg += "[현설일시] 필수입력값입니다.\n";
+		} else {
+			if(this.gfnIsNull(this.dsTempTime.getColumn(0, "EXPLAIN_HOUR")) || this.gfnIsNull(this.dsTempTime.getColumn(0, "EXPLAIN_MINUTE"))) {
+				msg += "[현설일시] 시, 분을 입력해 주시기 바랍니다.";
+				validate = false;
+			} else {
+				if(this._DT_EXPLAIN != this.dsList.getColumn(0, "DT_EXPLAIN") + this.dsTempTime.getColumn(0, "EXPLAIN_HOUR") + this.dsTempTime.getColumn(0, "EXPLAIN_MINUTE")) {
+					if(this.dsList.getColumn(0, "DT_EXPLAIN") + this.dsTempTime.getColumn(0, "EXPLAIN_HOUR") + this.dsTempTime.getColumn(0, "EXPLAIN_MINUTE") < s) {
+						msg += "[현설일시] 현재 일시 이후로 등록 하십시오.";
+						validate = false;
+					}
+				}
+			}		
+		}
+		
+		if(this.gfnIsNull(this.dsList.getColumn(0, "ID_SITESABUN"))) {
+			validate = false;
+			msg += "[현장담당자] 필수입력값입니다.";			
+		}
+		
+		if(this.gfnIsNull(this.dsList.getColumn(0, "NO_SITETEL"))) {
+			validate = false;
+			msg += "[현장담당자 전화번호] 필수입력값입니다.";			
+		}		
+	}
+	
+	if(!this.gfnIsNull(this.dsList.getColumn(0, "DT_BIDMAGAM"))) {
+		if(this.gfnIsNull(this.dsTempTime.getColumn(0, "BIDMAGAM_HOUR")) || this.gfnIsNull(this.dsTempTime.getColumn(0, "BIDMAGAM_MINUTE"))) {
+			msg += "[입찰마감일시] 시, 분을 입력해 주시기 바랍니다.";
+			validate = false;
+		} else {
+			if(this._DT_BIDMAGAM != this.dsList.getColumn(0, "DT_BIDMAGAM") + this.dsTempTime.getColumn(0, "BIDMAGAM_HOUR") + this.dsTempTime.getColumn(0, "BIDMAGAM_MINUTE")) {
+				if(this.dsList.getColumn(0, "DT_BIDMAGAM") + this.dsTempTime.getColumn(0, "BIDMAGAM_HOUR") + this.dsTempTime.getColumn(0, "BIDMAGAM_MINUTE") < s) {
+					msg += "[입찰마감일시] 현재 일시 이후로 등록 하십시오.";
+					validate = false;
+				}
+			}
+		}
+	}	
+	
+	switch(this.dsList.getColumn(0, "DS_CONTMETHOD"))
+	{
+		case "00" :
+		case "10" :
+		case "20" :
+		case "30" : 
+			var err = this.gfnDataValidate(this.dsList, this.dsRequired_DC, false);
+			if (!this.gfnIsNull(err))
+			{
+				validate = false;
+				msg += err;
+			}
+			
+			/*
+			if(this.fnZeroCheck(this.dsList.getColumn(0, "AREA_SITE1")) && this.fnZeroCheck(this.dsList.getColumn(0, "AREA_SITE2"))
+			&& this.fnZeroCheck(this.dsList.getColumn(0, "AREA_SITE3")) && this.fnZeroCheck(this.dsList.getColumn(0, "AREA_SITE4")))
+			{
+				msg += "[1공구 ~ 4공구연면적] 중 하나는 필수입력값입니다.\n";
+				validate = false;
+			}
+			*/
+		break;
+	}
+	
+	if(!this.gfnIsNull(msg)) {
+		var arrError = [msg];
+		this.gfnAlert("msg.err.validator", arrError);
+	}
+	
+	return validate;
+}
+
+
+this.fnSaveValidate1 = function()
+{
+	var validate = true;
+	
+	if(this._SAVE_MSGCHK == false) return true;
+	
+	switch(this.dsList.getColumn(0, "DS_CONTMETHOD"))
+	{
+		case "00" :
+		case "10" :
+		case "20" :
+		case "30" : 
+		/*
+			var msg = "";
+			if(this.gfnIsNull(this.dsList.getColumn(0, "RT_IND_01")) || this.dsList.getColumn(0, "RT_IND_01") == "0.0")
+			{
+				msg += "안전관리비";
+				validate = false;
+			}
+			 
+			if(this.gfnIsNull(this.dsList.getColumn(0, "RT_IND_02")) || this.dsList.getColumn(0, "RT_IND_02") == "0.00")
+			{
+				if(validate == false) msg += ",";
+				validate = false;
+				msg += "건설기계대여금 지급보증수수료";
+			}
+			
+			if(validate == false)
+			{
+				this.gfnConfirm(msg + "가 입력되지 않았습니다. 계속 진행하시겠습니까?","fnSaveValidate1_callback");
+			}
+			else
+			{	
+				this._SAVE_MSGCHK = false;
+			}
+			*/
+			break;
+			
+			default : this._SAVE_MSGCHK = false;
+	}
+	
+	return validate;
+}
+
+this.fnSaveValidate1_callback = function(strID, val)
+{
+	if(val == true)
+	{
+		this._SAVE_MSGCHK = false;
+		this.fnSave();
+	}
+}
+
+this.fnZeroCheck = function(sValue)
+{
+	if (new String(sValue).valueOf() == "undefined") return true;
+    if (sValue == null) return true;
+    
+    var ChkStr = new String(sValue);
+
+    if (ChkStr == null) return true;
+    if (ChkStr.toString().length == 0 ) return true;
+
+	if (sValue == 0 || sValue == "0" || sValue == null) return true;
+	
+	return false;
+}
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg, strArg)
+{
+	if (svcID == "select") {
+		this.dsTempTime.clearData();
+		this.dsTempTime.addRow();
+		
+		if(!this.gfnIsNull(this.dsList.getColumn(0, "DT_EXPLAIN")))
+		{
+			if(this.dsList.getColumn(0, "DT_EXPLAIN").length > 8)
+			{
+				this._DT_EXPLAIN = this.dsList.getColumn(0, "DT_EXPLAIN");
+				
+				this.dsTempTime.setColumn(0, "EXPLAIN_HOUR", this.dsList.getColumn(0, "DT_EXPLAIN").substr(8,2));
+				this.dsTempTime.setColumn(0, "EXPLAIN_MINUTE", this.dsList.getColumn(0, "DT_EXPLAIN").substr(10,2));
+				this.dsList.setColumn(0, "DT_EXPLAIN", this.dsList.getColumn(0, "DT_EXPLAIN").substr(0,8));
+				
+				// 폼상태 초기화
+				this.gfnSetFormStatus(this);	
+				this.singFormStat = "U";
+			}
+		}
+		
+		if(!this.gfnIsNull(this.dsList.getColumn(0, "TY_TAX")))
+		{
+			this.fnSetRT_TAX(this.dsList.getColumn(0, "TY_TAX"));
+		}
+		
+		if(!this.gfnIsNull(this.dsList.getColumn(0, "ONOFF_EXPLAIN")))
+		{
+			if(this.dsList.getColumn(0, "ONOFF_EXPLAIN") == "9") {
+				this.divData.form.tabData.tab1.form.div00.form.tclDT_EXPLAIN.set_enable(false);
+				this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_HOUR.set_enable(false);
+				this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_MINUTE.set_enable(false);
+				this.divData.form.tabData.tab1.form.div00.form.txtAT_SITEEXPLAIN.set_enable(false);
+			} else {
+				this.divData.form.tabData.tab1.form.div00.form.tclDT_EXPLAIN.set_enable(true);
+				this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_HOUR.set_enable(true);
+				this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_MINUTE.set_enable(true);
+				this.divData.form.tabData.tab1.form.div00.form.txtAT_SITEEXPLAIN.set_enable(true);
+			}
+		}
+		
+		if(this.dsList.getColumn(0, "YN_PREPAY1") == "Y") {
+			this.divData.form.divData01.form.txtDS_PREPAY1.set_enable(true);
+		} else {
+			this.divData.form.divData01.form.txtDS_PREPAY1.set_enable(false);
+		}		
+		
+		if(!this.gfnIsNull(this.dsList.getColumn(0, "DT_BIDMAGAM")))
+		{
+			if(this.dsList.getColumn(0, "DT_BIDMAGAM").length > 8)
+			{
+				this._DT_BIDMAGAM = this.dsList.getColumn(0, "DT_BIDMAGAM");
+				
+				this.dsTempTime.setColumn(0, "BIDMAGAM_HOUR", this.dsList.getColumn(0, "DT_BIDMAGAM").substr(8,2));
+				this.dsTempTime.setColumn(0, "BIDMAGAM_MINUTE", this.dsList.getColumn(0, "DT_BIDMAGAM").substr(10,2));
+				this.dsList.setColumn(0, "DT_BIDMAGAM", this.dsList.getColumn(0, "DT_BIDMAGAM").substr(0,8));
+				
+				// 폼상태 초기화
+				this.gfnSetFormStatus(this);	
+				this.singFormStat = "U";
+			}
+		}
+		
+		this.fnCodeFindChange(this.dsList.getColumn(0, "DS_CONTMETHOD"));
+		
+		if(!this.gfnIsNull(this.dsList.getColumn(0, "CD_LICCOST"))) {
+			this.divData.form.divData01.form.cfCD_LICCOST.form.fnCodeFindLoad();
+			// 폼상태 초기화
+			this.gfnSetFormStatus(this);	
+			this.singFormStat = "U";
+		}
+		if(!this.gfnIsNull(this.dsList.getColumn(0, "CD_COSTCLASS"))) {
+			this.divData.form.divData01.form.cfCD_COSTCLASS.form.fnCodeFindLoad();
+			// 폼상태 초기화
+			this.gfnSetFormStatus(this);	
+			this.singFormStat = "U";
+		}		
+		
+		this.fnSelectTab4();
+		
+		this.fnBtnCheckAll();
+	}
+	else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "update_attend")
+	{
+		if (errorCode == 0) {
+			this.fnAttend_callback = function()
+			{
+				this.FormBtns.Select.click();
+			}
+			
+			this.gfnAlert("현설참석여부확인이 정상처리되었습니다.", "","","fnAttend_callback");
+		}
+		else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "update_attach") {
+		if (errorCode == 0) {
+			this.fnAttach_callback = function()
+			{
+				this.FormBtns.Select.click();
+			}
+			
+// 			this.fnJodal("F");
+// 			this.FormBtns.Select.click();
+			
+			this.gfnAlert("현설파일확정이 정상처리되었습니다.", "fnAttach_callback");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "cancel_attach")
+	{
+		if (errorCode == 0) {
+			this.fnAttach_callback = function()
+			{
+				this.FormBtns.Select.click();
+			}
+		
+			this.gfnAlert("현설파일취소가 정상처리되었습니다.", "fnAttach_callback");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "select_jodal")
+	{
+		if (errorCode == 0) {
+			if(this.dsJodal.rowcount < 1) return;
+			
+			var json = this.gfnArgsToJson(strArg);
+			strArg = json.gubun;
+			
+			var url = "";
+			var param = "";
+
+			url = "/buyer/bid/pop/bid_sap_middle_pop.do";	
+			param += "&P_ZBANF=" + this.dsJodal.getColumn(0, "P_ZBANF");
+			param += "&P_ZCHA=" + this.dsJodal.getColumn(0, "P_ZCHA");
+			param += "&P_ZBHFLAG=" + this.dsJodal.getColumn(0, "P_ZBHFLAG");
+			param += "&P_ZCHGYN=" + this.dsJodal.getColumn(0, "P_ZCHGYN");
+			param += "&P_ZBIDCHA=" + this.dsJodal.getColumn(0, "P_ZBIDCHA");
+			param += "&P_ZHJCD=" + this.dsJodal.getColumn(0, "P_ZHJCD");
+			param += "&P_ZBMCD=" + this.dsJodal.getColumn(0, "P_ZBMCD");
+			param += "&P_ZHDGJ=" + this.dsJodal.getColumn(0, "P_ZHDGJ");
+			param += "&P_ZATTACHYN=" + this.dsJodal.getColumn(0, "P_ZATTACHYN");
+			param += "&P_ZSUVR=" + this.dsJodal.getColumn(0, "P_ZSUVR");
+			param += "&P_APP=" + strArg;
+			param += "&P_USER=" + this.dsJodal.getColumn(0, "P_USER");
+			param += "&P_TONG=" + this.dsJodal.getColumn(0, "P_TONG");
+			param += "&P_ILKWAL=" + this.dsJodal.getColumn(0, "P_ILKWAL");
+			param += "&P_ZHSCONDYN=" + this.dsJodal.getColumn(0, "P_ZHSCONDYN");
+			param += "&P_ZREJCYN=" + this.dsJodal.getColumn(0, "P_ZREJCYN");
+			param += "&P_BIDDATE=" + this.dsJodal.getColumn(0, "P_BIDDATE");
+			param += "&P_ZAPDA=" + this.dsJodal.getColumn(0, "P_ZAPDA");
+			
+			this.gfnOpenEPS(url, param);
+		}
+		else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if (id == "ccfNO_BID") {
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE"))) {
+			this.gfnAlert("현장코드를 먼저 입력하세요.");
+			return false;
+		}
+		dsUserParam.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE")); // CD_SITE
+	}else if (id == "cfCD_LICCOST") {		
+		if(this.gfnIsNull(this.dsList.getColumn(0, "CD_COSTCLASS")))
+		{
+			this.gfnAlert("부문을 먼저 입력해주세요.");
+			return false;
+		}
+
+		dsUserParam.setColumn(nrow, "COSTCLASS", this.dsList.getColumn(0, "CD_COSTCLASS"));
+	}
+	return true;
+}
+
+
+this.fnAfterCDTextChanged = function(id, codeFindData){
+	var arr = codeFindData;
+	
+	if(id == "ccfCD_SITE") {
+		this.ccfNO_BID.form.fnCodeFindClear();
+	}
+	else if(id == "ccfID_MANAGER"){
+		if(arr.length > 0){	
+			this.dsList.setColumn(0, "NO_MANAGERTEL", arr[0].PHONE);
+		}
+	}
+	else if(id == "ccfID_SITESABUN"){
+		if(arr.length > 0){	
+			this.dsList.setColumn(0, "NO_SITETEL", arr[0].PHONE);
+		}
+	}
+	else if(id == "ccfID_MANAGER_01"){
+		if(arr.length > 0){	
+			this.dsList.setColumn(0, "NO_MANAGERTEL", arr[0].PHONE);
+		}
+	}
+	else if(id == "ccfID_SITESABUN_01"){
+		if(arr.length > 0){	
+			this.dsList.setColumn(0, "NO_SITETEL", arr[0].PHONE);
+		}
+	}
+// 	else if(id == "ccfID_BIDCOORD"){
+// 		if(arr.length > 0){	
+// 			this.dsList.setColumn(0, "NO_BIDCOORDITEL", arr[0].PHONE);
+// 			this.dsList.setColumn(0, "EM_BIDCOORDI", arr[0].ID_EMAIL);
+// 		}
+// 	}
+	else if(id == "ccfID_BIDDAM1"){
+		if(arr.length > 0){	
+			this.dsList.setColumn(0, "NO_BIDDAM1TEL", arr[0].PHONE);
+			this.dsList.setColumn(0, "EM_BIDDAM1", arr[0].ID_EMAIL);
+		}
+	}
+	else if(id == "ccfID_BIDDAM2"){
+		if(arr.length > 0){	
+			this.dsList.setColumn(0, "NO_BIDDAM2TEL", arr[0].PHONE);
+			this.dsList.setColumn(0, "EM_BIDDAM2", arr[0].ID_EMAIL);
+		}
+	}
+	else if(id == "ccfID_QUESTION"){
+		if(arr.length > 0){	
+			this.dsList.setColumn(0, "NO_QUESTIONTEL", arr[0].PHONE);
+			this.dsList.setColumn(0, "EM_QUESTION", arr[0].ID_EMAIL);		
+		}
+	}
+};
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ this.fnGrid_EnterCell = function(obj:nexacro.Grid, row, cell){
+	if(this._READONLY == "Y")
+	{
+		return false;
+	}
+};
+
+this.fnGrid1_EnterCell = function(obj:nexacro.Grid, row, cell){
+	if(this._READONLY == "Y")
+	{
+		return false;
+	}
+};
+ this.fnGrid1_ExpandUp = function(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo) {
+	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, e.cell);
+	if(colnm == "EXFILE") {	
+		//this.fdg00.row = e.row;
+		//this.fdg00.open('FileOpen', FileDialog.LOAD);
+		var param = {};
+		param.CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+		param.DS_SITE = this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+		param.NO_PR = this.dsList3.getColumn(e.row, "NO_PR");
+		param.NO_BID = this.dsSearch.getColumn(0, "NO_BID");
+	
+		this.gfnFormOpen(this.FormInfo.CD_MODULE, "DCB_PR_EXPLAIN_FILE", "", param);
+	}
+}
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	this.dsCombo.addRow();	// 구매유형
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DC");
+	this.dsCombo.setColumn(0, "CD_TYPE", "53");	
+	
+	this.dsCombo.addRow();	
+	this.dsCombo.setColumn(1, "CD_SYSTEM", "DC");
+	this.dsCombo.setColumn(1, "CD_TYPE", "50");
+		
+	this.dsCombo.addRow();	
+	this.dsCombo.setColumn(2, "CD_SYSTEM", "DC");
+	this.dsCombo.setColumn(2, "CD_TYPE", "C07");
+	
+	this.dsCombo.addRow();	
+	this.dsCombo.setColumn(3, "CD_SYSTEM", "DC");
+	this.dsCombo.setColumn(3, "CD_TYPE", "C15");
+	
+	this.dsCombo.addRow();	
+	this.dsCombo.setColumn(4, "CD_SYSTEM", "DC");
+	this.dsCombo.setColumn(4, "CD_TYPE", "58");
+	
+	this.dsCombo.addRow();	
+	this.dsCombo.setColumn(5, "CD_SYSTEM", "DC");
+	this.dsCombo.setColumn(5, "CD_TYPE", "C31");
+	
+	this.dsCombo.addRow();	
+	this.dsCombo.setColumn(6, "CD_SYSTEM", "DC");
+	this.dsCombo.setColumn(6, "CD_TYPE", "33");
+	
+	this.dsCombo.addRow();	
+	this.dsCombo.setColumn(7, "CD_SYSTEM", "DC");
+	this.dsCombo.setColumn(7, "CD_TYPE", "34");
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().DS_PARAM)) {
+		if(this.getOwnerFrame().DS_PARAM == "MM") { //자재
+			this.dsCombo.addRow();	
+			this.dsCombo.setColumn(8, "CD_SYSTEM", "DM"); //DM 12 자재 대금지급조건 21.10.08
+			this.dsCombo.setColumn(8, "CD_TYPE", "12"); //원래 자재만이었는데 외주/자재 전체로 변경 21.10.06
+	
+			this.dsCombo.addRow();	
+			this.dsCombo.setColumn(9, "CD_SYSTEM", "DM");
+			this.dsCombo.setColumn(9, "CD_TYPE", "AG");
+
+			this.dsCombo.addRow();	
+			this.dsCombo.setColumn(10, "CD_SYSTEM", "DM");
+			this.dsCombo.setColumn(10, "CD_TYPE", "MT");			
+		}
+	} else {
+		this.dsCombo.addRow();	
+		this.dsCombo.setColumn(8, "CD_SYSTEM", "DC"); //DC PC 외주 대금지급조건 21.10.08
+		this.dsCombo.setColumn(8, "CD_TYPE", "PC"); //원래 자재만이었는데 외주/자재 전체로 변경 21.10.06	
+	}
+		
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_ACCOUNT=combo0 dsDS_CONTMETHOD=combo1 dsTY_BID=combo2 dsONOFF_EXPLAIN=combo3 dsONOFF=combo4 dsTY_RETIRE_BUGEUM=combo5 dsTY_IND_RT_01=combo6 dsTY_IND_RT_02=combo7 dsTY_PAY=combo8";
+	if(!this.gfnIsNull(this.getOwnerFrame().DS_PARAM)) {
+		if(this.getOwnerFrame().DS_PARAM == "MM") { //자재
+			outData += " dsTY_CONDITION_DELIVERY=combo9 dsTY_MAT=combo10";
+		}
+	}		
+	var strArg      = "";
+	var callBackFnc = "fnCallbackCombo";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);   // 통신방법 정의 [생략가능]
+};
+
+this.fnCallbackCombo = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "combo") {
+		/*
+		this.dsTY_JAJIK.insertRow(0);		
+		this.dsTY_JAJIK.setColumn(0, "CD_CODE", "");
+		this.dsTY_JAJIK.setColumn(0, "DS_CODE", "전체");
+		*/
+ 		//this.divData.form.divData01.form.cboTY_HAJA.set_index(0);
+	}
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.dsList.clearData();	// 싱글폼데이터 초기화
+		this.dsList2.clearData();
+		this.dsList3.clearData();
+	}
+};
+
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this, "U");	// 폼상태 초기화	
+		this._SAVE_MSGCHK = true;
+		
+		// 현설일자외에 다른 싱글폼 데이터를 수정시에는 this.singFormStat 값을 Q로 초기화 한다
+		if(e.columnid != "DT_EXPLAIN" && e.columnid != "DT_BIDMAGAM"){
+			this.singFormStat = "Q";
+		}
+		
+		if(e.columnid == "DS_CONTMETHOD")
+		{
+			this.fnCodeFindChange(e.newvalue);
+
+			this.divData.form.divData01.form.cfCD_LICCOST.form.fnCodeFindClear();
+			this.divData.form.divData01.form.cfCD_COSTCLASS.form.fnCodeFindClear();
+		}
+		else if(e.columnid == "CD_COSTCLASS")
+		{
+			this.divData.form.divData01.form.cfCD_LICCOST.form.fnCodeFindClear();
+		}
+		else if(e.columnid == "TY_TAX")
+		{
+			this.fnSetRT_TAX(e.newvalue);
+		}
+		else if(e.columnid == "ONOFF_EXPLAIN")
+		{
+			if(e.newvalue == "9") {
+				this.divData.form.tabData.tab1.form.div00.form.tclDT_EXPLAIN.set_enable(false);
+				this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_HOUR.set_enable(false);
+				this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_MINUTE.set_enable(false);
+				this.divData.form.tabData.tab1.form.div00.form.txtAT_SITEEXPLAIN.set_enable(false);
+				this.dsList.setColumn(0, "DT_EXPLAIN", "");
+				this.dsList.setColumn(0, "AT_SITEEXPLAIN", "");
+				this.dsTempTime.setColumn(0, "EXPLAIN_HOUR", "");
+				this.dsTempTime.setColumn(0, "EXPLAIN_MINUTE", "");
+			} else {
+				this.divData.form.tabData.tab1.form.div00.form.tclDT_EXPLAIN.set_enable(true);
+				this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_HOUR.set_enable(true);
+				this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_MINUTE.set_enable(true);
+				this.divData.form.tabData.tab1.form.div00.form.txtAT_SITEEXPLAIN.set_enable(true);
+			}
+		}
+		else if(e.columnid == "YN_PREPAY1")
+		{
+			if(e.newvalue == "Y") {
+				this.divData.form.divData01.form.txtDS_PREPAY1.set_enable(true);
+			} else {
+				this.dsList.setColumn(0, "DS_PREPAY1", "");
+				this.divData.form.divData01.form.txtDS_PREPAY1.set_enable(false);
+			}
+		}
+		else if(e.columnid == "ONOFF")
+		{
+			if(e.newvalue == "ON") {
+				obj.setColumn(e.row, "AT_BIDMAGAM", "온라인 입찰");
+			} else {
+				obj.setColumn(e.row, "AT_BIDMAGAM", "본사 입찰");
+			}
+		}
+		else if(e.columnid == "ONOFF_EXPLAIN")
+		{
+			if(e.newvalue == 9) {
+				this.dsList.setColumn(0, "AT_SITEEXPLAIN", "");
+				this.dsList.setColumn(0, "DT_EXPLAIN", "");
+				this.dsTempTime.setColumn(0, "EXPLAIN_HOUR", "");
+				this.dsTempTime.setColumn(0, "EXPLAIN_MINUTE", "");
+				this.divData.form.tabData.tab1.form.div00.form.txtAT_SITEEXPLAIN.set_enable(false);
+				this.divData.form.tabData.tab1.form.div00.form.tclDT_EXPLAIN.set_enable(false);
+				this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_HOUR.set_enable(false);
+				this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_MINUTE.set_enable(false);
+			} else {
+				this.divData.form.tabData.tab1.form.div00.form.txtAT_SITEEXPLAIN.set_enable(true);
+				this.divData.form.tabData.tab1.form.div00.form.tclDT_EXPLAIN.set_enable(true);
+				this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_HOUR.set_enable(true);
+				this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_MINUTE.set_enable(true);
+			}
+		}
+	}
+};
+
+this.fnSetRT_TAX = function(val)
+{
+	switch(val)
+	{
+		case "과세" :	this.dsList.setColumn(0, "RT_TAX", 100);
+						this.divData.form.divData01.form.txtRT_TAX.set_readonly(true);
+			break;
+		case "면세" :	this.dsList.setColumn(0, "RT_TAX", 0);
+						this.divData.form.divData01.form.txtRT_TAX.set_readonly(true);
+			break;
+		case "공존" :	this.divData.form.divData01.form.txtRT_TAX.set_readonly(false);
+			break;
+	}
+}
+
+this.divData_tabData_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	if(e.postindex == 2) {
+		this.divData.form.tabData.set_minheight(520);
+	}
+	this.divData.form.resetScroll();
+};
+
+this.fnCodeFindChange = function(val)
+{
+	//자재관련 (자재, 면허성, 레미콘)
+	if(val == "40" || val == "50" || val == "60")
+	{
+		this.divData.form.divData01.form.cfCD_LICCOST.CodeFindName = "DMX_CFLICCOST";
+		this.divData.form.divData01.form.cfCD_COSTCLASS.CodeFindName = "CF_CODE_DM_H01";
+		
+		this.divData.form.divData02.set_height(60);
+		this.divData.form.resetScroll();
+	}
+	//외주관련
+	else
+	{
+		this.divData.form.divData01.form.cfCD_LICCOST.CodeFindName = "DCX_CFLICCOST_01";
+		this.divData.form.divData01.form.cfCD_COSTCLASS.CodeFindName = "DCX_CFCOSTCLASS_01";
+		
+		this.divData.form.divData02.set_height(0);
+		this.divData.form.resetScroll();
+	}	
+}
+
+
+// 간접비관리 버튼 클릭시 팝업화면 호출
+ this.fnIndirect= function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var param = {};
+	
+	param.CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+	param.DS_SITE = this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+	param.NO_BID = this.dsSearch.getColumn(0, "NO_BID");
+	param.DS_BID = this.divSearch.form.ccfNO_BID.form.DSTextBox.text;
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DCB_INDIRECT_BONSA_REG", "", param);
+}
+
+// 입찰참여업체관리 버튼 클릭시 팝업화면 호출
+ this.fnRecVendor = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	//if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+	
+	this.gfnAlert("추후 개발 예정");
+	/*
+	var param = {};
+	param.CD_SITE = this.dsSearch.getColumn(0,"CD_SITE");
+	param.DS_SITE = this.ccfCD_SITE.form.DSTextBox.value;
+	param.NO_RISK = this.dsList.getColumn(this.dsList.rowposition, "NO_RISK");	
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DWA_RISKDTLS", "", param);
+	*/
+}
+
+/*
+ *	EPS 파라미터 공통 조회
+ */ 
+this.fnSelectEPS = function(lv_app) {
+	
+	this.dsEPS = new Dataset();
+	
+	this._dsProcEPS = new Dataset();
+	this._dsProcEPS.addColumn("TARGET", "string");
+	this._dsProcEPS.addColumn("SP", "string");
+	
+	this._dsProcEPS.addRow();
+	this._dsProcEPS.setColumn(0, "TARGET", "eps");
+	this._dsProcEPS.setColumn(0, "SP", "DZZPR_EPS_BID_SAP_MIDDLE_POPUP_SELECT");
+	
+	this.dsSelectEPS = new Dataset();
+	this.dsSelectEPS.addColumn("NO_BID", "string");		// ERP발주(입찰)번호
+	this.dsSelectEPS.addColumn("YN_UNION", "string");	// 통합입찰여부
+	this.dsSelectEPS.addColumn("ID_USER", "string");
+	
+	this.dsSelectEPS.addRow();	
+	this.dsSelectEPS.setColumn(0, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+	this.dsSelectEPS.setColumn(0, "YN_UNION", "N");
+	this.dsSelectEPS.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+
+	var strSvcId    = "eps";
+	var strSvcType  = "select";
+	var inProc		= "_dsProcEPS";
+	var inData      = "eps=dsSelectEPS";
+	var outData     = "dsEPS=eps0";
+	var strArg      = "P_APP=" + lv_app;
+	var callBackFnc = "fnCallbackEPS";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+}
+
+this.fnCallbackEPS = function(svcID, errorCode, errorMsg, strArg)
+{
+	if (errorCode!=0) {
+		this.gfnAlert(errorMsg);
+		return;
+	}
+	
+	var url = "";
+	if (svcID == "eps") {		
+		url = "/buyer/bid/pop/bid_sap_middle_pop.do";
+	}
+	else if (svcID == "eps2") {		
+		url = "/buyer/bid/open_su_nosave.do";
+	}
+	
+	if(this.dsEPS.rowcount > 0) {	
+		var arr_param = [];
+		
+		arr_param.push(strArg);
+		for(var c = 0; c < this.dsEPS.colinfos.length; c++) {
+			var colid = this.dsEPS.colinfos[c].name;			
+			var val = this.dsEPS.getColumn(0, colid);
+			if(val==null) val="";
+			arr_param.push(colid + "=" + val);
+		}
+		
+		this.gfnOpenEPS(url, arr_param.join('&'));
+	}
+};
+ 
+this.fnReq = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if (!this.fnSelectValidate()) return false;
+	
+	var msg = "현장코드 : " + this.dsSearch.getColumn(0, "CD_SITE") + " [" + this.ccfCD_SITE.form.DSTextBox.text + "]"
+	        + "\n입찰번호 : " + this.dsSearch.getColumn(0, "NO_BID") + " [" + this.ccfNO_BID.form.DSTextBox.text + "]"
+			+ "\n\n발주의뢰를 진행하시겠습니까?";
+	this.gfnConfirm(msg, "fnReq_callback", "A");
+}
+ 
+this.fnReqCancel = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if (!this.fnSelectValidate()) return false;
+	
+	var msg = "현장코드 : " + this.dsSearch.getColumn(0, "CD_SITE") + " [" + this.ccfCD_SITE.form.DSTextBox.text + "]"
+	        + "\n입찰번호 : " + this.dsSearch.getColumn(0, "NO_BID") + " [" + this.ccfNO_BID.form.DSTextBox.text + "]"
+			+ "\n\n발주의뢰취소를 진행하시겠습니까?";
+	this.gfnConfirm(msg, "fnReq_callback", "R");
+}
+
+this.fnReq_callback = function(strId, val) 
+{
+	if(val == true) {
+		this.dsExecute.clearData();
+		
+		var nrow = this.dsExecute.addRow();
+		
+		this.dsExecute.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+		this.dsExecute.setColumn(nrow, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+		this.dsExecute.setColumn(nrow, "CD_APP", strId);
+		this.dsExecute.setColumn(nrow, "V_NO_DOC", "");
+
+		
+		if (this.dsExecute.rowcount == 0) return;
+		
+		var strSvcId    = "execute";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "execute=dsExecute";
+		var outData     = "";
+		var strArg      = "gubun="+ strId;
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}	
+}
+
+this.fnReqETC = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var param = {};
+	
+	param.CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+	param.DS_SITE = this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+	param.NO_BID = this.dsSearch.getColumn(0, "NO_BID");
+	param.DS_SUBCON = this.divSearch.form.ccfNO_BID.form.DSTextBox.text;
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DCB_RECOMMEND_ETC_REQ", "", param);
+}
+
+this.dsTempTime_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this, "U");	// 폼상태 초기화
+	}
+};
+
+// 현설참석자명단
+this.divData_btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.gfnIsNull(this.dsList.getColumn(0, "NO_BID"))) return;
+
+	var fileManager = {};
+	fileManager.CD_GUBUN = "DC51";
+	fileManager.CD_DIR = [ this.dsList.getColumn(0, "NO_BID") ];
+	// CD_DIR 만 지정시 CD_DIR 배열 순대로 키1,키2,키3 까지 자동지정
+	// 저장되는 디렉토리와 키값이 다른경우 CD_REF 추가로 사용
+	//fileManager.CD_REF = [ "A1" ];
+	// 권한 및 상태에 따라 업로드,삭제 가능여부 지정 (기본: true)
+	
+	if(this.FormInfo.TY_AUTH == "R") {
+		fileManager.IS_READONLY = true;
+	} else {
+		fileManager.IS_READONLY = false;
+	}
+	
+	this.gfnFileManager(fileManager, "fnFileCallback");
+};
+// 현설질의응답
+this.divData_btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnJodal("Q");
+};
+// 현설참석여부확인
+this.divData_btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.gfnIsNull(this.dsList.getColumn(0, "NO_BID"))) return;
+
+	this.dsAttendUpdate = new Dataset();
+	this.dsAttendUpdate.addColumn("NO_BID", "string");
+	this.dsAttendUpdate.addColumn("ID_USER", "string");
+	
+	this.dsAttendUpdate.clearData();
+	var nrow = this.dsAttendUpdate.addRow();
+	
+	this.dsAttendUpdate.setColumn(nrow, "NO_BID", this.dsList.getColumn(0, "NO_BID"));
+	this.dsAttendUpdate.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+
+	if (this.dsAttendUpdate.rowcount == 0) return;
+		
+	var strSvcId    = "update_attend";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "update_attend=dsAttendUpdate";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+// 불참메일발송
+this.divData_btn03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+};
+// 현설파일확정
+this.fnPRAttachConfirm = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.gfnIsNull(this.dsList.getColumn(0, "NO_BID")))
+	{
+		this.gfnAlert("조회 후 진행해주십시오.");
+		return;
+	}
+
+	this.gfnConfirm("현설파일확정을 진행하시겠습니까?", "fnPRAttachConfirm_callback");
+
+};
+
+this.fnPRAttachConfirm_callback = function(strID, val)
+{
+	if(val == true)
+	{
+		this.dsAttachUpdate = new Dataset();
+		this.dsAttachUpdate.addColumn("NO_BID", "string");
+		this.dsAttachUpdate.addColumn("NO_PR", "string");
+		
+		this.dsAttachUpdate.clearData();
+		var nrow = this.dsAttachUpdate.addRow();
+		
+		this.dsAttachUpdate.setColumn(nrow, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+		this.dsAttachUpdate.setColumn(nrow, "NO_PR", this.dsList.getColumn(0, "NO_BID"));
+
+		if (this.dsAttachUpdate.rowcount == 0) return;
+			
+		var strSvcId    = "update_attach";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "update_attach=dsAttachUpdate";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}
+
+// 현설파일취소
+this.fnPRAttachCancel = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.gfnIsNull(this.dsList.getColumn(0, "NO_BID")))
+	{
+		this.gfnAlert("조회 후 진행해주십시오.");
+		return;
+	}
+
+	this.gfnConfirm("현설파일확정취소를 진행하시겠습니까?", "fnPRAttachCancel_callback");
+
+};
+
+
+this.fnPRAttachCancel_callback = function(strID, val)
+{
+	if(val == true)
+	{
+		this.dsAttachUpdate = new Dataset();
+		this.dsAttachUpdate.addColumn("NO_BID", "string");
+		this.dsAttachUpdate.addColumn("NO_PR", "string");
+		
+		this.dsAttachUpdate.clearData();
+		var nrow = this.dsAttachUpdate.addRow();
+		
+		this.dsAttachUpdate.setColumn(nrow, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+		this.dsAttachUpdate.setColumn(nrow, "NO_PR", this.dsList.getColumn(0, "NO_BID"));
+
+		if (this.dsAttachUpdate.rowcount == 0) return;
+			
+		var strSvcId    = "cancel_attach";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "cancel_attach=dsAttachUpdate";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}
+
+this.fnJodal = function(type)
+{
+	if (!this.fnSelectValidate()) return false;
+
+	this.dsSelectJodal.clearData();
+	this.dsSelectJodal.addRow();
+	
+	this.dsSelectJodal.setColumn(0, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+	this.dsSelectJodal.setColumn(0, "YN_UNION", this.dsSearch.getColumn(0, "YN_UNION"));
+	this.dsSelectJodal.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	
+	var strSvcId    = "select_jodal";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select_jodal=dsSelectJodal";
+	var outData     = "dsJodal=select_jodal0";
+	var strArg      = "gubun="+ type;
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+// 현장설명회 탭에서 현설일자 변경시 싱글폼 데이터가 저장 되도록한다
+this.divData_tabData_tab1_div00_tclDT_EXPLAIN_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	this.singFormStat = "Q";
+};
+
+// 현설입찰일정 탭에서 입찰일자 변경시 싱글폼 데이터가 저장 되도록한다
+this.divData_tabData_tab3_div02_tclDT_BIDMAGAM_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	this.singFormStat = "Q";
+};
+
+// 임시로 생성.
+this.fnBtnCheck = function(btn, ds)
+{
+	if(!this.gfnIsNull(btn.NM_COLUMN) && btn.IS_ENABLED == true)
+	{
+		if(ds.rowcount > 0)
+		{
+			if(ds.rowcount == 1 && this.gfnGetFlag(ds, 0) == "#")
+				return;
+		
+			var row = ds.rowposition;
+			
+			if(row == -1) row = 0;
+			
+			if(ds.getColumn(row, btn.NM_COLUMN) == "Y")
+				btn.set_enable(true);
+			else
+				btn.set_enable(false);	
+		}
+		else
+			return;
+	}
+	return;
+}
+
+this.fnBtnCheckAll = function()
+{
+	this.fnBtnCheck(this.btnIndirect, this.dsList);
+	this.fnBtnCheck(this.btnRecVendor, this.dsList);
+	this.fnBtnCheck(this.btnPRAttachConfirm, this.dsList);
+	this.fnBtnCheck(this.btnReq, this.dsList);
+	this.fnBtnCheck(this.btnReqCancel, this.dsList);
+	this.fnBtnCheck(this.btnReqETC, this.dsList);
+	this.fnBtnCheck(this.btnPRAttachCancel, this.dsList);
+}
+
+this.fnAllReadonly = function(value)
+{
+	this.divData.form.divData01.form.cboTY_ACCOUNT.set_readonly(value);
+	this.divData.form.divData01.form.txtNO_BID.set_readonly(value);
+	this.divData.form.divData01.form.txtNO_UNION_HADO.set_readonly(value);
+	this.divData.form.divData01.form.txtNO_UNION_BID_CONNECT.set_readonly(value);
+	this.divData.form.divData01.form.cboDS_CONTMETHOD.set_readonly(value);
+	this.divData.form.divData01.form.txtRT_TAX.set_readonly(value);
+	this.divData.form.divData01.form.cboTY_TAX.set_readonly(value);
+	this.divData.form.divData01.form.tclDT_FROM.set_readonly(value);
+	this.divData.form.divData01.form.tclDT_TO.set_readonly(value);
+	this.divData.form.divData01.form.txtDS_SUBCON.set_readonly(value);
+	this.divData.form.divData01.form.cfCD_COSTCLASS.form.set_enable(!value);
+	this.divData.form.divData01.form.cfCD_LICCOST.form.set_enable(!value);
+	this.divData.form.divData01.form.txtRT_TAX00.set_readonly(value);
+	this.divData.form.divData01.form.txtRT_TAX01.set_readonly(value);
+	this.divData.form.divData01.form.txtDS_SUBCON00.set_readonly(value);
+	this.divData.form.divData01.form.txtDS_SUBCON01.set_readonly(value);
+	this.divData.form.divData01.form.cboTY_RETIRE_BUGEUM.set_readonly(value);
+	this.divData.form.divData01.form.cboTY_IND_RT_01.set_readonly(value);
+	this.divData.form.divData01.form.cboTY_IND_RT_02.set_readonly(value);
+	this.divData.form.divData01.form.txtDS_PREPAY1.set_readonly(value);
+	this.divData.form.divData01.form.rdoYN_PAYGUARANTEE.set_readonly(value);
+	this.divData.form.divData01.form.txt00.set_readonly(value);
+	this.divData.form.divData01.form.txtDS_PAY.set_readonly(value);
+	
+	this.divData.form.divData02.form.txtDS_PAY.set_readonly(value);
+	this.divData.form.divData02.form.rdoYN_PAYGUARANTEE.set_readonly(value);
+	this.divData.form.divData02.form.chkYN_YEARDANGA.set_readonly(value);
+	this.divData.form.divData02.form.txtDS_PREPAY1_00.set_readonly(value);
+	this.divData.form.divData02.form.chkYN_BUYBACK.set_readonly(value);
+}
+
+this.fnReadOnlyTab1 = function(value)
+{
+	this.divData.form.tabData.tab1.form.div00.form.cboYN_EXPLAIN.set_readonly(value);
+	this.divData.form.tabData.tab1.form.div00.form.cboONOFF_EXPLAIN.set_readonly(value);
+	this.divData.form.tabData.tab1.form.div00.form.txtAT_SITEEXPLAIN.set_readonly(value);
+	this.divData.form.tabData.tab1.form.div00.form.tclDT_EXPLAIN.set_readonly(value);
+	this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_HOUR.set_readonly(value);
+	this.divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_MINUTE.set_readonly(value);
+	this.divData.form.tabData.tab1.form.div00.form.tclDT_EXPLAIN_GONGO.set_readonly(value);
+	
+	this.divData.form.tabData.tab1.form.div01.form.txtRM_BIDREMARK.set_readonly(value);
+	this.divData.form.tabData.tab1.form.div01.form.ccfID_SITESABUN.set_enable(!value);
+	this.divData.form.tabData.tab1.form.div01.form.txtNO_SITETEL.set_readonly(value);
+
+	//this.divData.form.tabData.tab3.form.div02.form.txtDS_BID_SUCCESS.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.cboTY_BID.set_readonly(value);
+	//this.divData.form.tabData.tab3.form.div02.form.ccfID_BIDCOORD.set_enable(!value);
+	this.divData.form.tabData.tab3.form.div02.form.txtNO_BIDCOORDITEL.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.cboONOFF_EXPLAIN.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.txtNO_BIDDAM1TEL.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.txtNO_BIDDAM2TEL.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.txtNO_QUESTIONTEL.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.txtEM_BIDCOORDI.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.txtEM_BIDDAM1.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.txtEM_BIDDAM2.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.txtEM_QUESTION.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.tclDT_BID_GONGO.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.tclDT_BIDMAGAM.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.ccfID_BIDDAM1.set_enable(!value);
+	this.divData.form.tabData.tab3.form.div02.form.ccfID_BIDDAM2.set_enable(!value);
+	this.divData.form.tabData.tab3.form.div02.form.ccfID_QUESTION.set_enable(!value);
+	this.divData.form.tabData.tab3.form.div02.form.ccboDT_BIDMAGAM_HOUR.set_readonly(value);
+	this.divData.form.tabData.tab3.form.div02.form.ccboDT_BIDMAGAM_MINUTE.set_readonly(value);
+}
+
+
+
+
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="NO_BID" type="STRING" size="256"/>
+          <Column id="NO_HADO" type="STRING" size="256"/>
+          <Column id="DS_SUBCON" type="STRING" size="256"/>
+          <Column id="TY_ACCOUNT" type="STRING" size="256"/>
+          <Column id="RT_TAX" type="BIGDECIMAL" size="256"/>
+          <Column id="TY_TAX" type="STRING" size="256"/>
+          <Column id="RT_JIBUN" type="INT" size="256"/>
+          <Column id="DT_FROM" type="STRING" size="256"/>
+          <Column id="DT_TO" type="STRING" size="256"/>
+          <Column id="DS_FROMTO" type="STRING" size="256"/>
+          <Column id="DT_REQ_SITE" type="STRING" size="256"/>
+          <Column id="DT_HQRECEIPT" type="STRING" size="256"/>
+          <Column id="DT_HQAPPR" type="STRING" size="256"/>
+          <Column id="AM_TT_DOKUB" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_TT_SILHENG" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_REQUEST" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_GONGSA" type="BIGDECIMAL" size="256"/>
+          <Column id="UP_PYEONG" type="INT" size="256"/>
+          <Column id="CD_VENDOR" type="STRING" size="256"/>
+          <Column id="CD_COSTCLASS" type="STRING" size="256"/>
+          <Column id="DS_COSTCLASS" type="STRING" size="256"/>
+          <Column id="CD_LICCOST" type="STRING" size="256"/>
+          <Column id="DS_LICCOST" type="STRING" size="256"/>
+          <Column id="CD_SPECCONST" type="STRING" size="256"/>
+          <Column id="CD_AREA" type="STRING" size="256"/>
+          <Column id="DS_AREA" type="STRING" size="256"/>
+          <Column id="NO_RFQ" type="STRING" size="256"/>
+          <Column id="DS_CONTMETHOD" type="STRING" size="256"/>
+          <Column id="AREA_SITE" type="INT" size="256"/>
+          <Column id="AM_BASIC" type="INT" size="256"/>
+          <Column id="YN_PUBLISH_BID" type="STRING" size="256"/>
+          <Column id="YN_ATTACH_ILSIK" type="STRING" size="256"/>
+          <Column id="YN_HASU" type="STRING" size="256"/>
+          <Column id="YN_EXFILE_SEPARATE" type="STRING" size="256"/>
+          <Column id="NO_UNION_HADO" type="STRING" size="256"/>
+          <Column id="NO_UNION_BID_CONNECT" type="STRING" size="256"/>
+          <Column id="YN_UNION_BID" type="STRING" size="256"/>
+          <Column id="YN_UNION_BID_ING" type="STRING" size="256"/>
+          <Column id="CT_GONGU" type="INT" size="256"/>
+          <Column id="NUM_GONGU" type="BIGDECIMAL" size="256"/>
+          <Column id="AREA_SITE1" type="BIGDECIMAL" size="256"/>
+          <Column id="AREA_SITE2" type="BIGDECIMAL" size="256"/>
+          <Column id="AREA_SITE3" type="BIGDECIMAL" size="256"/>
+          <Column id="AREA_SITE4" type="BIGDECIMAL" size="256"/>
+          <Column id="AREA_SITEALL" type="BIGDECIMAL" size="256"/>
+          <Column id="ID_MANAGER" type="BIGDECIMAL" size="256"/>
+          <Column id="NM_MANAGER" type="STRING" size="256"/>
+          <Column id="NO_MANAGERTEL" type="STRING" size="256"/>
+          <Column id="ID_SITESABUN" type="STRING" size="256"/>
+          <Column id="NM_SITESABUN" type="STRING" size="256"/>
+          <Column id="NO_SITETEL" type="STRING" size="256"/>
+          <Column id="RM_BIDREMARK" type="STRING" size="256"/>
+          <Column id="RM_REMARK" type="STRING" size="256"/>
+          <Column id="YN_EXPLAIN" type="STRING" size="256"/>
+          <Column id="ONOFF_EXPLAIN" type="STRING" size="256"/>
+          <Column id="AT_SITEEXPLAIN" type="STRING" size="256"/>
+          <Column id="DT_EXPLAIN" type="STRING" size="256"/>
+          <Column id="DT_EXPLAIN_GONGO" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM_GONGO" type="STRING" size="256"/>
+          <Column id="TY_BID" type="STRING" size="256"/>
+          <Column id="DS_BID_SUCCESS" type="STRING" size="256"/>
+          <Column id="ONOFF" type="STRING" size="256"/>
+          <Column id="ID_BIDCOORDI" type="STRING" size="256"/>
+          <Column id="NM_BIDCOORDI" type="STRING" size="256"/>
+          <Column id="NO_BIDCOORDITEL" type="STRING" size="256"/>
+          <Column id="EM_BIDCOORDI" type="STRING" size="256"/>
+          <Column id="ID_BIDDAM1" type="STRING" size="256"/>
+          <Column id="NM_BIDDAM1" type="STRING" size="256"/>
+          <Column id="NO_BIDDAM1TEL" type="STRING" size="256"/>
+          <Column id="EM_BIDDAM1" type="STRING" size="256"/>
+          <Column id="ID_BIDDAM2" type="STRING" size="256"/>
+          <Column id="NM_BIDDAM2" type="STRING" size="256"/>
+          <Column id="NO_BIDDAM2TEL" type="STRING" size="256"/>
+          <Column id="EM_BIDDAM2" type="STRING" size="256"/>
+          <Column id="ID_QUESTION" type="STRING" size="256"/>
+          <Column id="NM_QUESTION" type="STRING" size="256"/>
+          <Column id="NO_QUESTIONTEL" type="STRING" size="256"/>
+          <Column id="EM_QUESTION" type="STRING" size="256"/>
+          <Column id="ID_INSERT" type="STRING" size="256"/>
+          <Column id="NM_INSERT" type="STRING" size="256"/>
+          <Column id="DT_INSERT" type="STRING" size="256"/>
+          <Column id="ID_UPDATE" type="STRING" size="256"/>
+          <Column id="NM_UPDATE" type="STRING" size="256"/>
+          <Column id="DT_UPDATE" type="STRING" size="256"/>
+          <Column id="GW_STATUS1" type="STRING" size="256"/>
+          <Column id="DS_STATUS1" type="STRING" size="256"/>
+          <Column id="TY_BIDSTATUS" type="STRING" size="256"/>
+          <Column id="DS_BIDSTATUS" type="STRING" size="256"/>
+          <Column id="CT_HOUSEHOLDS" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_CONTGUARANTEE" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_ASGUARANTEE" type="BIGDECIMAL" size="256"/>
+          <Column id="DT_ASFROMTO" type="STRING" size="256"/>
+          <Column id="CT_JICHAE" type="INT" size="256"/>
+          <Column id="TY_RETIRE_BUGEUM" type="STRING" size="256"/>
+          <Column id="RT_IND_01" type="STRING" size="256"/>
+          <Column id="RT_IND_02" type="STRING" size="256"/>
+          <Column id="DS_PREPAY1" type="STRING" size="256"/>
+          <Column id="YN_PREPAY1" type="STRING" size="256"/>
+          <Column id="DS_PAY" type="STRING" size="256"/>
+          <Column id="DS_CONDITION_DELIVERY" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DCBPR_ORDERPLAN_BONSA_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DCBPR_ORDERPLAN_BONSA_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DCBPR_ORDERPLAN_BONSA_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">d_select</Col>
+            <Col id="SP">DCBPR_JOINBID_BONSA_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">d_update</Col>
+            <Col id="SP">DCBPR_BID_JOINBID_UPDATE_HDC</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update_attend</Col>
+            <Col id="SP">DCBPR_SITE_EXPLAIN_ATTEND_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update_attach</Col>
+            <Col id="SP">DCBPR_BID_EXPLAIN_FILE_CONFIRM</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">cancel_attach</Col>
+            <Col id="SP">DCBPR_BID_EXPLAIN_FILE_CANCEL</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select_jodal</Col>
+            <Col id="SP">DZZPR_EPS_BID_SAP_MIDDLE_POPUP_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">tab4_select</Col>
+            <Col id="SP">DCBPR_PR_BY_SITEEXPLAIN_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">tab4_save</Col>
+            <Col id="SP">DCBPR_PR_BY_SITEEXPLAIN_UPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="NO_BID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_SITE"/>
+            <Col id="NO_BID"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList2"/>
+      <Dataset id="dsTY_ACCOUNT">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE"/>
+            <Col id="DS_CODE"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDS_CONTMETHOD">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_TAX">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="DATA" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">과세</Col>
+            <Col id="DATA">과세</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">면세</Col>
+            <Col id="DATA">면세</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">공존</Col>
+            <Col id="DATA">공존</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_EXPLAIN">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="DATA" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="DATA">현설실시</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="DATA">현설없음</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsONOFF_EXPLAIN">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRequired">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="DS_FIELD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+
+<Row>
+            <Col id="CD_FIELD">TY_ACCOUNT</Col>
+            <Col id="DS_FIELD">구매유형</Col>
+</Row>
+
+          <Row>
+            <Col id="CD_FIELD">DS_CONTMETHOD</Col>
+            <Col id="DS_FIELD">계약유형</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">TY_TAX</Col>
+            <Col id="DS_FIELD">과세구분</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">DT_FROM</Col>
+            <Col id="DS_FIELD">공사시작일</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">DT_TO</Col>
+            <Col id="DS_FIELD">공사종료일</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_COSTCLASS</Col>
+            <Col id="DS_FIELD">부문</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_LICCOST</Col>
+            <Col id="DS_FIELD">하도공종</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">DS_SUBCON</Col>
+            <Col id="DS_FIELD">하도급명</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">ONOFF_EXPLAIN</Col>
+            <Col id="DS_FIELD">현설유형</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">DT_BIDMAGAM</Col>
+            <Col id="DS_FIELD">입찰일시</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">ID_BIDDAM1</Col>
+            <Col id="DS_FIELD">입찰담당1</Col>
+          </Row>
+
+<Row>
+            <Col id="CD_FIELD">ID_BIDDAM2</Col>
+            <Col id="DS_FIELD">입찰담당2</Col>
+</Row>
+
+          <Row>
+            <Col id="CD_FIELD">ONOFF</Col>
+            <Col id="DS_FIELD">입찰방식</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">ID_BIDCOORDI</Col>
+            <Col id="DS_FIELD">개찰자</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">NO_BIDDAM1TEL</Col>
+            <Col id="DS_FIELD">입찰담당1 전화번호</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">EM_BIDDAM1</Col>
+            <Col id="DS_FIELD">입찰담당1 이메일</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRequired_DC">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="DS_FIELD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+
+<Row>
+            <Col id="CD_FIELD">DT_EXPLAIN</Col>
+            <Col id="DS_FIELD">현설일시</Col>
+</Row>
+
+          <Row>
+            <Col id="CD_FIELD">ID_SITESABUN</Col>
+            <Col id="DS_FIELD">현장설명회 현장담당자</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">ID_MANAGER_01</Col>
+            <Col id="DS_FIELD">현설입찰일정 관리책임자</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">ID_SITESABUN_01</Col>
+            <Col id="DS_FIELD">현설입찰일정 현장담당자</Col>
+          </Row>
+
+<Row>
+            <Col id="CD_FIELD">AREA_SITE1</Col>
+            <Col id="DS_FIELD">1공구연면적</Col>
+</Row>
+<Row>
+            <Col id="CD_FIELD">AREA_SITE2</Col>
+            <Col id="DS_FIELD">2공구연면적</Col>
+</Row>
+<Row>
+            <Col id="CD_FIELD">AREA_SITE3</Col>
+            <Col id="DS_FIELD">3공구연면적</Col>
+</Row>
+<Row>
+            <Col id="CD_FIELD">AREA_SITE4</Col>
+            <Col id="DS_FIELD">4공구연면적</Col>
+</Row>
+
+        </Rows>
+      </Dataset>
+      <Dataset id="dsGONGU">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">0</Col>
+            <Col id="DS_CODE">0</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">1</Col>
+            <Col id="DS_CODE">1</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">2</Col>
+            <Col id="DS_CODE">2</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">3</Col>
+            <Col id="DS_CODE">3</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">4</Col>
+            <Col id="DS_CODE">4</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_BID">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsHOUR">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">00</Col>
+            <Col id="DS_CODE">00</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">01</Col>
+            <Col id="DS_CODE">01</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">02</Col>
+            <Col id="DS_CODE">02</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">03</Col>
+            <Col id="DS_CODE">03</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">04</Col>
+            <Col id="DS_CODE">04</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">05</Col>
+            <Col id="DS_CODE">05</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">06</Col>
+            <Col id="DS_CODE">06</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">07</Col>
+            <Col id="DS_CODE">07</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">08</Col>
+            <Col id="DS_CODE">08</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">09</Col>
+            <Col id="DS_CODE">09</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">10</Col>
+            <Col id="DS_CODE">10</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">11</Col>
+            <Col id="DS_CODE">11</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">12</Col>
+            <Col id="DS_CODE">12</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">13</Col>
+            <Col id="DS_CODE">13</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">14</Col>
+            <Col id="DS_CODE">14</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">15</Col>
+            <Col id="DS_CODE">15</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">16</Col>
+            <Col id="DS_CODE">16</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">17</Col>
+            <Col id="DS_CODE">17</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">18</Col>
+            <Col id="DS_CODE">18</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">19</Col>
+            <Col id="DS_CODE">19</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">20</Col>
+            <Col id="DS_CODE">20</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">21</Col>
+            <Col id="DS_CODE">21</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">22</Col>
+            <Col id="DS_CODE">22</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">23</Col>
+            <Col id="DS_CODE">23</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMINUTE">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">00</Col>
+            <Col id="DS_CODE">00</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">05</Col>
+            <Col id="DS_CODE">05</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">10</Col>
+            <Col id="DS_CODE">10</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">15</Col>
+            <Col id="DS_CODE">15</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">20</Col>
+            <Col id="DS_CODE">20</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">25</Col>
+            <Col id="DS_CODE">25</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">30</Col>
+            <Col id="DS_CODE">30</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">35</Col>
+            <Col id="DS_CODE">35</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">40</Col>
+            <Col id="DS_CODE">40</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">45</Col>
+            <Col id="DS_CODE">45</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">50</Col>
+            <Col id="DS_CODE">50</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">55</Col>
+            <Col id="DS_CODE">55</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTempTime" onvaluechanged="dsTempTime_onvaluechanged">
+        <ColumnInfo>
+          <Column id="EXPLAIN_HOUR" type="STRING" size="256"/>
+          <Column id="EXPLAIN_MINUTE" type="STRING" size="256"/>
+          <Column id="BIDMAGAM_HOUR" type="STRING" size="256"/>
+          <Column id="BIDMAGAM_MINUTE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsJodal"/>
+      <Dataset id="dsONOFF"/>
+      <Dataset id="dsList3"/>
+      <Dataset id="dsTY_RETIRE_BUGEUM">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsTY_IND_RT_01">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsTY_IND_RT_02">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsYN_PIL">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="VALUE">대상</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="VALUE">비대상</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_PIL2">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="VALUE">필요</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="VALUE">필요없음</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_PAY">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">월1회</Col>
+            <Col id="DS_CODE">월1회</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">월2회</Col>
+            <Col id="DS_CODE">월2회</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">완공불</Col>
+            <Col id="DS_CODE">완공불</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">2개월1회</Col>
+            <Col id="DS_CODE">2개월1회</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_CONDITION_DELIVERY">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE"/>
+            <Col id="DS_CODE"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_MAT">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE"/>
+            <Col id="DS_CODE"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divSearch.form.ccfNO_BID.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="NO_BID"/>
+      <BindItem id="item2" compid="divData.form.divData01.form.cboTY_ACCOUNT" propid="value" datasetid="dsList" columnid="TY_ACCOUNT"/>
+      <BindItem id="item3" compid="divData.form.divData01.form.txtNO_BID" propid="value" datasetid="dsList3" columnid="NO_PR"/>
+      <BindItem id="item8" compid="divData.form.divData01.form.txtNO_RFQ" propid="value" datasetid="dsList" columnid="NO_RFQ"/>
+      <BindItem id="item11" compid="divData.form.divData01.form.txtNO_UNION_HADO" propid="value" datasetid="dsList" columnid="NO_UNION_HADO"/>
+      <BindItem id="item12" compid="divData.form.divData01.form.txtNO_UNION_BID_CONNECT" propid="value" datasetid="dsList" columnid="NO_UNION_BID_CONNECT"/>
+      <BindItem id="item18" compid="divData.form.divData01.form.cboDS_CONTMETHOD" propid="value" datasetid="dsList" columnid="DS_CONTMETHOD"/>
+      <BindItem id="item19" compid="divData.form.divData01.form.txtRT_TAX" propid="value" datasetid="dsList" columnid="RT_TAX"/>
+      <BindItem id="item25" compid="divData.form.divData01.form.cboTY_TAX" propid="value" datasetid="dsList" columnid="TY_TAX"/>
+      <BindItem id="item26" compid="divData.form.divData01.form.tclDT_FROM" propid="value" datasetid="dsList" columnid="DT_FROM"/>
+      <BindItem id="item27" compid="divData.form.divData01.form.tclDT_TO" propid="value" datasetid="dsList" columnid="DT_TO"/>
+      <BindItem id="item28" compid="divData.form.divData01.form.cfCD_COSTCLASS.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_COSTCLASS"/>
+      <BindItem id="item29" compid="divData.form.divData01.form.cfCD_COSTCLASS.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_COSTCLASS"/>
+      <BindItem id="item30" compid="divData.form.divData01.form.cfCD_LICCOST.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_LICCOST"/>
+      <BindItem id="item31" compid="divData.form.divData01.form.cfCD_LICCOST.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_LICCOST"/>
+      <BindItem id="item32" compid="divData.form.divData01.form.txtDS_SUBCON" propid="value" datasetid="dsList" columnid="DS_SUBCON"/>
+      <BindItem id="item36" compid="divData.form.divData03.form.tclDT_REQ_SITE" propid="value" datasetid="dsList" columnid="DT_REQ_SITE"/>
+      <BindItem id="item37" compid="divData.form.divData03.form.tclDT_HQRECEIPT" propid="value" datasetid="dsList" columnid="DT_HQRECEIPT"/>
+      <BindItem id="item38" compid="divData.form.divData03.form.tclDT_HQAPPR" propid="value" datasetid="dsList" columnid="DT_HQAPPR"/>
+      <BindItem id="item39" compid="divData.form.divData03.form.txtAM_TT_DOKUB" propid="value" datasetid="dsList" columnid="AM_TT_DOKUB"/>
+      <BindItem id="item40" compid="divData.form.divData03.form.txtAM_TT_SILHENG" propid="value" datasetid="dsList" columnid="AM_TT_SILHENG"/>
+      <BindItem id="item42" compid="divData.form.divData03.form.txtAM_GONGSA" propid="value" datasetid="dsList" columnid="AM_GONGSA"/>
+      <BindItem id="item44" compid="divData.form.tabData.tab1.form.div00.form.cboYN_EXPLAIN" propid="value" datasetid="dsList" columnid="YN_EXPLAIN"/>
+      <BindItem id="item45" compid="divData.form.tabData.tab1.form.div00.form.cboONOFF_EXPLAIN" propid="value" datasetid="dsList" columnid="ONOFF_EXPLAIN"/>
+      <BindItem id="item46" compid="divData.form.tabData.tab1.form.div00.form.tclDT_EXPLAIN" propid="value" datasetid="dsList" columnid="DT_EXPLAIN"/>
+      <BindItem id="item47" compid="divData.form.tabData.tab1.form.div00.form.txtAT_SITEEXPLAIN" propid="value" datasetid="dsList" columnid="AT_SITEEXPLAIN"/>
+      <BindItem id="item48" compid="divData.form.tabData.tab1.form.div00.form.tclDT_EXPLAIN_GONGO" propid="value" datasetid="dsList" columnid="DT_EXPLAIN_GONGO"/>
+      <BindItem id="item52" compid="divData.form.tabData.tab1.form.div01.form.ccfID_SITESABUN.form.CDTextBox" propid="value" datasetid="dsList" columnid="ID_SITESABUN"/>
+      <BindItem id="item53" compid="divData.form.tabData.tab1.form.div01.form.ccfID_SITESABUN.form.DSTextBox" propid="value" datasetid="dsList" columnid="NM_SITESABUN"/>
+      <BindItem id="item54" compid="divData.form.tabData.tab1.form.div01.form.txtNO_SITETEL" propid="value" datasetid="dsList" columnid="NO_SITETEL"/>
+      <BindItem id="item55" compid="divData.form.tabData.tab1.form.div01.form.txtRM_BIDREMARK" propid="value" datasetid="dsList" columnid="RM_BIDREMARK"/>
+      <BindItem id="item68" compid="divData.form.tabData.tab3.form.div02.form.tclDT_BID_GONGO" propid="value" datasetid="dsList" columnid="DT_EXPLAIN_GONGO"/>
+      <BindItem id="item69" compid="divData.form.tabData.tab3.form.div02.form.tclDT_BIDMAGAM" propid="value" datasetid="dsList" columnid="DT_BIDMAGAM"/>
+      <BindItem id="item70" compid="divData.form.tabData.tab3.form.div02.form.cboONOFF_EXPLAIN" propid="value" datasetid="dsList" columnid="ONOFF"/>
+      <BindItem id="item78" compid="divData.form.tabData.tab3.form.div02.form.ccfID_BIDDAM1.form.CDTextBox" propid="value" datasetid="dsList" columnid="ID_BIDDAM1"/>
+      <BindItem id="item79" compid="divData.form.tabData.tab3.form.div02.form.ccfID_BIDDAM1.form.DSTextBox" propid="value" datasetid="dsList" columnid="NM_BIDDAM1"/>
+      <BindItem id="item80" compid="divData.form.tabData.tab3.form.div02.form.txtNO_BIDDAM1TEL" propid="value" datasetid="dsList" columnid="NO_BIDDAM1TEL"/>
+      <BindItem id="item81" compid="divData.form.tabData.tab3.form.div02.form.txtEM_BIDDAM1" propid="value" datasetid="dsList" columnid="EM_BIDDAM1"/>
+      <BindItem id="item82" compid="divData.form.tabData.tab3.form.div02.form.ccfID_BIDDAM2.form.CDTextBox" propid="value" datasetid="dsList" columnid="ID_BIDDAM2"/>
+      <BindItem id="item83" compid="divData.form.tabData.tab3.form.div02.form.ccfID_BIDDAM2.form.DSTextBox" propid="value" datasetid="dsList" columnid="NM_BIDDAM2"/>
+      <BindItem id="item84" compid="divData.form.tabData.tab3.form.div02.form.txtNO_BIDDAM2TEL" propid="value" datasetid="dsList" columnid="NO_BIDDAM2TEL"/>
+      <BindItem id="item85" compid="divData.form.tabData.tab3.form.div02.form.txtEM_BIDDAM2" propid="value" datasetid="dsList" columnid="EM_BIDDAM2"/>
+      <BindItem id="item86" compid="divData.form.tabData.tab3.form.div02.form.ccfID_QUESTION.form.CDTextBox" propid="value" datasetid="dsList" columnid="ID_QUESTION"/>
+      <BindItem id="item87" compid="divData.form.tabData.tab3.form.div02.form.ccfID_QUESTION.form.DSTextBox" propid="value" datasetid="dsList" columnid="NM_QUESTION"/>
+      <BindItem id="item88" compid="divData.form.tabData.tab3.form.div02.form.txtNO_QUESTIONTEL" propid="value" datasetid="dsList" columnid="NO_QUESTIONTEL"/>
+      <BindItem id="item89" compid="divData.form.tabData.tab3.form.div02.form.txtEM_QUESTION" propid="value" datasetid="dsList" columnid="EM_QUESTION"/>
+      <BindItem id="item91" compid="divSearch.form.ctxtDS_BIDSTATUS" propid="value" datasetid="dsList" columnid="DS_BIDSTATUS"/>
+      <BindItem id="item93" compid="divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_HOUR" propid="value" datasetid="dsTempTime" columnid="EXPLAIN_HOUR"/>
+      <BindItem id="item94" compid="divData.form.tabData.tab1.form.div00.form.ccboDT_EXPLAIN_MINUTE" propid="value" datasetid="dsTempTime" columnid="EXPLAIN_MINUTE"/>
+      <BindItem id="item95" compid="divData.form.tabData.tab3.form.div00.form.ccboDT_EXPLAIN_HOUR" propid="value" datasetid="dsTempTime" columnid="EXPLAIN_HOUR"/>
+      <BindItem id="item96" compid="divData.form.tabData.tab3.form.div00.form.ccboDT_EXPLAIN_MINUTE" propid="value" datasetid="dsTempTime" columnid="EXPLAIN_MINUTE"/>
+      <BindItem id="item71" compid="divData.form.tabData.tab3.form.div02.form.ccboDT_BIDMAGAM_HOUR" propid="value" datasetid="dsTempTime" columnid="BIDMAGAM_HOUR"/>
+      <BindItem id="item72" compid="divData.form.tabData.tab3.form.div02.form.ccboDT_BIDMAGAM_MINUTE" propid="value" datasetid="dsTempTime" columnid="BIDMAGAM_MINUTE"/>
+      <BindItem id="item4" compid="divData.form.divData01.form.txtRT_TAX00" propid="value" datasetid="dsList" columnid="RT_CONTGUARANTEE"/>
+      <BindItem id="item5" compid="divData.form.divData01.form.txtRT_TAX01" propid="value" datasetid="dsList" columnid="RT_ASGUARANTEE"/>
+      <BindItem id="item6" compid="divData.form.divData01.form.txtDS_SUBCON00" propid="value" datasetid="dsList" columnid="DT_ASFROMTO"/>
+      <BindItem id="item13" compid="divData.form.divData01.form.rdoYN_PAYGUARANTEE" propid="value" datasetid="dsList" columnid="YN_PREPAY1"/>
+      <BindItem id="item14" compid="divData.form.divData01.form.txt00" propid="value" datasetid="dsList" columnid="RM_REMARK"/>
+      <BindItem id="item17" compid="divData.form.divData02.form.rdoYN_PAYGUARANTEE" propid="value" datasetid="dsList" columnid="YN_LABORGUARANTEE"/>
+      <BindItem id="item20" compid="divData.form.divData01.form.rdoYN_SH" propid="value" datasetid="dsList" columnid="YN_SH"/>
+      <BindItem id="item21" compid="divData.form.divData02.form.chkYN_YEARDANGA" propid="value" datasetid="dsList" columnid="YN_YEARDANGA"/>
+      <BindItem id="item22" compid="divData.form.divData02.form.txtDS_PREPAY1_00" propid="value" datasetid="dsList" columnid="DS_PLACE"/>
+      <BindItem id="item23" compid="divData.form.divData02.form.chkYN_BUYBACK" propid="value" datasetid="dsList" columnid="YN_BUYBACK"/>
+      <BindItem id="item24" compid="divData.form.tabData.tab3.form.div02.form.cboTY_BID" propid="value" datasetid="dsList" columnid="TY_BID"/>
+      <BindItem id="item9" compid="divData.form.tabData.tab3.form.div02.form.txtEM_BIDDAM1_00" propid="value" datasetid="dsList" columnid="AT_BIDMAGAM"/>
+      <BindItem id="item15" compid="divData.form.divData02.form.txtDS_PAY2" propid="value" datasetid="dsList" columnid="DS_CONDITION_DELIVERY"/>
+      <BindItem id="item16" compid="divData.form.divData01.form.txtDS_PREPAY1" propid="value" datasetid="dsList" columnid="DS_PREPAY1"/>
+      <BindItem id="item35" compid="divData.form.divData01.form.cboTY_MAT" propid="value" datasetid="dsList" columnid="TY_MAT"/>
+      <BindItem id="item7" compid="divData.form.divData01.form.txtDS_SUBCON01" propid="value" datasetid="dsList" columnid="CT_JICHAE"/>
+      <BindItem id="item10" compid="divData.form.tabData.tab3.form.div02.form.ccfID_BIDCOORDI.form.CDTextBox" propid="value" datasetid="dsList" columnid="ID_BIDCOORDI"/>
+      <BindItem id="item34" compid="divData.form.tabData.tab3.form.div02.form.ccfID_BIDCOORDI.form.DSTextBox" propid="value" datasetid="dsList" columnid="NM_BIDCOORDI"/>
+      <BindItem id="item33" compid="divData.form.divData01.form.txtDS_SUBCON02_00" propid="value" datasetid="dsList" columnid="EPS_BID_NO"/>
+      <BindItem id="item41" compid="divData.form.divData01.form.txtDS_PAYMET" propid="value" datasetid="dsList" columnid="DS_PAYMET"/>
+      <BindItem id="item43" compid="divData.form.divData01.form.cboDS_PAY" propid="value" datasetid="dsList" columnid="DS_PAY"/>
+      <BindItem id="item49" compid="divData.form.divData02.form.txtDS_PAY" propid="value" datasetid="dsList" columnid="DS_CONDITION_DELIVERY"/>
+      <BindItem id="item50" compid="divData.form.divData01.form.txt00_00" propid="value" datasetid="dsList" columnid="DS_NOTICE"/>
+    </Bind>
+  </Form>
+</FDL>

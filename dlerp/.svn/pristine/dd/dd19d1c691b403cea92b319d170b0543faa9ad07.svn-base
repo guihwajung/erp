@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DAM_EMPLOYEECARD_DLG" width="730" height="350" titletext="출입카드(사원증)관리" onload="form_onload" maxwidth="750" maxheight="410">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="2" left="0" top="0" right="0" bottom="52" formscrolltype="both" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta_TITLE_L" taborder="0" text="신청정보" left="9" top="139" width="70" height="18" cssclass="sta_TITLE_Bg"/>
+              <Static id="sta_TITLE_T" taborder="1" text="임직원정보" left="9" top="9" width="90" height="18" cssclass="sta_TITLE_Bg"/>
+              <Static id="staCD_TEMP" taborder="12" left="50.00%" top="34" height="30" cssclass="sta_WF_tablelabel" width="70"/>
+              <Static id="staCD_POSITION_BG_00" taborder="13" left="staCD_TEMP:-1" top="34" height="30" cssclass="sta_WF_tablebg" text="" onclick="sta23_onclick" right="0"/>
+              <Static id="staID_SABUN" taborder="4" text="성명" left="0" top="34" height="30" width="65" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staID_SABUN_BG" taborder="2" left="staID_SABUN:-1" top="34" height="30" cssclass="sta_WF_tablebg" text="" onclick="sta23_onclick" right="staCD_TEMP:-1"/>
+              <Div id="ccfID_SABUN" CDTextWidth="70" taborder="3" left="staID_SABUN:5" top="39" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DAX_CFBASEINFO_ALL" right="staCD_TEMP:95"/>
+              <Static id="staCD_POSITION" taborder="10" text="직위" left="50.00%" top="63" height="30" cssclass="sta_WF_tablelabel" width="70"/>
+              <Static id="staCD_POSITION_BG" taborder="11" left="staCD_POSITION:-1" top="63" height="30" cssclass="sta_WF_tablebg" text="" onclick="sta23_onclick" right="0"/>
+              <Static id="staCD_DEPT" taborder="5" text="부서" left="0" top="63" height="30" cssclass="sta_WF_tablelabel" width="65"/>
+              <Static id="staCD_DEPT_BG" taborder="6" left="staCD_DEPT:-1" top="63" height="30" cssclass="sta_WF_tablebg" text="" onclick="sta23_onclick" right="staCD_POSITION:-1"/>
+              <Div id="ccfCD_DEPT" CDTextWidth="70" taborder="7" left="staCD_DEPT:5" top="68" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DAX_CFDEPT" right="staCD_POSITION:20"/>
+              <Static id="staDS_ENAME_OLD" taborder="14" text="영문성명" left="50.00%" top="92" height="30" cssclass="sta_WF_tablelabel" width="70"/>
+              <Static id="staDS_ENAME_OLD_BG" taborder="15" left="staDS_ENAME_OLD:-1" top="92" height="30" cssclass="sta_WF_tablebg" text="" onclick="sta23_onclick" right="0"/>
+              <Static id="staDS_HNAME_OLD" taborder="8" text="한글성명" left="0" top="92" height="30" cssclass="sta_WF_tablelabel" width="65"/>
+              <Static id="staDS_HNAME_OLD_BG" taborder="9" top="92" height="30" cssclass="sta_WF_tablebg" text="" onclick="sta23_onclick" left="staDS_HNAME_OLD:-1" right="staDS_ENAME_OLD:-1"/>
+              <Div id="ccfCD_POSITION" CDTextWidth="70" taborder="16" left="staCD_POSITION:5" top="68" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DAX_CFCOMMONCODE" right="20"/>
+              <Edit id="edtDS_HNAME_OLD" taborder="17" left="staDS_HNAME_OLD:5" top="97" height="20" right="staDS_ENAME_OLD:20" imemode="hangul,full"/>
+              <Edit id="edtDS_ENAME_OLD" taborder="18" left="staDS_ENAME_OLD:5" top="97" height="20" right="20" imemode="alpha,full"/>
+              <Static id="staDS_ENAME_NEW" taborder="19" text="영문성명" left="50.00%" top="172" height="30" width="70" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staDS_ENAME_NEW_BG" taborder="20" left="staDS_ENAME_NEW:-1" top="172" height="30" cssclass="sta_WF_tablebg" text="" onclick="sta23_onclick" right="0"/>
+              <Edit id="edtDS_ENAME_NEW" taborder="21" left="staDS_ENAME_NEW:5" top="177" height="20" right="20" imemode="alpha,full"/>
+              <Static id="staDS_HNAME_NEW" taborder="22" text="한글성명" left="0" top="172" height="30" width="65" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staDS_HNAME_NEW_BG" taborder="23" top="172" height="30" cssclass="sta_WF_tablebg" text="" onclick="sta23_onclick" left="staDS_HNAME_NEW:-1" right="staDS_ENAME_NEW:-1"/>
+              <Edit id="edtDS_HNAME_NEW" taborder="24" left="staDS_HNAME_NEW:5" top="177" height="20" right="staDS_ENAME_NEW:20" imemode="hangul,full"/>
+              <Static id="staDS_REASON" taborder="25" text="신청사유" left="0" top="201" height="30" cssclass="sta_WF_tablelabel" width="65"/>
+              <Static id="staDS_REASON_BG" taborder="26" top="201" height="30" cssclass="sta_WF_tablebg" text="" onclick="sta23_onclick" left="staDS_REASON:-1" right="0"/>
+              <Edit id="edtDS_REASON" taborder="27" left="staDS_REASON:5" top="206" height="20" right="20"/>
+              <TextArea id="txt00" taborder="28" left="17" top="241" width="670" height="49" value="※ 영문이름신청시 앞 음절만 대문자로 작성하여 주시기 바랍니다. &#10;    [예시] 홍길동  Hong Gil Dong (○) Hong Gildong(X)  Hong gildong(X) hong gildong(X) " readonly="true" background="transparent" border="0px none transparent,0px none,0px none"/>
+              <Edit id="edtID_PERSON" taborder="29" left="ccfID_SABUN:1" top="39" width="86" height="20" enable="false" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnOK" taborder="0" text="확인" width="70" height="27" onclick="btnOK_onclick" top="divData:15" right="51.01%"/>
+        <Button id="btnCANCLE" taborder="1" text="취소" left="btnOK:10" width="70" height="27" onclick="btnCANCLE_onclick" top="divData:15"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.fv_NO_SEQ = "";
+this.fv_ID_PERSON = "";
+
+this.fv_CD_CORP = "";
+this.fv_ID_SABUN = "";
+this.fv_DS_HNAME = "";
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------// 
+
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	 
+	this.fv_NO_SEQ = this.gfnNvl(this.getOwnerFrame().NO_SEQ, "");
+	this.fv_ID_PERSON = this.gfnNvl(this.getOwnerFrame().ID_PERSON, "");
+	
+	this.fv_CD_CORP = this.gfnNvl(this.getOwnerFrame().CD_CORP, "");
+	this.fv_ID_SABUN = this.gfnNvl(this.getOwnerFrame().ID_SABUN, "");
+	this.fv_DS_HNAME = this.gfnNvl(this.getOwnerFrame().DS_HNAME, "");
+
+	if(!this.gfnIsNull(this.fv_NO_SEQ) && !this.gfnIsNull(this.fv_ID_PERSON)){
+		//기존데이타 조회
+		this.ccfID_SABUN.set_enable(false);
+		this.ccfCD_DEPT.set_enable(false);
+		this.ccfCD_POSITION.set_enable(false);
+		this.edtDS_HNAME_OLD.set_enable(false);
+		this.edtDS_ENAME_OLD.set_enable(false);
+		this.fnSelect();
+	}else{
+		//신규등록
+		this.dsList.clearData();
+		this.dsList.addRow();
+		
+		//trace("CD_CORP", this.gfnNvl(this.fv_CD_CORP, this.AuthClient.CD_CORP));
+		//trace("ID_SABUN", this.gfnNvl(this.fv_ID_SABUN, this.AuthClient.ID_SABUN));
+		
+		this.dsList.setColumn(0, "CD_CORP", this.gfnNvl(this.fv_CD_CORP, this.AuthClient.CD_CORP));
+		this.dsList.setColumn(0, "ID_SABUN", this.gfnNvl(this.fv_ID_SABUN, this.AuthClient.ID_SABUN));
+		
+		if(!this.gfnIsNull(this.dsList.getColumn(0, "ID_SABUN"))){
+			this.ccfID_SABUN.form.fnCodeFindLoad();
+		}
+	}
+	
+	//>> GR_SEARCH <=2   수정 가능 / GR_SEARCH >2 수정불가 
+	if(this.FormInfo.GR_SEARCH > "2"){
+		this.ccfID_SABUN.set_enable(false);
+		this.ccfCD_DEPT.set_enable(false);
+		this.ccfCD_POSITION.set_enable(false);
+		this.edtDS_HNAME_OLD.set_enable(false);
+		this.edtDS_ENAME_OLD.set_enable(false);
+	}		
+	
+};
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfID_SABUN = this.divData.form.ccfID_SABUN;
+	this.ccfCD_DEPT = this.divData.form.ccfCD_DEPT;
+	this.ccfCD_POSITION = this.divData.form.ccfCD_POSITION;
+	this.edtDS_HNAME_OLD = this.divData.form.edtDS_HNAME_OLD;
+	this.edtDS_ENAME_OLD = this.divData.form.edtDS_ENAME_OLD;
+	
+	this.edtDS_HNAME_NEW = this.divData.form.edtDS_HNAME_NEW;
+	this.edtDS_ENAME_NEW = this.divData.form.edtDS_ENAME_NEW;
+	this.edtDS_REASON = this.divData.form.edtDS_REASON;
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("ID_PERSON", "int");
+	this.dsSelect.addColumn("NO_SEQ", "int");
+	this.dsSelect.addColumn("GR_SEARCH", "string");
+	this.dsSelect.addColumn("ID_USER", "string");
+	this.dsSelect.addColumn("TY_AUTH", "string");
+	
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("TY_SAVE", "string");
+	this.dsSave.addColumn("ID_PERSON", "int");
+	this.dsSave.addColumn("NO_SEQ", "int");
+	this.dsSave.addColumn("CD_CORP", "string");
+	this.dsSave.addColumn("ID_SABUN", "string");
+	this.dsSave.addColumn("CD_DEPT", "string");
+	this.dsSave.addColumn("CD_POSITION", "string");
+	this.dsSave.addColumn("DS_HNAME_OLD", "string");
+	this.dsSave.addColumn("DS_ENAME_OLD", "string");
+	this.dsSave.addColumn("DS_HNAME_NEW", "string");
+	this.dsSave.addColumn("DS_ENAME_NEW", "string");
+	this.dsSave.addColumn("DS_REASON", "string");
+	this.dsSave.addColumn("GR_SEARCH", "string");
+	this.dsSave.addColumn("ID_USER", "string");
+	this.dsSave.addColumn("TY_AUTH", "string");
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfID_SABUN.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfID_SABUN.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfCD_DEPT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_DEPT.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfCD_POSITION.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_POSITION.AfterCDTextChanged = "fnAfterCDTextChanged";
+};
+
+
+ /*
+  *	등록된 데이타 조회
+  */
+this.fnSelect = function() {
+	if(this.gfnIsNull(this.fv_NO_SEQ) 
+			||this.gfnIsNull(this.fv_ID_PERSON) ) return;
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "ID_PERSON", this.fv_ID_PERSON);
+	this.dsSelect.setColumn(0, "NO_SEQ", this.fv_NO_SEQ);
+	this.dsSelect.setColumn(0, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	this.dsSelect.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	this.dsSelect.setColumn(0, "TY_AUTH", this.FormInfo.TY_AUTH);
+	
+ 	var strSvcId    = "select";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	 
+						strSvcType ,  
+						inProc,			 
+						inData , 		 
+						outData , 	 
+						strArg, 			 
+						callBackFnc);  
+}
+
+
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	this.fnSave();
+};
+
+this.fnSave = function() {
+	if(this.dsList.rowcount == 0) return;
+	if(!this.fnSaveValid()) return;
+	
+	this.dsSave.clearData();
+	var nrow = this.dsSave.addRow();
+	
+ 	var nNO_SEQ = this.gfnNvl(this.dsList.getColumn(0, "NO_SEQ"), 0);
+ 	var flag = (nNO_SEQ == 0) ? "I" : "U";
+	this.dsSave.setColumn(nrow, "TY_SAVE", flag);
+	this.dsSave.setColumn(nrow, "ID_PERSON", this.dsList.getColumn(0, "ID_PERSON"));
+	this.dsSave.setColumn(nrow, "NO_SEQ", nNO_SEQ);
+	this.dsSave.setColumn(nrow, "CD_CORP", this.dsList.getColumn(0, "CD_CORP"));
+	this.dsSave.setColumn(nrow, "ID_SABUN", this.dsList.getColumn(0, "ID_SABUN"));
+	this.dsSave.setColumn(nrow, "CD_DEPT", this.dsList.getColumn(0, "CD_DEPT"));
+	this.dsSave.setColumn(nrow, "CD_POSITION", this.dsList.getColumn(0, "CD_POSITION"));
+	this.dsSave.setColumn(nrow, "DS_HNAME_OLD", this.gfnNvl(this.dsList.getColumn(0, "DS_HNAME_OLD"),""));
+	this.dsSave.setColumn(nrow, "DS_ENAME_OLD", this.gfnNvl(this.dsList.getColumn(0, "DS_ENAME_OLD"),""));
+	this.dsSave.setColumn(nrow, "DS_HNAME_NEW", this.gfnNvl(this.dsList.getColumn(0, "DS_HNAME_NEW"),""));
+	this.dsSave.setColumn(nrow, "DS_ENAME_NEW", this.gfnNvl(this.dsList.getColumn(0, "DS_ENAME_NEW"),""));
+	this.dsSave.setColumn(nrow, "DS_REASON", this.gfnNvl(this.dsList.getColumn(0, "DS_REASON"),""));
+	this.dsSave.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	this.dsSave.setColumn(nrow, "TY_AUTH", this.FormInfo.TY_AUTH);
+
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+											
+}
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	// 취소
+	this.getParentContext().close(false);
+};
+
+this.fnSaveValid = function(){
+	if(this.gfnIsNull(this.ccfID_SABUN.form.CDTextBox.value) || this.gfnIsNull(this.divData.form.edtID_PERSON.value)) {	
+		this.fnValidCallback = function(){
+			this.ccfID_SABUN.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("성명을 입력해주세요", "fnValidCallback");
+		return false;
+	}
+	if(this.gfnIsNull(this.edtDS_HNAME_NEW.value)) {	
+		this.fnValidCallback = function(){
+			this.edtDS_HNAME_NEW.setFocus();
+		}
+		this.gfnAlert("한글성명을 입력해주세요", "fnValidCallback");
+		return false;
+	}
+	if(this.gfnIsNull(this.edtDS_ENAME_NEW.value)) {	
+		this.fnValidCallback = function(){
+			this.edtDS_ENAME_NEW.setFocus();
+		}
+		this.gfnAlert("영문성명을 입력해주세요", "fnValidCallback");
+		return false;
+	}
+	
+	return true;	
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if(id == "ccfID_SABUN"){
+		dsUserParam.setColumn(nrow, "CD_DEPT", this.gfnNvl(this.getOwnerFrame().CD_DEPT, ""));
+		dsUserParam.setColumn(nrow, "CD_CORP", this.gfnNvl(this.getOwnerFrame().CD_CORP, "%"));
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "YN_CORP", "N");
+		dsUserParam.setColumn(nrow, "TY_RETIRE", "%");
+	}
+	else if(id == "ccfCD_DEPT"){
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "CD_DEPT", this.gfnNvl(this.getOwnerFrame().CD_DEPT, this.AuthClient.CD_DEPT));
+		dsUserParam.setColumn(nrow, "CD_CORP", this.gfnNvl(this.getOwnerFrame().CD_CORP, "%"));
+		dsUserParam.setColumn(nrow, "YN_DELETE", "N");		
+	}
+	else if(id == "ccfCD_POSITION"){ //직위
+		dsUserParam.setColumn(nrow, "CD_PREFIX", 'ED');	//직위
+	}
+
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {	
+	var arr = codeFindData;
+
+	if(id == "ccfID_SABUN"){
+ 		if(arr.length >0){
+			var rowData = arr[0];
+			this.divData.form.edtID_PERSON.set_value(rowData.ID_PERSON);
+			
+			this.ccfCD_DEPT.form.CDTextBox.set_value(rowData.CD_DEPT);
+			this.ccfCD_DEPT.form.DSTextBox.set_value(rowData.DS_DEPT); 
+			this.ccfCD_POSITION.form.CDTextBox.set_value(rowData.CD_POSITION);
+			this.ccfCD_POSITION.form.DSTextBox.set_value(rowData.DS_POSITION); 
+			this.edtDS_HNAME_OLD.set_value(rowData.DS_HNAME);
+			this.edtDS_ENAME_OLD.set_value(rowData.DS_ENAME);
+			
+			this.edtDS_HNAME_NEW.set_value(rowData.DS_HNAME);
+			this.edtDS_ENAME_NEW.set_value(rowData.DS_ENAME);
+			
+ 		}else{
+			this.divData.form.edtID_PERSON.set_value("");
+		
+			this.ccfCD_DEPT.form.CDTextBox.set_value("");
+			this.ccfCD_DEPT.form.DSTextBox.set_value(""); 
+			this.ccfCD_POSITION.form.CDTextBox.set_value("");
+			this.ccfCD_POSITION.form.DSTextBox.set_value(""); 
+			this.edtDS_HNAME_OLD.set_value("");
+			this.edtDS_ENAME_OLD.set_value("");	
+			
+			this.edtDS_HNAME_NEW.set_value("");
+			this.edtDS_ENAME_NEW.set_value("");
+		}
+	}	
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg){
+	if(svcID == "save") {
+		if (errorCode == 0) {
+			this.fnSaveAfter = function() {
+				this.getParentContext().close(true);
+			}
+			this.gfnAlert("저장되었습니다.", "fnSaveAfter");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+		
+	}else if(svcID == "select"){
+		if(this.dsList.rowcount >0){
+			var sCD_APPROVAL = this.dsList.getColumn(0, "CD_APPROVAL");
+			var sDT_ISSUE = this.dsList.getColumn(0, "DT_ISSUE"); //발급일자
+// --CD_APPROVAL
+// --01	상신
+// --03	결재완료
+// --04	반려			
+			if(sCD_APPROVAL == "03" || !this.gfnIsNull(sDT_ISSUE)){
+				this.btnOK.set_enable(false);
+			}else{
+				this.btnOK.set_enable(true);
+			}
+		}
+	}
+}
+
+
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo){
+	if(e.newvalue != e.oldvalue){
+		if(e.columnid == "ID_SABUN"){
+			//this.dsList.clearData();
+		}	
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="ID_PERSON" type="INT" size="256"/>
+          <Column id="NO_SEQ" type="INT" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="DT_REQUEST" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="CD_POSITION" type="STRING" size="256"/>
+          <Column id="DS_POSITION" type="STRING" size="256"/>
+          <Column id="DS_HNAME_OLD" type="STRING" size="256"/>
+          <Column id="DS_ENAME_OLD" type="STRING" size="256"/>
+          <Column id="DS_HNAME_NEW" type="STRING" size="256"/>
+          <Column id="DS_ENAME_NEW" type="STRING" size="256"/>
+          <Column id="DS_REASON" type="STRING" size="256"/>
+          <Column id="DT_APPROVAL" type="STRING" size="256"/>
+          <Column id="CD_APPROVAL" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DAMPR_EMPLOYEECARD_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DAMPR_EMPLOYEECARD_SELECT_DTL</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.ccfID_SABUN.form.CDTextBox" propid="value" datasetid="dsList" columnid="ID_SABUN"/>
+      <BindItem id="item1" compid="divData.form.ccfID_SABUN.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_HNAME"/>
+      <BindItem id="item2" compid="divData.form.edtID_PERSON" propid="value" datasetid="dsList" columnid="ID_PERSON"/>
+      <BindItem id="item3" compid="divData.form.ccfCD_DEPT.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_DEPT"/>
+      <BindItem id="item4" compid="divData.form.ccfCD_DEPT.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_DEPT"/>
+      <BindItem id="item5" compid="divData.form.ccfCD_POSITION.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_POSITION"/>
+      <BindItem id="item6" compid="divData.form.ccfCD_POSITION.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_POSITION"/>
+      <BindItem id="item7" compid="divData.form.edtDS_HNAME_OLD" propid="value" datasetid="dsList" columnid="DS_HNAME_OLD"/>
+      <BindItem id="item8" compid="divData.form.edtDS_ENAME_OLD" propid="value" datasetid="dsList" columnid="DS_ENAME_OLD"/>
+      <BindItem id="item9" compid="divData.form.edtDS_HNAME_NEW" propid="value" datasetid="dsList" columnid="DS_HNAME_NEW"/>
+      <BindItem id="item10" compid="divData.form.edtDS_ENAME_NEW" propid="value" datasetid="dsList" columnid="DS_ENAME_NEW"/>
+      <BindItem id="item11" compid="divData.form.edtDS_REASON" propid="value" datasetid="dsList" columnid="DS_REASON"/>
+    </Bind>
+  </Form>
+</FDL>

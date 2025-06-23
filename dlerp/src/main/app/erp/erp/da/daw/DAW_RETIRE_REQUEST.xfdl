@@ -1,0 +1,1078 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DAW_RETIRE_REQUEST" width="980" height="850" titletext="사직서" onload="form_onload" maxheight="960" maxwidth="995">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Button id="btnAprvConnect" taborder="1" text="결재문서조회" top="5" height="26" width="100" onclick="divData_btnAprvConnect_onclick" cssclass="btn_WF_function" right="5" visible="false"/>
+              <Button id="btnAprv" taborder="2" text="결재상신" top="5" height="26" onclick="divData_btnAprv_onclick" right="5" width="75" cssclass="btn_WF_function"/>
+              <Button id="btnDel" taborder="3" text="삭제" top="5" height="26" onclick="divData_btnDel_onclick" width="51" right="btnAprv:4" cssclass="btn_WF_action" visible="false"/>
+              <Button id="btnPrint" taborder="6" text="출력" top="5" height="26" onclick="divData_btnPrint_onclick" width="51" right="btnAprv:4" cssclass="btn_WF_function"/>
+              <Button id="btnSave" taborder="4" text="임시저장" top="5" height="26" onclick="divData_btn00_01_00_onclick" enable="true" cssclass="btn_WF_function" right="btnPrint:4" width="75"/>
+              <Button id="btnInit" taborder="7" text="결재문서초기화" top="5" height="26" width="112" cssclass="btn_WF_function" right="btnPrint:5" onclick="divData_btnInit_onclick" visible="false"/>
+              <!-- 기본정보 -->
+              <Static id="staTITLE" taborder="0" text="사직서작성" left="10" top="15" width="50%" height="25" cssclass="sta_TITLE_Bg"/>
+              <!-- 성명 -->
+              <Static id="staDS_HNAME" taborder="1" text="성명" left="0" top="staTITLE:5" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_HNAME_bg" taborder="2" left="staDS_HNAME:-1" top="staDS_HNAME:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtDS_HNAME" taborder="3" left="staDS_HNAME:5" top="staDS_HNAME:-25" height="20" autoselect="true" width="150" textAlign="left" readonly="true"/>
+              <!-- 부서 -->
+              <Static id="staCD_DEPT" taborder="10" text="부서" left="0" top="staDS_HNAME:-1" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_DEPT_bg" taborder="11" left="staCD_DEPT:-1" top="staCD_DEPT:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtCD_DEPT" taborder="12" left="staCD_DEPT:5" top="staCD_DEPT:-25" height="20" autoselect="true" width="150" textAlign="left" readonly="true"/>
+              <!-- 계약기간 -->
+              <Static id="staDT_PROVATION" taborder="10" text="계약기간" left="0" top="staCD_DEPT:-1" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDT_PROVATION_bg" taborder="11" left="staDT_PROVATION:-1" top="staDT_PROVATION:-30" width="836" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtDT_PROVATION" taborder="12" left="staDT_PROVATION:5" top="staDT_PROVATION:-25" height="20" autoselect="true" width="300" textAlign="left" readonly="true"/>
+              <!-- 우편번호 -->
+              <Static id="staCD_ZIP" taborder="16" text="우편번호" left="0" top="staDT_PROVATION:-1" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_ZIP_bg" taborder="17" left="staCD_ZIP:-1" top="staCD_ZIP:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtCD_ZIP" taborder="18" left="staCD_ZIP:5" top="staCD_ZIP:-25" height="20" autoselect="true" width="150" textAlign="left" readonly="true"/>
+              <!-- 자택전화 -->
+              <Static id="staDS_HOMEPHONE" taborder="22" text="자택전화" left="0" top="staCD_ZIP:-1" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_HOMEPHONE_bg" taborder="23" left="staDS_HOMEPHONE:-1" top="staDS_HOMEPHONE:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtDS_HOMEPHONE" taborder="24" left="staDS_HOMEPHONE:5" top="staDS_HOMEPHONE:-25" height="20" autoselect="true" width="150" textAlign="left" readonly="true"/>
+              <!-- 퇴직예정일 -->
+              <Static id="staDT_RETIRE" taborder="31" text="퇴직예정일" left="0" top="staDS_HOMEPHONE:-1" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staDT_RETIRE_bg" taborder="32" left="staDT_RETIRE:-1" top="staDT_RETIRE:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Calendar id="tclDT_RETIRE" taborder="33" left="staDT_RETIRE:5" top="staDT_RETIRE:-25" width="100" height="20" dateformat="yyyy-MM-dd" autoselect="true" onchanged="tclDT_RETIRE_onchanged"/>
+              <!-- 비고(상세사유) -->
+              <Static id="staDS_RETIRE_DETAIL" taborder="40" text="비고(상세사유)" left="0" top="staDT_RETIRE:-1" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_RETIRE_DETAIL_bg" taborder="41" left="staDS_RETIRE_DETAIL:-1" top="staDS_RETIRE_DETAIL:-30" width="518" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtDS_RETIRE_DETAIL" taborder="42" left="staDS_RETIRE_DETAIL:5" top="staDS_RETIRE_DETAIL:-25" height="20" autoselect="true" width="507" textAlign="left"/>
+              <!-- 사번 -->
+              <Static id="staID_SABUN" taborder="4" text="사번" left="staDS_HNAME_bg:-1" top="staDS_HNAME_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staID_SABUN_bg" taborder="5" left="staID_SABUN:-1" top="staID_SABUN:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtID_SABUN" taborder="6" left="staID_SABUN:5" top="staID_SABUN:-25" height="20" autoselect="true" width="150" textAlign="left" readonly="true"/>
+              <!-- 직책 -->
+              <Static id="staDS_OCCUPATION" taborder="19" text="직책" left="staCD_DEPT_bg:-1" top="staCD_DEPT_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_OCCUPATION_bg" taborder="20" left="staDS_OCCUPATION:-1" top="staDS_OCCUPATION:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtDS_OCCUPATION" taborder="21" left="staDS_OCCUPATION:5" top="staDS_OCCUPATION:-25" height="20" autoselect="true" width="150" textAlign="left" readonly="true"/>
+              <!-- 주소 -->
+              <Static id="staDS_ADDRESS" taborder="19" text="주소" left="staCD_ZIP_bg:-1" top="staCD_ZIP_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_ADDRESS_bg" taborder="20" left="staDS_ADDRESS:-1" top="staDS_ADDRESS:-30" width="518" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtDS_ADDRESS" taborder="21" left="staDS_ADDRESS:5" top="staDS_ADDRESS:-25" height="20" autoselect="true" width="508" textAlign="left" readonly="true"/>
+              <!-- 휴대전화 -->
+              <Static id="staDS_HANDPHONE" taborder="25" text="휴대전화" left="staDS_HOMEPHONE_bg:-1" top="staDS_HOMEPHONE_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_HANDPHONE_bg" taborder="26" left="staDS_HANDPHONE:-1" top="staDS_HANDPHONE:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtDS_HANDPHONE" taborder="27" left="staDS_HANDPHONE:5" top="staDS_HANDPHONE:-25" height="20" autoselect="true" width="150" textAlign="left" readonly="true"/>
+              <!-- 퇴직사유 -->
+              <Static id="staNO_RETIRE" taborder="34" text="퇴직사유" left="staDT_RETIRE_bg:-1" top="staDT_RETIRE_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staNO_RETIRE_bg" taborder="35" left="staNO_RETIRE:-1" top="staNO_RETIRE:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="cfNO_RETIRE" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="36" left="staNO_RETIRE:5" top="staNO_RETIRE:-25" width="190" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- 직급 -->
+              <Static id="staCD_POSITION" taborder="7" text="직급" left="staID_SABUN_bg:-1" top="staID_SABUN_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_POSITION_bg" taborder="8" left="staCD_POSITION:-1" top="staCD_POSITION:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtCD_POSITION" taborder="9" left="staCD_POSITION:5" top="staCD_POSITION:-25" height="20" autoselect="true" width="150" textAlign="left" readonly="true"/>
+              <!-- 직원구분 -->
+              <Static id="staCD_EMPTYPE" taborder="13" text="직원구분" left="staDS_OCCUPATION_bg:-1" top="staDS_OCCUPATION_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_EMPTYPE_bg" taborder="14" left="staCD_EMPTYPE:-1" top="staCD_EMPTYPE:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtCD_EMPTYPE" taborder="15" left="staCD_EMPTYPE:5" top="staCD_EMPTYPE:-25" height="20" autoselect="true" width="150" textAlign="left" readonly="true"/>
+              <!-- 구내전화 -->
+              <Static id="staDS_OFFICEPHONE" taborder="28" text="구내전화" left="staDS_HANDPHONE_bg:-1" top="staDS_HANDPHONE_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_OFFICEPHONE_bg" taborder="29" left="staDS_OFFICEPHONE:-1" top="staDS_OFFICEPHONE:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtDS_OFFICEPHONE" taborder="30" left="staDS_OFFICEPHONE:5" top="staDS_OFFICEPHONE:-25" height="20" autoselect="true" width="150" textAlign="left" readonly="true"/>
+              <!-- 이메일 -->
+              <Static id="staDS_EMAIL" taborder="37" text="사외이메일 [①]" left="staNO_RETIRE_bg:-1" top="staNO_RETIRE_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staDS_EMAILbg" taborder="38" left="staDS_EMAIL:-1" top="staDS_EMAIL:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtDS_EMAIL" taborder="39" left="staDS_EMAIL:5" top="staDS_EMAIL:-25" height="20" autoselect="true" width="190" textAlign="left"/>
+              <!-- 첨부파일 -->
+              <Static id="staDS_FILES" taborder="43" text="" left="staDS_RETIRE_DETAIL_bg:-1" top="staDS_RETIRE_DETAIL_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_FILES_bg" taborder="44" left="staDS_FILES:-1" top="staDS_FILES:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtDS_FILES" taborder="45" left="staDS_FILES:5" top="staDS_FILES:-25" height="20" autoselect="true" width="100" textAlign="left" text="파일갯수:0개" readonly="true"/>
+              <!--<Button id="btnFile" taborder="46" text="파일첨부" left="txtDS_FILES:5" top="staDS_FILES:-25" width="80" height="20" onclick="btnFile_onclick"/>-->
+              <!-- IRP계좌관리 -->
+              <Static id="staTile02_00_00" taborder="6" text="IRP계좌정보 [②]" left="10" top="staDS_RETIRE_DETAIL:10" width="20.41%" height="25" cssclass="sta_TITLE_Bg"/>
+              <!-- 은행명(코드) -->
+              <Static id="staCD_BANK" taborder="1" text="은행명(코드)" left="0" top="staTile02_00_00:5" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_BANK_bg" taborder="2" left="staCD_BANK:-1" top="staCD_BANK:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="cfCD_BANK" CodeFindName="DFX_CFBANKCODE" CDTextWidth="60" taborder="45" left="staCD_BANK:5" top="staCD_BANK:-25" width="190" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- IRP계좌번호 -->
+              <Static id="staNO_IRP" taborder="4" text="IRP계좌번호" left="staCD_BANK_bg:-1" top="staCD_BANK_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staNO_IRP_bg" taborder="5" left="staNO_IRP:-1" top="staNO_IRP:-30" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtNO_IRP" taborder="30" left="staNO_IRP:5" top="staNO_IRP:-25" height="20" autoselect="true" width="190" textAlign="left" inputtype="number"/>
+              <!--  -->
+              <Static id="staDesc08" taborder="13" text="" left="35" top="staCD_BANK:0" width="70" height="20" cssclass="ta_WF_tablelabelY"/>
+              <Static id="staDesc09" taborder="14" text="상기 본인은 위 사유로 인하여( " left="190" top="staDesc08:4" width="170" height="22" cssclass="ta_WF_tablelabelY"/>
+              <Static id="staDT_RETIRE_2" taborder="15" left="staDesc09:1" top="staDesc08:4" height="22" cssclass="ta_WF_tablelabelY" color="#2561ba" width="70" font="bold 12px/normal &quot;Dotum&quot;"/>
+              <!--<Edit id="edtDT_RETIRE_2" taborder="15" left="staDesc09:1" top="staDesc08:4" width="60" height="22" color="#2561ba" readonly="true"/>-->
+              <Static id="staDesc10" taborder="16" text=") 부로 본직을 사직하고자 하오니 승인하여 주시기 바랍니다." left="staDT_RETIRE_2:5" top="staDesc08:4" width="400" height="22" cssclass="ta_WF_tablelabelY"/>
+              <Static id="staDesc12" taborder="17" text="작성일 : " left="35" top="staDesc10:8" width="800" height="22" textAlign="right" font="bold 12px/normal &quot;Dotum&quot;" cssclass="ta_WF_tablelabelY"/>
+              <Static id="staDT_DAY" taborder="18" left="staDesc12:5" top="staDesc10:8" height="22" cssclass="ta_WF_tablelabelY" color="#2561ba" width="70" font="bold 12px/normal &quot;Dotum&quot;"/>
+              <Static id="staDesc13" taborder="19" text="생년월일 : " left="35" top="staDesc12:4" width="800" height="22" textAlign="right" font="bold 12px/normal &quot;Dotum&quot;" cssclass="ta_WF_tablelabelY"/>
+              <Static id="staDT_BIRTH" taborder="20" left="staDesc13:5" top="staDesc12:4" height="22" cssclass="ta_WF_tablelabelY" color="#2561ba" width="70" font="bold 12px/normal &quot;Dotum&quot;"/>
+              <Static id="staDesc14" taborder="21" text="성명 : " left="35" top="staDesc13:4" width="800" height="22" textAlign="right" font="bold 12px/normal &quot;Dotum&quot;" cssclass="ta_WF_tablelabelY"/>
+              <Static id="staDS_HNAME_2" taborder="22" left="staDesc14:5" top="staDesc13:4" height="22" cssclass="ta_WF_tablelabelY" color="#2561ba" width="70" font="bold 12px/normal &quot;Dotum&quot;"/>
+              <Static id="staDesc15" taborder="23" text="CARBONCO Pte. Ltd. 대표자 귀하" left="0" right="0" top="staDesc14:4" height="33" textAlign="center" font="bold 28px/normal &quot;Dotum&quot;" cssclass="ta_WF_tablelabelY"/>
+              <!-- 첨부문서관리 -->
+              <Button id="btnFileDown" taborder="5" text="첨부파일 다운로드" top="staDesc15:5" height="26" width="130" cssclass="btn_WF_action" left="5" onclick="divData_btnFileDown_onclick"/>
+              <Static id="staTile03_00_00" taborder="6" text="첨부파일 업로드 [③]" left="10" top="btnFileDown:2" width="20.41%" height="25" cssclass="sta_TITLE_Bg"/>
+              <Grid id="objGrid" taborder="45" left="0" top="staTile03_00_00:0" height="244" width="955" visible="true" autofittype="col" oncelldblclick="divData_objGrid_oncelldblclick"/>
+              <Div id="divData_foot" taborder="0" left="0" top="objGrid:15" height="80.0" bottom="0" right="0" cssclass="div_SEARCH_Bg">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta001" taborder="1" text="○" left="0" width="100" height="21" top="5" font="bold 18px/normal &quot;Dotum&quot;" color="#ff0000"/>
+                    <Static id="sta002" taborder="1" text=" !" left="3" width="100" height="21" top="5" font="bold 11px/normal &quot;Dotum&quot;" color="#ff0000"/>
+                    <Static id="sta00" taborder="1" text="     [작성안내]" left="0" width="100" height="21" top="5" font="bold 12px/normal &quot;Dotum&quot;"/>
+                    <Static id="sta01" taborder="1" text=" ① 사외이메일 입력시 퇴직정산 서류 수신을 위한 사외 개인 e-mail을 입력 바랍니다." left="sta00:-1" width="800" right="5" height="21" top="5" textAlign="left"/>
+                    <Static id="sta02" taborder="1" text=" ② 퇴직(예정)자는 반드시 사직서 작성 전 IRP 계좌 개설 후 IRP계좌 정보를 입력 바랍니다." width="700" left="sta00:-1" height="21" top="sta01:4"/>
+                    <Static id="sta03" taborder="1" text=" ③ 상기 첨부파일을 모두 업로드 한 후 결재 상신 바랍니다." width="700" left="sta00:-1" height="21" top="sta02:4"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+this.fileConfig = {};
+
+//임금 및 퇴직금 지급 동의서 여부
+this.approve = false;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{	
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	this.fnSetButton();			//버튼 공통 설정
+	this.fnSetExtendButton();	//화면별 버튼 id 설정
+	this.fnSetVariable();		//변수선언
+	this.fnSetEvent();			//이벤트 설정
+	this.fnSetParameter();		//파라미터 설정
+	
+	this.fileConfig = this.gfnGetFileConfig();
+};
+
+/************************************************************************
+ * 버튼 설정 
+ * 서브버튼 사용 처리. 공통 및 확장버튼 버튼관리화면에서 셋팅.
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+// 	// 권한설정
+// 	if (this.FormInfo.GR_SEARCH == "1") {
+// 		this.divData.form.btnInit.set_visible(true);
+// 	} else {
+// 		this.divData.form.btnInit.set_visible(false);
+// 	}
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+
+	this.tclDT_RETIRE = this.divData.form.tclDT_RETIRE;
+	this.staDT_RETIRE_2 = this.divData.form.staDT_RETIRE_2;
+	//퇴사구분코드	
+	this.staNO_RETIRE = this.divData.form.staNO_RETIRE;
+	this.cfNO_RETIRE = this.divData.form.cfNO_RETIRE;
+	this.txtDS_EMAIL = this.divData.form.txtDS_EMAIL;
+	//은행
+	this.staCD_BANK = this.divData.form.staCD_BANK;
+	this.cfCD_BANK = this.divData.form.cfCD_BANK;	
+	this.staNO_IRP = this.divData.form.staNO_IRP;
+	this.txtNO_IRP = this.divData.form.txtNO_IRP;		
+	
+	this.staDS_EMAIL = this.divData.form.staDS_EMAIL;
+	this.txtDS_EMAIL = this.divData.form.txtDS_EMAIL;	
+	this.staDS_RETIRE_DETAIL = this.divData.form.staDS_RETIRE_DETAIL;
+	this.txtDS_RETIRE_DETAIL = this.divData.form.txtDS_RETIRE_DETAIL;
+	
+	/**********  그리드  **********/
+	this.dxGrid = this.divData.form.objGrid;
+	//그리드 멀티라인 나오게 설정
+	//this.dxGrid.set_autosizingtype("row");		
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	//퇴사구분코드
+	this.cfNO_RETIRE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	//은행
+	this.cfCD_BANK.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfCD_BANK.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsFileList, "DA", "DAW_RETIRE_FILELIST");
+	this.dxGrid.ExpandUp = "fnGrid_ExpandUp";
+	this.dxGrid.deleteContentsCol("head",0);
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	var frame = this.getOwnerFrame();
+	
+	/******** 초기셋팅 ****************/
+	this.dsSearch.setColumn(0,"CD_CORP",frame.CD_CORP);
+	this.dsSearch.setColumn(0,"DS_CORP", frame.DS_CORP);
+	this.dsSearch.setColumn(0,"ID_SABUN", frame.ID_SABUN);
+	this.dsSearch.setColumn(0,"DS_HNAME", frame.DS_HNAME);
+	this.dsSearch.setColumn(0,"NO_SEQ", frame.NO_SEQ);		
+};
+
+// 셀 값 변경 후 이벤트
+this.fnGrid_AfterEdit = function(obj,e) {	
+	trace("fnGrid_AfterEdit >>>>>>"+e.columnid);	
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	//조회조건 Dataset
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("ID_SABUN", "string");
+	this.dsSelect.addColumn("NO_SEQ", "bigdecimal");
+	
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("CD_CORP", "string");
+	this.dsInsert.addColumn("DS_CORP", "string");
+	this.dsInsert.addColumn("NO_SEQ", "bigdecimal");
+	this.dsInsert.addColumn("ID_PERSON", "bigdecimal");
+	this.dsInsert.addColumn("ID_SABUN", "string");
+	this.dsInsert.addColumn("DS_NAME", "string");
+	this.dsInsert.addColumn("CD_DEPT", "string");
+	this.dsInsert.addColumn("DS_DEPT", "string");
+	this.dsInsert.addColumn("CD_EMPTYPE", "string");	
+	this.dsInsert.addColumn("DS_EMPTYPE", "string");
+	this.dsInsert.addColumn("CD_OCCUPATION", "string");
+	this.dsInsert.addColumn("DS_OCCUPATION", "string");
+	this.dsInsert.addColumn("CD_POSITION", "string");
+	this.dsInsert.addColumn("DS_POSITION", "string");
+	this.dsInsert.addColumn("NO_RETIRE", "string");
+	this.dsInsert.addColumn("DS_RETIRE", "string");
+	this.dsInsert.addColumn("DS_RETIRE_DETAIL", "string");
+	this.dsInsert.addColumn("DT_RETIRE", "string");
+	this.dsInsert.addColumn("DS_EMAIL", "string"); 
+	this.dsInsert.addColumn("CD_BANK", "string");
+	this.dsInsert.addColumn("DS_BANK", "string");
+	this.dsInsert.addColumn("NO_IRP", "string");
+	this.dsInsert.addColumn("NO_APRV", "bigdecimal");
+	this.dsInsert.addColumn("ST_APRV", "string");
+	this.dsInsert.addColumn("ID_INSERT", "string"); 
+	this.dsInsert.addColumn("NO_SEQ_RETURN", "int");
+	
+	//전자결재 초기화
+	this.dsSlipReset = new Dataset();
+	this.dsSlipReset.addColumn("CD_CORP", "string");
+	this.dsSlipReset.addColumn("ID_AP_TYPE", "string");
+	this.dsSlipReset.addColumn("NO_APRV", "int");
+	this.dsSlipReset.addColumn("ID_USER", "string");
+	
+	//삭제
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("CD_CORP", "string");
+	this.dsDelete.addColumn("NO_SEQ", "bigdecimal");
+	
+	// 결재
+	this.dsApproval = new Dataset();
+	this.dsApproval.addColumn("TY_WRK", "string");
+	this.dsApproval.addColumn("CD_CORP", "string");
+	this.dsApproval.addColumn("ID_SABUN", "string");
+	this.dsApproval.addColumn("NO_SEQ", "bigdecimal");
+	this.dsApproval.addColumn("ID_APRV", "string");
+	this.dsApproval.addColumn("NO_APRV", "int");
+	
+	// 사직서출력물
+	this.dsSelectRpt = new Dataset();
+	this.dsSelectRpt.addColumn("CD_CORP", "string"); 		
+	this.dsSelectRpt.addColumn("ID_SABUN", "string"); 			
+	this.dsSelectRpt.addColumn("NO_SEQ", "string");
+
+	//바로 조회  
+	this.fnSelect();
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+
+	//this.dsList.clearData();
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+
+	this.dsSelect.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSelect.setColumn(0, "ID_SABUN", this.dsSearch.getColumn(0, "ID_SABUN"));
+	this.dsSelect.setColumn(0, "NO_SEQ", this.dsSearch.getColumn(0, "NO_SEQ"));
+
+	var strSvcId    = "select";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect fileSelect=dsSelect";
+	var outData     = "dsList=select0 dsFileList=fileSelect0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg, strArg)
+{
+	//조회완료 후
+	if( svcID == "select" ){
+		if (this.dsFileList.rowcount == 0) {
+			this.gfnAlert("자료가 존재하지 않습니다.");
+		} else {
+			this.gfnGridAfterSelect(this.dxGrid);	
+			// 폼상태 초기화
+			this.gfnSetFormStatus(this);
+		}
+		//사직서 작성 버튼 클릭 시
+		//결재문서 상신, 조회, 초기화 설정
+		this.divData.form.btnSave.set_enable(false);
+		//this.divData.form.btnDel.set_enable(false);
+		this.divData.form.btnPrint.set_enable(false);		
+		this.divData.form.btnAprv.set_enable(false);
+		//this.divData.form.btnAprvConnect.set_enable(false);
+		//this.divData.form.btnInit.set_enable(false);
+		
+		var btnSave = this.dsList.getColumn(0, "BTN_SAVE");
+		//var btnDel = this.dsList.getColumn(0, "BTN_DEL");
+		var btnAprv = this.dsList.getColumn(0, "BTN_APRV");
+		var btnDocQ = this.dsList.getColumn(0, "BTN_DOC_Q");
+		//var btnInit = this.dsList.getColumn(0, "BTN_INIT");
+		
+		if(this.dsSearch.getColumn(0, "NO_SEQ" ) == 0) {	//this.getOwnerFrame().NO_SEQ == 0) {
+			var msg = this.dsList.getColumn(0, "MSG");
+			if( this.gfnIsNull(msg)){
+				/**************************************  버튼 컨트롤 (START)  **********************************/
+				this.divData.form.btnSave.set_enable(btnSave == "Y");		// 저장 버튼
+				//this.divData.form.btnDel.set_enable(btnDel == "Y");			// 삭제 버튼
+				this.divData.form.btnPrint.set_enable(false);				// 출력 버튼
+				this.divData.form.btnAprv.set_enable(btnAprv == "Y");		// 결재상신
+				//this.divData.form.btnAprvConnect.set_enable(btnDocQ == "Y");// 결재문서조회
+				//this.divData.form.btnInit.set_enable(btnInit == "Y");		// 결재초기화 버튼
+				/**************************************  버튼 컨트롤 (END)  **********************************/	
+				this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "DS_FILE_NAME"), "cssclass", "BACK_ReadOnly");
+				this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "DS_FILE_NAME"), "edittype", "none");
+				this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "DS_FILE_NAME"), "expandshow", "hide");	//"show" hide
+
+				//퇴직담당자 지정 팝업 호출
+				//this.fnPopup();
+			}else{
+				//a메세지 전송 후 종료
+				var param = {};
+				param.msg = msg;
+				this.getParentContext().close(JSON.stringify(param));
+			}
+		}else{	
+			/**************************************  버튼 컨트롤 (START)  **********************************/
+			this.divData.form.btnSave.set_enable(btnSave == "Y");		// 저장 버튼
+			//this.divData.form.btnDel.set_enable(btnDel == "Y");			// 삭제 버튼
+			this.divData.form.btnPrint.set_enable(true);				// 출력 버튼
+			this.divData.form.btnAprv.set_enable(btnAprv == "Y");		// 결재상신
+			//this.divData.form.btnAprvConnect.set_enable(btnDocQ == "Y");// 결재문서조회
+			//this.divData.form.btnInit.set_enable(btnInit == "Y");		// 결재초기화 버튼
+			/**************************************  버튼 컨트롤 (END)  **********************************/	
+			this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "DS_FILE_NAME"), "cssclass", "");
+			this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "DS_FILE_NAME"), "edittype", "text");
+			this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "DS_FILE_NAME"), "expandshow", "show");	//"show" hide	
+		}
+		/**************************************  그리드 컨트롤 (END)  **********************************/
+		//this.divData.form.resetScroll();
+		
+		//스크롤 설정 초기화
+		//this.resetScroll();
+		//this.gfnGridAfterSelect(this.dxGrid);
+		
+		//this.divData.form.staDT_RETIRE_2.set_text("20240101");
+		
+		//tooltiptext
+		var TTP_NO_RETIRE = this.dsList.getColumn(0, "TTP_NO_RETIRE");
+		var TTP_DS_EMAIL = this.dsList.getColumn(0, "TTP_DS_EMAIL");
+		var TTP_DS_RETIRE_DETAIL = this.dsList.getColumn(0, "TTP_DS_RETIRE_DETAIL");
+		var TTP_NO_IRP = this.dsList.getColumn(0, "TTP_NO_IRP");
+		this.staNO_RETIRE.set_tooltiptext(TTP_NO_RETIRE);
+		this.cfNO_RETIRE.set_tooltiptext(TTP_NO_RETIRE);	
+		this.staDS_EMAIL.set_tooltiptext(TTP_DS_EMAIL);
+		this.txtDS_EMAIL.set_tooltiptext(TTP_DS_EMAIL);
+		this.staDS_RETIRE_DETAIL.set_tooltiptext(TTP_DS_RETIRE_DETAIL);
+		this.txtDS_RETIRE_DETAIL.set_tooltiptext(TTP_DS_RETIRE_DETAIL);	
+		this.staCD_BANK.set_tooltiptext(TTP_NO_IRP);
+		this.cfCD_BANK.set_tooltiptext(TTP_NO_IRP);
+		this.staNO_IRP.set_tooltiptext(TTP_NO_IRP);
+		this.txtNO_IRP.set_tooltiptext(TTP_NO_IRP);
+		
+	// 	var colDS_FILE_NAME = this.dxGridSub.getBindCellIndex("body", "DS_FILE_NAME");
+	// 	this.dxGrid.setCellProperty("body",colDS_FILE_NAME,"tooltiptext","bind:TTP_DS_FILE_NAME");
+		if (btnSave != "Y")
+		{
+			this.tclDT_RETIRE.set_enable(false);
+			this.cfNO_RETIRE.set_enable(false);
+			this.txtDS_EMAIL.set_enable(false);
+			this.txtDS_RETIRE_DETAIL.set_enable(false);
+			this.cfCD_BANK.set_enable(false);
+			this.txtNO_IRP.set_enable(false);
+		}
+		else
+		{
+			this.tclDT_RETIRE.set_enable(true);
+			this.cfNO_RETIRE.set_enable(true);
+			this.txtDS_EMAIL.set_enable(true);
+			this.txtDS_RETIRE_DETAIL.set_enable(true);
+			this.cfCD_BANK.set_enable(true);
+			this.txtNO_IRP.set_enable(true);
+		}
+	}
+	//저장완료 후
+	else if( svcID == "save" ){
+		//처음 저장 시는 정상 처리 후 팝업창 close 아닌건 재조회
+		if( this.dsSearch.getColumn(0, "NO_SEQ" ) == 0 ){
+			this.gfnAlert('임시저장 되었습니다.');
+			if(this.dsOutput.rowcount > 0){
+				this.dsSearch.setColumn(0, "NO_SEQ", this.dsOutput.getColumn(0, "NO_SEQ_RETURN"));
+				this.fnSelect();
+			}
+// 			var param = {};
+// 			param.gubun = "Y";
+// 			this.getParentContext().close(JSON.stringify(param));
+		}else{
+			this.gfnAlert('임시저장 되었습니다.');
+			this.fnSelect();
+		}
+	}
+	//삭제 완료 후
+	else if( svcID == "delete" ){
+		this.gfnAlert('정상 처리 되었습니다.');
+		var param = {};
+		param.gubun = "Y";
+		this.getParentContext().close(JSON.stringify(param));
+	}
+	else if (svcID == "APRV" || svcID == "APRVCNC") {
+		this.gfnOpenAppr(function() {
+			//this.FormBtns.Select.click();
+			this.fnSelect();
+		});
+		this.fnSelect();
+		//this.getParentContext().close(JSON.stringify(param));
+	} else if (svcID == "selectRpt") {		// 사직서 출력물
+		if (this.dsRptList.rowcount > 0) {
+			var inProc     = "_dsProc";
+			var inParam    = "params=dsRptList";
+			var inData     = "report=dsSelectRpt";
+			var reportpath = "/da/daw/DAW_RETIRE_REGUEST.ozr";
+			
+			gfnOpenReport(this, reportpath, inProc, inParam, inData, false, '사직서');
+		} else {
+			this.gfnAlert("출력할 자료가 없습니다.");
+			return;
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ /**************** 조회조건 *****************/
+ //변경 전 이벤트
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+	//퇴사구분코드
+	if( id == "cfNO_RETIRE" ) {			
+		dsUserParam.setColumn(nrow, "CD_PREFIX", "W1");		
+	}
+	//은행코드 파인더
+	else if( id == "cfCD_BANK" ) {			
+		dsUserParam.setColumn(nrow, "CD_PREFIX", "W2");	
+		dsUserParam.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+	}
+	return true;	
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+
+	//은행선택 시
+	if( id == "cfCD_BANK" ) {			
+		if(this.divData.form.cfCD_BANK.form.CDTextBox.value == "98"){
+				this.divData.form.txtNO_IRP.set_enable(false);
+		}else{
+				this.divData.form.txtNO_IRP.set_enable(true);
+		}
+	}
+};
+
+this.tclDT_RETIRE_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo) {
+	var dtretire = this.divData.form.tclDT_RETIRE.value;
+	this.divData.form.staDT_RETIRE_2.set_text(dtretire.substr(0,4) + "-" + dtretire.substr(4,2) + "-" + dtretire.substr(6,2));
+	//this.divData.form.staDT_RETIRE_2.text = "";
+ 	//this.divData.form.staDT_RETIRE_2.text = dtretire.substr(0,4) + "-" + dtretire.substr(4,2) + "-" + dtretire.substr(6,2);
+	//staDT_RETIRE_2 = this.divData.form.tclDT_RETIRE.text;
+}
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ //그리드 파일 더블클릭 다운로드.
+this.divData_objGrid_oncelldblclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnDownload();
+};
+
+this.fnDownload = function() {
+	if (this.dsFileList.rowcount == 0) return false;
+	var sFilename = this.dsFileList.getColumn(this.dsFileList.rowposition, "NM_FILE_LIST");
+	var encodeFileName = encodeURIComponent(sFilename).replace(/[!'()*]/g, escape);
+	
+	var svrPath = this.dsFileList.getColumn(this.dsFileList.rowposition, "DS_FILE_PATH").replace(/\//g, "\\") + "\\";
+	var filePath = svrPath.replace(/\\\\/g, "\\");// + this.FileManager.CD_DIR.join('\\');
+		
+	var surl = this.fileConfig.host+ this.fileConfig.downloadUrl; // + encodeFileName;
+	this.FileDownTransfer.set_url(surl);
+	this.FileDownTransfer.setPostData("path", filePath);
+	this.FileDownTransfer.setPostData("fileName", encodeFileName);
+	
+	if( system.navigatorname =="nexacro"){
+		this.FileDownTransfer.set_downloadfilename(sFilename);
+	}
+	this.FileDownTransfer.download();
+};
+//첨부파일 팝업
+this.fnGrid_ExpandUp = function(obj:nexacro.Grid, e:nexacro.GridMouseEventInfo){
+ 	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, e.cell);
+	if(colnm == "DS_FILE_NAME") {
+		// 최초 작성시엔 NO_SEQ가 없기 때문에 저장 후에 파일 첨부를 진행하여야 함.
+		// CD_DIR에 넣어줄 값이 없기에 저장 후 진행!
+// 		if(this.gfnGetFlag(dataset, e.row) == "I"){
+// 			this.gfnAlert("저장 후 파일첨부 진행.");
+// 			return false;
+// 		}
+	
+		var fileManager = {};
+		fileManager.CD_GUBUN = "DAW2";
+		fileManager.CD_DIR = [this.dsList.getColumn(0, "ID_PERSON"), this.dsList.getColumn(0, "NO_SEQ"), this.dsFileList.getColumn(e.row, "NO_SEQ")];	
+		// 권한설정
+// 		if (this.FormInfo.GR_SEARCH == "1") {
+// 			fileManager.IS_READONLY = false;
+// 		} else {
+// 			fileManager.IS_READONLY = true;
+// 		}
+		if (this.dsList.getColumn(0, "ST_APRV") != "0") {
+			fileManager.IS_READONLY = true;
+		} else {
+			fileManager.IS_READONLY = false;
+		}
+		
+		this.gfnFileManager(fileManager, "fnFileCallback");
+	}
+}	
+
+//첨부파일 콜백
+this.fnFileCallback = function(strID, val) {	
+	// 변경시 조회를 다시 하거나
+	if(val.IsChange == true) {
+		this.FormBtns.Select.click();
+	}
+// 	
+// 	//파일첨부 갯수
+// 	this.fileCnt = val.Cnt;
+// 	this.fileNm = val.Cnt;
+// 	//셋팅 갯수 조절
+// 	this.dsFileList.setColumn(this.dsFileList.rowposition, "FILE_CNT", this.fileCnt);
+// 
+// 	// 파일개수를 다시 셋팅
+// 	this.dsFileList.set_enableevent(false);
+// 	if(val.Cnt == 0) {
+// 		this.dsFileList.setColumn(this.dsFileList.rowposition, "DS_FILE_NAME", "   첨부(0)");
+// 	} else {
+// 		this.dsFileList.setColumn(this.dsFileList.rowposition, "DS_FILE_NAME", "   첨부(" + val.Cnt + ")");
+// 	}
+// 	this.dsFileList.set_enableevent(true);
+}; 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+// 셀 수정가능 여부
+this.fnGrid_EnterCell = function(obj:nexacro.Grid, row, cell)
+{
+
+}
+
+//저장버튼 클릭
+this.divData_btn00_01_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	if (!this.fnApplyValidaion()) return false;
+	
+	var email = this.dsList.getColumn(0, "DS_EMAIL").toUpperCase();
+	var corpemail = this.gfnGetConfig("DZ" , "DS_EMAIL_CORP").toUpperCase();
+	
+	if(!this.gfnIsNull(email)) {
+		if( email.indexOf(corpemail) != -1 ){
+			this.fnVaidateCallback = function() {
+				this.divData.form.txtDS_EMAIL.setFocus();
+			}
+			this.gfnAlert("회사 메일은 입력 불가능 합니다.", "fnVaidateCallback");
+			return false;
+		}
+	}
+	
+	if (!this.gfnIsEmail(email)) {
+		this.fnVaidateCallback = function() {
+			this.divData.form.txtDS_EMAIL.setFocus();
+		}
+		this.gfnAlert("이메일 형식이 맞지 않습니다.", "fnVaidateCallback");
+		return false;
+	}
+	
+	this.dsInsert.clearData();
+	var nrow = this.dsInsert.addRow();
+	
+	this.dsInsert.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0,"CD_CORP"));
+	this.dsInsert.setColumn(nrow, "DS_CORP", this.dsSearch.getColumn(0,"DS_CORP"));
+	this.dsInsert.setColumn(nrow, "NO_SEQ", this.dsSearch.getColumn(0,"NO_SEQ"));
+	this.dsInsert.setColumn(nrow, "ID_PERSON", this.dsList.getColumn(0, "ID_PERSON"));	
+	this.dsInsert.setColumn(nrow, "ID_SABUN", this.dsSearch.getColumn(0, "ID_SABUN"));
+	this.dsInsert.setColumn(nrow, "DS_NAME", this.dsSearch.getColumn(0, "DS_HNAME"));
+	this.dsInsert.setColumn(nrow, "CD_DEPT", this.dsList.getColumn(0, "CD_DEPT"));
+	this.dsInsert.setColumn(nrow, "DS_DEPT", this.dsList.getColumn(0, "DS_DEPT"));
+	this.dsInsert.setColumn(nrow, "CD_EMPTYPE", this.dsList.getColumn(0, "CD_EMPTYPE"));
+	this.dsInsert.setColumn(nrow, "DS_EMPTYPE", this.dsList.getColumn(0, "DS_EMPTYPE"));
+	this.dsInsert.setColumn(nrow, "CD_OCCUPATION", this.dsList.getColumn(0, "CD_OCCUPATION"));
+	this.dsInsert.setColumn(nrow, "DS_OCCUPATION", this.dsList.getColumn(0, "DS_OCCUPATION"));
+	this.dsInsert.setColumn(nrow, "CD_POSITION", this.dsList.getColumn(0, "CD_POSITION"));
+	this.dsInsert.setColumn(nrow, "DS_POSITION", this.dsList.getColumn(0, "DS_POSITION"));
+	this.dsInsert.setColumn(nrow, "NO_RETIRE", this.dsList.getColumn(0, "NO_RETIRE"));
+	this.dsInsert.setColumn(nrow, "DS_RETIRE", this.dsList.getColumn(0, "DS_RETIRE"));
+	this.dsInsert.setColumn(nrow, "DS_RETIRE_DETAIL", this.dsList.getColumn(0, "DS_RETIRE_DETAIL"));
+	this.dsInsert.setColumn(nrow, "DT_RETIRE", this.dsList.getColumn(0, "DT_RETIRE").replace(/-/g,""));
+	this.dsInsert.setColumn(nrow, "DS_EMAIL", this.dsList.getColumn(0, "DS_EMAIL"));
+	this.dsInsert.setColumn(nrow, "CD_BANK", this.dsList.getColumn(0, "CD_BANK"));
+	this.dsInsert.setColumn(nrow, "DS_BANK", this.dsList.getColumn(0, "DS_BANK"));
+	this.dsInsert.setColumn(nrow, "NO_IRP", this.dsList.getColumn(0, "NO_IRP"));
+	this.dsInsert.setColumn(nrow, "NO_APRV", this.dsList.getColumn(0, "NO_APRV"));
+	this.dsInsert.setColumn(nrow, "ST_APRV", this.dsList.getColumn(0, "ST_APRV"));
+	this.dsInsert.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+	this.dsInsert.setColumn(nrow, "NO_SEQ_RETURN", "");
+		
+	if (this.dsInsert.rowcount == 0 ) return;
+	
+	var strSvcId    = "save";		//콜백
+	var strSvcType  = "save";		//
+	var inProc		= "_dsProc";
+	var inData      = "save=dsInsert";
+	var outData     = "dsOutput=save";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+// //퇴직담당자 지정 팝업 호출
+// this.fnPopup = function()
+// {	
+// 	var param = {};
+// 	param.CD_CORP  = this.dsSearch.getColumn(0, "CD_CORP");
+// 	//this.gfnFormOpen(this.FormInfo.CD_MODULE, "DAW_RETIRE_CHARGE_POP", "",  param , 972 ,610 );
+// 	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DAW_RETIRE_CHARGE_POP", "",  param , 972 ,500 );
+// };
+
+//신청 시 벨리데이션
+this.fnApplyValidaion = function()
+{	
+// 	var tyEmploymentEnd    				= this.dsList.getColumn(0, "TY_EMPLOYMENT_END");
+// 	var tyInformationSecurity           = this.dsList.getColumn(0, "TY_INFORMATION_SECURITY");
+// 	var tyPersonalInformation           = this.dsList.getColumn(0, "TY_PERSONAL_INFORMATION");
+// 	var tyPersonalInformationuserdata  = this.dsList.getColumn(0, "TY_PERSONAL_INFORMATION_USERDATA");
+// 	var tyPersonalInformationunique    = this.dsList.getColumn(0, "TY_PERSONAL_INFORMATION_UNIQUE");
+
+	if (this.gfnIsNull(this.dsList.getColumn(0, "DT_RETIRE"))) {
+		this.divData.form.tclDT_RETIRE.setFocus();
+		this.gfnAlert("퇴직일자를 입력하세요.");
+		return false;
+	}else if (this.gfnIsNull(this.dsList.getColumn(0, "NO_RETIRE"))) {
+		this.divData.form.cfNO_RETIRE.form.CDTextBox.setFocus();
+		this.gfnAlert("퇴사구분 코드를 입력하세요.");
+		return false;
+	}else if (this.gfnIsNull(this.dsList.getColumn(0, "DS_EMAIL"))) {
+		this.divData.form.txtDS_EMAIL.setFocus();
+		this.gfnAlert("사외이메일을 입력하세요.");
+		return false;
+	}
+// 	}else if (this.gfnIsNull(this.dsList.getColumn(0, "DS_RETIRE_DETAIL"))) {
+// 		this.divData.form.txtDS_RETIRE_DETAIL.setFocus();
+// 		this.gfnAlert("퇴직사유를 입력하세요.");
+// 		return false;	
+// 	}else if (this.gfnIsNull(this.dsList.getColumn(0, "CD_BANK"))) {
+// 		this.divData.form.cfCD_BANK.form.CDTextBox.setFocus();
+// 		this.gfnAlert("은행를 입력하세요.");
+// 		return false;
+// 	}else if (this.gfnIsNull(this.dsList.getColumn(0, "NO_IRP"))) {
+// 		this.divData.form.txtNO_IRP.setFocus();
+// 		this.gfnAlert("계좌번호를 입력하세요.");
+// 		return false;
+// 	}
+	return true;
+};
+
+//결재상신
+this.divData_btnAprv_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//신청 시 벨리데이션
+	if (!this.fnApplyValidaion()) return false;
+				
+	var status = this.gfnGetFormStatus(this);
+	if(status == "U"){
+		this.gfnAlert("변경 내용이 임시저장되지 않았습니다.\n저장 후 결재상신 하시기 바랍니다.");
+		return;
+	}
+	
+	for (var i = 0; i < this.dsFileList.rowcount; i++) {	
+		if(this.dsFileList.getColumn(i,"FILE_CNT") == 0 && this.dsFileList.getColumn(i,"DS_VIEW") != 1){
+			this.gfnAlert("첨부문서 [" + this.dsFileList.getColumn(i,"DS_ATTACH_FILE") + "] 파일이 첨부되지 않았습니다.");
+			return;
+		}
+	}
+	
+	this.fnWorkAfter = function(){
+		
+		this.gfnConfirm(this.fnAprvMsg(obj), function(strId, isOk) {
+			if (isOk == false) {
+				return;
+			}
+			var title = this.dsList.getColumn(0, "DS_TITLE");
+			
+			var initParam = {
+				CD_CORP: this.dsList.getColumn(0, "CD_CORP"), 
+				ID_AP_TYPE: "DAW01",
+				TY_WRK: "APRV",
+				ID_APRV: this.AuthClient.ID_SABUN,
+				TT_DOC: title, 
+				CD_CORP_SUFFIX: this.gfnGetConfig("DZ" , "CD_CORP_SUFFIX"),
+			}
+			this.gfnAprv(initParam, "fnAprvCallback", "APRV");
+		});
+	}
+	this.gfnAlert("만55세 이상이시거나 1년미만 재직자로\nIRP계좌로 퇴직금 수령이 법적으로 강제되지 않는 경우에는\n기재하지 않으셔도 됩니다.(기존 급여계좌에 입금)", "fnWorkAfter");
+	
+};
+
+this.fnAprvMsg = function(obj) {
+	var title = this.dsList.getColumn(0, "DS_TITLE");
+	var msg = title + "에 대하여 상신하시겠습니까?";
+	
+	return msg;
+}
+
+this.fnAprvDocQCallback = function() {
+	console.log('fnAprvDocQCallback');
+	alert('fnAprvDocQCallback'); 
+}
+
+
+// 결재상신 버튼 콜백
+// 취소결재상신 버튼 콜백
+// 결재상태초기화 버튼 콜백
+this.fnAprvCallback = function(strId, val) {	
+	this.dsApproval.clearData();
+	this.dsApproval.addRow();
+		
+	this.dsApproval.setColumn(0, "TY_WRK",  strId);
+	this.dsApproval.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsApproval.setColumn(0, "ID_SABUN", this.dsSearch.getColumn(0, "ID_SABUN"));
+	this.dsApproval.setColumn(0, "NO_SEQ", this.dsSearch.getColumn(0, "NO_SEQ"));
+	this.dsApproval.setColumn(0, "ID_APRV", this.AuthClient.ID_SABUN);
+	if (strId == "APRV" || strId == "APRVCNC") {
+		this.dsApproval.setColumn(0, "NO_APRV", this.dsAprvOut.getColumn(0, "NO_APRV"));
+	} else {
+		this.dsApproval.setColumn(0, "NO_APRV", this.dsList.getColumn(0, "NO_APRV"));
+	}
+		
+	var strSvcId    = strId;
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "aprv_execute=dsApproval";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);	// 통신방법 정의 [생략가능]
+}
+
+//첨부문서 다운로드
+this.divData_btnFileDown_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.gfnGridIsRow(this.dxGrid)) return;
+	
+	var fileManager = {};
+	fileManager.CD_GUBUN = "DAW1";
+	fileManager.CD_DIR = ["0"];	
+	// 권한설정
+	if (this.FormInfo.GR_SEARCH == "1") {
+		fileManager.IS_READONLY = false;
+	} else {
+		fileManager.IS_READONLY = true;
+	}
+	this.gfnFileManager(fileManager, "fnFileCallback");
+};
+
+// //결재문서조회 버튼
+// this.divData_btnAprvConnect_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	var oParams = {
+// 		CD_CORP: this.dsList.getColumn(0, "CD_CORP"),
+// 		NO_APRV: this.dsList.getColumn(0, "NO_APRV"),
+// 	}
+// 	this.gfnAprvDoc(oParams, this.fnAprvDocQCallback);
+// };
+
+// //결재문서 초기화
+// this.divData_btnInit_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	if (!this.gfnGridIsRow(this.dxGrid)) return;
+// 	
+// 	var msg = "사직서에 대하여 " + obj.text + "하시겠습니까?\n";
+// 	this.gfnConfirm(msg, "fnAprvCallback", "APRVINIT");
+// };
+
+//삭제 버튼 클릭
+this.divData_btnDel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnConfirm("삭제 하시겠습니까?", "canchange_callback");
+};
+
+//확인여부 콜백
+this.canchange_callback = function(strId, val) 
+{
+	if(val) {
+		this.dsDelete.clearData();
+		var nrow = this.dsDelete.addRow();
+		
+		this.dsDelete.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0,"CD_CORP"));
+		this.dsDelete.setColumn(nrow, "NO_SEQ", this.dsSearch.getColumn(0,"NO_SEQ"));
+
+		if (this.dsDelete.rowcount == 0 ) return;
+		
+		var strSvcId    = "delete";		//콜백
+		var strSvcType  = "save";		//
+		var inProc		= "_dsProc";
+		var inData      = "delete=dsDelete";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}
+
+//출력
+this.divData_btnPrint_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//신청 시 벨리데이션
+	if (!this.fnApplyValidaion()) return false;
+				
+	var status = this.gfnGetFormStatus(this);
+	if(status == "U"){
+		this.gfnAlert("변경 내용이 임시저장되지 않았습니다.\n저장 후 출력 하시기 바랍니다.");
+		return;
+	}
+	
+	this.dsSelectRpt.clearData();
+	this.dsSelectRpt.addRow();
+	
+	this.dsRptList.clearData();
+	
+	this.dsSelectRpt.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0,"CD_CORP"));
+	this.dsSelectRpt.setColumn(0, "ID_SABUN", this.dsSearch.getColumn(0,"ID_SABUN"));
+	this.dsSelectRpt.setColumn(0, "NO_SEQ", this.dsSearch.getColumn(0,"NO_SEQ"));
+	
+	var strSvcId    = "selectRpt";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "report=dsSelectRpt";
+	var outData     = "dsRptList=report0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+    this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+                        strSvcType,     // transaction을 요청할 구분
+						inProc,         // Procedure 정보 Dataset 이름
+						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);   // 통신방법 정의 [생략가능]
+};]]></Script>
+    <Objects>
+      <Dataset id="dsFileList" onvaluechanged="dsFileList_onvaluechanged"/>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="NO_SEQ" type="BIGDECIMAL" size="256"/>
+          <Column id="ID_PERSON" type="INT" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="DS_NAME" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="CD_EMPTYPE" type="STRING" size="256"/>
+          <Column id="DS_EMPTYPE" type="STRING" size="256"/>
+          <Column id="CD_OCCUPATION" type="STRING" size="256"/>
+          <Column id="DS_OCCUPATION" type="STRING" size="256"/>
+          <Column id="CD_POSITION" type="STRING" size="256"/>
+          <Column id="DS_POSITION" type="STRING" size="256"/>
+          <Column id="NO_RETIRE" type="STRING" size="256"/>
+          <Column id="DS_RETIRE" type="STRING" size="256"/>
+          <Column id="DS_RETIRE_DETAIL" type="STRING" size="256"/>
+          <Column id="DT_RETIRE" type="STRING" size="256"/>
+          <Column id="CD_BANK" type="STRING" size="256"/>
+          <Column id="DS_BANK" type="STRING" size="256"/>
+          <Column id="NO_IRP" type="STRING" size="256"/>
+          <Column id="DT_BIRTHDAY" type="STRING" size="256"/>
+          <Column id="NO_APRV" type="STRING" size="256"/>
+          <Column id="ST_APRV" type="STRING" size="256"/>
+          <Column id="ID_INSERT" type="STRING" size="256"/>
+          <Column id="ID_UPDATE" type="STRING" size="256"/>
+          <Column id="DT_INSERT" type="STRING" size="256"/>
+          <Column id="DT_UPDATE" type="STRING" size="256"/>
+          <Column id="DT_PROVATION" type="STRING" size="256"/>
+          <Column id="CD_ZIP" type="STRING" size="256"/>
+          <Column id="DS_ADDRESS" type="STRING" size="256"/>
+          <Column id="DS_HOMEPHONE" type="STRING" size="256"/>
+          <Column id="DS_HANDPHONE" type="STRING" size="256"/>
+          <Column id="DS_OFFICEPHONE" type="STRING" size="256"/>
+          <Column id="DS_EMAIL" type="STRING" size="256"/>
+          <Column id="MSG" type="STRING" size="256"/>
+          <Column id="TTP_NO_RETIRE" type="STRING" size="256"/>
+          <Column id="TTP_DS_EMAIL" type="STRING" size="256"/>
+          <Column id="TTP_DS_RETIRE_DETAIL" type="STRING" size="256"/>
+          <Column id="TTP_NO_IRP" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DAWPR_RETIRE_REQUEST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DAWPR_RETIRE_REQUEST_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DAWPR_RETIRE_REQUEST_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">fileSelect</Col>
+            <Col id="SP">DAWPR_RETIRE_REQUEST_FILE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">aprv</Col>
+            <Col id="SP">DAWPR_RETIRE_REQUEST_APRV_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">aprv_execute</Col>
+            <Col id="SP">DAWPR_RETIRE_REQUEST_APRV_EXECUTE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">report</Col>
+            <Col id="SP">DAWPR_RETIRE_REQUEST_PRINT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="DT_START" type="STRING" size="256"/>
+          <Column id="DT_END" type="STRING" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+          <Column id="NO_SEQ" type="STRING" size="256"/>
+          <Column id="NO_RETIRE" type="STRING" size="256"/>
+          <Column id="DS_RETIRE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsOutput"/>
+      <Dataset id="dsRptList"/>
+      <FileDownTransfer id="FileDownTransfer"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.txtDS_HNAME" propid="value" datasetid="dsList" columnid="DS_NAME"/>
+      <BindItem id="item1" compid="divData.form.txtID_SABUN" propid="value" datasetid="dsList" columnid="ID_SABUN"/>
+      <BindItem id="item2" compid="divData.form.txtCD_POSITION" propid="value" datasetid="dsList" columnid="DS_POSITION"/>
+      <BindItem id="item3" compid="divData.form.txtCD_DEPT" propid="value" datasetid="dsList" columnid="DS_DEPT"/>
+      <BindItem id="item4" compid="divData.form.txtDS_OCCUPATION" propid="value" datasetid="dsList" columnid="DS_OCCUPATION"/>
+      <BindItem id="item5" compid="divData.form.txtCD_EMPTYPE" propid="value" datasetid="dsList" columnid="DS_EMPTYPE"/>
+      <BindItem id="item6" compid="divData.form.txtDT_PROVATION" propid="value" datasetid="dsList" columnid="DT_PROVATION"/>
+      <BindItem id="item7" compid="divData.form.txtCD_ZIP" propid="value" datasetid="dsList" columnid="CD_ZIP"/>
+      <BindItem id="item8" compid="divData.form.txtDS_ADDRESS" propid="value" datasetid="dsList" columnid="DS_ADDRESS"/>
+      <BindItem id="item9" compid="divData.form.txtDS_HOMEPHONE" propid="value" datasetid="dsList" columnid="DS_HOMEPHONE"/>
+      <BindItem id="item10" compid="divData.form.txtDS_HANDPHONE" propid="value" datasetid="dsList" columnid="DS_HANDPHONE"/>
+      <BindItem id="item11" compid="divData.form.txtDS_OFFICEPHONE" propid="value" datasetid="dsList" columnid="DS_OFFICEPHONE"/>
+      <BindItem id="item12" compid="divData.form.tclDT_RETIRE" propid="value" datasetid="dsList" columnid="DT_RETIRE"/>
+      <BindItem id="item13" compid="divData.form.cfNO_RETIRE.form.CDTextBox" propid="value" datasetid="dsList" columnid="NO_RETIRE"/>
+      <BindItem id="item14" compid="divData.form.cfNO_RETIRE.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_RETIRE"/>
+      <BindItem id="item15" compid="divData.form.txtDS_EMAIL" propid="value" datasetid="dsList" columnid="DS_EMAIL"/>
+      <BindItem id="item16" compid="divData.form.txtDS_RETIRE_DETAIL" propid="value" datasetid="dsList" columnid="DS_RETIRE_DETAIL"/>
+      <BindItem id="item17" compid="divData.form.cfCD_BANK.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_BANK"/>
+      <BindItem id="item18" compid="divData.form.cfCD_BANK.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_BANK"/>
+      <BindItem id="item19" compid="divData.form.txtNO_IRP" propid="value" datasetid="dsList" columnid="NO_IRP"/>
+      <BindItem id="item20" compid="divData.form.staDT_RETIRE_2" propid="text" datasetid="dsList" columnid="DT_RETIRE2"/>
+      <BindItem id="item21" compid="divData.form.staDT_DAY" propid="text" datasetid="dsList" columnid="DT_INSERT"/>
+      <BindItem id="item22" compid="divData.form.staDT_BIRTH" propid="text" datasetid="dsList" columnid="DT_BIRTHDAY"/>
+      <BindItem id="item23" compid="divData.form.staDS_HNAME_2" propid="text" datasetid="dsList" columnid="DS_NAME"/>
+    </Bind>
+  </Form>
+</FDL>

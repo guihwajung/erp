@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="mainTest" width="1024" height="768" titletext="validation" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divValidate" taborder="0" text="Div00" left="0" top="0" height="215" width="540" background="whitesmoke" valid="">
+          <Layouts>
+            <Layout>
+              <Static id="Static21" taborder="0" text="필수Combo" cssclass="sta_WF_DetailLabel" left="2" top="1" width="95" height="31"/>
+              <Static id="Static22" taborder="1" cssclass="sta_WF_DetailLabel2" left="96" top="1" height="31" width="169"/>
+              <Combo id="Combo00" taborder="2" text="선택" left="104" top="6" width="150" height="20" codecolumn="codecolumn" datacolumn="datacolumn" index="0" innerdataset="innerdataset" validate="title:필수Combo,required:true">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn"/>
+                      <Col id="datacolumn">선택</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">1</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">2</Col>
+                      <Col id="datacolumn">2</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">3</Col>
+                      <Col id="datacolumn">3</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">4</Col>
+                      <Col id="datacolumn">4</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="Static00" taborder="3" cssclass="sta_WF_DetailLabel2" left="96" top="31" height="31" width="169"/>
+              <Static id="Static01" taborder="4" text="필수Edit" cssclass="sta_WF_DetailLabel" left="2" top="31" width="95" height="31"/>
+              <Static id="Static02" taborder="5" cssclass="sta_WF_DetailLabel2" left="96" top="61" height="31" width="169"/>
+              <Static id="Static03" taborder="6" text="필수(날짜)" cssclass="sta_WF_DetailLabel" left="2" top="61" width="95" height="31"/>
+              <Static id="Static06" taborder="9" cssclass="sta_WF_DetailLabel2" left="96" top="121" height="31" width="169" validate="title:최대값,max:100000"/>
+              <Static id="Static07" taborder="10" text="최대값" cssclass="sta_WF_DetailLabel" left="2" top="121" width="95" height="31"/>
+              <Static id="Static08" taborder="11" text="최소값" cssclass="sta_WF_DetailLabel" left="2" top="151" width="95" height="31"/>
+              <Static id="Static09" taborder="12" cssclass="sta_WF_DetailLabel2" left="96" top="151" height="31" width="169"/>
+              <Static id="Static10" taborder="13" text="최대길이" cssclass="sta_WF_DetailLabel" left="2" top="181" width="95" height="31"/>
+              <Static id="Static11" taborder="14" cssclass="sta_WF_DetailLabel2" left="96" top="181" height="31" width="169"/>
+              <Calendar id="Calendar00" taborder="16" left="104" top="65" width="150" height="20" dateformat="yyyy-MM-dd" validate="title:필수(날짜),required:true,date:true"/>
+              <Static id="Static14" taborder="20" text="필수(숫자)" cssclass="sta_WF_DetailLabel" left="2" top="91" width="95" height="31"/>
+              <Static id="Static15" taborder="21" cssclass="sta_WF_DetailLabel2" left="96" top="91" height="31" width="169"/>
+              <Static id="Static24" taborder="32" text="숫자이며 최대값은 100000" left="266" top="120" width="274" height="41"/>
+              <Static id="Static25" taborder="33" text="숫자이며 최소값은 10" left="266" top="146" width="274" height="41"/>
+              <Static id="Static26" taborder="34" text="최소길이" cssclass="sta_WF_DetailLabel" left="264" top="181" width="95" height="31"/>
+              <Static id="Static27" taborder="35" cssclass="sta_WF_DetailLabel2" left="358" top="181" height="31" width="169"/>
+              <Button id="btnDivChk" taborder="36" text="div validation check " cssclass="btn_WF_SchArea" right="2" width="174" height="25" top="2" onclick="divValidate_btnDivChk_onclick"/>
+              <Edit id="Edit00" taborder="37" left="104" top="125" width="150" height="20" validate="title:필수(숫자),required:true,digits:true"/>
+              <Edit id="Edit01" taborder="38" left="104" top="157" width="150" height="20" validate="title:최소값,min:10"/>
+              <Edit id="Edit02" taborder="39" left="104" top="188" width="150" height="20" validate="title:최대길이,maxlength:3"/>
+              <Edit id="Edit03" taborder="40" left="365" top="188" width="150" height="20"/>
+              <Edit id="Edit04" taborder="41" left="105" top="36" width="149" height="20" validate="title:필수Edit,required:true"/>
+              <Edit id="Edit05" taborder="42" left="103" top="96" width="150" height="20" validate="title:필수(숫자),required:true,digits:true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdList" taborder="1" binddataset="dsList" autoenter="select" left="545" top="36" height="178" right="0" autofittype="col" validate="col:Column0,title:필수여부,required:true|col:Column1,title:날짜,required:true,date:true|col:Column2,title:최대길이10,required:true,maxlength:10|col:Column3,title:최소3최대10,required:true,minlength:3,maxlength:10&quot;">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="118"/>
+                <Column size="135"/>
+                <Column size="123"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="필수값"/>
+                <Cell col="1" text="날짜"/>
+                <Cell col="2" text="최대길이(10)"/>
+                <Cell col="3" text="최소(3),최대(10)"/>
+              </Band>
+              <Band id="body">
+                <Cell edittype="normal" text="bind:Column0"/>
+                <Cell col="1" displaytype="date" edittype="date" text="bind:Column1"/>
+                <Cell col="2" edittype="normal" text="bind:Column2"/>
+                <Cell col="3" edittype="normal" text="bind:Column3"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnGrdChk" taborder="2" text="Grid validation check " cssclass="btn_WF_SchArea" top="4" right="0" width="174" height="25" onclick="btnGrdChk_onclick"/>
+        <Static id="Static00" taborder="3" text="대상 component선택 후 프로퍼티창에서 우클릭 후  user properties에 validate추가&#13;&#10;해당 valdate에 check값 입력 &#13;&#10;&#13;&#10;예) 단일컴포넌트 &gt;&gt;&gt;&gt; &#13;&#10;&#9;- title:필수여부,required:true (title은 리턴메세지값에 적용되므로 벨리데이션 체크시 필수로 입력합니다.)&#13;&#10;&#9;- Div로 묶여있을경우 Div통으로 호출&#13;&#10;&#13;&#10;    그리드컴포넌트&gt;&gt;&gt;&gt; &#13;&#10;&#9;- col:Column0,title:필수여부,required:true|&#13;&#10;&#9;  col:Column1,title:날짜,required:true,date:true|&#13;&#10;&#9;  col:Column2,title:최대길이10,required:true,maxlength:10|&#13;&#10;&#9;  col:Column3,title:최소3최대10,required:true,minlength:3,maxlength:10&#13;&#10;&#13;&#10;        - 각 컬럼별 벨리데이션값을 전부입력 각 컬럼사이 구분자는 &quot;|&quot;&#13;&#10;&#9;  제일 앞에 바인드된 dataset의 column id입력 후 단일 컴포넌트와 유사하게 title입력 후 벨리데이션값 입력&#13;&#10;&#13;&#10;&#13;&#10;===============================================================&#13;&#10;required   : 필수&#13;&#10;digit      : 숫자&#13;&#10;date       : 날짜&#13;&#10;max        : 최대값&#13;&#10;min        : 최소값&#13;&#10;maxlangth  : 최대길이&#13;&#10;minlangth  : 최소길이" left="0" top="224" height="439" right="0" background="whitesmoke"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">1213</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">2</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">test</Col>
+            <Col id="Column1"/>
+            <Col id="Column2">test</Col>
+            <Col id="Column3">test</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind/>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    샘플 > Validation
+*  @FileName 	sampleValidation.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.11.16
+*  @Desction    Validation 샘플
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.11.16     	consulting       	        최초 생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this);
+};
+
+/**
+ * @description 화면 닫힐때 변경사항 체크(입력 화면에서 변경되는 Dataset 체크 필요, 선택)
+ * @return {boolean} true(화면 닫음) / false(화면 닫지 않음)
+*/
+this.fnClose = function()
+{
+	if (this.gfnDsIsUpdated(this.dsList)) {
+		return false;
+	} 
+	else {
+		return true;
+	}
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.divValidate_btnDivChk_onclick = function (obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.gfnValidation(this.divValidate);
+};
+
+this.btnGrdChk_onclick = function (obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.gfnValidation(this.grdList);
+};]]></Script>
+  </Form>
+</FDL>

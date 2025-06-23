@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="현장보험 MASTER관리" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_DEPT" taborder="1" text="현장/부서 코드" left="0.0" top="10.0" width="144.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFDEPTCORP" CDTextWidth="100" taborder="0" left="staCD_DEPT:0.0" top="10.0" width="279" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Div id="divData2" taborder="0" left="0" top="0" text="" height="260" width="415">
+                <Layouts>
+                  <Layout>
+                    <Static id="staTitle" taborder="0" text="고용보험" left="0" top="0" width="100%" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Static id="staDT_GOYONG_FRSINGO" taborder="2" text="개시신고일" left="10" top="staTitle:5" width="135" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" textAlign="right" enable="true"/>
+                    <Static id="staDT_GOYONG_FR" taborder="1" text="개시일" left="10" top="staDT_GOYONG_FRSINGO:-1" width="135" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" textAlign="right" enable="true"/>
+                    <Static id="staDT_GOYONG_TO" taborder="3" text="종료일" left="10" top="staDT_GOYONG_FR:-1" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staAM_GOYONG_ENTRY" taborder="4" text="신고금액" left="10" top="staDT_GOYONG_TO:-1" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staNO_GOYONG" taborder="5" text="사업장관리번호" left="10" top="staAM_GOYONG_ENTRY:-1" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staDT_GOYONG_TOSINGO" taborder="6" text="종료신고일" left="10" top="172" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBgDT_GOYONG_FRSINGO" taborder="7" left="staDT_GOYONG_FRSINGO:-1" top="staTitle:5" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgDT_GOYONG_FR" taborder="8" left="staDT_GOYONG_FR:-1" top="staBgDT_GOYONG_FRSINGO:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgDT_GOYONG_TO" taborder="9" left="staDT_GOYONG_TO:-1" top="staBgDT_GOYONG_FR:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgAM_GOYONG_ENTRY" taborder="10" left="staAM_GOYONG_ENTRY:-1" top="staBgDT_GOYONG_TO:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgNO_GOYONG" taborder="11" left="staNO_GOYONG:-1" top="staBgAM_GOYONG_ENTRY:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgDT_GOYONG_TOSINGO" taborder="12" left="staDT_GOYONG_TOSINGO:-1" top="172" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Calendar id="ctclDT_GOYONG_FRSINGO" taborder="13" left="staDT_GOYONG_FRSINGO:5" top="staTitle:10" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <Calendar id="ctclDT_GOYONG_FR" taborder="14" left="staDT_GOYONG_FR:5" top="ctclDT_GOYONG_FRSINGO:9" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <Calendar id="ctclDT_GOYONG_TO" taborder="15" left="staDT_GOYONG_TO:5" top="ctclDT_GOYONG_FR:9" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <MaskEdit id="ctxtAM_GOYONG_ENTRY" taborder="16" left="staAM_GOYONG_ENTRY:5" top="ctclDT_GOYONG_TO:9" width="200" height="20" value="" format="#,0"/>
+                    <Edit id="ctxtNO_GOYONG" taborder="17" left="staNO_GOYONG:5" top="ctxtAM_GOYONG_ENTRY:9" width="200" height="20" value=""/>
+                    <Calendar id="ctclDT_GOYONG_TOSINGO" taborder="18" left="staDT_GOYONG_TOSINGO:5" top="177" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <Static id="staDT_GOYONG_TOSINGO00" taborder="19" left="10" top="201" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBgDT_GOYONG_TOSINGO00" taborder="20" left="staDT_GOYONG_TOSINGO00:-1" top="201" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divData3" taborder="1" left="divData2:10" top="0" text="" height="260" width="415">
+                <Layouts>
+                  <Layout>
+                    <Static id="staTitle" taborder="0" text="퇴직공제부금" left="0" top="0" width="100%" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Static id="staDT_SAUP_PLAN" taborder="6" text="공제계약일" left="10" top="staTitle:5" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staTY_TAEJIKGONGJE_CLOSE" taborder="3" text="계약체결여부" left="10" top="staDT_SAUP_PLAN:-1" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staDS_TAEJIKGONGJE_BIGO" taborder="4" text="공제미체결사유" left="10" top="staTY_TAEJIKGONGJE_CLOSE:-1" width="135" height="60" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staAM_TAEJIKGONGJE_DANGA" taborder="5" text="공제부금단가" left="10" top="staDS_TAEJIKGONGJE_BIGO:-1" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staAM_TAEJIKGONGJE_DOGUBLEVY" taborder="2" text="총원가반영공제부금액" left="10" top="staAM_TAEJIKGONGJE_DANGA:-1" width="135" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" textAlign="right" enable="true"/>
+                    <Static id="staNO_TAEJIKGONGJE" taborder="1" text="가입번호" left="10" top="staAM_TAEJIKGONGJE_DOGUBLEVY:-1" width="135" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" textAlign="right" enable="true"/>
+                    <Static id="staBgDT_SAUP_PLAN" taborder="12" left="staDT_SAUP_PLAN:-1" top="staTitle:5" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgDT_TAEJIKGONGJE_SINGO" taborder="9" left="staTY_TAEJIKGONGJE_CLOSE:-1" top="staBgDT_SAUP_PLAN:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgDT_TAEJIKGONGJE_OPEN" taborder="10" left="staDS_TAEJIKGONGJE_BIGO:-1" top="staBgDT_TAEJIKGONGJE_SINGO:-1" width="270" height="60" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgAM_TAEJIKGONGJE_DANGA" taborder="11" left="staAM_TAEJIKGONGJE_DANGA:-1" top="staBgDT_TAEJIKGONGJE_OPEN:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgAM_TAEJIKGONGJE_DOGUBLEVY" taborder="8" left="staAM_TAEJIKGONGJE_DOGUBLEVY:-1" top="staBgAM_TAEJIKGONGJE_DANGA:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgNO_TAEJIKGONGJE" taborder="7" left="staNO_TAEJIKGONGJE:-1" top="staBgAM_TAEJIKGONGJE_DOGUBLEVY:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Calendar id="ctclDT_SAUP_PLAN" taborder="15" left="staDT_SAUP_PLAN:5" top="staTitle:10" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <MaskEdit id="ctxtAM_TAEJIKGONGJE_DANGA" taborder="16" left="staAM_TAEJIKGONGJE_DANGA:5" top="149" width="200" height="20" value="" format="#,0"/>
+                    <MaskEdit id="ctxtAM_TAEJIKGONGJE_DOGUBLEVY" taborder="14" left="staAM_TAEJIKGONGJE_DOGUBLEVY:5" top="ctxtAM_TAEJIKGONGJE_DANGA:9" width="200" height="20" value="" format="#,0"/>
+                    <Edit id="ctxtNO_TAEJIKGONGJE" taborder="13" left="staNO_TAEJIKGONGJE:5" top="ctxtAM_TAEJIKGONGJE_DOGUBLEVY:9" width="200" height="20" value=""/>
+                    <Radio id="crdoTY_TAEJIKGONGJE_CLOSE" taborder="17" left="155" top="59" height="25" direction="vertical" fittocontents="width" width="140" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+                      <Dataset id="innerdataset">
+                        <ColumnInfo>
+                          <Column id="codecolumn" size="256"/>
+                          <Column id="datacolumn" size="256"/>
+                        </ColumnInfo>
+                        <Rows>
+                          <Row>
+                            <Col id="codecolumn">Y</Col>
+                            <Col id="datacolumn">체결</Col>
+                          </Row>
+                          <Row>
+                            <Col id="codecolumn">N</Col>
+                            <Col id="datacolumn">미체결</Col>
+                          </Row>
+                        </Rows>
+                      </Dataset>
+                    </Radio>
+                    <TextArea id="txtaDS_TAEJIKGONGJE_BIGO" taborder="18" left="150" top="90" width="259" height="50" maxlength="100"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divData4" taborder="2" left="0" top="245" text="" height="200" width="415">
+                <Layouts>
+                  <Layout>
+                    <Static id="staTitle" taborder="0" text="국민연금" left="0" top="0" width="100%" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Static id="staDT_KOOKMIN_SINGO" taborder="1" text="신고일" left="10" top="staTitle:5" width="135" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" textAlign="right" enable="true"/>
+                    <Static id="staDT_KOOKMIN_FR" taborder="2" text="적용일" left="10" top="staDT_KOOKMIN_SINGO:-1" width="135" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" textAlign="right" enable="true"/>
+                    <Static id="staDT_KOOKMIN_TO" taborder="3" text="탈퇴일" left="10" top="staDT_KOOKMIN_FR:-1" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staNO_KOOKMIN" taborder="4" text="사업장관리번호" left="10" top="staDT_KOOKMIN_TO:-1" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBgDT_KOOKMIN_SINGO" taborder="5" left="staDT_KOOKMIN_SINGO:-1" top="staTitle:5" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgDT_KOOKMIN_FR" taborder="6" left="staDT_KOOKMIN_FR:-1" top="staBgDT_KOOKMIN_SINGO:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgDT_KOOKMIN_TO" taborder="7" left="staDT_KOOKMIN_TO:-1" top="staBgDT_KOOKMIN_FR:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgNO_KOOKMIN" taborder="8" left="staNO_KOOKMIN:-1" top="staBgDT_KOOKMIN_TO:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Calendar id="ctclDT_KOOKMIN_SINGO" taborder="9" left="staDT_KOOKMIN_SINGO:5" top="staTitle:10" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <Calendar id="ctclDT_KOOKMIN_FR" taborder="10" left="staDT_KOOKMIN_FR:5" top="ctclDT_KOOKMIN_SINGO:9" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <Calendar id="ctclDT_KOOKMIN_TO" taborder="11" left="staDT_KOOKMIN_TO:5" top="ctclDT_KOOKMIN_FR:9" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <Edit id="ctxtNO_KOOKMIN" taborder="12" left="staNO_KOOKMIN:5" top="ctclDT_KOOKMIN_TO:9" width="260" height="20" value=""/>
+                    <Static id="staNO_KOOKMIN00" taborder="13" text="기본거래처" left="10" top="staNO_KOOKMIN:-1" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBgNO_KOOKMIN00" taborder="14" left="staNO_KOOKMIN00:-1" top="staBgNO_KOOKMIN:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Div id="ccfVENDOR1" CodeFindName="DOX_CFVENDOR_DH" CDTextWidth="100" taborder="15" left="staNO_KOOKMIN00:5" top="staBgNO_KOOKMIN:4" width="260" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divData5" taborder="3" left="divData4:10" top="245" text="" height="200" width="415">
+                <Layouts>
+                  <Layout>
+                    <Static id="staTitle" taborder="0" text="건강보험" left="0" top="0" width="100%" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Static id="staDT_MEDICARE_SINGO" taborder="1" text="신고일" left="10" top="staTitle:5" width="135" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" textAlign="right" enable="true"/>
+                    <Static id="staDT_MEDICARE_FR" taborder="2" text="적용일" left="10" top="staDT_MEDICARE_SINGO:-1" width="135" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" textAlign="right" enable="true"/>
+                    <Static id="staDT_MEDICARE_TO" taborder="3" text="탈퇴일" left="10" top="staDT_MEDICARE_FR:-1" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staNO_MEDICARE" taborder="4" text="사업장관리번호" left="10" top="staDT_MEDICARE_TO:-1" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBgDT_MEDICARE_SINGO" taborder="5" left="staDT_MEDICARE_SINGO:-1" top="staTitle:5" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgDT_MEDICARE_FR" taborder="6" left="staDT_MEDICARE_FR:-1" top="staBgDT_MEDICARE_SINGO:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgDT_MEDICARE_TO" taborder="7" left="staDT_MEDICARE_TO:-1" top="staBgDT_MEDICARE_FR:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBgNO_MEDICARE" taborder="8" left="staNO_MEDICARE:-1" top="staBgDT_MEDICARE_TO:-1" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Calendar id="ctclDT_MEDICARE_SINGO" taborder="9" left="staDT_MEDICARE_SINGO:5" top="staTitle:10" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <Calendar id="ctclDT_MEDICARE_FR" taborder="10" left="staDT_MEDICARE_FR:5" top="ctclDT_MEDICARE_SINGO:9" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <Calendar id="ctclDT_MEDICARE_TO" taborder="11" left="staDT_MEDICARE_TO:5" top="ctclDT_MEDICARE_FR:9" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                    <Edit id="ctxtNO_MEDICARE" taborder="12" left="staNO_MEDICARE:5" top="ctclDT_MEDICARE_TO:9" width="260" height="20" value=""/>
+                    <Static id="staNO_KOOKMIN00" taborder="13" text="기본거래처" left="10" top="143" width="135" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+                    <Static id="staBgNO_KOOKMIN00" taborder="14" left="144" top="143" width="270" height="30" cssclass="sta_WF_tablebg"/>
+                    <Div id="ccfVENDOR2" CodeFindName="DOX_CFVENDOR_DH" CDTextWidth="100" taborder="15" left="150" top="148" width="260" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divData6" taborder="4" left="0" top="430" width="850" height="200">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta27_00" taborder="2" width="526" height="149" cssclass="sta_WF_tablebg" left="144" top="34"/>
+                    <Static id="staTitle" taborder="0" text="첨부파일" left="0" top="0" width="100.00%" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Div id="divFile" taborder="1" left="140" top="30" url="cmm::cmmFileManager.xfdl" text="" width="532" height="155"/>
+                    <Static id="staID_FILE_ATTCH" taborder="3" text="첨부파일" left="10" width="135" height="149" cssclass="sta_WF_tablelabel" textAlign="right" top="34"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 파일관리자 - 조회전에는 disable
+	//this.divData.form.divData6.form.divFile.form.set_enable(false);
+	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+// 	this.FormBtns.Add.set_enable(false);
+// 	this.FormBtns.Del.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	//this.btn1 = this.gfnFormButtonAdd("New", "fnEmployNew");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ccfVENDOR1 = this.divData.form.divData4.form.ccfVENDOR1;
+	this.ccfVENDOR2 = this.divData.form.divData5.form.ccfVENDOR2;
+	this.divFileMng = this.divData.form.divData6.form.divFile;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_SITE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfVENDOR1.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfVENDOR2.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("ID_INSERT", "string");
+	this.dsInsert.addColumn("CD_SITE", "string");
+	this.dsInsert.addColumn("DT_SANJE_FRSINGO", "string");
+	this.dsInsert.addColumn("DT_SANJE_FR", "string");
+	this.dsInsert.addColumn("DT_SANJE_TO", "string");
+	this.dsInsert.addColumn("AM_SANJE_ENTRY", "bigdecimal");
+	this.dsInsert.addColumn("NO_SANJE_SAUP", "string");
+	this.dsInsert.addColumn("NO_SANJE", "string");
+	this.dsInsert.addColumn("DT_KOOKMIN_SINGO", "string");
+	this.dsInsert.addColumn("DT_KOOKMIN_FR", "string");
+	this.dsInsert.addColumn("DT_KOOKMIN_TO", "string");
+	this.dsInsert.addColumn("NO_KOOKMIN", "string");
+	this.dsInsert.addColumn("NO_KOOKMIN_VENDOR", "string");
+	this.dsInsert.addColumn("DS_KOOKMIN_VENDOR", "string");
+	this.dsInsert.addColumn("NO_KOOKMIN_NEW", "string");
+	this.dsInsert.addColumn("DT_MEDICARE_SINGO", "string");
+	this.dsInsert.addColumn("DT_MEDICARE_FR", "string");
+	this.dsInsert.addColumn("DT_MEDICARE_TO", "string");
+	this.dsInsert.addColumn("NO_MEDICARE", "string");
+	this.dsInsert.addColumn("NO_MEDICARE_VENDOR", "string");
+	this.dsInsert.addColumn("DS_MEDICARE_VENDOR", "string");
+	this.dsInsert.addColumn("NO_MEDICARE_NEW", "string");
+	this.dsInsert.addColumn("DT_GOYONG_FRSINGO", "string");
+	this.dsInsert.addColumn("DT_GOYONG_FR", "string");
+	this.dsInsert.addColumn("DT_GOYONG_TO", "string");
+	this.dsInsert.addColumn("AM_GOYONG_ENTRY", "bigdecimal");
+	this.dsInsert.addColumn("NO_GOYONG", "string");
+	this.dsInsert.addColumn("NO_GOYONG_OPEN", "string");
+	this.dsInsert.addColumn("DT_GOYONG_TOSINGO", "string");
+	this.dsInsert.addColumn("NO_TAEJIKGONGJE", "string");
+	this.dsInsert.addColumn("AM_TAEJIKGONGJE_DOGUBLEVY", "bigdecimal");
+	this.dsInsert.addColumn("DT_TAEJIKGONGJE_SINGO", "string");
+	this.dsInsert.addColumn("DT_TAEJIKGONGJE_OPEN", "string");
+	this.dsInsert.addColumn("AM_TAEJIKGONGJE_DANGA", "bigdecimal");
+	this.dsInsert.addColumn("RT_TAEJIKGONGJE_INVEST", "bigdecimal");
+	this.dsInsert.addColumn("DT_SAUP_PLAN", "string");
+	this.dsInsert.addColumn("TY_TAEJIKGONGJE_CLOSE", "string");
+	this.dsInsert.addColumn("DS_TAEJIKGONGJE_BIGO", "string");
+	
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("ID_INSERT", "string");
+	this.dsUpdate.addColumn("CD_SITE", "string");
+	this.dsUpdate.addColumn("DT_SANJE_FRSINGO", "string");
+	this.dsUpdate.addColumn("DT_SANJE_FR", "string");
+	this.dsUpdate.addColumn("DT_SANJE_TO", "string");
+	this.dsUpdate.addColumn("AM_SANJE_ENTRY", "bigdecimal");
+	this.dsUpdate.addColumn("NO_SANJE_SAUP", "string");
+	this.dsUpdate.addColumn("NO_SANJE", "string");
+	this.dsUpdate.addColumn("DT_KOOKMIN_SINGO", "string");
+	this.dsUpdate.addColumn("DT_KOOKMIN_FR", "string");
+	this.dsUpdate.addColumn("DT_KOOKMIN_TO", "string");
+	this.dsUpdate.addColumn("NO_KOOKMIN", "string");
+	this.dsUpdate.addColumn("NO_KOOKMIN_VENDOR", "string");
+	this.dsUpdate.addColumn("DS_KOOKMIN_VENDOR", "string");
+	this.dsUpdate.addColumn("NO_KOOKMIN_NEW", "string");
+	this.dsUpdate.addColumn("DT_MEDICARE_SINGO", "string");
+	this.dsUpdate.addColumn("DT_MEDICARE_FR", "string");
+	this.dsUpdate.addColumn("DT_MEDICARE_TO", "string");
+	this.dsUpdate.addColumn("NO_MEDICARE", "string");
+	this.dsUpdate.addColumn("NO_MEDICARE_VENDOR", "string");
+	this.dsUpdate.addColumn("DS_MEDICARE_VENDOR", "string");
+	this.dsUpdate.addColumn("NO_MEDICARE_NEW", "string");
+	this.dsUpdate.addColumn("DT_GOYONG_FRSINGO", "string");
+	this.dsUpdate.addColumn("DT_GOYONG_FR", "string");
+	this.dsUpdate.addColumn("DT_GOYONG_TO", "string");
+	this.dsUpdate.addColumn("AM_GOYONG_ENTRY", "bigdecimal");
+	this.dsUpdate.addColumn("NO_GOYONG", "string");
+	this.dsUpdate.addColumn("NO_GOYONG_OPEN", "string");
+	this.dsUpdate.addColumn("DT_GOYONG_TOSINGO", "string");
+	this.dsUpdate.addColumn("NO_TAEJIKGONGJE", "string");
+	this.dsUpdate.addColumn("AM_TAEJIKGONGJE_DOGUBLEVY", "bigdecimal");
+	this.dsUpdate.addColumn("DT_TAEJIKGONGJE_SINGO", "string");
+	this.dsUpdate.addColumn("DT_TAEJIKGONGJE_OPEN", "string");
+	this.dsUpdate.addColumn("AM_TAEJIKGONGJE_DANGA", "bigdecimal");
+	this.dsUpdate.addColumn("RT_TAEJIKGONGJE_INVEST", "bigdecimal");
+	this.dsUpdate.addColumn("DT_SAUP_PLAN", "string");
+	this.dsUpdate.addColumn("TY_TAEJIKGONGJE_CLOSE", "string");
+	this.dsUpdate.addColumn("DS_TAEJIKGONGJE_BIGO", "string");
+	
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+//this.gfnConfirm("삭제하시겠습니까?", "fnDel_callback");
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	//var flg = this.gfnGetFlag(this.dsList, 0);
+	var flg = this.gfnGetFormStatus(this);
+	var inData      = "";
+
+	if(flg == "I"){
+			inData = "insert=dsInsert";
+			this.dsInsert.clearData();
+			var nrow = this.dsInsert.addRow();
+			this.dsInsert.setColumn(nrow, "ID_INSERT", this.objApp.gdsUserInfo.getColumn(0, "ID_USER"));
+			this.dsInsert.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+			this.dsInsert.setColumn(nrow, "DT_SANJE_FRSINGO", this.dsList.getColumn(0, "DT_SANJE_FRSINGO"));
+			this.dsInsert.setColumn(nrow, "DT_SANJE_FR", this.dsList.getColumn(0, "DT_SANJE_FR"));
+			this.dsInsert.setColumn(nrow, "DT_SANJE_TO", this.dsList.getColumn(0, "DT_SANJE_TO"));
+			this.dsInsert.setColumn(nrow, "AM_SANJE_ENTRY", this.dsList.getColumn(0, "AM_SANJE_ENTRY"));
+			this.dsInsert.setColumn(nrow, "NO_SANJE_SAUP", this.dsList.getColumn(0, "NO_SANJE_SAUP"));
+			this.dsInsert.setColumn(nrow, "NO_SANJE", this.dsList.getColumn(0, "NO_SANJE"));
+			this.dsInsert.setColumn(nrow, "DT_KOOKMIN_SINGO", this.dsList.getColumn(0, "DT_KOOKMIN_SINGO"));
+			this.dsInsert.setColumn(nrow, "DT_KOOKMIN_FR", this.dsList.getColumn(0, "DT_KOOKMIN_FR"));
+			this.dsInsert.setColumn(nrow, "DT_KOOKMIN_TO", this.dsList.getColumn(0, "DT_KOOKMIN_TO"));
+			this.dsInsert.setColumn(nrow, "NO_KOOKMIN", this.dsList.getColumn(0, "NO_KOOKMIN"));
+			this.dsInsert.setColumn(nrow, "NO_KOOKMIN_VENDOR", this.dsList.getColumn(0, "NO_KOOKMIN_VENDOR"));
+			this.dsInsert.setColumn(nrow, "DS_KOOKMIN_VENDOR", this.dsList.getColumn(0, "DS_KOOKMIN_VENDOR"));
+			this.dsInsert.setColumn(nrow, "NO_KOOKMIN_NEW", this.dsList.getColumn(0, "NO_KOOKMIN_NEW"));
+			this.dsInsert.setColumn(nrow, "DT_MEDICARE_SINGO", this.dsList.getColumn(0, "DT_MEDICARE_SINGO"));
+			this.dsInsert.setColumn(nrow, "DT_MEDICARE_FR", this.dsList.getColumn(0, "DT_MEDICARE_FR"));
+			this.dsInsert.setColumn(nrow, "DT_MEDICARE_TO", this.dsList.getColumn(0, "DT_MEDICARE_TO"));
+			this.dsInsert.setColumn(nrow, "NO_MEDICARE", this.dsList.getColumn(0, "NO_MEDICARE"));
+			this.dsInsert.setColumn(nrow, "NO_MEDICARE_VENDOR", this.dsList.getColumn(0, "NO_MEDICARE_VENDOR"));
+			this.dsInsert.setColumn(nrow, "DS_MEDICARE_VENDOR", this.dsList.getColumn(0, "DS_MEDICARE_VENDOR"));
+			this.dsInsert.setColumn(nrow, "NO_MEDICARE_NEW", this.dsList.getColumn(0, "NO_MEDICARE_NEW"));
+			this.dsInsert.setColumn(nrow, "DT_GOYONG_FRSINGO", this.dsList.getColumn(0, "DT_GOYONG_FRSINGO"));
+			this.dsInsert.setColumn(nrow, "DT_GOYONG_FR", this.dsList.getColumn(0, "DT_GOYONG_FR"));
+			this.dsInsert.setColumn(nrow, "DT_GOYONG_TO", this.dsList.getColumn(0, "DT_GOYONG_TO"));
+			this.dsInsert.setColumn(nrow, "AM_GOYONG_ENTRY", this.dsList.getColumn(0, "AM_GOYONG_ENTRY"));
+			this.dsInsert.setColumn(nrow, "NO_GOYONG", this.dsList.getColumn(0, "NO_GOYONG"));
+			this.dsInsert.setColumn(nrow, "NO_GOYONG_OPEN", this.dsList.getColumn(0, "NO_GOYONG_OPEN"));
+			this.dsInsert.setColumn(nrow, "DT_GOYONG_TOSINGO", this.dsList.getColumn(0, "DT_GOYONG_TOSINGO"));
+			this.dsInsert.setColumn(nrow, "NO_TAEJIKGONGJE", this.dsList.getColumn(0, "NO_TAEJIKGONGJE"));
+			this.dsInsert.setColumn(nrow, "AM_TAEJIKGONGJE_DOGUBLEVY", this.dsList.getColumn(0, "AM_TAEJIKGONGJE_DOGUBLEVY"));
+			this.dsInsert.setColumn(nrow, "DT_TAEJIKGONGJE_SINGO", this.dsList.getColumn(0, "DT_TAEJIKGONGJE_SINGO"));
+			this.dsInsert.setColumn(nrow, "DT_TAEJIKGONGJE_OPEN", this.dsList.getColumn(0, "DT_TAEJIKGONGJE_OPEN"));
+			this.dsInsert.setColumn(nrow, "AM_TAEJIKGONGJE_DANGA", this.dsList.getColumn(0, "AM_TAEJIKGONGJE_DANGA"));
+			this.dsInsert.setColumn(nrow, "RT_TAEJIKGONGJE_INVEST", this.dsList.getColumn(0, "RT_TAEJIKGONGJE_INVEST"));
+			this.dsInsert.setColumn(nrow, "DT_SAUP_PLAN", this.dsList.getColumn(0, "DT_SAUP_PLAN"));
+			this.dsInsert.setColumn(nrow, "TY_TAEJIKGONGJE_CLOSE", this.dsList.getColumn(0, "TY_TAEJIKGONGJE_CLOSE"));
+			this.dsInsert.setColumn(nrow, "DS_TAEJIKGONGJE_BIGO", this.dsList.getColumn(0, "DS_TAEJIKGONGJE_BIGO"));
+
+	}else if(flg == "U"){
+			inData = "update=dsUpdate";
+			var nrow = this.dsUpdate.addRow();
+			this.dsUpdate.setColumn(nrow, "ID_INSERT", this.objApp.gdsUserInfo.getColumn(0, "ID_USER"));
+			this.dsUpdate.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+			this.dsUpdate.setColumn(nrow, "DT_SANJE_FRSINGO", this.dsList.getColumn(0, "DT_SANJE_FRSINGO"));
+			this.dsUpdate.setColumn(nrow, "DT_SANJE_FR", this.dsList.getColumn(0, "DT_SANJE_FR"));
+			this.dsUpdate.setColumn(nrow, "DT_SANJE_TO", this.dsList.getColumn(0, "DT_SANJE_TO"));
+			this.dsUpdate.setColumn(nrow, "AM_SANJE_ENTRY", this.dsList.getColumn(0, "AM_SANJE_ENTRY"));
+			this.dsUpdate.setColumn(nrow, "NO_SANJE_SAUP", this.dsList.getColumn(0, "NO_SANJE_SAUP"));
+			this.dsUpdate.setColumn(nrow, "NO_SANJE", this.dsList.getColumn(0, "NO_SANJE"));
+			this.dsUpdate.setColumn(nrow, "DT_KOOKMIN_SINGO", this.dsList.getColumn(0, "DT_KOOKMIN_SINGO"));
+			this.dsUpdate.setColumn(nrow, "DT_KOOKMIN_FR", this.dsList.getColumn(0, "DT_KOOKMIN_FR"));
+			this.dsUpdate.setColumn(nrow, "DT_KOOKMIN_TO", this.dsList.getColumn(0, "DT_KOOKMIN_TO"));
+			this.dsUpdate.setColumn(nrow, "NO_KOOKMIN", this.dsList.getColumn(0, "NO_KOOKMIN"));
+			this.dsUpdate.setColumn(nrow, "NO_KOOKMIN_VENDOR", this.dsList.getColumn(0, "NO_KOOKMIN_VENDOR"));
+			this.dsUpdate.setColumn(nrow, "DS_KOOKMIN_VENDOR", this.dsList.getColumn(0, "DS_KOOKMIN_VENDOR"));
+			this.dsUpdate.setColumn(nrow, "NO_KOOKMIN_NEW", this.dsList.getColumn(0, "NO_KOOKMIN_NEW"));
+			this.dsUpdate.setColumn(nrow, "DT_MEDICARE_SINGO", this.dsList.getColumn(0, "DT_MEDICARE_SINGO"));
+			this.dsUpdate.setColumn(nrow, "DT_MEDICARE_FR", this.dsList.getColumn(0, "DT_MEDICARE_FR"));
+			this.dsUpdate.setColumn(nrow, "DT_MEDICARE_TO", this.dsList.getColumn(0, "DT_MEDICARE_TO"));
+			this.dsUpdate.setColumn(nrow, "NO_MEDICARE", this.dsList.getColumn(0, "NO_MEDICARE"));
+			this.dsUpdate.setColumn(nrow, "NO_MEDICARE_VENDOR", this.dsList.getColumn(0, "NO_MEDICARE_VENDOR"));
+			this.dsUpdate.setColumn(nrow, "DS_MEDICARE_VENDOR", this.dsList.getColumn(0, "DS_MEDICARE_VENDOR"));
+			this.dsUpdate.setColumn(nrow, "NO_MEDICARE_NEW", this.dsList.getColumn(0, "NO_MEDICARE_NEW"));
+			this.dsUpdate.setColumn(nrow, "DT_GOYONG_FRSINGO", this.dsList.getColumn(0, "DT_GOYONG_FRSINGO"));
+			this.dsUpdate.setColumn(nrow, "DT_GOYONG_FR", this.dsList.getColumn(0, "DT_GOYONG_FR"));
+			this.dsUpdate.setColumn(nrow, "DT_GOYONG_TO", this.dsList.getColumn(0, "DT_GOYONG_TO"));
+			this.dsUpdate.setColumn(nrow, "AM_GOYONG_ENTRY", this.dsList.getColumn(0, "AM_GOYONG_ENTRY"));
+			this.dsUpdate.setColumn(nrow, "NO_GOYONG", this.dsList.getColumn(0, "NO_GOYONG"));
+			this.dsUpdate.setColumn(nrow, "NO_GOYONG_OPEN", this.dsList.getColumn(0, "NO_GOYONG_OPEN"));
+			this.dsUpdate.setColumn(nrow, "DT_GOYONG_TOSINGO", this.dsList.getColumn(0, "DT_GOYONG_TOSINGO"));
+			this.dsUpdate.setColumn(nrow, "NO_TAEJIKGONGJE", this.dsList.getColumn(0, "NO_TAEJIKGONGJE"));
+			this.dsUpdate.setColumn(nrow, "AM_TAEJIKGONGJE_DOGUBLEVY", this.dsList.getColumn(0, "AM_TAEJIKGONGJE_DOGUBLEVY"));
+			this.dsUpdate.setColumn(nrow, "DT_TAEJIKGONGJE_SINGO", this.dsList.getColumn(0, "DT_TAEJIKGONGJE_SINGO"));
+			this.dsUpdate.setColumn(nrow, "DT_TAEJIKGONGJE_OPEN", this.dsList.getColumn(0, "DT_TAEJIKGONGJE_OPEN"));
+			this.dsUpdate.setColumn(nrow, "AM_TAEJIKGONGJE_DANGA", this.dsList.getColumn(0, "AM_TAEJIKGONGJE_DANGA"));
+			this.dsUpdate.setColumn(nrow, "RT_TAEJIKGONGJE_INVEST", this.dsList.getColumn(0, "RT_TAEJIKGONGJE_INVEST"));
+			this.dsUpdate.setColumn(nrow, "DT_SAUP_PLAN", this.dsList.getColumn(0, "DT_SAUP_PLAN"));
+			this.dsUpdate.setColumn(nrow, "TY_TAEJIKGONGJE_CLOSE", this.dsList.getColumn(0, "TY_TAEJIKGONGJE_CLOSE"));
+			this.dsUpdate.setColumn(nrow, "DS_TAEJIKGONGJE_BIGO", this.dsList.getColumn(0, "DS_TAEJIKGONGJE_BIGO"));
+	}
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드를 입력하세요.", "fnVaidateCallback");
+	}
+	
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	//trace(this.dsList.saveXML());
+	if (svcID == "select") {
+
+		if(this.dsList.rowcount > 0){
+			
+		}else{
+			this.dsList.addRow();
+			this.gfnSetFormStatus(this, "I");			
+		}
+
+		// 현장코드가 키가 될수 있기에 이화면의 경우는 입력유무 상관없이 첨부파일을 그대로 사용가능하나
+		// 아닌경우는 입력이 우선되고 키가 있는 상태에서 첨부파일을 올릴수 있도록 처리해야한다.
+		//this.divData.form.divData6.form.divFile.form.set_enable(true);
+				
+		// 첨부파일
+		var cd_site = this.dsSearch.getColumn(0, "CD_SITE");
+		var fileManager = {};
+		fileManager.CD_GUBUN = "DS02";
+		fileManager.CD_DIR = [ cd_site ];
+		if(this.FormInfo.TY_AUTH == "R") {
+			fileManager.IS_READONLY = true;
+		} else {
+			fileManager.IS_READONLY = false;
+		}
+		
+		// div FileManager 셋팅
+		this.divFileMng.form.setFileManager(fileManager);
+		
+	}else if(svcID == "save"){
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow)  {
+	if(id == "ccfCD_SITE") {
+		dsUserParam.setColumn(nrow, "CD_CORP", this.objApp.gdsUserInfo.getColumn(0, "CD_CORP"));
+	} else if (id == "ccfVENDOR1") {
+		dsUserParam.setColumn(nrow, "CD_CORP", this.objApp.gdsUserInfo.getColumn(0, "CD_CORP"));
+		dsUserParam.setColumn(nrow, "CD_SITE", "");
+		dsUserParam.setColumn(nrow, "TY_VENDOR", "");
+	} else if (id == "ccfVENDOR2") {
+		dsUserParam.setColumn(nrow, "CD_CORP", this.objApp.gdsUserInfo.getColumn(0, "CD_CORP"));
+		dsUserParam.setColumn(nrow, "CD_SITE", "");
+		dsUserParam.setColumn(nrow, "TY_VENDOR", "");
+	}
+	return true;
+ }
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.dsList.clearData();
+		
+		// 파일관리자
+		//this.divData.form.divData6.form.divFile.form.set_enable(false);
+	}
+};
+
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		
+		if(this.gfnGetFormStatus(this) != "I"){
+		//if(this.dsList.getColumn(0, "nx_flag") != "I"){
+			//this.dsList.setColumn(0, "nx_flag", "U");
+			this.gfnSetFormStatus(this, "U");
+		}
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="nx_flag" type="STRING" size="256"/>
+          <Column id="TY_SANJE_CLOSE" type="STRING" size="256"/>
+          <Column id="DT_SANJE_FRSINGO" type="STRING" size="256"/>
+          <Column id="DT_SANJE_FR" type="STRING" size="256"/>
+          <Column id="DT_SANJE_TO" type="STRING" size="256"/>
+          <Column id="AM_SANJE_ENTRY" type="BIGDECIMAL" size="256"/>
+          <Column id="NO_SANJE_SAUP" type="STRING" size="256"/>
+          <Column id="NO_SANJE" type="STRING" size="256"/>
+          <Column id="DT_KOOKMIN_SINGO" type="STRING" size="256"/>
+          <Column id="DT_KOOKMIN_FR" type="STRING" size="256"/>
+          <Column id="DT_KOOKMIN_TO" type="STRING" size="256"/>
+          <Column id="NO_KOOKMIN" type="STRING" size="256"/>
+          <Column id="NO_KOOKMIN_VENDOR" type="STRING" size="256"/>
+          <Column id="DS_KOOKMIN_VENDOR" type="STRING" size="256"/>
+          <Column id="NO_KOOKMIN_NEW" type="STRING" size="256"/>
+          <Column id="DT_MEDICARE_SINGO" type="STRING" size="256"/>
+          <Column id="DT_MEDICARE_FR" type="STRING" size="256"/>
+          <Column id="DT_MEDICARE_TO" type="STRING" size="256"/>
+          <Column id="NO_MEDICARE" type="STRING" size="256"/>
+          <Column id="NO_MEDICARE_VENDOR" type="STRING" size="256"/>
+          <Column id="DS_MEDICARE_VENDOR" type="STRING" size="256"/>
+          <Column id="NO_MEDICARE_NEW" type="STRING" size="256"/>
+          <Column id="DT_GOYONG_FRSINGO" type="STRING" size="256"/>
+          <Column id="DT_GOYONG_FR" type="STRING" size="256"/>
+          <Column id="DT_GOYONG_TO" type="STRING" size="256"/>
+          <Column id="AM_GOYONG_ENTRY" type="BIGDECIMAL" size="256"/>
+          <Column id="NO_GOYONG" type="STRING" size="256"/>
+          <Column id="NO_GOYONG_OPEN" type="STRING" size="256"/>
+          <Column id="DT_GOYONG_TOSINGO" type="STRING" size="256"/>
+          <Column id="NO_TAEJIKGONGJE" type="STRING" size="256"/>
+          <Column id="AM_TAEJIKGONGJE_DOGUBLEVY" type="BIGDECIMAL" size="256"/>
+          <Column id="DT_TAEJIKGONGJE_SINGO" type="STRING" size="256"/>
+          <Column id="DT_TAEJIKGONGJE_OPEN" type="STRING" size="256"/>
+          <Column id="AM_TAEJIKGONGJE_DANGA" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_TAEJIKGONGJE_INVEST" type="BIGDECIMAL" size="256"/>
+          <Column id="DT_SAUP_PLAN" type="STRING" size="256"/>
+          <Column id="TY_TAEJIKGONGJE_CLOSE" type="STRING" size="256"/>
+          <Column id="DS_TAEJIKGONGJE_BIGO" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DSGPR_INSURANCESPEC_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DSGPR_INSURANCESPEC_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DSGPR_INSURANCESPEC_UPDATE</Col>
+            <Col id="TARGET">update</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_SITE"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item7" compid="divData.form.divData4.form.ctclDT_KOOKMIN_SINGO" propid="value" datasetid="dsList" columnid="DT_KOOKMIN_SINGO"/>
+      <BindItem id="item8" compid="divData.form.divData4.form.ctclDT_KOOKMIN_FR" propid="value" datasetid="dsList" columnid="DT_KOOKMIN_FR"/>
+      <BindItem id="item9" compid="divData.form.divData4.form.ctclDT_KOOKMIN_TO" propid="value" datasetid="dsList" columnid="DT_KOOKMIN_TO"/>
+      <BindItem id="item10" compid="divData.form.divData4.form.ctxtNO_KOOKMIN" propid="value" datasetid="dsList" columnid="NO_KOOKMIN"/>
+      <BindItem id="item12" compid="divData.form.divData5.form.ctclDT_MEDICARE_SINGO" propid="value" datasetid="dsList" columnid="DT_MEDICARE_SINGO"/>
+      <BindItem id="item13" compid="divData.form.divData5.form.ctclDT_MEDICARE_FR" propid="value" datasetid="dsList" columnid="DT_MEDICARE_FR"/>
+      <BindItem id="item14" compid="divData.form.divData5.form.ctclDT_MEDICARE_TO" propid="value" datasetid="dsList" columnid="DT_MEDICARE_TO"/>
+      <BindItem id="item15" compid="divData.form.divData5.form.ctxtNO_MEDICARE" propid="value" datasetid="dsList" columnid="NO_MEDICARE"/>
+      <BindItem id="item17" compid="divData.form.divData2.form.ctclDT_GOYONG_FRSINGO" propid="value" datasetid="dsList" columnid="DT_GOYONG_FRSINGO"/>
+      <BindItem id="item18" compid="divData.form.divData2.form.ctclDT_GOYONG_FR" propid="value" datasetid="dsList" columnid="DT_GOYONG_FR"/>
+      <BindItem id="item19" compid="divData.form.divData2.form.ctclDT_GOYONG_TO" propid="value" datasetid="dsList" columnid="DT_GOYONG_TO"/>
+      <BindItem id="item20" compid="divData.form.divData2.form.ctxtAM_GOYONG_ENTRY" propid="value" datasetid="dsList" columnid="AM_GOYONG_ENTRY"/>
+      <BindItem id="item21" compid="divData.form.divData2.form.ctxtNO_GOYONG" propid="value" datasetid="dsList" columnid="NO_GOYONG"/>
+      <BindItem id="item23" compid="divData.form.divData2.form.ctclDT_GOYONG_TOSINGO" propid="value" datasetid="dsList" columnid="DT_GOYONG_TOSINGO"/>
+      <BindItem id="item24" compid="divData.form.divData3.form.ctxtNO_TAEJIKGONGJE" propid="value" datasetid="dsList" columnid="NO_TAEJIKGONGJE"/>
+      <BindItem id="item25" compid="divData.form.divData3.form.ctxtAM_TAEJIKGONGJE_DOGUBLEVY" propid="value" datasetid="dsList" columnid="AM_TAEJIKGONGJE_DOGUBLEVY"/>
+      <BindItem id="item28" compid="divData.form.divData3.form.ctxtAM_TAEJIKGONGJE_DANGA" propid="value" datasetid="dsList" columnid="AM_TAEJIKGONGJE_DANGA"/>
+      <BindItem id="item30" compid="divData.form.divData3.form.ctclDT_SAUP_PLAN" propid="value" datasetid="dsList" columnid="DT_SAUP_PLAN"/>
+      <BindItem id="item1" compid="divData.form.divData4.form.ccfVENDOR1.form.CDTextBox" propid="value" datasetid="dsList" columnid="NO_KOOKMIN_VENDOR"/>
+      <BindItem id="item2" compid="divData.form.divData5.form.ccfVENDOR2.form.CDTextBox" propid="value" datasetid="dsList" columnid="NO_MEDICARE_VENDOR"/>
+      <BindItem id="item3" compid="divData.form.divData3.form.crdoTY_TAEJIKGONGJE_CLOSE" propid="value" datasetid="dsList" columnid="TY_TAEJIKGONGJE_CLOSE"/>
+      <BindItem id="item4" compid="divData.form.divData3.form.txtaDS_TAEJIKGONGJE_BIGO" propid="value" datasetid="dsList" columnid="DS_TAEJIKGONGJE_BIGO"/>
+      <BindItem id="item5" compid="divData.form.divData4.form.ccfVENDOR1.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_KOOKMIN_VENDOR"/>
+      <BindItem id="item6" compid="divData.form.divData5.form.ccfVENDOR2.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_MEDICARE_VENDOR"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="338" height="410" maxwidth="412" maxheight="415" titletext="건강검진 전표발행" onload="form_onload" onbeforeclose="form_onbeforeclose">
+    <Layouts>
+      <Layout>
+        <Static id="staTitle1" taborder="1" text="전표발행 정보" left="0" top="-10" width="359" height="35" cssclass="sta_TITLE_Bg" textAlign="left"/>
+        <Div id="divData" taborder="0" left="0" top="staTitle1:0" height="315" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staBgYmLoan" taborder="3" left="89" top="33" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Static id="staGubun" taborder="0" left="0" top="0" width="90" height="34" cssclass="sta_WF_tablelabelTE" text="결재구분"/>
+              <Static id="staBgGubun" taborder="1" left="89" top="0" height="34" cssclass="sta_WF_tablebgT" textAlign="right" right="0"/>
+              <Static id="staYmLoan" taborder="2" left="0" top="33" width="90" height="34" cssclass="sta_WF_tablelabelE" text="검진년월"/>
+              <Div id="tclYM_HOSPITAL" taborder="4" left="94" top="38" width="100" height="24" url="cmm::cmmCalMM.xfdl"/>
+              <Static id="staCdCorp" taborder="5" text="법인" left="0" top="98" width="90" height="34" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staCdCorpBg" taborder="6" left="89" top="98" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Div id="cfCD_CORP" CodeFindName="DZX_CFCORP_STD" CDTextWidth="70" taborder="7" left="94" top="103" height="24" url="cmm::cmmCodeFind.xfdl" text="" visible="true" right="4"/>
+              <Static id="staDtAccount" taborder="8" text="회계일자" left="0" top="164" width="90" height="34" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBgDtAccount" taborder="9" left="89" top="164" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0" text=""/>
+              <Calendar id="tclDT_ACCOUNT" taborder="10" left="94" top="169" width="120" height="24" dateformat="yyyy-MM-dd" editformat="yyyy-MM-dd" autoselect="true"/>
+              <Static id="staDtJiGub" taborder="11" text="지급일자" left="0" top="197" width="90" height="34" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBGDtJiGub" taborder="12" left="89" top="197" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Calendar id="tclDT_JIGUB" taborder="13" left="94" top="202" width="120" height="24" dateformat="yyyy-MM-dd" editformat="yyyy-MM-dd" autoselect="true"/>
+              <Edit id="txtGUBUN" taborder="14" left="94" top="5" height="24" maxlength="25" readonly="true" right="68"/>
+              <Static id="staNoOrder" taborder="15" text="오더번호" left="0" top="230" width="90" height="34" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBgNoOrder" taborder="16" left="89" top="230" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Div id="cfNO_ORDER" CodeFindName="DIX_CFSLIP_ORDER" CDTextWidth="95" taborder="17" left="94" top="236" height="24" url="cmm::cmmCodeFind.xfdl" text="" visible="true" right="4"/>
+              <Static id="staCdHospital" taborder="18" text="병원구분" left="0" top="131" width="90" height="34" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBgCdHospital" taborder="19" left="89" top="131" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Div id="cfCD_HOSPITAL" CodeFindName="DAX_CFHOSPITAL_CODE" CDTextWidth="50" FitToContents="true" taborder="20" left="94" top="136" height="24" url="cmm::cmmCodeFind.xfdl" text="" right="4"/>
+              <Static id="staIssueId" taborder="21" text="세금계산서" left="0" top="263" width="90" height="34" cssclass="sta_WF_tablelabel"/>
+              <Static id="staIssueIdBg" taborder="22" left="89" top="263" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Button id="btnEtaxSelect" taborder="23" text="선택" left="94" top="267" width="52" height="26" cssclass="btn_WF_action" onclick="btnEtaxSelect_onclick"/>
+              <Static id="staDtFromTo" taborder="24" text="검진기간" left="0" top="66" width="90" height="34" cssclass="sta_WF_tablelabelE" onclick="divData_staDtAccount00_onclick"/>
+              <Static id="staBgDtFromTo" taborder="25" left="89" top="66" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0" text=""/>
+              <Calendar id="tclDT_FROM" taborder="26" left="94" top="71" width="100" height="24" dateformat="yyyy-MM-dd" editformat="yyyy-MM-dd" autoselect="true"/>
+              <Calendar id="tclDT_TO" taborder="27" left="214" top="71" width="100" height="24" dateformat="yyyy-MM-dd" editformat="yyyy-MM-dd" autoselect="true"/>
+              <Static id="staDT_TO" taborder="28" text="~" left="194" top="70" width="20" height="24" cssclass="sta_WF_AC"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtns" width="200" height="26" taborder="2" right="0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnCancle" taborder="0" text="취소" top="0" width="52" height="26" onclick="btnCancle_onclick" right="0"/>
+              <Button id="btnOk" taborder="1" text="확인" left="92" top="0" width="52" height="26" onclick="btnOk_onclick" cssclass="btn_WF_action"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+
+	this.fnSetButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetDisplay();
+};
+
+/************************************************************************
+ * 버튼 설정 
+ * 서브버튼 사용 처리. 공통 및 확장버튼 버튼관리화면에서 셋팅.
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.tclYM_HOSPITAL = this.divData.form.tclYM_HOSPITAL;	
+	this.tclDT_FROM     = this.divData.form.tclDT_FROM;  	//검진기간 FROM
+	this.tclDT_TO       = this.divData.form.tclDT_TO;		//검진기간 TO	
+	this.cfCD_CORP      = this.divData.form.cfCD_CORP;
+	this.cfCD_HOSPITAL  = this.divData.form.cfCD_HOSPITAL;
+	this.tclDT_ACCOUNT  = this.divData.form.tclDT_ACCOUNT;
+	this.tclDT_JIGUB    = this.divData.form.tclDT_JIGUB;
+	this.cfNO_ORDER     = this.divData.form.cfNO_ORDER;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.cfCD_HOSPITAL.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfNO_ORDER.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfNO_ORDER.AfterCDTextChanged     = "fnAfterCDTextChanged";
+};
+
+// 부모창에서 받아온것 셋팅
+this.fnSetDisplay = function() {
+
+	var frame = this.getOwnerFrame();
+	this.dsList.set_enableevent(false);
+	var strGubun = "결재상신";
+	if( frame.GUBUN == "02") {
+		strGubun = "취소결재상신";
+		this.staTitle1.set_text("취소결재상신 정보");
+	} else if( frame.GUBUN == "03") {
+		strGubun = "초기화";
+		this.staTitle1.set_text("결재상신 초기화");
+	}
+	this.dsList.setColumn(0, "GUBUN"  , strGubun);
+	this.dsList.setColumn(0, "YM_HOSPITAL", frame.YM_HOSPITAL);
+	this.dsList.setColumn(0, "CD_CORP", frame.CD_CORP);
+	this.dsList.setColumn(0, "DS_CORP", frame.DS_CORP);
+	this.dsList.setColumn(0, "DT_FROM", frame.DT_FROM); //검진기간from
+	this.dsList.setColumn(0, "DT_TO"  , frame.DT_TO);	//검진기간to
+	
+	if( frame.GUBUN == "02" || frame.GUBUN == "03"){
+		this.tclDT_ACCOUNT.set_readonly(true);
+		this.tclDT_JIGUB.set_readonly(true);
+		this.cfNO_ORDER.form.set_readonly(true);
+	}
+	this.dsList.set_enableevent(true);
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	// 결재상신
+	this.dsApproval = new Dataset();	
+	this.dsApproval.addColumn("CD_CORP"    , "STRING");
+	this.dsApproval.addColumn("YM_HOSPITAL", "STRING");	
+	this.dsApproval.addColumn("DT_FROM"    , "STRING");   //검진기간from
+	this.dsApproval.addColumn("DT_TO"      , "STRING");   //검진기간to
+	this.dsApproval.addColumn("CD_HOSPITAL", "STRING");	
+	this.dsApproval.addColumn("DT_ACCOUNT" , "STRING");
+	this.dsApproval.addColumn("DT_JIGUB"   , "STRING");
+	this.dsApproval.addColumn("TY_ORDER"   , "STRING");
+	this.dsApproval.addColumn("NO_ORDER"   , "STRING");
+	this.dsApproval.addColumn("DS_ORDER"   , "STRING");
+	this.dsApproval.addColumn("ISSUE_ID"   , "STRING");
+	this.dsApproval.addColumn("ID_TRANS"   , "STRING");
+	this.dsApproval.addColumn("NO_APRVOUT" , "INT");
+	
+	// 취소결재상신
+	this.dsApprCnc = new Dataset();
+	this.dsApprCnc.addColumn("CD_CORP"    , "STRING");
+	this.dsApprCnc.addColumn("YM_HOSPITAL", "STRING");
+	this.dsApprCnc.addColumn("DT_FROM"    , "STRING");
+	this.dsApprCnc.addColumn("DT_TO"      , "STRING");
+	this.dsApprCnc.addColumn("CD_HOSPITAL", "STRING");
+	this.dsApprCnc.addColumn("ID_TRANS"   , "STRING");
+	this.dsApprCnc.addColumn("NO_APRVOUT" , "INT");
+	
+	// 결재상태초기화
+	this.dsSlipInit = new Dataset();
+	this.dsSlipInit.addColumn("CD_CORP"    , "STRING");
+	this.dsSlipInit.addColumn("YM_HOSPITAL", "STRING");
+	this.dsSlipInit.addColumn("DT_FROM"    , "STRING");
+	this.dsSlipInit.addColumn("DT_TO"      , "STRING");
+	this.dsSlipInit.addColumn("CD_HOSPITAL", "STRING");
+	this.dsSlipInit.addColumn("ID_TRANS"   , "STRING");
+	
+	this.dsAprvSelect = new Dataset();
+	this.dsAprvSelect.addColumn("CD_CORP"	   , "string");
+	this.dsAprvSelect.addColumn("CD_HOSPITAL"  , "string");
+	this.dsAprvSelect.addColumn("NO_APRV"      , "int");
+	this.dsAprvSelect.addColumn("ID_TRANS"	   , "STRING");
+		
+	// 결재상신전표조회
+	this.dsAprvSlipSelect = new Dataset();
+	this.dsAprvSlipSelect.addColumn("CD_CORP", "string");
+	this.dsAprvSlipSelect.addColumn("NO_APRV", "int");
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSaveValidate = function() {
+	
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg, strArg)
+{
+	if (errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return false;
+	}
+	
+	switch(svcID) {
+		case "apprSang" :
+			this.fnSlipAprv(svcID, this.dsApproval);
+			break;
+		case "apprCancel" :
+			this.fnSlipAprv(svcID, this.dsApprCnc);
+			break;
+		case "aprvDoc":		// 저장
+			var json = this.gfnArgsToJson(strArg);
+			trace("json.NO_APRV = " + json.NO_APRV)
+			var oParam = {
+				NO_APRV : json.NO_APRV,
+				ID_DOORAY_TYPE : this.dsResult.getColumn(0, "ID_DOORAY_TYPE")
+			}
+			
+			this.gfnOpenDoorayAppr("AP_REQ_URL", oParam, "fnDoorayCallback");
+			break;
+		case "apprInit" :
+			this.fnApprInitCallback = function() {
+				this.getParentContext().close(true);
+			}
+			this.gfnAlert("초기화 작업이 완료되었습니다.","fnApprInitCallback");
+		default:
+	}
+};
+
+this.fnDoorayCallback = function (svcId, sRtn)
+{
+	this.getParentContext().close(true);
+};
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+		
+	if (id == "cfCD_HOSPITAL") {
+		dsUserParam.setColumn(nrow, "CD_CORP",  this.dsList.getColumn(0, "CD_CORP"));
+	}
+	
+	if (id == "cfNO_ORDER") {
+		if( this.gfnIsNull(this.dsList.getColumn(0, "CD_CORP")) ){
+			this.gfnAlert("법인을 먼저 입력하세요.");
+			return;
+		}
+		if( this.gfnIsNull(this.dsList.getColumn(0, "DT_ACCOUNT")) ){
+			this.gfnAlert("회계일자를 먼저 입력하세요.");
+			return;
+		}
+		dsUserParam.setColumn(nrow, "CD_CORP",  this.dsList.getColumn(0, "CD_CORP"));
+		dsUserParam.setColumn(nrow, "CD_DEPT_BH", "602");
+		dsUserParam.setColumn(nrow, "CD_DEPT_BE", "602");
+		dsUserParam.setColumn(nrow, "DT_ACCOUNT", this.dsList.getColumn(0, "DT_ACCOUNT"));
+		dsUserParam.setColumn(nrow, "CD_DIV", "01");
+		dsUserParam.setColumn(nrow, "TY_GUBUN", "1");
+		
+		
+	}
+	return true;
+};
+this.fnAfterCDTextChanged = function(id,codeFindData) {
+   	var arr = codeFindData;
+	
+	if(id == "cfNO_ORDER") {
+		if(arr.length > 0) {
+			this.dsList.setColumn(0,"NO_ORDER",arr[0]["NO_ORDER"]);
+			this.dsList.setColumn(0,"DS_ORDER",arr[0]["DS_ORDER"]);
+		} else {
+			this.dsList.setColumn(0,"NO_ORDER","");
+			this.dsList.setColumn(0,"DS_ORDER","");
+		}
+	}
+};
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ // 확인 버튼
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+	
+	if( this.getOwnerFrame().GUBUN == "01" ) {
+			if(!this.gfnDataValidate(this.dsList,this.dsRequired)) return;
+	} else if( this.getOwnerFrame().GUBUN == "02" || this.getOwnerFrame().GUBUN == "03") {
+		if(!this.gfnDataValidate(this.dsList,this.dsRequired2) ) return;
+	}
+	this.gfnConfirm(this.dsList.getColumn(0,"GUBUN") + " 하시겠습니까?", function (strId, val){
+		if(val){
+			var strSvcId    = "";
+			var strSvcType  = "";
+			var inProc		= "";
+			var inData      = "";
+			var outData     = "";
+			
+			if( this.getOwnerFrame().GUBUN == "01" ) {				
+				this.dsApproval.clearData();
+						
+				var nrow = this.dsApproval.addRow();
+				this.dsApproval.setColumn(nrow, "CD_CORP"    , this.dsList.getColumn(0, "CD_CORP"));
+				this.dsApproval.setColumn(nrow, "YM_HOSPITAL", this.dsList.getColumn(0, "YM_HOSPITAL"));
+				this.dsApproval.setColumn(nrow, "DT_FROM"    , this.dsList.getColumn(0, "DT_FROM"));
+				this.dsApproval.setColumn(nrow, "DT_TO"      , this.dsList.getColumn(0, "DT_TO"));
+				this.dsApproval.setColumn(nrow, "CD_HOSPITAL", this.dsList.getColumn(0, "CD_HOSPITAL"));
+				this.dsApproval.setColumn(nrow, "DT_ACCOUNT" , this.dsList.getColumn(0, "DT_ACCOUNT"));
+				this.dsApproval.setColumn(nrow, "DT_JIGUB"   , this.dsList.getColumn(0, "DT_JIGUB"));
+				this.dsApproval.setColumn(nrow, "NO_ORDER"   , this.dsList.getColumn(0, "NO_ORDER"));
+				this.dsApproval.setColumn(nrow, "DS_ORDER"   , this.dsList.getColumn(0, "DS_ORDER"));
+				this.dsApproval.setColumn(nrow, "ISSUE_ID"   , this.dsList.getColumn(0, "ISSUE_ID"));
+				this.dsApproval.setColumn(nrow, "ID_TRANS"   , this.AuthClient.ID_USER);
+				this.dsApproval.setColumn(nrow, "TY_ORDER"   , "01");
+				
+				if (this.dsApproval.rowcount == 0) return;
+				
+				strSvcId    = "apprSang";
+				strSvcType  = "save";
+				inProc		= "_dsProc";
+				inData      = "apprSang=dsApproval";
+				outData     = "dsApproval=apprSang";
+			} else if( this.getOwnerFrame().GUBUN == "02" ) {
+				this.dsApprCnc.clearData();
+				var nrow = this.dsApprCnc.addRow();
+				this.dsApprCnc.setColumn(nrow, "CD_CORP"    , this.dsList.getColumn(0, "CD_CORP"));
+				this.dsApprCnc.setColumn(nrow, "YM_HOSPITAL", this.dsList.getColumn(0, "YM_HOSPITAL"));
+				this.dsApprCnc.setColumn(nrow, "DT_FROM"    , this.dsList.getColumn(0, "DT_FROM"));
+				this.dsApprCnc.setColumn(nrow, "DT_TO"      , this.dsList.getColumn(0, "DT_TO"));
+				this.dsApprCnc.setColumn(nrow, "CD_HOSPITAL", this.dsList.getColumn(0, "CD_HOSPITAL"));
+				this.dsApprCnc.setColumn(nrow, "ID_TRANS"   , this.AuthClient.ID_USER);
+				
+				if (this.dsApprCnc.rowcount == 0) return;
+				
+				strSvcId    = "apprCancel";
+				strSvcType  = "save";
+				inProc		= "_dsProc";
+				inData      = "apprCancel=dsApprCnc";
+				outData     = "dsApprCnc=apprCancel";
+			} else if( this.getOwnerFrame().GUBUN == "03" ) {
+				this.dsSlipInit.clearData();
+				var nrow = this.dsSlipInit.addRow();
+				this.dsSlipInit.setColumn(nrow, "CD_CORP"    , this.dsList.getColumn(0, "CD_CORP"));
+				this.dsSlipInit.setColumn(nrow, "YM_HOSPITAL", this.dsList.getColumn(0, "YM_HOSPITAL"));
+				this.dsSlipInit.setColumn(nrow, "DT_FROM"    , this.dsList.getColumn(0, "DT_FROM"));
+				this.dsSlipInit.setColumn(nrow, "DT_TO"      , this.dsList.getColumn(0, "DT_TO"));
+				this.dsSlipInit.setColumn(nrow, "CD_HOSPITAL", this.dsList.getColumn(0, "CD_HOSPITAL"));
+				this.dsSlipInit.setColumn(nrow, "ID_TRANS"   , this.AuthClient.ID_USER);
+				strSvcId    = "apprInit";
+				strSvcType  = "save";
+				inProc		= "_dsProc";
+				inData      = "apprInit=dsSlipInit";
+				outData     = "";
+			}
+				
+			
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+			
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// transaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc); // 통신방법 정의 [생략가능]
+		}
+	});
+};
+
+//결재상신/취소 콜백
+this.fnSlipAprv = function(svcID, dsOut) {
+	var idApType = "DAB03", ttType = "전표발행";
+	if(svcID == "apprCancel"){
+		idApType = "DAB03C";
+		ttType   = "전표발행(취소)";
+	}
+	
+	// 데이터셋 초기화
+	this.dsAprvSelect.clearData();
+	this.dsAprvSelect.addRow();
+	
+	this.dsAprvSelect.setColumn(0, "CD_CORP"	, this.dsList.getColumn(0, "CD_CORP"));
+	this.dsAprvSelect.setColumn(0, "CD_HOSPITAL", this.dsList.getColumn(0,"CD_HOSPITAL"));
+	this.dsAprvSelect.setColumn(0, "NO_APRV"    , dsOut.getColumn(0, "NO_APRVOUT"));
+	this.dsAprvSelect.setColumn(0, "ID_TRANS"   , this.AuthClient.ID_USER);
+	
+	
+	this.dsAprvSlipSelect.clearData();
+	this.dsAprvSlipSelect.addRow();
+	
+	this.dsAprvSlipSelect.setColumn(0, "CD_CORP",  this.dsList.getColumn(0,"CD_CORP"));
+	this.dsAprvSlipSelect.setColumn(0, "NO_APRV", dsOut.getColumn(0, "NO_APRVOUT"));
+	//trace("this.dsAprvSelect >>>>>>>"+this.dsAprvSelect.saveXML());
+	//trace("this.dsAprvSlipSelect >>>>>>>"+this.dsAprvSlipSelect.saveXML());
+	var strSvcId    = "aprvDoc";
+	var strSvcType  = "approval/templete/"+idApType;
+	var inProc      = "_dsProc";
+	var inData      = "aprvSelect=dsAprvSelect slipAprv=dsAprvSlipSelect";
+	var outData     = "dsResult="+idApType;
+	var strArg      = "NO_APRV=" + dsOut.getColumn(0, "NO_APRVOUT") + " TT_DOC="+encodeURIComponent("건강검진("+this.dsList.getColumn(0,"DS_HOSPITAL")+") "+ttType);	
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+// 취소버튼
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(true);
+};
+
+// 세금계산서 선택 버튼
+this.btnEtaxSelect_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.gfnIsNull(this.dsList.getColumn(0,"CD_CORP"))){
+		this.gfnAlert("법인코드는 필수입니다.");
+		this.cfCD_CORP.form.CDTextBox.setFocus();
+		return;
+	}
+	
+	var param = {};
+	param.CD_CORP = this.dsList.getColumn(0, "CD_CORP");
+	param.DS_CORP = this.dsList.getColumn(0, "DS_CORP");
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DHA_ETAX_DATA_DLG", "fnEtaxDataCallBack", param);
+};
+
+// 세금계산서 선택 버튼CallBack
+this.fnEtaxDataCallBack = function(strID, val) {
+	if(!this.gfnIsNull(val)) {
+		var json = JSON.parse(val);
+		this.dsList.setColumn(0,"ISSUE_ID", json.ISSUE_ID);
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="GUBUN" type="STRING" size="256"/>
+          <Column id="YM_HOSPITAL" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256" description=""/>
+          <Column id="DS_CORP" type="STRING" size="256" description=""/>
+          <Column id="CD_HOSPITAL" type="STRING" size="256"/>
+          <Column id="DS_HOSPITAL" type="STRING" size="256"/>
+          <Column id="DT_ACCOUNT" type="STRING" size="256" description=""/>
+          <Column id="DT_JIGUB" type="STRING" size="256"/>
+          <Column id="NO_ORDER" type="STRING" size="256"/>
+          <Column id="DS_ORDER" type="STRING" size="256"/>
+          <Column id="TY_ORDER" type="STRING" size="256"/>
+          <Column id="ISSUE_ID" type="STRING" size="256"/>
+          <Column id="DT_FROM" type="STRING" size="256"/>
+          <Column id="DT_TO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="GUBUN"/>
+            <Col id="YM_HOSPITAL"/>
+            <Col id="CD_CORP"/>
+            <Col id="DS_CORP"/>
+            <Col id="CD_HOSPITAL"/>
+            <Col id="DS_HOSPITAL"/>
+            <Col id="DT_ACCOUNT"/>
+            <Col id="DT_JIGUB"/>
+            <Col id="NO_ORDER"/>
+            <Col id="DS_ORDER"/>
+            <Col id="TY_ORDER"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">apprSang</Col>
+            <Col id="SP">DABPR_HOSPITAL_AUTOSLIP</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">apprCancel</Col>
+            <Col id="SP">DABPR_HOSPITAL_AUTOSLIP_CANCEL</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">slipAprv</Col>
+            <Col id="SP">DHAPR_NSLIP_APRV_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">apprInit</Col>
+            <Col id="SP">DABPR_HOSPITAL_XAUTOSLIP_INIT</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DABPR_HOSPITAL_AUTOSLIP_TITLE</Col>
+            <Col id="TARGET">aprvSelect</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRequired">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="DS_FIELD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_FIELD">YM_HOSPITAL</Col>
+            <Col id="DS_FIELD">검진년월</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_CORP</Col>
+            <Col id="DS_FIELD">법인</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_HOSPITAL</Col>
+            <Col id="DS_FIELD">병원구분</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">DT_ACCOUNT</Col>
+            <Col id="DS_FIELD">회계일자</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">DT_JIGUB</Col>
+            <Col id="DS_FIELD">지급일자</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">NO_ORDER</Col>
+            <Col id="DS_FIELD">오더번호</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRequired2">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="DS_FIELD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_FIELD">YM_HOSPITAL</Col>
+            <Col id="DS_FIELD">검진년월</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_CORP</Col>
+            <Col id="DS_FIELD">법인</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_HOSPITAL</Col>
+            <Col id="DS_FIELD">병원구분</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.tclYM_HOSPITAL.form.TextBox" propid="value" datasetid="dsList" columnid="YM_HOSPITAL"/>
+      <BindItem id="item2" compid="divData.form.cfCD_CORP.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_CORP"/>
+      <BindItem id="item3" compid="divData.form.cfCD_CORP.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_CORP"/>
+      <BindItem id="item4" compid="divData.form.tclDT_ACCOUNT" propid="value" datasetid="dsList" columnid="DT_ACCOUNT"/>
+      <BindItem id="item1" compid="divData.form.tclDT_JIGUB" propid="value" datasetid="dsList" columnid="DT_JIGUB"/>
+      <BindItem id="item5" compid="divData.form.txtGUBUN" propid="value" datasetid="dsList" columnid="GUBUN"/>
+      <BindItem id="item6" compid="divData.form.cfNO_ORDER.form.CDTextBox" propid="value" datasetid="dsList" columnid="NO_ORDER"/>
+      <BindItem id="item7" compid="divData.form.cfNO_ORDER.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_ORDER"/>
+      <BindItem id="item8" compid="divData.form.cfCD_HOSPITAL.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_HOSPITAL"/>
+      <BindItem id="item9" compid="divData.form.cfCD_HOSPITAL.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_HOSPITAL"/>
+      <BindItem id="item10" compid="divData.form.tclDT_FROM" propid="value" datasetid="dsList" columnid="DT_FROM"/>
+      <BindItem id="item11" compid="divData.form.tclDT_TO" propid="value" datasetid="dsList" columnid="DT_TO"/>
+    </Bind>
+  </Form>
+</FDL>

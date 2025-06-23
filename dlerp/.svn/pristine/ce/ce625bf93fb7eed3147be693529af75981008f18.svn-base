@@ -1,0 +1,1023 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DAC_DAILY_DEPT" width="1280" height="720" titletext="일별인원근태 등록" onload="form_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="기준일자" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Calendar id="calDT_REPORT" taborder="1" left="sta00:0.0" top="10.0" width="100" height="24.0" dateformat="yyyy-MM-dd"/>
+              <Static id="sta01" taborder="3" text="부서" left="calDT_REPORT:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_DEPT" CDTextWidth="80" taborder="2" left="sta01:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData01" taborder="1" top="divSearch:10" height="200" right="0" left="0" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta32" taborder="0" text="인원현황" left="0" top="0" height="22" cssclass="sta_TITLE_Bg" right="0" onclick="divData01_sta32_onclick"/>
+              <Static id="sta04" taborder="1" text="기준일자" left="5" top="31" width="70" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta14" taborder="2" left="sta04:-1" top="31" width="200" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta00" taborder="3" text="상태" left="sta14:-1" top="31" width="70" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta01" taborder="4" text="총인원" left="5" top="60" width="70" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta02" taborder="5" left="sta01:-1" top="60" width="468" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta03" taborder="6" text="근무" left="5" top="89" width="70" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta05" taborder="7" left="sta03:-1" top="89" width="55" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta06" taborder="8" text="결근" left="sta05:-1" top="89" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta07" taborder="9" left="sta06:-1" top="89" width="55" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta08" taborder="10" text="연차" left="sta07:-1" top="89" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta09" taborder="11" left="sta08:-1" top="89" width="55" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta10" taborder="12" text="특별" left="sta09:-1" top="89" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta11" taborder="13" left="sta10:-1" top="89" width="55" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta12" taborder="14" text="휴무" left="sta11:-1" top="89" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta13" taborder="15" left="sta12:-1" top="89" width="55" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta15" taborder="16" text="공가" left="sta13:-1" top="89" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta16" taborder="17" left="sta15:-1" top="89" width="55" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta17" taborder="18" text="기타" left="sta16:-1" top="89" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta18" taborder="19" left="sta17:-1" top="89" width="57" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta19" taborder="20" left="sta00:-1" top="31" width="200" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta20" taborder="21" text="비고" left="5" top="118" width="70" height="80" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta21" taborder="22" left="sta20:-1" top="118" width="675" height="80" cssclass="sta_WF_tablebg" text=""/>
+              <Edit id="edtDT_REPORT" taborder="23" top="36" width="140" height="20" left="sta04:5" readonly="true" textAlign="center"/>
+              <Edit id="edtSUM_WORK" taborder="24" top="65" width="60" height="20" left="sta01:5" readonly="true" textAlign="right"/>
+              <Edit id="edtDS_STATUS" taborder="25" top="36" width="140" height="20" left="sta00:5" readonly="true" textAlign="center"/>
+              <Edit id="edtNO_WORK" taborder="26" top="94" width="45" height="20" left="sta03:5" readonly="true" textAlign="right"/>
+              <Edit id="edtNO_ABSENCE" taborder="27" top="94" width="45" height="20" left="sta06:5" readonly="true" textAlign="right"/>
+              <Edit id="edtNO_HOLIDAY" taborder="28" top="94" width="45" height="20" left="sta08:5" readonly="true" textAlign="right"/>
+              <Edit id="edtNO_SPECIAL" taborder="29" top="94" width="45" height="20" left="sta10:5" readonly="true" textAlign="right"/>
+              <Edit id="edtNO_CLOSE" taborder="30" top="94" width="45" height="20" left="sta12:4" readonly="true" textAlign="right"/>
+              <Edit id="edtNO_OFFICIAL" taborder="31" top="94" width="45" height="20" left="sta15:5" readonly="true" textAlign="right"/>
+              <Edit id="edtNO_ETC" taborder="32" top="94" width="45" height="20" left="sta17:5" readonly="true" textAlign="right"/>
+
+              <TextArea id="txtDS_REMARK_R" taborder="33" top="125" width="660" height="66" left="80" oninput="divData01_txtDS_REMARK_R_oninput"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div00" taborder="3" left="630" top="143" height="100" right="10" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="21" text="용역인원 : " left="236" top="3" height="30" textAlign="right" width="60"/>
+              <Static id="sta23" taborder="0" text="총원" left="sta00:5" top="3" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta26" taborder="2" left="sta23:-1" top="3" width="55" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta24" taborder="1" text="휴무" left="sta26:-1" top="3" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta27" taborder="3" left="sta24:-1" top="3" width="55" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta25" taborder="4" text="현원" left="sta27:-1" top="3" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta28" taborder="5" left="sta25:-1" top="3" width="55" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta01" taborder="22" text="출역인원 : " left="236" top="32" height="30" textAlign="right" width="60"/>
+              <Static id="sta22" taborder="6" text="총원" left="sta01:5" top="32" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta29" taborder="7" left="sta22:-1" top="32" width="261" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta02" taborder="23" text="캐디인원 : " left="236" top="61" height="30" textAlign="right" width="60"/>
+              <Static id="sta30" taborder="8" text="총원" left="sta02:5" top="61" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta31" taborder="9" left="sta30:-1" top="61" width="55" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta33" taborder="10" text="휴무" left="sta31:-1" top="61" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta34" taborder="11" left="sta33:-1" top="61" width="55" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="sta35" taborder="12" text="현원" left="sta34:-1" top="61" width="50" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" textAlign="center"/>
+              <Static id="sta36" taborder="13" left="sta35:-1" top="61" width="55" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Edit id="edtNO_SERVICE_TOTAL" taborder="14" top="8" width="45" height="20" left="sta23:5" readonly="true" inputtype="digit" textAlign="right" onkeydown="div00_edit_onkeydown" onchanged="div00_edtNO_SERVICE_TOTAL_onchanged"/>
+              <Edit id="edtNO_SERVICE_HOLIDAY" taborder="15" top="8" width="45" height="20" left="sta24:5" readonly="true" inputfilter="none" inputtype="number" textAlign="right" onkeydown="div00_edit_onkeydown" onchanged="div00_edtNO_SERVICE_HOLIDAY_onchanged"/>
+              <Edit id="edtNO_SERVICE_CNT" taborder="16" top="8" width="45" height="20" left="sta25:5" readonly="true" inputfilter="none" inputtype="number" textAlign="right"/>
+              <Edit id="edtNO_LABOR_CNT" taborder="17" top="edtNO_SERVICE_TOTAL:9" width="45" height="20" left="sta22:5" readonly="true" inputtype="number" inputfilter="none" textAlign="right" onkeydown="div00_edit_onkeydown" onchanged="div00_edtNO_LABOR_CNT_onchanged"/>
+              <Edit id="edtNO_CADDIE_TOTAL" taborder="18" top="edtNO_LABOR_CNT:9" width="45" height="20" left="sta30:5" readonly="true" inputfilter="none" inputtype="number" textAlign="right" onkeydown="div00_edit_onkeydown" onchanged="div00_edtNO_CADDIE_TOTAL_onchanged"/>
+              <Edit id="edtNO_CADDIE_HOLIDAY" taborder="19" top="edtNO_LABOR_CNT:9" width="45" height="20" left="sta33:5" readonly="true" inputfilter="none" inputtype="number" textAlign="right" onchanged="div00_edtNO_CADDIE_HOLIDAY_onchanged"/>
+              <Edit id="edtNO_CADDIE_CNT" taborder="20" top="edtNO_LABOR_CNT:9" width="45" height="20" left="sta35:5" readonly="true" inputfilter="none" inputtype="number" textAlign="right"/>
+              <Static id="sta03" taborder="24" text="[현장만 입력]" left="146" top="32" height="30" textAlign="right" color="crimson" width="90"/>
+              <Static id="sta04" taborder="25" text="[골프장만 입력]" left="146" top="61" height="30" textAlign="right" color="crimson" width="90"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData02" taborder="2" top="260" right="0" left="0" bottom="10">
+          <Layouts>
+            <Layout>
+              <Static id="sta32" taborder="1" text="세부내역" left="0" top="0" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+              <Grid id="objGrid" taborder="0" left="0" top="sta32:5" bottom="0" right="0" binddataset="dsList2nd" oncellclick="divData02_objGrid_oncellclick" BeforeUserDataSetParam="fnGrid_BeforeUserDataSetParam" AfterCDTextChanged="fnGrid_AfterCDTextChanged">
+                <Formats>
+                  <Format id="default"/>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DT_REPORT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="NO_WORK" type="STRING" size="256"/>
+          <Column id="NO_ABSENCE" type="STRING" size="256"/>
+          <Column id="NO_HOLIDAY" type="STRING" size="256"/>
+          <Column id="NO_SPECIAL" type="STRING" size="256"/>
+          <Column id="NO_CLOSE" type="STRING" size="256"/>
+          <Column id="NO_OFFICIAL" type="STRING" size="256"/>
+          <Column id="NO_ETC" type="STRING" size="256"/>
+          <Column id="NO_SERVICE_TOTAL" type="STRING" size="256"/>
+          <Column id="NO_SERVICE_HOLIDAY" type="STRING" size="256"/>
+          <Column id="NO_SERVICE_CNT" type="STRING" size="256"/>
+          <Column id="NO_LABOR_CNT" type="STRING" size="256"/>
+          <Column id="NO_CADDIE_TOTAL" type="STRING" size="256"/>
+          <Column id="NO_CADDIE_HOLIDAY" type="STRING" size="256"/>
+          <Column id="NO_CADDIE_CNT" type="STRING" size="256"/>
+          <Column id="DS_REMARK_R" type="STRING" size="256"/>
+          <Column id="TY_STATUS" type="STRING" size="256"/>
+          <Column id="DS_STATUS" type="STRING" size="256"/>
+          <Column id="SUM_WORK" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DACPR_DAILYREPORT_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DACPR_DAILYWORK_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DACPR_DAILYWORK_SELECT</Col>
+            <Col id="TARGET">select2nd</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DACPR_DAILYWORK_CREATE</Col>
+            <Col id="TARGET">selectCreate</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">report2</Col>
+            <Col id="SP">DACPR_DAILY_REPORT2</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">report3</Col>
+            <Col id="SP">DACPR_DAILY_REPORT3</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">report4</Col>
+            <Col id="SP">DACPR_DAILY_REPORT4</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">report5</Col>
+            <Col id="SP">DACPR_DAILY_REPORT5</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">report6</Col>
+            <Col id="SP">DACPR_DAILY_REPORT7</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="DT_REPORT" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DT_REPORT"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList2nd" onvaluechanged="dsList2nd_onvaluechanged"/>
+      <Dataset id="dsOutPut"/>
+      <Dataset id="dsListCreate"/>
+      <Dataset id="dsReportParam" >
+        <ColumnInfo>
+          <Column id="DT_REPORT" type="STRING" size="256"/>
+          <Column id="TY_VIEW" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item19" compid="divData01.form.edtDT_REPORT" propid="value" datasetid="dsList" columnid="DT_REPORT"/>
+      <BindItem id="item0" compid="divData01.form.edtDS_STATUS" propid="value" datasetid="dsList" columnid="DS_STATUS"/>
+      <BindItem id="item1" compid="divData01.form.edtNO_WORK" propid="value" datasetid="dsList" columnid="NO_WORK"/>
+      <BindItem id="item2" compid="divData01.form.edtNO_ABSENCE" propid="value" datasetid="dsList" columnid="NO_ABSENCE"/>
+      <BindItem id="item3" compid="divData01.form.edtNO_HOLIDAY" propid="value" datasetid="dsList" columnid="NO_HOLIDAY"/>
+      <BindItem id="item4" compid="divData01.form.edtNO_SPECIAL" propid="value" datasetid="dsList" columnid="NO_SPECIAL"/>
+      <BindItem id="item5" compid="divData01.form.edtNO_CLOSE" propid="value" datasetid="dsList" columnid="NO_CLOSE"/>
+      <BindItem id="item6" compid="divData01.form.edtNO_OFFICIAL" propid="value" datasetid="dsList" columnid="NO_OFFICIAL"/>
+      <BindItem id="item7" compid="divData01.form.edtNO_ETC" propid="value" datasetid="dsList" columnid="NO_ETC"/>
+      <BindItem id="item9" compid="div00.form.edtNO_SERVICE_TOTAL" propid="value" datasetid="dsList" columnid="NO_SERVICE_TOTAL"/>
+      <BindItem id="item10" compid="div00.form.edtNO_SERVICE_HOLIDAY" propid="value" datasetid="dsList" columnid="NO_SERVICE_HOLIDAY"/>
+      <BindItem id="item11" compid="div00.form.edtNO_SERVICE_CNT" propid="value" datasetid="dsList" columnid="NO_SERVICE_CNT"/>
+      <BindItem id="item12" compid="div00.form.edtNO_LABOR_CNT" propid="value" datasetid="dsList" columnid="NO_LABOR_CNT"/>
+      <BindItem id="item13" compid="div00.form.edtNO_CADDIE_TOTAL" propid="value" datasetid="dsList" columnid="NO_CADDIE_TOTAL"/>
+      <BindItem id="item14" compid="div00.form.edtNO_CADDIE_HOLIDAY" propid="value" datasetid="dsList" columnid="NO_CADDIE_HOLIDAY"/>
+      <BindItem id="item15" compid="div00.form.edtNO_CADDIE_CNT" propid="value" datasetid="dsList" columnid="NO_CADDIE_CNT"/>
+      <BindItem id="item16" compid="divSearch.form.calDT_REPORT" propid="value" datasetid="dsSearch" columnid="DT_REPORT"/>
+      <BindItem id="item17" compid="divSearch.form.ccfCD_DEPT.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_DEPT"/>
+      <BindItem id="item18" compid="divData01.form.edtSUM_WORK" propid="value" datasetid="dsList" columnid="SUM_WORK"/>
+      <BindItem id="item20" compid="divSearch.form.ccfCD_DEPT.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_DEPT"/>
+      <BindItem id="item8" compid="divData01.form.txtDS_REMARK_R" propid="value" datasetid="dsList" columnid="DS_REMARK_R"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo){
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.fnReset();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	// this.FormBtns.Save.set_enable(true);
+	// this.FormBtns.Add.set_enable(true);
+	// this.FormBtns.Del.set_enable(true);
+	//this.FormBtns.Print.set_enable(false);
+	this.FormBtns.Reset.set_enable(true);
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnCreate = this.gfnFormButtonAdd("btnCreate", "fnBtnCreate");		// 당일근태생성
+	this.btnForm = this.gfnFormButtonAdd("btnForm", "fnBtnForm");			// 관리현장등록(일인원현황)
+	//this.btnItem5 = this.gfnFormButtonAdd("btnReport6", "fnSelectRpt6");	// 레저사업장
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.calDT_REPORT = this.divSearch.form.calDT_REPORT;
+	this.ccfCD_DEPT = this.divSearch.form.ccfCD_DEPT;
+	
+	this.txtDS_REMARK_R = this.divData01.form.txtDS_REMARK_R;
+	this.edtNO_SERVICE_TOTAL = this.div00.form.edtNO_SERVICE_TOTAL;
+	this.edtNO_SERVICE_HOLIDAY = this.div00.form.edtNO_SERVICE_HOLIDAY;
+	this.edtNO_SERVICE_CNT = this.div00.form.edtNO_SERVICE_CNT;
+	this.edtNO_LABOR_CNT = this.div00.form.edtNO_LABOR_CNT;
+	this.edtNO_CADDIE_TOTAL = this.div00.form.edtNO_CADDIE_TOTAL;
+	this.edtNO_CADDIE_HOLIDAY = this.div00.form.edtNO_CADDIE_HOLIDAY;
+	this.edtNO_CADDIE_CNT = this.div00.form.edtNO_CADDIE_CNT;
+	
+	this.dxGrid = this.divData02.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	this.ccfCD_DEPT.CodeFindName = "DAX_DAILYLIST_CODE";
+	this.ccfCD_DEPT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_DEPT.AfterCDTextChanged = "fnAfterCDTextChanged";
+
+	//기준일자
+	this.dsSearch.setColumn(0, "DT_REPORT", this.gfnGetDate());
+	
+	//부서
+	//this.dsSearch.setColumn(0, "CD_DEPT", this.AuthClient.CD_DEPT);
+	//this.dsSearch.setColumn(0, "DS_DEPT", this.AuthClient.DS_DEPT); 
+	
+	this.gfnGridInit(this.dxGrid, this.dsList2nd, "DA", "DAC_DAILY_DEPT");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("DT_REPORT", "string");
+	this.dsSelect.addColumn("CD_DEPT", "string");
+	this.dsSelect.addColumn("GR_SEARCH", "string");
+	this.dsSelect.addColumn("GR_DEPT", "string");
+	this.dsSelect.addColumn("GR_USER", "string");
+	
+	
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("TY_SAVE", "string");
+	this.dsSave.addColumn("CD_DEPT", "string");
+	this.dsSave.addColumn("DT_REPORT", "string");
+	this.dsSave.addColumn("DS_REMARK_R", "string");
+	this.dsSave.addColumn("NO_SERVICE_TOTAL", "bigdecimal");
+	this.dsSave.addColumn("NO_SERVICE_HOLIDAY", "bigdecimal");
+	this.dsSave.addColumn("NO_SERVICE_CNT", "bigdecimal");
+	this.dsSave.addColumn("NO_LABOR_CNT", "bigdecimal");
+	this.dsSave.addColumn("NO_CADDIE_TOTAL", "bigdecimal");
+	this.dsSave.addColumn("NO_CADDIE_HOLIDAY", "bigdecimal");
+	this.dsSave.addColumn("NO_CADDIE_CNT", "bigdecimal");
+	this.dsSave.addColumn("ID_PERSON", "bigdecimal"); 
+	this.dsSave.addColumn("ID_SABUN", "string");
+	this.dsSave.addColumn("YN_WORK", "string");
+	this.dsSave.addColumn("YN_ABSENCE", "string");
+	this.dsSave.addColumn("YN_HOLIDAY", "string");
+	this.dsSave.addColumn("YN_SPECIAL", "string");
+	this.dsSave.addColumn("YN_CLOSE", "string");
+	this.dsSave.addColumn("YN_OFFICIAL", "string");
+	this.dsSave.addColumn("YN_ETC", "string");
+	this.dsSave.addColumn("DS_REMARK", "string");
+	this.dsSave.addColumn("ID_INSERT", "string");
+	this.dsSave.addColumn("GR_SEARCH", "string");
+	this.dsSave.addColumn("GR_DEPT", "string");
+
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if(!this.fnSearchValidate()) return false;
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "DT_REPORT", this.dsSearch.getColumn(0, "DT_REPORT"));
+	this.dsSelect.setColumn(0, "CD_DEPT", this.dsSearch.getColumn(0, "CD_DEPT"));
+	this.dsSelect.setColumn(0, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	this.dsSelect.setColumn(0, "GR_DEPT", this.AuthClient.CD_DEPT);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+//세부내역
+this.fnSelect2nd = function() {
+	
+	this.dsList2nd.clearData();
+	
+	var strSvcId    = "select2nd";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select2nd=dsSelect";
+	var outData     = "dsList2nd=select2nd0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	if(!this.fnSearchValidate()) return false;
+
+	//this.txtDS_REMARK_R.set_readonly(false);  		// 비고
+	this.txtDS_REMARK_R.set_enable(true);
+	this.edtNO_SERVICE_TOTAL.set_readonly(false);	
+	this.edtNO_SERVICE_HOLIDAY.set_readonly(false);
+	this.edtNO_LABOR_CNT.set_readonly(false);
+	this.edtNO_CADDIE_TOTAL.set_readonly(false);
+	this.edtNO_CADDIE_HOLIDAY.set_readonly(false);
+		
+	var nrow = this.gfnGridAdd(this.dxGrid);
+	this.dsList2nd.setColumn(nrow, "YN_WORK", "Y");
+};
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+	this.gfnSetFormStatus(this, "D");
+	this.FormBtns.Save.set_enable(true);
+	if(this.dsList2nd.rowposition < 0){
+		
+		//this.txtDS_REMARK_R.set_readonly(true);  		// 비고
+		this.txtDS_REMARK_R.set_enable(false);
+		this.edtNO_SERVICE_TOTAL.set_readonly(true);	
+		this.edtNO_SERVICE_HOLIDAY.set_readonly(true);
+		this.edtNO_LABOR_CNT.set_readonly(true);
+		this.edtNO_CADDIE_TOTAL.set_readonly(true);
+		this.edtNO_CADDIE_HOLIDAY.set_readonly(true);
+		
+		
+		this.divData01.form.edtDT_REPORT.set_value("");
+		this.divData01.form.edtDS_STATUS.set_value("");
+		this.divData01.form.edtSUM_WORK.set_value("");
+		this.divData01.form.edtNO_WORK.set_value("");
+		this.divData01.form.edtNO_ABSENCE.set_value("");
+		this.divData01.form.edtNO_HOLIDAY.set_value("");
+		this.divData01.form.edtNO_SPECIAL.set_value("");
+		this.divData01.form.edtNO_CLOSE.set_value("");
+		this.divData01.form.edtNO_OFFICIAL.set_value("");
+		this.divData01.form.edtNO_ETC.set_value("");
+		this.divData01.form.txtDS_REMARK_R.set_value("");
+		
+		this.edtNO_SERVICE_TOTAL.set_value("");
+		this.edtNO_SERVICE_HOLIDAY.set_value("");
+		this.edtNO_SERVICE_CNT.set_value(""); //현원
+		this.edtNO_LABOR_CNT.set_value("");
+		this.edtNO_CADDIE_TOTAL.set_value("");
+		this.edtNO_CADDIE_HOLIDAY.set_value("");
+		this.edtNO_CADDIE_CNT.set_value(""); //현원		
+		
+		
+		this.FormBtns.Select.click();
+	}
+};
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {	
+
+	this.dsSave.clearData();
+	this.dsSave.addRow();
+
+	for(var i=0; i < this.dsList2nd.getRowCount(); i++){
+		var flag = this.gfnGetFlag(this.dsList2nd, i);
+		switch(flag) {
+			case "I":
+			case "U": 
+			case "D":
+			
+				var nrow = this.dsSave.addRow();
+				this.dsSave.setColumn(nrow, "TY_SAVE", flag);
+				this.dsSave.setColumn(nrow, "CD_DEPT", this.gfnNvl(this.dsList.getColumn(0, "CD_DEPT"), this.dsSearch.getColumn(0, "CD_DEPT")));
+				this.dsSave.setColumn(nrow, "DT_REPORT", this.gfnNvl(this.dsList2nd.getColumn(i, "DT_REPORT"), this.dsSearch.getColumn(0, "DT_REPORT")));
+				this.dsSave.setColumn(nrow, "DS_REMARK_R", this.dsList.getColumn(0, "DS_REMARK_R"));
+				this.dsSave.setColumn(nrow, "NO_SERVICE_TOTAL", this.dsList.getColumn(0, "NO_SERVICE_TOTAL"));
+				this.dsSave.setColumn(nrow, "NO_SERVICE_HOLIDAY", this.dsList.getColumn(0, "NO_SERVICE_HOLIDAY"));
+				this.dsSave.setColumn(nrow, "NO_SERVICE_CNT", this.dsList.getColumn(0, "NO_SERVICE_CNT"));
+				this.dsSave.setColumn(nrow, "NO_LABOR_CNT", this.dsList.getColumn(0, "NO_LABOR_CNT"));
+				this.dsSave.setColumn(nrow, "NO_CADDIE_TOTAL", this.dsList.getColumn(0, "NO_CADDIE_TOTAL"));
+				this.dsSave.setColumn(nrow, "NO_CADDIE_HOLIDAY", this.dsList.getColumn(0, "NO_CADDIE_HOLIDAY"));
+				this.dsSave.setColumn(nrow, "NO_CADDIE_CNT", this.dsList.getColumn(0, "NO_CADDIE_CNT"));
+				this.dsSave.setColumn(nrow, "ID_PERSON", this.dsList2nd.getColumn(i, "ID_PERSON"));
+				this.dsSave.setColumn(nrow, "ID_SABUN", this.dsList2nd.getColumn(i, "ID_SABUN"));
+				this.dsSave.setColumn(nrow, "YN_WORK", this.dsList2nd.getColumn(i, "YN_WORK"));
+				this.dsSave.setColumn(nrow, "YN_ABSENCE", this.dsList2nd.getColumn(i, "YN_ABSENCE"));
+				this.dsSave.setColumn(nrow, "YN_HOLIDAY", this.dsList2nd.getColumn(i, "YN_HOLIDAY"));
+				this.dsSave.setColumn(nrow, "YN_SPECIAL", this.dsList2nd.getColumn(i, "YN_SPECIAL"));
+				this.dsSave.setColumn(nrow, "YN_CLOSE", this.dsList2nd.getColumn(i, "YN_CLOSE"));
+				this.dsSave.setColumn(nrow, "YN_OFFICIAL", this.dsList2nd.getColumn(i, "YN_OFFICIAL"));
+				this.dsSave.setColumn(nrow, "YN_ETC", this.dsList2nd.getColumn(i, "YN_ETC"));
+				this.dsSave.setColumn(nrow, "DS_REMARK", this.dsList2nd.getColumn(i, "DS_REMARK"));
+				this.dsSave.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+				this.dsSave.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+				this.dsSave.setColumn(nrow, "GR_DEPT", this.AuthClient.CD_DEPT);
+				break;
+		}
+	}
+
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "dsOutPut=save0";  
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	 
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]		
+				
+};
+
+
+this.SaveSingle = function() {  
+
+	this.dsSave.clearData();
+	this.dsSave.addRow();
+
+	// 상단 싱글폼 저장
+	this.dsSave.setColumn(0, "TY_SAVE", "U");  
+	this.dsSave.setColumn(0, "CD_DEPT", this.gfnNvl(this.dsList.getColumn(0, "CD_DEPT"), this.dsSearch.getColumn(0, "CD_DEPT")));
+	this.dsSave.setColumn(0, "DT_REPORT", this.gfnNvl(this.dsList.getColumn(0, "DT_REPORT"), this.dsSearch.getColumn(0, "DT_REPORT")));
+	this.dsSave.setColumn(0, "DS_REMARK_R", this.dsList.getColumn(0, "DS_REMARK_R"));
+	this.dsSave.setColumn(0, "NO_SERVICE_TOTAL", this.dsList.getColumn(0, "NO_SERVICE_TOTAL"));
+	this.dsSave.setColumn(0, "NO_SERVICE_HOLIDAY", this.dsList.getColumn(0, "NO_SERVICE_HOLIDAY"));
+	this.dsSave.setColumn(0, "NO_SERVICE_CNT", this.dsList.getColumn(0, "NO_SERVICE_CNT"));
+	this.dsSave.setColumn(0, "NO_LABOR_CNT", this.dsList.getColumn(0, "NO_LABOR_CNT"));
+	this.dsSave.setColumn(0, "NO_CADDIE_TOTAL", this.dsList.getColumn(0, "NO_CADDIE_TOTAL"));
+	this.dsSave.setColumn(0, "NO_CADDIE_HOLIDAY", this.dsList.getColumn(0, "NO_CADDIE_HOLIDAY"));
+	this.dsSave.setColumn(0, "NO_CADDIE_CNT", this.dsList.getColumn(0, "NO_CADDIE_CNT"));
+	this.dsSave.setColumn(0, "ID_PERSON", this.dsList.getColumn(0, "ID_PERSON"));
+	this.dsSave.setColumn(0, "ID_SABUN", this.dsList.getColumn(0, "ID_SABUN"));
+	this.dsSave.setColumn(0, "YN_WORK", this.dsList.getColumn(0, "YN_WORK"));
+	this.dsSave.setColumn(0, "YN_ABSENCE", this.dsList.getColumn(0, "YN_ABSENCE"));
+	this.dsSave.setColumn(0, "YN_HOLIDAY", this.dsList.getColumn(0, "YN_HOLIDAY"));
+	this.dsSave.setColumn(0, "YN_SPECIAL", this.dsList.getColumn(0, "YN_SPECIAL"));
+	this.dsSave.setColumn(0, "YN_CLOSE", this.dsList.getColumn(0, "YN_CLOSE"));
+	this.dsSave.setColumn(0, "YN_OFFICIAL", this.dsList.getColumn(0, "YN_OFFICIAL"));
+	this.dsSave.setColumn(0, "YN_ETC", this.dsList.getColumn(0, "YN_ETC"));
+	this.dsSave.setColumn(0, "DS_REMARK_R", this.dsList.getColumn(0, "DS_REMARK_R"));
+	this.dsSave.setColumn(0, "ID_INSERT", this.AuthClient.ID_USER);
+	this.dsSave.setColumn(0, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	this.dsSave.setColumn(0, "GR_DEPT", this.AuthClient.CD_DEPT);
+	
+		
+	var strSvcId    = "savesingle";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	 
+						strSvcType ,  
+						inProc,			 
+						inData , 		 
+						outData , 		 
+						strArg, 			 
+						callBackFnc); 		
+	
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+};
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+	this.fnSelectRpt("6");
+};
+/*
+ *	리셋
+ */
+this.fnReset = function() {
+
+	this.dsSearch.clearData();
+	var nrow = this.dsSearch.addRow();
+
+	var today = this.gfnGetDate();
+	this.calDT_REPORT.set_value(today);
+	
+	//var CD_DEPT_MST = "11220";
+	//var DS_DEPT_MST = "전산실";
+	
+	var CD_DEPT_MST;
+	var DS_DEPT_MST;	
+
+	if (this.gfnIsNull(this.AuthClient.CD_DEPT_MST) == true) {
+		CD_DEPT_MST = (this.AuthClient.CD_DEPT).substring(1,5);
+		DS_DEPT_MST = this.AuthClient.DS_DEPT;	
+	} else {
+		CD_DEPT_MST = this.AuthClient.CD_DEPT_MST;
+		DS_DEPT_MST = this.AuthClient.DS_DEPT_MST;		
+	}
+
+	this.ccfCD_DEPT.form.CDTextBox.set_value(CD_DEPT_MST);
+	this.ccfCD_DEPT.form.DSTextBox.set_value(DS_DEPT_MST);
+	this.ccfCD_DEPT.form.CDTextBox_onchanged();
+
+
+	this.FormBtns.Select.click();
+};
+
+// 당일근태생성
+this.fnBtnCreate = function() {
+	if(!this.gfnIsNull(this.dsSearch.getColumn(0, "DT_REPORT")) && !this.gfnIsNull(this.dsSearch.getColumn(0, "CD_DEPT"))){
+		var strSvcId    = "selectCreate";
+		var strSvcType  = "select";
+		var inProc		= "_dsProc";
+		var inData      = "selectCreate=dsSearch";
+		var outData     = "dsListCreate=selectCreate0";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// trabsaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+ 	} else {
+ 		this.gfnAlert("일별 인원 근태를 먼저 조회하세요.", "");
+ 	}
+};
+
+// 일인원현황
+this.fnBtnForm = function() {
+	if(this.dsList.getRowCount() > 0) {
+		var param = {};
+		
+		param.CD_DEPT = this.ccfCD_DEPT.form.CDTextBox.value;
+		param.DS_DEPT = this.ccfCD_DEPT.form.DSTextBox.value; 
+		param.DT_REPORT = this.calDT_REPORT.value;			
+
+		this.gfnFormOpen("DAC", "DAC_DAILYMANAGE", "fnFormButton_callback", param);	
+	}
+};
+
+this.fnFormButton_callback = function(svcID, val) {
+		this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+ this.fnSearchValidate = function(){
+	if(this.gfnIsNull(this.calDT_REPORT.value)){
+		this.fnAlertCallback = function() {
+			this.ctclDT_REPORT.setFocus();
+		}
+		this.gfnAlert("일자를 입력하세요.", "fnAlertCallback");
+		return false;
+	}
+	if(this.gfnIsNull(this.ccfCD_DEPT.form.CDTextBox.value)){
+		this.fnAlertCallback = function() {
+			this.ccfCD_DEPT.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("조회 부서를 입력하세요.", "fnAlertCallback");
+		return false;
+	}
+	 
+	return true;
+ };
+ 
+/************************************************************************
+ * 콜백 이벤트
+ ***********************************************************************
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg){
+	if (errorCode == 0) {		
+	} else {
+		this.gfnAlert(errorMsg);
+		return false;
+	}
+		
+	if (svcID == "select") {	
+		var readOnly = true;
+		if(this.dsList.getRowCount() > 0){
+			this.FormBtns.Print.set_enable(true); // 출력버튼
+
+			if(this.dsList.getColumn(0, "TY_STATUS") == "2"){
+				readOnly = true;
+			}else{
+				readOnly = false;
+			}
+			this.fnSetButton();
+		}else{
+			this.dsList.set_enableevent(false);
+			this.dsList.addRow();
+			this.dsList.set_enableevent(true);
+			readOnly = true;
+		}
+
+		//this.txtDS_REMARK_R.set_readonly(readOnly);
+		this.txtDS_REMARK_R.set_enable(!readOnly);
+		this.edtNO_SERVICE_TOTAL.set_readonly(readOnly); 
+		this.edtNO_SERVICE_HOLIDAY.set_readonly(readOnly);
+		//this.edtNO_SERVICE_CNT.set_readonly(readOnly); //현원
+		this.edtNO_LABOR_CNT.set_readonly(readOnly);
+		this.edtNO_CADDIE_TOTAL.set_readonly(readOnly);
+		this.edtNO_CADDIE_HOLIDAY.set_readonly(readOnly);
+		//this.edtNO_CADDIE_CNT.set_readonly(readOnly); //현원
+		
+		this.fnSelect2nd();
+		
+	} else if (svcID == "select2nd") {
+		if(this.dsList.getColumn(0, "TY_STATUS") == "2"){
+			this.FormBtns.Save.set_enable(false);
+			this.FormBtns.Add.set_enable(false);
+			this.FormBtns.Del.set_enable(false);
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_WORK"),"edittype","none");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_ABSENCE"),"edittype","none");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_HOLIDAY"),"edittype","none");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_SPECIAL"),"edittype","none");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_CLOSE"),"edittype","none");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_OFFICIAL"),"edittype","none");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_ETC"),"edittype","none");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","DS_REMARK"),"edittype","none");	
+		} else {
+			this.FormBtns.Save.set_enable(false);
+			this.FormBtns.Add.set_enable(true); 
+			this.FormBtns.Del.set_enable(true);		
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_WORK"),"edittype","checkbox");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_ABSENCE"),"edittype","checkbox");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_HOLIDAY"),"edittype","checkbox");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_SPECIAL"),"edittype","checkbox");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_CLOSE"),"edittype","checkbox");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_OFFICIAL"),"edittype","checkbox");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","YN_ETC"),"edittype","checkbox");
+			this.dxGrid.setCellProperty("body",this.dxGrid.getBindCellIndex("body","DS_REMARK"),"edittype","text");				
+		}
+		//this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "CHK"), "edittype", "expr:TY_STATUS == 2?'none':'checkbox'");
+		
+	} else if (svcID == "selectCreate") {
+		
+		if(this.dsListCreate.getRowCount() > 0){
+			for(var i = 0; i < this.dsListCreate.getRowCount(); i++){
+				var nrow = this.dsList2nd.addRow();
+				this.dsList2nd.copyRow(nrow, this.dsListCreate, i);
+				
+				this.dsList2nd.setColumn(nrow, this.ucFlag, "I");
+			}
+			//this.txtDS_REMARK_R.set_readonly(false);
+			this.txtDS_REMARK_R.set_enable(true);
+			this.edtNO_SERVICE_TOTAL.set_readonly(false);
+			this.edtNO_SERVICE_HOLIDAY.set_readonly(false);
+			this.edtNO_LABOR_CNT.set_readonly(false); 
+			this.edtNO_CADDIE_TOTAL.set_readonly(false);
+			this.edtNO_CADDIE_HOLIDAY.set_readonly(false);
+		} 
+	} else if (svcID == "save") { //그리드 저장
+		if(errorCode == 0 ){
+// 			if(this.dsOutput.getColumn(0, "YN_FLAG") == "Y") {
+// 				this.SaveSingle(); 
+// 			}
+			this.SaveSingle();
+			
+		}else {
+			this.gfnAlert(errorMsg); 
+		}
+	} else if (svcID == "savesingle") { //상단 싱글폼 저장
+		if(errorCode == 0 ){
+			this.fnSelect();
+			this.fnSelect2nd();  
+		}else { 
+			this.gfnAlert(errorMsg); 
+		}	
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	switch(id) {
+		case "ccfCD_DEPT":
+			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);	// 로그인 권한
+			dsUserParam.setColumn(nrow, "GR_DEPT", this.AuthClient.CD_DEPT);	// 로그인 부서
+			dsUserParam.setColumn(nrow, "ID_LOGIN", this.AuthClient.ID_USER);	// 로그인 사번
+		break;
+
+		default:
+	}
+
+	return true;
+};
+
+this.fnGrid_BeforeUserDataSetParam = function(id, dsUserParam, nrow){
+
+	switch(id) {
+		case "DAX_CFBASEINFO":
+			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+			dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+			dsUserParam.setColumn(nrow, "TY_RETIRE", "%");	// 재직구분
+			break;
+
+		default:
+	}
+
+	return true;
+};
+
+this.fnGrid_AfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData; 
+
+	switch(id){
+		case "ccfCD_DEPT" :
+			var YN_SITE = "N";
+			var YN_LEISURE = "N";
+		
+			if(!this.gfnIsNull(arr)) {
+				YN_SITE = arr[0]["YN_SITE"];
+				YN_LEISURE = arr[0]["YN_LEISURE"];
+				
+				this.FormBtns.Select.click();
+			}
+
+			var bEnable1 = (YN_SITE == "Y") ?  true : false;
+			var bEnable2 = (YN_LEISURE == "Y") ?  true : false;
+			trace("YN_SITE->" + YN_SITE + " / "  + bEnable1+ "\n YN_LEISURE->" + YN_LEISURE + " / "  + bEnable2);
+
+			// 관리현장 유무 확인 후 작업버튼(관리현장등록)ENABLE 처리
+			this.btnForm.set_enable(bEnable1);		// 관리현장등록(일인원현황)
+
+			//this.btnItem5.set_enable(bEnable2);		// 레저사업장
+			// this.btnForm.set_visible(true);
+
+		break;
+	}
+	
+}
+ 
+/************************************************************************
+ * 그리드 이벤트
+ *************************************************************************/
+ this.divData02_objGrid_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.clickitem == "control") {
+		for(var i = 0; i < this.dxGrid.getCellCount("body"); i++) {
+			if(this.divData02.form.objGrid.getCellProperty("body", i , "edittype") == "checkbox") {
+				if(e.col != i) {
+					this.dsList2nd.setColumn(e.row, this.gfnGridGetBindColumnNameByIndex( this.dxGrid, i), "N");
+				}
+			}
+		}
+	}
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo){	
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		
+		this.dsList.clearData();
+	}
+};
+
+this.dsList2nd_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	this.fnSetButton();
+};
+
+this.fnClose = function(){
+	this.close();
+};
+
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	this.fnSetButton();
+	if(!this.gfnIsNull(e) && e.oldvalue != e.newvalue){ 
+		if(e.columnid == "NO_SERVICE_TOTAL"){
+			if(!this.gfnIsNull(obj.getColumn(0, "NO_SERVICE_HOLIDAY"))){ 
+				this.dsList.setColumn(0, "NO_SERVICE_CNT", (e.newvalue - obj.getColumn(0, "NO_SERVICE_HOLIDAY")));
+			} 
+		}else if(e.columnid == "NO_SERVICE_HOLIDAY"){
+			if(!this.gfnIsNull(obj.getColumn(0, "NO_SERVICE_TOTAL"))){ 
+				this.dsList.setColumn(0, "NO_SERVICE_CNT", (obj.getColumn(0, "NO_SERVICE_TOTAL") - e.newvalue));
+			} 
+		}else if(e.columnid == "NO_CADDIE_TOTAL"){
+			if(!this.gfnIsNull(obj.getColumn(0, "NO_CADDIE_HOLIDAY"))){ 
+				this.dsList.setColumn(0, "NO_CADDIE_CNT", (e.newvalue - obj.getColumn(0, "NO_CADDIE_HOLIDAY")));
+			} 
+		}else if(e.columnid == "NO_CADDIE_HOLIDAY"){
+			if(!this.gfnIsNull(obj.getColumn(0, "NO_CADDIE_TOTAL"))){ 
+				this.dsList.setColumn(0, "NO_CADDIE_CNT", (obj.getColumn(0, "NO_CADDIE_TOTAL") - e.newvalue));
+			} 
+		}
+	}
+};
+
+this.div00_edit_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	//trace("div00_edit_onkeydown >>"+obj.name+"   e.keycode :"+e.keycode ); 
+	if(e.keycode == "13"){ 
+		if(obj.name == "edtNO_SERVICE_TOTAL"){
+			this.edtNO_SERVICE_HOLIDAY.setFocus(); 
+		}else if(obj.name == "edtNO_SERVICE_HOLIDAY"){
+			this.edtNO_LABOR_CNT.setFocus(); 
+		}else if(obj.name == "edtNO_LABOR_CNT"){
+			this.edtNO_CADDIE_TOTAL.setFocus(); 
+		}else if(obj.name == "edtNO_CADDIE_TOTAL"){
+			this.edtNO_CADDIE_HOLIDAY.setFocus(); 
+		}
+	} 
+};
+
+// 리포트 출력 전체
+this.fnSelectRpt = function(TY_REPORT) {
+
+	this.dsSelectRpt = new Dataset();
+	this.dsSelectRpt.addColumn("DT_REPORT", "string");	    // 일자
+	this.dsSelectRpt.addColumn("ID_LOGIN", "string"); 	    // 출력자
+	this.dsSelectRpt.addColumn("CD_DEPT", "string"); 	    // 부서
+	this.dsSelectRpt.addColumn("TY_VIEW", "string"); 	    // 레포트구분
+	
+	var nrow = this.dsSelectRpt.addRow();
+	
+	var DT_REPORT = this.dsSearch.getColumn(0,"DT_REPORT");
+	if(this.gfnIsNull(DT_REPORT)){
+		this.gfnAlert("기준일자는 반드시 입력 하셔야 합니다");
+		return false;
+	}
+	
+	var CD_DEPT = this.dsSearch.getColumn(0,"CD_DEPT");
+	if(this.gfnIsNull(DT_REPORT)){
+		this.gfnAlert("부서는 반드시 입력 하셔야 합니다");
+		return false;
+	}	
+
+	this.dsSelectRpt.setColumn(nrow, "DT_REPORT", DT_REPORT);
+	this.dsSelectRpt.setColumn(nrow, "ID_LOGIN", this.AuthClient.ID_USER);
+	this.dsSelectRpt.setColumn(nrow, "CD_DEPT", CD_DEPT);
+	
+	this.dsReportParam.setColumn(0, "DT_REPORT", DT_REPORT);
+	this.dsReportParam.setColumn(0, "TY_VIEW", this.gfnNvl(TY_REPORT, "1"));
+	this.dsReportParam.setColumn(0, "CD_DEPT", CD_DEPT);
+
+	var inProc		= "_dsProc";
+	var inParam 	= "params=dsReportParam";
+	var inData      = "report2=dsSelectRpt report3=dsSelectRpt report4=dsSelectRpt report5=dsSelectRpt report6=dsSelectRpt";
+	//var inData      = "report6=dsSelectRpt";
+	var reportpath  = "/da/dac/DAC_DAILY_REPORT.ozr";
+
+	gfnOpenReport(this, reportpath, inProc, inParam, inData);
+}
+
+/*
+// 레저사업장 인원현황 RPT (1. 요약보고)
+this.fnSelectRpt6 = function() {
+	this.fnSelectRpt("6");
+	// DACPR_DAILY_REPORT6
+}
+*/
+
+var SingleFlag;
+// 비고
+this.divData01_txtDS_REMARK_R_oninput = function(obj:nexacro.TextArea,e:nexacro.InputEventInfo)
+{
+	this.SingleFormButton();
+};
+// 용역 총원
+this.div00_edtNO_SERVICE_TOTAL_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	this.SingleFormButton();
+};
+
+// 용역 휴무
+this.div00_edtNO_SERVICE_HOLIDAY_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	SingleFlag == "Y";
+	this.SingleFormButton();
+}
+// 출역 총원
+this.div00_edtNO_LABOR_CNT_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	SingleFlag == "Y";
+	this.SingleFormButton();	
+};
+// 캐디 총원
+this.div00_edtNO_CADDIE_TOTAL_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	SingleFlag == "Y";
+	this.SingleFormButton();	
+};
+// 캐디 휴무
+this.div00_edtNO_CADDIE_HOLIDAY_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	SingleFlag == "Y";
+	this.SingleFormButton();
+};
+
+this.SingleFormButton = function ()
+{
+	this.FormBtns.Add.set_enable(true);
+	this.FormBtns.Del.set_enable(true);
+	this.FormBtns.Save.set_enable(true);
+};]]></Script>
+  </Form>
+</FDL>

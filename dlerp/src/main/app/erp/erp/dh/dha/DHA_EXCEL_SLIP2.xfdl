@@ -1,0 +1,1274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="엑셀전표발행(일반)" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="2" text="법인코드" left="0" top="10.0" width="92" height="24.0" textAlign="right" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_CORP" CDTextWidth="50" taborder="0" left="sta00:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="staMM_BASE" taborder="3" text="회계일자" left="ccfCD_CORP:0.0" top="10.0" width="92" height="24.0" textAlign="right" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclMM_BASE" taborder="5" left="staMM_BASE:0.0" top="10.0" width="95" height="24.0" url="cmm::cmmCalMM.xfdl"/>
+              <Static id="sta04" taborder="4" text="전표발행여부" left="ctclMM_BASE:0.0" top="10.0" width="118.0" height="24.0" textAlign="right" cssclass="sta_WF_SchLabel"/>
+              <Combo id="ccboYN_SLIP" taborder="1" left="sta04:0.0" top="10.0" width="100" height="24.0" innerdataset="innerdataset" datacolumn="datacolumn" codecolumn="codecolumn" value="" index="-1" text="">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">Y</Col>
+                      <Col id="datacolumn">발행</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">N</Col>
+                      <Col id="datacolumn">미발행</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0" oncelldblclick="divData_objGrid_oncelldblclick"/>
+              <Grid id="grdFormat" taborder="1" left="20" top="112" width="938" height="162" binddataset="dsFormat" visible="false">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="74"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="86"/>
+                      <Column size="104"/>
+                      <Column size="96"/>
+                      <Column size="108"/>
+                      <Column size="99"/>
+                      <Column size="189"/>
+                      <Column size="80"/>
+                      <Column size="110"/>
+                      <Column size="110"/>
+                      <Column size="114"/>
+                      <Column size="110"/>
+                      <Column size="110"/>
+                      <Column size="110"/>
+                      <Column size="110"/>
+                      <Column size="110"/>
+                      <Column size="110"/>
+                      <Column size="110"/>
+                      <Column size="102"/>
+                      <Column size="100"/>
+                      <Column size="105"/>
+                      <Column size="92"/>
+                      <Column size="100"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell rowspan="2" text="순번" textDecoration="underline" suppress="0"/>
+                      <Cell col="1" rowspan="2" text="회계일자" textDecoration="underline"/>
+                      <Cell col="2" rowspan="2" text="귀속부서" textDecoration="underline"/>
+                      <Cell col="3" rowspan="2" text="계정코드" textDecoration="underline"/>
+                      <Cell col="4" rowspan="2" text="집행통화" textDecoration="underline"/>
+                      <Cell col="5" colspan="2" text="차변"/>
+                      <Cell col="7" colspan="2" text="대변"/>
+                      <Cell col="9" rowspan="2" text="적요"/>
+                      <Cell col="10" rowspan="2" text="거래구분" textDecoration="underline"/>
+                      <Cell col="11" rowspan="2" text="증빙구분"/>
+                      <Cell col="12" rowspan="2" text="불공제사유"/>
+                      <Cell col="13" rowspan="2" text="공급가"/>
+                      <Cell col="14" rowspan="2" text="부가세"/>
+                      <Cell col="15" rowspan="2" text="거래처코드" textDecoration="underline"/>
+                      <Cell col="16" rowspan="2" text="기타1(사업코드)"/>
+                      <Cell col="17" rowspan="2" text="기타2"/>
+                      <Cell col="18" rowspan="2" text="참고번호1"/>
+                      <Cell col="19" rowspan="2" text="참고번호2"/>
+                      <Cell col="20" rowspan="2" text="참고금액1"/>
+                      <Cell col="21" rowspan="2" text="참고금액2"/>
+                      <Cell col="22" rowspan="2" text="참고일자1"/>
+                      <Cell col="23" rowspan="2" text="참고일자2"/>
+                      <Cell col="24" rowspan="2" text="참고율1"/>
+                      <Cell col="25" rowspan="2" text="참고율2"/>
+                      <Cell row="1" col="5" text="집행화"/>
+                      <Cell row="1" col="6" text="원화" textDecoration="underline"/>
+                      <Cell row="1" col="7" text="집행화"/>
+                      <Cell row="1" col="8" text="원화" textDecoration="underline"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:NO_TRADE" textAlign="center"/>
+                      <Cell col="1" text="bind:DT_ACCOUNT" textAlign="center"/>
+                      <Cell col="2" text="bind:CD_DEPT_BE" textAlign="center"/>
+                      <Cell col="3" text="bind:CD_ACCOUNT" textAlign="center"/>
+                      <Cell col="4" textAlign="center" text="bind:CD_CURR" editinputtype="number"/>
+                      <Cell col="5" textAlign="right" text="bind:AM_EXEC_DR" editinputtype="number"/>
+                      <Cell col="6" text="bind:AM_DR" textAlign="right" editinputtype="number"/>
+                      <Cell col="7" text="bind:AM_EXEC_CR" textAlign="right" editinputtype="number"/>
+                      <Cell col="8" text="bind:AM_CR" textAlign="right" editinputtype="number"/>
+                      <Cell col="9" text="bind:DS_REM" textAlign="left" displaytype="text"/>
+                      <Cell col="10" text="bind:TY_SALEBUY" textAlign="center" displaytype="text"/>
+                      <Cell col="11" text="bind:CD_PROOF" textAlign="center" edittype="text" displaytype="text" editinputfilter="sign"/>
+                      <Cell col="12" text="bind:TY_VATBGJE" textAlign="center" edittype="text" displaytype="text" editinputfilter="sign"/>
+                      <Cell col="13" text="bind:AM_SUPPLY" textAlign="right" edittype="text" editinputfilter="sign" editinputtype="number"/>
+                      <Cell col="14" text="bind:AM_VAT" textAlign="right" edittype="text" editinputfilter="sign" editinputtype="number"/>
+                      <Cell col="15" text="bind:CD_VENDOR" textAlign="center" edittype="text" displaytype="text" editinputfilter="sign"/>
+                      <Cell col="16" text="bind:CD_ETC1" textAlign="center" edittype="text" displaytype="text" editinputfilter="sign"/>
+                      <Cell col="17" text="bind:CD_ETC2" textAlign="center" edittype="text" displaytype="text" editinputfilter="sign"/>
+                      <Cell col="18" text="bind:NO_REF" textAlign="center" edittype="text" displaytype="text" editinputfilter="sign"/>
+                      <Cell col="19" text="bind:NO_REF2" textAlign="center" edittype="text" displaytype="text" editinputfilter="sign" editinputtype="number"/>
+                      <Cell col="20" text="bind:AM_REF1" textAlign="right" edittype="text" editinputfilter="sign" editinputtype="number"/>
+                      <Cell col="21" text="bind:AM_REF2" textAlign="right" editinputtype="number"/>
+                      <Cell col="22" text="bind:DT_REF1" textAlign="center"/>
+                      <Cell col="23" text="bind:DT_REF2" textAlign="center"/>
+                      <Cell col="24" text="bind:RT_REF1" textAlign="right"/>
+                      <Cell col="25" text="bind:RT_REF2" textAlign="right"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();	
+
+	//발행구분 미발행
+	this.ccboYN_SLIP.set_value("N");
+
+	var toDay = this.gfnGetDate();
+	this.ctclMM_BASE.form.TextBox.set_value(toDay.substr(0,6));	// 현재워
+
+	//법인코드 세션에 코드로 셋팅
+	this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP); 
+	this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);	
+	this.ccfCD_CORP.setFocus();
+
+	//전역변수에 그리드에 필수체크 배열 담기
+	this.vArrRequired = this.dxGrid.usRequired;	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	this.FormBtns.Add.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnExcelUpload = this.gfnFormButtonAdd("ExcelUpload", "fnExcelUpload"); 	//엑셀업로드 버튼
+	this.btnExcelDown   = this.gfnFormButtonAdd("ExcelDown", "fnExcelDown"); 		//양식다운 버튼
+	this.btnIssueSlip   = this.gfnFormButtonAdd("IssueSlip", "fnIssueSlip"); 		//전표발행 버튼
+	this.btnSearchSlip  = this.gfnFormButtonAdd("SearchSlip", "fnSearchSlip"); 		//전표조회 버튼
+	this.btnCancelSlip  = this.gfnFormButtonAdd("CancelSlip", "fnCancelSlip"); 		//전표취소 버튼
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+	this.ccboYN_SLIP = this.divSearch.form.ccboYN_SLIP;
+	this.dxGrid = this.divData.form.objGrid;
+	this.ctclMM_BASE  = this.divSearch.form.ctclMM_BASE;
+	
+	this.vArrRequired = [];
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_CORP.CodeFindName = "DHX_CFCORP";
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHA_SLIP_EXCEL2");
+
+	this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+	this.dxGrid.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+	this.dsList.addEventHandler("oncolumnchanged", this.dsList_ColumnChanged, this);
+	//this.dxGrid.set_selecttype("cell");
+	
+	this.dxGrid.EnterCell = "fnGrid_EnterCell";
+	
+	//검색조건 변경 이벤트
+	this.dsSearch.addEventHandler("onvaluechanged", this.dsSearch_Valuechanged, this);
+	
+	//this.dxGrid.deleteContentsCol("body", this.dxGrid.getBindCellIndex("body", "CD_CORP"));		//법인코드
+	//this.dxGrid.deleteContentsCol("body", this.dxGrid.getBindCellIndex("body", "CD_DEPT_BE"));	//귀속부서코드
+	//this.dxGrid.deleteContentsCol("body", this.dxGrid.getBindCellIndex("body", "CD_VENDOR"));	//거래처코드
+	
+	var colNOREF = this.dxGrid.getBindCellIndex("body", "NO_REF");
+	this.dxGrid.setCellProperty("body", colNOREF, "editinputfilter", "sign");
+	this.dxGrid.setCellProperty("body", colNOREF, "editinputtype"  , "number");
+
+	var colDS_PROOF = this.dxGrid.getBindCellIndex("body", "DS_PROOF");
+	this.dxGrid.setCellProperty("body", colDS_PROOF, "edittype", "expr:dataset.parent.gfnIsNull(TY_SALEBUY) ? 'none' : 'text'");
+	this.dxGrid.setCellProperty("body", colDS_PROOF, "expandshow", "expr:dataset.parent.gfnIsNull(TY_SALEBUY) ? 'hide' : 'show'");
+	
+	var colTY_VATBGJE = this.dxGrid.getBindCellIndex("body", "TY_VATBGJE");
+	this.dxGrid.setCellProperty("body", colTY_VATBGJE, "edittype", "expr:YN_VATBGJE == 'Y' ? 'combo' : 'none'");
+
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("DT_FROM", "string");
+	this.dsSelect.addColumn("DT_TO", "string");
+	this.dsSelect.addColumn("YN_SLIP", "string");
+	
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("SEQ", "BIGDECIMAL");
+	this.dsInsert.addColumn("DT_SEQ", "string");
+	this.dsInsert.addColumn("CD_CORP", "string");
+	this.dsInsert.addColumn("NO_TRADE", "string");
+	this.dsInsert.addColumn("DT_ACCOUNT", "string");
+	this.dsInsert.addColumn("CD_DEPT_BE", "string");
+	this.dsInsert.addColumn("CD_ACCOUNT", "string");
+	this.dsInsert.addColumn("DS_ACCOUNT", "string");
+	this.dsInsert.addColumn("AM_DR", "BIGDECIMAL");
+	this.dsInsert.addColumn("AM_CR", "BIGDECIMAL");
+	this.dsInsert.addColumn("DS_REM", "string");
+	this.dsInsert.addColumn("CD_VENDOR", "string");
+	this.dsInsert.addColumn("CD_PROOF", "string");
+	this.dsInsert.addColumn("TY_SALEBUY", "string");
+	this.dsInsert.addColumn("TY_VATBGJE", "string");	
+	this.dsInsert.addColumn("AM_SUPPLY", "BIGDECIMAL");
+	this.dsInsert.addColumn("AM_VAT", "BIGDECIMAL");
+	this.dsInsert.addColumn("ID_USER", "string");
+	this.dsInsert.addColumn("YN_LAST", "string");
+	this.dsInsert.addColumn("CD_ETC1", "string");
+	this.dsInsert.addColumn("CD_ETC2", "string");
+	this.dsInsert.addColumn("NO_REF", "string");
+	this.dsInsert.addColumn("NO_REF2", "string");
+	this.dsInsert.addColumn("AM_REF1", "BIGDECIMAL");
+	this.dsInsert.addColumn("AM_REF2", "BIGDECIMAL");
+	this.dsInsert.addColumn("DT_REF1", "string");
+	this.dsInsert.addColumn("DT_REF2", "string");
+	this.dsInsert.addColumn("RT_REF1", "BIGDECIMAL");
+	this.dsInsert.addColumn("RT_REF2", "BIGDECIMAL");
+	this.dsInsert.addColumn("CD_EXEC_CURR", "string");
+	this.dsInsert.addColumn("AM_EXEC_DR", "BIGDECIMAL");
+	this.dsInsert.addColumn("AM_EXEC_CR", "BIGDECIMAL");
+	
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.copyData(this.dsInsert);
+
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("SEQ", "BIGDECIMAL");			
+	
+	//전표발행용 데이터셋
+	this.dsIssueSlip = new Dataset();	
+	this.dsIssueSlip.addColumn("CD_CORP"    , "string");
+	this.dsIssueSlip.addColumn("SEQ"   		, "string");
+	this.dsIssueSlip.addColumn("ID_USER"    , "string");	
+	
+	//전표취소용 데이터셋
+	this.dsCancelSlip = new Dataset();	
+	this.dsCancelSlip.addColumn("CD_CORP"   , "string");
+	this.dsCancelSlip.addColumn("CD_TRADE"  , "string");
+	this.dsCancelSlip.addColumn("ID_USER"    , "string");	
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_CORP"	, this.ccfCD_CORP.form.CDTextBox.text);
+	this.dsSelect.setColumn(0, "DT_FROM"	, this.ctclMM_BASE.form.TextBox.value + "01");
+	this.dsSelect.setColumn(0, "DT_TO"		, this.ctclMM_BASE.form.TextBox.value + "31");
+	this.dsSelect.setColumn(0, "YN_SLIP"	, this.ccboYN_SLIP.value);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/* 입력 버튼 */
+this.fnAdd = function() {
+	var nRow = this.gfnGridAdd(this.dxGrid);
+	this.dsList.setColumn(nRow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.text);
+	//this.dsList.setColumn(nRow, "DT_WORK", this.ctclDT_WORK.form.TextBox.value);
+}
+
+/* 삭제 버튼 */
+this.fnDel = function() {	
+
+	if(!this.gfnIsNull(this.dsList.getColumn(this.dsList.rowposition, "CD_TRADE"))){
+		return false;
+	}
+	this.gfnGridDel(this.dxGrid);
+
+/*
+	this.dsList.set_enableevent(false);
+
+	trace(" 삭제 "+ this.dsList.getRowCountNF());
+	var arrDel = [];
+ 	for(var i =0;i<this.dsList.getRowCountNF();i++){
+		if(this.gfnIsNull(this.dsList.getColumnNF(i, "CD_TRADE"))){
+		//if(this.dsList.getColumnNF(i, "CHK") == "1" && this.gfnIsNull(this.dsList.getColumnNF(i, "CD_TRADE"))){
+
+			var flag = this.dsList.getColumnNF(i, this.ucFlag);
+			
+			if(flag == "I"){
+				arrDel[arrDel.length] = i;
+			} 
+			else if (flag == "D") {
+				this.dsList.setColumnNF(i, this.ucFlag, "");
+			}
+			else if (flag == "DU") {
+				this.dsList.setColumnNF(i, this.ucFlag, "U");
+			}
+			else {
+				if (flag == "U") {
+					this.dsList.setColumnNF(i, this.ucFlag, "DU");
+				}
+				else if (flag != "#") {
+					this.dsList.setColumnNF(i, this.ucFlag, "D");
+				}
+			}
+		}	
+ 	}
+	
+	//신규로우 데이터 삭제
+	this.dsList.deleteMultiRows(arrDel);
+	
+	this.dsList.set_enableevent(true);
+	
+	this.gfnSetFormStatus(this, "D");
+	// 등록버튼 diabled
+	this.FormBtns.Add.set_enable(false);
+*/
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+
+	// 그리드 필수항목 체크
+	if (!this.gfnGridValidate(this.dxGrid)) return;	
+	if (!this.fnSaveValidate()) return false;
+
+	this.dxGrid.updateToDataset();
+	
+	this.dsInsert.clearData();
+	this.dsUpdate.clearData();
+	this.dsDelete.clearData();		
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		
+		switch(flag) {
+			case "I":
+				var nrow = this.dsInsert.addRow();
+				this.dsInsert.setColumn(nrow, "DT_SEQ"  		, this.dsList.getColumn(i, "DT_SEQ"));			//날짜순번
+				this.dsInsert.setColumn(nrow, "CD_CORP"  		, this.dsList.getColumn(i, "CD_CORP"));			//법인코드
+				this.dsInsert.setColumn(nrow, "NO_TRADE"  		, this.dsList.getColumn(i, "NO_TRADE"));		//전표번호
+				this.dsInsert.setColumn(nrow, "DT_ACCOUNT"  	, this.dsList.getColumn(i, "DT_ACCOUNT"));		//회계일자
+
+				//엑셀업로드시 명에 코드가 들어올경우 처리
+				if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "CD_DEPT_BE")))){
+					this.dsInsert.setColumn(nrow, "CD_DEPT_BE"  	, this.dsList.getColumn(i, "DS_DEPT_BE"));		//귀속부서
+				}else{
+					this.dsInsert.setColumn(nrow, "CD_DEPT_BE"  	, this.dsList.getColumn(i, "CD_DEPT_BE"));		//귀속부서
+				}			
+				
+				this.dsInsert.setColumn(nrow, "CD_ACCOUNT"  	, this.dsList.getColumn(i, "CD_ACCOUNT"));		//계정코드
+				this.dsInsert.setColumn(nrow, "AM_DR"  			, this.dsList.getColumn(i, "AM_DR"));			//차변금액
+				this.dsInsert.setColumn(nrow, "AM_CR"  			, this.dsList.getColumn(i, "AM_CR"));			//대변금액
+				this.dsInsert.setColumn(nrow, "DS_REM"  		, this.dsList.getColumn(i, "DS_REM"));			//적요
+
+				//엑셀업로드시 명에 코드가 들어올경우 처리
+				if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "CD_VENDOR")))) {
+					this.dsInsert.setColumn(nrow, "CD_VENDOR"  		, this.dsList.getColumn(i, "DS_VENDOR"));		//거래처코드
+				} else {
+					this.dsInsert.setColumn(nrow, "CD_VENDOR"  		, this.dsList.getColumn(i, "CD_VENDOR"));		//거래처코드
+				}
+				
+				this.dsInsert.setColumn(nrow, "CD_PROOF" 		, this.dsList.getColumn(i, "CD_PROOF"));		//증빙구분
+				this.dsInsert.setColumn(nrow, "TY_SALEBUY"  	, this.dsList.getColumn(i, "TY_SALEBUY"));		//거래구분
+				this.dsInsert.setColumn(nrow, "TY_VATBGJE"  	, this.dsList.getColumn(i, "TY_VATBGJE"));		//불공제사유
+				this.dsInsert.setColumn(nrow, "AM_SUPPLY"  		, this.dsList.getColumn(i, "AM_SUPPLY"));		//공급가
+				this.dsInsert.setColumn(nrow, "AM_VAT"  		, this.dsList.getColumn(i, "AM_VAT"));			//부가세
+				this.dsInsert.setColumn(nrow, "YN_LAST"  		, this.dsList.getColumn(i, "YN_LAST"));			//마지막 전표여부
+				this.dsInsert.setColumn(nrow, "CD_ETC1"			, this.dsList.getColumn(i, "CD_ETC1"));
+				this.dsInsert.setColumn(nrow, "CD_ETC2"			, this.dsList.getColumn(i, "CD_ETC2"));
+				this.dsInsert.setColumn(nrow, "NO_REF"			, this.dsList.getColumn(i, "NO_REF"));
+				this.dsInsert.setColumn(nrow, "NO_REF2"			, this.dsList.getColumn(i, "NO_REF2"));
+				this.dsInsert.setColumn(nrow, "AM_REF1"			, this.dsList.getColumn(i, "AM_REF1"));
+				this.dsInsert.setColumn(nrow, "AM_REF2"			, this.dsList.getColumn(i, "AM_REF2"));
+				this.dsInsert.setColumn(nrow, "DT_REF1"			, this.dsList.getColumn(i, "DT_REF1"));
+				this.dsInsert.setColumn(nrow, "DT_REF2"			, this.dsList.getColumn(i, "DT_REF2"));
+				this.dsInsert.setColumn(nrow, "RT_REF1"			, this.dsList.getColumn(i, "RT_REF1"));
+				this.dsInsert.setColumn(nrow, "RT_REF2"			, this.dsList.getColumn(i, "RT_REF2"));
+				this.dsInsert.setColumn(nrow, "ID_USER"  		, this.AuthClient.ID_USER);						//사용자 아이디
+				this.dsInsert.setColumn(nrow, "CD_EXEC_CURR"	, this.dsList.getColumn(i, "CD_EXEC_CURR"));
+				this.dsInsert.setColumn(nrow, "AM_EXEC_DR"		, this.dsList.getColumn(i, "AM_EXEC_DR"));
+				this.dsInsert.setColumn(nrow, "AM_EXEC_CR"		, this.dsList.getColumn(i, "AM_EXEC_CR"));
+				break;
+			case "U":
+			
+				var nrow = this.dsUpdate.addRow();
+				this.dsUpdate.setColumn(nrow, "SEQ"  			, this.dsList.getColumn(i, "SEQ"));				//순번
+				this.dsUpdate.setColumn(nrow, "DT_SEQ"  		, this.dsList.getColumn(i, "DT_SEQ"));			//날짜순번
+				this.dsUpdate.setColumn(nrow, "CD_CORP"  		, this.dsList.getColumn(i, "CD_CORP"));			//법인코드
+				this.dsUpdate.setColumn(nrow, "NO_TRADE"  		, this.dsList.getColumn(i, "NO_TRADE"));		//전표번호
+				this.dsUpdate.setColumn(nrow, "DT_ACCOUNT"  	, this.dsList.getColumn(i, "DT_ACCOUNT"));		//회계일자
+				this.dsUpdate.setColumn(nrow, "CD_DEPT_BE"  	, this.dsList.getColumn(i, "CD_DEPT_BE"));		//귀속부서
+				this.dsUpdate.setColumn(nrow, "CD_ACCOUNT"  	, this.dsList.getColumn(i, "CD_ACCOUNT"));		//계정코드
+				this.dsUpdate.setColumn(nrow, "AM_DR"  			, this.dsList.getColumn(i, "AM_DR"));			//차변금액
+				this.dsUpdate.setColumn(nrow, "AM_CR"  			, this.dsList.getColumn(i, "AM_CR"));			//대변금액
+				this.dsUpdate.setColumn(nrow, "DS_REM"  		, this.dsList.getColumn(i, "DS_REM"));			//적요
+				this.dsUpdate.setColumn(nrow, "CD_VENDOR"  		, this.dsList.getColumn(i, "CD_VENDOR"));		//거래처코드
+				this.dsUpdate.setColumn(nrow, "TY_SALEBUY"  	, this.dsList.getColumn(i, "TY_SALEBUY"));		//거래구분
+				this.dsUpdate.setColumn(nrow, "TY_VATBGJE"  	, this.dsList.getColumn(i, "TY_VATBGJE"));		//불공제사유
+				this.dsUpdate.setColumn(nrow, "CD_PROOF" 	    , this.dsList.getColumn(i, "CD_PROOF"));		//증빙구분
+				this.dsUpdate.setColumn(nrow, "AM_SUPPLY"  		, this.dsList.getColumn(i, "AM_SUPPLY"));		//공급가
+				this.dsUpdate.setColumn(nrow, "AM_VAT"  		, this.dsList.getColumn(i, "AM_VAT"));			//부가세
+				this.dsUpdate.setColumn(nrow, "YN_LAST"  		, this.dsList.getColumn(i, "YN_LAST"));			//마지막 전표여부
+				this.dsUpdate.setColumn(nrow, "CD_ETC1"			, this.dsList.getColumn(i, "CD_ETC1"));
+				this.dsUpdate.setColumn(nrow, "CD_ETC2"			, this.dsList.getColumn(i, "CD_ETC2"));
+				this.dsUpdate.setColumn(nrow, "NO_REF"			, this.dsList.getColumn(i, "NO_REF"));
+				this.dsUpdate.setColumn(nrow, "NO_REF2"			, this.dsList.getColumn(i, "NO_REF2"));
+				this.dsUpdate.setColumn(nrow, "AM_REF1"			, this.dsList.getColumn(i, "AM_REF1"));
+				this.dsUpdate.setColumn(nrow, "AM_REF2"			, this.dsList.getColumn(i, "AM_REF2"));
+				this.dsUpdate.setColumn(nrow, "DT_REF1"			, this.dsList.getColumn(i, "DT_REF1"));
+				this.dsUpdate.setColumn(nrow, "DT_REF2"			, this.dsList.getColumn(i, "DT_REF2"));
+				this.dsUpdate.setColumn(nrow, "RT_REF1"			, this.dsList.getColumn(i, "RT_REF1"));
+				this.dsUpdate.setColumn(nrow, "RT_REF2"			, this.dsList.getColumn(i, "RT_REF2"));
+				this.dsUpdate.setColumn(nrow, "ID_USER"  		, this.AuthClient.ID_USER);						//사용자 아이디
+				this.dsUpdate.setColumn(nrow, "CD_EXEC_CURR"	, this.dsList.getColumn(i, "CD_EXEC_CURR"));
+				this.dsUpdate.setColumn(nrow, "AM_EXEC_DR"		, this.dsList.getColumn(i, "AM_EXEC_DR"));
+				this.dsUpdate.setColumn(nrow, "AM_EXEC_CR"		, this.dsList.getColumn(i, "AM_EXEC_CR"));
+				break;
+			case "D":
+				var nrow = this.dsDelete.addRow();
+				this.dsDelete.setColumn(nrow, "SEQ"  , this.dsList.getColumn(i, "SEQ"));		//순번
+				break;
+		}
+	}
+	
+	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+
+	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.text)) {
+		this.gfnAlert("법인코드는 필수입니다.");
+		this.ccfCD_CORP.form.CDTextBox.setFocus();
+		validate = false;
+	}
+	
+	return validate;
+};
+
+this.fnSaveValidate = function(){
+	for (var i=0; i < this.dsList.rowcount; i++) {
+		if (this.dsList.getColumn(i, "nx_flag") == "I" || this.dsList.getColumn(i, "nx_flag") == "U") {
+
+			var CD_PROOF = this.dsList.getColumn(i, "CD_PROOF");
+			var TY_VATBGJE = this.dsList.getColumn(i, "TY_VATBGJE");
+			var YN_VATBGJE = this.dsList.getColumn(i, "YN_VATBGJE");	// 불공제여부
+// 			var YN_BUDGET = this.dsList.getColumn(i, "YN_BUDGET");
+// 			var CD_SEMOK = this.dsList.getColumn(i, "CD_SEMOK");
+// 			var YN_BUDGET_CTRL_ACNT = this.dsList.getColumn(i, "YN_BUDGET_CTRL_ACNT");
+// 			var YN_VAT = this.dsList.getColumn(i, "YN_VAT");		
+	
+			if(YN_VATBGJE == "Y" && this.gfnIsNull(TY_VATBGJE)){		
+				this.gfnAlert((i + 1) + "행: 증빙구분이 불공제일 경우 불공제사유는 필수입니다.");
+				this.dsList.set_rowposition(i);
+				return false;
+			}
+			
+// 			if(YN_BUDGET == 'Y' && YN_BUDGET_CTRL_ACNT == 'Y' && this.gfnIsNull(CD_SEMOK)){
+// 				this.gfnAlert("예산부서일 경우 세목코드는 필수입니다.");
+// 				this.dsList.set_rowposition(i);
+// 				return false;
+// 			}
+// 			
+// 			if(YN_VAT == 'Y' && this.gfnIsNull(CD_PROOF)){
+// 				this.gfnAlert("부가세신고 대상인 경우 증빙구분은 필수입니다.");
+// 				this.dsList.set_rowposition(i);
+// 				return false;
+// 			}
+		}
+	}
+	return true;
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	switch(svcID) {
+		case "select":
+			this.gfnGridAfterSelect(this.dxGrid);	
+			if(this.dsList.rowcount > 0){
+				if(this.dsList.rowcount == 1 && this.dsList.getColumn(0, this.ucFlag) == "#"){
+					return;
+				}
+				
+				if(this.ccboYN_SLIP.value == "Y"){	//전표발행여부
+					this.gfnSetEnable(this.btnIssueSlip, false);
+					//this.gfnSetEnable(this.btnCancelSlip, true);
+					this.gfnSetEnable(this.btnSearchSlip, true);
+				}else{
+					this.gfnSetEnable(this.btnIssueSlip, true);
+					//this.gfnSetEnable(this.btnCancelSlip, false);
+					this.gfnSetEnable(this.btnSearchSlip, false);
+				}
+			}
+		break;
+		case "save":
+			if (errorCode == 0) {
+				this.FormBtns.Select.click();
+			} else {
+				this.gfnAlert(errorMsg);
+			}
+		break;
+		case "issueSlip":
+			if (errorCode == 0) {
+				this.gfnAlert("전표가 발행 되었습니다.");
+				this.FormBtns.Select.click();
+			} else {
+				this.gfnAlert(errorMsg);
+			}
+		break;
+		case "cancelSlip":
+			if (errorCode == 0) {
+				this.gfnAlert("전표가 취소 되었습니다.");
+				this.FormBtns.Select.click();
+			} else {
+				this.gfnAlert(errorMsg);
+			}
+		break;
+	}
+	// 등록버튼 diabled
+	//this.FormBtns.Add.set_enable(false);			
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if (id == "ccfCD_CORP") {	//법인코드
+		dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+	}
+	return true;
+}; 
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+
+	switch(id) {
+		case "ccfCD_CORP":	//법인코드
+
+		break;
+	}
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+this.fnGrid_BeforeUserDataSetParam = function(id, dsUserParam, nrow) {	
+	// 그리드에서 코드파인드 id는 그리드셋팅의 코드파인드 식별ID
+	var cdCorp = this.dsList.getColumn(this.dsList.rowposition, "CD_CORP");
+
+	switch(id) {
+		case "DHX_CFACNTUNIT":	//귀속부서
+			dsUserParam.setColumn(nrow, "CD_DEPT_UPPER"	, "");				//상위부서
+			dsUserParam.setColumn(nrow, "YN_SLIPACCEPT"	, "");				//전표발행여부
+			dsUserParam.setColumn(nrow, "CD_CORP"		, cdCorp);			//법인코드
+			dsUserParam.setColumn(nrow, "YN_USE"		, "Y");				//사용여부
+			dsUserParam.setColumn(nrow, "GR_DEPT_ACNT"	, "");				//현장/본사여부
+			dsUserParam.setColumn(nrow, "LEVCD_DEPT_UPPER", this.AuthClient.LEVCD_DEPT_UPPER);
+		break;
+		case "DHX_CFVENDOR":	//거래처코드	
+			dsUserParam.setColumn(nrow, "TY_VENDOR" , "X");		//거래처구분
+			dsUserParam.setColumn(nrow, "YN_RELATED", "");		//관계사여부
+		break;
+
+		case "DHX_CFALLVENDOR_CODEFIND":	//거래처코드
+			dsUserParam.setColumn(nrow, "CD_CORP" , cdCorp);
+		break;
+		
+		case "DHX_CFACCOUNT":	//계정코드	
+			dsUserParam.setColumn(nrow, "YN_SLIP", "Y");
+			var sMinValue = this.dsList.getColumn(this.dsList.rowposition, "CD_DEPT_BE");
+			dsUserParam.setColumn(nrow, "MIN_VALUE", sMinValue);	
+		break;
+		
+		case "DZX_CFCODE_COM_V10":	//증빙코드	
+			dsUserParam.setColumn(nrow, "CD_SYSTEM" , "DH");
+			dsUserParam.setColumn(nrow, "CD_TYPE" , "V10");			
+			break;
+
+		case "DZX_CFCODE_COM_V11":	//증빙코드	
+			dsUserParam.setColumn(nrow, "CD_SYSTEM" , "DH");
+			dsUserParam.setColumn(nrow, "CD_TYPE" , "V11");			
+			break;
+	}
+
+	return true;
+}
+
+this.fnGrid_AfterCDTextChanged = function(id, codeFindData) {
+	var arrData = codeFindData;
+	var rowPos = this.dsList.rowposition;
+	switch(id) {
+		case "DHX_CFACNTUNIT":	//귀속부서
+			
+		break;
+
+		case "DHX_COMMON_CODEFIND_SELECT":	//증빙선택
+		case "DZX_CFCODE_COM_V10":	//증빙선택
+		case "DZX_CFCODE_COM_V11":	//증빙선택
+		
+			if (arrData.length > 0) {
+
+				this.dsList.set_enableevent(false);
+				this.dsList.setColumn(rowPos, "VAT_RATE"  , arrData[0]["DS_ETC2"]);
+				this.dsList.setColumn(rowPos, "YN_VATBGJE", (arrData[0]["DS_ETC3"] == "Y" ? "Y" : "N"));
+				
+				//this.dsList.setColumn(rowPos, "NO_CREDIT", "");
+				//this.dsList.setColumn(rowPos, "DS_CREDIT", "");
+				this.dsList.setColumn(rowPos, "TY_VATBGJE", "");
+				
+				var cdCode = arrData[0]["CD_CODE"];
+				
+				/*
+				//매입일 경우
+				if(this.dsList.getColumn(rowPos, "TY_SALEBUY") == "I"){
+					if(cdCode == "16" || cdCode == "17" || cdCode == "18" || cdCode == "19"){
+						this.fnSetNoCreditCol("ADD");
+					}else if(cdCode == "22"){	//현금영수증
+						this.fnSetNoCreditCol("DEL");	
+					}
+				}
+				
+				//공급가액이 있을경우
+				if(!this.gfnIsNull(this.dsList.getColumn(rowPos, "AM_SUPPLY"))){
+					var amSupply = nexacro.toNumber(this.dsList.getColumn(rowPos, "AM_SUPPLY"), 0);
+					
+					this.fnVatCal(amSupply);
+
+					var amVat = nexacro.toNumber(this.dsList.getColumn(rowPos, "AM_VAT"), 0);
+					this.dsList.setColumn(rowPos, "AM_TOTAL", amSupply + amVat);
+				}
+				*/
+				this.dsList.set_enableevent(true);
+				
+			}
+			break;
+ 	}
+};
+
+//그리드 값변경 이벤트
+this.dsList_ColumnChanged = function(obj:nexacro.NormalDataset, e:nexacro.DSColChangeEventInfo)
+{
+	if(e.columnid == "TY_SALEBUY"){	//거래구분
+		obj.setColumn(e.row, "CD_PROOF", "");	//증빙선택 초기화
+		obj.setColumn(e.row, "DS_PROOF", "");	//증빙선택 초기화
+		obj.setColumn(e.row, "TY_VATBGJE", "");	//불공제사유 초기화
+	}
+	
+	if(e.columnid == "AM_SUPPLY"){	//공급가
+		var am_supply = nexacro.round(nexacro.toNumber(e.newvalue,0) * 0.1);
+		obj.setColumn(e.row, "AM_VAT", am_supply);
+	}
+	
+};
+// 셀 수정가능 여부 (반드시 EnterCell에서 처리할것)
+// cell 수정안되는것만 return false 할것
+// 마지막에 return true 해버리면 전체 컬럼 수정가능해져버림
+this.fnGrid_EnterCell = function(obj:nexacro.Grid, row, cell) {
+	var colNm = this.gfnGridGetBindColumnNameByIndex(obj, cell);
+	var objDs = this.dxGrid.getBindDataset();
+	var changFalg = false;
+
+
+	if(!this.gfnIsNull(this.dsList.getColumn(row, "CHK"))){
+		return true;
+	}
+    
+	//trace("CD_TRADE =>" + this.gfnIsNull(this.dsList.getColumn(row, "CD_TRADE")) );
+	if(this.gfnIsNull(this.dsList.getColumn(row, "CD_TRADE"))){
+			// 공통 > Setting > 그리드정보 에서 셋팅한 내용대로 
+		var nGrdSpcRow = this.dsGridSpec.findRow( "DS_FIELD", colNm);
+		if(this.dsGridSpec.getColumn(nGrdSpcRow, "YN_READONLY") == "Y"){
+			//return false;
+			changFalg = false;
+		} else {
+			changFalg = true;
+		} 
+	} else {	
+		changFalg = false;
+	}
+
+	//trace("changFalg =>" + changFalg);
+	switch(colNm) {
+		case "CD_PROOF" : //증빙
+		case "DS_PROOF" : //증빙
+			var CD_CODEFIND = "DZX_CFCODE_COM"; // 관리ID
+			var NM_CODEFIND = (objDs.getColumn(row, "TY_SALEBUY") == "I") ? "DZX_CFCODE_COM_V10" : "DZX_CFCODE_COM_V11";
+			//증빙코드(CD_PROOF), 증빙명칭(DS_PROOF)
+			this.dxGrid.usCodefindInfo["CD_PROOF"].CD_CODEFIND = "DZX_CFCODE_COM";	// 관리ID
+			this.dxGrid.usCodefindInfo["CD_PROOF"].NM_CODEFIND = NM_CODEFIND;	// 식별ID
+			this.dxGrid.usCodefindInfo["DS_PROOF"].CD_CODEFIND = "DZX_CFCODE_COM";
+			this.dxGrid.usCodefindInfo["DS_PROOF"].NM_CODEFIND = NM_CODEFIND;
+
+			//changFalg = (objDs.getColumn(row, "CD_CHANGE") == "02") ? false : true;
+			changFalg = true;
+			
+			break;		
+	}
+	
+	return changFalg;
+// 	if(changFalg){
+// 		return true;
+// 	}else{
+// 		return false;
+// 	}	
+
+	//return true;
+}
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+//검색조건 변경 이벤트
+this.dsSearch_Valuechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{	
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+
+//엑셀업로드 처리
+this.fnExcelUpload = function (obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+		this.gfnAlert("법인코드를 선택하세요.");
+		this.ccfCD_CORP.form.CDTextBox.setFocus();
+		return;
+	}
+
+	this.gfnExcelImport("dsList", "", "A3", "fnExcelImportCallback", "import", this);
+};
+
+/*
+ *	엑셀업로드 Callback
+ */ 
+this.fnExcelImportCallback = function(sImportId, dsOut, dsSheet) {
+	
+	// 엑셀 양식과 그리드 컬럼이 그대로 일치 하는경우 아래와 같이 처리.
+	// 아닌경우는 이부분 주석처리
+	if (dsOut.rowcount == 0)  {
+		this.gfnAlert("엑셀파일에 내용이 없습니다."); 
+		return false;
+	}
+	
+	this.dsList.clearData();
+		
+	for (var i=0; i< this.dsList.getColCount(); i++)
+	{
+		sColumnId = "Column"+i;
+		var sColumnNm = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, i);
+		if (sColumnNm != "" && sColumnId != sColumnNm)
+		{
+			//dsOut.updateColID(sColumnId, sColumnNm);
+		}
+	}
+	
+	// 양식이 일치하고 엑셀내역을 기존데이터에 Insert하지 않고
+	// 엑셀내역 그대로 그리드 반영할 시 copyData
+	//this.dsList.copyData(dsOut);
+	//trace("rowcount :: "+dsOut.rowcount);
+
+	var DT_SEQ = parseFloat(this.gfnGetDate("milli").substring(2));
+	var NO_TRADE = "";
+	var YN_VATBGJE = "N";	// 불공제여부
+	var oDsColCnt = dsOut.getColCount();
+	this.dsList.set_enableevent(false);
+	
+	
+	for (var i=0; i< dsOut.rowcount; i++) {
+		var nrow = this.dsList.addRow();
+		
+		if (NO_TRADE != dsOut.getColumn(i, "Column0")) {
+			NO_TRADE = dsOut.getColumn(i, "Column0");
+			DT_SEQ = parseFloat(DT_SEQ) + 1;
+		}
+		
+		YN_VATBGJE = ((dsOut.getColumn(i, "Column11") == "13" || dsOut.getColumn(i, "Column11") == "19" )? "Y" : "N");
+
+		this.dsList.setColumn(nrow, this.ucFlag		, "I");
+		this.dsList.setColumn(nrow, "CD_CORP"		, this.ccfCD_CORP.form.CDTextBox.text);		//법인코드 셋팅
+		this.dsList.setColumn(nrow, "SEQ"			, "");
+		this.dsList.setColumn(nrow, "DT_SEQ"	, DT_SEQ);
+		this.dsList.setColumn(nrow, "NO_TRADE"	, dsOut.getColumn(i, "Column0"));
+		this.dsList.setColumn(nrow, "DT_ACCOUNT", dsOut.getColumn(i, "Column1"));
+		this.dsList.setColumn(nrow, "DS_DEPT_BE", dsOut.getColumn(i, "Column2"));
+		this.dsList.setColumn(nrow, "CD_ACCOUNT", dsOut.getColumn(i, "Column3"));
+		this.dsList.setColumn(nrow, "CD_EXEC_CURR"	, dsOut.getColumn(i, "Column4"));
+		this.dsList.setColumn(nrow, "AM_EXEC_DR", dsOut.getColumn(i, "Column5"));
+		this.dsList.setColumn(nrow, "AM_DR"		, dsOut.getColumn(i, "Column6"));
+		this.dsList.setColumn(nrow, "AM_EXEC_CR", dsOut.getColumn(i, "Column7"));
+		this.dsList.setColumn(nrow, "AM_CR"		, dsOut.getColumn(i, "Column8"));
+		this.dsList.setColumn(nrow, "DS_REM"	, dsOut.getColumn(i, "Column9"));
+		this.dsList.setColumn(nrow, "TY_SALEBUY", ((dsOut.getColumn(i, "Column10") == "매출") ? "O" : "I"));
+		this.dsList.setColumn(nrow, "CD_PROOF"	, dsOut.getColumn(i, "Column11"));
+		this.dsList.setColumn(nrow, "TY_VATBGJE", dsOut.getColumn(i, "Column12"));
+		this.dsList.setColumn(nrow, "AM_SUPPLY"	, dsOut.getColumn(i, "Column13"));
+		this.dsList.setColumn(nrow, "AM_VAT"	, dsOut.getColumn(i, "Column14"));
+		this.dsList.setColumn(nrow, "DS_VENDOR"	, dsOut.getColumn(i, "Column15"));
+		this.dsList.setColumn(nrow, "CD_ETC1"	, dsOut.getColumn(i, "Column16"));
+		this.dsList.setColumn(nrow, "CD_ETC2"	, dsOut.getColumn(i, "Column17"));
+		this.dsList.setColumn(nrow, "NO_REF"	, dsOut.getColumn(i, "Column18"));
+		this.dsList.setColumn(nrow, "NO_REF2"	, dsOut.getColumn(i, "Column19"));
+		this.dsList.setColumn(nrow, "AM_REF1"	, dsOut.getColumn(i, "Column20"));
+		this.dsList.setColumn(nrow, "AM_REF2"	, dsOut.getColumn(i, "Column21"));
+		this.dsList.setColumn(nrow, "DT_REF1"	, dsOut.getColumn(i, "Column22"));
+		this.dsList.setColumn(nrow, "DT_REF2"	, dsOut.getColumn(i, "Column23"));
+		this.dsList.setColumn(nrow, "RT_REF1"	, dsOut.getColumn(i, "Column24"));
+		this.dsList.setColumn(nrow, "RT_REF2"	, dsOut.getColumn(i, "Column25"));
+		this.dsList.setColumn(nrow, "YN_VATBGJE", YN_VATBGJE);	// 불공제여부
+
+		//this.dsList.setColumn(nrow, "NO_REF"		, this.gfnRemoveSpecialChar(this.gfnNvl(dsOut.getColumn(i, "Column8"),"")));		//계좌번호
+		this.dsList.setColumn(nrow, "YN_LAST"		,(i == dsOut.rowcount-1 ? "Y" : "N"));	//마지막 데이터 여부
+		this.dsList.setColumn(nrow, "YN_EXCEL"		, "Y");		//엑셀여부
+	}
+	
+	//trace("saveXML :: "+this.dsList.saveXML());
+	this.dsList.set_enableevent(true);
+	this.gfnSetFormStatus(this, "I");
+	// 등록버튼 diabled
+	this.FormBtns.Add.set_enable(false);	
+	
+};
+
+//엑셀다운 처리
+this.fnExcelDown = function (obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnExcelExport(this.divData.form.grdFormat, null, "엑셀전표발행 양식");
+};
+
+//전표발행 처리
+this.fnIssueSlip = function (obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.gfnIsNull(this.gfnTrim(this.ccfCD_CORP.form.CDTextBox.value))) {
+		this.gfnAlert("법인코드는 필수입니다.");
+		this.ccfCD_CORP.form.CDTextBox.setFocus();
+		return;
+	}
+
+	var Temp1 = "";
+	var RowCount = this.dsList.rowcount;
+
+	for (var i = 0 ; i < RowCount ; i++) {
+		if (this.dsList.getColumn(i, "CHK") == 1 && this.gfnIsNull(this.dsList.getColumn(i, "CD_TRADE")) == true)  {
+			Temp1 += "," + this.dsList.getColumn(i, "SEQ");
+		}
+	}
+
+	if (Temp1 == "") {
+		this.gfnAlert("선택된 항목이 없습니다.");
+		return;
+	}
+
+	this.gfnConfirm("전표발행 하시겠습니까?", "fnIssueSlip_callback", Temp1, "B");	
+};
+
+this.fnIssueSlip_callback = function(strId, val) 
+{
+	if(val == true) {
+		this.dsIssueSlip.clearData();
+		var nRow = this.dsIssueSlip.addRow();
+		
+		//처리할 데이터 담기
+		this.dsIssueSlip.setColumn(nRow, "CD_CORP"		, this.ccfCD_CORP.form.CDTextBox.value);
+		this.dsIssueSlip.setColumn(nRow, "SEQ"			, strId);
+		this.dsIssueSlip.setColumn(nRow, "ID_USER" 		, this.AuthClient.ID_USER);
+
+		var strSvcId    = "issueSlip";
+		var strSvcType  = "savesel";
+		var inProc		= "_dsProc";
+		var inData      = "issueSlip=dsIssueSlip";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); 	// 통신방법 정의 [생략가능]
+	}
+};
+
+//전표취소 처리
+this.fnCancelSlip = function (obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var Temp1 = "";
+	var Bef_CD_TRADE = "";
+	var RowCount = this.dsList.rowcount;
+
+	for (var i = 0 ; i < RowCount ; i++) {
+		if (this.dsList.getColumn(i, "CHK") == 1 && this.gfnIsNull(this.dsList.getColumn(i, "CD_TRADE")) == false)  {
+			if (Bef_CD_TRADE != this.dsList.getColumn(i, "CD_TRADE")) {		// 동일한 데이터를 걸러내기 위해 
+				Temp1 += "," + this.dsList.getColumn(i, "CD_TRADE");
+			}
+			Bef_CD_TRADE = this.dsList.getColumn(i, "CD_TRADE");
+		}
+	}
+
+	if (Temp1 == "") {
+		this.gfnAlert("전표발행된 항목이 없습니다.");
+		return;
+	}
+	
+	this.gfnConfirm("전표를 취소하시겠습니까 ?", "fnCancelSlip_callback", Temp1, "B");	
+};
+
+this.fnCancelSlip_callback = function(strId, val) 
+{
+	if(val == true) {
+		this.dsCancelSlip.clearData();
+		var nRow = this.dsCancelSlip.addRow();
+		
+		//처리할 데이터 담기
+		this.dsCancelSlip.setColumn(nRow, "CD_CORP"		, this.ccfCD_CORP.form.CDTextBox.value);
+		this.dsCancelSlip.setColumn(nRow, "CD_TRADE"	, strId);
+		this.dsCancelSlip.setColumn(nRow, "ID_USER" 	, this.AuthClient.ID_USER);
+
+		var strSvcId    = "cancelSlip";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "cancelSlip=dsCancelSlip";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); 	// 통신방법 정의 [생략가능]
+	}
+};
+
+//전표 조회 
+this.fnSearchSlip = function (obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.gfnIsNull(this.gfnAllTrim(this.dsList.getColumn(this.dsList.rowposition, "CD_TRADE")))) {
+		this.gfnAlert("전표번호는 필수입니다.");
+		return;
+	}
+	
+	var param = {};
+	param.IUD_FLAG = "S";
+	param.CD_TRADE = this.gfnAllTrim(this.dsList.getColumn(this.dsList.rowposition, "CD_TRADE"));
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DHA_ISSUESLIP", "fnPopupCallBack", param, this.getOffsetWidth(), this.getOffsetHeight());
+	
+};
+
+this.divData_objGrid_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var strColumnName = this.gfnGridGetBindColumnNameByIndex(obj, e.col);
+	var curRow = this.dsList.rowposition;
+	var rowCount;
+
+	switch(strColumnName) {
+		case "NO_TRADE":	// 사업관리비_법인카드
+			rowCount = this.dsList.rowcount;
+			var DT_SEQ = this.dsList.getColumn(curRow, "DT_SEQ");
+
+			for (var i = 0 ; i < rowCount ; i++) {
+				if (this.dsList.getColumn(i, "DT_SEQ") == DT_SEQ)  {
+					this.dsList.setColumn(i, "CHK", "1");
+				} 
+			}
+			break;
+	}
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DHAPR_SLIP_EXCEL_SELECT2</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DHAPR_SLIP_EXCEL_INSERT2</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DHAPR_SLIP_EXCEL_UPDATE2</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DHAPR_SLIP_EXCEL_DELETE2</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">issueSlip</Col>
+            <Col id="SP">DHAPR_SLIP_EXCEL_AUTOSLIP3</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DHAPR_SLIP_EXCEL_CANCELSLIP3</Col>
+            <Col id="TARGET">cancelSlip</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DT_ACCOUNT_FR" type="STRING" size="256"/>
+          <Column id="DT_ACCOUNT_TO" type="STRING" size="256"/>
+          <Column id="CD_NATION" type="STRING" size="256"/>
+          <Column id="YN_SLIP" type="STRING" size="256"/>
+          <Column id="MM_BASE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CORP"/>
+            <Col id="DT_ACCOUNT_FR"/>
+            <Col id="DT_ACCOUNT_TO"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <FileDownTransfer id="FileDownTransfer00"/>
+      <Dataset id="dsFormat">
+        <ColumnInfo>
+          <Column id="NO_TRADE" type="INT" size="256"/>
+          <Column id="DT_ACCOUNT" type="STRING" size="256"/>
+          <Column id="CD_DEPT_BE" type="STRING" size="256"/>
+          <Column id="CD_ACCOUNT" type="STRING" size="256"/>
+          <Column id="DS_ACCOUNT" type="STRING" size="256"/>
+          <Column id="DS_ACCOUNT" type="STRING" size="256"/>
+          <Column id="CD_CURR" type="STRING" size="256"/>
+          <Column id="AM_EXEC_DR" type="BIGINT" size="256"/>
+          <Column id="AM_DR" type="INT" size="256"/>
+          <Column id="AM_EXEC_CR" type="BIGINT" size="256"/>
+          <Column id="AM_CR" type="INT" size="256"/>
+          <Column id="DS_REM" type="STRING" size="256"/>
+          <Column id="CD_VENDOR" type="STRING" size="256"/>
+          <Column id="CD_ETC1" type="STRING" size="256"/>
+          <Column id="CD_ETC2" type="STRING" size="256"/>
+          <Column id="NO_REF" type="STRING" size="256"/>
+          <Column id="NO_REF2" type="STRING" size="256"/>
+          <Column id="AM_REF1" type="STRING" size="256"/>
+          <Column id="AM_REF2" type="STRING" size="256"/>
+          <Column id="DT_REF1" type="STRING" size="256"/>
+          <Column id="DT_REF2" type="STRING" size="256"/>
+          <Column id="RT_REF1" type="STRING" size="256"/>
+          <Column id="RT_REF2" type="STRING" size="256"/>
+          <Column id="TY_SALEBUY" type="STRING" size="256"/>
+          <Column id="TY_VATBGJE" type="STRING" size="256"/>
+          <Column id="AM_SUPPLY" type="STRING" size="256"/>
+          <Column id="AM_VAT" type="STRING" size="256"/>
+          <Column id="CD_PROOF" type="STRING" size="256"/>
+          <Column id="CD_CURR" type="STRING" size="256"/>
+          <Column id="AM_EXEC_DR" type="STRING" size="256"/>
+          <Column id="AM_EXEC_CR" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="NO_TRADE">1</Col>
+            <Col id="DT_ACCOUNT">20230403</Col>
+            <Col id="CD_DEPT_BE">HQ0005</Col>
+            <Col id="CD_ACCOUNT">11110106</Col>
+            <Col id="DS_ACCOUNT">선급금(기타)</Col>
+            <Col id="CD_CURR">KRW</Col>
+            <Col id="AM_EXEC_DR">1000000</Col>
+            <Col id="AM_DR">1000000</Col>
+            <Col id="DS_REM">엑셀 전표발행</Col>
+            <Col id="CD_VENDOR">11087</Col>
+            <Col id="CD_ETC1"/>
+            <Col id="CD_ETC2"/>
+            <Col id="NO_REF"/>
+            <Col id="NO_REF2"/>
+            <Col id="AM_REF1"/>
+            <Col id="AM_REF2"/>
+            <Col id="DT_REF1"/>
+            <Col id="DT_REF2"/>
+            <Col id="RT_REF1"/>
+            <Col id="RT_REF2"/>
+            <Col id="AM_CR"/>
+            <Col id="TY_SALEBUY">매입</Col>
+            <Col id="AM_SUPPLY"> 1000000 </Col>
+            <Col id="AM_VAT">100000</Col>
+            <Col id="TY_VATBGJE"/>
+            <Col id="CD_PROOF">11</Col>
+          </Row>
+          <Row>
+            <Col id="NO_TRADE">1</Col>
+            <Col id="DT_ACCOUNT">20230403</Col>
+            <Col id="CD_DEPT_BE">HQ0005</Col>
+            <Col id="CD_ACCOUNT">11110301</Col>
+            <Col id="DS_ACCOUNT">매입부가가치세(국내)</Col>
+            <Col id="CD_CURR">KRW</Col>
+            <Col id="AM_EXEC_DR">1000000</Col>
+            <Col id="AM_DR">100000</Col>
+            <Col id="DS_REM">엑셀 전표발행</Col>
+            <Col id="NO_REF"/>
+            <Col id="CD_VENDOR">11087</Col>
+            <Col id="CD_ETC2"/>
+            <Col id="CD_ETC1"/>
+            <Col id="DT_REF1"/>
+            <Col id="AM_REF1"/>
+            <Col id="AM_REF2"/>
+            <Col id="DT_REF2"/>
+            <Col id="RT_REF1"/>
+            <Col id="RT_REF2"/>
+            <Col id="TY_SALEBUY">매입</Col>
+            <Col id="AM_SUPPLY"/>
+            <Col id="AM_VAT"/>
+            <Col id="CD_PROOF"/>
+            <Col id="AM_CR"/>
+          </Row>
+          <Row>
+            <Col id="NO_TRADE">1</Col>
+            <Col id="DT_ACCOUNT">20230403</Col>
+            <Col id="CD_DEPT_BE">HQ0005</Col>
+            <Col id="CD_ACCOUNT">21010213</Col>
+            <Col id="DS_ACCOUNT">미지급금(기타)</Col>
+            <Col id="CD_CURR">KRW</Col>
+            <Col id="AM_DR"/>
+            <Col id="AM_EXEC_CR">1100000</Col>
+            <Col id="AM_CR">1100000</Col>
+            <Col id="DS_REM">엑셀 전표발행</Col>
+            <Col id="CD_VENDOR">11087</Col>
+            <Col id="DT_REF1"/>
+            <Col id="AM_REF1"/>
+            <Col id="AM_REF2"/>
+            <Col id="DT_REF2">20230420</Col>
+            <Col id="RT_REF1"/>
+            <Col id="RT_REF2"/>
+            <Col id="TY_SALEBUY">매입</Col>
+            <Col id="AM_SUPPLY"/>
+            <Col id="AM_VAT"/>
+            <Col id="CD_PROOF"/>
+            <Col id="CD_ETC1"/>
+            <Col id="CD_ETC2"/>
+            <Col id="NO_REF">32300109401001</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item4" compid="divSearch.form.ccboYN_SLIP" propid="value" datasetid="dsSearch" columnid="YN_SLIP"/>
+      <BindItem id="item1" compid="divSearch.form.ctclMM_BASE.form.TextBox" propid="value" datasetid="dsSearch" columnid="MM_BASE"/>
+    </Bind>
+  </Form>
+</FDL>

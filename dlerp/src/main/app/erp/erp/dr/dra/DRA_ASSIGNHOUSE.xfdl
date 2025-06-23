@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_ACNTUNIT" taborder="1" text="사업지코드" left="0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Edit id="ctxtCD_ACNTUNIT" taborder="2" left="staCD_ACNTUNIT:0.0" top="10.0" width="100" height="24.0" readonly="true" textAlign="center"/>
+              <Edit id="ctxtDS_ACNTUNIT" taborder="3" left="ctxtCD_ACNTUNIT:0.0" top="10.0" width="200" height="24.0" readonly="true" textAlign="left"/>
+              <MaskEdit id="ctxtNO_SIZE" taborder="4" left="ctxtDS_ACNTUNIT:0.0" top="10.0" width="100" height="24.0" value="" readonly="true" format="#,0.###0" type="number" maskchar=" " textAlign="right"/>
+              <Static id="staMETER" taborder="5" text="m²" left="ctxtNO_SIZE:0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtTY_TYPE" taborder="6" left="staMETER:0.0" top="10.0" width="60" height="24.0" readonly="true" textAlign="right"/>
+              <Static id="staMSG00" taborder="7" text="형 " left="ctxtTY_TYPE:0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtYN_TAX" taborder="8" left="staMSG00:0.0" top="10.0" width="60" height="24.0" readonly="true" textAlign="right"/>
+              <Static id="staMSG01" taborder="9" text="군/OPTION" left="ctxtYN_TAX:0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtGUN" taborder="10" left="staMSG01:0.0" top="10.0" width="60" height="24.0" readonly="true" textAlign="right"/>
+              <Edit id="ctxtOPTION" taborder="11" left="ctxtGUN:0.0" top="10.0" width="60" height="24.0" readonly="true" textAlign="right"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsSearch.setColumn(0, "CD_ACNTUNIT", this.getOwnerFrame().CD_ACNTUNIT);
+	this.dsSearch.setColumn(0, "DS_ACNTUNIT", this.getOwnerFrame().DS_ACNTUNIT);
+	this.dsSearch.setColumn(0, "NO_SIZE", this.getOwnerFrame().NO_SIZE);
+	this.dsSearch.setColumn(0, "TY_TYPE", this.getOwnerFrame().TY_TYPE);
+	this.dsSearch.setColumn(0, "YN_TAX", this.getOwnerFrame().YN_TAX);
+	this.dsSearch.setColumn(0, "TY_DISTRICT", this.getOwnerFrame().TY_DISTRICT);
+	this.dsSearch.setColumn(0, "RT_OPTION", this.getOwnerFrame().RT_OPTION);
+
+	this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnAuto = this.gfnFormButtonAdd("btnAuto", "fnAuto");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DR", "DRA_ASSIGNHOUSE");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_ACNTUNIT", "string");
+	this.dsSelect.addColumn("TY_GUBUN", "string");
+	this.dsSelect.addColumn("NO_CHASU", "string");
+	this.dsSelect.addColumn("NO_SIZE", "bigdecimal");
+	this.dsSelect.addColumn("TY_TYPE", "string");
+	this.dsSelect.addColumn("TY_DISTRICT", "string");
+	this.dsSelect.addColumn("RT_OPTION", "string");
+
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("CD_ACNTUNIT", "string");
+	this.dsInsert.addColumn("TY_GUBUN", "string");
+	this.dsInsert.addColumn("NO_CHASU", "string");
+	this.dsInsert.addColumn("NO_SIZE", "bigdecimal");
+	this.dsInsert.addColumn("TY_TYPE", "string");
+	this.dsInsert.addColumn("TY_DISTRICT", "string");
+	this.dsInsert.addColumn("RT_OPTION", "string");
+	this.dsInsert.addColumn("NO_DONG", "string");
+	this.dsInsert.addColumn("NO_FLOOR", "string");
+	this.dsInsert.addColumn("NO_HO", "string");
+	this.dsInsert.addColumn("TY_BUNYANG", "string");
+	this.dsInsert.addColumn("ID_INSERT", "string");
+	this.dsInsert.addColumn("YN_MIX", "string");
+	this.dsInsert.addColumn("TY_CONTRACTDTL", "string");
+
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("CD_ACNTUNIT", "string");
+	this.dsUpdate.addColumn("TY_GUBUN", "string");
+	this.dsUpdate.addColumn("NO_CHASU", "string");
+	this.dsUpdate.addColumn("NO_SIZE", "bigdecimal");
+	this.dsUpdate.addColumn("TY_TYPE", "string");
+	this.dsUpdate.addColumn("TY_DISTRICT", "string");
+	this.dsUpdate.addColumn("RT_OPTION", "string");
+	this.dsUpdate.addColumn("NO_DONG", "string");
+	this.dsUpdate.addColumn("NO_FLOOR", "string");
+	this.dsUpdate.addColumn("NO_HO", "string");
+	this.dsUpdate.addColumn("TY_BUNYANG", "string");
+	this.dsUpdate.addColumn("ID_UPDATE", "string");
+	this.dsUpdate.addColumn("YN_MIX", "string");
+	this.dsUpdate.addColumn("TY_CONTRACTDTL", "string");
+
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("CD_ACNTUNIT", "string");
+	this.dsDelete.addColumn("TY_GUBUN", "string");
+	this.dsDelete.addColumn("NO_CHASU", "string");
+	this.dsDelete.addColumn("NO_DONG", "string");
+	this.dsDelete.addColumn("NO_FLOOR", "string");
+	this.dsDelete.addColumn("NO_HO", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0,6));
+	this.dsSelect.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6,1));
+	this.dsSelect.setColumn(0, "NO_CHASU", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7,2));
+	this.dsSelect.setColumn(0, "NO_SIZE", this.dsSearch.getColumn(0, "NO_SIZE"));
+	this.dsSelect.setColumn(0, "TY_TYPE", this.dsSearch.getColumn(0, "TY_TYPE"));
+	this.dsSelect.setColumn(0, "TY_DISTRICT", this.dsSearch.getColumn(0, "TY_DISTRICT"));
+	this.dsSelect.setColumn(0, "RT_OPTION", this.dsSearch.getColumn(0, "RT_OPTION"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	var nrow = this.gfnGridAdd(this.dxGrid); // top (default), bottom, current
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	// 그리드 필수항목 체크
+	if (!this.gfnGridValidate(this.dxGrid)) return;	
+
+	this.dxGrid.updateToDataset();
+		
+	this.dsInsert.clearData();
+	this.dsUpdate.clearData();
+	this.dsDelete.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+			case "I":
+				var nrow = this.dsInsert.addRow();
+				this.dsInsert.setColumn(nrow, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0,6));
+				this.dsInsert.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6,1));
+				this.dsInsert.setColumn(nrow, "NO_CHASU", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7,2));
+				this.dsInsert.setColumn(nrow, "NO_SIZE", this.dsSearch.getColumn(0, "NO_SIZE"));
+				this.dsInsert.setColumn(nrow, "TY_TYPE", this.dsSearch.getColumn(0, "TY_TYPE"));
+				this.dsInsert.setColumn(nrow, "TY_DISTRICT", this.dsSearch.getColumn(0, "TY_DISTRICT"));
+				this.dsInsert.setColumn(nrow, "RT_OPTION", this.dsSearch.getColumn(0, "RT_OPTION"));
+				this.dsInsert.setColumn(nrow, "NO_DONG", this.dsList.getColumn(i, "NO_DONG"));
+				this.dsInsert.setColumn(nrow, "NO_FLOOR", this.dsList.getColumn(i, "NO_FLOOR"));
+				this.dsInsert.setColumn(nrow, "NO_HO", this.dsList.getColumn(i, "NO_HO"));
+				this.dsInsert.setColumn(nrow, "TY_BUNYANG", this.dsList.getColumn(i, "TY_BUNYANG"));
+				this.dsInsert.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+				this.dsInsert.setColumn(nrow, "YN_MIX", this.dsList.getColumn(i, "YN_MIX"));
+				this.dsInsert.setColumn(nrow, "TY_CONTRACTDTL", this.dsList.getColumn(i, "TY_CONTRACTDTL"));
+				break;
+				
+			case "U":
+				var nrow = this.dsUpdate.addRow();
+				this.dsUpdate.setColumn(nrow, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0,6));
+				this.dsUpdate.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6,1));
+				this.dsUpdate.setColumn(nrow, "NO_CHASU", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7,2));
+				this.dsUpdate.setColumn(nrow, "NO_SIZE", this.dsSearch.getColumn(0, "NO_SIZE"));
+				this.dsUpdate.setColumn(nrow, "TY_TYPE", this.dsSearch.getColumn(0, "TY_TYPE"));
+				this.dsUpdate.setColumn(nrow, "TY_DISTRICT", this.dsSearch.getColumn(0, "TY_DISTRICT"));
+				this.dsUpdate.setColumn(nrow, "RT_OPTION", this.dsSearch.getColumn(0, "RT_OPTION"));
+				this.dsUpdate.setColumn(nrow, "NO_DONG", this.dsList.getColumn(i, "NO_DONG"));
+				this.dsUpdate.setColumn(nrow, "NO_FLOOR", this.dsList.getColumn(i, "NO_FLOOR"));
+				this.dsUpdate.setColumn(nrow, "NO_HO", this.dsList.getColumn(i, "NO_HO"));
+				this.dsUpdate.setColumn(nrow, "TY_BUNYANG", this.dsList.getColumn(i, "TY_BUNYANG"));
+				this.dsUpdate.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+				this.dsUpdate.setColumn(nrow, "YN_MIX", this.dsList.getColumn(i, "YN_MIX"));
+				this.dsUpdate.setColumn(nrow, "TY_CONTRACTDTL", this.dsList.getColumn(i, "TY_CONTRACTDTL"));
+				break;
+				
+			case "D":
+				var nrow = this.dsDelete.addRow();
+				this.dsDelete.setColumn(nrow, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0,6));
+				this.dsDelete.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6,1));
+				this.dsDelete.setColumn(nrow, "NO_CHASU", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7,2));
+				this.dsDelete.setColumn(nrow, "NO_DONG", this.dsList.getColumn(i, "NO_DONG"));
+				this.dsDelete.setColumn(nrow, "NO_FLOOR", this.dsList.getColumn(i, "NO_FLOOR"));
+				this.dsDelete.setColumn(nrow, "NO_HO", this.dsList.getColumn(i, "NO_HO"));
+
+				break;
+		}
+	}
+	
+	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+	}
+	else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+
+this.fnAuto = function()
+{
+	var param = {};
+	
+	param.CD_ACNTUNIT = this.dsSearch.getColumn(0, "CD_ACNTUNIT");
+	param.DS_ACNTUNIT = this.dsSearch.getColumn(0, "DS_ACNTUNIT");
+	param.NO_SIZE = this.dsSearch.getColumn(0, "NO_SIZE");
+	param.TY_TYPE = this.dsSearch.getColumn(0, "TY_TYPE");
+	param.TY_DISTRICT = this.dsSearch.getColumn(0, "TY_DISTRICT");
+	param.RT_OPTION = this.dsSearch.getColumn(0, "RT_OPTION");
+	param.YN_TAX = this.dsSearch.getColumn(0, "YN_TAX");
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DRA_AUTOASSIGNDLG", "fnAuto_callback", param);	
+}
+
+this.fnAuto_callback = function(strId, val)
+{
+	if(val == true)
+	{
+		this.FormBtns.Select.click();
+	}
+}]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DRAPR_ASSIGNHOUSE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DRAPR_ASSIGNHOUSE_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DRAPR_ASSIGNHOUSE_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DRAPR_CONTRACTOR_DELETE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_ACNTUNIT" type="STRING" size="256"/>
+          <Column id="DS_ACNTUNIT" type="STRING" size="256"/>
+          <Column id="NO_SIZE" type="STRING" size="256"/>
+          <Column id="TY_TYPE" type="STRING" size="256"/>
+          <Column id="YN_TAX" type="STRING" size="256"/>
+          <Column id="TY_DISTRICT" type="STRING" size="256"/>
+          <Column id="RT_OPTION" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctxtCD_ACNTUNIT" propid="value" datasetid="dsSearch" columnid="CD_ACNTUNIT"/>
+      <BindItem id="item1" compid="divSearch.form.ctxtDS_ACNTUNIT" propid="value" datasetid="dsSearch" columnid="DS_ACNTUNIT"/>
+      <BindItem id="item2" compid="divSearch.form.ctxtNO_SIZE" propid="value" datasetid="dsSearch" columnid="NO_SIZE"/>
+      <BindItem id="item3" compid="divSearch.form.ctxtTY_TYPE" propid="value" datasetid="dsSearch" columnid="TY_TYPE"/>
+      <BindItem id="item4" compid="divSearch.form.ctxtYN_TAX" propid="value" datasetid="dsSearch" columnid="YN_TAX"/>
+      <BindItem id="item5" compid="divSearch.form.ctxtGUN" propid="value" datasetid="dsSearch" columnid="TY_DISTRICT"/>
+      <BindItem id="item6" compid="divSearch.form.ctxtOPTION" propid="value" datasetid="dsSearch" columnid="RT_OPTION"/>
+    </Bind>
+  </Form>
+</FDL>

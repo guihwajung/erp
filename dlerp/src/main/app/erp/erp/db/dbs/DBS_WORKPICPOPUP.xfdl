@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1200" height="900" maxwidth="1200" maxheight="900" titletext="점검전후이미지 가져오기" onload="form_onload">
+    <Layouts>
+      <Layout height="850" width="1150">
+        <Button id="btnPicAfterDown" taborder="1" text="점검후사진 다운로드" left="300" width="130" height="21" uWord="popup.cancel" onclick="btnPicImgDown_onclick" top="790"/>
+        <Button id="btnPicBeforeDown" taborder="0" text="점검전사진 다운로드" width="130" uWord="popup.ok" height="21" left="20" onclick="btnPicImgDown_onclick" top="790"/>
+        <Static id="staTitle01" taborder="7" text="점검전사진" left="20" top="10" width="140" height="22" cssclass="sta_TITLE_Bg"/>
+        <ImageViewer id="imgPicBefore" taborder="3" left="20" top="40" stretch="fixaspectratio" width="360" height="340"/>
+        <Static id="staTitle02" taborder="8" text="점검후사진" left="20" top="400" width="295" height="22" cssclass="sta_TITLE_Bg"/>
+        <ImageViewer id="imgPicAfter" taborder="4" left="20" top="430" stretch="fixaspectratio" width="360" height="340"/>
+        <ImageViewer id="imgPicSign" taborder="5" left="780" top="250" stretch="fixaspectratio" width="360" height="340"/>
+        <Static id="staTitle03" taborder="9" text="점검후사진2" left="400" top="400" width="130" height="22" cssclass="sta_TITLE_Bg" onclick="staTitle03_onclick"/>
+        <Button id="btnPicSignDown" taborder="2" text="완료사인 다운로드" left="580" width="130" height="21" onclick="btnPicImgDown_onclick" uWord="popup.cancel" top="790"/>
+        <Button id="btnClose" taborder="6" text="닫기" left="720" width="130" height="21" onclick="btnCancle_onclick" uWord="popup.cancel" top="790"/>
+        <Static id="staTitle01_00" taborder="10" text="점검전사진2" left="400" top="10" width="140" height="22" cssclass="sta_TITLE_Bg"/>
+        <ImageViewer id="imgPicBefore2" taborder="11" left="400" top="40" stretch="fixaspectratio" width="360" height="340"/>
+        <Button id="btnPicBeforeDown2" taborder="12" text="점검전사진2 다운로드" width="130" uWord="popup.ok" height="21" left="160" onclick="btnPicImgDown_onclick" top="790"/>
+        <Static id="staTitle03_00" taborder="13" text="완료사인" left="780" top="218" width="130" height="22" cssclass="sta_TITLE_Bg"/>
+        <ImageViewer id="imgPicAfter2" taborder="14" left="400" top="430" stretch="fixaspectratio" width="360" height="340"/>
+        <Button id="btnPicAfterDown2" taborder="15" text="점검후사진2 다운로드" left="440" width="130" height="21" uWord="popup.cancel" onclick="btnPicImgDown_onclick" top="790"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ***********************************************************************************************/
+ this.filepath = "/DB/WORK/";
+ this.fileConfig = {};
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);
+	// ---------------------------//
+	
+	this.fnSetParameter();
+	
+	// 파일설정
+	this.fileConfig = this.gfnGetFileConfig();
+	this.fileConfig.allowTypes = ["jpg","jpeg","gif","png"]; // 넥사브라우저 전용, 웹은 적용불가
+	//this.key = this.getOwnerFrame().CD_SITE + this.getOwnerFrame().CD_JOB + this.getOwnerFrame().TY_UMGB;
+	
+	this.imgPicBefore.set_image(null);
+	this.imgPicAfter.set_image(null);
+	this.imgPicSign.set_image(null);
+	
+	if( !this.gfnIsNull(this.getOwnerFrame().CD_SITE) && !this.gfnIsNull(this.getOwnerFrame().CD_JOB) && !this.gfnIsNull(this.getOwnerFrame().TY_UMGB)) {
+		this.fnImgSelect();
+	}
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("CD_JOB", "string");
+	this.dsSelect.addColumn("TY_UMGB", "string");
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnImgSelect = function() {
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+	this.dsSelect.setColumn(0, "CD_JOB", this.getOwnerFrame().CD_JOB); 
+	this.dsSelect.setColumn(0, "TY_UMGB", this.getOwnerFrame().TY_UMGB);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect"; 
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	this.getParentContext().close(false);
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if (svcID == "select") {
+		if (this.dsList.rowcount > 0) {
+			this.fnImageView();
+			this.fnImageView1();
+			this.fnImageView2();
+		}
+	}
+	else if (svcID == "imagefile") {
+		if (errorCode == 0) {
+			for( var i =0; i < this.dsImageFile.rowcount; i++) {
+				if( this.dsImageFile.getColumn(i,"filepath")==this.filepath + "BEFORE/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB && this.dsList.getColumn(0, "PIC_BEFORENM") == this.dsImageFile.getColumn(i,"filename") && !this.gfnIsNull( this.dsImageFile.getColumn(i,"filereturn") )){
+					this.imgPicBefore.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+					this.imgPicBefore2.set_image(this.dsImageFile.getColumn(1, "filereturn"));
+				}
+			}	
+				
+			for( var i =0; i < this.dsImageFile1.rowcount; i++) {	
+				if( this.dsImageFile1.getColumn(i,"filepath")==this.filepath + "AFTER/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB && this.dsList.getColumn(0, "PIC_AFTERNM") == this.dsImageFile.getColumn(i,"filename") && !this.gfnIsNull( this.dsImageFile.getColumn(i,"filereturn") )){
+					this.imgPicAfter.set_image(this.dsImageFile1.getColumn(0, "filereturn"));
+					this.imgPicAfter2.set_image(this.dsImageFile1.getColumn(1, "filereturn"));
+				}
+			}	
+			
+			for( var i =0; i < this.dsImageFile2.rowcount; i++) {
+				if( this.dsImageFile2.getColumn(i,"filepath")==this.filepath + "SIGN/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB && this.dsList.getColumn(0, "PIC_SIGNNM") == this.dsImageFile.getColumn(i,"filename") && !this.gfnIsNull( this.dsImageFile.getColumn(i,"filereturn") )){
+					this.imgPicSign.set_image(this.dsImageFile2.getColumn(0, "filereturn"));		
+				}
+			}
+		}
+		else {
+			this.gfnAlert(errorMsg);
+			return;
+		}
+	}
+}
+
+/*
+ * 이미지 파일 조회
+ */ 
+ this.fnImageView = function() {
+	this.dsImageFile.clearData();
+	if (this.dsList.rowcount > 0) {
+		var nrow = 0;
+		if (!this.gfnIsNull( this.dsList.getColumn(0,"PIC_BEFORENM"))) {
+			nrow = this.dsImageFile.addRow();
+			this.dsImageFile.setColumn(nrow, "filepath", this.filepath + "BEFORE/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB);
+			this.dsImageFile.setColumn(nrow, "filename", this.dsList.getColumn(0, "PIC_BEFORENM"));
+		}
+		
+		if (!this.gfnIsNull( this.dsList.getColumn(0,"PIC_BEFORENM2"))) {
+			nrow = this.dsImageFile.addRow();
+			this.dsImageFile.setColumn(nrow, "filepath", this.filepath + "BEFORE/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB);
+			this.dsImageFile.setColumn(nrow, "filename", this.dsList.getColumn(0, "PIC_BEFORENM2"));
+		}
+	}
+	
+	// 서버 이미지파일 base64 로 받아오기		
+	var strSvcId    = "imagefile";
+	var strSvcType  = "file/imageFile";
+	var inProc		= "";
+	var inData      = "input=dsImageFile";
+	var outData     = "dsImageFile=input";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.fnImageView1 = function() {
+	this.dsImageFile1.clearData();
+	if (this.dsList.rowcount > 0) {
+		var nrow = 0;
+		if (!this.gfnIsNull( this.dsList.getColumn(0,"PIC_AFTERNM"))) {
+			nrow = this.dsImageFile1.addRow();	
+			this.dsImageFile1.setColumn(nrow, "filepath", this.filepath + "AFTER/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB);
+			this.dsImageFile1.setColumn(nrow, "filename", this.dsList.getColumn(0, "PIC_AFTERNM"));
+		}
+		
+		if (!this.gfnIsNull( this.dsList.getColumn(0,"PIC_AFTERNM2"))) {
+			nrow = this.dsImageFile1.addRow();	
+			this.dsImageFile1.setColumn(nrow, "filepath", this.filepath + "AFTER/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB);
+			this.dsImageFile1.setColumn(nrow, "filename", this.dsList.getColumn(0, "PIC_AFTERNM2"));
+		}
+	}	
+	
+	// 서버 이미지파일 base64 로 받아오기		
+	var strSvcId    = "imagefile";
+	var strSvcType  = "file/imageFile";
+	var inProc		= "";
+	var inData      = "input=dsImageFile1";
+	var outData     = "dsImageFile1=input";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.fnImageView2 = function() {
+	this.dsImageFile2.clearData();
+	if (this.dsList.rowcount > 0) {
+		var nrow = 0;
+		if (!this.gfnIsNull( this.dsList.getColumn(0,"PIC_SIGNNM"))) {
+			nrow = this.dsImageFile2.addRow();	
+			this.dsImageFile2.setColumn(nrow, "filepath", this.filepath + "SIGN/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB);
+			this.dsImageFile2.setColumn(nrow, "filename", this.dsList.getColumn(0, "PIC_SIGNNM"));
+		}
+	}	
+	
+	// 서버 이미지파일 base64 로 받아오기		
+	var strSvcId    = "imagefile";
+	var strSvcType  = "file/imageFile";
+	var inProc		= "";
+	var inData      = "input=dsImageFile2";
+	var outData     = "dsImageFile2=input";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+// this.fnImageView = function() {
+// 	this.dsImageFile.clearData();
+// 	if (this.dsList.rowcount > 0) {
+// 		var nrow = 0;
+// 		if (!this.gfnIsNull( this.dsList.getColumn(0,"PIC_BEFORENM"))) {
+// 			nrow = this.dsImageFile.addRow();
+// 			this.dsImageFile.setColumn(nrow, "filepath", this.filepath + "BEFORE/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB);
+// 			this.dsImageFile.setColumn(nrow, "filename", this.dsList.getColumn(0, "PIC_BEFORENM"));
+// 		}
+// 		
+// 		if (!this.gfnIsNull( this.dsList.getColumn(0,"PIC_BEFORENM2"))) {
+// 			nrow = this.dsImageFile.addRow();
+// 			this.dsImageFile.setColumn(nrow, "filepath", this.filepath + "BEFORE/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB);
+// 			this.dsImageFile.setColumn(nrow, "filename", this.dsList.getColumn(0, "PIC_BEFORENM2"));
+// 		}
+// 		
+// 		if (!this.gfnIsNull( this.dsList.getColumn(0,"PIC_AFTERNM"))) {
+// 			nrow = this.dsImageFile.addRow();	
+// 			this.dsImageFile.setColumn(nrow, "filepath", this.filepath + "AFTER/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB);
+// 			this.dsImageFile.setColumn(nrow, "filename", this.dsList.getColumn(0, "PIC_AFTERNM"));
+// 		}
+// 		
+// 		if (!this.gfnIsNull( this.dsList.getColumn(0,"PIC_AFTERNM2"))) {
+// 			nrow = this.dsImageFile.addRow();	
+// 			this.dsImageFile.setColumn(nrow, "filepath", this.filepath + "AFTER/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB);
+// 			this.dsImageFile.setColumn(nrow, "filename", this.dsList.getColumn(0, "PIC_AFTERNM2"));
+// 		}
+// 		
+// 		if (!this.gfnIsNull( this.dsList.getColumn(0,"PIC_SIGNNM"))) {
+// 			nrow = this.dsImageFile.addRow();	
+// 			this.dsImageFile.setColumn(nrow, "filepath", this.filepath + "SIGN/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB);
+// 			this.dsImageFile.setColumn(nrow, "filename", this.dsList.getColumn(0, "PIC_SIGNNM"));
+// 		}
+// 	}
+// 	
+// 	// 서버 이미지파일 base64 로 받아오기		
+// 	var strSvcId    = "imagefile";
+// 	var strSvcType  = "file/imageFile";
+// 	var inProc		= "";
+// 	var inData      = "input=dsImageFile";
+// 	var outData     = "dsImageFile=input";
+// 	var strArg      = "";
+// 	var callBackFnc = "fnCallback";
+// 	
+// 	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+// 						strSvcType , 	// transaction을 요청할 구분
+// 						inProc,			// Procedure 정보 Dataset 이름
+// 						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+// 						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+// 						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+// 						callBackFnc); // 통신방법 정의 [생략가능]
+// };
+
+/*
+ * 이미지 파일 다운로드 버튼 클릭
+ */ 
+this.btnPicImgDown_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {	
+	if (obj.id == "btnPicBeforeDown") {
+		if (this.gfnIsNull(this.dsList.getColumn(0,"PIC_BEFORENM"))) {
+			this.gfnAlert("점검전 사진이 등록되있지 않습니다.");
+			return;
+		}
+		this.fnDownload(this.filepath + "BEFORE/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB, this.dsList.getColumn(0,"PIC_BEFORENM"));
+	}
+	
+	else if (obj.id == "btnPicBeforeDown2") {
+		if (this.gfnIsNull(this.dsList.getColumn(0,"PIC_BEFORENM2"))) {
+			this.gfnAlert("점검전 사진이 등록되있지 않습니다.");
+			return;
+		}
+		this.fnDownload(this.filepath + "BEFORE/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB, this.dsList.getColumn(0,"PIC_BEFORENM2"));
+	}
+	
+	else if (obj.id == "btnPicAfterDown") {
+		if (this.gfnIsNull(this.dsList.getColumn(0,"PIC_AFTERNM"))) {
+			this.gfnAlert("점검후 사진이 등록되있지 않습니다.");
+			return;
+		}
+		this.fnDownload(this.filepath + "AFTER/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB, this.dsList.getColumn(0,"PIC_AFTERNM"));
+	}
+	
+	else if (obj.id == "btnPicAfterDown2") {
+		if (this.gfnIsNull(this.dsList.getColumn(0,"PIC_AFTERNM2"))) {
+			this.gfnAlert("점검후 사진2이 등록되있지 않습니다.");
+			return;
+		}
+		this.fnDownload(this.filepath + "AFTER/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB, this.dsList.getColumn(0,"PIC_AFTERNM2"));
+	}
+	
+	else if (obj.id == "btnPicSignDown") {
+		if (this.gfnIsNull(this.dsList.getColumn(0,"PIC_SIGNNM"))) {
+			this.gfnAlert("완료사인 사진이 등록되있지 않습니다.");
+			return;
+		}
+		this.fnDownload(this.filepath + "SIGN/" + this.getOwnerFrame().CD_SITE + "/" + this.getOwnerFrame().CD_JOB, this.dsList.getColumn(0,"PIC_SIGNNM"));
+	}
+};
+
+/*
+ * 이미지 파일 다운로드
+ */
+this.fnDownload = function(strFilePath, strFileName) {
+	
+	this.fileConfig.downloadUrl = "/file/downloadFile.do";
+	var encodeFileName = encodeURIComponent(strFileName);
+		
+	var surl = this.fileConfig.host+ this.fileConfig.downloadUrl; // + encodeFileName;
+	
+	this.FileDownTransfer00.set_url(surl);
+	
+	this.FileDownTransfer00.setPostData("path", strFilePath);
+	this.FileDownTransfer00.setPostData("fileName", encodeFileName);
+	if( system.navigatorname =="nexacro"){
+		this.FileDownTransfer00.set_downloadfilename(strFileName);
+	}
+	this.FileDownTransfer00.download();
+};]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+          <Column id="CLOB" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DBSPR_IPJUWORKSTATE_IMG_SELECT</Col>
+            <Col id="CLOB">PIC_SIGN</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="PIC_BEFORE" type="STRING" size="256"/>
+          <Column id="PIC_BEFORE2" type="STRING" size="256"/>
+          <Column id="PIC_AFTER" type="STRING" size="256"/>
+          <Column id="PIC_SIGN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsImageFile">
+        <ColumnInfo>
+          <Column id="filepath" type="STRING" size="256"/>
+          <Column id="filename" type="STRING" size="256"/>
+          <Column id="filereturn" type="STRING" size="10000"/>
+        </ColumnInfo>
+      </Dataset>
+      <FileDownTransfer id="FileDownTransfer00"/>
+      <Dataset id="dsImageFile1">
+        <ColumnInfo>
+          <Column id="filepath" type="STRING" size="256"/>
+          <Column id="filename" type="STRING" size="256"/>
+          <Column id="filereturn" type="STRING" size="10000"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsImageFile2">
+        <ColumnInfo>
+          <Column id="filepath" type="STRING" size="256"/>
+          <Column id="filename" type="STRING" size="256"/>
+          <Column id="filereturn" type="STRING" size="10000"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

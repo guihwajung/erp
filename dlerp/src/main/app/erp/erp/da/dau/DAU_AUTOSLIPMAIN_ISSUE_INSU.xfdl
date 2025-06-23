@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="450" height="320" maxwidth="440" maxheight="310" titletext="급여전표발행" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="전표발행" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staDS_SITE00" taborder="14" text="귀속년월" left="0" top="36" width="112" height="30" textAlign="left" onclick="divData_staDS_SITE_onclick" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg00" taborder="13" left="staDS_SITE00:-1" top="36" height="30" cssclass="sta_WF_tablebg" width="289"/>
+              <Div id="ctclYM_SALARY" taborder="15" left="116" top="41" width="80" height="20" url="cmm::cmmCalMM.xfdl"/>
+              <Static id="staDS_SITE" taborder="1" text="법인" left="0" top="staDS_SITE00:-1" width="112" height="30" textAlign="left" onclick="divData_staDS_SITE_onclick" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg1" taborder="5" left="staDS_SITE:-1" top="staBg00:-1" height="30" cssclass="sta_WF_tablebg" width="289"/>
+              <Div id="cfCD_CORP" CDTextWidth="80" taborder="11" left="116" top="70" width="280" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="staTY_APPROVAL" taborder="3" text="발행부서" left="0" top="staDS_SITE:-1" width="112" height="30" textAlign="left" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg3" taborder="7" left="staTY_APPROVAL:-1" top="staBg1:-1" height="30" cssclass="sta_WF_tablebg" width="289"/>
+              <Div id="cfCD_DEPT_ACNT" CDTextWidth="80" taborder="18" left="116" top="staBg1:4" width="280" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="staDT_CONFIRM" taborder="4" text="회계일자" left="0" top="staTY_APPROVAL:-1" width="112" height="30" textAlign="left" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg4" taborder="8" left="staDT_CONFIRM:-1" top="staBg3:-1" height="30" cssclass="sta_WF_tablebg" width="289"/>
+              <Calendar id="tclDT_ACCOUNT" taborder="12" left="116" top="staBg3:4" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Static id="staDT_REQUEST" taborder="4" text="집행요청일자" left="0" top="staDT_CONFIRM:-1" width="112" height="30" textAlign="left" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg5" taborder="8" left="staDT_REQUEST:-1" top="staBg4:-1" height="30" cssclass="sta_WF_tablebg" width="289"/>
+              <Calendar id="tclDT_REQUEST" taborder="12" left="116" top="staBg4:4" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Button id="btnOk" taborder="9" text="확인" left="32.50%" top="200" width="60" height="20" onclick="divData_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="10" text="취소" left="52.50%" top="200" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();	
+	
+	this.dsData.setColumn(0, "YM_SALARY", this.getOwnerFrame().YM_SALARY);
+	this.dsData.setColumn(0, "CD_CORP", this.getOwnerFrame().CD_CORP);
+	this.cfCD_CORP.form.DSTextBox.set_value(this.getOwnerFrame().DS_CORP);	
+	this.dsData.setColumn(0, "CD_DEPT_ACNT", this.getOwnerFrame().CD_DEPT_INSA);
+	this.cfCD_DEPT_ACNT.form.DSTextBox.set_value(this.getOwnerFrame().DS_DEPT_INSA);	
+	
+	var strLastDate = this.gfnGetLastDate(this.getOwnerFrame().YM_SALARY);
+	this.dsData.setColumn(0, "DT_ACCOUNT", strLastDate);
+	var strNextDate = this.gfnAddDate(this.gfnGetDate(), 1)
+	this.dsData.setColumn(0, "DT_REQUEST", strNextDate);
+	
+	//this.dsData.setColumn(0, "DT_ACCOUNT", this.getOwnerFrame().DT_SALARY);
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	//this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	//this.dxGrid = this.divData.form.objGrid;
+	this.ctclYM_SALARY = this.divData.form.ctclYM_SALARY;
+	this.cfCD_CORP = this.divData.form.cfCD_CORP;	
+	this.cfCD_DEPT_ACNT = this.divData.form.cfCD_DEPT_ACNT;
+	this.tclDT_ACCOUNT = this.divData.form.tclDT_ACCOUNT;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.cfCD_CORP.CodeFindName = "DAX_CFCORP_CODEFIND";
+	this.cfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.cfCD_DEPT_ACNT.CodeFindName = "DHX_CFACNTUNIT";
+	this.cfCD_DEPT_ACNT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {	
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("YM_SALARY", "string");
+	this.dsSave.addColumn("CD_CORP", "string");
+	this.dsSave.addColumn("CD_DEPT_ACNT", "string");
+	this.dsSave.addColumn("DT_ACCOUNT", "string");
+	this.dsSave.addColumn("DT_REQUEST", "string");
+	this.dsSave.addColumn("ID_USER", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "save") {
+		if(errorCode == 0)
+		{
+			// this.close()가 작동하지 않았고, 
+			// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+			this.fnSlipVaidateCallback = function() {
+				this.getParentContext().close(true);
+			}
+			this.gfnAlert("전표가 발행되었습니다.", "fnSlipVaidateCallback");
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	
+	if(id == "cfCD_CORP") { 
+		dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	}
+	
+	if(id == "cfCD_DEPT_ACNT") { 
+		var cd_corp = this.cfCD_CORP.form.CDTextBox.text;
+		if(this.gfnIsNull(cd_corp)) {
+			this.gfnAlert("법인코드를 먼저 입력하세요.");
+			return false;
+		}
+		
+		dsUserParam.setColumn(nrow, "YN_SLIPACCEPT"	, "Y");						//전표발행여부
+		dsUserParam.setColumn(nrow, "CD_CORP"		, this.cfCD_CORP.form.CDTextBox.text);					//법인코드
+		dsUserParam.setColumn(nrow, "YN_USE"		, "Y");						//사용여부
+		dsUserParam.setColumn(nrow, "GR_DEPT_ACNT"	, "%");						//현장/본사여부		
+		dsUserParam.setColumn(nrow, "ID_USER"	, this.AuthClient.ID_USER);						
+		dsUserParam.setColumn(nrow, "GR_SEARCH"	, this.FormInfo.GR_SEARCH);						
+		dsUserParam.setColumn(nrow, "CD_DEPT"	, this.AuthClient.CD_DEPT);	
+	}
+	
+	return true;
+};
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+// 확인 버튼 클릭
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnSaveValidate()) return false;
+		
+	this.dsSave.clearData();
+	this.dsSave.addRow();	
+	
+	this.dsSave.setColumn(0, "YM_SALARY", this.dsData.getColumn(0, "YM_SALARY"));
+	this.dsSave.setColumn(0, "CD_CORP", this.dsData.getColumn(0, "CD_CORP"));
+	this.dsSave.setColumn(0, "CD_DEPT_ACNT", this.dsData.getColumn(0, "CD_DEPT_ACNT"));
+	this.dsSave.setColumn(0, "DT_ACCOUNT", this.dsData.getColumn(0, "DT_ACCOUNT"));
+	this.dsSave.setColumn(0, "DT_REQUEST", this.dsData.getColumn(0, "DT_REQUEST"));
+	this.dsSave.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+	
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+
+
+this.fnSaveValidate = function() {	
+	var validate = true;
+	
+	if (this.gfnIsNull(this.dsData.getColumn(0,"CD_CORP"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.cfCD_CORP.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("법은은 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}else if (this.gfnIsNull(this.dsData.getColumn(0,"YM_SALARY"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ctclYM_SALARY.form.TextBox.setFocus();
+		}
+		this.gfnAlert("귀속년월은 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}else if (this.gfnIsNull(this.dsData.getColumn(0,"CD_DEPT_ACNT"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.cfCD_DEPT_ACNT.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("발행부서는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}else if (this.gfnIsNull(this.dsData.getColumn(0,"DT_ACCOUNT"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.tclDT_ACCOUNT.setFocus();
+		}
+		this.gfnAlert("회계일자는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}else if (this.gfnIsNull(this.dsData.getColumn(0,"DT_REQUEST"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.tclDT_REQUEST.setFocus();
+		}
+		this.gfnAlert("집행요청일자는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}
+	
+	
+	return validate;	
+}
+
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DAUPR_SALARY_INSURANCE_AUTOSLIP_CREATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="YM_SALARY" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_DEPT_ACNT" type="STRING" size="256"/>
+          <Column id="DT_ACCOUNT" type="STRING" size="256"/>
+          <Column id="DT_REQUEST" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="YM_SALARY"/>
+            <Col id="CD_CORP"/>
+            <Col id="CD_DEPT_ACNT"/>
+            <Col id="DT_ACCOUNT"/>
+            <Col id="DT_REQUEST"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divData.form.ctclYM_SALARY.form.TextBox" propid="value" datasetid="dsData" columnid="YM_SALARY"/>
+      <BindItem id="item2" compid="divData.form.cfCD_CORP.form.CDTextBox" propid="value" datasetid="dsData" columnid="CD_CORP"/>
+      <BindItem id="item3" compid="divData.form.cfCD_DEPT_ACNT.form.CDTextBox" propid="value" datasetid="dsData" columnid="CD_DEPT_ACNT"/>
+      <BindItem id="item4" compid="divData.form.tclDT_ACCOUNT" propid="value" datasetid="dsData" columnid="DT_ACCOUNT"/>
+      <BindItem id="item5" compid="divData.form.tclDT_REQUEST" propid="value" datasetid="dsData" columnid="DT_REQUEST"/>
+    </Bind>
+  </Form>
+</FDL>

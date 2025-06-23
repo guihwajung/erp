@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="test" width="1280" height="720" titletext="sampleExtCommon" onload="form_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Button id="btnLoad" taborder="0" text="btnLoad" left="30" top="313" width="120" height="37" onclick="btnLoad_onclick"/>
+        <Button id="btnUnLoad" taborder="1" text="btnUnLoad" left="290" top="313" width="142" height="37" onclick="btnUnLoad_onclick"/>
+        <Static id="sta02" taborder="2" text="확장 컴포넌트 DLL" left="20" top="17" width="261" height="33"/>
+        <Static id="sta01" taborder="3" left="20" top="50" height="215" background="cornsilk" right="20" verticalAlign="top" padding="10px"/>
+        <Static id="Static00" taborder="4" text="1) extCommon 파일 load" left="20" top="275" width="328" height="28" font="bold 10pt &quot;맑은 고딕&quot;"/>
+        <Static id="Static01" taborder="5" text="2) extCommon 파일 unLoad" left="290" top="275" width="328" height="28" font="bold 10pt &quot;맑은 고딕&quot;"/>
+        <Edit id="edtMsg" taborder="6" left="30" top="360" _ms_clear="true" value="안녕하세요~~ 반갑습니다." text="안녕하세요~~ 반갑습니다." width="214" height="37"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    샘플 > extCommon dll
+*  @FileName 	sampleExtCommon.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2018.03.16
+*  @Desction    Document view
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier                Description
+*******************************************************************************
+*  2018.03.16     	consulting 	           	최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{			
+
+};
+
+this.btnLoad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var extComm = this.gfnGetExtCommon();	
+	extComm._ext_messagebox(this.edtMsg.value);
+};
+
+this.btnUnLoad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnCloseExtCommon();
+};
+]]></Script>
+  </Form>
+</FDL>

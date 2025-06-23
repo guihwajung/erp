@@ -1,0 +1,620 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="550" height="420" maxwidth="550" maxheight="420" titletext="전자세금계산서 수정발행(팝업)" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="42" right="0" cssclass="div_DATA_Bg" height="278">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_DEPT" taborder="0" text="수정사유" left="10" top="2" width="95" height="30" onclick="divData_divDataRight_sta01_onclick" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staCD_ACNT" taborder="3" text="당초승인번호" left="10" top="31" width="95" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta11" taborder="1" left="104" top="2" height="30" cssclass="sta_WF_tablebg" text="" right="10"/>
+              <Static id="sta12" taborder="4" left="104" top="31" height="30" cssclass="sta_WF_tablebg" right="10"/>
+              <Div id="ccfISSUE_ID" CDTextWidth="246" taborder="5" left="110" top="36" width="270" height="20" url="cmm::cmmCodeFind.xfdl" text="" enable="false"/>
+              <Combo id="ccboTY_UPDATE" taborder="2" left="110" top="7" width="270" height="20" value="" index="-1" text="" innerdataset="dsTY_UPDATE" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+              <Static id="staDT_ACCOUNT" taborder="18" text="회계일자" left="10" top="145" width="95" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="sta00" taborder="19" left="104" top="145" height="30" cssclass="sta_WF_tablebg" right="10"/>
+              <Static id="staAM_SUPPLY" taborder="21" text="공급가액 변동" left="10" top="174" width="95" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="sta01" taborder="22" left="104" top="174" height="30" cssclass="sta_WF_tablebg" right="10"/>
+              <Calendar id="ctclDT_ACCOUNT" taborder="20" left="111" top="151" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" width="105" enable="false"/>
+              <MaskEdit id="txtAM_SUPPLY" taborder="23" left="110" top="180" width="148" height="20" readonly="false" format="#,###" enable="false" onchanged="divData_txtAM_SUPPLY_onchanged"/>
+              <Static id="staAM_VAT" taborder="24" text="부가세 변동" left="10" top="203" width="95" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="sta02" taborder="25" left="104" top="203" height="30" cssclass="sta_WF_tablebg" right="10"/>
+              <MaskEdit id="txtAM_VAT" taborder="26" left="109" top="209" width="148" height="20" readonly="false" format="#,###" enable="false"/>
+              <Static id="staCD_VENDOR" taborder="6" text="거래처" left="10" top="58" width="95" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_REM" taborder="15" text="품목" left="10" top="116" width="95" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="sta03" taborder="7" left="104" top="58" height="30" cssclass="sta_WF_tablebg" right="10" enable="false"/>
+              <Static id="sta04" taborder="16" left="104" top="116" height="30" cssclass="sta_WF_tablebg" right="10"/>
+              <Div id="ccfCD_VENDOR" CDTextWidth="64" taborder="9" left="109" top="64" height="20" url="cmm::cmmCodeFind.xfdl" width="355" enable="true"/>
+              <Edit id="txtDS_REM" taborder="17" left="109" top="121" width="355" height="20" maxlength="100" enable="false"/>
+              <Edit id="edtTY_VENDOR" taborder="8" left="69" top="63" width="30" height="21" visible="false"/>
+              <Static id="staCD_TRADE_CANCEL" taborder="27" text="수정전표번호" left="10" top="232" width="95" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="sta05" taborder="28" left="104" top="232" height="30" cssclass="sta_WF_tablebg" right="10"/>
+              <Edit id="txtCD_TRADE_CANCEL" taborder="29" left="109" top="237" width="235" height="20" maxlength="100" enable="true" readonly="true"/>
+              <Static id="staNO_SJC" taborder="10" text="사업자번호" left="10" top="87" width="95" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="sta06" taborder="11" left="104" top="87" height="30" cssclass="sta_WF_tablebg" right="10" enable="false"/>
+              <Static id="staDS_DAEPYO" taborder="13" text="대표자" left="295" top="87" width="85" height="30" cssclass="sta_WF_tablelabel"/>
+              <Edit id="edtDS_DAEPYO" taborder="14" left="384" top="91" width="80" height="21" visible="true" enable="false"/>
+              <Edit id="edtNO_SJC" taborder="12" left="110" top="92" width="182" height="21" visible="true" enable="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staTitle" taborder="1" text="전자수정발행" left="10" top="10" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+        <Button id="btnConf" taborder="2" text="발행" left="171" width="69" height="27" onclick="btnConf_onclick" bottom="3"/>
+        <Button id="btnCancel" taborder="3" text="닫기" left="250" width="69" height="27" onclick="btnCancel_onclick" bottom="3"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetCombo();
+
+	this.dsSearch.set_enableevent(false);
+
+	this.dsSearch.setColumn(0, "CD_CORP", this.getOwnerFrame().P_CD_CORP);
+	this.dsSearch.setColumn(0, "CD_TRADE", this.getOwnerFrame().P_CD_TRADE);
+	this.dsSearch.setColumn(0, "ISSUE_ID_OLD", this.getOwnerFrame().P_ISSUE_ID);
+	this.dsSearch.setColumn(0, "CD_VENDOR", this.getOwnerFrame().P_CD_VENDOR);
+	this.dsSearch.setColumn(0, "DS_VENDOR", this.getOwnerFrame().P_DS_VENDOR);
+	this.dsSearch.setColumn(0, "TY_VENDOR", this.getOwnerFrame().P_TY_VENDOR);
+	this.dsSearch.setColumn(0, "DS_DAEPYO", this.getOwnerFrame().P_DS_DAEPYO);
+	this.dsSearch.setColumn(0, "NO_SJC", this.getOwnerFrame().P_NO_SJC);
+	this.dsSearch.setColumn(0, "DS_REM", this.getOwnerFrame().P_DS_REM);
+	this.dsSearch.setColumn(0, "DS_REM_OLD", this.getOwnerFrame().P_DS_REM);
+	this.dsSearch.setColumn(0, "CD_VENDOR_OLD", this.getOwnerFrame().P_CD_VENDOR);
+	this.dsSearch.setColumn(0, "TY_VENDOR_OLD", this.getOwnerFrame().P_TY_VENDOR);
+	this.dsSearch.setColumn(0, "CD_PROOF", this.getOwnerFrame().P_CD_PROOF);
+
+	this.dsSearch.set_enableevent(true);
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.ccboTY_UPDATE = this.divData.form.ccboTY_UPDATE;
+	this.ccfISSUE_ID   = this.divData.form.ccfISSUE_ID;	
+	this.ctclDT_ACCOUNT   = this.divData.form.ctclDT_ACCOUNT;	
+	this.txtAM_SUPPLY   = this.divData.form.txtAM_SUPPLY;
+	this.txtAM_VAT   = this.divData.form.txtAM_VAT;
+	this.ccfCD_VENDOR   = this.divData.form.ccfCD_VENDOR;
+	this.txtDS_REM   = this.divData.form.txtDS_REM;
+	this.txtCD_TRADE_CANCEL   = this.divData.form.txtCD_TRADE_CANCEL;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfISSUE_ID.CodeFindName = "DHX_ISSUE_ID_CODEFIND_SELECT";
+	this.ccfISSUE_ID.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.ccfCD_VENDOR.CodeFindName = "DHX_CFALLVENDOR_CODEFIND";
+	this.ccfCD_VENDOR.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_VENDOR.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	this.dsSearch.addEventHandler("onvaluechanged", this.dsSearch_Valuechanged, this);
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("CD_CORP", "string");
+	this.dsSave.addColumn("CD_TRADE", "string");
+	this.dsSave.addColumn("AMEND_CODE", "string");
+	this.dsSave.addColumn("AM_SUPPLY", "bigdecimal");
+	this.dsSave.addColumn("AM_VAT", "bigdecimal");
+	this.dsSave.addColumn("DT_ACCOUNT", "string");
+	this.dsSave.addColumn("ID_TRANS", "string");
+	this.dsSave.addColumn("ISSUE_ID_OLD", "string");
+	this.dsSave.addColumn("TY_VENDOR_NEW", "string");
+	this.dsSave.addColumn("CD_VENDOR_NEW", "string");
+	this.dsSave.addColumn("DS_REM_NEW", "string");
+	this.dsSave.addColumn("CD_TRADE_CANCEL", "string");
+	this.dsSave.addColumn("TY_VENDOR_OLD", "string");
+	this.dsSave.addColumn("CD_VENDOR_OLD", "string");
+	this.dsSave.addColumn("DS_REM_OLD", "string");
+	this.dsSave.addColumn("CD_PROOF", "string");
+	
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+
+}
+
+ /*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	
+
+}
+
+ /*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	//this.gfnGridDel(this.dxGrid);
+}
+
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	//this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+	var validate = true;
+
+	return validate;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+*/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "save"){
+		if (errorCode == 0) {
+		
+			trace(this.dsCD_TRADE_CANCEL.saveXML());
+		
+			//this.getParentContext().close("SUSESS");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+
+	if(svcID == "combo"){
+		if (errorCode == 0) {
+			var nRow = this.dsTY_UPDATE.insertRow(0);
+			this.dsTY_UPDATE.setColumn(nRow, "CD_CODE", "");
+			this.dsTY_UPDATE.setColumn(nRow, "DS_CODE", "선택");
+
+			this.ccboTY_UPDATE.set_index(0);
+			this.ccboTY_UPDATE.setFocus();
+			
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}	
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	switch(id) {
+		case "ccfISSUE_ID":	//당초승인번호
+			dsUserParam.setColumn(nrow, "CD_VENDOR", this.dsSearch.getColumn(0, "ISSUE_ID_OLD"));
+		break;
+		case "ccfCD_VENDOR":	//거래처
+			dsUserParam.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+		break;
+	}
+	
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arrData = codeFindData;
+	switch(id) {
+		case "ccfCD_VENDOR":	// 거래처
+			var TY_VENDOR = (arrData.length > 0) ? arrData[0]["TY_VENDOR"] : "";
+			var DS_DAEPYO = (arrData.length > 0) ? arrData[0]["DS_DAEPYO"] : "";
+			var NO_SJC = (arrData.length > 0) ? arrData[0]["NO_SJC"] : "";
+
+			this.dsSearch.setColumn(0, "TY_VENDOR"	, TY_VENDOR);
+			this.dsSearch.setColumn(0, "DS_DAEPYO"	, DS_DAEPYO);
+			this.dsSearch.setColumn(0, "NO_SJC"	, NO_SJC);
+		break;
+	}
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ 
+//콤보박스 코드 조회
+this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");	
+
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DH");
+	this.dsCombo.setColumn(0, "CD_TYPE",  "V23");	
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_UPDATE=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+ 
+//취소버튼 클릭
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.dsCD_TRADE_CANCEL.rowcount > 0){
+		this.getParentContext().close("SUSESS");
+	}else{
+		this.getParentContext().close();
+	}
+};
+
+//확인버튼 클릭
+this.btnConf_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var TY_UPDATE = this.ccboTY_UPDATE.value;
+	if(!this.gfnIsNull(this.txtCD_TRADE_CANCEL.value)){
+		this.gfnAlert("수정 전표발행 되었습니다.");
+		return;
+	}
+	
+	if(this.gfnIsNull(this.ccboTY_UPDATE.value)){
+		this.gfnAlert("수정사유는 필수입니다.");
+		this.ccboTY_UPDATE.setFocus();
+		return;
+	}
+	
+	if(this.gfnIsNull(this.ccfISSUE_ID.form.CDTextBox.value)){
+		this.gfnAlert("당초승인번호는 필수입니다.");
+		this.ccfISSUE_ID.form.CDTextBox.setFocus();
+		return;
+	}
+	
+	/*
+		01	기재사항 착오정정 등
+		02	공급가액변동
+		03	환입
+		04	계약의 해지
+		05	내국신용장 등 사후 개설
+		06	착오에 의한 이중발급
+	*/
+
+	if(TY_UPDATE == "01"){
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_VENDOR"))){
+			this.gfnAlert("거래처 필수입니다.");
+			this.ccfCD_VENDOR.form.CDTextBox.setFocus();
+			return;
+		}
+		
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "NO_SJC"))){
+			this.gfnAlert("사업자번호 필수입니다.");
+			this.ccfCD_VENDOR.form.CDTextBox.setFocus();
+			return;
+		}
+
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "DS_DAEPYO"))){
+			this.gfnAlert("대표자 필수입니다.");
+			this.ccfCD_VENDOR.form.CDTextBox.setFocus();
+			return;
+		}
+
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "DS_REM"))){
+			this.gfnAlert("품목 필수입니다.");
+			this.txtDS_REM.setFocus();
+			return;
+		}
+	}
+
+	if(this.ccboTY_UPDATE.value != "06"){
+
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "DT_ACCOUNT"))){
+			this.gfnAlert("회계일자는 필수입니다.");
+			this.ctclDT_ACCOUNT.setFocus();
+			return;
+		}
+
+		if (this.gfnGetDate() < this.dsSearch.getColumn(0, "DT_ACCOUNT")){
+			this.gfnAlert("회계일자는 오늘 이전 일자로 입력 하셔야 합니다.");
+			this.ctclDT_ACCOUNT.setFocus();
+			return;
+		}
+	}
+
+	if(this.ccboTY_UPDATE.value == "02"){
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "AM_SUPPLY"))){
+			this.gfnAlert("공급가액 변동은 필수입니다.");
+			this.txtAM_SUPPLY.setFocus();
+			return;
+		}
+
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "AM_VAT"))){
+			this.gfnAlert("부가세 변동은 필수입니다.");
+			this.txtAM_VAT.setFocus();
+			return;
+		}
+	}
+
+	var cdProof = this.dsSearch.getColumn(0, "CD_PROOF");
+	if(cdProof == "50" && !this.gfnIsNull(this.dsSearch.getColumn(0, "AM_SUPPLY")) && !this.gfnIsNull(this.dsSearch.getColumn(0, "AM_VAT"))){
+		var amSupply = this.dsSearch.getColumn(0, "AM_SUPPLY");
+		var amVat = this.dsSearch.getColumn(0, "AM_VAT");
+		var amVatLimitFrom = nexacro.round(amSupply / 10, 0) - 100;
+		var amVatLimitTo = nexacro.round(amSupply / 10, 0) + 100;
+		
+		var msgAmLimit = this.gfnAppendComma(amVatLimitFrom) +"~"+ this.gfnAppendComma(amVatLimitTo)
+		
+		if(amVat < amVatLimitFrom || amVat > amVatLimitTo){
+			this.gfnAlert("부가세 변동 값은 오차범위 ±100 ( "+msgAmLimit+" ) 이내로 입력 하셔야 합니다.");
+			this.txtAM_VAT.setFocus();
+			return;
+		}
+	}
+		
+	this.gfnConfirm("전자발행 하시겠습니까?", "fnSave_callback");
+}
+
+this.fnSave_callback = function(strId, val) {
+	if(val == true) {
+	
+	
+	this.dsCD_TRADE_CANCEL.clearData();
+	this.dsSave.clearData();
+	var nrow = this.dsSave.addRow();
+
+	this.dsSave.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSave.setColumn(nrow, "CD_TRADE", this.dsSearch.getColumn(0, "CD_TRADE"));
+	this.dsSave.setColumn(nrow, "AMEND_CODE", this.dsSearch.getColumn(0, "CD_CODE"));
+	this.dsSave.setColumn(nrow, "AM_SUPPLY", this.dsSearch.getColumn(0, "AM_SUPPLY"));
+	this.dsSave.setColumn(nrow, "AM_VAT", this.dsSearch.getColumn(0, "AM_VAT"));
+	this.dsSave.setColumn(nrow, "DT_ACCOUNT", this.dsSearch.getColumn(0, "DT_ACCOUNT"));
+	this.dsSave.setColumn(nrow, "ID_TRANS", this.AuthClient.ID_USER);
+	this.dsSave.setColumn(nrow, "ISSUE_ID_OLD", this.dsSearch.getColumn(0, "ISSUE_ID_OLD"));
+	this.dsSave.setColumn(nrow, "TY_VENDOR_NEW", this.dsSearch.getColumn(0, "TY_VENDOR"));
+	this.dsSave.setColumn(nrow, "CD_VENDOR_NEW", this.dsSearch.getColumn(0, "CD_VENDOR"));
+	this.dsSave.setColumn(nrow, "DS_REM_NEW", this.dsSearch.getColumn(0, "DS_REM"));
+	this.dsSave.setColumn(nrow, "DS_REM_OLD", this.dsSearch.getColumn(0, "DS_REM_OLD"));
+	this.dsSave.setColumn(nrow, "CD_TRADE_CANCEL", "");
+	this.dsSave.setColumn(nrow, "CD_VENDOR_OLD", this.dsSearch.getColumn(0, "CD_VENDOR_OLD"));
+	this.dsSave.setColumn(nrow, "TY_VENDOR_OLD", this.dsSearch.getColumn(0, "TY_VENDOR_OLD"));
+	this.dsSave.setColumn(nrow, "CD_PROOF", this.dsSearch.getColumn(0, "CD_PROOF"));
+	
+
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "autoslip=dsSave";
+	var outData     = "dsCD_TRADE_CANCEL=autoslip";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+	}
+
+};
+
+this.dsSearch_Valuechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		switch(e.columnid) {
+			case "CD_CODE":
+				this.fnSetAllEnable(e.newvalue);
+			break;
+		}
+	}
+};
+
+this.fnSetAllEnable = function(sTyCode){
+	/*
+		01	기재사항 착오정정 등
+		02	공급가액변동
+		03	환입
+		04	계약의 해지
+		05	내국신용장 등 사후 개설
+		06	취소발행
+	*/
+	var textDecoration = "";
+	this.divData.form.staAM_SUPPLY.set_textDecoration(textDecoration);
+	this.divData.form.staAM_VAT.set_textDecoration(textDecoration);
+	this.divData.form.staCD_VENDOR.set_textDecoration(textDecoration);
+	this.divData.form.staNO_SJC.set_textDecoration(textDecoration);
+	this.divData.form.staDS_DAEPYO.set_textDecoration(textDecoration);
+	this.divData.form.staDS_REM.set_textDecoration(textDecoration);
+	
+	//this.gfnSetAllEnable(this.divData.form, false);
+
+	var benable = false;	
+	this.ccboTY_UPDATE.set_enable(!benable);
+	this.ccfCD_VENDOR.set_enable(benable);
+	this.ctclDT_ACCOUNT.set_enable(benable);
+	this.txtAM_SUPPLY.set_enable(benable);
+	this.txtAM_VAT.set_enable(benable);
+	this.txtDS_REM.set_enable(benable);
+
+	this.dsSearch.setColumn(0, "AM_SUPPLY", "")
+	this.dsSearch.setColumn(0, "AM_VAT", "")
+	
+	textDecoration = "underline";
+	benable = true;	
+	
+	switch(sTyCode) {
+		case "01":	// 기재사항 착오정정 등
+			this.ccfCD_VENDOR.set_enable(benable);
+			this.txtDS_REM.set_enable(benable);
+			this.ctclDT_ACCOUNT.set_enable(benable);
+			
+			this.txtAM_SUPPLY.set_enable(benable);
+			this.txtAM_VAT.set_enable(benable);
+			
+			this.divData.form.staDT_ACCOUNT.set_textDecoration(textDecoration);
+			this.divData.form.staCD_VENDOR.set_textDecoration(textDecoration);
+			this.divData.form.staNO_SJC.set_textDecoration(textDecoration);
+			this.divData.form.staDS_DAEPYO.set_textDecoration(textDecoration);
+			this.divData.form.staDS_REM.set_textDecoration(textDecoration);
+		break;
+		case "02":	// 공급가액변동
+			this.txtAM_SUPPLY.set_enable(benable);
+			this.txtAM_VAT.set_enable(benable);
+			this.ctclDT_ACCOUNT.set_enable(benable);
+			
+			this.divData.form.staDT_ACCOUNT.set_textDecoration(textDecoration);
+			this.divData.form.staAM_SUPPLY.set_textDecoration(textDecoration);
+			this.divData.form.staAM_VAT.set_textDecoration(textDecoration);
+		break;
+		case "03":	// 환입
+		case "04":	// 계약의 해지
+			this.ctclDT_ACCOUNT.set_enable(benable);
+
+			this.divData.form.staDT_ACCOUNT.set_textDecoration(textDecoration);
+		break;
+	}
+}
+
+this.divData_txtAM_SUPPLY_onchanged = function(obj:nexacro.MaskEdit,e:nexacro.ChangeEventInfo)
+{
+	var cdProof = this.dsSearch.getColumn(0, "CD_PROOF");
+	if(cdProof == "50"){
+		var amVat = 0;
+		if(!this.gfnIsNull(e.postvalue) && e.postvalue > 0 ){
+			var amSupply = nexacro.toNumber(e.postvalue);
+			amVat = nexacro.round(amSupply / 10, 0);
+		}
+		this.dsSearch.setColumn(0, "AM_VAT", amVat); // 소수점 한자리에서 사는 버리오 오는 올림
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">eTaxBuy</Col>
+            <Col id="SP">DHVPR_ETAXBUYLIST_AR_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">autoslip</Col>
+            <Col id="SP">DHVPR_ETAXBUYLIST_AUTOSLIP</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_TRADE" type="STRING" size="256"/>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="AM_SUPPLY" type="STRING" size="256"/>
+          <Column id="DT_ACCOUNT" type="STRING" size="256"/>
+          <Column id="ISSUE_ID_OLD" type="STRING" size="256"/>
+          <Column id="AM_VAT" type="STRING" size="256"/>
+          <Column id="CD_VENDOR" type="STRING" size="256"/>
+          <Column id="DS_VENDOR" type="STRING" size="256"/>
+          <Column id="TY_VENDOR" type="STRING" size="256"/>
+          <Column id="DS_DAEPYO" type="STRING" size="256"/>
+          <Column id="DS_REM" type="STRING" size="256"/>
+          <Column id="NO_SJC" type="STRING" size="256"/>
+          <Column id="TY_VENDOR_OLD" type="STRING" size="256"/>
+          <Column id="CD_VENDOR_OLD" type="STRING" size="256"/>
+          <Column id="DS_REM_OLD" type="STRING" size="256"/>
+          <Column id="CD_PROOF" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_UPDATE"/>
+      <Dataset id="dsCD_TRADE_CANCEL">
+        <ColumnInfo>
+          <Column id="CD_TRADE_CANCEL" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.ccboTY_UPDATE" propid="value" datasetid="dsSearch" columnid="CD_CODE"/>
+      <BindItem id="item1" compid="divData.form.ccfISSUE_ID.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="ISSUE_ID_OLD"/>
+      <BindItem id="item2" compid="divData.form.ctclDT_ACCOUNT" propid="value" datasetid="dsSearch" columnid="DT_ACCOUNT"/>
+      <BindItem id="item3" compid="divData.form.txtAM_SUPPLY" propid="value" datasetid="dsSearch" columnid="AM_SUPPLY"/>
+      <BindItem id="item4" compid="divData.form.txtAM_VAT" propid="value" datasetid="dsSearch" columnid="AM_VAT"/>
+      <BindItem id="item5" compid="divData.form.edtTY_VENDOR" propid="value" datasetid="dsSearch" columnid="TY_VENDOR"/>
+      <BindItem id="item6" compid="divData.form.ccfCD_VENDOR.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_VENDOR"/>
+      <BindItem id="item7" compid="divData.form.ccfCD_VENDOR.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_VENDOR"/>
+      <BindItem id="item8" compid="divData.form.edtDS_DAEPYO" propid="value" datasetid="dsSearch" columnid="DS_DAEPYO"/>
+      <BindItem id="item9" compid="divData.form.txtDS_REM" propid="value" datasetid="dsSearch" columnid="DS_REM"/>
+      <BindItem id="item10" compid="divData.form.txtCD_TRADE_CANCEL" propid="value" datasetid="dsCD_TRADE_CANCEL" columnid="CD_TRADE_CANCEL"/>
+      <BindItem id="item11" compid="divData.form.edtNO_SJC" propid="value" datasetid="dsSearch" columnid="NO_SJC"/>
+    </Bind>
+  </Form>
+</FDL>

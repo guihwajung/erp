@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="390" height="320" maxwidth="450" maxheight="420" titletext="평가 최종결과 생성" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staTITLE" taborder="4" text="평가 최종결과 생성" left="0" top="0" width="100.00%" height="30" cssclass="sta_TITLE_Bg" textAlign="center"/>
+        <Static id="staJOB_TYPE" taborder="6" text="대상" left="20" top="130" width="60" height="20" onclick="staCD_UPDEPT_onclick" cssclass="sta_WF_tablelabelE"/>
+        <Static id="staYR_BASE" taborder="8" text="평가년도" left="20" top="70" width="60" height="20" cssclass="sta_WF_tablelabelE"/>
+        <Static id="staCD_CORP" taborder="7" text="법인" left="20" top="39" width="60" height="20"/>
+        <Div id="cfCD_CORP" CDTextWidth="70" taborder="2" left="90" top="39" width="200" height="20" url="cmm::cmmCodeFind.xfdl"/>
+        <Radio id="rdoJOB_TYPE" taborder="0" left="90" top="130" height="20" innerdataset="dsJOB_TYPE" codecolumn="CODE" datacolumn="VALUE" direction="vertical" fittocontents="width" width="220" index="0" value="1" onitemchanged="fnCreateInit"/>
+        <Div id="ctclYR_BASE" taborder="1" left="90" top="70" width="80" height="20" url="cmm::cmmCalYY.xfdl" enableevent="true" text="2019"/>
+        <Static id="txtDlgGroupText1" taborder="3" text="특정 사번이 입력되지 않으면 전직원을 대상으로 작업됩니다." left="20" top="210" height="20" right="30" background="#cfebeb"/>
+        <Combo id="cboGUBUN" taborder="9" left="90" top="101" width="150" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">01</Col>
+                <Col id="datacolumn">상반기</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">02</Col>
+                <Col id="datacolumn">하반기</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Static id="staYR_BASE00" taborder="10" text="구분" left="20" top="101" width="60" height="20" cssclass="sta_WF_tablelabelE"/>
+        <Static id="staCD_CORP00" taborder="11" text="피평가자" left="20" top="158" width="60" height="20"/>
+        <Div id="cfID_SABUN" CDTextWidth="70" taborder="12" left="90" top="158" width="200" height="20" url="cmm::cmmCodeFind.xfdl" enable="false"/>
+        <Div id="divBtns" left="91" top="265" width="200" height="60" taborder="5">
+          <Layouts>
+            <Layout>
+              <Button id="btnOK" taborder="12" text="확인" left="20" top="0" width="60" height="27" onclick="btnOK_onclick"/>
+              <Button id="btnCANCLE" taborder="13" text="취소" left="btnOK:30" top="0" width="60" height="27" onclick="btnCANCLE_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	//생성년도
+	this.ctclYR_BASE.form.TextBox.set_value(this.getOwnerFrame().textCal);
+	
+	//법인
+	this.cfCD_CORP.form.CDTextBox.set_value(this.getOwnerFrame().cdcorp);
+	this.cfCD_CORP.form.DSTextBox.set_value(this.getOwnerFrame().dscorp);
+	
+	//구분
+	this.cboGUBUN.set_value(this.getOwnerFrame().gubun);
+	
+};
+
+//자료생성
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	this.gfnConfirm("자료생성 하시겠습니까?","fnCreate");
+};
+
+// 확인
+this.fnCreate = function()
+{
+	if (!this.fnDataValidate()) return;
+	
+	this.dsCreate.clearData();
+	
+	var nrow = this.dsCreate.addRow();
+	
+	this.dsCreate.setColumn(nrow, "CD_CORP", this.gfnNvl(this.gfnTrim(this.cfCD_CORP.form.CDTextBox.value), ""));
+	this.dsCreate.setColumn(nrow, "YY_EVALUATION", this.gfnNvl(this.gfnTrim(this.ctclYR_BASE.form.TextBox.text), ""));
+	this.dsCreate.setColumn(nrow, "TY_EVALUATION", this.cboGUBUN.value);
+	this.dsCreate.setColumn(nrow, "ID_SABUN", this.gfnNvl(this.gfnTrim(this.cfID_SABUN.form.CDTextBox.value), ""));
+	this.dsCreate.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	this.dsCreate.setColumn(nrow, "TY_AUTH", this.FormInfo.TY_AUTH);
+	this.dsCreate.setColumn(nrow, "GR_DEPT", this.AuthClient.CD_DEPT);
+	this.dsCreate.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	
+	if (this.dsCreate.rowcount == 0) return;
+
+	var strSvcId    = "create";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "create=dsCreate";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 취소
+	this.getParentContext().close(false);
+};
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsCreate = new Dataset();
+	this.dsCreate.addColumn("CD_CORP", "string");
+	this.dsCreate.addColumn("YY_EVALUATION", "string");
+	this.dsCreate.addColumn("TY_EVALUATION", "string");
+	this.dsCreate.addColumn("ID_SABUN", "string");
+	this.dsCreate.addColumn("GR_SEARCH", "string");
+	this.dsCreate.addColumn("TY_AUTH", "string");
+	this.dsCreate.addColumn("GR_DEPT", "string");
+	this.dsCreate.addColumn("ID_USER", "string");
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+ // 코드파인더
+this.fnSetEvent = function() {
+
+    this.cfID_SABUN.CodeFindName = "DAX_EVAL_TARGET_CODEFIND";
+	this.cfID_SABUN.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfID_SABUN.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	this.cfCD_CORP.CodeFindName = "DAX_CFCORP";
+	this.cfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";	
+	
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	
+	if(id == "cfID_SABUN") {
+		dsUserParam.setColumn(nrow, "CD_CORP", this.gfnNvl(this.gfnTrim(this.cfCD_CORP.form.CDTextBox.value), ""));
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "YY_EVALUATION", this.gfnNvl(this.gfnTrim(this.ctclYR_BASE.form.TextBox.text), ""));
+		dsUserParam.setColumn(nrow, "TY_EVALUATION", this.cboGUBUN.value);
+		dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER); 
+	}
+	
+	if(id == "cfCD_CORP") {
+		dsUserParam.setColumn(nrow, "GR_SEARCH", "");
+		dsUserParam.setColumn(nrow, "CD_DEPT", "");
+	}
+		
+	return true;
+} 
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+
+// 	if(id == "cfID_SABUN") {
+// 	    if(codeFindData.length > 0){	
+// 		    this.cfID_SABUN.form.CDTextBox.set_value(codeFindData[0]["CD_CORP"]);
+// 			this.cfID_SABUN.form.DSTextBox.set_value(codeFindData[0]["DS_CORP"]);
+// 		}
+// 	}else if(id == "cfCD_CORP") {
+// 	    if(codeFindData.length == 0){	
+// 			this.cfCD_CORP.form.CDTextBox.set_value("");	
+// 			this.cfCD_CORP.form.DSTextBox.set_value("");
+// 		}
+// 	}
+}
+
+this.fnDataValidate = function(){
+		if(this.gfnIsNull(this.ctclYR_BASE.form.TextBox.value)) {		
+			this.ctclYR_BASE.form.TextBox.setFocus();
+			this.gfnAlert("평가년도가 입력되지 않았습니다.");
+			return false;
+		}
+		if(this.rdoJOB_TYPE.value == 2 && this.gfnIsNull(this.cfID_SABUN.form.CDTextBox.value))
+		{
+		    this.cfID_SABUN.form.CDTextBox.setFocus();
+			this.gfnAlert("특정사원이 지정되지 않았습니다.");
+			return false;
+		}
+	return true;
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "select") {
+		
+	} else if(svcID == "create") {
+		if (errorCode == 0) {
+		    this.fnWorkAfter = function(){
+				this.getParentContext().close(false);
+			}
+		    this.gfnAlert("최종 평가 생성 작업이 완료되었습니다.", "fnWorkAfter");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.fnCreateInit = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	if(e.postvalue == 1){
+		this.cfID_SABUN.form.fnCodeFindClear(false);
+	    this.cfID_SABUN.set_enable(false);
+	}
+	else if(e.postvalue == 2){
+	    this.cfID_SABUN.set_enable(true);
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">create</Col>
+            <Col id="SP">DAJPR_EVALUATION_TOTAL_CREATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsJOB_TYPE">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">1</Col>
+            <Col id="VALUE">전체</Col>
+          </Row>
+          <Row>
+            <Col id="VALUE">특정사원</Col>
+            <Col id="CODE">2</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="ctclYR_BASE.form.TextBox" propid="value" datasetid="dsSearch" columnid="YR_BASE"/>
+    </Bind>
+  </Form>
+</FDL>

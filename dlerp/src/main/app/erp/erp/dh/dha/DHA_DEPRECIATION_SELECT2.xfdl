@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1400" height="720" titletext="임대주택채권명세서조회" onload="form_onload">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" taborder="0" left="staDT_FROM:0.0" top="staDT_FROM:10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCorp" taborder="1" text="법인코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCorp" CDTextWidth="70" taborder="0" left="staCorp:0.0" top="staCorp:10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" onclick="Common_onclick" text=""/>
+              <Static id="staSite" taborder="2" text="사업지" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfSite" CDTextWidth="70" taborder="3" left="staSite:0.0" top="staSite:10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" onclick="Common_onclick" text=""/>
+              <Static id="staStd" taborder="2" text="회계년월" left="0.0" top="10.0" width="92.0" height="24.0" onclick="Common_onclick" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclStd" taborder="3" left="staStd:0.0" top="staStd:10.0" width="90" height="24.0" url="cmm::cmmCalMM.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="30" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="15" right="0" bottom="0"/>
+              <Radio id="rdoYN_DEP" taborder="1" left="75" top="-34" width="200" height="20" onitemchanged="rdo00_onitemchanged" index="-1" text="" value="" innerdataset="dsYN_DEP" datacolumn="VALUE" codecolumn="CODE" fittocontents="width" direction="vertical"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetVariable();
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetParameter();
+	this.fnSetEvent(); 
+};
+
+this.fnSetExtendButton = function() {
+	/*this.btnCalc = this.gfnFormButtonAdd("Calc", "fnCalc", "정상상각 자료생성"); */
+	
+	/*this.btnCalc.set_enable(false);*/
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+
+	//조회
+	this.ccfCorp = this.divSearch.form.ccfCorp;
+	this.ccfSite = this.divSearch.form.ccfSite;
+	this.ctclStd = this.divSearch.form.ctclStd;
+		
+	//그리드
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+this.fnSetButton = function() {
+	
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	this.FormBtns.Add.set_enable(false);
+ 	this.FormBtns.Del.set_enable(false);
+	this.FormBtns.Save.set_enable(false);
+}
+
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();	
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("DT_STD", "string");	
+
+}
+
+this.fnSetEvent = function() {
+		
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHA_DEPRECIATION_SELECT2");
+	
+	this.ccfCorp.CodeFindName = "DHX_CFCORP";
+	this.ccfCorp.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCorp.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	this.ccfSite.CodeFindName = "DHX_CFACNTUNIT";
+	this.ccfSite.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfSite.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	this.ccfCorp.form.DSTextBox.set_value(this.AuthClient.DS_CORP); 
+	this.ccfCorp.form.CDTextBox.set_value(this.AuthClient.CD_CORP);	
+	
+	var toDay = this.gfnGetDate().substring(0,6);
+	this.divSearch.form.ctclStd.form.TextBox.set_value(toDay);
+	
+}
+
+this.fnSelectValidation = function() {
+	
+	if(this.gfnIsNull(this.ccfCorp.form.CDTextBox.value)) {		
+		this.ccfCorp.form.CDTextBox.setFocus();
+		this.gfnAlert("법인코드를 입력하세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.ctclStd.form.TextBox.value)) {		
+		this.ctclStd.setFocus();
+		this.gfnAlert("회계년월을 입력하세요.");
+		return false;
+	}
+	
+	return true;
+}
+
+this.fnSelect = function() {
+
+	if (!this.fnSelectValidation()) return;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_CORP", this.gfnTrim(this.ccfCorp.form.CDTextBox.value)); 
+	this.dsSelect.setColumn(0, "CD_SITE", this.gfnTrim(this.ccfSite.form.CDTextBox.value)); 
+	this.dsSelect.setColumn(0, "DT_STD", this.ctclStd.form.TextBox.value); 
+		
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect"; 
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnAdd = function() {
+	
+}
+
+this.fnDel = function() {
+	
+}
+
+this.fnSave = function() {
+	
+}
+
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+this.fnPrint = function() {
+
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.fnSetButton();
+		this.gfnGridAfterSelect(this.dxGrid);	
+	}
+
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+		
+	if(id == "ccfCorp") { 
+		dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+	}
+		
+	if(id == "ccfSite") {
+		var cdCorp = this.ccfCorp.form.CDTextBox.text;
+		if(this.gfnIsNull(cdCorp)){
+			this.gfnAlert("법인코드를 먼저 선택하세요.");
+			return false;
+		}	
+		//dsUserParam.setColumn(nrow, "VALUE", "");
+		dsUserParam.setColumn(nrow, "YN_SLIPACCEPT", "");
+		dsUserParam.setColumn(nrow, "CD_DEPT_UPPER", "0000000");
+		dsUserParam.setColumn(nrow, "CD_CORP", cdCorp);
+		dsUserParam.setColumn(nrow, "YN_USE", "Y");
+		dsUserParam.setColumn(nrow, "GR_DEPT_ACNT", "02");
+	}
+	
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+
+	if(id == "ccfCorp") {
+		this.ccfSite.form.fnCodeFindClear();
+		//this.gfnSetFormStatus(this, "I");
+	}else if(id == "ccfSite") {
+		//this.gfnSetFormStatus(this, "I");
+	}
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+
+	if(e == null || (e.pretext != e.posttext)) {
+		// 폼상태 초기화
+		this.gfnSetFormStatus(this);	
+		this.gfnGridClear(this.dxGrid);
+		
+	/*	this.btnCalc.set_enable(false);*/
+	}
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		
+		/*this.btnCalc.set_enable(false);*/
+	}
+};
+
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnCalc = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	
+	this.dsInsert.clearData();
+	this.dsInsert.addRow();
+	
+	this.dsInsert.setColumn(0, "CD_CORP", this.gfnTrim(this.ccfCorp.form.CDTextBox.value));
+	this.dsInsert.setColumn(0, "DT_STD", this.ctclStd.form.TextBox.value);
+	
+	if (this.dsInsert.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsTable"/>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DHAPR_LA_BONDDETAIL_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CORP" type="STRING" size="256"/>
+          <Column id="DEPT" type="STRING" size="256"/>
+          <Column id="STD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CORP"/>
+            <Col id="DEPT"/>
+            <Col id="STD"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCorp.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CORP"/>
+      <BindItem id="item1" compid="divSearch.form.ccfSite.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="DEPT"/>
+      <BindItem id="item2" compid="divSearch.form.ctclStd.form.TextBox" propid="value" datasetid="dsSearch" columnid="STD"/>
+    </Bind>
+  </Form>
+</FDL>

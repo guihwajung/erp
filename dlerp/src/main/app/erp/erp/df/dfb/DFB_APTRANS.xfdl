@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1720" height="720" titletext="미지급출금현황" onload="form_onload">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="142.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta04" taborder="0" text="법인코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_CORP" CDTextWidth="70" taborder="1" left="sta04:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="sta00" taborder="2" text="기간" left="ccfCD_CORP:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Calendar id="calDT_FROM" taborder="3" left="sta00:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staCD_TILDE" taborder="4" text="~" left="calDT_FROM:0.0" top="10.0" width="30.0" height="24.0" cssclass="sta_WF_AC"/>
+              <Calendar id="calDT_TO" taborder="5" left="calDT_FROM:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staCD_DEPT" taborder="6" text="귀속부서" left="0.0" top="sta04:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_DEPT_BE" CodeFindName="DHX_CFACNTUNIT2" CDTextWidth="70" taborder="7" left="staCD_DEPT:0.0" top="staCD_DEPT:10.0" width="249" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="staDS_VENDOR" taborder="9" text="거래처" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="txtDS_VENDOR" taborder="8" left="staDS_VENDOR:0.0" top="10.0" width="220" height="24.0" maxlength="50" onchanged="divSearch_txtDS_CONTEXT_onchanged"/>
+              <Static id="staCD_DEPT00" taborder="10" text="발행부서" left="0.0" top="sta04:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_DEPT_BH" CodeFindName="DHX_CFACNTUNIT2" CDTextWidth="70" taborder="11" left="staCD_DEPT00:0.0" top="staCD_DEPT00:10.0" width="249" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Tab id="tabData" taborder="0" tabindex="0" left="0" top="0" bottom="0" right="0" canchange="divData_tabData_canchange" onchanged="divData_tabData_onchanged">
+                <Tabpages>
+                  <Tabpage id="tab1" text="매입">
+                    <Layouts>
+                      <Layout>
+                        <Div id="divSplitter" taborder="1" left="36.90%" top="0" width="5" height="100.00%" background="skyblue" cursor="ew-resize" ondrag="divData_divSplitter_ondrag"/>
+                        <Div id="divDataLeft" taborder="0" left="0" top="0" bottom="0" right="divSplitter:5">
+                          <Layouts>
+                            <Layout>
+                              <Grid id="objGridAPLeft" taborder="0" left="0" top="0" bottom="0" right="0"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                        <Div id="divDataRight" taborder="0" left="divSplitter:5" top="0" bottom="0" right="0" text="" ondragmove="divDataRight_ondragmove">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divSplitter2" taborder="1" left="0" top="67.81%" width="100.00%" height="5" background="skyblue" cursor="ns-resize" ondrag="divData_divSplitter2_ondrag"/>
+                              <Div id="divDataTop" taborder="0" left="0" top="0" bottom="divSplitter2:5" right="0" text="">
+                                <Layouts>
+                                  <Layout>
+                                    <Static id="sta01" taborder="1" left="0" top="25" width="80" height="30" cssclass="sta_WF_tablelabel" text="발급ID"/>
+                                    <Static id="sta00" taborder="0" left="sta01:-1" top="25" height="30" cssclass="sta_WF_tablebg" width="891"/>
+                                    <Static id="sta02" taborder="2" left="0" top="sta01:-2" width="80" height="30" cssclass="sta_WF_tablelabel" text="거래처명"/>
+                                    <Static id="sta03" taborder="3" left="sta02:-1" top="sta00:-2" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                    <Static id="sta06" taborder="4" left="0" top="sta02:-1" width="80" height="30" cssclass="sta_WF_tablelabel" text="대표자"/>
+                                    <Static id="sta07" taborder="5" left="79" top="sta03:-1" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                    <Static id="sta08" taborder="6" left="0" top="sta06:-1" width="80" height="30" cssclass="sta_WF_tablelabel" text="종목"/>
+                                    <Static id="sta09" taborder="7" left="79" top="sta07:-1" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                    <Static id="sta10" taborder="8" left="0" top="sta08:-1" width="80" height="30" cssclass="sta_WF_tablelabel" text="공급가"/>
+                                    <Static id="sta11" taborder="9" left="79" top="sta09:-1" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                    <Static id="sta12" taborder="10" left="0" top="sta10:-1" width="80" height="30" cssclass="sta_WF_tablelabel" text="이메일"/>
+                                    <Static id="sta13" taborder="11" left="79" top="sta11:-1" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                    <Edit id="txtDS_CORP" taborder="12" left="87" top="30" width="143" height="20" enable="true" readonly="true" maxlength="256"/>
+                                    <Edit id="txtDS_VENDOR" taborder="13" left="87" top="58" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtAM_MIBUL" taborder="14" left="87" top="87" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <MaskEdit id="txtDS_ACCOUNT" taborder="15" left="87" top="145" width="143" height="20" maxlength="256" enable="true" readonly="true" format="#,##0"/>
+                                    <Edit id="txtDS_DEPT" taborder="16" left="87" top="175" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Static id="sta14" taborder="17" left="0" top="sta12:-1" width="80" height="30" cssclass="sta_WF_tablelabel" text="체크"/>
+                                    <Static id="sta15" taborder="18" left="79" top="sta13:-1" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                    <Static id="sta16" taborder="19" text="세금계산서정보" left="0" top="0" height="24" cssclass="sta_TITLE_Bg" width="300"/>
+                                    <Static id="sta17" taborder="20" text="미지급상세 및 결재정보" left="490" top="0" height="24" cssclass="sta_TITLE_Bg" width="300"/>
+                                    <Static id="sta18" taborder="21" left="482" top="25" width="80" height="30" cssclass="sta_WF_tablelabel" text="전표번호"/>
+                                    <Static id="sta21" taborder="22" left="482" top="82" width="80" height="30" cssclass="sta_WF_tablelabel" text="귀속부서"/>
+                                    <Static id="sta22" taborder="23" left="482" top="111" width="80" height="30" cssclass="sta_WF_tablelabel" text="회계승인"/>
+                                    <Static id="sta23" taborder="24" left="482" top="140" width="80" height="30" cssclass="sta_WF_tablelabel" text="자동전표"/>
+                                    <Edit id="txtDS_CORP00" taborder="25" left="571" top="30" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Static id="sta24" taborder="26" left="79" top="256" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                    <Static id="sta25" taborder="27" left="0" top="256" width="80" height="30" cssclass="sta_WF_tablelabel" text="요청번호"/>
+                                    <Static id="sta26" taborder="28" left="79" top="sta24:-1" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                    <Static id="sta27" taborder="29" left="240" top="256" width="80" height="30" cssclass="sta_WF_tablelabel" text="요청일자"/>
+                                    <Static id="sta28" taborder="30" left="79" top="sta26:-1" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                    <Static id="sta30" taborder="31" left="79" top="sta28:-1" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                    <Static id="sta31" taborder="32" left="0" top="285" width="80" height="30" cssclass="sta_WF_tablelabel" text="예정금액"/>
+                                    <Calendar id="txtDS_CORP01" taborder="33" left="327" top="30" width="143" height="20" maxlength="256" enable="true" readonly="true" dateformat="yyyy-MM-dd" editformat="yyyyMMdd"/>
+                                    <Edit id="txtDS_VENDOR00" taborder="34" left="327" top="58" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtAM_MIBUL00" taborder="35" left="327" top="87" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Static id="sta32" taborder="36" left="240" top="25" width="80" height="30" cssclass="sta_WF_tablelabel" text="발급일자" onclick="divData_tabData_tab1_divDataRight_divDataTop_sta32_onclick"/>
+                                    <Static id="sta33" taborder="37" left="240" top="53" width="80" height="30" cssclass="sta_WF_tablelabel" text="사업자번호"/>
+                                    <Static id="sta34" taborder="38" left="240" top="82" width="80" height="30" cssclass="sta_WF_tablelabel" text="업태"/>
+                                    <Static id="sta35" taborder="39" left="240" top="111" width="80" height="30" cssclass="sta_WF_tablelabel" text="주소"/>
+                                    <Static id="sta36" taborder="40" left="240" top="140" width="80" height="30" cssclass="sta_WF_tablelabel" text="세금"/>
+                                    <Static id="sta37" taborder="41" left="240" top="169" width="80" height="30" cssclass="sta_WF_tablelabel" text="개수"/>
+                                    <Static id="sta38" taborder="42" left="726" top="25" width="80" height="30" cssclass="sta_WF_tablelabel" text="비고"/>
+                                    <Edit id="txtDS_CORP02" taborder="43" left="815" top="30" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Static id="sta39" taborder="44" left="482" top="53" width="80" height="30" cssclass="sta_WF_tablelabel" text="거래처"/>
+                                    <Edit id="txtDS_VENDOR01" taborder="45" left="571" top="58" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Static id="sta40" taborder="46" left="726" top="53" width="80" height="30" cssclass="sta_WF_tablelabel" text="계정과목"/>
+                                    <Edit id="txtAM_MIBUL01" taborder="47" left="815" top="58" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Static id="sta41" taborder="48" left="726" top="82" width="80" height="30" cssclass="sta_WF_tablelabel" text="생성자"/>
+                                    <Static id="sta43" taborder="49" left="726" top="111" width="80" height="30" cssclass="sta_WF_tablelabel" text="품의번호"/>
+                                    <Edit id="txtAM_MIBUL02" taborder="50" left="87" top="116" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtAM_MIBUL03" taborder="51" left="327" top="116" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <MaskEdit id="txtDS_ACCOUNT00" taborder="52" left="327" top="145" width="143" height="20" maxlength="256" enable="true" readonly="true" format="#,##0"/>
+                                    <Edit id="txtDS_DEPT00" taborder="53" left="327" top="175" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtAM_MIBUL05" taborder="54" left="571" top="87" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtDS_ACCOUNT01" taborder="55" left="571" top="116" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtDS_DEPT01" taborder="56" left="571" top="145" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtAM_MIBUL06" taborder="57" left="815" top="87" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtDS_DEPT02" taborder="58" left="815" top="116" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtDS_DEPT04" taborder="59" left="815" top="145" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtDS_DEPT05" taborder="60" left="571" top="175" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Calendar id="txtDS_DEPT06" taborder="61" left="815" top="175" width="143" height="20" maxlength="256" enable="true" readonly="true" dateformat="yyyy-MM-dd" editformat="yyyyMMdd"/>
+                                    <Static id="sta44" taborder="62" text="출금요청" left="0" top="230" height="24" cssclass="sta_TITLE_Bg" width="300"/>
+                                    <Static id="sta45" taborder="63" text="집행내역" left="490" top="230" height="24" cssclass="sta_TITLE_Bg" width="300"/>
+                                    <Static id="sta46" taborder="64" left="482" top="256" width="80" height="30" cssclass="sta_WF_tablelabel" text="집행번호"/>
+                                    <Static id="sta47" taborder="65" left="482" top="285" width="80" height="30" cssclass="sta_WF_tablelabel" text="전표번호"/>
+                                    <Static id="sta48" taborder="66" left="482" top="314" width="80" height="30" cssclass="sta_WF_tablelabel" text="집행계좌"/>
+                                    <Static id="sta49" taborder="67" left="482" top="343" width="80" height="30" cssclass="sta_WF_tablelabel" text="금액"/>
+                                    <Edit id="txtCD_TRADE00" taborder="68" left="87" top="260" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Calendar id="txtCD_TRADE01" taborder="69" left="329" top="260" width="143" height="20" maxlength="256" enable="true" readonly="true" dateformat="yyyy-MM-dd" editformat="yyyyMMdd"/>
+                                    <MaskEdit id="txtCD_TRADE03" taborder="70" left="87" top="290" width="143" height="20" maxlength="256" enable="true" readonly="true" format="#,##0"/>
+                                    <Static id="sta53" taborder="71" left="0" top="314" width="80" height="30" cssclass="sta_WF_tablelabel" text="현금"/>
+                                    <Static id="sta54" taborder="72" left="726" top="256" width="80" height="30" cssclass="sta_WF_tablelabel" text="거래처 은행"/>
+                                    <Static id="sta55" taborder="73" left="726" top="285" width="80" height="30" cssclass="sta_WF_tablelabel" text="거래처계좌"/>
+                                    <Static id="sta56" taborder="74" left="726" top="314" width="80" height="30" cssclass="sta_WF_tablelabel" text="거래처계좌명"/>
+                                    <Static id="sta57" taborder="75" left="726" top="343" width="80" height="30" cssclass="sta_WF_tablelabel" text="집행시간"/>
+                                    <MaskEdit id="txtCD_TRADE07" taborder="76" left="87" top="319" width="143" height="20" maxlength="256" enable="true" readonly="true" format="#,##0"/>
+                                    <Edit id="txtCD_TRADE08" taborder="77" left="571" top="260" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtCD_TRADE09" taborder="78" left="571" top="290" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtCD_TRADE10" taborder="79" left="571" top="319" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <MaskEdit id="txtCD_TRADE11" taborder="80" left="571" top="348" width="143" height="20" maxlength="256" enable="true" readonly="true" format="#,##0"/>
+                                    <Edit id="txtCD_TRADE12" taborder="81" left="815" top="260" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtCD_TRADE13" taborder="82" left="815" top="290" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtCD_TRADE14" taborder="83" left="815" top="319" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Edit id="txtCD_TRADE15" taborder="84" left="815" top="348" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Static id="sta61" taborder="87" left="726" top="sta43:-1" width="80" height="30" cssclass="sta_WF_tablelabel" text="전자결재"/>
+                                    <Static id="sta58" taborder="85" left="726" top="sta61:-1" width="80" height="30" cssclass="sta_WF_tablelabel" text="승인일시"/>
+                                    <Static id="sta59" taborder="86" left="482" top="sta61:-1" width="80" height="30" cssclass="sta_WF_tablelabel" text="승인자 이름"/>
+                                    <Static id="sta62" taborder="88" left="240" top="314" width="80" height="30" cssclass="sta_WF_tablelabel" text="어음"/>
+                                    <Edit id="txtCD_TRADE16" taborder="89" left="85" top="378" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Static id="sta63" taborder="90" left="79" top="sta30:-1" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                    <MaskEdit id="txtCD_TRADE20" taborder="91" left="329" top="319" width="143" height="20" maxlength="256" enable="true" readonly="true" format="#,##0"/>
+                                    <Edit id="txtCHECKPOINT" taborder="92" left="84" top="409" width="394" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Static id="sta04" taborder="93" left="240" top="343" width="80" height="30" cssclass="sta_WF_tablelabel" text="거래처계좌"/>
+                                    <Edit id="txtCD_TRADE22" taborder="94" left="329" top="348" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Static id="sta19" taborder="95" left="0" top="343" width="80" height="30" cssclass="sta_WF_tablelabel" text="은행"/>
+                                    <Edit id="txtCD_TRADE23" taborder="96" left="87" top="348" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                    <Static id="sta20" taborder="97" text="확인사항" left="0" top="406" height="22" cssclass="sta_TITLE_Bg" width="300"/>
+                                    <Static id="sta29" taborder="98" left="0" top="372" width="80" height="30" cssclass="sta_WF_tablelabel" text=""/>
+                                    <Edit id="txtDS_DEPT03" taborder="99" left="87" top="203" width="143" height="20" maxlength="256" enable="true" readonly="true"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                              <Div id="divDataBottom" taborder="0" left="0" top="divSplitter2:5" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout>
+                                    <Div id="divButton" taborder="106" left="0" top="0" height="30" right="0" visible="true" text="">
+                                      <Layouts>
+                                        <Layout/>
+                                      </Layouts>
+                                    </Div>
+                                    <Tab id="tabDataAP" taborder="1" tabindex="0" left="0" top="divButton:-20" bottom="0" right="0" onchanged="divData_tabData1_onchanged">
+                                      <Tabpages>
+                                        <Tabpage id="tabAP1" text="원안품의 헤더">
+                                          <Layouts>
+                                            <Layout>
+                                              <Grid id="objGridAP1" taborder="1" left="9" top="71" bottom="5" right="1"/>
+                                              <Static id="sta33" taborder="0" left="10" top="8" width="60" height="30" cssclass="sta_WF_tablelabel" text="헤더번호"/>
+                                              <Static id="sta32" taborder="2" left="69" top="8" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                              <Edit id="txtCD_TRADE03" taborder="3" left="74" top="13" width="90" height="20" maxlength="256" enable="true" readonly="true"/>
+                                              <Static id="sta00" taborder="4" left="168" top="8" width="60" height="30" cssclass="sta_WF_tablelabel" text="라인번호"/>
+                                              <Edit id="txtCD_TRADE00" taborder="5" left="232" top="13" width="90" height="20" maxlength="256" enable="true" readonly="true"/>
+                                              <Static id="sta07" taborder="11" left="69" top="sta32:-1" width="891" height="30" cssclass="sta_WF_tablebg"/>
+                                              <Static id="sta03" taborder="6" left="10" top="37" width="60" height="30" cssclass="sta_WF_tablelabel" text="결재"/>
+                                              <Calendar id="txtCD_TRADE04" taborder="7" left="864" top="14" width="90" height="20" maxlength="256" enable="true" readonly="true" dateformat="yyyy-MM-dd" editformat="yyyyMMdd"/>
+                                              <Edit id="txtCD_TRADE05" taborder="8" left="74" top="41" width="90" height="20" maxlength="256" enable="true" readonly="true"/>
+                                              <Static id="sta06" taborder="9" left="168" top="37" width="60" height="30" cssclass="sta_WF_tablelabel" text="사용여부"/>
+                                              <Edit id="txtCD_TRADE07" taborder="10" left="232" top="41" width="90" height="20" maxlength="256" enable="true" readonly="true"/>
+                                              <Static id="sta08" taborder="12" left="638" top="8" width="60" height="30" cssclass="sta_WF_tablelabel" text="기간From"/>
+                                              <Calendar id="txtCD_TRADE08" taborder="13" left="704" top="13" width="90" height="20" maxlength="256" enable="true" readonly="true" dateformat="yyyy-MM-dd" editformat="yyyyMMdd"/>
+                                              <Static id="sta09" taborder="14" left="638" top="37" width="60" height="30" cssclass="sta_WF_tablelabel" text="거래처"/>
+                                              <Edit id="txtCD_TRADE09" taborder="15" left="704" top="41" width="90" height="20" maxlength="256" enable="true" readonly="true"/>
+                                              <Edit id="txtCD_TRADE10" taborder="16" left="390" top="41" width="245" height="20" maxlength="256" enable="true" readonly="true"/>
+                                              <Static id="sta10" taborder="18" left="326" top="8" width="60" height="30" cssclass="sta_WF_tablelabel" text="품의제목"/>
+                                              <Edit id="txtCD_TRADE11" taborder="17" left="390" top="13" width="245" height="20" maxlength="256" enable="true" readonly="true"/>
+                                              <Static id="sta11" taborder="19" left="326" top="37" width="60" height="30" cssclass="sta_WF_tablelabel" text="비고"/>
+                                              <Static id="sta01" taborder="20" left="800" top="8" width="60" height="30" cssclass="sta_WF_tablelabel" text="기간To"/>
+                                            </Layout>
+                                          </Layouts>
+                                        </Tabpage>
+                                      </Tabpages>
+                                    </Tab>
+                                    <Div id="divButton2" taborder="107" left="0" top="0" height="30" right="0" text="">
+                                      <Layouts>
+                                        <Layout>
+                                          <Button id="btnAPWonanDtl" taborder="104" text="전자결재문서조회" top="10" width="100" height="20" right="18" onclick="btnAPWonanDtl_onclick" enable="false"/>
+                                        </Layout>
+                                      </Layouts>
+                                    </Div>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.fDebugMod = false;
+this.own = false; 
+this.isDlg = false;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	 
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+  
+	this.dsSearch.set_enableevent(false); 
+	this.dsSearch.setColumn(0, "DT_FROM", this.gfnGetFirstDate(this.gfnGetLastDate()));
+	this.dsSearch.setColumn(0, "DT_TO", this.gfnGetLastDate(this.gfnGetLastDate()));
+	this.dsSearch.set_enableevent(true); 
+};
+ 
+
+/************************************************************************
+* 버튼 설정 : 화면(Tab) 전환시 마다 호출
+* 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+* 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+************************************************************************/
+this.fnSetExtendButton = function() {  
+	this.btn1 = this.gfnFormButtonAdd("Wrk1", "fnWrk1"); 	//미지급전표조회
+	this.btn2 = this.gfnFormButtonAdd("Wrk2", "fnWrk2"); 	//지급전표조회
+	this.btn3 = this.gfnFormButtonAdd("Wrk3", "fnWrk3"); 	//전자세금계산서조회
+};
+
+/************************************************************************
+* 변수 선언
+************************************************************************/
+this.fnSetVariable = function() {	 
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+	this.ccfCD_DEPT_BE = this.divSearch.form.ccfCD_DEPT_BE;
+	this.ccfCD_DEPT_BH = this.divSearch.form.ccfCD_DEPT_BH;
+
+
+	this.dxGridAPLeft = this.divData.form.tabData.tab1.form.divDataLeft.form.objGridAPLeft;
+	this.dxGridAP1 = this.divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabAP1.form.objGridAP1; 
+	//this.dxGridAP2 = this.divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabAP2.form.objGridAP2; 
+	//this.dxGridAP3 = this.divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabAP3.form.objGridAP3; 
+	
+//	this.ccfCD_ACNTUNIT = this.divSearch.form.ccfCD_ACNTUNIT;
+	this.btnAPWonanDtl = this.divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.divButton2.form.btnAPWonanDtl ;
+	this.txtStatus = "";
+};
+
+/************************************************************************
+* 이벤트 설정
+************************************************************************/
+this.fnSetEvent = function() {
+	
+	this.ccfCD_CORP.CodeFindName = "DHX_CFCORP";
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	this.ccfCD_DEPT_BE.CodeFindName = "DHX_CFACNTUNIT";
+	this.ccfCD_DEPT_BE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_DEPT_BE.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	this.ccfCD_DEPT_BH.CodeFindName = "DHX_CFACNTUNIT2"; 
+	this.ccfCD_DEPT_BH.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_DEPT_BH.AfterCDTextChanged = "fnAfterCDTextChanged";
+
+
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGridAPLeft, this.dsLeft, "DF", "DFB_APTRANS");
+ 	this.gfnGridInit(this.dxGridAP1, this.dsListAP1, "DF", "DFB_APTRANS_GRID1"); 
+// 	this.gfnGridInit(this.dxGridAP2, this.dsListAP2, "DF", "DFB_APTRANS_GRID2"); 
+// 	this.gfnGridInit(this.dxGridAP3, this.dsListAP3, "DF", "DFB_APTRANS_GRID3"); 
+
+	this.dxGridAPLeft.set_selecttype("row");
+	this.dxGridAPLeft.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+};
+
+/************************************************************************
+* 파라미터 설정
+************************************************************************/
+this.fnSetParameter = function() {
+	//Left Grid
+	this.dsSelectleft = new Dataset();
+	this.dsSelectleft.addColumn("CD_CORP", "string");
+	this.dsSelectleft.addColumn("DT_FROM", "string");
+	this.dsSelectleft.addColumn("DT_TO", "string");
+	this.dsSelectleft.addColumn("DS_VENDOR", "string");
+	this.dsSelectleft.addColumn("CD_DEPT_BE", "string");
+	this.dsSelectleft.addColumn("CD_DEPT_BH", "string");
+	
+	//Single
+	this.dsSelectMaster = new Dataset();
+	this.dsSelectMaster.addColumn("NO_MIBUL", "string"); 
+	this.dsSelectMaster.addColumn("CD_TRADE", "string"); 
+	this.dsSelectMaster.addColumn("CD_VENDOR", "string"); 
+	this.dsSelectMaster.addColumn("DT_ACCOUNT", "string"); 
+	this.dsSelectMaster.addColumn("AM_MIBUL", "string"); 
+	this.dsSelectMaster.addColumn("ID_CONSULT", "string"); 
+	  
+	//
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_ACNTUNIT", "string");
+	this.dsSelect.addColumn("NO_DONG", "string");
+	this.dsSelect.addColumn("NO_HO", "string");
+	this.dsSelect.addColumn("CONT_DEG", "bigdecimal");
+	this.dsSelect.addColumn("ID_USER", "string");
+	this.dsSelect.addColumn("IP_ADDR", "string");
+	 
+}
+
+/************************************************************************
+* 컨트롤 이벤트
+************************************************************************/
+/*
+*	조회 버튼
+*/
+this.fnSelect = function() {
+	
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGridAPLeft );
+	this.drow = this.dxGridAPLeft.currentrow;
+	
+	this.dsSelectleft.clearData();
+	this.dsSelectleft.addRow();	
+	this.dsSelectleft.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSelectleft.setColumn(0, "DT_FROM", this.dsSearch.getColumn(0, "DT_FROM"));
+	this.dsSelectleft.setColumn(0, "DT_TO", this.dsSearch.getColumn(0, "DT_TO"));
+	this.dsSelectleft.setColumn(0, "DS_VENDOR", this.dsSearch.getColumn(0, "DS_VENDOR"));
+	this.dsSelectleft.setColumn(0, "CD_DEPT_BE", this.dsSearch.getColumn(0, "CD_DEPT_BE"));
+	this.dsSelectleft.setColumn(0, "CD_DEPT_BH", this.dsSearch.getColumn(0, "CD_DEPT_BH"));
+	 
+	var strSvcId    = "selectleft";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "selectleft=dsSelectleft";
+	var outData     = "dsLeft=selectleft0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+		strSvcType , 	// transaction을 요청할 구분
+		inProc,			// Procedure 정보 Dataset 이름
+		inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+		outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+		strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+		callBackFnc); // 통신방법 정의 [생략가능]
+}
+ 
+this.fnSelectMaster = function(row) {
+
+	trace("row", row);
+	if (row <= 0) return false;
+	
+	if (row == 0 && this.dsLeft.rowcount > 0) {
+		row = 1;
+		this.dsList.set_enableevent(false);
+		this.dxGridAPLeft.setCellPos(1, 1);
+		this.dsList.set_enableevent(true);
+	}
+	
+	this.dsSelectMaster.clearData();
+	this.dsSelectMaster.addRow();	 
+	this.dsSelectMaster.setColumn(0, "NO_MIBUL", this.dsLeft.getColumn(row, "NO_MIBUL")); 
+	this.dsSelectMaster.setColumn(0, "CD_TRADE", this.dsLeft.getColumn(row, "CD_TRADE")); 
+	this.dsSelectMaster.setColumn(0, "CD_VENDOR", this.dsLeft.getColumn(row, "CD_VENDOR")); 
+	this.dsSelectMaster.setColumn(0, "DT_ACCOUNT", this.dsLeft.getColumn(row, "DT_ACCOUNT")); 
+	this.dsSelectMaster.setColumn(0, "AM_MIBUL", this.dsLeft.getColumn(row, "AM_MIBUL")); 
+
+	//trace(this.dsSelectMaster.saveXML());
+
+	var strSvcId    = "selectMaster";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+//  	var inData      = "select=dsSelectMaster";
+  	var inData      = "select1=dsSelectMaster select2=dsSelectMaster select3=dsSelectMaster select4=dsSelectMaster select5=dsSelectMaster" ;
+  	var outData     = "dsList1=select10 dsList2=select20 dsList3=select30 dsList4=select40 dsList5=select50";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+		strSvcType , 	// transaction을 요청할 구분
+		inProc,			// Procedure 정보 Dataset 이름
+		inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+		outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+		strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+		callBackFnc); // 통신방법 정의 [생략가능
+} 
+
+
+this.fnSelectDetail = function(row) {
+	if (row <= 0) return false; 
+	 
+	if (row == 0 && this.dsLeft.rowcount > 0) {
+		row = 1;
+		this.dsList.set_enableevent(false);
+		this.dxGridAPLeft.setCellPos(1, 1);
+		this.dsList.set_enableevent(true);
+	}
+	
+	this.dsSelectMaster.clearData();
+	this.dsSelectMaster.addRow();	 
+	this.dsSelectMaster.setColumn(0, "ID_CONSULT", this.dsLeft.getColumn(row, "ID_CONSULT")); 
+	this.dsSelectMaster.setColumn(0, "NO_MIBUL", this.dsLeft.getColumn(row, "NO_MIBUL")); 
+	
+	var tabIdx = this.divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabindex;
+	
+ 	switch(tabIdx) {
+	case 0:
+		this.gfnGridClear(this.dxGridAP1);
+		break;
+	case 1:
+		this.gfnGridClear(this.dxGridAP2);
+		break;
+	case 2:
+		this.gfnGridClear(this.dxGridAP3);
+		break; 
+	}
+	 
+
+	var strSvcId    = "selectDetail";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "selectAPTab"+(tabIdx+1)+"=dsSelectMaster" 
+						+ (tabIdx==0? " selectAPTabHeader1=dsSelectMaster":""); //탭1 해더
+  	var outData     = "dsListAP"+(tabIdx+1)+"=selectAPTab"+(tabIdx+1)+"0" 
+						+ (tabIdx==0? " dsListAPTabHeader1=selectAPTabHeader10":""); //탭1 해더 
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+		strSvcType , 	// transaction을 요청할 구분
+		inProc,			// Procedure 정보 Dataset 이름
+		inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+		outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+		strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+		callBackFnc); // 통신방법 정의 [생략가능
+}
+
+/*
+*	입력 버튼
+*/
+this.fnAdd = function() { 
+}
+
+/*
+*	삭제 버튼
+*/
+this.fnDel = function() { 
+}
+
+this.fnDataValidate = function(aDiv){    
+	return true;
+}
+
+this.fnSetTextDecoration = function(aTY_CONTRACTOR){ 
+}
+
+/*
+*	저장 버튼
+*/
+this.fnSave = function() {
+}
+ 
+/*
+*	엑셀 버튼
+*/
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+ 
+/************************************************************************
+* 콜백 이벤트
+************************************************************************/
+/*
+*	콜백 처리
+*/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{	
+	trace("svcID", svcID);
+	if (svcID == "selectDetail") {
+		var tabIdx = this.divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabindex;
+		if(tabIdx == 0){ 
+			if(!this.gfnIsNull(this.dsListAPTabHeader1.getColumn(0 , "NO_APPR"))){
+				this.btnAPWonanDtl.set_enable(true)
+			}
+			else{
+				this.btnAPWonanDtl.set_enable(false)
+			}
+		}
+	}
+	else if (svcID == "selectMaster") {
+		if(this.dsList5.getColumn(0 , "GUBUN") == "X"){
+			this.divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCHECKPOINT.set_background("#F9E79F");   
+// 			this.divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.sta16.set_text("세금계산서정보 \uD83D\uDEA8");
+// 			this.divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.sta17.set_text("미지급상세 및 결재정보 \uD83D\uDEA8");
+// 			this.divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.sta44.set_text("출금요청 \uD83D\uDEA8");
+// 			this.divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.sta45.set_text("집행내역 \uD83D\uDEA8");
+		}
+		else{
+			this.divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCHECKPOINT.set_background("");  
+// 			this.divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.sta16.set_text("세금계산서정보");
+// 			this.divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.sta17.set_text("미지급상세 및 결재정보");
+// 			this.divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.sta44.set_text("출금요청");
+// 			this.divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.sta45.set_text("집행내역");
+		} 
+		if(this.dsList1.getColumn(0 , "ISSUE_CNT") > "1" ) {
+			this.divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.sta16.set_text("세금계산서정보 \uD83D\uDEA8");
+		}
+		else{
+			this.divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.sta16.set_text("세금계산서정보");
+		}
+
+	}
+	else if (svcID == "selectTax") {  
+		if (errorCode == 0) {
+			if(this.dsTax.rowcount > 0){
+				var url = this.gfnGetConfig("DH" , "TAX_URL");
+				url = url+"Tax/TaxView.jsp?";
+				url += "invseq="+this.dsTax.getColumn(0, "INV_SEQ");
+				url += "&status="+this.dsTax.getColumn(0, "STATUS");
+				url += "&burks=" +this.dsTax.getColumn(0, "BUKRS");
+
+				window.open(url, "_blank", "width=790,height=600,menubar=no,scrollbars=no,resizable=no,status=no");
+			}else{
+				this.gfnAlert("세금계산서 정보가 없습니다.");
+			}
+		}else{
+			this.gfnAlert(errorMsg);
+		} 
+	}
+	
+	
+	
+}
+
+/************************************************************************
+* 코드파인드 이벤트
+************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) { 
+	if (id == "ccfCD_CORP") {
+		dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+	}
+
+	if (id == "ccfCD_DEPT_BH") {
+		if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+			// Alert후 실행할 처리
+			this.fnVaidateCallback = function() {
+				this.ccfCD_CORP.form.CDTextBox.setFocus();
+			}
+			this.gfnAlert("법인코드를 입력하세요!", "fnVaidateCallback");
+			return false;
+		}
+		
+		dsUserParam.setColumn(nrow, "CD_DEPT_UPPER", "0000000");
+		dsUserParam.setColumn(nrow, "YN_SLIPACCEPT", "");
+		dsUserParam.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.text);
+		dsUserParam.setColumn(nrow, "YN_USE", "Y");
+		dsUserParam.setColumn(nrow, "GR_DEPT_ACNT", "");
+		dsUserParam.setColumn(nrow, "ID_USER"	    , this.AuthClient.ID_USER);
+		dsUserParam.setColumn(nrow, "GR_SEARCH"	    , this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "CD_DEPT"	    , this.AuthClient.CD_DEPT);
+	}
+	if (id == "ccfCD_DEPT_BE") {
+		if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+			// Alert후 실행할 처리
+			this.fnVaidateCallback = function() {
+				this.ccfCD_CORP.form.CDTextBox.setFocus();
+			}
+			this.gfnAlert("법인코드를 입력하세요!", "fnVaidateCallback");
+			return false;
+		}
+		
+		dsUserParam.setColumn(nrow, "CD_DEPT_UPPER", "0000000");
+		dsUserParam.setColumn(nrow, "YN_SLIPACCEPT", "");
+		dsUserParam.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.text);
+		dsUserParam.setColumn(nrow, "YN_USE", "Y");
+		dsUserParam.setColumn(nrow, "GR_DEPT_ACNT", "");
+	}
+	return true;
+}
+ 
+/************************************************************************
+* 그리드 이벤트
+************************************************************************/ 
+this.fnGrid_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{ 
+	this.fnSelectMaster(e.row); 
+	this.fnSelectDetail(e.row); 
+};
+
+/************************************************************************
+* 기타 이벤트
+************************************************************************/
+this.divData_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	if(e.userdata == "splitter") {
+		this.divData.form.tabData.tab1.form.divSplitter.set_left(e.clientx);
+		this.divData.form.tabData.tab1.form.resetScroll();
+	}
+};
+
+this.divData_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	e.set_userdata("splitter");
+	return true;
+};
+
+this.divDataRight_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	if(e.userdata == "splitter2") {
+		this.divData.form.tabData.tab1.form.divDataRight.form.divSplitter2.set_top(e.clienty);
+		this.divData.form.tabData.tab1.form.divDataRight.form.resetScroll();	
+	}
+};
+
+this.divData_divSplitter2_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	e.set_userdata("splitter2");
+	return true;
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{ 
+};
+ 
+
+this.divData_tabData1_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	if (e.preindex == e.postindex) return; 
+
+	switch (e.postindex) {
+	case 0:
+		this.gfnGridInit(this.dxGridAP1, this.dsListAP1, "DF", "DFB_APTRANS_GRID1");  
+		break;
+	case 1:
+		this.gfnGridInit(this.dxGridAP2, this.dsListAP2, "DF", "DFB_APTRANS_GRID2");	  
+		break;
+	case 2:
+		this.gfnGridInit(this.dxGridAP3, this.dsListAP3, "DF", "DFB_APTRANS_GRID3"); 
+		break; 
+	default:
+		break;
+	}
+	 
+	this.fnSelectDetail(this.dsLeft.rowposition);
+};
+  
+
+/************************************************************************
+* 툴바 버튼 이벤트
+************************************************************************/
+this.fnDialogCallback = function(svcID, value) {
+	trace("svcID", svcID);
+	// 리턴값
+	trace("value", value);
+	 
+};
+ 
+//출력버튼(fnPrint) > 계좌선택
+this.fnPrint = function() {
+
+};
+  
+
+/************************************************************************
+* 기타 function
+************************************************************************/
+this.fnTrace = function(arg1, arg2){
+	if(this.fDebugMod){
+		trace(arg1,arg2);
+	}
+}
+
+this.fnReplace = function(orgText, fromSplit, toSplit){
+	if(this.gfnIsNull(orgText)) return "";
+	
+	var newSplit = "";
+	if(!this.gfnIsNull(toSplit)) newSplit = toSplit;
+	
+	var arrResult = orgText.split(fromSplit);
+	var sResult = arrResult.join(newSplit);
+	return sResult;
+} 
+ 
+this.fnSaveValidate = function() {
+	var validate = true;
+	var msg = "";
+ 
+	return validate;
+}
+
+this.fnSelectValidate = function(){
+	return true;
+}
+
+this.fnWrk1 = function(){
+	trace("fnWrk1");
+	if( this.gfnIsNull(this.dsList2.getColumn(0, "CD_TRADE"))) {
+		this.gfnAlert("전표를 조회할수 없습니다.");
+		return false;
+	} 
+	var param = {};
+	
+	param.IUD_FLAG = this.dsList2.getColumn(0, "YN_APPR")  == "N" ? "U" : "S";
+	param.CD_TRADE = this.dsList2.getColumn(0, "CD_TRADE").replace(/-/gi, "");
+	
+	this.gfnFormOpen("DHA", "DHA_ISSUESLIP", "", param);
+}
+
+this.fnWrk2 = function(){
+	trace("fnWrk2");
+	if( this.gfnIsNull(this.dsList4.getColumn(0, "CHECK_CD_TRADE"))) {
+		this.gfnAlert("전표를 조회할수 없습니다.");
+		return false;
+	} 
+	var param = {};
+	
+	param.IUD_FLAG = this.dsList4.getColumn(0, "YN_APPR")  == "N" ? "U" : "S";
+	param.CD_TRADE = this.dsList4.getColumn(0, "CHECK_CD_TRADE").replace(/-/gi, "");
+	
+	this.gfnFormOpen("DHA", "DHA_ISSUESLIP", "", param);
+}
+
+this.fnWrk3 = function(){
+	trace("fnWrk3");
+	
+	//세금계산서 조회용 데이터셋
+	this.dsSelectTax = new Dataset();
+	this.dsSelectTax.addColumn("ISSUE_ID"  , "string");
+	this.dsSelectTax.addColumn("TY_SALEBUY", "string");
+	
+	this.dsSelectTax.clearData();
+	var nRow = this.dsSelectTax.addRow();
+	
+	var issueId = this.dsList1.getColumn(0, "ISSUE_ID");
+	var tySalebuy = "I" //this.dsLeft.getColumn(this.dsLeft.rowposition, "TY_SALEBUY");
+	if(this.gfnIsNull(issueId)){
+		this.gfnAlert("전자세금계산서번호는 필수입니다.");
+		return;
+	}
+	this.dsSelectTax.setColumn(nRow, "ISSUE_ID"  , issueId);		//세금계산서번호
+	this.dsSelectTax.setColumn(nRow, "TY_SALEBUY", tySalebuy);		//매입/매출구분 
+
+	//trace(this.dsSelectTax.saveXML());
+	var strSvcId    = "selectTax";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "selectTax=dsSelectTax";
+	var outData     = "dsTax=selectTax0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능] 
+}
+
+this.btnAPWonanDtl_onclick = function(){
+	trace("btnAPWonanDtl_onclick");
+	  
+	var url = this.gfnGetConfig("DZ" , "GW_APROVAL_URL");
+	url += "approval/approval_Form.do?";
+	url +="forminstanceID="+this.dsListAPTabHeader1.getColumn(0 , "NO_APPR");
+	url +="&processID="+this.dsListAPTabHeader1.getColumn(0, "NM_APPR");
+	
+	trace("url :: " + url);
+	window.open(url,"_blank", "width=790,height=1000,menubar=no,scrollbars=no,resizable=no,status=no");
+	
+}]]></Script>
+    <Objects>
+      <Dataset id="dsList1">
+        <ColumnInfo>
+          <Column id="ISSUE_ID" type="STRING" size="256"/>
+          <Column id="ISSUE_DATE" type="STRING" size="256"/>
+          <Column id="SU_NAME" type="STRING" size="256"/>
+          <Column id="SU_ID" type="STRING" size="256"/>
+          <Column id="SU_REPRES" type="STRING" size="256"/>
+          <Column id="SU_BUSTYPE" type="STRING" size="256"/>
+          <Column id="SU_INDTYPE" type="STRING" size="256"/>
+          <Column id="SU_ADDR" type="STRING" size="256"/>
+          <Column id="AM_SUPPLY" type="STRING" size="256"/>
+          <Column id="AM_TAX" type="STRING" size="256"/>
+          <Column id="SU_EMAIL" type="STRING" size="256"/>
+          <Column id="ISSUE_CNT" type="STRING" size="256"/>
+          <Column id="CHK_HOMETAX" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList2">
+        <ColumnInfo>
+          <Column id="CD_TRADE" type="STRING" size="256"/>
+          <Column id="RM_BIGO2" type="STRING" size="256"/>
+          <Column id="TY_VENDOR" type="STRING" size="256"/>
+          <Column id="DS_VENDOR" type="STRING" size="256"/>
+          <Column id="NO_SJC" type="STRING" size="256"/>
+          <Column id="DS_ACCOUNT" type="STRING" size="256"/>
+          <Column id="DS_DEPT_BH" type="STRING" size="256"/>
+          <Column id="ID_INSERT" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+          <Column id="YN_APPR" type="STRING" size="256"/>
+          <Column id="DS_AUTOSLIP" type="STRING" size="256"/>
+          <Column id="NO_CONSULT" type="STRING" size="256"/>
+          <Column id="ISSUE_ID" type="STRING" size="256"/>
+          <Column id="CD_APP" type="STRING" size="256"/>
+          <Column id="DT_APPR" type="STRING" size="256"/>
+          <Column id="ID_APPR" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList3">
+        <ColumnInfo>
+          <Column id="NO_REQUEST" type="STRING" size="256"/>
+          <Column id="YN_DIRECT" type="STRING" size="256"/>
+          <Column id="DT_REQ" type="STRING" size="256"/>
+          <Column id="DT_EFDTE" type="STRING" size="256"/>
+          <Column id="AM_REQUEST" type="STRING" size="256"/>
+          <Column id="DT_REQ_N" type="STRING" size="256"/>
+          <Column id="AM_REQ" type="STRING" size="256"/>
+          <Column id="AM_CASH" type="STRING" size="256"/>
+          <Column id="AM_NOTES" type="STRING" size="256"/>
+          <Column id="QN_ILSU" type="STRING" size="256"/>
+          <Column id="NO_ACCOUNT" type="STRING" size="256"/>
+          <Column id="DS_BANK" type="STRING" size="256"/>
+          <Column id="SEQ_ALLOT " type="STRING" size="256"/>
+          <Column id="YN_CASH" type="STRING" size="256"/>
+          <Column id="AM_BAEJUNG" type="STRING" size="256"/>
+          <Column id="AM_FIT" type="STRING" size="256"/>
+          <Column id="SEQ_REF" type="STRING" size="256"/>
+          <Column id="SEQ_EXEC" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList4">
+        <ColumnInfo>
+          <Column id="SEQ_EXEC" type="STRING" size="256"/>
+          <Column id="DS_BANK" type="STRING" size="256"/>
+          <Column id="CHECK_CD_TRADE" type="STRING" size="256"/>
+          <Column id="IN_ACCT_NO" type="STRING" size="256"/>
+          <Column id="NO_MAINACCOUNT" type="STRING" size="256"/>
+          <Column id="CLIENT" type="STRING" size="256"/>
+          <Column id="TRAN_AMT" type="STRING" size="256"/>
+          <Column id="CREATED_DATE" type="STRING" size="256"/>
+          <Column id="YN_APPR" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList5">
+        <ColumnInfo>
+          <Column id="BIGO" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">selectleft</Col>
+            <Col id="SP">DFBPR_APTRANS_SLT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select1</Col>
+            <Col id="SP">DFBPR_APTRANS_MASTER1_SLT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select2</Col>
+            <Col id="SP">DFBPR_APTRANS_MASTER2_SLT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select3</Col>
+            <Col id="SP">DFBPR_APTRANS_MASTER3_SLT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select4</Col>
+            <Col id="SP">DFBPR_APTRANS_MASTER4_SLT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select5</Col>
+            <Col id="SP">DFBPR_APTRANS_MASTER5_SLT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectAPTabHeader1</Col>
+            <Col id="SP">DFBPR_APTRANS_TABHEADER1_SLT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectAPTab1</Col>
+            <Col id="SP">DFBPR_APTRANS_TAB1_SLT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectAPTab2</Col>
+            <Col id="SP">DFBPR_APTRANS_TAB2_SLT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectAPTab3</Col>
+            <Col id="SP">DFBPR_APTRANS_TAB3_SLT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectTax</Col>
+            <Col id="SP">DHXPR_TAX_INFO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="DT_FROM" type="STRING" size="256"/>
+          <Column id="DT_TO" type="STRING" size="256"/>
+          <Column id="DS_VENDOR" type="STRING" size="256"/>
+          <Column id="CD_DEPT_BE" type="STRING" size="256"/>
+          <Column id="DS_DEPT_BE" type="STRING" size="256"/>
+          <Column id="CD_DEPT_BH" type="STRING" size="256"/>
+          <Column id="DS_DEPT_BH" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListAPTabHeader1">
+        <ColumnInfo>
+          <Column id="ID_CONSULT" type="STRING" size="256"/>
+          <Column id="NO_CONSULT" type="STRING" size="256"/>
+          <Column id="SN_CONSULT" type="STRING" size="256"/>
+          <Column id="DT_CONSULT" type="STRING" size="256"/>
+          <Column id="RM_TITLE" type="STRING" size="256"/>
+          <Column id="DT_FROM" type="STRING" size="256"/>
+          <Column id="DT_TO" type="STRING" size="256"/>
+          <Column id="TY_APPR" type="STRING" size="256"/>
+          <Column id="YN_USE" type="STRING" size="256"/>
+          <Column id="DS_CONSULT" type="STRING" size="256"/>
+          <Column id="DS_VENDOR" type="STRING" size="256"/>
+          <Column id="AM_REQ" type="STRING" size="256"/>
+          <Column id="RM_BIGO" type="STRING" size="256"/>
+          <Column id="DT_INSERT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsLeft"/>
+      <Dataset id="dsListAP1"/>
+      <Dataset id="dsListAP2"/>
+      <Dataset id="dsListAP3"/>
+      <Dataset id="dsTax"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item1" compid="divSearch.form.calDT_FROM" propid="value" datasetid="dsSearch" columnid="DT_FROM"/>
+      <BindItem id="item2" compid="divSearch.form.calDT_TO" propid="value" datasetid="dsSearch" columnid="DT_TO"/>
+      <BindItem id="item3" compid="divSearch.form.ccfCD_DEPT_BE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_DEPT_BE"/>
+      <BindItem id="item5" compid="divSearch.form.ccfCD_DEPT_BH.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_DEPT_BH"/>
+      <BindItem id="item4" compid="divSearch.form.txtDS_VENDOR" propid="value" datasetid="dsSearch" columnid="DS_VENDOR"/>
+      <BindItem id="item6" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_CORP" propid="value" datasetid="dsList1" columnid="ISSUE_ID"/>
+      <BindItem id="item7" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_VENDOR" propid="value" datasetid="dsList1" columnid="SU_NAME"/>
+      <BindItem id="item8" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtAM_MIBUL" propid="value" datasetid="dsList1" columnid="SU_REPRES"/>
+      <BindItem id="item10" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_ACCOUNT" propid="value" datasetid="dsList1" columnid="AM_SUPPLY"/>
+      <BindItem id="item9" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_DEPT" propid="value" datasetid="dsList1" columnid="SU_EMAIL"/>
+      <BindItem id="item13" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_CORP00" propid="value" datasetid="dsList2" columnid="CD_TRADE"/>
+      <BindItem id="item14" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_CORP01" propid="value" datasetid="dsList1" columnid="ISSUE_DATE"/>
+      <BindItem id="item15" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_VENDOR00" propid="value" datasetid="dsList1" columnid="SU_ID"/>
+      <BindItem id="item16" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtAM_MIBUL00" propid="value" datasetid="dsList1" columnid="SU_BUSTYPE"/>
+      <BindItem id="item17" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_CORP02" propid="value" datasetid="dsList2" columnid="RM_BIGO2"/>
+      <BindItem id="item18" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_VENDOR01" propid="value" datasetid="dsList2" columnid="DS_VENDOR"/>
+      <BindItem id="item19" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtAM_MIBUL01" propid="value" datasetid="dsList2" columnid="DS_ACCOUNT"/>
+      <BindItem id="item11" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtAM_MIBUL02" propid="value" datasetid="dsList1" columnid="SU_INDTYPE"/>
+      <BindItem id="item20" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtAM_MIBUL03" propid="value" datasetid="dsList1" columnid="SU_ADDR"/>
+      <BindItem id="item21" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_ACCOUNT00" propid="value" datasetid="dsList1" columnid="AM_TAX"/>
+      <BindItem id="item22" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_DEPT00" propid="value" datasetid="dsList1" columnid="ISSUE_CNT"/>
+      <BindItem id="item25" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtAM_MIBUL05" propid="value" datasetid="dsList2" columnid="DS_DEPT_BH"/>
+      <BindItem id="item26" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_ACCOUNT01" propid="value" datasetid="dsList2" columnid="YN_APPR"/>
+      <BindItem id="item27" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_DEPT01" propid="value" datasetid="dsList2" columnid="DS_AUTOSLIP"/>
+      <BindItem id="item28" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtAM_MIBUL06" propid="value" datasetid="dsList2" columnid="DS_HNAME"/>
+      <BindItem id="item30" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_DEPT02" propid="value" datasetid="dsList2" columnid="NO_CONSULT"/>
+      <BindItem id="item32" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_DEPT04" propid="value" datasetid="dsList2" columnid="CD_APP"/>
+      <BindItem id="item33" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_DEPT05" propid="value" datasetid="dsList2" columnid="ID_APPR"/>
+      <BindItem id="item34" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_DEPT06" propid="value" datasetid="dsList2" columnid="DT_APPR"/>
+      <BindItem id="item52" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabAP1.form.txtCD_TRADE03" propid="value" datasetid="dsListAPTabHeader1" columnid="ID_CONSULT"/>
+      <BindItem id="item53" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabAP1.form.txtCD_TRADE00" propid="value" datasetid="dsListAPTabHeader1" columnid="NO_CONSULT"/>
+      <BindItem id="item56" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabAP1.form.txtCD_TRADE04" propid="value" datasetid="dsListAPTabHeader1" columnid="DT_TO"/>
+      <BindItem id="item57" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabAP1.form.txtCD_TRADE05" propid="value" datasetid="dsListAPTabHeader1" columnid="TY_APPR"/>
+      <BindItem id="item59" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabAP1.form.txtCD_TRADE07" propid="value" datasetid="dsListAPTabHeader1" columnid="YN_USE"/>
+      <BindItem id="item60" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabAP1.form.txtCD_TRADE08" propid="value" datasetid="dsListAPTabHeader1" columnid="DT_FROM"/>
+      <BindItem id="item61" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabAP1.form.txtCD_TRADE09" propid="value" datasetid="dsListAPTabHeader1" columnid="DS_VENDOR"/>
+      <BindItem id="item62" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabAP1.form.txtCD_TRADE10" propid="value" datasetid="dsListAPTabHeader1" columnid="DS_CONSULT"/>
+      <BindItem id="item63" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataBottom.form.tabDataAP.tabAP1.form.txtCD_TRADE11" propid="value" datasetid="dsListAPTabHeader1" columnid="RM_TITLE"/>
+      <BindItem id="item23" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCHECKPOINT" propid="value" datasetid="dsList5" columnid="BIGO"/>
+      <BindItem id="item12" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE08" propid="value" datasetid="dsList4" columnid="SEQ_EXEC"/>
+      <BindItem id="item24" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE12" propid="value" datasetid="dsList4" columnid="DS_BANK"/>
+      <BindItem id="item29" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE09" propid="value" datasetid="dsList4" columnid="CHECK_CD_TRADE"/>
+      <BindItem id="item31" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE13" propid="value" datasetid="dsList4" columnid="IN_ACCT_NO"/>
+      <BindItem id="item35" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE10" propid="value" datasetid="dsList4" columnid="NO_MAINACCOUNT"/>
+      <BindItem id="item36" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE14" propid="value" datasetid="dsList4" columnid="CLIENT"/>
+      <BindItem id="item37" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE11" propid="value" datasetid="dsList4" columnid="TRAN_AMT"/>
+      <BindItem id="item38" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE15" propid="value" datasetid="dsList4" columnid="CREATED_DATE"/>
+      <BindItem id="item39" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE00" propid="value" datasetid="dsList3" columnid="NO_REQUEST"/>
+      <BindItem id="item40" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE01" propid="value" datasetid="dsList3" columnid="DT_REQ"/>
+      <BindItem id="item41" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE03" propid="value" datasetid="dsList3" columnid="AM_REQ"/>
+      <BindItem id="item42" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE07" propid="value" datasetid="dsList3" columnid="AM_CASH"/>
+      <BindItem id="item43" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE20" propid="value" datasetid="dsList3" columnid="AM_NOTES"/>
+      <BindItem id="item44" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE23" propid="value" datasetid="dsList3" columnid="DS_BANK"/>
+      <BindItem id="item45" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtCD_TRADE22" propid="value" datasetid="dsList3" columnid="NO_ACCOUNT"/>
+      <BindItem id="item46" compid="divData.form.tabData.tab1.form.divDataRight.form.divDataTop.form.txtDS_DEPT03" propid="value" datasetid="dsList1" columnid="CHK_HOMETAX"/>
+    </Bind>
+  </Form>
+</FDL>

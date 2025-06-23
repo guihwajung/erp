@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DAU_SOCIAL_INSURANCE_DLG" width="346" height="300" maxwidth="380" maxheight="360" titletext="사회보험고지정보 급여적용" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staTITLE" taborder="1" text="학자금정보 급여적용" left="2" top="10" width="344" height="30" cssclass="sta_TITLE_Bg" textAlign="left" onclick="staTITLE_onclick"/>
+        <Div id="divBtns" left="73" top="251" width="200" height="40">
+          <Layouts>
+            <Layout>
+              <Button id="btnCANCLE" taborder="0" text="취소" left="120" top="13" width="60" height="27" onclick="btnCANCLE_onclick"/>
+              <Button id="btnOK" taborder="1" text="확인" left="30" top="13" width="60" height="27" onclick="btnOK_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staYY_TUITION" taborder="21" text="년도" left="0" top="104" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta02" taborder="24" left="86" top="75" width="260" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+        <Static id="staCD_CORP" taborder="17" text="법인코드" left="0" top="75" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta06" taborder="18" left="86" top="133" width="260" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+        <Div id="ccfCD_CORP" CodeFindName="DAX_CFCORP2" CDTextWidth="70" taborder="5" left="staCD_CORP:5" top="80" width="248" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="true"/>
+        <Static id="staYM_SALARY" taborder="7" text="급여년월" left="0" top="162" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta00" taborder="8" left="86" top="104" width="260" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+        <Static id="staTY_SALARY" taborder="13" text="지급구분" left="0" top="190" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta03" taborder="18" left="86" top="190" width="260" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+        <Div id="ctclYY_TUITION" taborder="24" left="92" top="109" width="80" height="20" url="cmm::cmmCalYY.xfdl"/>
+        <Static id="sta01" taborder="20" left="86" top="161" width="260" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+        <Static id="staYN_SALARY" taborder="21" text="적용여부" left="0" top="46" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta04" taborder="22" left="86" top="46" width="260" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+        <Radio id="rdoYN_SALARY" taborder="23" left="staYN_SALARY:5" top="49" width="218" height="24" innerdataset="dsYN_SALARY" codecolumn="CODE" datacolumn="VALUE" direction="vertical" value="M" text="마감" index="0"/>
+        <Static id="staCD_TUITION" taborder="23" text="분기" left="0" top="133" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Div id="ctclYM_SALARY" taborder="24" left="92" top="166" width="80" height="20" url="cmm::cmmCalMM.xfdl"/>
+        <Combo id="cboCD_TUITION" taborder="25" left="92" top="138" width="106" height="19" innerdataset="dsCD_TUITION" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+        <Combo id="cboTY_SALARY" taborder="19" left="92" top="195" width="60" height="20" innerdataset="dsTY_SALARY" datacolumn="VALUE" codecolumn="CODE" index="-1" value="1" onitemchanged="fnSearchInit" readonly="false"/>
+        <Combo id="cboSN_SALARY" taborder="20" left="155" top="195" width="40" height="20" innerdataset="dsSN_SALARY" datacolumn="VALUE" codecolumn="CODE" index="-1" value="1" onitemchanged="fnSearchInit" readonly="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+
+	this.fnSetButton();
+	//this.fnSetExtendButton();   
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.rdoYN_SALARY.set_value("Y");//적용여부
+	//법인
+	this.ccfCD_CORP.form.CDTextBox.set_value(this.getOwnerFrame().CD_CORP);				
+    this.ccfCD_CORP.form.DSTextBox.set_value(this.getOwnerFrame().DS_CORP);	
+	
+	this.ctclYY_TUITION.form.TextBox.set_value(this.getOwnerFrame().YY_TUITION);//공제년월
+	this.ctclYM_SALARY.form.TextBox.set_value(this.gfnGetDate().substr(0,6));//급여년월
+	
+	this.cboCD_TUITION.set_value(this.getOwnerFrame().CD_TUITION); //분기
+	
+	//지급구분
+	this.cboTY_SALARY.set_value("S");
+	this.cboSN_SALARY.set_value("1");	
+	
+	this.ctclYY_TUITION.set_enable(false);
+	this.ccfCD_CORP.set_enable(false);
+	this.cboCD_TUITION.set_enable(false);
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	// this.FormBtns.Add.set_enable(false);
+	// this.FormBtns.Del.set_enable(false);
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("YN_SALARY", "string");
+	this.dsSave.addColumn("CD_CORP", "string");
+	this.dsSave.addColumn("YY_TUITION", "string");
+	this.dsSave.addColumn("CD_TUITION", "string");
+	this.dsSave.addColumn("YM_SALARY", "string");
+	this.dsSave.addColumn("TY_SALARY", "string");
+	this.dsSave.addColumn("SN_SALARY", "int");
+	this.dsSave.addColumn("GR_SEARCH", "string");
+	this.dsSave.addColumn("GR_CORP", "string");
+	this.dsSave.addColumn("GR_DEPT", "string");
+	this.dsSave.addColumn("ID_USER", "string");
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+
+ 	var validate = true;
+	
+	//법인
+	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+		validate = false;
+		this.fnValidCallback = function() {
+			this.ccfCD_CORP.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("법인코드를 입력하세요.", "fnValidCallback");
+		return validate;
+	}	
+	
+	if (this.gfnIsNull(this.ctclYY_TUITION.form.TextBox.value)) {
+		validate = false;
+		this.fnValidCallback = function() {
+			this.ctclYY_TUITION.form.TextBox.setFocus();
+		}
+		this.gfnAlert("년도를 입력하세요.", "fnValidCallback");
+		return validate;
+	}
+	
+	//급여년월
+	if (this.gfnIsNull(this.ctclYM_SALARY.form.TextBox.value)) {
+		validate = false;
+		this.fnValidCallback = function() {
+			this.ctclYM_SALARY.form.TextBox.setFocus();
+		}
+		this.gfnAlert("급여년월을 입력하세요.", "fnValidCallback");
+		return validate;
+	}	
+
+	
+ 	return validate;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "save") {
+		if (errorCode == 0) {
+			this.fnClose = function() {
+				this.getParentContext().close(true);
+			}
+			this.gfnAlert("급여적용이 완료되었습니다.", "fnClose");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+ 	if(id == "ccfCD_CORP") { // 법인코드
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+ 	}
+ 	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+	
+	if(id == "ccfCD_CORP") { // 법인코드{
+		;
+	}
+};
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	
+	if(!this.fnSelectValidate()) return false;
+	
+	this.dsSave.clearData();
+	var nrow = this.dsSave.addRow();
+	this.dsSave.setColumn(nrow, "YN_SALARY", this.dsList.getColumn(0, "YN_SALARY"));
+	this.dsSave.setColumn(nrow, "CD_CORP", this.dsList.getColumn(0, "CD_CORP"));
+	this.dsSave.setColumn(nrow, "YY_TUITION", this.dsList.getColumn(0, "YY_TUITION"));
+	this.dsSave.setColumn(nrow, "CD_TUITION", this.dsList.getColumn(0, "CD_TUITION"));
+	this.dsSave.setColumn(nrow, "YM_SALARY", this.dsList.getColumn(0, "YM_SALARY"));
+	this.dsSave.setColumn(nrow, "TY_SALARY", this.dsList.getColumn(0, "TY_SALARY"));
+	this.dsSave.setColumn(nrow, "SN_SALARY", this.dsList.getColumn(0, "SN_SALARY"));
+	this.dsSave.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	this.dsSave.setColumn(nrow, "GR_CORP", this.AuthClient.CD_CORP);
+	this.dsSave.setColumn(nrow, "GR_DEPT", this.AuthClient.CD_DEPT);
+	this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	
+	if(this.dsSave.rowcount == 0) return;
+	
+	//trace(this.dsSave.saveXML());
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+
+
+]]></Script>
+    <Dataset id="dsList"/>
+    <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+      <ColumnInfo>
+        <Column id="DT_PROVATION_FROM" type="STRING" size="256"/>
+      </ColumnInfo>
+      <Rows>
+        <Row>
+          <Col id="DT_PROVATION_FROM"/>
+        </Row>
+      </Rows>
+    </Dataset>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="YN_SALARY" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="YY_TUITION" type="STRING" size="256"/>
+          <Column id="CD_TUITION" type="STRING" size="256"/>
+          <Column id="YM_SALARY" type="STRING" size="256"/>
+          <Column id="TY_SALARY" type="STRING" size="256"/>
+          <Column id="SN_SALARY" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DABPR_TUITION_SALARY</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_SALARY">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">S</Col>
+            <Col id="VALUE">급여</Col>
+          </Row>
+          <Row>
+            <Col id="VALUE">상여</Col>
+            <Col id="CODE">B</Col>
+          </Row>
+          <Row>
+            <Col id="VALUE">성과급</Col>
+            <Col id="CODE">X</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSN_SALARY">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">1</Col>
+            <Col id="VALUE">1</Col>
+          </Row>
+          <Row>
+            <Col id="VALUE">2</Col>
+            <Col id="CODE">2</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">3</Col>
+            <Col id="VALUE">3</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">4</Col>
+            <Col id="VALUE">4</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">5</Col>
+            <Col id="VALUE">5</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">6</Col>
+            <Col id="VALUE">6</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">7</Col>
+            <Col id="VALUE">7</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">8</Col>
+            <Col id="VALUE">8</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">9</Col>
+            <Col id="VALUE">9</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">10</Col>
+            <Col id="VALUE">10</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_SALARY">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="VALUE">급여적용</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="VALUE">급여적용취소</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCD_TUITION">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">01</Col>
+            <Col id="DS_CODE">1분기</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">02</Col>
+            <Col id="DS_CODE">2분기</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">03</Col>
+            <Col id="DS_CODE">3분기</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">04</Col>
+            <Col id="DS_CODE">4분기</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="rdoYN_SALARY" propid="value" datasetid="dsList" columnid="YN_SALARY"/>
+      <BindItem id="item1" compid="ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_CORP"/>
+      <BindItem id="item2" compid="ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_CORP"/>
+      <BindItem id="item3" compid="ctclYY_TUITION.form.TextBox" propid="value" datasetid="dsList" columnid="YY_TUITION"/>
+      <BindItem id="item4" compid="cboCD_TUITION" propid="value" datasetid="dsList" columnid="CD_TUITION"/>
+      <BindItem id="item5" compid="ctclYM_SALARY.form.TextBox" propid="value" datasetid="dsList" columnid="YM_SALARY"/>
+      <BindItem id="item6" compid="cboTY_SALARY" propid="value" datasetid="dsList" columnid="TY_SALARY"/>
+      <BindItem id="item7" compid="cboSN_SALARY" propid="value" datasetid="dsList" columnid="SN_SALARY"/>
+    </Bind>
+  </Form>
+</FDL>

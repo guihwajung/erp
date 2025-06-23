@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="410" height="340" maxwidth="440" maxheight="400" titletext="출금 전표발행" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTitle" taborder="0" text="전표참고정보" left="20" top="50" height="22" width="350" cssclass="sta_TITLE_Bg"/>
+              <Static id="staBar53" taborder="1" left="119" top="79" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Button id="btnOk" taborder="2" text="확인" left="143" width="45" height="21" onclick="btnOk_onclick" uWord="popup.ok" top="299"/>
+              <Button id="btnCancle" taborder="3" text="취소" left="193" width="45" height="21" onclick="btnCancle_onclick" uWord="popup.cancel" top="299"/>
+              <Static id="staBar01" taborder="4" left="119" top="166" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staBar03" taborder="5" left="119" top="137" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <MaskEdit id="mskAM_ETC" taborder="6" left="125" top="142" width="195" height="20" format="#,###,###,###,###,###,##0" limitbymask="integer" enable="false"/>
+              <Static id="staItem55" taborder="7" text="이자금액" left="20" top="79" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staItem01" taborder="8" text="상환금액" left="20" top="166" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staItem03" taborder="9" text="부대비용" left="20" top="137" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="sta01" taborder="10" text="원" left="326" top="142" width="20" height="20"/>
+              <MaskEdit id="mskAM_EZA" taborder="11" left="125" top="84" width="195" height="20" format="#,###,###,###,###,###,##0" limitbymask="integer" enable="false"/>
+              <Static id="sta00" taborder="12" text="원" left="326" top="84" width="20" height="20"/>
+              <MaskEdit id="mskAM_TRADE" taborder="13" left="125" top="171" width="195" height="20" format="#,###,###,###,###,###,##0" limitbymask="integer" enable="false"/>
+              <Static id="sta03" taborder="14" text="원" left="326" top="171" width="20" height="20"/>
+              <Static id="staTitle01" taborder="15" text="출금 전표발행" left="20" top="20" height="22" width="350" cssclass="sta_POP_Title"/>
+              <Static id="staBar00" taborder="16" left="119" top="195" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staItem00" taborder="17" text="출금예상금액" left="20" top="195" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <MaskEdit id="mskAM_TOTAL" taborder="18" left="125" top="200" width="195" height="20" format="#,###,###,###,###,###,##0" limitbymask="integer" enable="false"/>
+              <Static id="sta02" taborder="19" text="원" left="326" top="200" width="20" height="20"/>
+              <Static id="staBar05" taborder="20" left="119" top="108" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staItem05" taborder="21" text="법인세/주민세" left="20" top="108" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <MaskEdit id="mskAM_CORP_JUMIN" taborder="22" left="125" top="112" width="195" height="20" format="#,###,###,###,###,###,##0" limitbymask="integer" enable="false"/>
+              <Static id="sta05" taborder="23" text="원" left="326" top="112" width="20" height="20"/>
+              <Static id="staItem02" taborder="24" text="계좌번호" left="20" top="224" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBar02" taborder="26" left="119" top="224" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Div id="cfNO_ACCOUNT" CDTextWidth="212" taborder="25" left="125" top="229" width="238" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmPopup.xfdl (공통 팝업페이지)
+*  @FileName 	cmmPopup.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.10.19
+*  @Desction         스크립트 표준 및 주석 표준 정의
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.pv_AM_EZA;
+this.pv_AM_ETC;
+this.pv_AM_TRADE;
+this.pv_AM_TOTAL;
+this.pv_CD_CORP;
+this.pv_NO_ACCOUNT;
+
+this.pv_AM_CORP_JUMIN;
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this); //초기화[필수]
+	this.gfnFormInfo(this);
+	
+	this.fnSetVariable();
+	this.fnSetEvent();  
+	this.fnSetParameter();
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	var frame = this.getOwnerFrame();	
+	
+	this.pv_AM_EZA = frame.AM_EZA;			// 이자금액
+	this.pv_AM_ETC = frame.AM_ETC;			// 부대비용
+	this.pv_AM_TRADE = frame.AM_TRADE;		// 상환금액
+	this.pv_AM_TOTAL = frame.AM_TOTAL;		// 출금예상금액
+	this.pv_CD_CORP = frame.CD_CORP;		// 법인코드
+	this.pv_NO_ACCOUNT = frame.NO_ACCOUNT;	// 
+	this.pv_DS_BANK = frame.DS_BANK;		// 
+	this.pv_TY_GUBUN = frame.TY_GUBUN;		// 
+	this.pv_CD_BANK = frame.CD_BANK;		// 
+	
+	this.pv_AM_CORP_JUMIN = frame.AM_CORP_JUMIN;		// 법인세
+	
+	this.mskAM_EZA.set_value(this.pv_AM_EZA);		// 이자금액
+	this.mskAM_ETC.set_value(this.pv_AM_ETC);		// 부대비용
+	this.mskAM_TRADE.set_value(this.pv_AM_TRADE);	// 상환금액	
+	this.mskAM_TOTAL.set_value(this.pv_AM_TOTAL);	// 출금예상금액	
+	
+	this.mskAM_CORP_JUMIN.set_value(this.pv_AM_CORP_JUMIN);		// 법인세	
+	
+	this.cfNO_ACCOUNT.form.CDTextBox.set_value(this.pv_NO_ACCOUNT);	// 
+	this.cfNO_ACCOUNT.form.DSTextBox.set_value(this.pv_DS_BANK);	// 
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.mskAM_EZA = this.divData.form.mskAM_EZA;
+	this.mskAM_ETC = this.divData.form.mskAM_ETC;
+	this.mskAM_TRADE = this.divData.form.mskAM_TRADE;
+	this.mskAM_TOTAL = this.divData.form.mskAM_TOTAL;
+	this.mskAM_CORP_JUMIN = this.divData.form.mskAM_CORP_JUMIN;
+	
+	this.cfNO_ACCOUNT = this.divData.form.cfNO_ACCOUNT;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+ 	this.cfNO_ACCOUNT.CodeFindName = "DFX_CFACCOUNTNO_SUJI";
+ 	this.cfNO_ACCOUNT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	
+ 	this.cfNO_ACCOUNT.AfterCDTextChanged = "fnAfterCDTextChanged";
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnValidation = function() {
+// 	if (this.gfnIsNull(this.cfNO_ACCOUNT.form.CDTextBox.value)) {
+// 		this.gfnAlert("인출계좌를 입력하십시오.");
+// 		this.cfNO_ACCOUNT.form.CDTextBox.setFocus();
+// 		return false;
+// 	}
+// 	
+	return true;
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+ 	if (id == "cfNO_ACCOUNT") {
+ 		dsUserParam.setColumn(nrow, "CD_CORP", this.pv_CD_CORP);
+ 	}
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	
+	var arr = codeFindData;
+	
+	this.pv_TY_GUBUN = arr[0]["TY_GUBUN"];
+	this.pv_CD_BANK = arr[0]["CD_BANK"];
+
+ 	//trace("cd :: " + this.cfNO_ACCOUNT.form.CDTextBox.value);
+ 	//trace("nm :: " + this.cfNO_ACCOUNT.form.DSTextBox.value);
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* @ OK버튼이벤트
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnValidation()) return false;
+
+	// 확인
+	var json = {};
+	
+	json.AM_EZA = this.mskAM_EZA.value;							// 이자금액
+	json.AM_ETC = this.mskAM_ETC.value;							// 부대비용
+	json.AM_TRADE = this.mskAM_TRADE.value;						// 상환금액	
+ 	json.NO_ACCOUNT = this.cfNO_ACCOUNT.form.CDTextBox.value;	// 계좌번호
+	json.DS_BANK = this.cfNO_ACCOUNT.form.DSTextBox.value;
+	json.TY_GUBUN = this.pv_TY_GUBUN;
+	json.CD_BANK = this.pv_CD_BANK;
+	
+	this.getParentContext().close(JSON.stringify(json));
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

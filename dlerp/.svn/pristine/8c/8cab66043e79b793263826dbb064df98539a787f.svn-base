@@ -1,0 +1,1024 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="조건별 인사정보" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="348" right="0" cssclass="" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <!-- 기본정보 -->
+              <Static id="staTITLE" taborder="0" text="기본정보" left="0" top="0" width="100%" height="25" cssclass="sta_TITLE_Bg"/>
+              <!-- 소속법인 -->
+              <Static id="staCD_CORP" taborder="1" text="법인" left="0" top="staTITLE:5" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_CORP_bg" taborder="2" left="staCD_CORP:-1" top="staCD_CORP:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_CORP" CDTextWidth="80" taborder="3" left="staCD_CORP:5" top="staCD_CORP:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- 성명 -->
+              <Static id="staDS_HNAME" taborder="10" text="성명" left="0" top="staCD_CORP:-1" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_HNAME_bg" taborder="11" left="staDS_HNAME:-1" top="staDS_HNAME:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtDS_HNAME" taborder="12" left="staDS_HNAME:5" top="staDS_HNAME:-25" height="20" autoselect="true" width="150" textAlign="left"/>
+              <!-- 직급 -->
+              <Static id="staCD_POSITION" taborder="19" text="직급" left="0" top="staDS_HNAME:-1" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_POSITION_bg" taborder="20" left="staCD_POSITION:-1" top="staCD_POSITION:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_POSITION" CDTextWidth="80" taborder="21" left="staCD_POSITION:5" top="staCD_POSITION:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl"/>
+              <!-- 입사일자 -->
+              <Static id="staFR_JOIN" taborder="28" text="입사일자" left="0" top="staCD_POSITION:-1" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staFR_JOIN_bg" taborder="87" left="staFR_JOIN:-1" top="staFR_JOIN:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Calendar id="ctclFR_JOIN" taborder="29" left="staFR_JOIN:5" top="staFR_JOIN:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit" headformat="yyyy.MM"/>
+              <Static id="staTO_JOIN" taborder="91" text="~" left="ctclFR_JOIN:0" top="staFR_JOIN:-25" width="30" height="20" cssclass="sta_WF_AC"/>
+              <Calendar id="ctclTO_JOIN" taborder="30" left="staTO_JOIN:0" top="staFR_JOIN:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <!-- 생년월일 -->
+              <Static id="staFR_BIRTH" taborder="37" text="생년월일" left="0" top="staFR_JOIN:-1" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staFR_BIRTH_bg" taborder="38" left="staFR_BIRTH:-1" top="staFR_BIRTH:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Calendar id="ctclFR_BIRTH" taborder="39" left="staFR_BIRTH:5" top="staFR_BIRTH:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staTO_BIRTH" taborder="40" text="~" left="ctclFR_BIRTH:0" top="staFR_BIRTH:-25" width="30" height="20" cssclass="sta_WF_AC"/>
+              <Calendar id="ctclTO_BIRTH" taborder="41" left="staTO_BIRTH:0" top="staFR_BIRTH:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <!-- 본적 -->
+              <Static id="staDS_FAMILYPLACE" taborder="52" text="본적" left="0" top="staFR_BIRTH:-1" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_FAMILYPLACE_bg" taborder="53" left="staDS_FAMILYPLACE:-1" top="staDS_FAMILYPLACE:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtDS_FAMILYPLACE" taborder="54" left="staDS_FAMILYPLACE:5" top="staDS_FAMILYPLACE:-25" height="20" autoselect="true" width="230" textAlign="left"/>
+              <!-- 직원구분 -->
+              <Static id="staCD_EMPTYPE" taborder="4" text="직원구분" left="staCD_CORP_bg:-1" top="staCD_CORP_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_EMPTYPE_bg" taborder="5" left="staCD_EMPTYPE:-1" top="staCD_EMPTYPE:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_EMPTYPE" CDTextWidth="80" taborder="6" left="staCD_EMPTYPE:5" top="staCD_EMPTYPE:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- 사번 -->
+              <Static id="staID_SABUN" taborder="13" text="사번" left="staDS_HNAME_bg:-1" top="staDS_HNAME_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staID_SABUN_bg" taborder="14" left="staID_SABUN:-1" top="staID_SABUN:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfID_SABUN" CDTextWidth="80" taborder="15" left="staID_SABUN:5" top="staID_SABUN:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- 채용구분 -->
+              <Static id="staCD_ADOPTYPE" taborder="22" text="채용구분" left="staCD_POSITION_bg:-1" top="staCD_POSITION_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_ADOPTYPE_bg" taborder="23" left="staCD_ADOPTYPE:-1" top="staCD_ADOPTYPE:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_ADOPTYPE" CDTextWidth="80" taborder="24" left="staCD_ADOPTYPE:5" top="staCD_ADOPTYPE:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- 부서 -->
+              <Static id="staCD_DEPT" taborder="31" text="부서" left="staFR_JOIN_bg:-1" top="staFR_JOIN_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_DEPT_bg" taborder="32" left="staCD_DEPT:-1" top="staCD_DEPT:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_DEPT" CDTextWidth="80" taborder="33" left="staCD_DEPT:5" top="staCD_DEPT:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- 그룹입사 -->
+              <Static id="staFR_GROUPJOIN" taborder="42" text="그룹입사" left="staFR_BIRTH_bg:-1" top="staFR_BIRTH_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staFR_GROUPJOIN_bg" taborder="43" left="staFR_GROUPJOIN:-1" top="staFR_GROUPJOIN:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Calendar id="ctclFR_GROUPJOIN" taborder="44" left="staFR_GROUPJOIN:5" top="staFR_GROUPJOIN:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staTO_GROUPJOIN" taborder="45" text="~" left="ctclFR_GROUPJOIN:0" top="staFR_GROUPJOIN:-25" width="30" height="20" cssclass="sta_WF_AC"/>
+              <Calendar id="ctclTO_GROUPJOIN" taborder="46" left="staTO_GROUPJOIN:0" top="staFR_GROUPJOIN:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <!-- 주소구분 -->
+              <Static id="staCD_ADDRESS" taborder="55" text="주소구분" left="staDS_FAMILYPLACE_bg:-1" top="staDS_FAMILYPLACE_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_ADDRESS_bg" taborder="56" left="staCD_ADDRESS:-1" top="staCD_ADDRESS:-30" width="259" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_ADDRESS" CDTextWidth="80" taborder="57" left="staCD_ADDRESS:5" top="staCD_ADDRESS:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- 본사/현장구분 -->
+              <Static id="staTY_DEPT" taborder="7" text="본사/현장구분" left="staCD_EMPTYPE_bg:-1" top="staCD_EMPTYPE_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staTY_DEPT_bg" taborder="8" left="staTY_DEPT:-1" top="staTY_DEPT:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfTY_DEPT" CDTextWidth="80" taborder="9" left="staTY_DEPT:5" top="staTY_DEPT:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- 직종 -->
+              <Static id="staCD_JOBTYPE" taborder="16" text="직종" left="staID_SABUN_bg:-1" top="staID_SABUN_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_JOBTYPE_bg" taborder="17" left="staCD_JOBTYPE:-1" top="staCD_JOBTYPE:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_JOBTYPE" CDTextWidth="80" taborder="18" left="staCD_JOBTYPE:5" top="staCD_JOBTYPE:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- 직책 -->
+              <Static id="staCD_OCCUPATION" taborder="25" text="직책" left="staCD_ADOPTYPE_bg:-1" top="staCD_ADOPTYPE_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_OCCUPATION_bg" taborder="26" left="staCD_OCCUPATION:-1" top="staCD_OCCUPATION:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_OCCUPATION" CDTextWidth="80" taborder="27" left="staCD_OCCUPATION:5" top="staCD_OCCUPATION:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- 직무 -->
+              <Static id="staCD_DUTY" taborder="34" text="직무" left="staCD_DEPT_bg:-1" top="staCD_DEPT_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_DUTY_bg" taborder="35" left="staCD_DUTY:-1" top="staCD_DUTY:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_DUTY" CDTextWidth="80" taborder="36" left="staCD_DUTY:5" top="staCD_DUTY:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- 성별/재직여부 -->
+              <Static id="staYN_GENDER" taborder="47" text="성별/재직여부" left="staFR_GROUPJOIN_bg:-1" top="staFR_GROUPJOIN_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staYN_GENDER_bg" taborder="48" left="staYN_GENDER:-1" top="staYN_GENDER:-30" width="240" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Combo id="cboYN_GENDER" taborder="49" text="" left="staYN_GENDER:5" top="staYN_GENDER:-25" width="99" height="20" innerdataset="dsYN_GENDER" codecolumn="CODE" datacolumn="VALUE" value="%" index="0" onitemchanged="fnSearchInit"/>
+              <Static id="staTY_RETIRE_bg" taborder="50" text="/" left="cboYN_GENDER:10" top="staYN_GENDER:-32" width="21" height="30" visible="true"/>
+              <Combo id="cboTY_RETIRE" taborder="51" text="" left="staTY_RETIRE_bg:0" top="staYN_GENDER:-25" width="99" height="20" innerdataset="dsTY_RETIRE" codecolumn="CD_CODE" datacolumn="DS_CODE" value="%" index="0" onitemchanged="fnSearchInit"/>
+              <!-- 근속연차로 사용 (급호) -->
+              <Static id="staCD_PAYSTEP" taborder="58" text="근속연차" left="staID_SABUN_bg:-1" top="staCD_ADDRESS_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_PAYSTEP_bg" taborder="59" left="staCD_PAYSTEP:-1" top="staCD_PAYSTEP:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_PAYSTEP" CDTextWidth="80" taborder="60" left="staCD_PAYSTEP:5" top="staCD_PAYSTEP:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <!-- 학력정보 -->
+              <Static id="staTITLE01" taborder="61" text="학력정보" left="0" top="staDS_FAMILYPLACE:5" width="100%" height="25" cssclass="sta_TITLE_Bg"/>
+              <!-- 학교구분 -->
+              <Static id="staCD_SCHOOL" taborder="62" text="학교구분" left="0" top="staTITLE01:5" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_SCHOOL_bg" taborder="63" left="staCD_SCHOOL:-1" top="staCD_SCHOOL:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_SCHOOL" CDTextWidth="80" taborder="64" left="staCD_SCHOOL:5" top="staCD_SCHOOL:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="true"/>
+              <!-- 학교명 -->
+              <Static id="staDS_UNIVERSITY" taborder="65" text="학교명" left="staCD_SCHOOL_bg:-1" top="staCD_SCHOOL_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_UNIVERSITY_bg" taborder="66" left="staDS_UNIVERSITY:-1" top="staDS_UNIVERSITY:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfDS_UNIVERSITY" CDTextWidth="80" taborder="89" left="staDS_UNIVERSITY:688" top="staTITLE01:-42" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false"/>
+              <!-- 전공 -->
+              <Static id="staCD_MAJOR" taborder="68" text="전공" left="staDS_UNIVERSITY_bg:-1" top="staDS_UNIVERSITY_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_MAJOR_t" taborder="69" left="staCD_MAJOR:-1" top="staCD_MAJOR:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_MAJOR" CDTextWidth="80" taborder="90" left="staCD_MAJOR:311" top="staTITLE01:-13" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false"/>
+              <!-- 휴직/퇴직일 및 기타사항 -->
+              <Static id="staTITLE02" taborder="71" text="휴직/퇴직일 및 기타사항" left="0" top="staCD_SCHOOL:5" width="100%" height="25" cssclass="sta_TITLE_Bg"/>
+              <!-- 휴직일자 -->
+              <!-- 퇴직일자 -->
+              <!-- 연력 -->
+              <Static id="staFR_TEMPORARY" taborder="72" text="휴직일자" left="0" top="staTITLE02:5" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staFR_TEMPORARY_bg" taborder="73" left="staFR_TEMPORARY:-1" top="staFR_TEMPORARY:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Calendar id="ctclFR_TEMPORARY" taborder="74" left="staFR_TEMPORARY:5" top="staFR_TEMPORARY:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staTO_TEMPORARY" taborder="75" text="~" left="ctclFR_TEMPORARY:0" top="staFR_TEMPORARY:-25" width="30" height="20" cssclass="sta_WF_AC"/>
+              <Calendar id="ctclTO_TEMPORARY" taborder="76" left="staTO_TEMPORARY:0" top="staFR_TEMPORARY:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staFR_RETIRE" taborder="77" text="퇴직일자" left="staFR_TEMPORARY_bg:-1" top="staFR_TEMPORARY_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staFR_RETIRE_bg" taborder="78" left="staFR_RETIRE:-1" top="staFR_RETIRE:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Calendar id="ctclFR_RETIRE" taborder="79" left="staFR_RETIRE:5" top="staFR_RETIRE:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staTO_RETIRE" taborder="80" text="~" left="ctclFR_RETIRE:0" top="staFR_RETIRE:-25" width="30" height="20" cssclass="sta_WF_AC"/>
+              <Calendar id="ctclTO_RETIRE" taborder="81" left="staTO_RETIRE:0" top="staFR_RETIRE:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staFR_AGE" taborder="82" text="연령" left="staFR_RETIRE_bg:-1" top="staFR_RETIRE_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staFR_AGE_bg" taborder="83" left="staFR_AGE:-1" top="staFR_AGE:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtFR_AGE" taborder="84" left="staFR_AGE:5" top="staFR_AGE:-25" height="20" autoselect="true" width="100" textAlign="center" inputtype="normal,number"/>
+              <Static id="staTO_AGE" taborder="85" text="~" left="txtFR_AGE:0" top="staFR_AGE:-25" width="30" height="20" cssclass="sta_WF_AC"/>
+              <Edit id="txtTO_AGE" taborder="86" left="staTO_AGE:0" top="staFR_AGE:-25" height="20" autoselect="true" width="100" textAlign="center"/>
+              <Edit id="txtCD_SCHOOL" taborder="88" left="1195" top="168" height="20" autoselect="true" width="150" textAlign="left" visible="false"/>
+              <Edit id="txtDS_UNIVERSITY" taborder="67" left="staDS_UNIVERSITY:5" top="staDS_UNIVERSITY:-25" height="20" autoselect="true" width="230" textAlign="left"/>
+              <Edit id="txtCD_MAJOR" taborder="70" left="staCD_MAJOR:5" top="staCD_MAJOR:-25" height="20" autoselect="true" width="230" textAlign="left"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DAAPR_QUERYPERS_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="CD_EMPTYPE" type="STRING" size="256"/>
+          <Column id="DS_EMPTYPE" type="STRING" size="256"/>
+          <Column id="TY_DEPT" type="STRING" size="256"/>
+          <Column id="DS_TYDEPT" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="DS_SABUN" type="STRING" size="256"/>
+          <Column id="CD_JOBTYPE" type="STRING" size="256"/>
+          <Column id="DS_JOBTYPE" type="STRING" size="256"/>
+          <Column id="CD_PAYSTEP" type="STRING" size="256"/>
+          <Column id="DS_PAYSTEP" type="STRING" size="256"/>
+          <Column id="CD_POSITION" type="STRING" size="256"/>
+          <Column id="DS_POSITION" type="STRING" size="256"/>
+          <Column id="CD_ADOPTYPE" type="STRING" size="256"/>
+          <Column id="DS_ADOPTYPE" type="STRING" size="256"/>
+          <Column id="CD_OCCUPATION" type="STRING" size="256"/>
+          <Column id="DS_OCCUPATION" type="STRING" size="256"/>
+          <Column id="CD_DUTY" type="STRING" size="256"/>
+          <Column id="DS_DUTY" type="STRING" size="256"/>
+          <Column id="FR_JOIN" type="STRING" size="256"/>
+          <Column id="TO_JOIN" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="YN_GENDER" type="STRING" size="256"/>
+          <Column id="FR_BIRTH" type="STRING" size="256"/>
+          <Column id="TO_BIRTH" type="STRING" size="256"/>
+          <Column id="FR_GROUPJOIN" type="STRING" size="256"/>
+          <Column id="TO_GROUPJOIN" type="STRING" size="256"/>
+          <Column id="TY_RETIRE" type="STRING" size="256"/>
+          <Column id="DS_FAMILYPLACE" type="STRING" size="256"/>
+          <Column id="CD_ADDRESS" type="STRING" size="256"/>
+          <Column id="DS_ADDRESS" type="STRING" size="256"/>
+          <Column id="CD_DUTY" type="STRING" size="256"/>
+          <Column id="DS_DUTY" type="STRING" size="256"/>
+          <Column id="CD_LEVEL" type="STRING" size="256"/>
+          <Column id="DS_LEVEL" type="STRING" size="256"/>
+          <Column id="CD_SCHOOL" type="STRING" size="256"/>
+          <Column id="DS_SCHOOL" type="STRING" size="256"/>
+          <Column id="DS_UNIVERSITY" type="STRING" size="256"/>
+          <Column id="DS_MAJOR" type="STRING" size="256"/>
+          <Column id="CD_MAJOR" type="STRING" size="256"/>
+          <Column id="FR_TEMPORARY" type="STRING" size="256"/>
+          <Column id="TO_TEMPORARY" type="STRING" size="256"/>
+          <Column id="FR_RETIRE" type="STRING" size="256"/>
+          <Column id="TO_RETIRE" type="STRING" size="256"/>
+          <Column id="FR_AGE" type="STRING" size="256"/>
+          <Column id="TO_AGE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_GENDER">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">%</Col>
+            <Col id="VALUE">전체</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">W</Col>
+            <Col id="VALUE">여성</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">M</Col>
+            <Col id="VALUE">남성</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_RETIRE">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">%</Col>
+            <Col id="DS_CODE">전체</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">01</Col>
+            <Col id="DS_CODE">재직</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">02</Col>
+            <Col id="DS_CODE">휴직</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">99</Col>
+            <Col id="DS_CODE">재직+휴직</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">04</Col>
+            <Col id="DS_CODE">퇴직</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();	
+	//this.fnSetCombo(); // 휴퇴여부 안됨
+	
+	//조회 권한에 따른 제어
+	this.fnTyAuth();
+	
+	this.dsSearch.setColumn(0, "TY_RETIRE", "99"); // 재직+휴직
+	
+};   
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Add.set_enable(false);
+ 	this.FormBtns.Save.set_enable(false);
+ 	this.FormBtns.Del.set_enable(false);
+	this.FormBtns.Reset.set_enable(true);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	//this.btnFormButtonIn = this.gfnFormButtonAdd("searchCancel", "fnSearchCancel", "조건초기화"); 
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+	this.ccfCD_EMPTYPE = this.divSearch.form.ccfCD_EMPTYPE;
+	this.ccfTY_DEPT = this.divSearch.form.ccfTY_DEPT;
+	
+	this.ccfID_SABUN = this.divSearch.form.ccfID_SABUN;
+	this.ccfCD_JOBTYPE = this.divSearch.form.ccfCD_JOBTYPE;
+	this.ccfCD_POSITION = this.divSearch.form.ccfCD_POSITION;
+	this.ccfCD_DUTY = this.divSearch.form.ccfCD_DUTY;
+	this.ccfCD_ADOPTYPE = this.divSearch.form.ccfCD_ADOPTYPE;
+	this.ccfCD_OCCUPATION = this.divSearch.form.ccfCD_OCCUPATION;
+
+	this.ctclFR_JOIN = this.divSearch.form.ctclFR_JOIN;
+	this.ctclTO_JOIN = this.divSearch.form.ctclTO_JOIN;
+		
+	this.ccfCD_DEPT = this.divSearch.form.ccfCD_DEPT;
+	
+	this.ctclFR_BIRTH = this.divSearch.form.ctclFR_BIRTH;
+	this.ctclTO_BIRTH = this.divSearch.form.ctclTO_BIRTH;
+	
+	this.ctclFR_GROUPJOIN = this.divSearch.form.ctclFR_GROUPJOIN;
+	this.ctclTO_GROUPJOIN = this.divSearch.form.ctclTO_GROUPJOIN;
+	
+	this.ccfCD_ADDRESS = this.divSearch.form.ccfCD_ADDRESS;
+	this.ccfCD_PAYSTEP = this.divSearch.form.ccfCD_PAYSTEP;
+ 	this.ccfCD_SCHOOL = this.divSearch.form.ccfCD_SCHOOL;
+// 	this.ccfDS_UNIVERSITY = this.divSearch.form.ccfDS_UNIVERSITY;
+// 	this.ccfCD_MAJOR = this.divSearch.form.ccfCD_MAJOR;
+
+//	this.txtCD_SCHOOL = this.divSearch.form.txtCD_SCHOOL;
+	this.txtDS_UNIVERSITY = this.divSearch.form.txtDS_UNIVERSITY;
+	this.txtCD_MAJOR = this.divSearch.form.txtCD_MAJOR;
+
+	this.ctclFR_TEMPORARY = this.divSearch.form.ctclFR_TEMPORARY;
+	this.ctclTO_TEMPORARY = this.divSearch.form.ctclTO_TEMPORARY;
+	
+	this.ctclFR_RETIRE = this.divSearch.form.ctclFR_RETIRE;
+	this.ctclTO_RETIRE = this.divSearch.form.ctclTO_RETIRE;
+
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_CORP.CodeFindName = "DAX_CFCORP";
+	this.ccfCD_EMPTYPE.CodeFindName = "DAX_CFCOMMONCODE";
+	this.ccfTY_DEPT.CodeFindName = "DAX_CFCOMMONCODE";
+	
+	//this.ccfID_SABUN.CodeFindName = "DAX_CFBASEINFO";
+	this.ccfID_SABUN.CodeFindName = "DAX_CFBASEINFO_ALL";
+	
+	this.ccfCD_JOBTYPE.CodeFindName = "DAX_CFCOMMONCODE";
+	this.ccfCD_POSITION.CodeFindName = "DAX_CFCOMMONCODE";
+	this.ccfCD_DUTY.CodeFindName = "DAX_CFCOMMONCODE";
+	this.ccfCD_ADOPTYPE.CodeFindName = "DAX_CFCOMMONCODE";
+	this.ccfCD_OCCUPATION.CodeFindName = "DAX_CFCOMMONCODE";
+
+	//this.ccfCD_DEPT.CodeFindName = "DAX_CFDEPT_MST1";
+	this.ccfCD_DEPT.CodeFindName = "DAX_CFDEPT";
+
+	this.ccfCD_ADDRESS.CodeFindName = "DAX_CFCOMMONCODE";
+	this.ccfCD_PAYSTEP.CodeFindName = "DAX_CFPAYSTEPSUB";
+
+ 	this.ccfCD_SCHOOL.CodeFindName = "DAX_CFCOMMONCODE";
+// 	this.ccfDS_UNIVERSITY.CodeFindName = "DAX_CFCOMMONCODE";
+// 	this.ccfCD_MAJOR.CodeFindName = "DAX_CFCOMMONCODE";
+
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfCD_EMPTYPE.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfTY_DEPT.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfID_SABUN.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfCD_JOBTYPE.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfCD_POSITION.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfCD_ADOPTYPE.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfCD_OCCUPATION.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfCD_DEPT.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfCD_ADDRESS.AfterCDTextChanged = "fnAfterCDTextChanged";
+ 	this.ccfCD_SCHOOL.AfterCDTextChanged = "fnAfterCDTextChanged";
+// 	this.ccfDS_UNIVERSITY.AfterCDTextChanged = "fnAfterCDTextChanged";
+// 	this.ccfCD_MAJOR.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	this.ccfCD_EMPTYPE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfTY_DEPT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	
+	this.ccfID_SABUN.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_JOBTYPE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_POSITION.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_DUTY.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_ADOPTYPE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_OCCUPATION.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_DEPT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_ADDRESS.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+ 	this.ccfCD_SCHOOL.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+// 	this.ccfDS_UNIVERSITY.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+// 	this.ccfCD_MAJOR.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+// 		this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP); 
+// 		this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);	
+	}
+	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAA_QUERYPERS");
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("CD_EMPTYPE", "string");
+	this.dsSelect.addColumn("TY_DEPT", "string");
+	this.dsSelect.addColumn("DS_HNAME", "string");
+	this.dsSelect.addColumn("ID_SABUN", "string");
+	this.dsSelect.addColumn("CD_JOBTYPE", "string");
+	this.dsSelect.addColumn("CD_POSITION", "string");
+	this.dsSelect.addColumn("CD_DUTY", "string");
+	this.dsSelect.addColumn("CD_LEVEL", "string");
+	this.dsSelect.addColumn("CD_ADOPTYPE", "string");
+	this.dsSelect.addColumn("CD_OCCUPATION", "string");
+	this.dsSelect.addColumn("FR_JOIN", "string");
+	this.dsSelect.addColumn("TO_JOIN", "string");
+	this.dsSelect.addColumn("CD_DEPT", "string");
+	this.dsSelect.addColumn("YN_GENDER", "string");
+	this.dsSelect.addColumn("FR_BIRTH", "string");
+	this.dsSelect.addColumn("TO_BIRTH", "string");
+	this.dsSelect.addColumn("FR_GROUPJOIN", "string");
+	this.dsSelect.addColumn("TO_GROUPJOIN", "string");
+	this.dsSelect.addColumn("TY_RETIRE", "string");
+	this.dsSelect.addColumn("DS_FAMILYPLACE", "string");
+	this.dsSelect.addColumn("CD_ADDRESS", "string");
+	this.dsSelect.addColumn("CD_PAYSTEP", "string");
+//	this.dsSelect.addColumn("CD_SCHOOL", "string");
+//	this.dsSelect.addColumn("DS_UNIVERSITY", "string");
+//	this.dsSelect.addColumn("CD_MAJOR", "string");
+	this.dsSelect.addColumn("DS_SCHOOL", "string");
+	this.dsSelect.addColumn("DS_MAJOR", "string");
+	this.dsSelect.addColumn("FR_TEMPORARY", "string");
+	this.dsSelect.addColumn("TO_TEMPORARY", "string");
+	this.dsSelect.addColumn("FR_RETIRE", "string");
+	this.dsSelect.addColumn("TO_RETIRE", "string");
+	this.dsSelect.addColumn("FR_AGE", "string");
+	this.dsSelect.addColumn("TO_AGE", "string");
+	this.dsSelect.addColumn("ID_LOGIN", "string");
+	this.dsSelect.addColumn("IP_ADDR", "string");
+	this.dsSelect.addColumn("GR_SEARCH", "string");
+	this.dsSelect.addColumn("GR_CORP", "string");
+	this.dsSelect.addColumn("GR_DEPT", "string");	
+
+}
+
+//조회 권한에 따른 제어
+this.fnTyAuth = function(){
+
+	if(this.FormInfo.GR_SEARCH == 1){
+		//조회조건 모두 활성화
+		this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+		this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+	} 
+	else if(this.FormInfo.GR_SEARCH == 7){	
+		//법인 : 로그인법인 비활성화
+		//부서 : 로그인부서 비활성화
+		this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+		this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+		this.ccfCD_DEPT.form.CDTextBox.set_value(this.AuthClient.CD_DEPT);
+		this.ccfCD_DEPT.form.DSTextBox.set_value(this.AuthClient.DS_DEPT);
+		this.ccfCD_CORP.set_enable(false);
+		this.ccfCD_DEPT.set_enable(false);
+	} 
+	else if(this.FormInfo.GR_SEARCH == 9){
+		//법인 : 로그인법인 비활성화
+		//부서 : 로그인부서 비활성화
+		//사번 : 로그인ID   비활성화
+		this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+		this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+		this.ccfCD_DEPT.form.CDTextBox.set_value(this.AuthClient.CD_DEPT);
+		this.ccfCD_DEPT.form.DSTextBox.set_value(this.AuthClient.DS_DEPT);
+		this.ccfID_SABUN.form.CDTextBox.set_value(this.AuthClient.ID_USER);
+		this.ccfID_SABUN.form.DSTextBox.set_value(this.AuthClient.DS_HNAME);
+		this.ccfCD_CORP.set_enable(false);
+		this.ccfCD_DEPT.set_enable(false);
+		this.ccfID_SABUN.set_enable(false);
+			
+	}else{
+		//2,3,5
+		//법인 : 로그인법인 비활성화
+		this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+		this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+		this.ccfCD_CORP.set_enable(false);
+	}
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if(!this.fnValidate()) return;
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+// 	var FR_AGE = this.gfnNvl(this.dsSearch.getColumn(0, "FR_AGE"), "0");	// 연령
+// 	var TO_AGE = this.gfnNvl(this.dsSearch.getColumn(0, "TO_AGE"), "200");	// 연령
+
+	this.dsSelect.setColumn(0, "CD_CORP", this.gfnNvl(this.dsSearch.getColumn(0, "CD_CORP"), ""));
+	this.dsSelect.setColumn(0, "CD_EMPTYPE", this.gfnNvl(this.dsSearch.getColumn(0, "CD_EMPTYPE"), ""));
+	this.dsSelect.setColumn(0, "TY_DEPT", this.gfnNvl(this.dsSearch.getColumn(0, "TY_DEPT"), ""));
+	this.dsSelect.setColumn(0, "DS_HNAME", this.gfnNvl(this.dsSearch.getColumn(0, "DS_HNAME"), ""));
+	this.dsSelect.setColumn(0, "ID_SABUN", this.gfnNvl(this.dsSearch.getColumn(0, "ID_SABUN"), ""));
+	this.dsSelect.setColumn(0, "CD_JOBTYPE", this.gfnNvl(this.dsSearch.getColumn(0, "CD_JOBTYPE"), ""));
+	this.dsSelect.setColumn(0, "CD_PAYSTEP", this.gfnNvl(this.dsSearch.getColumn(0, "CD_PAYSTEP"), ""));
+	
+	this.dsSelect.setColumn(0, "CD_POSITION", this.gfnNvl(this.dsSearch.getColumn(0, "CD_POSITION"), ""));
+	this.dsSelect.setColumn(0, "CD_ADOPTYPE", this.gfnNvl(this.dsSearch.getColumn(0, "CD_ADOPTYPE"), ""));
+	this.dsSelect.setColumn(0, "CD_OCCUPATION", this.gfnNvl(this.dsSearch.getColumn(0, "CD_OCCUPATION"), ""));
+	this.dsSelect.setColumn(0, "FR_JOIN", this.gfnNvl(this.dsSearch.getColumn(0, "FR_JOIN"), ""));
+	this.dsSelect.setColumn(0, "TO_JOIN", this.gfnNvl(this.dsSearch.getColumn(0, "TO_JOIN"), ""));
+	this.dsSelect.setColumn(0, "CD_DEPT", this.gfnNvl(this.dsSearch.getColumn(0, "CD_DEPT"), ""));
+	this.dsSelect.setColumn(0, "YN_GENDER", this.gfnNvl(this.dsSearch.getColumn(0, "YN_GENDER"), ""));
+
+	this.dsSelect.setColumn(0, "FR_BIRTH", this.gfnNvl(this.dsSearch.getColumn(0, "FR_BIRTH"), ""));
+	this.dsSelect.setColumn(0, "TO_BIRTH", this.gfnNvl(this.dsSearch.getColumn(0, "TO_BIRTH"), ""));
+	this.dsSelect.setColumn(0, "FR_GROUPJOIN", this.gfnNvl(this.dsSearch.getColumn(0, "FR_GROUPJOIN"), ""));
+	this.dsSelect.setColumn(0, "TO_GROUPJOIN", this.gfnNvl(this.dsSearch.getColumn(0, "TO_GROUPJOIN"), ""));
+	
+	this.dsSelect.setColumn(0, "TY_RETIRE", this.gfnNvl(this.dsSearch.getColumn(0, "TY_RETIRE"), ""));
+	this.dsSelect.setColumn(0, "DS_FAMILYPLACE", this.gfnNvl(this.dsSearch.getColumn(0, "DS_FAMILYPLACE"), ""));
+	this.dsSelect.setColumn(0, "CD_ADDRESS", this.gfnNvl(this.dsSearch.getColumn(0, "CD_ADDRESS"), ""));
+	
+	this.dsSelect.setColumn(0, "CD_DUTY", this.gfnNvl(this.dsSearch.getColumn(0, "CD_DUTY"), ""));
+	this.dsSelect.setColumn(0, "CD_LEVEL", this.gfnNvl(this.dsSearch.getColumn(0, "CD_LEVEL"), ""));
+
+	this.dsSelect.setColumn(0, "DS_SCHOOL", this.gfnNvl(this.dsSearch.getColumn(0, "DS_SCHOOL"), ""));
+	this.dsSelect.setColumn(0, "DS_MAJOR", this.gfnNvl(this.dsSearch.getColumn(0, "DS_MAJOR"), ""));
+	
+	this.dsSelect.setColumn(0, "FR_TEMPORARY", this.gfnNvl(this.dsSearch.getColumn(0, "FR_TEMPORARY"), ""));
+	this.dsSelect.setColumn(0, "TO_TEMPORARY", this.gfnNvl(this.dsSearch.getColumn(0, "TO_TEMPORARY"), ""));
+	this.dsSelect.setColumn(0, "FR_RETIRE", this.gfnNvl(this.dsSearch.getColumn(0, "FR_RETIRE"), ""));
+	this.dsSelect.setColumn(0, "TO_RETIRE", this.gfnNvl(this.dsSearch.getColumn(0, "TO_RETIRE"), ""));
+	
+	this.dsSelect.setColumn(0, "FR_AGE", this.gfnNvl(this.dsSearch.getColumn(0, "FR_AGE"), 0));
+	this.dsSelect.setColumn(0, "TO_AGE", this.gfnNvl(this.dsSearch.getColumn(0, "TO_AGE"), 200));
+
+	this.dsSelect.setColumn(0, "ID_LOGIN", this.AuthClient.ID_USER);
+	this.dsSelect.setColumn(0, "IP_ADDR", this.AuthClient.NO_IP);
+	this.dsSelect.setColumn(0, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	this.dsSelect.setColumn(0, "GR_CORP", this.AuthClient.CD_CORP);
+	this.dsSelect.setColumn(0, "GR_DEPT", this.AuthClient.CD_DEPT);	
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	
+}
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	
+}
+
+/*
+ *	저장 버튼
+ */
+//this.fnSave = function() {
+//
+//}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/*
+ *	초기화 버튼
+ */
+this.fnReset  = function() {
+	//this.dsSearch.clearData();
+	//this.dsSearch.addRow();
+
+	this.ccfCD_CORP.form.DSTextBox.set_value('');
+	this.ccfCD_CORP.form.CDTextBox.set_value('');
+	this.ccfCD_EMPTYPE.form.DSTextBox.set_value('');
+	this.ccfCD_EMPTYPE.form.CDTextBox.set_value('');
+	this.ccfTY_DEPT.form.DSTextBox.set_value('');
+	this.ccfTY_DEPT.form.CDTextBox.set_value('');
+	this.divSearch.form.txtDS_HNAME.set_value('');
+	this.ccfID_SABUN.form.DSTextBox.set_value('');
+	this.ccfID_SABUN.form.CDTextBox.set_value('');
+	this.ccfCD_JOBTYPE.form.DSTextBox.set_value('');
+	this.ccfCD_JOBTYPE.form.CDTextBox.set_value('');
+	this.ccfCD_POSITION.form.DSTextBox.set_value('');
+	this.ccfCD_POSITION.form.CDTextBox.set_value('');
+	this.ccfCD_DUTY.form.DSTextBox.set_value('');
+	this.ccfCD_DUTY.form.CDTextBox.set_value('');
+	this.ccfCD_ADOPTYPE.form.CDTextBox.set_value('');
+	this.ccfCD_ADOPTYPE.form.DSTextBox.set_value('');
+	
+	this.ccfCD_OCCUPATION.form.CDTextBox.set_value('');
+	this.ccfCD_OCCUPATION.form.DSTextBox.set_value('');
+	
+	this.ctclFR_JOIN.set_value('');
+	this.ctclTO_JOIN.set_value('');
+	
+	this.ccfCD_DEPT.form.CDTextBox.set_value('');
+	this.ccfCD_DEPT.form.DSTextBox.set_value('');
+	
+	this.divSearch.form.cboYN_GENDER.set_value('%');
+	
+	this.ctclFR_BIRTH.set_value('');
+	this.ctclTO_BIRTH.set_value('');
+	this.ctclFR_GROUPJOIN.set_value('');
+	this.ctclTO_GROUPJOIN.set_value('');
+	
+	this.divSearch.form.cboTY_RETIRE.set_value('%');
+	this.divSearch.form.txtDS_FAMILYPLACE.set_value('');
+	this.ccfCD_ADDRESS.form.CDTextBox.set_value('');
+	this.ccfCD_ADDRESS.form.DSTextBox.set_value('');
+	
+	this.ccfCD_PAYSTEP.form.CDTextBox.set_value('');
+	this.ccfCD_PAYSTEP.form.DSTextBox.set_value('');
+
+ 	this.ccfCD_SCHOOL.form.CDTextBox.set_value('');
+ 	this.ccfCD_SCHOOL.form.DSTextBox.set_value('');
+// 	this.ccfDS_UNIVERSITY.form.CDTextBox.set_value('');
+// 	this.ccfDS_UNIVERSITY.form.DSTextBox.set_value('');
+// 	this.ccfCD_MAJOR.form.CDTextBox.set_value('');
+// 	this.ccfCD_MAJOR.form.DSTextBox.set_value('');
+
+//	this.divSearch.form.txtCD_SCHOOL.set_value('');
+	this.divSearch.form.txtDS_UNIVERSITY.set_value('');
+	this.divSearch.form.txtCD_MAJOR.set_value('');
+
+	this.ctclFR_TEMPORARY.set_value('');
+	this.ctclTO_TEMPORARY.set_value('');
+	this.ctclFR_RETIRE.set_value('');
+	this.ctclTO_RETIRE.set_value('');
+	
+	this.divSearch.form.txtFR_AGE.set_value('');
+	this.divSearch.form.txtTO_AGE.set_value('');
+
+	this.fnSearchInit();
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnValidate = function() {
+	
+// 	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.text)) {
+// 		this.gfnAlert("법인코드를 입력 하세요.");
+// 		this.ccfCD_CORP.form.CDTextBox.setFocus();
+// 		return false;
+// 	}
+	
+	if ( !this.gfnIsNull(this.ctclFR_JOIN.value) && !this.gfnIsNull(this.ctclTO_JOIN.value) ) {
+		if ( this.ctclFR_JOIN.value > this.ctclTO_JOIN.value ) {
+			this.gfnAlert("입사일자가 잘못 입력 되었습니다..");
+			this.ctclFR_JOIN.setFocus();
+			return false;
+		}
+	}
+	
+	if ( !this.gfnIsNull(this.ctclFR_BIRTH.value) && !this.gfnIsNull(this.ctclTO_BIRTH.value) ) {
+		if ( this.ctclFR_BIRTH.value > this.ctclTO_BIRTH.value ) {
+			this.gfnAlert("생년월일이 잘못 입력 되었습니다..");
+			this.ctclFR_BIRTH.setFocus();
+			return false;
+		}
+	}
+	
+	if ( !this.gfnIsNull(this.ctclFR_GROUPJOIN.value) && !this.gfnIsNull(this.ctclTO_GROUPJOIN.value) ) {
+		if ( this.ctclFR_GROUPJOIN.value > this.ctclTO_GROUPJOIN.value ) {
+			this.gfnAlert("그룹일자가 잘못 입력 되었습니다..");
+			this.ctclFR_GROUPJOIN.setFocus();
+			return false;
+		}
+	}
+	
+	if ( !this.gfnIsNull(this.ctclFR_TEMPORARY.value) && !this.gfnIsNull(this.ctclTO_TEMPORARY.value) ) {
+		if ( this.ctclFR_TEMPORARY.value > this.ctclTO_TEMPORARY.value ) {
+			this.gfnAlert("휴직일이 잘못 입력 되었습니다..");
+			this.ctclFR_TEMPORARY.setFocus();
+			return false;
+		}
+	}
+	
+	if ( !this.gfnIsNull(this.ctclFR_RETIRE.value) && !this.gfnIsNull(this.ctclTO_RETIRE.value) ) {
+		if ( this.ctclFR_RETIRE.value > this.ctclTO_RETIRE.value ) {
+			this.gfnAlert("퇴직일이 잘못 입력 되었습니다..");
+			this.ctclFR_RETIRE.setFocus();
+			return false;
+		}
+	}
+	
+	if ( !this.gfnIsNull(this.divSearch.form.txtFR_AGE.value) && !this.gfnIsNull(this.divSearch.form.txtTO_AGE.value) ) {
+		if ( this.divSearch.form.txtFR_AGE.value > this.divSearch.form.txtTO_AGE.value ) {
+			this.gfnAlert("연령이 잘못 입력 되었습니다..");
+			this.divSearch.form.txtFR_AGE.setFocus();
+			return false;
+		}
+	}
+	
+	return true;
+};
+
+this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "A");
+	this.dsCombo.setColumn(0, "CD_TYPE", "AE");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_RETIRE=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+	}
+	this.fnSetButton();
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+	if (id == "ccfCD_EMPTYPE") {
+		dsUserParam.setColumn(nrow, "CD_PREFIX", 'EA');
+	}
+	
+	if (id == "ccfTY_DEPT") {
+		dsUserParam.setColumn(nrow, "CD_PREFIX", 'DA');
+	}
+	
+	if (id == "ccfCD_DEPT") {	// 부서	
+		if(this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)){
+			this.fnAlertAfter = function(){
+				this.ccfCD_CORP.form.CDTextBox.setFocus();
+			}
+			this.gfnAlert("소속법인을 선택하세요", "fnAlertAfter");
+			return;
+		}
+		
+		// @TY_GUBUN	공통
+		// @CN_ROW	
+		// @VALUE	
+		// @MIN_VALUE
+		dsUserParam.setColumn(nrow, "GR_SEARCH",  this.FormInfo.GR_SEARCH);	// 사용자 권한
+		dsUserParam.setColumn(nrow, "CD_DEPT",  this.AuthClient.CD_DEPT);	// 로그인부서
+		dsUserParam.setColumn(nrow, "CD_CORP",  this.ccfCD_CORP.form.CDTextBox.value);	// 조회조건에 있는 소속법인
+		dsUserParam.setColumn(nrow, "YN_CURRENT",  "");
+	}
+
+	if (id == "ccfID_SABUN") {
+		if(this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)){
+			this.fnAlertAfter = function(){
+				this.ccfCD_CORP.form.CDTextBox.setFocus();
+			}
+			this.gfnAlert("소속법인을 선택하세요", "fnAlertAfter");
+			return;
+		}
+	
+		dsUserParam.setColumn(nrow, "CD_CORP",  this.ccfCD_CORP.form.CDTextBox.value);	// 조회조건에 있는 소속법인
+		dsUserParam.setColumn(nrow, "GR_SEARCH",  this.FormInfo.GR_SEARCH);	// 사용자 권한
+		dsUserParam.setColumn(nrow, "CD_DEPT",  this.AuthClient.CD_DEPT);	// 로그인부서
+		dsUserParam.setColumn(nrow, "YN_CORP", "N");	// 법인무관(Y: 법인에 관계없이 직원검색 N:조건의 법인의 임직원만 검색)
+		//dsUserParam.setColumn(nrow, "TY_RETIRE", "");	// 01 재직 02 휴직 04 퇴직 % :전체
+		dsUserParam.setColumn(nrow, "TY_RETIRE", "");	// 01 재직 02 휴직 04 퇴직 % :전체
+		// this.divSearch.form.cboTY_RETIRE.value
+		/*
+			@CD_DEPT	= 로그인부서
+			@CD_CORP	= 조회조건에 있는 소속법인 
+			@GR_SEARCH 	= 사용자 권한
+			@YN_CORP	= 'Y'
+			@TY_RETIRE	= '%'
+		*/
+	}
+
+	if (id == "ccfCD_JOBTYPE") {
+		dsUserParam.setColumn(nrow, "CD_PREFIX", 'EB');
+	}
+	
+	if (id == "ccfCD_POSITION") {	
+		dsUserParam.setColumn(nrow, "CD_PREFIX", 'ED'); 
+	}
+	
+	if (id == "ccfCD_ADOPTYPE") {
+		dsUserParam.setColumn(nrow, "CD_PREFIX", 'AD');
+	}
+	
+	if (id == "ccfCD_OCCUPATION") {
+		dsUserParam.setColumn(nrow, "CD_PREFIX", 'EC');
+	}
+	
+	if (id == "ccfCD_DUTY") {
+		dsUserParam.setColumn(nrow, "CD_PREFIX", 'EF');
+	}
+	
+	if (id == "ccfCD_ADDRESS") {
+		dsUserParam.setColumn(nrow, "CD_PREFIX", 'AA');
+	}
+	
+	if (id == "ccfCD_SCHOOL") {
+		dsUserParam.setColumn(nrow, "CD_PREFIX", 'SA');
+	}
+
+	if (id == "ccfDS_UNIVERSITY") {
+		dsUserParam.setColumn(nrow, "CD_PREFIX", 'SD');
+	}
+
+	if (id == "ccfCD_MAJOR") {
+		dsUserParam.setColumn(nrow, "CD_PREFIX", 'SE');
+	}
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id) {
+	this.fnSearchInit();
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.fnSearchCancel = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	// 검색조건 초기화
+	
+	this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP); 
+	this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);	
+	this.ccfCD_EMPTYPE.form.DSTextBox.set_value('');
+	this.ccfCD_EMPTYPE.form.CDTextBox.set_value('');
+	this.ccfTY_DEPT.form.DSTextBox.set_value('');
+	this.ccfTY_DEPT.form.CDTextBox.set_value('');
+	this.divSearch.form.txtDS_HNAME.set_value('');
+	this.ccfID_SABUN.form.DSTextBox.set_value('');
+	this.ccfID_SABUN.form.CDTextBox.set_value('');
+	this.ccfCD_JOBTYPE.form.DSTextBox.set_value('');
+	this.ccfCD_JOBTYPE.form.CDTextBox.set_value('');
+	this.ccfCD_POSITION.form.DSTextBox.set_value('');
+	this.ccfCD_POSITION.form.CDTextBox.set_value('');
+	this.ccfCD_DUTY.form.DSTextBox.set_value('');
+	this.ccfCD_DUTY.form.CDTextBox.set_value('');
+	this.ccfCD_ADOPTYPE.form.CDTextBox.set_value('');
+	this.ccfCD_ADOPTYPE.form.CDTextBox.set_value('');
+	this.ccfCD_OCCUPATION.form.CDTextBox.set_value('');
+	this.ccfCD_OCCUPATION.form.CDTextBox.set_value('');
+	
+	this.ctclFR_JOIN.set_value('');
+	this.ctclTO_JOIN.set_value('');
+	
+	this.ccfCD_DEPT.form.CDTextBox.set_value('');
+	this.ccfCD_DEPT.form.CDTextBox.set_value('');
+	this.divSearch.form.cboYN_GENDER.set_value('%');
+	
+	this.ctclFR_BIRTH.set_value('');
+	this.ctclTO_BIRTH.set_value('');
+	this.ctclFR_GROUPJOIN.set_value('');
+	this.ctclTO_GROUPJOIN.set_value('');
+	
+	this.divSearch.form.cboTY_RETIRE.set_value('%');
+	this.divSearch.form.txtDS_FAMILYPLACE.set_value('');
+	this.ccfCD_ADDRESS.form.CDTextBox.set_value('');
+	this.ccfCD_ADDRESS.form.CDTextBox.set_value('');
+	this.ccfCD_PAYSTEP.form.CDTextBox.set_value('');
+	this.ccfCD_PAYSTEP.form.CDTextBox.set_value('');
+
+ 	this.ccfCD_SCHOOL.form.CDTextBox.set_value('');
+ 	this.ccfCD_SCHOOL.form.DSTextBox.set_value('');
+// 	this.ccfDS_UNIVERSITY.form.CDTextBox.set_value('');
+// 	this.ccfDS_UNIVERSITY.form.DSTextBox.set_value('');
+// 	this.ccfCD_MAJOR.form.CDTextBox.set_value('');
+// 	this.ccfCD_MAJOR.form.DSTextBox.set_value('');
+//	this.divSearch.form.txtCD_SCHOOL.set_value('');
+	this.divSearch.form.txtDS_UNIVERSITY.set_value('');
+	this.divSearch.form.txtCD_MAJOR.set_value('');
+
+	this.ctclFR_TEMPORARY.set_value('');
+	this.ctclTO_TEMPORARY.set_value('');
+	this.ctclFR_RETIRE.set_value('');
+	this.ctclTO_RETIRE.set_value('');
+	
+	this.divSearch.form.txtFR_AGE.set_value('');
+	this.divSearch.form.txtTO_AGE.set_value('');
+
+
+	this.fnSearchInit();
+}
+
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		// 폼상태 초기화
+		this.gfnSetFormStatus(this);	
+		this.gfnGridClear(this.dxGrid);
+		this.fnSetButton();
+	}
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		this.fnSetButton();
+	}
+	
+	//this.divSearch.form.ccfCD_CORP.form.DSTextBox.set_value('');
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+      <BindItem id="item2" compid="divSearch.form.ccfCD_EMPTYPE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_EMPTYPE"/>
+      <BindItem id="item3" compid="divSearch.form.ccfCD_EMPTYPE.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_EMPTYPE"/>
+      <BindItem id="item4" compid="divSearch.form.ccfTY_DEPT.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="TY_DEPT"/>
+      <BindItem id="item5" compid="divSearch.form.ccfTY_DEPT.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_TYDEPT"/>
+      <BindItem id="item6" compid="divSearch.form.txtDS_HNAME" propid="value" datasetid="dsSearch" columnid="DS_HNAME"/>
+      <BindItem id="item7" compid="divSearch.form.ccfID_SABUN.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="ID_SABUN"/>
+      <BindItem id="item8" compid="divSearch.form.ccfID_SABUN.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_SABUN"/>
+      <BindItem id="item9" compid="divSearch.form.ccfCD_JOBTYPE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_JOBTYPE"/>
+      <BindItem id="item10" compid="divSearch.form.ccfCD_JOBTYPE.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_JOBTYPE"/>
+      <BindItem id="item11" compid="divSearch.form.ccfCD_POSITION.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_POSITION"/>
+      <BindItem id="item12" compid="divSearch.form.ccfCD_POSITION.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_POSITION"/>
+      <BindItem id="item13" compid="divSearch.form.ccfCD_ADOPTYPE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_ADOPTYPE"/>
+      <BindItem id="item14" compid="divSearch.form.ccfCD_ADOPTYPE.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_ADOPTYPE"/>
+      <BindItem id="item15" compid="divSearch.form.ccfCD_OCCUPATION.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_OCCUPATION"/>
+      <BindItem id="item16" compid="divSearch.form.ccfCD_OCCUPATION.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_OCCUPATION"/>
+      <BindItem id="item17" compid="divSearch.form.ctclFR_JOIN" propid="value" datasetid="dsSearch" columnid="FR_JOIN"/>
+      <BindItem id="item18" compid="divSearch.form.ctclTO_JOIN" propid="value" datasetid="dsSearch" columnid="TO_JOIN"/>
+      <BindItem id="item19" compid="divSearch.form.ccfCD_DEPT.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_DEPT"/>
+      <BindItem id="item20" compid="divSearch.form.ccfCD_DEPT.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_DEPT"/>
+      <BindItem id="item21" compid="divSearch.form.cboYN_GENDER" propid="value" datasetid="dsSearch" columnid="YN_GENDER"/>
+      <BindItem id="item22" compid="divSearch.form.ctclFR_BIRTH" propid="value" datasetid="dsSearch" columnid="FR_BIRTH"/>
+      <BindItem id="item23" compid="divSearch.form.ctclTO_BIRTH" propid="value" datasetid="dsSearch" columnid="TO_BIRTH"/>
+      <BindItem id="item24" compid="divSearch.form.ctclFR_GROUPJOIN" propid="value" datasetid="dsSearch" columnid="FR_GROUPJOIN"/>
+      <BindItem id="item25" compid="divSearch.form.ctclTO_GROUPJOIN" propid="value" datasetid="dsSearch" columnid="TO_GROUPJOIN"/>
+      <BindItem id="item26" compid="divSearch.form.cboTY_RETIRE" propid="value" datasetid="dsSearch" columnid="TY_RETIRE"/>
+      <BindItem id="item27" compid="divSearch.form.txtDS_FAMILYPLACE" propid="value" datasetid="dsSearch" columnid="DS_FAMILYPLACE"/>
+      <BindItem id="item28" compid="divSearch.form.ccfCD_ADDRESS.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_ADDRESS"/>
+      <BindItem id="item29" compid="divSearch.form.ccfCD_ADDRESS.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_ADDRESS"/>
+      <BindItem id="item30" compid="divSearch.form.ccfCD_DUTY.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_DUTY"/>
+      <BindItem id="item31" compid="divSearch.form.ccfCD_DUTY.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_DUTY"/>
+      <BindItem id="item32" compid="divSearch.form.ccfCD_SCHOOL.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_LEVEL"/>
+      <BindItem id="item33" compid="divSearch.form.ccfCD_SCHOOL.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_LEVEL"/>
+      <BindItem id="item34" compid="divSearch.form.txtDS_UNIVERSITY" propid="value" datasetid="dsSearch" columnid="DS_SCHOOL"/>
+      <BindItem id="item35" compid="divSearch.form.txtCD_MAJOR" propid="value" datasetid="dsSearch" columnid="DS_MAJOR"/>
+      <BindItem id="item36" compid="divSearch.form.ctclFR_TEMPORARY" propid="value" datasetid="dsSearch" columnid="FR_TEMPORARY"/>
+      <BindItem id="item37" compid="divSearch.form.ctclTO_TEMPORARY" propid="value" datasetid="dsSearch" columnid="TO_TEMPORARY"/>
+      <BindItem id="item38" compid="divSearch.form.ctclFR_RETIRE" propid="value" datasetid="dsSearch" columnid="FR_RETIRE"/>
+      <BindItem id="item39" compid="divSearch.form.ctclTO_RETIRE" propid="value" datasetid="dsSearch" columnid="TO_RETIRE"/>
+      <BindItem id="item40" compid="divSearch.form.txtTO_AGE" propid="value" datasetid="dsSearch" columnid="TO_AGE"/>
+      <BindItem id="item41" compid="divSearch.form.txtFR_AGE" propid="value" datasetid="dsSearch" columnid="FR_AGE"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="230" height="160" maxwidth="260" maxheight="200" titletext="어음만기일 수정" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staTITLE" taborder="1" text="어음만기일 수정" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+        <Static id="staSUBTITLE" taborder="2" text="어음만기일을 입력하세요." left="20" top="staTITLE:10" width="180" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+        <Static id="sta00" taborder="0" text="어음만기일" left="20" top="staSUBTITLE:10" width="60" height="20" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+        <Calendar id="ctclDT_NOTES" taborder="1" left="sta00:10" top="staSUBTITLE:7" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true"/>
+        <Button id="btnSave" taborder="1" text="확인" left="21.92%" top="sta00:20" width="60" height="20" onclick="divData_btnSave_onclick"/>
+        <Button id="btnCancel" taborder="2" text="취소" left="btnSave:16" top="sta00:20" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	//this.fnSetButton();
+	//this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 팝업사이즈 조정
+ 	var nWidth = "280px";
+ 	var nHeight = "220px";	
+ 	this.getOwnerFrame().set_width(nWidth);
+ 	this.getOwnerFrame().set_height(nHeight);	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ 
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	
+}
+
+ /*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	
+}
+
+ /*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	
+}
+
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+	if(this.gfnIsNull(this.ctclDT_NOTES.value)) {
+		this.gfnAlert("어음만기일을 입력하세요.");
+		this.ctclDT_NOTES.setFocus();
+		return false;
+	}
+	
+	return true;
+}
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+*/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ 
+// 저장 버튼 클릭
+this.divData_btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnSelectValidate()) return false;
+	
+	var json = {};
+	
+	json.DT_NOTES = this.ctclDT_NOTES.value;
+	
+	this.getParentContext().close(JSON.stringify(json));
+	
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+]]></Script>
+  </Form>
+</FDL>

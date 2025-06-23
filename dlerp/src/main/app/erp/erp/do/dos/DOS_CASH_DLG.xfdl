@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="420" height="270" maxwidth="440" maxheight="290" titletext="" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staBgCD_PROJ" taborder="2" left="119" top="102" width="280" height="30" cssclass="sta_WF_tablebg" text=""/>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="현금흐름 자료생성" left="0" top="0" width="100.00%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Button id="btnOK" taborder="1" text="확인" left="28.33%" top="187" width="60" height="27" onclick="btnOK_onclick"/>
+              <Button id="btnCANCLE" taborder="2" text="취소" left="btnOK:31" top="187" width="60" height="27" onclick="btnCANCLE_onclick"/>
+              <MaskEdit id="msk00" taborder="3" left="126" top="107" width="120" height="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staCD_PROJ" taborder="1" text="년차수" left="10" top="102" width="110" height="30" cssclass="sta_WF_tablelabel" textAlign="left" textDecoration="underline" onclick="divData_staCD_ACNTUNIT_onclick"/>
+        <Static id="staYM_WORK" taborder="3" text="시작년도" left="10" top="73" width="110" height="30" cssclass="sta_WF_tablelabel" textAlign="left" textDecoration="underline"/>
+        <Static id="staBgYM_WORK" taborder="4" left="119" top="73" width="280" height="30" cssclass="sta_WF_tablebg" text=""/>
+        <Div id="ctclYY_START" taborder="5" left="126" top="78" width="119" height="20" url="cmm::cmmCalYY.xfdl" enable="true"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+//this._onload = true; // 최초 화면로드 판단.
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsList.setColumn(0, "CD_PROJ", this.getOwnerFrame().CD_PROJ);
+	this.dsList.setColumn(0, "YM_MAGAM", this.getOwnerFrame().YM_MAGAM);
+	
+};
+
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {	
+
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("CD_PROJ", "string");
+	this.dsSave.addColumn("YM_MAGAM", "string");
+	this.dsSave.addColumn("YY_START", "string");
+	this.dsSave.addColumn("CT_YEAR", "int");
+	this.dsSave.addColumn("ID_USER", "string");
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+};
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return;
+	} 
+	else if(svcID == "save"){ 
+		if (errorCode == 0) { 	
+			this.getParentContext().close(true);
+			
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	this.fnSave();
+};
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 취소
+	this.getParentContext().close(false);
+};
+
+this.fnSave = function()
+{
+	this.dsSave.clearData();
+	var nrow = this.dsSave.addRow();		
+	this.dsSave.setColumn(nrow, "CD_PROJ", this.dsList.getColumn(0, "CD_PROJ"));
+	this.dsSave.setColumn(nrow, "YM_MAGAM", this.dsList.getColumn(0, "YM_MAGAM"));
+	this.dsSave.setColumn(nrow, "YY_START", this.dsList.getColumn(0, "YY_START"));
+	this.dsSave.setColumn(nrow, "CT_YEAR", this.dsList.getColumn(0, "CT_YEAR"));
+	this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]	
+}
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_PROJ" type="STRING" size="256"/>
+          <Column id="YM_MAGAM" type="STRING" size="256"/>
+          <Column id="YY_START" type="STRING" size="256"/>
+          <Column id="CT_YEAR" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="YM_MAGAM">DOSPR_CASH_CREATE</Col>
+            <Col id="CD_PROJ">save</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DOSPR_CASH_CREATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="ctclYY_START.form.TextBox" propid="value" datasetid="dsList" columnid="YY_START"/>
+      <BindItem id="item1" compid="divData.form.msk00" propid="value" datasetid="dsList" columnid="CT_YEAR"/>
+    </Bind>
+  </Form>
+</FDL>

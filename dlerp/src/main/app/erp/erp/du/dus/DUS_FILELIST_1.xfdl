@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="작업허가서 목록" onload="form_onload">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SITE" taborder="3" text="현장코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFSITE" CDTextWidth="80" taborder="0" left="staCD_SITE:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staDT_START" taborder="5" text="날짜" left="ccfCD_SITE:0.0" top="10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabelE"/>
+              <Calendar id="ctclYMD_INPUT" taborder="1" left="staDT_START:0.0" top="10.0" width="110" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd"/>
+              <Static id="sta01" taborder="4" text="종류" left="ctclYMD_INPUT:0.0" top="10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="ccboNO_FILELIST" taborder="2" left="sta01:0.0" top="10.0" width="220" height="24.0" datacolumn="DS_CODE" codecolumn="CD_CODE" innerdataset="dsNO_FILELIST"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" right="0" bottom="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetCombo();
+	
+	this.dsSearch.setColumn(0, "YMD_INPUT", this.gfnGetDate());	
+	
+};
+
+this.fnSetButton = function() {
+}
+
+this.fnSetExtendButton = function() {
+	//this.btnRiskWork = this.gfnFormButtonAdd("btn_RiskWork", "fnRiskWork");	
+};
+
+this.fnSetVariable = function() {
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ctclYMD_INPUT = this.divSearch.form.ctclYMD_INPUT;
+	this.ccboNO_FILELIST = this.divSearch.form.ccboNO_FILELIST;
+
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid, this.dsList, "DU", "DUS_FILELIST_1");
+	
+	// BUTTON, BUTTON-IN 처리
+	this.dxGrid.ExpandUp = "fnGrid_ExpandUp";
+	
+	//this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+	//this.dxGrid.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+	
+	//var today = this.gfnGetDate();
+	
+	//var sDate = today.substr(0,6);
+	
+	//this.dsSearch.setColumn(0, "DT_WORK_FR", this.gfnGetFirstDate(sDate));
+	//this.dsSearch.setColumn(0, "DT_WORK_TO", this.gfnGetLastDate(sDate));
+}
+
+this.fnSetParameter = function() {
+
+	
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("TY_WRK", "string");
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("YMD_INPUT", "string");
+	this.dsSelect.addColumn("NO_FILELIST", "string");
+
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("TY_WRK", "string");
+	this.dsSave.addColumn("CD_SITE", "string");
+	this.dsSave.addColumn("YMD_INPUT", "string");
+	this.dsSave.addColumn("NO_FILELIST", "string");
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+this.fnSelect = function() {
+	if (!this.fnSelectValidation()) return;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "TY_WRK", "Q");
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "YMD_INPUT", this.dsSearch.getColumn(0, "YMD_INPUT"));
+	this.dsSelect.setColumn(0, "NO_FILELIST", this.dsSearch.getColumn(0, "NO_FILELIST"));	
+		
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect"; 
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnAdd = function() {
+	var nrow = this.gfnGridAdd(this.dxGrid, "top");
+	
+	this.dsList.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsList.setColumn(nrow, "DS_SITE", this.dsSearch.getColumn(0, "DS_SITE"));
+}
+
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+this.fnSave = function() {
+	// 그리드 필수항목 체크
+	if (!this.gfnGridValidate(this.dxGrid)) return;	
+
+	this.dxGrid.updateToDataset();
+	
+	// save SP 한개로 사용하는 경우
+	this.dsSave.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+			case "I":
+			case "U":
+			case "D":
+				var nrow = this.dsSave.addRow();
+				this.dsSave.setColumn(nrow, "TY_WRK", flag);
+				this.dsSave.setColumn(nrow, "CD_SITE", this.dsList.getColumn(i, "CD_SITE"));
+				this.dsSave.setColumn(nrow, "YMD_INPUT", this.dsList.getColumn(i, "YMD_INPUT"));
+				this.dsSave.setColumn(nrow, "NO_FILELIST", this.dsList.getColumn(i, "NO_FILELIST"));
+				break;
+		}
+	}
+		
+	if (this.dsSave.rowcount == 0) return;
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+this.fnPrint = function() {
+
+}
+
+this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DU");
+	this.dsCombo.setColumn(0, "CD_TYPE", "S1");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsNO_FILELIST=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+};
+
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+ 
+this.fnSelectValidation = function() {
+	var validate = true;
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE"))) {
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드가 입력되지 않았습니다.", "fnVaidateCallback");
+	}
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "YMD_INPUT"))) {
+		this.fnVaidateCallback = function() {
+			this.ctclYMD_INPUT.setFocus();
+		}
+		this.gfnAlert("날짜가 입력되지 않았습니다.", "fnVaidateCallback");
+	}
+	
+	return validate;
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if(svcID == "select") {
+	 
+		this.gfnGridAfterSelect(this.dxGrid);
+		
+		//this.FormBtns.Del.set_enable(this.dsSearch.getColumn(0, "YN_RECEIPT") == "N");
+	}
+	else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		}
+		else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "combo") {
+		if (errorCode == 0) {
+			var nrow = this.dsNO_FILELIST.insertRow(0);
+			this.dsNO_FILELIST.setColumn(nrow, "CD_CODE", "");
+			this.dsNO_FILELIST.setColumn(nrow, "DS_CODE", "전체");
+			
+			this.ccboNO_FILELIST.set_index(0);
+		}
+		else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	
+}
+ 
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGrid_ExpandUp = function(obj:nexacro.Grid, e:nexacro.GridMouseEventInfo) {
+
+	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, e.cell);
+	
+	if(colnm == "DS_FILE") {
+		// 최초 작성시엔 NO_SEQ가 없기 때문에 저장 후에 파일 첨부를 진행하여야 함.
+		// CD_DIR에 넣어줄 값이 없기에 저장 후 진행!
+		if(this.gfnGetFlag(this.dsList, e.row) == "I"){
+			this.gfnAlert("저장 후 파일첨부 진행.");
+			return false;
+		}
+	
+		var fileManager = {};
+		fileManager.CD_GUBUN = "DUS1";
+		fileManager.CD_DIR = [this.dsList.getColumn(e.row, "CD_SITE"), this.dsList.getColumn(e.row, "YMD_INPUT"), this.dsList.getColumn(e.row, "NO_FILELIST")];
+		fileManager.IS_READONLY = false;
+		this.gfnFileManager(fileManager, "fnFileCallback");
+	}
+}
+
+this.fnFileCallback = function(strID, val) {
+	// val.IsChange : 변경여부, val.Cnt : 파일개수
+	
+	// 변경시 조회를 다시 하거나
+// 	if(val.IsChange == true) {
+// 		this.FormBtns.Select.click();
+// 	}
+	
+	// 파일개수를 다시 셋팅
+	this.dsList.set_enableevent(false);
+	if(val.Cnt == 0) {
+		this.dsList.setColumn(this.dsList.rowposition, "DS_FILE", "첨부");
+	} else {
+		this.dsList.setColumn(this.dsList.rowposition, "DS_FILE", "첨부(" + val.Cnt + ")");
+	}
+	this.dsList.set_enableevent(true);
+};
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);
+	}
+};
+
+this.fnRiskWork = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+
+    var param = {};
+	var nRow = this.dsList.rowposition;
+	
+	param.CD_SITE = this.dsList.getColumn(nRow, "CD_SITE");
+	param.DS_SITE = this.dsList.getColumn(nRow, "DS_SITE");
+    param.NO_SEQ = this.dsList.getColumn(nRow, "NO_SEQ");
+	param.TY_WORK = this.dsSearch.getColumn(0, "TY_WORK");
+	//param.DS_WORK = this.dsSearch.getColumn(0, "DS_WORK");
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DWG_RISKWORK_1", "fnRiskWorkCallback", param);
+	
+}
+
+this.fnRiskWorkCallback =  function(svcID, val) {
+
+	if(val != false) {
+		this.FormBtns.Select.click();
+	}
+};
+
+this.divSearch_staDT_START_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DUSPR_FILEUP_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DUSPR_FILEUP_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="YMD_INPUT" type="STRING" size="256"/>
+          <Column id="NO_FILELIST" type="STRING" size="256"/>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsNO_FILELIST" onvaluechanged="dsTY_WORK_onvaluechanged"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_SITE.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_SITE"/>
+      <BindItem id="item2" compid="divSearch.form.ctclYMD_INPUT" propid="value" datasetid="dsSearch" columnid="YMD_INPUT"/>
+      <BindItem id="item4" compid="divSearch.form.ccboNO_FILELIST" propid="value" datasetid="dsSearch" columnid="NO_FILELIST"/>
+    </Bind>
+  </Form>
+</FDL>

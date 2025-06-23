@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="770" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0.0" top="10.0" height="78.0" right="0" cssclass="div_SEARCH_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_DEPT" taborder="0" text="귀속부서" left="0.0" top="10.0" width="118.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_DEPT" CodeFindName="DHX_CFACNTUNIT_YNSLIPACCEPT" CDTextWidth="70" taborder="1" left="staCD_DEPT:0.0" top="10.0" width="276" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staDT_REQ" taborder="3" text="자동전표코드" left="0.0" top="staCD_DEPT:10.0" width="118.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Calendar id="ctclFR_DATE" taborder="2" left="0.0" top="10.0" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" width="105"/>
+              <Static id="staDT_REQ00" taborder="4" text="~" left="ctclFR_DATE:0.0" top="10.0" width="30.0" height="24.0" cssclass="sta_WF_AC"/>
+              <Calendar id="ctclTO_DATE" taborder="5" left="staDT_REQ00:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true"/>
+              <Static id="staCD_VENDOR" taborder="6" text="회계일자" left="ctclTO_DATE:0.0" top="10.0" width="118.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_AUTOSLIP" CodeFindName="DHX_CFAUTOSLIP" CDTextWidth="70" taborder="7" left="0.0" top="staCD_DEPT:10.0" width="280" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Combo id="ccboTY_AUTOSLIP" taborder="8" left="ccfCD_AUTOSLIP:0.0" top="staCD_DEPT:10.0" width="70" height="24.0" innerdataset="dsTY_AUTOSLIP" datacolumn="DS_CODE" codecolumn="CD_CODE" value="" text="전체" index="0" onitemchanged="divSearch_ccboTY_PAY00_onitemchanged"/>
+              <Static id="staCD_VENDOR00" taborder="9" text="전표종류" left="ccboTY_AUTOSLIP:0.0" top="staCD_DEPT:10.0" width="118.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="ccboTY_SLIP" taborder="10" left="staCD_VENDOR00:0.0" top="staCD_DEPT:10.0" width="148" height="24.0" datacolumn="DS_CODE" codecolumn="CD_CODE" value="" onitemchanged="fnSearchInit" text="전체" index="0" innerdataset="dsTY_SLIP"/>
+              <Combo id="ccboTY_APPR" taborder="11" left="ccboTY_SLIP:0.0" top="staCD_DEPT:10.0" width="148" height="24.0" datacolumn="DS_CODE" codecolumn="CD_CODE" value="" onitemchanged="fnSearchInit" text="전체" index="0" innerdataset="dsTY_APPR"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove" text="">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="8" right="0" oncelldblclick="divData_divDataTop_objGrid_oncelldblclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetParameter();
+	this.fnSetEvent();
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnSlipDetail = this.gfnFormButtonAdd("SlipDetail", "fnSlipDetail");
+	this.btnSlipDetail.set_enable(false);
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_DEPT = this.divSearch.form.ccfCD_DEPT;
+	this.ctclFR_DATE = this.divSearch.form.ctclFR_DATE;
+	this.ctclTO_DATE = this.divSearch.form.ctclTO_DATE;
+	this.ccboTY_AUTOSLIP = this.divSearch.form.ccboTY_AUTOSLIP;
+	this.ccfCD_AUTOSLIP = this.divSearch.form.ccfCD_AUTOSLIP;
+	this.ccboTY_SLIP = this.divSearch.form.ccboTY_SLIP;
+	this.ccboTY_APPR = this.divSearch.form.ccboTY_APPR;
+	
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHA_JOURNAL");		
+
+	this.ccfCD_DEPT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_AUTOSLIP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+	this.dxGrid.addEventHandler("oncelldblclick", this.fnGrid_oncelldblclick, this);
+	
+	
+	var today = this.gfnGetDate();
+	this.dsSearch.setColumn(0, "FR_DATE", today.substr(0,6)+"01");
+	this.dsSearch.setColumn(0, "TO_DATE", today);
+	
+	this.dsSearch.setColumn(0, "CD_DEPT", this.AuthClient.CD_DEPT);
+	this.dsSearch.setColumn(0, "DS_DEPT", this.AuthClient.DS_DEPT);
+	
+	this.dsSearch.setColumn(0, "TY_AUTOSLIP", "A");
+	this.dsSearch.setColumn(0, "TY_SLIP", "%");
+	this.dsSearch.setColumn(0, "TY_APPR", "%");
+
+	if (nexacro.toNumber(this.FormInfo.GR_SEARCH) >= 7) {
+		this.ccfCD_DEPT.set_enable(false);
+	}
+
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("FR_DATE", "string");
+	this.dsSelect.addColumn("TO_DATE", "string");
+	this.dsSelect.addColumn("CD_DEPT", "string");
+	this.dsSelect.addColumn("TY_SLIP", "string");
+	this.dsSelect.addColumn("TY_SLIP2", "string");
+	this.dsSelect.addColumn("TY_APPR", "string");
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("CD_AUTOSLIP", "string");
+
+	this.dsSelectUser = new Dataset();
+	this.dsSelectUser.addColumn("ID_USER", "string");
+	this.dsSelectUser.addColumn("CD_DEPT", "string");
+}
+
+/************************************************************************
+ * 버튼 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+		
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "FR_DATE", this.dsSearch.getColumn(0, "FR_DATE"));
+	this.dsSelect.setColumn(0, "TO_DATE", this.dsSearch.getColumn(0, "TO_DATE"));
+	this.dsSelect.setColumn(0, "CD_DEPT", this.dsSearch.getColumn(0, "CD_DEPT"));
+	this.dsSelect.setColumn(0, "TY_SLIP", this.dsSearch.getColumn(0, "TY_SLIP"));
+	this.dsSelect.setColumn(0, "TY_SLIP2", "%");
+	this.dsSelect.setColumn(0, "TY_APPR", this.dsSearch.getColumn(0, "TY_APPR"));
+	this.dsSelect.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+	this.dsSelect.setColumn(0, "CD_AUTOSLIP", this.dsSearch.getColumn(0, "CD_AUTOSLIP"));
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+/*
+ *	삭제 버튼
+ */ 
+this.fnDel = function() {
+}
+
+/*
+ *	저장 버튼
+ */ 
+this.fnSave = function() {
+}
+
+/*
+ *	엑셀 버튼
+ */ 
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+	//Dha_JournalReport
+}
+ 
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"FR_DATE"))||this.gfnIsNull(this.dsSearch.getColumn(0,"TO_DATE"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ctclDT_REQ_FROM.setFocus();
+		}
+		this.gfnAlert("회계일자를 입력하세요!", "fnVaidateCallback");
+	} else if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_DEPT"))) {
+		this.fnVaidateCallback = function() {
+			this.ccfCD_DEPT.setFocus();
+		}
+		this.gfnAlert("귀속부서를 입력하세요!", "fnVaidateCallback");
+	}
+	return validate;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+		
+		if (this.dsList.rowcount > 0)
+			this.btnSlipDetail.set_enable(true);
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow)  {
+	if (id == "ccfCD_DEPT") {
+		dsUserParam.setColumn(nrow, "LV_DEPT", this.UserInfo.LEVLV_DEPT_ACNT);
+		dsUserParam.setColumn(nrow, "CD_DEPT_UPPER", this.UserInfo.LEVCD_DEPT_ACNT);
+		dsUserParam.setColumn(nrow, "YN_SLIPACCEPT", "");
+		dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+		dsUserParam.setColumn(nrow, "YR_ACCOUNT", "");
+	}
+	else if (id == "ccfCD_AUTOSLIP") {
+		dsUserParam.setColumn(nrow, "TY_AUTOSLIP", this.dsSearch.getColumn(0, "CD_AUTOSLIP"));
+	}
+	return true;
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGrid_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+ 	if (!this.gfnGridIsRow(this.dxGrid)) return;
+	
+	if (this.dsList.getColumn(e.row, "CD_SLIP") == "")
+		this.btnSlipDetail.set_enable(false);
+	else
+		this.btnSlipDetail.set_enable(true);
+};
+
+this.fnGrid_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+ 	if (!this.gfnGridIsRow(this.dxGrid)) return;
+	
+	this.fnSlipDetail();
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	if (e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);
+		
+		this.btnSlipDetail.set_enable(false);
+		
+		if (e.columnid == "TY_AUTOSLIP") {
+			if (e.newvalue != "A") {
+				this.dsSearch.setColumn(0, "CD_AUTOSLIP", this.dsSearch.getColumn(0, "TY_AUTOSLIP"));
+			}
+			else {
+				this.dsSearch.setColumn(0, "CD_AUTOSLIP", "");
+				this.dsSearch.setColumn(0, "DS_AUTOSLIP", "");
+			}
+		}
+	}
+};
+
+this.fnSlipDetail = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(!this.gfnGridIsRow(this.dxGrid)) {return false;}
+	
+	var param = {};
+	
+	param.IUD_FLAG = "S";
+	param.CD_TRADE = this.dsList.getColumn(this.dsList.rowposition, "CD_SLIP").replace(/-/gi, "");
+	
+	this.gfnFormOpen("DHA", "DHA_ISSUESLIP", "", param);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DHAPR_SLIP_JOURNALLEGER</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="FR_DATE" type="STRING" size="256"/>
+          <Column id="TO_DATE" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="TY_SLIP" type="STRING" size="256"/>
+          <Column id="TY_SLIP2" type="STRING" size="256"/>
+          <Column id="TY_APPR" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="TY_AUTOSLIP" type="STRING" size="256"/>
+          <Column id="CD_AUTOSLIP" type="STRING" size="256"/>
+          <Column id="DS_AUTOSLIP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_AUTOSLIP">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">A</Col>
+            <Col id="DS_CODE">ALL</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">DA</Col>
+            <Col id="DS_CODE">인사</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">DF</Col>
+            <Col id="DS_CODE">자금</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">DH</Col>
+            <Col id="DS_CODE">회계</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">DM</Col>
+            <Col id="DS_CODE">자재</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">DW</Col>
+            <Col id="DS_CODE">기술</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_SLIP">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">%</Col>
+            <Col id="DS_CODE">전체</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">A</Col>
+            <Col id="DS_CODE">자동</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">M</Col>
+            <Col id="DS_CODE">미분류</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_APPR">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">%</Col>
+            <Col id="DS_CODE">전체</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">승인</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">미승인</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_DEPT.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_DEPT"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_DEPT.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_DEPT"/>
+      <BindItem id="item2" compid="divSearch.form.ctclFR_DATE" propid="value" datasetid="dsSearch" columnid="FR_DATE"/>
+      <BindItem id="item3" compid="divSearch.form.ctclTO_DATE" propid="value" datasetid="dsSearch" columnid="TO_DATE"/>
+      <BindItem id="item4" compid="divSearch.form.ccboTY_AUTOSLIP" propid="value" datasetid="dsSearch" columnid="TY_AUTOSLIP"/>
+      <BindItem id="item5" compid="divSearch.form.ccfCD_AUTOSLIP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_AUTOSLIP"/>
+      <BindItem id="item6" compid="divSearch.form.ccfCD_AUTOSLIP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_AUTOSLIP"/>
+      <BindItem id="item7" compid="divSearch.form.ccboTY_SLIP" propid="value" datasetid="dsSearch" columnid="TY_SLIP"/>
+      <BindItem id="item8" compid="divSearch.form.ccboTY_APPR" propid="value" datasetid="dsSearch" columnid="TY_APPR"/>
+    </Bind>
+  </Form>
+</FDL>

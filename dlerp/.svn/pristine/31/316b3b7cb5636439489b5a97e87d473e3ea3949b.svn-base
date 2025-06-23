@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46" right="0" cssclass="div_SEARCH_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SYSTEM" taborder="1" text="COMMAND" left="0" top="10" width="120" height="26" cssclass="sta_WF_SchLabelE"/>
+              <Combo id="cboCommand" taborder="1" text="도메인목록" left="staCD_SYSTEM:0" top="10" width="213" height="26" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" value="/get/admin/v1/mail-domains">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">/dooray/mail-domains</Col>
+                      <Col id="datacolumn">도메인목록</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">/dooray/organizations</Col>
+                      <Col id="datacolumn">법인 목록</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">/dooray/members/list</Col>
+                      <Col id="datacolumn">멤버목록</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">/dooray/departments/list</Col>
+                      <Col id="datacolumn">부서 목록</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">/dooray/job-positions</Col>
+                      <Col id="datacolumn">조직에서 사용하는 직책 목록</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">/dooray/job-ranks</Col>
+                      <Col id="datacolumn">조직에서 사용하는 직위 목록</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="staUSE_YN" taborder="2" text="size" left="cboCommand:0" top="10" width="92" height="24" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Combo id="ccboSIZE" taborder="3" left="staUSE_YN:0" top="10" width="80" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" text="20" value="20">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">20</Col>
+                      <Col id="datacolumn">20</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">50</Col>
+                      <Col id="datacolumn">50</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">100</Col>
+                      <Col id="datacolumn">100</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">500</Col>
+                      <Col id="datacolumn">500</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">1000</Col>
+                      <Col id="datacolumn">1000</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="sta00" taborder="4" text="page" left="ccboSIZE:0" top="10" width="92" height="24" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtPAGE" taborder="5" left="sta00:0" top="10" height="24" readonly="false" maxlength="50" width="73"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta00_01" taborder="1" text="Result" left="0" top="0" height="30" cssclass="sta_TITLE_Bg2" onclick="divData_sta00_onclick" right="0"/>
+              <Grid id="objGrid" taborder="0" left="0" top="sta00_01:0" right="0" autosizingtype="col" bottom="0" binddataset="dsList" selecttype="area">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:name"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+//	this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 버튼 설정 
+ * 서브버튼 사용 처리. 공통 및 확장버튼 버튼관리화면에서 셋팅.
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	//this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.dsParam.clearData();
+	
+	var nRow = this.dsParam.addRow();
+	this.dsParam.setColumn(nRow, 'size', this.divSearch.form.ccboSIZE.value);
+	this.dsParam.setColumn(nRow, 'page', this.gfnNvl(this.divSearch.form.ctxtPAGE.value, 0));
+	
+	var strSvcId    = "select";
+	var strSvcType  = this.divSearch.form.cboCommand.value;
+	var inProc		= "";
+	var inData      = "dsParam=dsParam";
+	var outData     = "dsResult=result";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+			
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	this.gfnGridAdd(this.divData.form.objGrid)
+};
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	
+};
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid,  'sheet1', this.divSearch.form.cboCommand.text);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if(errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return;
+	}
+	
+	if (svcID == "select") 
+	{
+		this.fnSetGrid();
+		this.dsList.copyData(this.dsResult);
+	}
+}
+
+
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+this.fnSetGrid = function() 
+{	
+	var gridName = 'objGrid';
+
+	if (this.dxGrid != null) 
+	{	
+		this.divData.form.removeChild(gridName);
+		this.dxGrid.destroy();
+	}
+	
+	this.dxGrid = new Grid(gridName, 0, 'sta00_01:0', null, null, 0, 0);
+	
+	this.dxGrid.set_autoupdatetype("itemselect")
+	this.dxGrid.set_selecttype("multiarea");
+	this.dxGrid.set_cellsizingtype("col");
+	this.dxGrid.set_cellmovingtype("none"); //col
+	this.dxGrid.set_treeusecheckbox(false);
+	this.dxGrid.set_binddataset(this.dsList);
+		
+	var nRow = this.dxGrid.appendContentsRow("head");
+	this.dxGrid.appendContentsRow("body");
+	
+	// 컬럼
+	var start_col = 0;
+	for (var i = 0; i < this.dsResult.colcount; i++) {
+		var cd_field = this.dsResult.getColID(i);
+		var ds_field = this.dsResult.getColID(i);;
+		
+		var sz_width = 100;
+		var ty_align = "left"
+		
+		var nCol = 0;
+		if (i > 0) {
+			nCol = this.dxGrid.appendContentsCol();
+		}
+		
+		var displaytype = "text";
+		var edittype = "text";
+		this.dxGrid.setCellProperty("head", nCol, "displaytype", displaytype);
+		this.dxGrid.setCellProperty("head", nCol, "edittype", edittype);
+		
+		this.dxGrid.setCellProperty("head", nCol, "text", ds_field);
+		this.dxGrid.setFormatColProperty(nCol, "size", sz_width);
+		this.dxGrid.setCellProperty("body", nCol, "text", "bind:" + cd_field);
+		this.dxGrid.setCellProperty("body", nCol, "textAlign", ty_align);
+			
+		this.dxGrid.setCellProperty("body", nCol, "displaytype", displaytype);
+		this.dxGrid.setCellProperty("body", nCol, "edittype", edittype);
+	}		
+	
+	this.divData.form.addChild(gridName, this.dxGrid);
+	
+	this.dxGrid.show();
+};]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="name" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch"/>
+      <Dataset id="dsParam">
+        <ColumnInfo>
+          <Column id="size" type="STRING" size="256"/>
+          <Column id="page" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsVariables">
+        <ColumnInfo>
+          <Column id="COLUMN" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsResult">
+        <ColumnInfo>
+          <Column id="name" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

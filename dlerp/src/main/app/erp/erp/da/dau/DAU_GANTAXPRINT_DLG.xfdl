@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DAU_GANTAXPRINT_DLG" width="366" height="218" maxwidth="406" maxheight="293" titletext="간이지급명세서(근로소득)출력" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <!-- 간이지금명세서(근로소득) 출력 -->
+              <Static id="staTITLE" taborder="0" text="간이지급명세서(근로소득) 출력" left="0" top="-5" width="344" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <!-- 신고구분 -->
+              <Static id="staYN_GUBUN" taborder="1" text="신고구분" left="0" top="35" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staYN_GUBUN_bg" taborder="2" left="staYN_GUBUN:-1" top="staYN_GUBUN:-30" width="280" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+              <Combo id="cboYN_GUBUN" taborder="3" text="상반기" left="staYN_GUBUN:5" top="staYN_GUBUN:-25" width="80" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="1" index="0">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">Y</Col>
+                      <Col id="datacolumn">상반기</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">N</Col>
+                      <Col id="datacolumn">하반기</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <!-- 제출구분 -->
+              <Static id="staSUBMIT_GUBUN" taborder="4" text="제출구분" left="0" top="staYN_GUBUN:-1" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staSUBMIT_GUBUN_bg" taborder="5" left="staSUBMIT_GUBUN:-1" top="staSUBMIT_GUBUN:-30" width="280" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+              <Combo id="cboSUBMIT_GUBUN" taborder="6" text="지급자보관용" left="staSUBMIT_GUBUN:5" top="staSUBMIT_GUBUN:-25" width="118" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="1" index="0">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">Y</Col>
+                      <Col id="datacolumn">지급자보관용</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">N</Col>
+                      <Col id="datacolumn">지급자제출용</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <!-- 귀속년도 -->
+              <Static id="staYY_BASE" taborder="7" text="귀속년도" left="0" top="staSUBMIT_GUBUN:-1" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staYY_BASE_bg" taborder="8" left="staYY_BASE:-1" top="staYY_BASE:-30" width="280" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+              <Div id="ctclYY_BASE" taborder="9" left="staYY_BASE:5" top="staYY_BASE:-25" width="60" height="20" url="cmm::cmmCalYY.xfdl"/>
+              <!-- 세무단위 -->
+              <Static id="staCD_CFSELFACNT" taborder="10" text="세무단위" left="0" top="staYY_BASE:-1" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staCD_CFSELFACNT_bg" taborder="11" left="86" top="122" width="280" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+              <Div id="ccfCD_CFSELFACNT" CodeFindName="DHX_CFSELFACNT" CDTextWidth="70" taborder="12" left="staCD_CFSELFACNT:5" top="staCD_CFSELFACNT:-25" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="true" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+              <!-- 출력일자 -->
+              <Static id="staDT_PRINT" taborder="13" text="출력일자" left="0" top="staCD_CFSELFACNT:-1" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE" onclick="divData_staDT_PRINT_onclick"/>
+              <Static id="staDT_PRINT_bg" taborder="14" left="staDT_PRINT:-1" top="staDT_PRINT:-30" width="280" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+              <Calendar id="ctclDT_PRINT" taborder="15" left="staDT_PRINT:5" top="staDT_PRINT:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <!-- 버튼 -->
+              <Div id="divBtns" left="120" top="staDT_PRINT:10" width="130" height="27" taborder="16">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnOK" taborder="1" text="확인" left="0" top="0" width="60" height="27" onclick="btnOK_onclick"/>
+                    <Button id="btnCANCLE" taborder="0" text="취소" left="btnOK:10" top="0" width="60" height="27" onclick="btnCANCLE_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form, e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+    this.fnSetCombo();
+	this.fnInit();
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	
+}
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.cboYN_GUBUN      = this.divData.form.cboYN_GUBUN;		// 신고구분
+	this.cboSUBMIT_GUBUN  = this.divData.form.cboSUBMIT_GUBUN;	// 제출구분
+	this.ctclYY_BASE      = this.divData.form.ctclYY_BASE;		// 귀속년도
+	this.ccfCD_CFSELFACNT = this.divData.form.ccfCD_CFSELFACNT;	// 세무단위
+	this.ctclDT_PRINT     = this.divData.form.ctclDT_PRINT;		// 출력일자
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_CFSELFACNT.BeforeUserDataSetParam  = "fnBeforeUserDataSetParam";		// 세무단위
+	this.ccfCD_CFSELFACNT.AfterCDTextChanged      = "fnAfterCDTextChanged";
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+}
+
+/************************************************************************
+ * 콤보 데이터 조회 및 설정
+ ************************************************************************/
+this.fnSetCombo = function() {
+	
+}
+
+/************************************************************************
+ * 화면 및 검색영역 초기화
+ ************************************************************************/
+this.fnInit = function() {
+	var frame = this.getOwnerFrame();
+	if (!this.gfnIsNull(frame.YN_GUBUN) && !this.gfnIsNull(frame.YY_BASE)) {
+		this.dsData.setColumn(0, "YN_GUBUN", frame.YN_GUBUN);	// 작업구분
+		this.dsData.setColumn(0, "YY_BASE", frame.YY_BASE);		// 정산년도
+	} else {
+		this.dsData.setColumn(0, "YY_BASE", this.gfnGetDate().substr(0, 4));		// 정산년도
+	}
+	
+	this.dsData.setColumn(0, "YN_GUBUN", "Y");					// 신고구분
+	this.dsData.setColumn(0, "SUBMIT_GUBUN", "Y");				// 제출구분
+	this.dsData.setColumn(0, "DT_PRINT", this.gfnGetDate());	// 출력일자
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+/*
+ *	조회 버튼
+ */
+this.fnSelect = function() {
+	
+}
+
+/*
+ * 추가 버튼
+ */
+this.fnAdd = function() {
+	
+}
+
+/*
+ * 삭제 버튼
+ */
+this.fnDel = function() {
+	
+} 
+
+/*
+ * 저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ * 엑셀 버튼
+ */
+this.fnExcel = function() {
+	
+}
+
+/*
+ * 출력 버튼
+ */
+this.fnPrint = function() {
+	return true
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+ 	var validate = true;
+	
+	// 지급년월
+	if (this.gfnIsNull(this.dsData.getColumn(0, "YY_BASE"))) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.ctclYY_BASE.form.TextBox.setFocus();
+		}
+		this.gfnAlert("귀속년도를 입력하세요.");
+		return validate;
+	}
+	
+	// 세무단위
+	if (this.gfnIsNull(this.dsData.getColumn(0, "CD_CFSELFACNT"))) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.ccfCD_CFSELFACNT.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("세무단위를 입력하세요.", "fnVaidateCallback");
+		return validate;
+	}
+	
+	// 제출일
+	if (this.gfnIsNull(this.dsData.getColumn(0, "DT_PRINT"))) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.ctclDT_PRINT.setFocus();
+		}
+		this.gfnAlert("제출일을 입력하세요.");
+		return false;
+	}
+	
+ 	return validate;
+}
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+// 확인 버튼
+this.btnOK_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	if (!this.fnSelectValidate()) return false;
+
+	this.dsReport = new Dataset();
+	this.dsReport.addColumn("YN_GUBUN", "string");
+	this.dsReport.addColumn("OUT_YM_IMPUTE", "string");
+	this.dsReport.addColumn("OUT_CD_SELFACNT", "string");
+	this.dsReport.addColumn("SUBMIT_GUBUN", "string");
+
+	var nrow = this.dsReport.addRow();
+	this.dsReport.setColumn(nrow, "YN_GUBUN"       , this.dsData.getColumn(0, "YN_GUBUN"));
+	this.dsReport.setColumn(nrow, "OUT_YM_IMPUTE"  , this.dsData.getColumn(0, "YY_BASE"));
+	this.dsReport.setColumn(nrow, "OUT_CD_SELFACNT", this.dsData.getColumn(0, "CD_CFSELFACNT"));
+	this.dsReport.setColumn(nrow, "SUBMIT_GUBUN"   , this.dsData.getColumn(0, "SUBMIT_GUBUN"));
+							
+	var inProc     = "_dsProc";
+	var inParam    = "";						// 필요없는 경우 생략
+	var inData     = "report=dsReport";
+	var reportpath = "/da/dau/DAU_GANTAXPRINT.ozr";
+	
+	gfnOpenReport(this, reportpath, inProc, inParam, inData);
+	
+	this.getParentContext().close(true);
+}
+
+// 취소 버튼
+this.btnCANCLE_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	this.getParentContext().close(false);
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ * 기본 콜백
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if (svcID == "execute") {
+		if (errorCode == 0) {
+			this.fnClose = function() {
+				this.getParentContext().close(true);
+			}
+			this.gfnAlert("급여소득자료 생성이 완료되었습니다.", "fnClose");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+ 	return true;
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGridBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+}
+
+this.fnGridAfterCDTextChanged = function(id, codeFindData) {
+	
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+]]></Script>
+    <Dataset id="dsList"/>
+    <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+      <ColumnInfo>
+        <Column id="DT_PROVATION_FROM" type="STRING" size="256"/>
+      </ColumnInfo>
+      <Rows>
+        <Row>
+          <Col id="DT_PROVATION_FROM"/>
+        </Row>
+      </Rows>
+    </Dataset>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">report</Col>
+            <Col id="SP">DAUPR_GANTAXPRINT_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="YN_GUBUN" type="STRING" size="256"/>
+          <Column id="SUBMIT_GUBUN" type="STRING" size="256"/>
+          <Column id="YY_BASE" type="STRING" size="256"/>
+          <Column id="CD_CFSELFACNT" type="STRING" size="256"/>
+          <Column id="DS_CFSELFACNT" type="STRING" size="256"/>
+          <Column id="DT_PRINT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="YN_GUBUN"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.cboYN_GUBUN" propid="value" datasetid="dsData" columnid="YN_GUBUN"/>
+      <BindItem id="item1" compid="divData.form.cboSUBMIT_GUBUN" propid="value" datasetid="dsData" columnid="SUBMIT_GUBUN"/>
+      <BindItem id="item2" compid="divData.form.ctclYY_BASE.form.TextBox" propid="value" datasetid="dsData" columnid="YY_BASE"/>
+      <BindItem id="item3" compid="divData.form.ccfCD_CFSELFACNT.form.CDTextBox" propid="value" datasetid="dsData" columnid="CD_CFSELFACNT"/>
+      <BindItem id="item4" compid="divData.form.ccfCD_CFSELFACNT.form.DSTextBox" propid="value" datasetid="dsData" columnid="DS_CFSELFACNT"/>
+      <BindItem id="item5" compid="divData.form.ctclDT_PRINT" propid="value" datasetid="dsData" columnid="DT_PRINT"/>
+    </Bind>
+  </Form>
+</FDL>

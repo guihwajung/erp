@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1200" height="700" maxwidth="1200" maxheight="700" titletext="New Form" onload="form_onload" onclick="form_onclick">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove" text="">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="3" left="0" top="divDataMaster:10" height="140" right="0"/>
+              <Static id="sta00" taborder="4" text="변경상세내역" left="0" top="objGrid:10" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+              <Grid id="objGrid1" taborder="5" left="0" top="sta00:5" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	//this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+
+	//this.fnSelect();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.dxGrid = this.divData.form.objGrid;
+	this.dxGrid1 = this.divData.form.objGrid1;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	//결재본문 그리드 세팅
+	this.gfnGridInit(this.dxGrid, this.dsList, "DW", "DWA_RISK_APP");
+	this.gfnGridInit(this.dxGrid1, this.dsList1, "DW", "DWA_RISKDTLS_APP");
+	
+	//가로 스크롤이 생기지 않게 세팅
+	this.dxGrid.set_scrollbartype("none default");
+	this.dxGrid1.set_scrollbartype("none default");
+	
+	//헤더색상 변경
+	this.dxGrid.set_enableredraw(false);
+	for(var i = 0; i < this.dxGrid.getCellCount("head"); i++) {
+		this.dxGrid.setCellProperty("head",i,"background","#7DA2A9");
+		//this.dxGrid.setCellProperty("head",i,"color","#7DA2A9");
+	}
+	this.dxGrid.set_enableredraw(true);
+
+	this.dxGrid1.set_enableredraw(false);
+	for(var i = 0; i < this.dxGrid1.getCellCount("head"); i++) {
+		this.dxGrid1.setCellProperty("head",i,"background","#7DA2A9");
+		//this.dxGrid1.setCellProperty("head",i,"color","#7DA2A9");
+	}
+	this.dxGrid1.set_enableredraw(true);
+
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("TY_WRK", "string");
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("NO_RISK", "string");
+	this.dsSelect.addColumn("CD_SRCH", "string");
+	
+	this.dsSelect1 = new Dataset();
+	this.dsSelect1.addColumn("TY_WRK", "string");
+	this.dsSelect1.addColumn("CD_SITE", "string");
+	this.dsSelect1.addColumn("NO_RISK", "string");
+	this.dsSelect1.addColumn("NO_HADOCONT", "string");
+	this.dsSelect1.addColumn("NO_SEQCONT", "string");
+}
+
+
+/************************************************************************
+ * 버튼 이벤트
+ ************************************************************************/
+//결재본분 조회
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "TY_WRK", "Q");
+	this.dsSelect.setColumn(0, "CD_SITE", this.objApp.getActiveForm().divWork.form.dsListMaster.getColumn(0, "V_PARAM01"));
+	this.dsSelect.setColumn(0, "NO_RISK", this.objApp.getActiveForm().divWork.form.dsListMaster.getColumn(0, "V_PARAM02"));
+	this.dsSelect.setColumn(0, "CD_SRCH", "");
+
+	this.dsSelect1.clearData();
+	this.dsSelect1.addRow();
+	this.dsSelect1.setColumn(0, "TY_WRK", "Q");
+	this.dsSelect1.setColumn(0, "CD_SITE", this.objApp.getActiveForm().divWork.form.dsListMaster.getColumn(0, "V_PARAM01"));
+	this.dsSelect1.setColumn(0, "NO_RISK", this.objApp.getActiveForm().divWork.form.dsListMaster.getColumn(0, "V_PARAM02"));
+	this.dsSelect1.setColumn(0, "NO_HADOCONT", "");
+	this.dsSelect1.setColumn(0, "NO_SEQCONT", "");
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+ 	var inData      = "select=dsSelect select1=dsSelect1";
+ 	var outData     = "dsList=select0 dsList1=select10";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {	
+	var validate = true;
+	
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if (svcID == "select") {
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DWAPR_RISK_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select1</Col>
+            <Col id="SP">DWAPR_RISKDTLS_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="ID_AP" type="STRING" size="256"/>
+          <Column id="ID_AP_TYPE" type="STRING" size="256"/>
+          <Column id="V1" type="STRING" size="256"/>
+          <Column id="V2" type="STRING" size="256"/>
+          <Column id="V3" type="STRING" size="256"/>
+          <Column id="V4" type="STRING" size="256"/>
+          <Column id="DS_ETITLE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="ID_AP"/>
+            <Col id="ID_AP_TYPE"/>
+            <Col id="V1"/>
+            <Col id="V2"/>
+            <Col id="V3"/>
+            <Col id="V4"/>
+            <Col id="DS_ETITLE"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList"/>
+      <Dataset id="dsList1"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.divDataMaster.form.sta02" propid="text" datasetid="dsListMaster" columnid="DS_HNAME"/>
+      <BindItem id="item1" compid="divData.form.divDataMaster.form.sta03" propid="text" datasetid="dsListMaster" columnid="DS_DEPT"/>
+      <BindItem id="item2" compid="divData.form.divDataMaster.form.sta05" propid="text" datasetid="dsListMaster" columnid="DT_START"/>
+      <BindItem id="item3" compid="divData.form.divDataMaster.form.sta07" propid="text" datasetid="dsListMaster" columnid="DS_ETITLE"/>
+      <BindItem id="item4" compid="divData.form.divDataMaster.form.sta09" propid="text" datasetid="dsListMaster" columnid="NO_DOC"/>
+      <BindItem id="item5" compid="divData.form.divDataApprTitle.form.staApprNm" propid="text" datasetid="dsListMaster" columnid="DS_TITLE"/>
+    </Bind>
+  </Form>
+</FDL>

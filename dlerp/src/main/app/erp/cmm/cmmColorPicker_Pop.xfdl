@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="cmmColorPicker_Pop" width="245" height="240" onload="cmmColorPicker_Pop_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staBG" taborder="0" left="0" top="0" bottom="0" right="0" background="#ffffff" text="" border="1px solid darkgray"/>
+        <Div id="divColor" taborder="0" left="5" top="5" height="200" width="235">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Edit id="txtColor" taborder="1" left="5" top="divColor:5" autoselect="true" width="100" height="25" maxlength="6" onchanged="txtColor_onchanged" type="string" textAlign="left"/>
+        <Div id="divBack" taborder="2" left="txtColor:2" top="divColor:5" width="25" height="25" border="1px solid darkgray"/>
+        <Button id="btnCancel" taborder="4" text="취소" left="190" top="210" height="25" width="50" onclick="btnCancel_onclick"/>
+        <Button id="btnOK" taborder="3" text="확인" top="210" height="25" right="btnCancel:3" width="50" onclick="btnOK_onclick" cssclass="btn_WF_action"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.cmmColorPicker_Pop_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var txtColor = this.txtColor;
+	var divBack = this.divBack;
+	var divColor = this.divColor._unique_id;
+	var el = document.getElementById(divColor);
+	el.innerHTML = "";
+	var divPicker = document.createElement("div");
+	divPicker.setAttribute("id", "picker");
+	divPicker.style.width = "200px";
+	divPicker.style.height = "200px";
+	divPicker.style.cursor = "crosshair";
+	var divSlide = document.createElement("div");
+	divSlide.setAttribute("id", "slide");
+	divSlide.style.width = "30px";
+	divSlide.style.height = "200px";
+	divSlide.style.left = "205px";
+	divSlide.style.cursor = "crosshair";
+	el.appendChild(divPicker);
+	el.appendChild(divSlide);
+	
+	this._cpObj = ColorPicker(
+		document.getElementById('slide'),
+		document.getElementById('picker'),
+		function(hex, hsv, rgb) {
+			txtColor.set_value(hex.replace('#','').toUpperCase());
+			divBack.set_background(hex);
+		}
+	);
+	
+	this.fnInit();
+};
+
+/**
+* @description 달력초기화
+*/
+this.fnInit = function()
+{
+	if(new String(this.parent.initvalueid).valueOf() != "undefined") {
+		this._cpObj.setHex(this.parent.initvalueid);
+	} else {
+		this._cpObj.setHex('#ff0000');	
+	}
+};
+
+this.txtColor_onchanged = function(obj:nexacro.MaskEdit,e:nexacro.ChangeEventInfo)
+{
+	if(e.prevalue != e.postvalue) {
+		var color = this.gfnTrim(e.postvalue).toUpperCase();
+		
+		var hex = "#"+color;
+		if(/^#[0-9A-F]{6}$/i.test(hex)) {
+			this.divBack.set_background(hex);
+			this._cpObj.setHex(hex);
+		} else {
+			color = "";
+			this.divBack.set_background("transparent");
+		}
+		this.txtColor.set_value(color);
+	}
+};
+
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.parent.closePopup(this.txtColor.value.toUpperCase());
+};
+
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.parent.closePopup();
+};
+]]></Script>
+  </Form>
+</FDL>

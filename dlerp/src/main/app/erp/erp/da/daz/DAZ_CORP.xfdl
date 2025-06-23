@@ -1,0 +1,1229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="인사법인정보등록" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staYN_DELETE" taborder="0" text="사용여부" left="0.0" top="10.0" width="92.0" height="24.0" rtl="false" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboYN_DELETE_COND" taborder="1" left="staYN_DELETE:0.0" top="10.0" width="80" height="24.0" innerdataset="dsYN_DELETE" datacolumn="VALUE" codecolumn="CODE" index="1" value="N" onitemchanged="fnSearchInit"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Div id="divDataLeft" taborder="0" left="0" top="0" bottom="0" width="300">
+                <Layouts>
+                  <Layout>
+                    <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataRight" taborder="0" left="divDataLeft:10" top="0" bottom="0" text="" right="0">
+                <Layouts>
+                  <Layout>
+                    <!-- 법인코드/구분 -->
+                    <Static id="staCD_CORP" taborder="0" text="법인코드 / 구분" left="0" top="0" width="130" height="30" cssclass="sta_WF_tablelabelE" onclick="divData_divDataRight_staCD_CORP_onclick"/>
+                    <Static id="staCD_CORP_bg" taborder="1" left="staCD_CORP:-1" top="0" width="254" height="30" cssclass="sta_WF_tablebg" onclick="divData_divDataRight_staCD_CORP_bg_onclick"/>
+                    <Div id="cfCD_CORP" CodeFindName="DAX_CFCORPNEW" CDTextWidth="25" taborder="2" left="staCD_CORP:5" top="staCD_CORP:-25" width="150" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+                    <Static id="staCD_CORP_slash" taborder="3" text="/" left="cfCD_CORP:5" top="staCD_CORP:-30" width="20" height="28" visible="true"/>
+                    <Edit id="edtCD_GUBUN" taborder="4" left="staCD_CORP_slash:-9" top="staCD_CORP:-25" width="74" height="20" maxlength="3"/>
+                    <!-- 영문명 -->
+                    <Static id="staDS_CORP_ENG" taborder="5" text="영문명" left="0" top="staCD_CORP:-1" width="130" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staDS_CORP_ENG_bg" taborder="6" left="staDS_CORP_ENG:-1" top="staDS_CORP_ENG:-30" width="254" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="edtDS_CORP_ENG" taborder="7" left="staDS_CORP_ENG:5" top="staDS_CORP_ENG:-25" width="240" height="20" maxlength="20"/>
+                    <!-- 사업자번호 -->
+                    <Static id="staNO_BUSINESS" taborder="8" text="사업자번호" left="0" top="staDS_CORP_ENG:-1" width="130" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staNO_BUSINESS_bg" taborder="9" left="staNO_BUSINESS:-1" top="staNO_BUSINESS:-30" width="254" height="30" cssclass="sta_WF_tablebg" onclick="divData_divDataRight_staNO_BUSINESS_bg_onclick"/>
+                    <Edit id="edtNO_BUSINESS" taborder="10" left="staNO_BUSINESS:5" top="staNO_BUSINESS:-25" width="240" height="20" maxlength="20"/>
+                    <!-- 법인번호 -->
+                    <Static id="staNO_CORP" taborder="11" text="법인번호" left="0" top="staNO_BUSINESS:-1" width="130" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staNO_CORP_bg" taborder="12" left="staNO_CORP:-1" top="staNO_CORP:-30" width="254" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="edtNO_CORP" taborder="13" left="staNO_CORP:5" top="staNO_CORP:-25" width="240" height="20" maxlength="13"/>
+                    <!-- 전화번호 -->
+                    <Static id="staNO_TEL" taborder="14" text="전화번호" left="0" top="staNO_CORP:-1" width="130" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Static id="staNO_TEL_bg" taborder="15" left="staNO_TEL:-1" top="staNO_TEL:-30" width="254" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="edtNO_TEL" taborder="16" left="staNO_TEL:5" top="staNO_TEL:-25" width="240" height="20" maxlength="20"/>
+                    <!-- 대표자 -->
+                    <Static id="staDS_CHIEFNAME" taborder="17" text="대표자" left="0" top="staNO_TEL:-1" width="130" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staDS_CHIEFNAME_bg" taborder="18" left="staDS_CHIEFNAME:-1" top="staDS_CHIEFNAME:-30" width="254" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="edtDS_CHIEFNAME" taborder="19" left="staDS_CHIEFNAME:5" top="staDS_CHIEFNAME:-25" width="240" height="20" maxlength="20"/>
+                    <!-- 대표자(영문) -->
+                    <Static id="staDS_CHIEFNAME_ENG" taborder="17" text="대표자(영문)" left="0" top="staDS_CHIEFNAME:-1" width="130" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staDS_CHIEFNAME_ENG_bg" taborder="18" left="staDS_CHIEFNAME_ENG:-1" top="staDS_CHIEFNAME_ENG:-30" width="254" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="edtDS_CHIEFNAME_ENG" taborder="19" left="staDS_CHIEFNAME_ENG:5" top="staDS_CHIEFNAME_ENG:-25" width="240" height="20" maxlength="20"/>
+                    <!-- 대표자주민번호 -->
+                    <Static id="staNO_CHIEFID" taborder="20" text="대표자주민번호" left="0" top="staDS_CHIEFNAME_ENG:-1" width="130" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staNO_CHIEFID_bg" taborder="21" left="staNO_CHIEFID:-1" top="staNO_CHIEFID:-30" width="254" height="30" cssclass="sta_WF_tablebg" onclick="divData_divDataRight_staNO_CHIEFID_bg_onclick"/>
+                    <Edit id="edtNO_CHIEFID" taborder="22" left="staNO_CHIEFID:5" top="staNO_CHIEFID:-25" width="240" height="20" maxlength="13"/>
+                    <!-- 사업지세무소 -->
+                    <Static id="staCD_TAXOFFICE" taborder="23" text="사업지세무소" left="0" top="staNO_CHIEFID:-1" width="130" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staCD_TAXOFFICE_bg" taborder="24" left="staCD_TAXOFFICE:-1" top="staCD_TAXOFFICE:-30" width="254" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="edtCD_TAXOFFICE" taborder="25" left="staCD_TAXOFFICE:5" top="edtNO_CHIEFID:9" width="240" height="20" maxlength="3"/>
+                    <!-- 건설업종 -->
+                    <Static id="staDS_TAXOFFICE" taborder="26" text="건설업종" left="0" top="staCD_TAXOFFICE:-1" width="130" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staDS_TAXOFFICE_bg" taborder="27" left="staDS_TAXOFFICE:-1" top="staDS_TAXOFFICE:-30" width="254" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="edtDS_TAXOFFICE" taborder="28" left="staDS_TAXOFFICE:5" top="staDS_TAXOFFICE:-25" width="240" height="20" maxlength="50"/>
+                    <!-- 면접번호/등록번호 -->
+                    <Static id="staDS_LICENSE" taborder="29" text="면접번호/등록번호" left="0" top="staDS_TAXOFFICE:-1" width="130" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staDS_LICENSE_bg" taborder="30" left="staDS_LICENSE:-1" top="staDS_LICENSE:-30" width="254" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="edtDS_LICENSE" taborder="31" left="staDS_LICENSE:5" top="staDS_LICENSE:-25" width="240" height="20" maxlength="50"/>
+                    <!-- 은행코드 -->
+                    <Static id="staCD_BANK" taborder="32" text="은행코드" left="0" top="staDS_LICENSE:-1" width="130" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staCD_BANK_bg" taborder="33" left="staCD_BANK:-1" top="staCD_BANK:-30" width="254" height="30" cssclass="sta_WF_tablebg"/>
+                    <Div id="cfCD_BANK" CodeFindName="DSX_CFBANK_CODE" CDTextWidth="40" taborder="34" left="staCD_BANK:5" top="staCD_BANK:-25" width="240" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                    <!-- 예금주 -->
+                    <Static id="staNM_OWNER" taborder="35" text="예금주" left="0" top="staCD_BANK:-1" width="130" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staNM_OWNER_bg" taborder="36" left="staNM_OWNER:-1" top="staNM_OWNER:-30" width="254" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="edtNM_OWNER" taborder="37" left="staNM_OWNER:5" top="staNM_OWNER:-25" width="240" height="20" maxlength="20"/>
+                    <!-- 계좌번호 -->
+                    <Static id="staNO_ACCOUNT" taborder="38" text="계좌번호" left="0" top="staNM_OWNER:-1" width="130" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staNO_ACCOUNT_bg" taborder="39" left="staNO_ACCOUNT:-1" top="staNO_ACCOUNT:-30" width="254" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="edtNO_ACCOUNT" taborder="40" left="staNO_ACCOUNT:5" top="staNO_ACCOUNT:-25" width="240" height="20" maxlength="20"/>
+                    <!-- 주소 -->
+                    <Static id="staDS_ADDR" taborder="41" text="주소" left="0" top="staNO_ACCOUNT:-1" width="130" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staDS_ADDR_bg" taborder="42" left="staDS_ADDR:-1" top="staDS_ADDR:-30" width="582" height="30" cssclass="sta_WF_tablebg"/>
+                    <Div id="cfCD_ADDR" CodeFindName="DZX_CFZIP_STREET" CDTextWidth="70" taborder="43" left="staDS_ADDR:5" top="staDS_ADDR:-25" width="570" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+                    <!-- 주소(영문) -->
+                    <Static id="staDS_CADDR" taborder="44" text="영문주소" left="0" top="staDS_ADDR:-1" width="130" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staDS_CADDR_bg" taborder="45" left="staDS_CADDR:-1" top="staDS_CADDR:-30" width="582" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Edit id="edtNO_ZIP_ENG" taborder="77" left="staDS_CADDR:5" top="staDS_CADDR:-25" width="70" height="20" inputtype="digit,number" maxlength="5"/>
+                    <Edit id="edtDS_ADDR_ENG" taborder="78" left="edtNO_ZIP_ENG:5" top="staDS_CADDR:-25" width="495" height="20"/>
+                    <!-- 사용여부/출력순서 -->
+                    <Static id="staYN_DELETE" taborder="46" text="사용여부/출력순서" left="0" top="staDS_CADDR:-1" width="130" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staYN_DELETE_bg" taborder="47" left="staYN_DELETE:-1" top="staDS_CADDR_bg:-1" width="254" height="30" cssclass="sta_WF_tablebg"/>
+                    <Combo id="cboYN_DELETE" taborder="48" left="staYN_DELETE:5" top="staYN_DELETE:-25" width="80" height="20" innerdataset="dsYN_DELETE" datacolumn="VALUE" codecolumn="CODE" index="1" value="N" text="사용" onitemchanged="divData_divDataRight_cboYN_DELETE_onitemchanged"/>
+                    <Static id="staYN_DELETE_slash" taborder="49" text="/" left="cboYN_DELETE:10" top="staYN_DELETE:-30" width="20" height="28" visible="true"/>
+                    <Edit id="edtSN_PRINT" taborder="50" left="staYN_DELETE_slash:0" top="staYN_DELETE:-25" width="62" height="20" maxlength="3" textAlign="right"/>
+                    <!-- 인감등록 -->
+                    <!--  -->
+                    <!--  -->
+                    <Static id="sta30" taborder="51" text="인감등록" left="397" top="0" width="314" height="22" cssclass="sta_TITLE_Bg" right="90"/>
+                    <Static id="sta31" taborder="52" text="인감1" top="sta30:5" width="80" height="23" cssclass="sta_WF_tablelabel" textAlign="center" left="398"/>
+                    <Static id="sta32" taborder="53" text="인감2" left="sta31:25" top="sta30:5" width="80" height="23" cssclass="sta_WF_tablelabel" textAlign="center"/>
+                    <Static id="sta33" taborder="54" text="인감3" left="sta32:25" top="sta30:5" width="80" height="23" cssclass="sta_WF_tablelabel" textAlign="center"/>
+                    <Button id="btnSTAMP_IMG" taborder="55" text="등록" left="398" top="sta31:2" width="39" height="28" onclick="divData_divDataRight_btnSTAMP_IMG_onclick" textAlign="center"/>
+                    <Button id="btnSTAMP_DEL_IMG" taborder="71" text="삭제" left="btnSTAMP_IMG:2" top="sta31:2" width="39" height="28" onclick="divData_divDataRight_btnSTAMP_DEL_IMG_onclick" textAlign="center"/>
+                    <Button id="btnSTAMP_IMG2" taborder="56" text="등록" left="btnSTAMP_DEL_IMG:25" top="sta32:2" width="39" height="28" onclick="divData_divDataRight_btnSTAMP_IMG1_onclick" textAlign="center"/>
+                    <Button id="btnSTAMP_DEL_IMG2" taborder="72" text="삭제" left="btnSTAMP_IMG2:2" top="sta32:2" width="39" height="28" onclick="divData_divDataRight_btnSTAMP_DEL_IMG2_onclick" textAlign="center"/>
+                    <Button id="btnSTAMP_IMG3" taborder="57" text="등록" left="btnSTAMP_DEL_IMG2:25" top="sta33:2" width="39" height="28" onclick="divData_divDataRight_btnSTAMP_IMG2_onclick" textAlign="center"/>
+                    <ImageViewer id="imgSTAMP_IMG" taborder="58" top="btnSTAMP_IMG:3" stretch="fixaspectratio" width="80" height="72" left="398"/>
+                    <ImageViewer id="imgSTAMP_IMG2" taborder="59" left="imgSTAMP_IMG:25" top="btnSTAMP_IMG2:3" stretch="fixaspectratio" width="80" height="72"/>
+                    <ImageViewer id="imgSTAMP_IMG3" taborder="60" left="imgSTAMP_IMG2:25" top="btnSTAMP_IMG3:3" stretch="fixaspectratio" width="80" height="72"/>
+                    <Static id="sta40" taborder="61" text="회사 이미지등록" left="397" top="sta30:145" width="314" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Static id="sta41" taborder="62" text="출장계획서" left="398" top="194" width="80" height="23" cssclass="sta_WF_tablelabel" textAlign="center"/>
+                    <Static id="sta42" taborder="63" text="출장보고서" left="sta41:25" top="194" width="80" height="23" cssclass="sta_WF_tablelabel" textAlign="center"/>
+                    <Static id="sta43" taborder="64" text="경조사비" left="sta42:25" top="194" width="80" height="23" cssclass="sta_WF_tablelabel" textAlign="center"/>
+                    <Button id="btnLOGO1_IMG" taborder="65" text="등록" left="398" top="sta41:2" width="39" height="28" onclick="divData_divDataRight_btnLOGO1_IMG_onclick" textAlign="center"/>
+                    <Button id="btnLOGO1_DEL_IMG" taborder="74" text="삭제" left="btnLOGO1_IMG:2" top="sta41:2" width="39" height="28" onclick="divData_divDataRight_btnLOGO_DEL_IMG_onclick" textAlign="center"/>
+                    <Button id="btnLOGO2_IMG" taborder="66" text="등록" left="btnLOGO1_DEL_IMG:25" top="sta42:2" width="39" height="28" onclick="divData_divDataRight_btnLOGO2_IMG_onclick" textAlign="center"/>
+                    <Button id="btnLOGO2_DEL_IMG" taborder="75" text="삭제" left="btnLOGO2_IMG:2" top="sta42:2" width="39" height="28" onclick="divData_divDataRight_btnLOGO2_DEL_IMG_onclick" textAlign="center"/>
+                    <Button id="btnLOGO3_IMG" taborder="67" text="등록" left="btnLOGO2_DEL_IMG:25" top="sta43:2" width="39" height="28" onclick="divData_divDataRight_btnLOGO3_IMG_onclick" textAlign="center"/>
+                    <ImageViewer id="imgLOGO1_IMG" taborder="68" left="398" top="btnLOGO1_IMG:3" stretch="fixaspectratio" width="80" height="72"/>
+                    <ImageViewer id="imgLOGO2_IMG" taborder="69" left="imgLOGO1_IMG:25" top="btnLOGO2_IMG:3" stretch="fixaspectratio" width="80" height="72"/>
+                    <ImageViewer id="imgLOGO3_IMG" taborder="70" left="imgLOGO2_IMG:25" top="btnLOGO3_IMG:3" stretch="fixaspectratio" width="80" height="72"/>
+                    <Button id="btnSTAMP_DEL_IMG3" taborder="73" text="삭제" left="btnSTAMP_IMG3:2" top="sta33:2" width="39" height="28" onclick="divData_divDataRight_btnSTAMP_DEL_IMG3_onclick" textAlign="center"/>
+                    <Button id="btnLOGO3_DEL_IMG" taborder="76" text="삭제" left="btnLOGO3_IMG:2" top="sta43:2" width="39" height="28" onclick="divData_divDataRight_btnLOGO3_DEL_IMG_onclick" textAlign="center"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.filepath = "/DA/CORP/";
+this.fileuploads = {};
+this.filecnt = 1;
+this.filecnt2 = 1;
+this.filecnt3 = 1;
+this.filecnt4 = 1;
+this.filecnt5 = 1;
+this.filecnt6 = 1;
+
+this.fileid6 = "";
+
+this.fileup = new FileUpload();
+this.no = 0;
+
+this.form_onload = function(obj: nexacro.Form, e: nexacro.LoadEventInfo) {
+    // -- 필수 -------------------//
+    this.gfnFormOnLoad(this);
+    this.gfnFormInfo(this);
+    // ---------------------------//
+
+    this.fnSetButton();
+    this.fnSetExtendButton();
+    this.fnSetVariable();
+    this.fnSetEvent();
+    this.fnSetParameter();
+	
+	var context = "/";
+	if (nexacro.getEnvironmentVariable("evContextPath") != undefined) {
+		context = nexacro.getEnvironmentVariable("evContextPath");
+	}
+
+    // 파일설정
+    this.fileConfig = this.gfnGetFileConfig();
+    this.fileConfig.allowTypes = ["jpg", "jpeg", "gif", "PNG"]; // 넥사브라우저 전용, 웹은 적용불가
+    this.fileConfig.uploadUrl = context + "file/saveEmpImg.do"; 			// 법인 이미지 따로 저장
+	
+	//default
+	this.fnSet_button(false);
+
+    this.cfCD_CORP.set_enable(false);
+    this.cfCD_BANK.set_enable(false);
+    this.cfCD_ADDR.set_enable(false);
+
+    this.divData.form.divDataRight.form.edtNO_BUSINESS.set_inputtype("number");
+    this.divData.form.divDataRight.form.edtNO_CORP.set_inputtype("number");
+    this.divData.form.divDataRight.form.edtNO_TEL.set_inputtype("number");
+    this.divData.form.divDataRight.form.edtNO_CHIEFID.set_inputtype("number");
+    this.divData.form.divDataRight.form.edtDS_LICENSE.set_inputtype("number");
+    this.divData.form.divDataRight.form.edtNO_ACCOUNT.set_inputtype("number");
+	
+    this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+    this.cfCD_CORP = this.divData.form.divDataRight.form.cfCD_CORP;
+    this.cfCD_BANK = this.divData.form.divDataRight.form.cfCD_BANK;
+    this.cfCD_ADDR = this.divData.form.divDataRight.form.cfCD_ADDR;
+	
+
+    this.cboYN_DELETE_COND = this.divSearch.form.cboYN_DELETE_COND;
+    this.dxGrid = this.divData.form.divDataLeft.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+    this.cfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+    this.cfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+    this.cfCD_BANK.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+    this.cfCD_BANK.AfterCDTextChanged = "fnAfterCDTextChanged";
+    this.cfCD_ADDR.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+    this.cfCD_ADDR.AfterCDTextChanged = "fnAfterCDTextChanged";	
+	
+    // 그리드 초기화
+    this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAZ_CORP_NEW");
+
+    this.dxGrid.set_selecttype("row");
+    this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+
+    // 그리드 코드파인드 설정
+    this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+    this.dsSelect = new Dataset();
+    this.dsSelect.addColumn("YN_DELETE", "string");
+
+    this.dsSelect2 = new Dataset();
+    this.dsSelect2.addColumn("CD_CORP", "string");
+
+    this.dsSave = new Dataset();
+	this.dsSave.addColumn("TY_SAVE", "string");
+	this.dsSave.addColumn("CD_GUBUN", "string");
+	this.dsSave.addColumn("CD_CORP", "string");
+	this.dsSave.addColumn("DS_CORP", "string");
+	this.dsSave.addColumn("NO_CORP", "string");
+	this.dsSave.addColumn("NO_ZIP", "string");
+	this.dsSave.addColumn("DS_ADDR", "string");
+	this.dsSave.addColumn("NO_TEL", "string");
+	this.dsSave.addColumn("DS_CHIEFNAME", "string");
+	this.dsSave.addColumn("DS_CHIEFNAME_ENG", "string");
+	this.dsSave.addColumn("NO_CHIEFID", "string");
+	this.dsSave.addColumn("CD_TAXOFFICE", "string");
+	this.dsSave.addColumn("DS_TAXOFFICE", "string");
+	this.dsSave.addColumn("NO_BUSINESS", "string");
+	this.dsSave.addColumn("DS_CONSTTYPE", "string");
+	this.dsSave.addColumn("DS_LICENSE", "string");
+	this.dsSave.addColumn("CD_BANK", "string");
+	this.dsSave.addColumn("NO_ACCOUNT", "string");
+	this.dsSave.addColumn("NM_OWNER", "string");
+	this.dsSave.addColumn("STAMP_IMG", "string");
+	this.dsSave.addColumn("STAMP_IMG2", "string");
+	this.dsSave.addColumn("STAMP_IMG3", "string");
+	this.dsSave.addColumn("LOGO1_IMG", "string");
+	this.dsSave.addColumn("LOGO2_IMG", "string");
+	this.dsSave.addColumn("LOGO3_IMG", "string");
+	this.dsSave.addColumn("DS_CADDR", "string");
+	this.dsSave.addColumn("ID_INSERT", "string");
+	this.dsSave.addColumn("DS_CORP_ENG", "string");
+	this.dsSave.addColumn("SN_PRINT", "int");
+	this.dsSave.addColumn("YN_DELETE", "string");
+	this.dsSave.addColumn("DS_ADDR_ENG", "string");
+	this.dsSave.addColumn("NO_ZIP_ENG", "string");
+
+    this.dsUpdateFile = new Dataset();
+    this.dsUpdateFile.addColumn("CD_CORP", "string");
+    this.dsUpdateFile.addColumn("STAMP_IMG", "string");
+    this.dsUpdateFile.addColumn("ID_UPDATE", "string");
+
+    this.dsImage = new Dataset();
+    this.dsImage.addColumn("TY_SAVE", "string");
+    this.dsImage.addColumn("CD_CORP", "string");
+    this.dsImage.addColumn("TY_GUBUN", "string"); //(1: 인감1, 2: 인감2, 3: 인감3, 4: 회사로고1, 5: 회사로고2, 6: 회사로고3)
+    this.dsImage.addColumn("DS_IMAGE", "string");
+    this.dsImage.addColumn("ID_UPDATE", "string");
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+/*
+ *	조회 버튼
+ */
+this.fnSelect = function() {
+    //if (!this.fnSelectValidate()) return false;
+
+    this.gfnGridBeforeSelect(this.dxGrid);
+
+    this.dsSelect.clearData();
+    this.dsSelect.addRow();
+    this.dsSelect.setColumn(0, "YN_DELETE", this.cboYN_DELETE_COND.value);
+
+    var strSvcId 	= "select";
+    var strSvcType 	= "grid";
+    var inProc 		= "_dsProc";
+    var inData 		= "select=dsSelect";
+    var outData 	= "dsList=select0";
+    var strArg 		= "";
+    var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+    //this.fnSelect2();
+}
+
+this.fnSelect2 = function() {
+    if (this.dxGrid.rowcount == 0 || this.dxGrid.currentrow < 0) return false;
+
+    this.dsSelect2.clearData();
+    this.dsSelect2.addRow();
+    this.dsSelect2.setColumn(0, "CD_CORP", this.dsList.getColumn(this.dsList.rowposition, "CD_CORP"));
+
+    var strSvcId 	= "detail";
+    var strSvcType 	= "grid";
+    var inProc 		= "_dsProc";
+    var inData 		= "d_select=dsSelect2";
+    var outData 	= "dsDetail=d_select0";
+    var strArg 		= "";
+    var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+    var nRow = this.gfnGridAdd(this.dxGrid);
+    this.gfnSetFormStatus(this, "I");
+    this.dsDetail.clearData();
+    this.dsDetail.addRow();
+
+    this.cfCD_CORP.set_enable(true);
+	
+	this.divData.form.divDataRight.form.imgSTAMP_IMG.set_image(null);
+	this.divData.form.divDataRight.form.imgSTAMP_IMG2.set_image(null);
+	this.divData.form.divDataRight.form.imgSTAMP_IMG3.set_image(null);
+	
+	this.divData.form.divDataRight.form.imgLOGO1_IMG.set_image(null);
+	this.divData.form.divDataRight.form.imgLOGO2_IMG.set_image(null);
+	this.divData.form.divDataRight.form.imgLOGO3_IMG.set_image(null);
+
+    this.fnSet_button(false);
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+    this.gfnGridDel(this.dxGrid);
+    this.gfnSetFormStatus(this, "D");
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+    this.dsSave.clearData();
+
+    var flag = this.gfnGetFormStatus(this);
+    switch (flag) {
+        case "I":
+        case "U":
+        case "D":
+            if (!this.fnDataValidate()) return;
+            var nrow = this.dsSave.addRow();
+			this.dsSave.setColumn(nrow, "TY_SAVE", flag);
+			this.dsSave.setColumn(nrow, "CD_GUBUN", this.dsDetail.getColumn(0, "CD_GUBUN"));
+			this.dsSave.setColumn(nrow, "CD_CORP", this.dsDetail.getColumn(0, "CD_CORP"));
+			this.dsSave.setColumn(nrow, "DS_CORP", this.dsDetail.getColumn(0, "DS_CORP"));
+			this.dsSave.setColumn(nrow, "NO_CORP", this.dsDetail.getColumn(0, "NO_CORP"));
+			this.dsSave.setColumn(nrow, "NO_ZIP", this.dsDetail.getColumn(0, "NO_ZIP"));
+			this.dsSave.setColumn(nrow, "DS_ADDR", this.dsDetail.getColumn(0, "DS_ADDR"));
+			this.dsSave.setColumn(nrow, "NO_TEL", this.dsDetail.getColumn(0, "NO_TEL"));
+			this.dsSave.setColumn(nrow, "DS_CHIEFNAME", this.dsDetail.getColumn(0, "DS_CHIEFNAME"));
+			this.dsSave.setColumn(nrow, "DS_CHIEFNAME_ENG", this.dsDetail.getColumn(0, "DS_CHIEFNAME_ENG"));
+			this.dsSave.setColumn(nrow, "NO_CHIEFID", this.dsDetail.getColumn(0, "NO_CHIEFID"));
+			this.dsSave.setColumn(nrow, "CD_TAXOFFICE", this.dsDetail.getColumn(0, "CD_TAXOFFICE"));
+			this.dsSave.setColumn(nrow, "DS_TAXOFFICE", this.dsDetail.getColumn(0, "DS_TAXOFFICE"));
+			this.dsSave.setColumn(nrow, "NO_BUSINESS", this.dsDetail.getColumn(0, "NO_BUSINESS"));
+			this.dsSave.setColumn(nrow, "DS_CONSTTYPE", this.dsDetail.getColumn(0, "DS_CONSTTYPE"));
+			this.dsSave.setColumn(nrow, "DS_LICENSE", this.dsDetail.getColumn(0, "DS_LICENSE"));
+			this.dsSave.setColumn(nrow, "CD_BANK", this.dsDetail.getColumn(0, "CD_BANK"));
+			this.dsSave.setColumn(nrow, "NO_ACCOUNT", this.dsDetail.getColumn(0, "NO_ACCOUNT"));
+			this.dsSave.setColumn(nrow, "NM_OWNER", this.dsDetail.getColumn(0, "NM_OWNER"));
+			this.dsSave.setColumn(nrow, "STAMP_IMG", this.dsDetail.getColumn(0, "STAMP_IMG"));
+			this.dsSave.setColumn(nrow, "STAMP_IMG2", this.dsDetail.getColumn(0, "STAMP_IMG2"));
+			this.dsSave.setColumn(nrow, "STAMP_IMG3", this.dsDetail.getColumn(0, "STAMP_IMG3"));
+			this.dsSave.setColumn(nrow, "LOGO1_IMG", this.dsDetail.getColumn(0, "LOGO1_IMG"));
+			this.dsSave.setColumn(nrow, "LOGO2_IMG", this.dsDetail.getColumn(0, "LOGO2_IMG"));
+			this.dsSave.setColumn(nrow, "LOGO3_IMG", this.dsDetail.getColumn(0, "LOGO3_IMG"));
+			this.dsSave.setColumn(nrow, "DS_CADDR", this.dsDetail.getColumn(0, "DS_CADDR"));
+			this.dsSave.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+			this.dsSave.setColumn(nrow, "DS_CORP_ENG", this.dsDetail.getColumn(0, "DS_CORP_ENG"));
+			this.dsSave.setColumn(nrow, "SN_PRINT", this.dsDetail.getColumn(0, "SN_PRINT"));
+			this.dsSave.setColumn(nrow, "YN_DELETE", this.dsDetail.getColumn(0, "YN_DELETE"));
+			this.dsSave.setColumn(nrow, "DS_ADDR_ENG", this.dsDetail.getColumn(0, "DS_ADDR_ENG"));
+			this.dsSave.setColumn(nrow, "NO_ZIP_ENG", this.dsDetail.getColumn(0, "NO_ZIP_ENG"));
+            break;
+    }
+
+    if (this.dsSave.rowcount == 0) return;
+
+    var strSvcId 	= "save";
+    var strSvcType 	= "save";
+    var inProc 		= "_dsProc";
+    var inData 		= "save=dsSave";
+    var outData 	= "";
+    var strArg 		= "";
+    var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,
+						false); // 통신방법 정의 [생략가능]
+
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+   if (svcID == "select") {
+        
+        this.gfnGridAfterSelect(this.dxGrid);
+		this.fnSet_button(true);
+		
+    } else if (svcID == "detail") {
+
+        //this.gfnGridAfterSelect(this.dxGrid);
+
+        this.cfCD_BANK.set_enable(true);
+        this.cfCD_ADDR.set_enable(true);
+
+        this.fileuploads = {};
+
+        this.divData.form.divDataRight.form.imgSTAMP_IMG.set_image(null);
+        this.divData.form.divDataRight.form.imgSTAMP_IMG2.set_image(null);
+        this.divData.form.divDataRight.form.imgSTAMP_IMG3.set_image(null);
+
+        this.divData.form.divDataRight.form.imgLOGO1_IMG.set_image(null);
+        this.divData.form.divDataRight.form.imgLOGO2_IMG.set_image(null);
+        this.divData.form.divDataRight.form.imgLOGO3_IMG.set_image(null);
+
+        if (this.dsDetail.rowcount > 0) {
+            this.fnSet_button(true);
+
+            this.fnImageView("STAMP_IMG");
+            this.fnImageView("STAMP_IMG2");
+            this.fnImageView("STAMP_IMG3");
+            this.fnImageView("LOGO1_IMG");
+            this.fnImageView("LOGO2_IMG");
+            this.fnImageView("LOGO3_IMG");
+        }
+	}
+	else if (svcID == "save") {
+
+        this.dsList.setColumn(this.dsList.rowposition, this.ucFlag, "");
+        this.gfnSetFormStatus(this);
+
+        this.FormBtns.Select.click();
+        
+    } 
+	else if (svcID == "STAMP_IMG") {
+        this.divData.form.divDataRight.form.imgSTAMP_IMG.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+    } 
+	else if (svcID == "STAMP_IMG2") {
+        this.divData.form.divDataRight.form.imgSTAMP_IMG2.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+    } 
+	else if (svcID == "STAMP_IMG3") {
+        this.divData.form.divDataRight.form.imgSTAMP_IMG3.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+    } 
+	else if (svcID == "LOGO1_IMG") {
+        this.divData.form.divDataRight.form.imgLOGO1_IMG.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+    } 
+	else if (svcID == "LOGO2_IMG") {
+        this.divData.form.divDataRight.form.imgLOGO2_IMG.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+    } 
+	else if (svcID == "LOGO3_IMG") {
+        this.divData.form.divDataRight.form.imgLOGO3_IMG.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+    } 
+	else if (svcID == "deletefile") {
+		this.divData.form.divDataRight.form["img"+this._fileColName].set_image(null);
+	} 
+	else if (svcID == "image") {
+    }
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+    var arr = codeFindData;
+	
+    if (id == "cfCD_CORP") {
+        if (arr.length > 0) {
+            this.dsDetail.setColumn(0, "NO_CORP", arr[0].NO_CORP);
+            this.dsDetail.setColumn(0, "NO_BUSINESS", arr[0].NO_SAUP);
+            this.dsDetail.setColumn(0, "NO_TEL", arr[0].NO_SAUPTEL);
+            this.dsDetail.setColumn(0, "DS_CHIEFNAME", arr[0].DS_NAME);
+            this.dsDetail.setColumn(0, "NO_ZIP", arr[0].NO_ZIP);
+            this.dsDetail.setColumn(0, "DS_ADDR", arr[0].DS_SAUPADDR);
+        }else{
+            this.dsDetail.setColumn(0, "NO_CORP", "");
+            this.dsDetail.setColumn(0, "NO_BUSINESS", "");
+            this.dsDetail.setColumn(0, "NO_TEL", "");
+            this.dsDetail.setColumn(0, "DS_CHIEFNAME", "");
+            this.dsDetail.setColumn(0, "NO_ZIP", "");
+            this.dsDetail.setColumn(0, "DS_ADDR", "");
+		}
+    }
+	else if(id == "cfCD_ADDR"){
+		if (arr.length > 0) {
+			this.dsDetail.setColumn(0, "NO_ZIP_ENG", arr[0].ZIPCODE);
+		}else{
+			this.dsDetail.setColumn(0, "NO_ZIP_ENG", "");
+		}
+	}
+}
+
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+    if (id == "cfCD_CORP") {
+        ;
+    }
+    return true;
+}
+
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGrid_BeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+    return true;
+}
+
+this.fnGrid_RowCellChanged = function(obj: nexacro.Grid, e: nexacro.GridSelectEventInfo) {
+	console.log('fnGrid_RowCellChanged 1');
+    if ((obj.oldrow > -1 && obj.oldrow == e.row) || (obj.oldrow == -1 && e.oldrow != e.row)) {
+		console.log('fnGrid_RowCellChanged 2');
+        if (this.dxGrid.rowcount == 0 || this.dxGrid.currentrow < 0) return false;
+		console.log('fnGrid_RowCellChanged 3');
+        if (this.dsList.getColumn(e.row, this.ucFlag) != "I") {
+			console.log('fnGrid_RowCellChanged 4');
+            // 싱글폼 조회
+            this.fnSelect2();
+        }
+		
+		console.log('fnGrid_RowCellChanged 5');
+        obj.oldrow = -1;
+    }
+};
+
+this.dsDetail_oncolumnchanged = function(obj: nexacro.NormalDataset, e: nexacro.DSColChangeEventInfo) {
+    if (this.gfnGetFormStatus(this) != "I") {
+        this.gfnSetFormStatus(this, "U");
+    }
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj, e) {
+    if (e.pretext != e.posttext) {
+        this.gfnSetFormStatus(this); // 폼상태 초기화
+        this.gfnGridClear(this.dxGrid);
+
+        this.dsDetail.clearData();
+
+        this.cfCD_CORP.set_enable(false);
+        this.cfCD_BANK.set_enable(false);
+        this.cfCD_ADDR.set_enable(false);
+
+        this.divData.form.divDataRight.form.imgSTAMP_IMG.set_image(null);
+        this.divData.form.divDataRight.form.imgSTAMP_IMG2.set_image(null);
+        this.divData.form.divDataRight.form.imgSTAMP_IMG3.set_image(null);
+
+        this.divData.form.divDataRight.form.imgLOGO1_IMG.set_image(null);
+        this.divData.form.divDataRight.form.imgLOGO2_IMG.set_image(null);
+        this.divData.form.divDataRight.form.imgLOGO3_IMG.set_image(null);
+
+        this.fnSet_button(false);
+    }
+};
+
+this.fnSet_button = function(val) {
+
+    if (val == true) {
+        this.divData.form.divDataRight.form.btnSTAMP_IMG.set_enable(true);
+        this.divData.form.divDataRight.form.btnSTAMP_IMG2.set_enable(true);
+        this.divData.form.divDataRight.form.btnSTAMP_IMG3.set_enable(true);
+
+        this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG.set_enable(true);
+        this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG2.set_enable(true);
+        this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG3.set_enable(true);
+
+        this.divData.form.divDataRight.form.btnLOGO1_IMG.set_enable(true);
+        this.divData.form.divDataRight.form.btnLOGO2_IMG.set_enable(true);
+        this.divData.form.divDataRight.form.btnLOGO3_IMG.set_enable(true);
+
+        this.divData.form.divDataRight.form.btnLOGO1_DEL_IMG.set_enable(true);
+        this.divData.form.divDataRight.form.btnLOGO2_DEL_IMG.set_enable(true);
+        this.divData.form.divDataRight.form.btnLOGO3_DEL_IMG.set_enable(true);
+
+    } else {
+        this.divData.form.divDataRight.form.btnSTAMP_IMG.set_enable(false);
+        this.divData.form.divDataRight.form.btnSTAMP_IMG2.set_enable(false);
+        this.divData.form.divDataRight.form.btnSTAMP_IMG3.set_enable(false);
+
+        this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG.set_enable(false);
+        this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG2.set_enable(false);
+        this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG3.set_enable(false);
+
+        this.divData.form.divDataRight.form.btnLOGO1_IMG.set_enable(false);
+        this.divData.form.divDataRight.form.btnLOGO2_IMG.set_enable(false);
+        this.divData.form.divDataRight.form.btnLOGO3_IMG.set_enable(false);
+
+        this.divData.form.divDataRight.form.btnLOGO1_DEL_IMG.set_enable(false);
+        this.divData.form.divDataRight.form.btnLOGO2_DEL_IMG.set_enable(false);
+        this.divData.form.divDataRight.form.btnLOGO3_DEL_IMG.set_enable(false);
+    }
+}
+
+this.fnDataValidate = function() {
+    var msg = "은(는) 필수입력 입니다.";
+
+    var flag = this.gfnGetFormStatus(this);
+
+    if (flag == "I" || flag == "U") {
+        var cd_corp = this.divData.form.divDataRight.form.cfCD_CORP.form.CDTextBox.value;
+        var no_business = this.divData.form.divDataRight.form.edtNO_BUSINESS.value;
+        var no_corp = this.divData.form.divDataRight.form.edtNO_CORP.value;
+        var no_tel = this.divData.form.divDataRight.form.edtNO_TEL.value;
+        var ds_chiefname = this.divData.form.divDataRight.form.edtDS_CHIEFNAME.value;
+        var ds_addr = this.divData.form.divDataRight.form.cfCD_ADDR.form.CDTextBox.value;
+
+        if (this.gfnIsNull(this.gfnTrim(cd_corp))) {
+            this.gfnAlert("법인코드" + msg);
+            this.divData.form.divDataRight.form.cfCD_CORP.form.CDTextBox.setFocus();
+            return false;
+        }
+
+        if (this.gfnIsNull(this.gfnTrim(no_business))) {
+            this.gfnAlert("사업자번호" + msg);
+            this.divData.form.divDataRight.form.edtNO_BUSINESS.setFocus();
+            return false;
+        }
+
+
+        if (this.gfnIsNull(this.gfnTrim(no_corp))) {
+            this.gfnAlert("법인번호" + msg);
+            this.divData.form.divDataRight.form.edtNO_CORP.setFocus();
+            return false;
+        }
+
+        if (this.gfnIsNull(this.gfnTrim(ds_chiefname))) {
+            this.gfnAlert("대표자" + msg);
+            this.divData.form.divDataRight.form.edtDS_CHIEFNAME.setFocus();
+            return false;
+        }
+
+        if (this.gfnIsNull(this.gfnTrim(ds_addr))) {
+            this.gfnAlert("주소" + msg);
+            this.divData.form.divDataRight.form.cfCD_ADDR.form.CDTextBox.setFocus();
+            return false;
+        }
+
+    }
+
+    return true;
+}
+
+/**********************************************************************************************/
+/*** 이미지 삭제 ***/
+
+// 인감1
+this.divData_divDataRight_btnSTAMP_DEL_IMG_onclick = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+    this.gfnConfirm("인감1 사진을 삭제하시겠습니까??", "fnbtnSTAMP_callback");
+};
+this.fnbtnSTAMP_callback = function(strId, val) {
+    if (val == true) {
+        this.saveImage("D", 1);
+    }
+}
+
+// 인감2
+this.divData_divDataRight_btnSTAMP_DEL_IMG2_onclick = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+    this.gfnConfirm("인감2 사진을 삭제하시겠습니까??", "fnbtnSTAMP2_callback");
+};
+this.fnbtnSTAMP2_callback = function(strId, val) {
+    if (val == true) {
+        this.saveImage("D", 2);
+    }
+}
+
+
+// 인감3
+this.divData_divDataRight_btnSTAMP_DEL_IMG3_onclick = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+    this.gfnConfirm("인감3 사진을 삭제하시겠습니까??", "fnbtnSTAMP3_callback");
+};
+this.fnbtnSTAMP3_callback = function(strId, val) {
+    if (val == true) {
+        this.saveImage("D", 3);
+    }
+}
+
+
+// 회사로고1
+this.divData_divDataRight_btnLOGO_DEL_IMG_onclick = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+    this.gfnConfirm("회사로고1 사진을 삭제하시겠습니까??", "fnbtnLOGO_callback");
+};
+this.fnbtnLOGO_callback = function(strId, val) {
+    if (val == true) {
+        this.saveImage("D", 4);
+    }
+}
+
+// 회사로고2
+this.divData_divDataRight_btnLOGO2_DEL_IMG_onclick = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+    this.gfnConfirm("회사로고2 사진을 삭제하시겠습니까??", "fnbtnLOGO2_callback");
+};
+this.fnbtnLOGO2_callback = function(strId, val) {
+    if (val == true) {
+        this.saveImage("D", 5);
+    }
+}
+
+// 회사로고3
+this.divData_divDataRight_btnLOGO3_DEL_IMG_onclick = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+    this.gfnConfirm("회사로고3 사진을 삭제하시겠습니까??", "fnbtnLOGO3_callback");
+};
+this.fnbtnLOGO3_callback = function(strId, val) {
+    if (val == true) {
+        this.saveImage("D", 6);
+    }
+}
+
+this.deletefile = function(ty_gubun) {
+    this.dsDeleteFile.clearData();
+    this.dsDeleteFile.addRow();
+
+    var key = this.dsDetail.getColumn(0, "CD_CORP");
+
+    var fileColName;
+
+    if (ty_gubun == 1) {
+        fileColName = "STAMP_IMG";
+    } else if (ty_gubun == 2) {
+        fileColName = "STAMP_IMG2";
+    } else if (ty_gubun == 3) {
+        fileColName = "STAMP_IMG3";
+    } else if (ty_gubun == 4) {
+        fileColName = "LOGO1_IMG";
+    } else if (ty_gubun == 5) {
+        fileColName = "LOGO2_IMG";
+    } else if (ty_gubun == 6) {
+        fileColName = "LOGO3_IMG";
+    }
+
+    this.dsDeleteFile.setColumn(0, "filepath", this.filepath + key);
+    this.dsDeleteFile.setColumn(0, "filename", this.dsDetail.getColumn(0, fileColName));
+
+
+    // 서버 파일 삭제
+    if (this.dsDeleteFile.rowcount > 0) {
+		this._fileColName = fileColName;
+        var strSvcId 	= "deletefile";
+        var strSvcType 	= "file/deleteFile";
+        var inProc 		= "";
+        var inData 		= "input=dsDeleteFile";
+        var outData 	= "";
+        var strArg 		= "";
+        var callBackFnc = "fnCallback";
+
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); 	// 통신방법 정의 [생략가능]
+			
+    }
+}
+
+this.saveImage = function(ty_save, ty_gubun, ds_image) {
+	// 물리적 파일 삭제
+	if(ty_save == "D") {
+		this.deletefile(ty_gubun);
+	}
+
+    this.dsImage.clearData();
+    var nrow = this.dsImage.addRow();
+
+    this.dsImage.setColumn(nrow, "TY_SAVE", ty_save);
+    this.dsImage.setColumn(nrow, "CD_CORP", this.dsDetail.getColumn(0, "CD_CORP"));
+    this.dsImage.setColumn(nrow, "TY_GUBUN", ty_gubun);
+    this.dsImage.setColumn(nrow, "DS_IMAGE", ds_image);
+    this.dsImage.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+
+    var strSvcId 	= "image";
+    var strSvcType 	= "save";
+    var inProc 		= "_dsProc";
+    var inData 		= "image=dsImage";
+    var outData 	= "dsImage=image";
+    var strArg 		= "";
+    var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/******************************************************************************************/
+
+
+this.fnFile = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+
+    var sPopupCallBack = "fnFileCallback";
+    var options = {
+        title: "파일업로드",
+        resizable: true
+    }
+    this.gfnOpenPopup("filelist", "cmm::cmmFileManager.xfdl", null, sPopupCallBack, options);
+};
+
+this.fnFileCallback = function() {};
+
+// 파일저장
+this.fdg00_onclose = function(obj: nexacro.FileDialog, e: nexacro.FileDialogEventInfo) {
+    this.addFileList(obj, e.virtualfiles);
+}
+
+this.addFileList = function(obj, filelist) {
+    this.FileList = filelist;
+    if (filelist.length > 0) {
+        var vFile;
+        for (var i = 0; i < filelist.length; i++) {
+            vFile = filelist[i];
+            vFile.fileColName = obj.fileColName;
+            var extFile = vFile.filename.substring(vFile.filename.lastIndexOf('.') + 1);
+            if (!this.gfnIsExistInArray(this.fileConfig.allowTypes, extFile)) {
+                this.gfnAlert("이미지 파일(" + this.fileConfig.allowTypes.join(',') + ")을 선택하세요.");
+                return;
+            }
+
+            vFile.addEventHandler("onsuccess", this.FileList_onsuccess, this);
+            vFile.addEventHandler("onerror", this.FileList_onerror, this);
+
+            vFile.open(null, 1);
+        }
+    }
+}
+
+this.FileList_onsuccess = function(obj: nexacro.VirtualFile, e: nexacro.VirtualFileEventInfo) {
+    switch (e.reason) {
+        case 1:
+            obj.getFileSize();
+            break;
+        case 9:
+            // 하나씩 올리는 화면이므로 바로 업로드 처리
+            this.FileUpTransfer00.clearFileList();
+            this.FileUpTransfer00.addFile(obj.filename, obj);
+            if (this.FileUpTransfer00.filelist.length > 0) {
+                this._waitCursor(true);
+                var sUploadUrl = this.fileConfig.host + this.fileConfig.uploadUrl;
+
+                var fileColName = obj.fileColName;
+                var filename = this.FileUpTransfer00.filelist[0].filename;
+                var fileext = filename.substring(filename.lastIndexOf('.'));
+
+                var key = this.dsDetail.getColumn(0, "CD_CORP");
+
+				this.FileUpTransfer00.setPostData("colname", fileColName);
+				
+				trace("filepath:" + this.filepath);
+				trace("key:" + this.key);
+				trace("fileColName:" + this.fileColName);
+				
+				
+				
+                this.FileUpTransfer00.setPostData("path", this.filepath + key + "|" + fileColName);
+                this.FileUpTransfer00.upload(sUploadUrl);
+
+				this.dsDetail.set_enableevent(false);
+                this.dsDetail.setColumn(0, fileColName, fileColName + fileext);
+				this.dsDetail.set_enableevent(true);
+
+            }
+            break;
+    }
+}
+
+this.FileList_onerror = function(obj: nexacro.VirtualFile, e: nexacro.VirtualFileErrorEventInfo) {
+    trace("errortype: " + e.errortype);
+    trace("errormsg: " + e.errormsg);
+    trace("statuscode: " + e.statuscode);
+}
+
+this.FileUpTransfer00_onprogress = function(obj: nexacro.FileUploadTransfer, e: nexacro.FileUploadTransferProgressEventInfo) {
+    trace("FileUpTransfer00_onprogress: " + e.loaded + "/" + e.total);
+};
+
+this.FileUpTransfer00_onsuccess = function(obj: nexacro.FileUploadTransfer, e: nexacro.FileUploadTransferEventinfo) {
+    this._waitCursor(false);
+    trace("FileUpTransfer00_onsuccess: " + e.code + "/" + e.message);
+	if(obj.getPostData("colname") != null) {
+		var fileColName = obj.getPostData("colname");
+		this.fnImageView(fileColName);
+		this.fnUpdateFile(fileColName);
+	}	
+};
+
+this.FileUpTransfer00_onerror = function(obj: nexacro.FileUploadTransfer, e: nexacro.FileUploadTransferErrorEventInfo) {
+    this._waitCursor(false);
+    if (e.errormsg.indexOf("maxsize") > -1) {
+        this.gfnAlert("첨부파일 허용용량(" + this.gfnCutFileSize(nexacro.toNumber(e.errormsg.split(':')[1])) + ")을 초과할 수 없습니다.");
+    } else {
+        this.gfnAlert(e.errormsg);
+    }
+};
+
+//인감
+this.divData_divDataRight_btnSTAMP_IMG_onclick = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+    this.fdg00.fileColName = "STAMP_IMG";
+    this.fdg00.open('FileOpen', FileDialog.LOAD);
+};
+
+//인감2
+this.divData_divDataRight_btnSTAMP_IMG1_onclick = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+    this.fdg00.fileColName = "STAMP_IMG2";
+    this.fdg00.open('FileOpen', FileDialog.LOAD);
+};
+
+//인감3
+this.divData_divDataRight_btnSTAMP_IMG2_onclick = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+    this.fdg00.fileColName = "STAMP_IMG3";
+    this.fdg00.open('FileOpen', FileDialog.LOAD);
+};
+
+//로고1
+this.divData_divDataRight_btnLOGO1_IMG_onclick = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+    this.fdg00.fileColName = "LOGO1_IMG";
+    this.fdg00.open('FileOpen', FileDialog.LOAD);
+};
+
+//로고2
+this.divData_divDataRight_btnLOGO2_IMG_onclick = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+    this.fdg00.fileColName = "LOGO2_IMG";
+    this.fdg00.open('FileOpen', FileDialog.LOAD);
+};
+
+//로고3
+this.divData_divDataRight_btnLOGO3_IMG_onclick = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+    this.fdg00.fileColName = "LOGO3_IMG";
+    this.fdg00.open('FileOpen', FileDialog.LOAD);
+};
+
+this.fnImageView = function(fileColName) {
+    if (this.gfnIsNull(this.dsDetail.getColumn(0, fileColName))) {
+        return false;
+    }
+
+    this.dsImageFile.clearData();
+    this.dsImageFile.addRow();
+    var key = this.dsDetail.getColumn(0, "CD_CORP");
+    this.dsImageFile.setColumn(0, "filepath", this.filepath + key);
+    this.dsImageFile.setColumn(0, "filename", this.dsDetail.getColumn(0, fileColName));
+
+    // 서버 이미지파일 base64 로 받아오기		
+    var strSvcId = fileColName;
+    var strSvcType = "file/imageFile";
+    var inProc = "";
+    var inData = "input=dsImageFile";
+    var outData = "dsImageFile=input";
+    var strArg = "";
+    var callBackFnc = "fnCallback";
+
+    this.gfnTransaction(strSvcId, // transaction을 구분하기 위한 svc id값
+        strSvcType, // transaction을 요청할 구분
+        inProc, // Procedure 정보 Dataset 이름
+        inData, // 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        outData, // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        strArg, // 입력갑스로 보낼 arguments, strFormData="20120607"
+        callBackFnc,
+        false); // 통신방법 정의 [생략가능]
+};
+
+this.fnUpdateFile = function(fileColName) {
+    var ty_gubun = 0;
+    switch (fileColName) {
+        case "STAMP_IMG":
+            ty_gubun = 1;
+            break;
+        case "STAMP_IMG2":
+            ty_gubun = 2;
+            break;
+        case "STAMP_IMG3":
+            ty_gubun = 3;
+            break;
+        case "LOGO1_IMG":
+            ty_gubun = 4;
+            break;
+        case "LOGO2_IMG":
+            ty_gubun = 5;
+            break;
+        case "LOGO3_IMG":
+            ty_gubun = 6;
+            break;
+    }
+    this.saveImage("U", ty_gubun, this.dsDetail.getColumn(0, fileColName));
+}]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDetail" oncolumnchanged="dsDetail_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="CD_GUBUN" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="NO_CORP" type="STRING" size="256"/>
+          <Column id="NO_ZIP" type="STRING" size="256"/>
+          <Column id="DS_ADDR" type="STRING" size="256"/>
+          <Column id="NO_TEL" type="STRING" size="256"/>
+          <Column id="DS_CHIEFNAME" type="STRING" size="256"/>
+          <Column id="DS_CHIEFNAME_ENG" type="STRING" size="256"/>
+          <Column id="NO_CHIEFID" type="STRING" size="256"/>
+          <Column id="CD_TAXOFFICE" type="STRING" size="256"/>
+          <Column id="DS_TAXOFFICE" type="STRING" size="256"/>
+          <Column id="NM_OWNER" type="STRING" size="256"/>
+          <Column id="NO_BUSINESS" type="STRING" size="256"/>
+          <Column id="DS_CONSTTYPE" type="STRING" size="256"/>
+          <Column id="DS_LICENSE" type="STRING" size="256"/>
+          <Column id="CD_BANK" type="STRING" size="256"/>
+          <Column id="DS_BANK" type="STRING" size="256"/>
+          <Column id="NO_ACCOUNT" type="STRING" size="256"/>
+          <Column id="YN_DELETE" type="STRING" size="256"/>
+          <Column id="STAMP_IMG" type="STRING" size="256"/>
+          <Column id="STAMP_IMG2" type="STRING" size="256"/>
+          <Column id="STAMP_IMG3" type="STRING" size="256"/>
+          <Column id="LOGO1_IMG" type="STRING" size="256"/>
+          <Column id="LOGO2_IMG" type="STRING" size="256"/>
+          <Column id="LOGO3_IMG" type="STRING" size="256"/>
+          <Column id="DS_CADDR" type="STRING" size="256"/>
+          <Column id="DS_CORP_ENG" type="STRING" size="256"/>
+          <Column id="NO_ZIP_ENG" type="STRING" size="256"/>
+          <Column id="DS_ADDR_ENG" type="STRING" size="256"/>
+          <Column id="SN_PRINT" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DAZPR_CORP_MASTER_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">d_select</Col>
+            <Col id="SP">DAZPR_CORP_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DAZPR_CORP_SAVE</Col>
+            <Col id="TARGET">save</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">image</Col>
+            <Col id="SP">DAZPR_CORP_IMAGE_SAVE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_DELETE">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">%</Col>
+            <Col id="VALUE">전체</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="VALUE">사용</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="VALUE">미사용</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_CORPANTE">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE"/>
+            <Col id="VALUE"/>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="VALUE">N</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="VALUE">Y</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsImageFile">
+        <ColumnInfo>
+          <Column id="filepath" type="STRING" size="256"/>
+          <Column id="filename" type="STRING" size="256"/>
+          <Column id="filereturn" type="STRING" size="10000"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDeleteFile">
+        <ColumnInfo>
+          <Column id="filepath" type="STRING" size="256"/>
+          <Column id="filename" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <FileDialog id="fdg00" onclose="fdg00_onclose"/>
+      <FileUpTransfer id="FileUpTransfer00" onprogress="FileUpTransfer00_onprogress" onsuccess="FileUpTransfer00_onsuccess" onerror="FileUpTransfer00_onerror"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divData.form.divDataRight.form.cfCD_CORP.form.CDTextBox" propid="value" datasetid="dsDetail" columnid="CD_CORP"/>
+      <BindItem id="item2" compid="divData.form.divDataRight.form.cfCD_CORP.form.DSTextBox" propid="value" datasetid="dsDetail" columnid="DS_CORP"/>
+      <BindItem id="item3" compid="divData.form.divDataRight.form.edtNO_BUSINESS" propid="value" datasetid="dsDetail" columnid="NO_BUSINESS"/>
+      <BindItem id="item4" compid="divData.form.divDataRight.form.edtNO_CORP" propid="value" datasetid="dsDetail" columnid="NO_CORP"/>
+      <BindItem id="item5" compid="divData.form.divDataRight.form.edtNO_TEL" propid="value" datasetid="dsDetail" columnid="NO_TEL"/>
+      <BindItem id="item6" compid="divData.form.divDataRight.form.edtDS_CHIEFNAME" propid="value" datasetid="dsDetail" columnid="DS_CHIEFNAME"/>
+      <BindItem id="item7" compid="divData.form.divDataRight.form.edtNO_CHIEFID" propid="value" datasetid="dsDetail" columnid="NO_CHIEFID"/>
+      <BindItem id="item8" compid="divData.form.divDataRight.form.edtCD_TAXOFFICE" propid="value" datasetid="dsDetail" columnid="DS_TAXOFFICE"/>
+      <BindItem id="item9" compid="divData.form.divDataRight.form.edtDS_TAXOFFICE" propid="value" datasetid="dsDetail" columnid="DS_CONSTTYPE"/>
+      <BindItem id="item10" compid="divData.form.divDataRight.form.edtDS_LICENSE" propid="value" datasetid="dsDetail" columnid="DS_LICENSE"/>
+      <BindItem id="item11" compid="divData.form.divDataRight.form.cfCD_BANK.form.CDTextBox" propid="value" datasetid="dsDetail" columnid="CD_BANK"/>
+      <BindItem id="item12" compid="divData.form.divDataRight.form.cfCD_BANK.form.DSTextBox" propid="value" datasetid="dsDetail" columnid="DS_BANK"/>
+      <BindItem id="item13" compid="divData.form.divDataRight.form.edtNM_OWNER" propid="value" datasetid="dsDetail" columnid="NM_OWNER"/>
+      <BindItem id="item14" compid="divData.form.divDataRight.form.edtNO_ACCOUNT" propid="value" datasetid="dsDetail" columnid="NO_ACCOUNT"/>
+      <BindItem id="item15" compid="divData.form.divDataRight.form.cfCD_ADDR.form.CDTextBox" propid="value" datasetid="dsDetail" columnid="NO_ZIP"/>
+      <BindItem id="item16" compid="divData.form.divDataRight.form.cfCD_ADDR.form.DSTextBox" propid="value" datasetid="dsDetail" columnid="DS_ADDR"/>
+      <BindItem id="item17" compid="divData.form.divDataRight.form.cboYN_DELETE" propid="value" datasetid="dsDetail" columnid="YN_DELETE"/>
+      <BindItem id="item18" compid="divData.form.divDataRight.form.edtDS_CORP_ENG" propid="value" datasetid="dsDetail" columnid="DS_CORP_ENG"/>
+      <BindItem id="item20" compid="divData.form.divDataRight.form.edtSN_PRINT" propid="value" datasetid="dsDetail" columnid="SN_PRINT"/>
+      <BindItem id="item23" compid="divData.form.divDataRight.form.edtCD_GUBUN" propid="value" datasetid="dsDetail" columnid="CD_GUBUN"/>
+      <BindItem id="item0" compid="divData.form.divDataRight.form.edtNO_ZIP_ENG" propid="value" datasetid="dsDetail" columnid="NO_ZIP_ENG"/>
+      <BindItem id="item19" compid="divData.form.divDataRight.form.edtDS_ADDR_ENG" propid="value" datasetid="dsDetail" columnid="DS_ADDR_ENG"/>
+      <BindItem id="item21" compid="divData.form.divDataRight.form.edtDS_CHIEFNAME_ENG" propid="value" datasetid="dsDetail" columnid="DS_CHIEFNAME_ENG"/>
+    </Bind>
+  </Form>
+</FDL>

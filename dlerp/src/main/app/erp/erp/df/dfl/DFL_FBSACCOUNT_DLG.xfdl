@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="330" height="220" maxwidth="400" maxheight="230" titletext="예금주 조회 브랜치 전송" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" cssclass="div_DATA_Bg" width="330" bottom="0">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_CORP" taborder="1" text="법인코드" left="8" top="27" width="87" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta07" taborder="3" left="94" top="27" width="200" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Div id="ccfCD_CORP" CodeFindName="DZX_CFCORP" CDTextWidth="50" taborder="0" left="staCD_CORP:10" top="32" width="180" height="20" url="cmm::cmmCodeFind.xfdl"/>
+              <Div id="divBtns" left="45" top="90" width="200" height="40" taborder="2">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnOK" taborder="10" text="확인" left="30" top="10" width="60" height="27" onclick="btnOK_onclick"/>
+                    <Button id="btnCANCLE" taborder="11" text="취소" left="btnOK:30" top="10" width="60" height="27" onclick="btnCANCLE_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+
+	this.fnSetVariable();
+	this.fnSetEvent(); 
+	this.fnSetParameter();
+
+	if(!this.gfnIsNull(this.getOwnerFrame().DS_PARAM)) {
+		var today = this.gfnGetDate().substring(0,8);
+		var val = this.getOwnerFrame().DS_PARAM;
+		
+		this.dsList.loadCSV(val);
+
+		this.dsSearch.setColumn(0, "CD_CORP", this.getOwnerFrame().CD_CORP)
+		this.dsSearch.setColumn(0, "DS_CORP", this.getOwnerFrame().DS_CORP)
+	}	
+};
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_CORP = this.divData.form.ccfCD_CORP;	// 법인코드
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsList = new Dataset();
+	this.dsList.addColumn("NO_ACCOUNT", "string");	// 계좌번호
+	this.dsList.addColumn("TY_GUBUN", "string");	// 계좌구분
+	this.dsList.addColumn("CD_OWNER", "string");	// 계좌소유주코드
+	this.dsList.addColumn("CD_CORP", "string");		// 법인코드(브랜치전송용)
+	this.dsList.addColumn("ID_USER", "string");		// 사용자	
+}
+
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 확인
+	if(!this.fnSaveValidate()) return;	
+	//this.gfnConfirm("예금주 조회 브랜치 전송 하시겠습니까?", "fnBranchAccountCallback"); 
+	this.fnBranchAccount(); 
+};
+
+// 예금주 조회 브랜치 전송 Callback
+this.fnBranchAccountCallback = function(strId, val) { 
+	if(val == false) return; 
+	this.fnBranchAccount(); 
+}
+
+// 예금주 조회 브랜치 전송
+this.fnBranchAccount = function() {
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		this.dsList.setColumn(i, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));			//법인코드
+	}
+
+	var strSvcId    = "saveBranchAccount";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "saveBranchAccount=dsList";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 취소
+	this.getParentContext().close(false);
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	저장 Validate
+ */
+this.fnSaveValidate = function() {
+
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_CORP"))) {
+		this.ccfCD_CORP.setFocus();
+		this.gfnAlert("법인코드를 입력하세요.");
+		return false;
+	}
+
+	return true;
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	//trace("fnCallback >>>> svcID:["+svcID+"] errorMsg:["+errorMsg+"]");
+	
+	if (errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return;
+	} 
+	
+	if(svcID == "saveBranchAccount"){
+		if (errorCode == 0) {	
+			// 부모화면 조회 호출 
+			//this.parent.parent.opener.divWork.form.fnSelect();
+			// 자기자신창 닫기
+			this.getParentContext().close(true);
+			
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+ 	}
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+	if(e.pretext != e.posttext) {
+		// 폼상태 초기화
+		//this.gfnSetFormStatus(this);	
+		//this.gfnGridClear(this.dxGrid);
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="NO_ACCOUNT" type="STRING" size="256"/>
+          <Column id="ID_USER" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+          <Column id="CD_OWNER" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">saveBranchAccount</Col>
+            <Col id="SP">DFBPR_BRANCH_ACCOUNT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item1" compid="divData.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+    </Bind>
+  </Form>
+</FDL>

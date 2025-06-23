@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="410" height="300" titletext="장기자금계획 전자결재(초기화)" onload="form_onload">
+    <Layouts>
+      <Layout height="300" width="410">
+        <Static id="staTitle" taborder="6" text="계획정보" left="20" top="50" height="22" cssclass="sta_TITLE_Bg" width="350"/>
+        <Button id="btnOk" taborder="4" text="확인" left="143" width="45" height="21" onclick="btnOk_onclick" uWord="popup.ok" top="257"/>
+        <Button id="btnCancle" taborder="5" text="취소" left="193" width="45" height="21" onclick="btnCancle_onclick" uWord="popup.cancel" top="257"/>
+        <Static id="staBar00" taborder="7" left="119" top="80" height="30" cssclass="sta_WF_tablebg" width="251"/>
+        <Static id="staItem00" taborder="8" text="작성년월" left="20" top="80" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+        <Static id="staTitle01" taborder="9" text="장기자금계획 전자결재(초기화)" left="20" top="20" height="22" width="350" cssclass="sta_POP_Title"/>
+        <Static id="sta00" taborder="10" text="※ 해당자료의 결재상태가 초기화 됩니다." left="26" top="204" width="264" height="20" font="bold 12px/normal &quot;Dotum&quot;"/>
+        <Static id="sta01" taborder="11" text="[주의]" left="269" top="204" width="97" height="20" color="red" font="bold 12px/normal &quot;Dotum&quot;"/>
+        <Div id="calYM_PLAN" taborder="0" left="126" top="85" width="80" height="20" url="cmm::cmmCalMM.xfdl"/>
+        <Static id="staBar01" taborder="12" left="119" top="109" height="30" cssclass="sta_WF_tablebg" width="251"/>
+        <Static id="staItem01" taborder="13" text="법인코드" left="20" top="109" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staBar02" taborder="14" left="119" top="167" height="30" cssclass="sta_WF_tablebg" width="251"/>
+        <Static id="staItem02" taborder="15" text="작성부서" left="20" top="167" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+        <Div id="ccfCD_CORP" CDTextWidth="70" taborder="1" left="126" top="114" width="237" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+        <Div id="ccfCD_SITE" CDTextWidth="90" taborder="3" left="126" top="172" width="237" height="20" url="cmm::cmmCodeFind.xfdl"/>
+        <Static id="sta02" taborder="16" text="※ 취소 전 결재여부 확인!!!" left="26" top="222" width="264" height="20" color="red" font="bold 12px/normal &quot;Dotum&quot;"/>
+        <Static id="staBar03" taborder="17" left="119" top="138" height="30" cssclass="sta_WF_tablebg" width="251"/>
+        <Static id="staItem03" taborder="18" text="구분" left="20" top="138" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+        <Combo id="cboYN_FINAL" taborder="2" text="자금집행일" left="126" top="143" width="130" height="20" innerdataset="dsYN_FINAL" datacolumn="DS_CODE" codecolumn="CD_CODE" index="-1" onitemchanged="divSearch_cboYN_FINAL_onitemchanged"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmPopup.xfdl (공통 팝업페이지)
+*  @FileName 	cmmPopup.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.10.19
+*  @Desction         스크립트 표준 및 주석 표준 정의
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this); //초기화[필수]
+	this.gfnFormInfo(this);
+	
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetCombo();	
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_CORP.CodeFindName = "DZX_CFCORP";	// 법인코드
+	this.ccfCD_SITE.CodeFindName = "DFX_CFACNTUNIT";	// 작성부서
+	
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_SITE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfCD_SITE.AfterCDTextChanged = "fnAfterCDTextChanged";
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnValidation = function() {
+	if (this.gfnIsNull(this.calYM_PLAN.form.TextBox.value)) {
+		this.gfnAlert("작성년월을 입력하십시오.");
+		this.calYM_PLAN.form.TextBox.setFocus();
+		return false;
+	}
+	
+// 	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+// 		this.gfnAlert("법인코드를 입력하십시오.");
+// 		this.ccfCD_CORP.form.CDTextBox.setFocus();
+// 		return false;
+// 	}
+	
+	if (this.gfnIsNull(this.cboYN_FINAL.value)) {
+		this.gfnAlert("구분을 입력하십시오.");
+		this.cboYN_FINAL.setFocus();
+		return false;
+	}	
+	
+	if (this.gfnIsNull(this.ccfCD_SITE.form.CDTextBox.value)) {
+		this.gfnAlert("작성부서를 입력하십시오.");
+		this.ccfCD_SITE.form.CDTextBox.setFocus();
+		return false;
+	}	
+	
+	return true;
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	var cdCorp = this.ccfCD_CORP.form.CDTextBox.value;
+	
+	switch(id) {
+	case "ccfCD_CORP": // 법인코드
+		dsUserParam.setColumn(nrow, "CD_GROUP", this.cdGroup);	
+		break;
+		
+	case "ccfCD_SITE": // 작성부서
+		if ( this.gfnIsNull(cdCorp) ) {
+			this.gfnAlert("법인코드를 먼저 입력하세요.");
+			return false;
+		}	
+		dsUserParam.setColumn(nrow, "CD_GROUP", this.cdGroup);
+		dsUserParam.setColumn(nrow, "CD_CORP", cdCorp);
+		break;
+		
+	default:
+	}	
+	return true;	
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {	
+	switch(id) {
+	
+	case "ccfCD_CORP": // 법인코드
+		break;
+		
+	case "ccfCD_SITE": // 작성부서
+		break;
+	default:
+	}	
+	return true;
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* @ OK버튼이벤트
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnValidation()) return false;
+
+	// 확인
+	var json = {};
+	
+	json.YM_PLAN = this.calYM_PLAN.form.TextBox.value;		// 작성년월
+	json.CD_CORP = this.ccfCD_CORP.form.CDTextBox.value;	// 법인코드
+	json.YN_FINAL = this.cboYN_FINAL.value;					// 구분
+	json.CD_SITE = this.ccfCD_SITE.form.CDTextBox.value;	// 작성부서
+	
+	this.getParentContext().close(JSON.stringify(json));
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+
+
+this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DF");
+	this.dsCombo.setColumn(0, "CD_TYPE", "A7");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsYN_FINAL=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "combo") {
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	var frame = this.getOwnerFrame();	
+	
+		if (!this.gfnIsNull(frame.YM_PLAN)) {
+			this.calYM_PLAN.form.TextBox.set_value(frame.YM_PLAN);
+			
+			this.ccfCD_CORP.form.CDTextBox.set_value(frame.CD_CORP);
+			this.ccfCD_CORP.form.DSTextBox.set_value(frame.DS_CORP);
+							
+			this.ccfCD_SITE.form.CDTextBox.set_value(frame.CD_SITE);
+			this.ccfCD_SITE.form.DSTextBox.set_value(frame.DS_SITE);				
+			
+			this.cboYN_FINAL.set_value(frame.YN_FINAL);
+			
+			// 부서팀(N) : 작성부서 셋팅 / 자금팀 : 작성부서 숨김 처리
+			switch(frame.YN_FINAL) {
+			case "Y":
+				this.staItem02.set_visible(false);
+				this.staBar02.set_visible(false);
+				this.ccfCD_SITE.set_visible(false);
+				break;
+			case "N":
+				this.staItem02.set_visible(true);
+				this.staBar02.set_visible(true);
+				this.ccfCD_SITE.set_visible(true);			
+				break;
+			default:
+			}
+		}	
+	}
+}]]></Script>
+    <Objects>
+      <Dataset id="dsYN_FINAL"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="calYM_PLAN.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_PLAN"/>
+      <BindItem id="item1" compid="ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item2" compid="ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item3" compid="cboYN_FINAL" propid="value" datasetid="dsSearch" columnid="YN_FINAL"/>
+    </Bind>
+  </Form>
+</FDL>

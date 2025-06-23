@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="495" height="316" titletext="점검후 리포트 입력팝업" onload="form_onload">
+    <Layouts>
+      <Layout height="316" width="495">
+        <Static id="staTitle" taborder="12" text="점검후 리포트 입력항목" left="20" top="10" width="470" height="22" cssclass="sta_TITLE_Bg"/>
+        <Static id="staItem01" taborder="13" text="단지" left="20" top="staTitle:10" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staBar01" taborder="14" left="staItem01:-1" top="staTitle:10" width="356" height="30" cssclass="sta_WF_tablebg"/>
+        <Edit id="edtCD_SITE" taborder="9" left="staItem01:5" top="staTitle:15" width="80" height="20" value="" text="" readonly="true"/>
+        <Edit id="edtDS_SITE" taborder="10" left="edtCD_SITE:5" top="staTitle:15" width="259" height="20" value="" text="" readonly="true"/>
+        <Static id="staItem02" taborder="15" text="접수구분" left="20" top="staItem01:-1" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staBar02" taborder="16" left="staItem02:-1" top="staBar01:-1" width="356" height="30" cssclass="sta_WF_tablebg"/>
+        <Edit id="edtDS_UMGB" taborder="11" left="staItem02:5" top="staBar01:4" width="125" height="20" value="" text="" readonly="true" visible="false"/>
+        <Static id="staItem03" taborder="17" text="작성일자" left="20" top="staItem02:-1" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staBar03" taborder="18" left="staItem03:-1" top="staBar02:-1" width="356" height="30" cssclass="sta_WF_tablebg"/>
+        <Calendar id="calDT_WRITE" taborder="0" left="staItem03:5" top="staBar02:4" width="125" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true"/>
+        <Static id="staItem04" taborder="19" text="점검기간" left="20" top="staItem03:-1" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staBar04" taborder="20" left="staItem04:-1" top="staBar03:-1" width="356" height="30" cssclass="sta_WF_tablebg"/>
+        <Calendar id="calDT_CHECK_FROM" taborder="1" left="staItem04:5" top="staBar03:4" width="125" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true"/>
+        <Static id="sta00" taborder="21" text="~" left="calDT_CHECK_FROM:5" top="staBar03:4" width="10" height="20"/>
+        <Calendar id="calDT_CHECK_TO" taborder="2" left="sta00:5" top="staBar03:4" width="125" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true"/>
+        <Static id="staItem05" taborder="22" text="점검원" left="20" top="staItem04:-1" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staBar05" taborder="23" left="staItem05:-1" top="staBar04:-1" width="356" height="30" cssclass="sta_WF_tablebg"/>
+        <Edit id="edtNM_CHECKER" taborder="3" left="staItem05:5" top="staBar04:4" height="20" width="125"/>
+        <Static id="staItem06" taborder="24" text="현장담당자" left="20" top="staItem05:-1" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staBar06" taborder="25" left="staItem06:-1" top="staBar05:-1" width="356" height="30" cssclass="sta_WF_tablebg"/>
+        <Edit id="edtNM_SITE_MANAGER" taborder="4" left="staItem06:5" top="staBar05:4" height="20" width="125"/>
+        <Static id="staItem07" taborder="26" text="조치완료일" left="20" top="staItem06:-1" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staBar07" taborder="27" left="staItem07:-1" top="staBar06:-1" width="356" height="30" cssclass="sta_WF_tablebg"/>
+        <Calendar id="calDT_JOBEND" taborder="5" left="staItem07:5" top="staBar06:4" width="125" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true"/>
+        <Static id="staItem08" taborder="28" text="현장소장" left="20" top="staItem07:-1" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staBar08" taborder="29" left="staItem08:-1" top="staBar07:-1" width="356" height="30" cssclass="sta_WF_tablebg"/>
+        <Edit id="edtNM_SOJANG" taborder="6" left="staItem08:5" top="staBar07:4" height="20" width="125"/>
+        <Button id="btnOk" taborder="7" text="확인" left="40.20%" width="45" height="21" onclick="btnOk_onclick" uWord="popup.ok" top="staBar08:10"/>
+        <Button id="btnCancle" taborder="8" text="취소" left="248" width="45" onclick="btnCancle_onclick" uWord="popup.cancel" top="staBar08:10" height="21"/>
+        <Combo id="cboTY_UMGB" taborder="30" left="125" top="76" height="20" innerdataset="dsTY_UMGB" datacolumn="DS_CODE" codecolumn="CD_CODE" index="0" text="전체" value="" width="105" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmPopup.xfdl (공통 팝업페이지)
+*  @FileName 	cmmPopup.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.10.19
+*  @Desction         스크립트 표준 및 주석 표준 정의
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ 
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this); //초기화[필수]
+	
+	this.fnSetEvent();
+	this.fnSetParameter();
+	if( this.gfnNvl(this.getOwnerFrame().CF_TY_FLAG,"") == "CBO" ){
+		this.fnSetCombo();
+	}
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {	
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	var strToday = this.gfnGetDate();
+	
+	if( this.gfnNvl(this.getOwnerFrame().CF_TY_FLAG,"") == "CBO" ){
+		this.cboTY_UMGB.set_visible(true);
+	} else {
+		this.edtDS_UMGB.set_visible(true);
+	}
+	
+	this.dsReturn.setColumn(0,"CD_SITE",this.gfnNvl(this.getOwnerFrame().CF_CD_SITE,""));
+	this.dsReturn.setColumn(0,"DS_SITE",this.gfnNvl(this.getOwnerFrame().CF_DS_SITE,""));
+	this.dsReturn.setColumn(0,"TY_UMGB",this.gfnNvl(this.getOwnerFrame().CF_TY_UMGB,""));
+	this.dsReturn.setColumn(0,"DS_UMGB",this.gfnNvl(this.getOwnerFrame().CF_DS_UMGB,""));	
+	this.dsReturn.setColumn(0,"DT_WRITE",strToday);
+	this.dsReturn.setColumn(0,"DT_CHECK_FROM","");
+	this.dsReturn.setColumn(0,"DT_CHECK_TO","");
+	this.dsReturn.setColumn(0,"NM_CHECKER","");
+	this.dsReturn.setColumn(0,"NM_SITE_MANAGER","");
+	this.dsReturn.setColumn(0,"DT_JOBEND","");
+	this.dsReturn.setColumn(0,"NM_SOJANG","");
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSaveValidate = function() {
+	var validate = true;
+	if (this.gfnIsNull(this.ccfCD_SITE.form.CDTextBox.text)) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("단지코드를 입력 하셔야 합니다.", "fnVaidateCallback");
+	}
+	
+	return validate;
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* @ OK버튼이벤트
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(this.dsReturn.saveXML());
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+ /************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "combo") {
+		this.cboTY_UMGB.set_index(0);		
+	}
+};
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	콤보박스 값 설정
+ */
+this.fnSetCombo = function() {
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	this.dsCombo.addColumn("DS_ETC1", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DB");
+	this.dsCombo.setColumn(0, "CD_TYPE", "S2");    // 접수구분
+	this.dsCombo.setColumn(0, "DS_ETC1", "BS");    // 접수구분	
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_UMGB=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+
+};]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DBZPR_SITEERPDATA_BATCH</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DBXPR_COMBO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsReturn" >
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="TY_UMGB" type="STRING" size="256"/>
+          <Column id="DS_UMGB" type="STRING" size="256"/>
+          <Column id="DT_WRITE" type="STRING" size="256"/>
+          <Column id="DT_CHECK_FROM" type="STRING" size="256"/>
+          <Column id="DT_CHECK_TO" type="STRING" size="256"/>
+          <Column id="NM_CHECKER" type="STRING" size="256"/>
+          <Column id="NM_SITE_MANAGER" type="STRING" size="256"/>
+          <Column id="DT_JOBEND" type="STRING" size="256"/>
+          <Column id="NM_SOJANG" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_UMGB">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item7" compid="edtCD_SITE" propid="value" datasetid="dsReturn" columnid="CD_SITE"/>
+      <BindItem id="item0" compid="calDT_WRITE" propid="value" datasetid="dsReturn" columnid="DT_WRITE"/>
+      <BindItem id="item5" compid="calDT_CHECK_FROM" propid="value" datasetid="dsReturn" columnid="DT_CHECK_FROM"/>
+      <BindItem id="item6" compid="calDT_CHECK_TO" propid="value" datasetid="dsReturn" columnid="DT_CHECK_TO"/>
+      <BindItem id="item1" compid="edtNM_CHECKER" propid="value" datasetid="dsReturn" columnid="NM_CHECKER"/>
+      <BindItem id="item2" compid="edtNM_SITE_MANAGER" propid="value" datasetid="dsReturn" columnid="NM_SITE_MANAGER"/>
+      <BindItem id="item3" compid="calDT_JOBEND" propid="value" datasetid="dsReturn" columnid="DT_JOBEND"/>
+      <BindItem id="item4" compid="edtNM_SOJANG" propid="value" datasetid="dsReturn" columnid="NM_SOJANG"/>
+      <BindItem id="item8" compid="edtDS_SITE" propid="value" datasetid="dsReturn" columnid="DS_SITE"/>
+      <BindItem id="item9" compid="edtDS_UMGB" propid="value" datasetid="dsReturn" columnid="DS_UMGB"/>
+      <BindItem id="item10" compid="cboTY_UMGB" propid="value" datasetid="dsReturn" columnid="TY_UMGB"/>
+    </Bind>
+  </Form>
+</FDL>

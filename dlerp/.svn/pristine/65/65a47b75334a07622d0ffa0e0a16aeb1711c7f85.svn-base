@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DBS_MENU" width="1280" height="720" titletext="콜센터 메뉴" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staACC_CODE" taborder="3" text="단지코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfACC_CODE" CodeFindName="DLX_CFACNTUNIT" CDTextWidth="50" taborder="0" left="staACC_CODE:0.0" top="10.0" width="300" height="24.0" url="cmm::cmmCodeFind.xfdl" BeforeUserDataSetParam="fnBeforeUserDataSetParam"/>
+              <Static id="staNO_DONG" taborder="4" text="동호" left="ccfACC_CODE:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfDH_CD" CDTextWidth="70" taborder="1" left="staNO_DONG:0.0" top="10.0" width="175" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="staAPT_ST_GU" taborder="5" text="아파트/상가 구분" left="ccfDH_CD:0.0" top="10.0" width="92.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboAPT_ST_GU" taborder="2" left="staAPT_ST_GU:0.0" top="10.0" width="90" height="24.0" innerdataset="dsAPT_ST_GU" datacolumn="DS_CODE" codecolumn="CD_CODE" text="아파트" index="0" value="1"/>
+              <Static id="staAPT_ST_GU00" taborder="6" text="고객명" left="cboAPT_ST_GU:0.0" top="10.0" width="92.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtDS_HNAME" taborder="7" top="10.0" width="7.36%" height="24.0" readonly="true" left="staAPT_ST_GU00:0.0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove" text="">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0" oncellclick="divData_objGrid_oncellclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetParameter();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	
+	this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+	// 입력버튼 사용안함
+	//this.alert(this.FormBtns.Add.enable);
+	//this.FormBtns.Add.set_enable(true);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfACC_CODE = this.divSearch.form.ccfACC_CODE;    //단지코드
+	this.ccfDH_CD = this.divSearch.form.ccfDH_CD;          // 동호
+	this.cboAPT_ST_GU = this.divSearch.form.cboAPT_ST_GU;  // 아파트/상가 구분
+	
+	this.dxGrid = this.divData.form.objGrid;
+	
+	// 단지코드 버튼크기 조정
+	var nWidth = nexacro.toNumber(this.ccfACC_CODE.form.CDTextBox.width) + 20;
+	this.ccfACC_CODE.form.CDTextBox.set_width(nWidth); 
+	nWidth = nWidth + nexacro.toNumber(this.ccfACC_CODE.form.CDTextBox.left) + 3;
+	this.ccfACC_CODE.form.BtnSearch.set_left(nWidth);
+	
+	nWidth = nWidth + nexacro.toNumber(this.ccfACC_CODE.form.BtnSearch.width) + 3;
+	this.ccfACC_CODE.form.DSTextBox.set_left(nWidth); 
+	
+	this.cboAPT_ST_GU.set_index(0);
+	this.isCall = false;
+	
+	// 파라미터가 있을 경우	
+	if ( !this.gfnIsNull(this.getOwnerFrame().acc_code) ) {
+		this.isCall = true;
+		this.ccfACC_CODE.form.CDTextBox.set_value(this.gfnNvl(this.getOwnerFrame().acc_code,""));
+		this.ccfACC_CODE.form.fnCodeFindLoad();
+		this.ccfDH_CD.form.CDTextBox.set_value(this.gfnNvl(this.getOwnerFrame().dh_cd1,""));
+		this.ccfDH_CD.form.DSTextBox.set_value(this.gfnNvl(this.getOwnerFrame().dh_cd2,""));
+		this.cboAPT_ST_GU.set_value(this.gfnNvl(this.getOwnerFrame().apt_st_gu,""));
+		this.dsSearch.setColumn(0,"CONT_DEG",this.gfnNvl(this.getOwnerFrame().cont_deg,""));
+		this.dsSearch.setColumn(0,"DS_HNAME",this.gfnNvl(this.getOwnerFrame().ds_hname,""));
+		
+		this.ccfACC_CODE.form.set_readonly(true);
+		this.ccfDH_CD.form.set_readonly(true);
+		this.cboAPT_ST_GU.set_readonly(true);
+	}
+	
+	this.dsSearch.addEventHandler("onvaluechanged", this.dsSearch_onvaluechanged, this);
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfACC_CODE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfDH_CD.CodeFindName = "DLX_CFDONGHO_DETAIL_CODEFIND";
+	this.ccfDH_CD.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfDH_CD.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DB", "DBL_MENU");  // pForm.gfnGridInit = function(objGrid, objDs, cd_system, id_grid, tree_column, level_column, is_manual) 
+	//this.dxGrid.set_selecttype("cell");	// IE경우만 multiarea모드에서 master선택후 마우스 이동 빠르게 할 경우 버그가 있어서 cell 모드로 변경
+	
+	this.dxGrid.addEventHandler("oncellclick", this.dxGrid_oncellclick, this);
+	
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("ACC_CODE", "string");
+	
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsList.clearData();
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "ACC_CODE", "");
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	//var outData     = "dsList=select0 dsChart2=select1";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+}
+
+/*
+ *	저장 버튼
+ */ 
+this.fnSave = function() {	
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+/*
+ *	삭제 버튼
+ */ 
+this.fnDel = function() {
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+		this.dsList.set_rowposition(0);
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+/*
+ * 코드파인드 Before
+ */
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if (id == "ccfACC_CODE") {
+		if( this.isCall ) {
+			this.isCall = false;
+		} else {
+			dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT); 
+			dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+			dsUserParam.setColumn(nrow, "ID_GROUP", this.FormInfo.ID_GROUP);
+			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		}
+	} else if (id == "ccfDH_CD"){
+ 		if (this.gfnIsNull(this.dsSearch.getColumn(0, "ACC_CODE"))) {
+ 			this.gfnAlert("단지코드를 먼저 입력하세요.");
+ 			return false;
+ 		}
+		dsUserParam.setColumn(nrow, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "ACC_CODE"));
+		dsUserParam.setColumn(nrow, "TY_BUNYANG", "");
+		dsUserParam.setColumn(nrow, "APT_ST_GU", this.dsSearch.getColumn(0, "APT_ST_GU"));	
+	}
+	return true;
+};
+
+/*
+ * 코드파인드 After
+ */
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	
+	if(id == "ccfDH_CD"){	
+		var arr = codeFindData;
+		if(arr.length > 0 ){
+			this.dsSearch.setColumn(0, "DH_CD1", arr[0]["NO_DONG"]);
+			this.dsSearch.setColumn(0, "DH_CD2", arr[0]["NO_HO"]);
+			this.dsSearch.setColumn(0, "CONT_DEG", arr[0]["CONT_DEG"]);
+			
+		} else{
+			this.dsSearch.setColumn(0, "DH_CD1", "");
+			this.dsSearch.setColumn(0, "DH_CD2", "");
+			this.dsSearch.setColumn(0, "CONT_DEG", "");
+		}
+		
+		trace(this.dsSearch.saveXML());
+	}
+};
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ /*
+  * 그리드 더블 클릭
+  */
+ this.dxGrid_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if( e.row < 0 ) return false;
+	if ( this.dsList.getColumn(this.dsList.rowposition,"ID_FORM") != "DBS_AS_EXCEL" && this.dsList.getColumn(this.dsList.rowposition,"ID_FORM") != "DBS_JEOBSU_GONGA" && this.dsList.getColumn(this.dsList.rowposition,"ID_FORM") != "DBS_GONGA_STATE"){
+		if( this.gfnIsNull(this.dsSearch.getColumn(0,"ACC_CODE")) ){
+			this.gfnAlert("단지코드를 입력하세요!");
+			this.ccfACC_CODE.setFocus();
+			return false;
+		}
+		if (    this.dsList.getColumn(this.dsList.rowposition,"ID_FORM") != "DLC_ACCOUNT_CALL" 
+		    &&  this.dsList.getColumn(this.dsList.rowposition,"ID_FORM") != "DLC_ENFORCE_CALL"
+			&&  this.dsList.getColumn(this.dsList.rowposition,"ID_FORM") != "DLA_001_CALL") {
+			if( this.gfnIsNull(this.dsSearch.getColumn(0,"DH_CD1")) ){
+				this.gfnAlert("동호를 입력하세요!");
+				this.ccfDH_CD.setFocus();
+				return false;
+			}
+		}
+	}
+	var url = nexacro.replaceAll(window.location.href,window.location.search,"") + "?ID_FORM="+this.dsList.getColumn(this.dsList.rowposition,"ID_FORM")+"&ACC_CODE="+this.gfnNvl(this.dsSearch.getColumn(0,"ACC_CODE"),"")+"&DH_CD1="+this.gfnNvl(this.dsSearch.getColumn(0,"DH_CD1"),"")+"&DH_CD2="+this.gfnNvl(this.dsSearch.getColumn(0,"DH_CD2"),"")+"&CONT_DEG="+this.gfnNvl(this.dsSearch.getColumn(0,"CONT_DEG"),"")+"&APT_ST_GU="+this.gfnNvl(this.dsSearch.getColumn(0,"APT_ST_GU"),"")
+	window.open(url,"_blank", "width=1350,height=720,menubar=no,scrollbars=no,resizable=no,status=no");
+};
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue){	
+		if (e.columnid == "ACC_CODE") {
+			this.dsSearch.setColumn(0, "DH_CD1", "");
+			this.dsSearch.setColumn(0, "DH_CD2", "");
+			this.dsSearch.setColumn(0, "CONT_DEG", "");
+		}
+	}
+}]]></Script>
+    <Objects>
+      <Dataset id="dsList" />
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DBLPR_MENU_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsAPT_ST_GU">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">1</Col>
+            <Col id="DS_CODE">아파트</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">2</Col>
+            <Col id="DS_CODE">상가</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="ACC_CODE" type="STRING" size="256"/>
+          <Column id="DH_CD1" type="STRING" size="256"/>
+          <Column id="DH_CD2" type="STRING" size="256"/>
+          <Column id="CONT_DEG" type="STRING" size="256"/>
+          <Column id="APT_ST_GU" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item3" compid="divSearch.form.ccfACC_CODE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="ACC_CODE"/>
+      <BindItem id="item0" compid="divSearch.form.ccfDH_CD.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="DH_CD1"/>
+      <BindItem id="item1" compid="divSearch.form.ccfDH_CD.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DH_CD2"/>
+      <BindItem id="item2" compid="divSearch.form.cboAPT_ST_GU" propid="value" datasetid="dsSearch" columnid="APT_ST_GU"/>
+      <BindItem id="item4" compid="divSearch.form.edtDS_HNAME" propid="value" datasetid="dsSearch" columnid="DS_HNAME"/>
+    </Bind>
+  </Form>
+</FDL>

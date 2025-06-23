@@ -1,0 +1,1782 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="970" titletext="개인정보변경 승인" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46.0" right="0" cssclass="div_SEARCH_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="ccfCorpCD_CORP" taborder="2" text="법인" left="0" top="10.0" width="66" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_CORP" CDTextWidth="50" taborder="3" left="ccfCorpCD_CORP:0.0" top="10.0" width="200" height="24.0" url="cmm::cmmCodeFind.xfdl" CodeFindName="DAX_CFCORP"/>
+              <Static id="staTY_CHAIYONG" taborder="0" text="결재상태" left="ccfCD_CORP:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboTY_STATUS" taborder="1" left="staTY_CHAIYONG:0.0" top="10.0" width="92" height="24.0" innerdataset="dsTY_STATUS" datacolumn="VALUE" codecolumn="CODE" value="01" index="-1" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Tab id="tabData" taborder="0" tabindex="0" left="0" top="0" right="0" bottom="0" onchanged="divData_tabData_onchanged" canchange="divData_tabData_canchange">
+                <Tabpages>
+                  <Tabpage id="tab1" text="인사기본정보" ondragmove="divData_tabData_tab1_ondragmove">
+                    <Layouts>
+                      <Layout>
+                        <Div id="divSplitter1" taborder="1" left="18.50%" top="0" width="5" cursor="ew-resize" ondrag="divData_tabData_tab1_divSplitter1_ondrag" bottom="0" cssclass="div_Splitter"/>
+                        <Div id="divBase" taborder="0" top="4" left="divSplitter1:3" bottom="0" right="0">
+                          <Layouts>
+                            <Layout>
+                              <Static id="staDS_CNAME_OLD00" taborder="226" text="성명" left="5" top="5" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta12_02" taborder="227" left="staDS_CNAME_OLD00:-1" top="staDS_CNAME_OLD00:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfID_SABUN_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="85" taborder="231" left="staDS_CNAME_OLD00:5" top="staDS_CNAME_OLD00:-25" width="178" height="20" url="cmm::cmmCodeFind.xfdl" accessibilityrole="form"/>
+                              <Static id="staDS_ENAME_OLD00" taborder="228" text="상태" left="sta12_02:-1" top="sta12_02:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="sta02_02" taborder="229" left="staDS_ENAME_OLD00:-1" top="staDS_ENAME_OLD00:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_STATUS" taborder="230" left="staDS_ENAME_OLD00:5" top="staDS_ENAME_OLD00:-25" width="179" height="20" maxlength="16"/>
+                              <Static id="staBase_old" taborder="112" text="현재정보" left="4" top="50" width="9.19%" height="25" textDecoration="none" cssclass="sta_TITLE_Bg"/>
+                              <!-- 한자성명 -->
+                              <Static id="staDS_CNAME" taborder="0" text="한자성명" left="5" top="staBase_old:5" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="staDS_CNAME_bg" taborder="1" left="staDS_CNAME:-1" top="staDS_CNAME:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_CNAME_OLD" taborder="2" left="staDS_CNAME:5" top="staDS_CNAME:-25" width="178" height="20" maxlength="16"/>
+                              <!-- 영어성명 -->
+                              <Static id="staDS_ENAME" taborder="3" text="영어성명" left="5" top="staDS_CNAME:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_ENAME_bg" taborder="4" left="staDS_ENAME:-1" top="staDS_ENAME:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_ENAME_OLD" taborder="5" left="staDS_ENAME:5" top="staDS_ENAME:-25" width="179" height="20" maxlength="16"/>
+                              <!-- 휴대폰 -->
+                              <Static id="staDS_HANDPHONE" taborder="18" text="휴대폰" left="5" top="staDS_ENAME:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_HANDPHONE_bg" taborder="19" left="staDS_HANDPHONE:-1" top="staDS_HANDPHONE:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_HANDPHONE_OLD" taborder="20" left="staDS_HANDPHONE:5" top="staDS_HANDPHONE:-25" width="178" height="20" maxlength="50"/>
+                              <!-- 종교 -->
+                              <Static id="staCD_RELIGION" taborder="27" text="종교" left="5" top="staDS_HANDPHONE:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_RELIGION_bg" taborder="28" left="staCD_RELIGION:-1" top="staCD_RELIGION:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfCD_RELIGION_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="29" left="staCD_RELIGION:5" top="staCD_RELIGION:-25" width="178" height="20" url="cmm::cmmCodeFind.xfdl" accessibilityrole="form"/>
+                              <!-- 보훈여부/번호 -->
+                              <Static id="staYN_SUPPORTED" taborder="36" text="보훈여부/번호" left="5" top="staCD_RELIGION:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staYN_SUPPORTED_bg" taborder="37" left="staYN_SUPPORTED:-1" top="staYN_SUPPORTED:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Radio id="rdoYN_SUPPORTED_OLD" taborder="41" left="staYN_SUPPORTED:5" top="staYN_SUPPORTED:-25" height="20" innerdataset="dsTY_SUPPORTED" direction="vertical" width="85" codecolumn="CD_CODE" datacolumn="DS_CODE" onitemchanged="divData_tabData_tab1_rdoYN_SUPPORTED_onitemchanged" columncount="-1" rowcount="-1"/>
+                              <Edit id="txtNO_SUPPORTED_OLD" taborder="42" left="rdoYN_SUPPORTED_OLD:-5" top="staYN_SUPPORTED:-25" width="98" height="20" maxlength="20"/>
+                              <!-- 장애여부/번호 -->
+                              <Static id="staYN_HANDICAP" taborder="43" text="장애여부/번호" left="5" top="staYN_SUPPORTED:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staYN_HANDICAP_bg" taborder="40" left="staYN_HANDICAP:-1" top="staYN_HANDICAP:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Radio id="rdoYN_HANDICAP_OLD" taborder="45" left="staYN_HANDICAP:5" top="staYN_HANDICAP:-25" height="20" innerdataset="dsTY_HANDICAP" direction="vertical" width="85" codecolumn="CD_CODE" datacolumn="DS_CODE" onitemchanged="divData_tabData_tab1_rdoYN_HANDICAP_onitemchanged" columncount="-1" rowcount="-1"/>
+                              <Edit id="ctxtNO_DISABILITY_OLD" taborder="46" left="rdoYN_HANDICAP_OLD:-5" top="staYN_HANDICAP:-25" width="98" height="20" value=""/>
+                              <!-- 출생지 -->
+                              <Static id="staDS_BIRTHPLACE" taborder="61" text="출생지" left="5" top="staYN_HANDICAP:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_BIRTHPLACE_bg" taborder="39" left="staDS_BIRTHPLACE:-1" top="staDS_BIRTHPLACE:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_BIRTHPLACE_OLD" taborder="62" left="staDS_BIRTHPLACE:5" top="staDS_BIRTHPLACE:-25" width="178" height="20" maxlength="15"/>
+                              <!-- 호주/관계 -->
+                              <Static id="staCD_FAMILY_HEAD" taborder="69" text="호주/관계" left="5" top="staDS_BIRTHPLACE:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_FAMILY_HEAD_bg" taborder="70" left="staCD_FAMILY_HEAD:-1" top="staCD_FAMILY_HEAD:-30" width="190" height="30" cssclass="sta_WF_tablebg" text=""/>
+                              <Div id="cfCD_FAMILY_HEAD_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="72" left="staCD_FAMILY_HEAD:5" top="staCD_FAMILY_HEAD:-25" width="90" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <Edit id="txtDS_FAMILY_HEADNAME_OLD" taborder="73" left="cfCD_FAMILY_HEAD_OLD:2" top="staCD_FAMILY_HEAD:-25" width="86" height="20" enable="true"/>
+                              <!-- 주민번호 -->
+                              <Static id="staID_RESIDENT" taborder="9" text="주민번호" left="staDS_CNAME_bg:-1" top="staDS_CNAME_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="staID_RESIDENT_bg" taborder="10" left="staID_RESIDENT:-1" top="staID_RESIDENT:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtID_RESIDENT_OLD" taborder="11" left="staID_RESIDENT:5" top="staID_RESIDENT:-25" width="178" height="20" onchanged="divData_tabData_tab1_txtID_RESIDENT_onchanged" maxlength="14"/>
+                              <!-- 생년월일/양.음 -->
+                              <Static id="staDT_BIRTH" taborder="12" left="staDS_ENAME_bg:-1" top="staDS_ENAME_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabelE" text="생일(양/음)"/>
+                              <Static id="staDT_BIRTH_bg" taborder="4" left="staDT_BIRTH:-1" top="staDT_BIRTH:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Calendar id="tclDT_BIRTH_OLD" taborder="14" left="staDT_BIRTH:5" top="staDT_BIRTH:-25" width="95" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                              <Radio id="rdoYN_SOLAR_OLD" taborder="17" left="tclDT_BIRTH_OLD:2" top="staDT_BIRTH:-25" height="20" innerdataset="dsYN_SOLAR" direction="vertical" fittocontents="width" width="82" codecolumn="CD_CODE" datacolumn="DS_CODE" value="Y" text="Y" index="0"/>
+                              <!-- 회사전화/내선 -->
+                              <Static id="staDS_OFFICEPHONE" taborder="21" text="회사전화/내선" left="staDS_HANDPHONE_bg:-1" top="staDS_HANDPHONE_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_OFFICEPHONE_bg" taborder="22" left="staDS_OFFICEPHONE:-1" top="staDS_OFFICEPHONE:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_OFFICEPHONE_OLD" taborder="23" left="staDS_OFFICEPHONE:5" top="staDS_OFFICEPHONE:-25" width="119" height="20" inputtype="normal" maxlength="50"/>
+                              <Edit id="txtDS_OFFICEPHONE00_OLD" taborder="105" left="txtDS_OFFICEPHONE_OLD:2" top="staDS_OFFICEPHONE:-25" width="58" height="20" inputtype="digit"/>
+                              <!-- 취미 -->
+                              <Static id="staDS_HOBBY" taborder="30" text="취미" left="staCD_RELIGION_bg:-1" top="staCD_RELIGION_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_HOBBY_bg" taborder="31" left="staDS_HOBBY:-1" top="staDS_HOBBY:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_HOBBY_OLD" taborder="32" left="staDS_HOBBY:5" top="staDS_HOBBY:-25" width="179" height="20" maxlength="30"/>
+                              <!-- 보훈관계/사유 -->
+                              <Static id="staCD_SUPPORTED" taborder="101" text="보훈관계/사유" left="staYN_SUPPORTED_bg:-1" top="staYN_SUPPORTED_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_SUPPORTED_bg" taborder="31" left="staCD_SUPPORTED:-1" top="staCD_SUPPORTED:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="ccfCD_SUPPORTED_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="102" left="staCD_SUPPORTED:5" top="staCD_SUPPORTED:-25" width="100" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <Edit id="txtDS_SUPPORTED_OLD" taborder="103" left="ccfCD_SUPPORTED_OLD:2" top="staCD_SUPPORTED:-25" width="77" height="20" maxlength="50"/>
+                              <!-- 장애종류/등급 -->
+                              <Static id="staDS_DISABILITY" taborder="47" text="장애종류/등급" left="staYN_HANDICAP_bg:-1" top="staYN_HANDICAP_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_DISABILITY_bg" taborder="48" left="staDS_DISABILITY:-1" top="staDS_DISABILITY:-30" width="190" height="30" cssclass="sta_WF_tablebg" text=""/>
+                              <Div id="ccfDS_DISABILITY_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="44" left="staDS_DISABILITY:5" top="staDS_DISABILITY:-25" width="100" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <Div id="ccfDS_DISABILITY_GRADE_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="50" left="ccfDS_DISABILITY_OLD:0" top="staDS_DISABILITY:-25" width="79" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 본적 -->
+                              <Static id="staDS_FAMILYPLACE" taborder="63" text="본적" top="staDS_BIRTHPLACE_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel" left="staDS_BIRTHPLACE_bg:-1" textDecoration="none"/>
+                              <Static id="staDS_FAMILYPLACE_bg" taborder="64" left="staDS_FAMILYPLACE:-1" top="staDS_FAMILYPLACE:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_FAMILYPLACE_OLD" taborder="65" left="staDS_FAMILYPLACE:5" top="staDS_FAMILYPLACE:-25" width="179" height="20" maxlength="50"/>
+                              <!-- 세대주/관계 -->
+                              <Static id="staCD_HOUSEHOLDER" taborder="74" text="세대주/관계" left="staCD_FAMILY_HEAD_bg:-1" top="staCD_FAMILY_HEAD_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_HOUSEHOLDER_bg" taborder="75" left="staCD_HOUSEHOLDER:-1" top="staCD_HOUSEHOLDER:-30" width="190" height="30" cssclass="sta_WF_tablebg" text=""/>
+                              <Div id="cfCD_HOUSEHOLDER_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="76" left="staCD_HOUSEHOLDER:5" top="staCD_HOUSEHOLDER:-25" width="100" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <Edit id="txtDS_HOUSEHOLDER_NAME_OLD" taborder="77" left="cfCD_HOUSEHOLDER_OLD:2" top="staCD_HOUSEHOLDER:-25" width="77" height="20"/>
+                              <!-- E-Mail -->
+                              <Static id="staDS_EMAIL" taborder="6" text="E-Mail" left="staID_RESIDENT_bg:-1" top="staID_RESIDENT_bg:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" enable="true" enableevent="true"/>
+                              <Static id="staDS_EMAIL_bg" taborder="7" left="staDS_EMAIL:-1" top="staDS_EMAIL:-30" width="242" height="30" cssclass="sta_WF_tablebg" enableevent="true"/>
+                              <Edit id="txtDS_EMAIL_OLD" taborder="8" left="staDS_EMAIL:5" top="staDS_EMAIL:-25" width="230" height="20" enable="true"/>
+                              <!-- 외부E-Mail-->
+                              <Static id="staDS_EMAIL_ETC" taborder="15" text="외부E-Mail" left="staDT_BIRTH_bg:-1" top="staDT_BIRTH_bg:-30" width="150" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="staDS_EMAIL_ETC_bg" taborder="16" left="staDS_EMAIL_ETC:-1" top="staDS_EMAIL_ETC:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_EMAIL_ETC_OLD" taborder="109" left="staDS_EMAIL_ETC:5" top="staDS_EMAIL_ETC:-25" width="230" height="20" enable="true"/>
+                              <!-- 자택전화/FAX -->
+                              <Static id="staDS_HOMEPHONE" taborder="24" text="자택전화/FAX" left="staDS_OFFICEPHONE_bg:-1" top="staDS_OFFICEPHONE_bg:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_HOMEPHONE_bg" taborder="25" left="staDS_HOMEPHONE:-1" top="staDS_HOMEPHONE:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_HOMEPHONE_OLD" taborder="26" left="staDS_HOMEPHONE:5" top="staDS_HOMEPHONE:-25" width="124" height="20" inputtype="normal" maxlength="50"/>
+                              <Edit id="txtDS_FAX_OLD" taborder="110" left="txtDS_HOMEPHONE_OLD:1" top="staDS_HOMEPHONE:-25" width="105" height="20" inputtype="normal" maxlength="50"/>
+                              <!-- 특기 -->
+                              <Static id="staDS_SPECIAL" taborder="33" text="특기" left="staDS_HOBBY_bg:-1" top="staDS_HOBBY_bg:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_SPECIAL_bg" taborder="34" left="staDS_SPECIAL:-1" top="staDS_SPECIAL:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_SPECIAL_OLD" taborder="35" left="staDS_SPECIAL:5" top="staDS_SPECIAL:-25" width="230" height="20" maxlength="30"/>
+                              <!-- 외국인여부/국적 -->
+                              <Static id="staYN_FOREIGNER" taborder="55" text="외국인여부/국적" left="staCD_SUPPORTED_bg:-1" top="staCD_SUPPORTED_bg:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staYN_FOREIGNER_bg" taborder="104" left="staYN_FOREIGNER:-1" top="staYN_FOREIGNER:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Radio id="rdoYN_FOREIGNER_OLD" taborder="56" left="staYN_FOREIGNER:5" top="staYN_FOREIGNER:-25" height="20" innerdataset="dsTY_HANDICAP" direction="vertical" fittocontents="width" width="70" codecolumn="CD_CODE" datacolumn="DS_CODE" value="N" text="N" index="1" onitemchanged="divData_tabData_tab1_rdoYN_FOREIGNER_onitemchanged"/>
+                              <Div id="ccfDS_FOREIGNER_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="57" left="rdoYN_FOREIGNER_OLD:16" top="staYN_FOREIGNER:-25" width="131" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 결혼여부/기념일 -->
+                              <Static id="staYN_MARRIAGE" taborder="51" text="결혼여부/기념일" left="staDS_DISABILITY_bg:-1" top="staDS_DISABILITY_bg:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staYN_MARRIAGE_bg" taborder="52" left="staYN_MARRIAGE:-1" top="staYN_MARRIAGE:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Radio id="rdoYN_MARRIAGE_OLD" taborder="53" left="staYN_MARRIAGE:5" top="staYN_MARRIAGE:-25" height="20" innerdataset="dsTY_MARRIAGE" direction="vertical" fittocontents="width" width="70" codecolumn="CD_CODE" datacolumn="DS_CODE" onitemchanged="divData_tabData_tab1_rdoYN_MARRIAGE_onitemchanged"/>
+                              <Calendar id="tclDT_MARRIAGE_OLD" taborder="54" left="rdoYN_MARRIAGE_OLD:17" top="staYN_MARRIAGE:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                              <!-- 성별 -->
+                              <Static id="staYN_GENDER" taborder="66" text="성별" left="staDS_FAMILYPLACE_bg:-1" top="staDS_FAMILYPLACE_bg:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staYN_GENDER_bg" taborder="67" left="staYN_GENDER:-1" top="staYN_GENDER:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Radio id="rdoYN_GENDER_OLD" taborder="68" left="staYN_GENDER:5" top="staYN_GENDER:-25" height="20" innerdataset="dsTY_GENDER" direction="vertical" fittocontents="width" width="113" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+                              <!-- 담당업무 -->
+                              <Static id="staDS_BUSINESS" taborder="106" text="담당업무" left="staCD_HOUSEHOLDER_bg:-1" top="staCD_HOUSEHOLDER_bg:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_BUSINESS_bg" taborder="71" left="staDS_BUSINESS:-1" top="staDS_BUSINESS:-30" width="242" height="30" cssclass="sta_WF_tablebg" text=""/>
+                              <Edit id="txtDS_BUSINESS_OLD" taborder="107" left="staDS_BUSINESS:5" top="staDS_BUSINESS:-25" width="230" height="20"/>
+                              <!-- 병역 -->
+                              <Static id="staTitle" taborder="81" text="병역" left="5" top="staCD_FAMILY_HEAD:10" width="61" height="25" cssclass="sta_TITLE_Bg" textDecoration="none"/>
+                              <!-- 군필종류 -->
+                              <Static id="staCD_RESOURCE" taborder="82" text="군필종류" left="5" top="staTitle:5" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_RESOURCE_bg" taborder="88" left="staCD_RESOURCE:-1" top="staCD_RESOURCE:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfCD_RESOURCE_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="90" left="staCD_RESOURCE:5" top="staCD_RESOURCE:-25" width="178" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 군별 -->
+                              <Static id="staCD_MILITARY" taborder="87" text="군별" left="5" top="staCD_RESOURCE:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_MILITARY_bg" taborder="96" left="staCD_MILITARY:-1" width="190" height="30" cssclass="sta_WF_tablebg" top="staCD_MILITARY:-30"/>
+                              <Div id="cfCD_MILITARY_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="99" left="staCD_MILITARY:5" top="staCD_MILITARY:-25" width="178" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 입대일자 -->
+                              <Static id="staDT_CHARGE" taborder="100" text="입대일자" left="5" top="staCD_MILITARY:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDT_CHARGE_bg" taborder="101" left="staDT_CHARGE:-1" top="staDT_CHARGE:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Calendar id="tclDT_CHARGE_OLD" taborder="108" left="staDT_CHARGE:5" top="staDT_CHARGE:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" autoskip="true"/>
+                              <!-- 면제사유 -->
+                              <Static id="staDS_REASON" taborder="106" text="면제사유" left="5" top="staDT_CHARGE:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_REASON_bg" taborder="107" left="staDS_REASON:-1" top="staDS_REASON:-30" width="888" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_REASON_OLD" taborder="111" left="staDS_REASON:5" top="staDS_REASON:-25" width="876" height="20" autoselect="true" autoskip="true" accessibilityenable="false" maxlength="100"/>
+                              <!-- 역종 -->
+                              <Static id="staCD_SERVICESTS" taborder="83" text="역종" left="staCD_RESOURCE_bg:-1" top="staCD_RESOURCE_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_SERVICESTS_bg" taborder="89" left="staCD_SERVICESTS:-1" top="staCD_SERVICESTS:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfCD_SERVICESTS_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="91" left="staCD_SERVICESTS:5" top="staCD_SERVICESTS:-25" width="179" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 제대구분 -->
+                              <Static id="staCD_DISCHARGE" taborder="92" text="제대구분" left="staCD_MILITARY_bg:-1" top="staCD_MILITARY_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_DISCHARGE_bg" taborder="93" left="staCD_DISCHARGE:-1" top="staCD_DISCHARGE:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfCD_DISCHARGE_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="94" left="staCD_DISCHARGE:5" top="staCD_DISCHARGE:-25" width="179" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 제대일자 -->
+                              <Static id="staDT_DISCHARGE" taborder="102" text="제대일자" left="staDT_CHARGE_bg:-1" top="staDT_CHARGE_bg:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDT_DISCHARGE_bg" taborder="103" left="staDT_DISCHARGE:-1" width="190" height="30" cssclass="sta_WF_tablebg" top="staDT_DISCHARGE:-30"/>
+                              <Calendar id="tclDT_DISCHARGE_OLD" taborder="109" left="staDT_DISCHARGE:5" top="staDT_DISCHARGE:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" autoskip="true"/>
+                              <!-- 병과 -->
+                              <Static id="staCD_BRANCH" taborder="84" text="병과" left="staCD_SERVICESTS_bg:-1" top="staCD_SERVICESTS_bg:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_BRANCH_bg" taborder="85" left="staCD_BRANCH:-1" top="staCD_BRANCH:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfCD_BRANCH_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="86" left="staCD_BRANCH:5" top="staCD_BRANCH:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 계급 -->
+                              <Static id="staCD_MILITARYRANK" taborder="95" text="계급" left="staCD_DISCHARGE_bg:-1" top="staCD_DISCHARGE_bg:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_MILITARYRANK_bg" taborder="97" left="staCD_MILITARYRANK:-1" width="242" height="30" cssclass="sta_WF_tablebg" top="staCD_MILITARYRANK:-30"/>
+                              <Div id="cfCD_MILITARYRANK_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="98" left="staCD_MILITARYRANK:5" top="staCD_MILITARYRANK:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 군번 -->
+                              <Static id="staDS_SERVICENO" taborder="104" text="군번" left="staDT_DISCHARGE_bg:-1" top="staDT_DISCHARGE_bg:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_SERVICENO_bg" taborder="105" left="staDS_SERVICENO:-1" top="staDS_SERVICENO:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_SERVICENO_OLD" taborder="110" left="staDS_SERVICENO:5" top="staDS_SERVICENO:-25" width="230" height="20" autoselect="true" autoskip="true" maxlength="50"/>
+                              <Static id="staBase_ask" taborder="113" text="변경정보" left="5" top="staDS_REASON:10" width="9.19%" height="25" cssclass="sta_TITLE_Bg" color="red" textDecoration="none"/>
+                              <!-- 한자성명 -->
+                              <Static id="staDS_CNAME_ASK" taborder="0" text="한자성명" left="5" top="staBase_ask:5" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="staDS_CNAME_bg_ASK" taborder="1" left="staDS_CNAME_ASK:-1" top="staDS_CNAME_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_CNAME_ASK" taborder="2" left="staDS_CNAME_ASK:5" top="staDS_CNAME_ASK:-25" width="178" height="20" maxlength="16"/>
+                              <!-- 영어성명 -->
+                              <Static id="staDS_ENAME_ASK" taborder="3" text="영어성명" left="5" top="staDS_CNAME_ASK:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_ENAME_bg_ASK" taborder="4" left="staDS_ENAME_ASK:-1" top="staDS_ENAME_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_ENAME_ASK" taborder="5" left="staDS_ENAME_ASK:5" top="staDS_ENAME_ASK:-25" width="179" height="20" maxlength="16"/>
+                              <!-- 휴대폰 -->
+                              <Static id="staDS_HANDPHONE_ASK" taborder="18" text="휴대폰" left="5" top="staDS_ENAME_bg_ASK:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_HANDPHONE_bg_ASK" taborder="19" left="staDS_HANDPHONE_ASK:-1" top="staDS_HANDPHONE_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_HANDPHONE_ASK" taborder="20" left="staDS_HANDPHONE_ASK:5" top="staDS_HANDPHONE_ASK:-25" width="178" height="20" maxlength="50"/>
+                              <!-- 종교 -->
+                              <Static id="staCD_RELIGION_ASK" taborder="27" text="종교" left="5" top="staDS_HANDPHONE_ASK:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_RELIGION_bg_ASK" taborder="28" left="staCD_RELIGION_ASK:-1" top="staCD_RELIGION_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfCD_RELIGION_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="29" left="staCD_RELIGION_ASK:5" top="staCD_RELIGION_ASK:-25" width="178" height="20" url="cmm::cmmCodeFind.xfdl" accessibilityrole="form"/>
+                              <!-- 보훈여부/번호 -->
+                              <Static id="staYN_SUPPORTED_ASK" taborder="36" text="보훈여부/번호" left="5" top="staCD_RELIGION_ASK:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staYN_SUPPORTED_bg_ASK" taborder="37" left="staYN_SUPPORTED_ASK:-1" top="staYN_SUPPORTED_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Radio id="rdoYN_SUPPORTED_ASK" taborder="41" left="staYN_SUPPORTED_ASK:5" top="staYN_SUPPORTED_ASK:-25" height="20" innerdataset="dsTY_SUPPORTED" direction="vertical" width="85" codecolumn="CD_CODE" datacolumn="DS_CODE" onitemchanged="divData_tabData_tab1_rdoYN_SUPPORTED_onitemchanged" columncount="-1" rowcount="-1"/>
+                              <Edit id="txtNO_SUPPORTED_ASK" taborder="42" left="rdoYN_SUPPORTED_ASK:-5" top="staYN_SUPPORTED_ASK:-25" width="98" height="20" maxlength="20"/>
+                              <!-- 장애여부/번호 -->
+                              <Static id="staYN_HANDICAP_ASK" taborder="43" text="장애여부/번호" left="5" top="staYN_SUPPORTED_ASK:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staYN_HANDICAP_bg_ASK" taborder="40" left="staYN_HANDICAP_ASK:-1" top="staYN_HANDICAP_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Radio id="rdoYN_HANDICAP_ASK" taborder="45" left="staYN_HANDICAP_ASK:5" top="staYN_HANDICAP_ASK:-25" height="20" innerdataset="dsTY_HANDICAP" direction="vertical" width="85" codecolumn="CD_CODE" datacolumn="DS_CODE" onitemchanged="divData_tabData_tab1_rdoYN_HANDICAP_onitemchanged" columncount="-1" rowcount="-1"/>
+                              <Edit id="ctxtNO_DISABILITY_ASK" taborder="46" left="rdoYN_HANDICAP_ASK:-5" top="staYN_HANDICAP_ASK:-25" width="98" height="20" value=""/>
+                              <!-- 출생지 -->
+                              <Static id="staDS_BIRTHPLACE_ASK" taborder="61" text="출생지" left="5" top="staYN_HANDICAP_ASK:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_BIRTHPLACE_bg_ASK" taborder="39" left="staDS_BIRTHPLACE_ASK:-1" top="staDS_BIRTHPLACE_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_BIRTHPLACE_ASK" taborder="62" left="staDS_BIRTHPLACE_ASK:5" top="staDS_BIRTHPLACE_ASK:-25" width="178" height="20" maxlength="15"/>
+                              <!-- 호주/관계 -->
+                              <Static id="staCD_FAMILY_HEAD_ASK" taborder="69" text="호주/관계" left="5" top="staDS_BIRTHPLACE_ASK:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_FAMILY_HEAD_bg_ASK" taborder="70" left="staCD_FAMILY_HEAD_ASK:-1" top="staCD_FAMILY_HEAD_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg" text=""/>
+                              <Div id="cfCD_FAMILY_HEAD_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="72" left="staCD_FAMILY_HEAD_ASK:5" top="staCD_FAMILY_HEAD_ASK:-25" width="90" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <Edit id="txtDS_FAMILY_HEADNAME_ASK" taborder="73" left="cfCD_FAMILY_HEAD_ASK:2" top="staCD_FAMILY_HEAD_ASK:-25" width="86" height="20" enable="true"/>
+                              <!-- 주민번호 -->
+                              <Static id="staID_RESIDENT_ASK" taborder="9" text="주민번호" left="staDS_CNAME_bg_ASK:-1" top="staDS_CNAME_bg_ASK:-30" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="staID_RESIDENT_bg_ASK" taborder="10" left="staID_RESIDENT_ASK:-1" top="staID_RESIDENT_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtID_RESIDENT_ASK" taborder="11" left="staID_RESIDENT_ASK:5" top="staID_RESIDENT_ASK:-25" width="178" height="20" onchanged="divData_tabData_tab1_txtID_RESIDENT_onchanged" maxlength="14"/>
+                              <!-- 생년월일/양.음 -->
+                              <Static id="staDT_BIRTH_ASK" taborder="12" text="생년월일/양.음" left="staDS_ENAME_bg_ASK:-1" top="staDS_ENAME_bg_ASK:-30" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="staDT_BIRTH_bg_ASK" taborder="4" left="staDT_BIRTH_ASK:-1" top="staDT_BIRTH_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Calendar id="tclDT_BIRTH_ASK" taborder="14" left="staDT_BIRTH_ASK:5" top="staDT_BIRTH_ASK:-25" width="95" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                              <Radio id="rdoYN_SOLAR_ASK" taborder="17" left="tclDT_BIRTH_ASK:2" top="staDT_BIRTH_ASK:-25" height="20" innerdataset="dsYN_SOLAR" direction="vertical" fittocontents="width" width="82" codecolumn="CD_CODE" datacolumn="DS_CODE" value="Y" text="Y" index="0"/>
+                              <!-- 회사전화/내선 -->
+                              <Static id="staDS_OFFICEPHONE_ASK" taborder="21" text="회사전화/내선" left="staDS_HANDPHONE_bg_ASK:-1" top="staDS_HANDPHONE_bg_ASK:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_OFFICEPHONE_bg_ASK" taborder="22" left="staDS_OFFICEPHONE_ASK:-1" top="staDS_OFFICEPHONE_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_OFFICEPHONE_ASK" taborder="23" left="staDS_OFFICEPHONE_ASK:5" top="staDS_OFFICEPHONE_ASK:-25" width="119" height="20" inputtype="normal" maxlength="50"/>
+                              <Edit id="txtDS_OFFICEPHONE00_ASK" taborder="105" left="txtDS_OFFICEPHONE_ASK:2" top="staDS_OFFICEPHONE_ASK:-25" width="58" height="20" inputtype="digit"/>
+                              <!-- 취미 -->
+                              <Static id="staDS_HOBBY_ASK" taborder="30" text="취미" left="staCD_RELIGION_bg_ASK:-1" top="staCD_RELIGION_bg_ASK:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_HOBBY_bg_ASK" taborder="31" left="staDS_HOBBY_ASK:-1" top="staDS_HOBBY_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_HOBBY_ASK" taborder="32" left="staDS_HOBBY_ASK:5" top="staDS_HOBBY_ASK:-25" width="179" height="20" maxlength="30"/>
+                              <!-- 보훈관계/사유 -->
+                              <Static id="staCD_SUPPORTED_ASK" taborder="101" text="보훈관계/사유" left="staYN_SUPPORTED_bg_ASK:-1" top="staYN_SUPPORTED_bg_ASK:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_SUPPORTED_bg_ASK" taborder="31" left="staCD_SUPPORTED_ASK:-1" top="staCD_SUPPORTED_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="ccfCD_SUPPORTED_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="102" left="staCD_SUPPORTED_ASK:5" top="staCD_SUPPORTED_ASK:-25" width="100" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <Edit id="txtDS_SUPPORTED_ASK" taborder="103" left="ccfCD_SUPPORTED_ASK:2" top="staCD_SUPPORTED_ASK:-25" width="77" height="20" maxlength="50"/>
+                              <!-- 장애종류/등급 -->
+                              <Static id="staDS_DISABILITY_ASK" taborder="47" text="장애종류/등급" left="staYN_HANDICAP_bg_ASK:-1" top="staYN_HANDICAP_bg_ASK:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_DISABILITY_bg_ASK" taborder="48" left="staDS_DISABILITY_ASK:-1" top="staDS_DISABILITY_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg" text=""/>
+                              <Div id="ccfDS_DISABILITY_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="44" left="staDS_DISABILITY_ASK:5" top="staDS_DISABILITY_ASK:-25" width="100" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <Div id="ccfDS_DISABILITY_GRADE_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="50" left="ccfDS_DISABILITY_ASK:0" top="staDS_DISABILITY_ASK:-25" width="79" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 본적 -->
+                              <Static id="staDS_FAMILYPLACE_ASK" taborder="63" text="본적" top="staDS_BIRTHPLACE_bg_ASK:-30" width="120" height="30" cssclass="sta_WF_tablelabel" left="staDS_BIRTHPLACE_bg_ASK:-1" textDecoration="none"/>
+                              <Static id="staDS_FAMILYPLACE_bg_ASK" taborder="64" left="staDS_FAMILYPLACE_ASK:-1" top="staDS_FAMILYPLACE_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_FAMILYPLACE_ASK" taborder="65" left="staDS_FAMILYPLACE_ASK:5" top="staDS_FAMILYPLACE_ASK:-25" width="179" height="20" maxlength="50"/>
+                              <!-- 세대주/관계 -->
+                              <Static id="staCD_HOUSEHOLDER_ASK" taborder="74" text="세대주/관계" left="staCD_FAMILY_HEAD_bg_ASK:-1" top="staCD_FAMILY_HEAD_bg_ASK:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_HOUSEHOLDER_bg_ASK" taborder="75" left="staCD_HOUSEHOLDER_ASK:-1" top="staCD_HOUSEHOLDER_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg" text=""/>
+                              <Div id="cfCD_HOUSEHOLDER_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="76" left="staCD_HOUSEHOLDER_ASK:5" top="staCD_HOUSEHOLDER_ASK:-25" width="100" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <Edit id="txtDS_HOUSEHOLDER_NAME_ASK" taborder="77" left="cfCD_HOUSEHOLDER_ASK:2" top="staCD_HOUSEHOLDER_ASK:-25" width="77" height="20"/>
+                              <!-- E-Mail -->
+                              <Static id="staDS_EMAIL_ASK" taborder="6" text="E-Mail" left="staID_RESIDENT_bg_ASK:-1" top="staID_RESIDENT_bg_ASK:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" enable="true" enableevent="true"/>
+                              <Static id="staDS_EMAIL_bg_ASK" taborder="7" left="staDS_EMAIL_ASK:-1" top="staDS_EMAIL_ASK:-30" width="242" height="30" cssclass="sta_WF_tablebg" enableevent="true"/>
+                              <Edit id="txtDS_EMAIL_ASK" taborder="8" left="staDS_EMAIL_ASK:5" top="staDS_EMAIL_ASK:-25" width="230" height="20" enable="true"/>
+                              <!-- 외부E-Mail-->
+                              <Static id="staDS_EMAIL_ETC_ASK" taborder="15" text="외부E-Mail" left="staDT_BIRTH_bg_ASK:-1" top="staDT_BIRTH_bg_ASK:-30" width="150" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="staDS_EMAIL_ETC_bg_ASK" taborder="16" left="staDS_EMAIL_ETC_ASK:-1" top="staDS_EMAIL_ETC_ASK:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_EMAIL_ETC_ASK" taborder="109" left="staDS_EMAIL_ETC_ASK:5" top="staDS_EMAIL_ETC_ASK:-25" width="230" height="20" enable="true"/>
+                              <!-- 자택전화/FAX -->
+                              <Static id="staDS_HOMEPHONE_ASK" taborder="24" text="자택전화/FAX" left="staDS_OFFICEPHONE_bg_ASK:-1" top="staDS_OFFICEPHONE_bg_ASK:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_HOMEPHONE_bg_ASK" taborder="25" left="staDS_HOMEPHONE_ASK:-1" top="staDS_HOMEPHONE_ASK:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_HOMEPHONE_ASK" taborder="26" left="staDS_HOMEPHONE_ASK:5" top="staDS_HOMEPHONE_ASK:-25" width="124" height="20" inputtype="normal" maxlength="50"/>
+                              <Edit id="txtDS_FAX_ASK" taborder="110" left="txtDS_HOMEPHONE_ASK:1" top="staDS_HOMEPHONE_ASK:-25" width="105" height="20" inputtype="normal" maxlength="50"/>
+                              <!-- 특기 -->
+                              <Static id="staDS_SPECIAL_ASK" taborder="33" text="특기" left="staDS_HOBBY_bg_ASK:-1" top="staDS_HOBBY_bg_ASK:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_SPECIAL_bg_ASK" taborder="34" left="staDS_SPECIAL_ASK:-1" top="staDS_SPECIAL_ASK:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_SPECIAL_ASK" taborder="35" left="staDS_SPECIAL_ASK:5" top="staDS_SPECIAL_ASK:-25" width="230" height="20" maxlength="30"/>
+                              <!-- 외국인여부/국적 -->
+                              <Static id="staYN_FOREIGNER_ASK" taborder="55" text="외국인여부/국적" left="staCD_SUPPORTED_bg_ASK:-1" top="staCD_SUPPORTED_bg_ASK:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staYN_FOREIGNER_bg_ASK" taborder="104" left="staYN_FOREIGNER_ASK:-1" top="staYN_FOREIGNER_ASK:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Radio id="rdoYN_FOREIGNER_ASK" taborder="56" left="staYN_FOREIGNER_ASK:5" top="staYN_FOREIGNER_ASK:-25" height="20" innerdataset="dsTY_HANDICAP" direction="vertical" fittocontents="width" width="70" codecolumn="CD_CODE" datacolumn="DS_CODE" value="N" text="N" index="1" onitemchanged="divData_tabData_tab1_rdoYN_FOREIGNER_onitemchanged"/>
+                              <Div id="ccfDS_FOREIGNER_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" taborder="57" left="rdoYN_FOREIGNER_ASK:16" top="staYN_FOREIGNER_ASK:-25" width="131" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 결혼여부/기념일 -->
+                              <Static id="staYN_MARRIAGE_ASK" taborder="51" text="결혼여부/기념일" left="staDS_DISABILITY_bg_ASK:-1" top="staDS_DISABILITY_bg_ASK:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staYN_MARRIAGE_bg_ASK" taborder="52" left="staYN_MARRIAGE_ASK:-1" top="staYN_MARRIAGE_ASK:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Radio id="rdoYN_MARRIAGE_ASK" taborder="53" left="staYN_MARRIAGE_ASK:5" top="staYN_MARRIAGE_ASK:-25" height="20" innerdataset="dsTY_MARRIAGE" direction="vertical" fittocontents="width" width="70" codecolumn="CD_CODE" datacolumn="DS_CODE" onitemchanged="divData_tabData_tab1_rdoYN_MARRIAGE_onitemchanged"/>
+                              <Calendar id="tclDT_MARRIAGE_ASK" taborder="54" left="rdoYN_MARRIAGE_ASK:17" top="staYN_MARRIAGE_ASK:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+                              <!-- 성별 -->
+                              <Static id="staYN_GENDER_ASK" taborder="66" text="성별" left="staDS_FAMILYPLACE_bg_ASK:-1" top="staDS_FAMILYPLACE_bg_ASK:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staYN_GENDER_bg_ASK" taborder="67" left="staYN_GENDER_ASK:-1" top="staYN_GENDER_ASK:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Radio id="rdoYN_GENDER_ASK" taborder="68" left="staYN_GENDER_ASK:5" top="staYN_GENDER_ASK:-25" height="20" innerdataset="dsTY_GENDER" direction="vertical" fittocontents="width" width="113" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+                              <!-- 담당업무 -->
+                              <Static id="staDS_BUSINESS_ASK" taborder="106" text="담당업무" left="staCD_HOUSEHOLDER_bg_ASK:-1" top="staCD_HOUSEHOLDER_bg_ASK:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_BUSINESS_bg_ASK" taborder="71" left="staDS_BUSINESS_ASK:-1" top="staDS_BUSINESS_ASK:-30" width="242" height="30" cssclass="sta_WF_tablebg" text=""/>
+                              <Edit id="txtDS_BUSINESS_ASK" taborder="107" left="staDS_BUSINESS_ASK:5" top="staDS_BUSINESS_ASK:-25" width="230" height="20"/>
+                              <!-- 병역 -->
+                              <Static id="staTitle_ASK" taborder="81" text="병역" left="5" top="staCD_FAMILY_HEAD_ASK:10" width="61" height="25" cssclass="sta_TITLE_Bg" color="red" textDecoration="none"/>
+                              <!-- 군필종류 -->
+                              <Static id="staCD_RESOURCE_ASK" taborder="82" text="군필종류" left="5" top="staTitle_ASK:5" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_RESOURCE_bg_ASK" taborder="88" left="staCD_RESOURCE_ASK:-1" top="staCD_RESOURCE_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfCD_RESOURCE_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="90" left="staCD_RESOURCE_ASK:5" top="staCD_RESOURCE_ASK:-25" width="178" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 군별 -->
+                              <Static id="staCD_MILITARY_ASK" taborder="87" text="군별" left="5" top="staCD_RESOURCE_ASK:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_MILITARY_bg_ASK" taborder="96" left="staCD_MILITARY_ASK:-1" width="190" height="30" cssclass="sta_WF_tablebg" top="staCD_MILITARY_ASK:-30"/>
+                              <Div id="cfCD_MILITARY_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="99" left="staCD_MILITARY_ASK:5" top="staCD_MILITARY_ASK:-25" width="178" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 입대일자 -->
+                              <Static id="staDT_CHARGE_ASK" taborder="100" text="입대일자" left="5" top="staCD_MILITARY_ASK:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDT_CHARGE_bg_ASK" taborder="101" left="staDT_CHARGE_ASK:-1" top="staDT_CHARGE_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Calendar id="tclDT_CHARGE_ASK" taborder="108" left="staDT_CHARGE_ASK:5" top="staDT_CHARGE_ASK:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" autoskip="true"/>
+                              <!-- 면제사유 -->
+                              <Static id="staDS_REASON_ASK" taborder="106" text="면제사유" left="5" top="staDT_CHARGE_ASK:-1" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_REASON_bg_ASK" taborder="107" left="staDS_REASON_ASK:-1" top="staDS_REASON_ASK:-30" width="888" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_REASON_ASK" taborder="111" left="staDS_REASON_ASK:5" top="staDS_REASON_ASK:-25" width="876" height="20" autoselect="true" autoskip="true" accessibilityenable="false" maxlength="100"/>
+                              <!-- 역종 -->
+                              <Static id="staCD_SERVICESTS_ASK" taborder="83" text="역종" left="staCD_RESOURCE_bg_ASK:-1" top="staCD_RESOURCE_bg_ASK:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_SERVICESTS_bg_ASK" taborder="89" left="staCD_SERVICESTS_ASK:-1" top="staCD_SERVICESTS_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfCD_SERVICESTS_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="91" left="staCD_SERVICESTS_ASK:5" top="staCD_SERVICESTS_ASK:-25" width="179" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 제대구분 -->
+                              <Static id="staCD_DISCHARGE_ASK" taborder="92" text="제대구분" left="staCD_MILITARY_bg_ASK:-1" top="staCD_MILITARY_bg_ASK:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_DISCHARGE_bg_ASK" taborder="93" left="staCD_DISCHARGE_ASK:-1" top="staCD_DISCHARGE_ASK:-30" width="190" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfCD_DISCHARGE_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="94" left="staCD_DISCHARGE_ASK:5" top="staCD_DISCHARGE_ASK:-25" width="179" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 제대일자 -->
+                              <Static id="staDT_DISCHARGE_ASK" taborder="102" text="제대일자" left="staDT_CHARGE_bg_ASK:-1" top="staDT_CHARGE_bg_ASK:-30" width="120" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDT_DISCHARGE_bg_ASK" taborder="103" left="staDT_DISCHARGE_ASK:-1" width="190" height="30" cssclass="sta_WF_tablebg" top="staDT_DISCHARGE_ASK:-30"/>
+                              <Calendar id="tclDT_DISCHARGE_ASK" taborder="109" left="staDT_DISCHARGE_ASK:5" top="staDT_DISCHARGE_ASK:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" autoskip="true"/>
+                              <!-- 병과 -->
+                              <Static id="staCD_BRANCH_ASK" taborder="84" text="병과" left="staCD_SERVICESTS_bg_ASK:-1" top="staCD_SERVICESTS_bg_ASK:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_BRANCH_bg_ASK" taborder="85" left="staCD_BRANCH_ASK:-1" top="staCD_BRANCH_ASK:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfCD_BRANCH_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="86" left="staCD_BRANCH_ASK:5" top="staCD_BRANCH_ASK:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 계급 -->
+                              <Static id="staCD_MILITARYRANK_ASK" taborder="95" text="계급" left="staCD_DISCHARGE_bg_ASK:-1" top="staCD_DISCHARGE_bg_ASK:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staCD_MILITARYRANK_bg_ASK" taborder="97" left="staCD_MILITARYRANK_ASK:-1" width="242" height="30" cssclass="sta_WF_tablebg" top="staCD_MILITARYRANK_ASK:-30"/>
+                              <Div id="cfCD_MILITARYRANK_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="50" taborder="98" left="staCD_MILITARYRANK_ASK:5" top="staCD_MILITARYRANK_ASK:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                              <!-- 군번 -->
+                              <Static id="staDS_SERVICENO_ASK" taborder="104" text="군번" left="staDT_DISCHARGE_bg_ASK:-1" top="staDT_DISCHARGE_bg_ASK:-30" width="150" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_SERVICENO_bg_ASK" taborder="105" left="staDS_SERVICENO_ASK:-1" top="staDS_SERVICENO_ASK:-30" width="242" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_SERVICENO_ASK" taborder="110" left="staDS_SERVICENO_ASK:5" top="staDS_SERVICENO_ASK:-25" width="230" height="20" autoselect="true" autoskip="true" maxlength="50"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                        <Div id="divLeft1" taborder="2" left="0" top="4" right="divSplitter1:5" bottom="10">
+                          <Layouts>
+                            <Layout>
+                              <Grid id="objGridBase" taborder="0" left="5" top="4" bottom="4" right="3"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab2" text="주소">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staGridAddr" taborder="3" text="변경정보" left="4" top="0" width="50%" height="25" cssclass="sta_TITLE_Bg" textDecoration="none"/>
+                        <Grid id="objGridAddr" taborder="0" left="0" top="staGridAddr:5" right="0" height="95%" visible="true"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab3" text="가족">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staGridFmy" taborder="78" text="변경정보" left="4" top="0" width="50%" height="25" cssclass="sta_TITLE_Bg" textDecoration="none"/>
+                        <Grid id="objGridFmy" taborder="0" left="0" top="staGridFmy:5" bottom="0" right="0"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab4" text="학력">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staGridSch" taborder="78" text="변경정보" left="4" top="0" width="50%" height="25" cssclass="sta_TITLE_Bg" textDecoration="none"/>
+                        <Grid id="objGridSch" taborder="0" left="0" top="staGridSch:5" bottom="0" right="0"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab5" text="자격">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staGridLic" taborder="78" text="변경정보" left="4" top="0" width="50%" height="25" cssclass="sta_TITLE_Bg" textDecoration="none"/>
+                        <Grid id="objGridLic" taborder="0" left="0" top="staGridLic:5" bottom="0" right="0"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab6" text="그룹외경력">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staGridCrr" taborder="78" text="변경정보" left="4" top="0" width="50%" height="25" cssclass="sta_TITLE_Bg" textDecoration="none"/>
+                        <Grid id="objGridCrr" taborder="0" left="0" top="staGridCrr:5" bottom="0" right="0"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab7" text="기타" ondragmove="divData_tabData_tab7_ondragmove">
+                    <Layouts>
+                      <Layout>
+                        <Div id="divSplitter7" taborder="1" left="18.50%" top="0" width="5" cursor="ew-resize" ondrag="divData_tabData_tab7_divSplitter7_ondrag" bottom="0" cssclass="div_Splitter"/>
+                        <Div id="divLeft7" taborder="0" left="0" top="4" right="divSplitter7:5" bottom="10">
+                          <Layouts>
+                            <Layout>
+                              <Grid id="objGridEtc" taborder="0" left="5" top="4" bottom="4" right="4"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                        <Div id="divEtc" taborder="2" top="4" left="divSplitter7:7" bottom="0" right="0">
+                          <Layouts>
+                            <Layout>
+                              <Static id="staDS_CNAME_OLD00" taborder="2" text="성명" left="0" top="5" width="80" height="30" cssclass="sta_WF_tablelabel"/>
+                              <Static id="sta12_02" taborder="3" left="staDS_CNAME_OLD00:-1" top="staDS_CNAME_OLD00:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="cfID_SABUN_OLD7" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="85" taborder="7" left="staDS_CNAME_OLD00:5" top="staDS_CNAME_OLD00:-25" width="173" height="20" url="cmm::cmmCodeFind.xfdl" accessibilityrole="form"/>
+                              <Static id="staDS_ENAME_OLD00" taborder="4" text="상태" left="sta12_02:-1" top="sta12_02:-30" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="sta02_02" taborder="5" left="staDS_ENAME_OLD00:-1" top="staDS_ENAME_OLD00:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_STATUS7" taborder="6" left="staDS_ENAME_OLD00:5" top="staDS_ENAME_OLD00:-25" width="173" height="20" maxlength="16"/>
+                              <Static id="staEtc_old" taborder="0" text="현재정보" left="4" top="50" width="9.10%" height="25" textDecoration="none" cssclass="sta_TITLE_Bg"/>
+                              <Static id="staEtc_old_1" taborder="8" text="▣ 신체정보" left="4" top="staEtc_old:2" width="24.01%" height="25" textDecoration="none"/>
+                              <!-- 신장 -->
+                              <Static id="staQT_HEIGHT" taborder="25" text="신장" left="0" top="staEtc_old_1:5" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staQT_HEIGHT_bg" taborder="22" left="staQT_HEIGHT:-1" top="staQT_HEIGHT:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtQT_HEIGHT_OLD" taborder="1" left="staQT_HEIGHT:5" top="staQT_HEIGHT:-25" width="173" height="20" inputmode="normal" enable="true" enableevent="true" autoselect="true" autoskip="true" readonly="false" maxlength="6"/>
+                              <!-- 시력 -->
+                              <Static id="staRT_EYE" taborder="27" text="시력" left="0" top="staQT_HEIGHT:-1" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staRT_LEFTEYE_bg" taborder="22" left="staRT_EYE:-1" top="staRT_EYE:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="staRT_EYE_L" taborder="26" text="좌:" left="staRT_EYE:10" top="staRT_EYE:-25" width="20" height="20" textDecoration="none"/>
+                              <Edit id="txtRT_LEFTEYE_OLD" taborder="3" left="staRT_EYE_L:5" top="staRT_EYE:-25" width="54" height="20" inputmode="normal" maxlength="3"/>
+                              <Static id="staRT_EYE_R" taborder="68" text="우:" left="txtRT_LEFTEYE_OLD:10" top="staRT_EYE:-25" width="20" height="20" textDecoration="none"/>
+                              <Edit id="txtRT_RIGHTEYE_OLD" taborder="4" left="staRT_EYE_R:5" top="staRT_EYE:-25" width="54" height="20" inputmode="normal" maxlength="3"/>
+                              <!-- 주량 -->
+                              <Static id="staDS_ALCOHOL" taborder="31" text="주량" left="0" top="staRT_EYE:-1" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_ALCOHOL_bg" taborder="22" left="staDS_ALCOHOL:-1" top="staDS_ALCOHOL:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_ALCOHOL_OLD" taborder="5" left="staDS_ALCOHOL:5" top="staDS_ALCOHOL:-25" width="173" height="20" inputmode="normal" maxlength="10"/>
+                              <!-- 비고 -->
+                              <Static id="staDS_HEALTH_REMARK" taborder="35" text="비고" left="0" top="staDS_ALCOHOL:-1" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_HEALTH_REMARK_bg" taborder="22" left="staDS_HEALTH_REMARK:-1" top="staDS_HEALTH_REMARK:-30" width="448" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_HEALTH_REMARK_OLD" taborder="7" left="staDS_HEALTH_REMARK:5" top="staDS_HEALTH_REMARK:-25" width="437" height="20" inputmode="normal" maxlength="20"/>
+                              <!-- 체중 -->
+                              <Static id="staQT_WEIGHT" taborder="23" text="체중" left="staQT_HEIGHT_bg:-1" top="staQT_HEIGHT_bg:-30" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staQT_WEIGHT_bg" taborder="22" left="staQT_WEIGHT:-1" top="staQT_WEIGHT:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtQT_WEIGHT_OLD" taborder="2" left="staQT_WEIGHT:5" top="staQT_WEIGHT:-25" width="174" height="20" inputmode="normal" maxlength="6"/>
+                              <!-- 혈액형 -->
+                              <Static id="staTY_BLOOD" taborder="29" text="혈액형" left="staRT_LEFTEYE_bg:-1" top="staRT_LEFTEYE_bg:-30" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staTY_BLOOD_bg" taborder="22" left="staTY_BLOOD:-1" top="staTY_BLOOD:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="ccfTY_BLOOD_OLD" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="30" taborder="69" left="staTY_BLOOD:5" top="staTY_BLOOD:-25" width="174" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="true"/>
+                              <!-- 흡연여부 -->
+                              <Static id="staYN_SMOKING" taborder="33" text="흡연여부" left="staDS_ALCOHOL_bg:-1" top="staDS_ALCOHOL_bg:-30" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staYN_SMOKING_bg" taborder="22" left="staYN_SMOKING:-1" top="staYN_SMOKING:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Radio id="rdoYN_SMOKING_OLD" taborder="6" left="staYN_SMOKING:5" top="staYN_SMOKING:-25" height="20" innerdataset="dsTY_SMOKING" direction="vertical" fittocontents="width" width="120" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+                              <!-- 추천인정보 -->
+                              <Static id="staEtc_old_2" taborder="23" text="▣ 추천인정보" left="4" top="staDS_HEALTH_REMARK:10" width="24.01%" height="25" textDecoration="none"/>
+                              <!-- 성명 -->
+                              <Static id="staDS_RECOM_HNAME" taborder="55" text="성명" left="0" top="staEtc_old_2:5" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_RECOM_HNAME_bg" taborder="54" left="staDS_RECOM_HNAME:-1" top="staDS_RECOM_HNAME:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_RECOM_HNAME_OLD" taborder="16" left="staDS_RECOM_HNAME:5" top="staDS_RECOM_HNAME:-25" width="173" height="20" inputmode="normal" maxlength="10"/>
+                              <!-- 직업 -->
+                              <Static id="staDS_RECOM_JOB" taborder="56" text="직업" left="0" top="staDS_RECOM_HNAME:-1" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_RECOM_JOB_bg" taborder="57" left="staDS_RECOM_JOB:-1" top="staDS_RECOM_JOB:-30" width="448" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_RECOM_JOB_OLD" taborder="18" left="staDS_RECOM_JOB:5" top="staDS_RECOM_JOB:-25" width="437" height="20" inputmode="normal" maxlength="10"/>
+                              <!-- 주소 -->
+                              <Static id="staDS_RECOM_ADDRESS" taborder="58" text="주소" left="0" top="staDS_RECOM_JOB:-1" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_RECOM_ADDRESS_bg" taborder="59" left="staDS_RECOM_ADDRESS:-1" top="staDS_RECOM_ADDRESS:-30" width="448" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_RECOM_ADDRESS_OLD" taborder="19" left="staDS_RECOM_ADDRESS:5" top="staDS_RECOM_ADDRESS:-25" width="437" height="20" inputmode="normal" maxlength="60"/>
+                              <!-- 관계 -->
+                              <Static id="staDS_RECOM_RELATION" taborder="53" text="관계" left="staDS_RECOM_HNAME_bg:-1" top="staDS_RECOM_HNAME_bg:-30" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_RECOM_RELATION_bg" taborder="52" left="staDS_RECOM_RELATION:-1" top="staDS_RECOM_RELATION:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_RECOM_RELATION_OLD" taborder="17" left="staDS_RECOM_RELATION:5" top="staDS_RECOM_RELATION:-25" width="174" height="20" inputmode="normal" maxlength="5"/>
+                              <!-- 재산정보 -->
+                              <Static id="sta100003" taborder="60" text="재산정보" left="0" top="staDS_RECOM_ADDRESS:10" width="25%" height="25" cssclass="sta_TITLE_Bg" textDecoration="none" visible="false"/>
+                              <!-- 동산 -->
+                              <Static id="staDS_MOVABLES" taborder="61" text="동산" left="4" top="sta100003:5" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" visible="false"/>
+                              <Static id="staDS_MOVABLES_bg" taborder="62" left="staDS_MOVABLES:-1" top="staDS_MOVABLES:-30" width="185" height="30" cssclass="sta_WF_tablebg" visible="false"/>
+                              <Edit id="txtDS_MOVABLES_OLD" taborder="20" left="staDS_MOVABLES:5" top="staDS_MOVABLES:-25" width="173" height="20" inputmode="normal" maxlength="20" visible="false"/>
+                              <!-- 부동산 -->
+                              <Static id="staDS_IMMOVABLES" taborder="63" text="부동산" left="staDS_MOVABLES_bg:-1" top="staDS_MOVABLES_bg:-30" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" visible="false"/>
+                              <Static id="staDS_IMMOVABLES_bg" taborder="64" left="staDS_IMMOVABLES:-1" top="staDS_IMMOVABLES:-30" width="185" height="30" cssclass="sta_WF_tablebg" visible="false"/>
+                              <Edit id="txtDS_IMMOVABLES_OLD" taborder="21" left="staDS_IMMOVABLES:5" top="staDS_IMMOVABLES:-25" width="174" height="20" inputmode="normal" maxlength="20" visible="false"/>
+                              <Static id="staEtc_ask" taborder="1" text="변경정보" left="5" top="staDS_RECOM_ADDRESS:10" width="9.10%" height="25" cssclass="sta_TITLE_Bg" color="red" textDecoration="none"/>
+                              <Static id="staEtc_ask_1" taborder="53" text="▣ 신체정보" left="4" top="staEtc_ask:2" width="24.01%" height="25" textDecoration="none"/>
+                              <!-- 신장 -->
+                              <Static id="staQT_HEIGHT_ASK" taborder="25" text="신장" left="0" top="staEtc_ask_1:5" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staQT_HEIGHT_bg_ASK" taborder="22" left="staQT_HEIGHT_ASK:-1" top="staQT_HEIGHT_ASK:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtQT_HEIGHT_ASK" taborder="1" left="staQT_HEIGHT_ASK:5" top="staQT_HEIGHT_ASK:-25" width="173" height="20" inputmode="normal" enable="true" enableevent="true" autoselect="true" autoskip="true" readonly="false" maxlength="6"/>
+                              <!-- 시력 -->
+                              <Static id="staRT_EYE_ASK" taborder="27" text="시력" left="0" top="staQT_HEIGHT_ASK:-1" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staRT_LEFTEYE_bg_ASK" taborder="22" left="staRT_EYE_ASK:-1" top="staRT_EYE_ASK:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Static id="staRT_EYE_L_ASK" taborder="26" text="좌:" left="staRT_EYE_ASK:10" top="staRT_EYE_ASK:-25" width="20" height="20" textDecoration="none"/>
+                              <Edit id="txtRT_LEFTEYE_ASK" taborder="3" left="staRT_EYE_L_ASK:5" top="staRT_EYE_ASK:-25" width="54" height="20" inputmode="normal" maxlength="3"/>
+                              <Static id="staRT_EYE_R_ASK" taborder="68" text="우:" left="txtRT_LEFTEYE_ASK:10" top="staRT_EYE_ASK:-25" width="20" height="20" textDecoration="none"/>
+                              <Edit id="txtRT_RIGHTEYE_ASK" taborder="4" left="staRT_EYE_R_ASK:5" top="staRT_EYE_ASK:-25" width="54" height="20" inputmode="normal" maxlength="3"/>
+                              <!-- 주량 -->
+                              <Static id="staDS_ALCOHOL_ASK" taborder="31" text="주량" left="0" top="staRT_EYE_ASK:-1" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_ALCOHOL_bg_ASK" taborder="22" left="staDS_ALCOHOL_ASK:-1" top="staDS_ALCOHOL_ASK:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_ALCOHOL_ASK" taborder="5" left="staDS_ALCOHOL_ASK:5" top="staDS_ALCOHOL_ASK:-25" width="173" height="20" inputmode="normal" maxlength="10"/>
+                              <!-- 비고 -->
+                              <Static id="staDS_HEALTH_REMARK_ASK" taborder="35" text="비고" left="0" top="staDS_ALCOHOL_ASK:-1" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_HEALTH_REMARK_bg_ASK" taborder="22" left="staDS_HEALTH_REMARK_ASK:-1" top="staDS_HEALTH_REMARK_ASK:-30" width="448" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_HEALTH_REMARK_ASK" taborder="7" left="staDS_HEALTH_REMARK_ASK:5" top="staDS_HEALTH_REMARK_ASK:-25" width="437" height="20" inputmode="normal" maxlength="20"/>
+                              <!-- 체중 -->
+                              <Static id="staQT_WEIGHT_ASK" taborder="23" text="체중" left="staQT_HEIGHT_bg_ASK:-1" top="staQT_HEIGHT_bg_ASK:-30" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staQT_WEIGHT_bg_ASK" taborder="22" left="staQT_WEIGHT_ASK:-1" top="staQT_WEIGHT_ASK:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtQT_WEIGHT_ASK" taborder="2" left="staQT_WEIGHT_ASK:5" top="staQT_WEIGHT_ASK:-25" width="174" height="20" inputmode="normal" maxlength="6"/>
+                              <!-- 혈액형 -->
+                              <Static id="staTY_BLOOD_ASK" taborder="29" text="혈액형" left="staRT_LEFTEYE_bg_ASK:-1" top="staRT_LEFTEYE_bg_ASK:-30" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staTY_BLOOD_bg_ASK" taborder="22" left="staTY_BLOOD_ASK:-1" top="staTY_BLOOD_ASK:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Div id="ccfTY_BLOOD_ASK" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="30" taborder="69" left="staTY_BLOOD_ASK:5" top="staTY_BLOOD_ASK:-25" width="174" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="true"/>
+                              <!-- 흡연여부 -->
+                              <Static id="staYN_SMOKING_ASK" taborder="33" text="흡연여부" left="staDS_ALCOHOL_bg_ASK:-1" top="staDS_ALCOHOL_bg_ASK:-30" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staYN_SMOKING_bg_ASK" taborder="22" left="staYN_SMOKING_ASK:-1" top="staYN_SMOKING_ASK:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Radio id="rdoYN_SMOKING_ASK" taborder="6" left="staYN_SMOKING_ASK:5" top="staYN_SMOKING_ASK:-25" height="20" innerdataset="dsTY_SMOKING" direction="vertical" fittocontents="width" width="120" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+                              <!-- 추천인정보 -->
+                              <Static id="staEtc_ask_2" taborder="23" text="▣ 추천인정보" left="4" top="staDS_HEALTH_REMARK_ASK:5" width="24.01%" height="25" textDecoration="none"/>
+                              <!-- 성명 -->
+                              <Static id="staDS_RECOM_HNAME_ASK" taborder="55" text="성명" left="0" top="staEtc_ask_2:10" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_RECOM_HNAME_bg_ASK" taborder="54" left="staDS_RECOM_HNAME_ASK:-1" top="staDS_RECOM_HNAME_ASK:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_RECOM_HNAME_ASK" taborder="16" left="staDS_RECOM_HNAME_ASK:5" top="staDS_RECOM_HNAME_ASK:-25" width="173" height="20" inputmode="normal" maxlength="10"/>
+                              <!-- 직업 -->
+                              <Static id="staDS_RECOM_JOB_ASK" taborder="56" text="직업" left="0" top="staDS_RECOM_HNAME_ASK:-1" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_RECOM_JOB_bg_ASK" taborder="57" left="staDS_RECOM_JOB_ASK:-1" top="staDS_RECOM_JOB_ASK:-30" width="448" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_RECOM_JOB_ASK" taborder="18" left="staDS_RECOM_JOB_ASK:5" top="staDS_RECOM_JOB_ASK:-25" width="437" height="20" inputmode="normal" maxlength="10"/>
+                              <!-- 주소 -->
+                              <Static id="staDS_RECOM_ADDRESS_ASK" taborder="58" text="주소" left="0" top="staDS_RECOM_JOB_ASK:-1" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_RECOM_ADDRESS_bg_ASK" taborder="59" left="staDS_RECOM_ADDRESS_ASK:-1" top="staDS_RECOM_ADDRESS_ASK:-30" width="448" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_RECOM_ADDRESS_ASK" taborder="19" left="staDS_RECOM_ADDRESS_ASK:5" top="staDS_RECOM_ADDRESS_ASK:-25" width="437" height="20" inputmode="normal" maxlength="60"/>
+                              <!-- 관계 -->
+                              <Static id="staDS_RECOM_RELATION_ASK" taborder="53" text="관계" left="staDS_RECOM_HNAME_bg_ASK:-1" top="staDS_RECOM_HNAME_bg_ASK:-30" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                              <Static id="staDS_RECOM_RELATION_bg_ASK" taborder="52" left="staDS_RECOM_RELATION_ASK:-1" top="staDS_RECOM_RELATION_ASK:-30" width="185" height="30" cssclass="sta_WF_tablebg"/>
+                              <Edit id="txtDS_RECOM_RELATION_ASK" taborder="17" left="staDS_RECOM_RELATION_ASK:5" top="staDS_RECOM_RELATION_ASK:-25" width="174" height="20" inputmode="normal" maxlength="5"/>
+                              <!-- 재산정보 -->
+                              <Static id="staEtc_ask_3" taborder="77" text="▣ 재산정보" left="4" top="staDS_RECOM_ADDRESS_ASK:10" width="24.01%" height="25" textDecoration="none" visible="false"/>
+                              <!-- 동산 -->
+                              <Static id="staDS_MOVABLES_ASK" taborder="61" text="동산" left="4" top="staEtc_ask_3:5" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" visible="false"/>
+                              <Static id="staDS_MOVABLES_bg_ASK" taborder="62" left="staDS_MOVABLES_ASK:-1" top="staDS_MOVABLES_ASK:-30" width="185" height="30" cssclass="sta_WF_tablebg" visible="false"/>
+                              <Edit id="txtDS_MOVABLES_ASK" taborder="20" left="staDS_MOVABLES_ASK:5" top="staDS_MOVABLES_ASK:-25" width="173" height="20" inputmode="normal" maxlength="20" visible="false"/>
+                              <!-- 부동산 -->
+                              <Static id="staDS_IMMOVABLES_ASK" taborder="63" text="부동산" left="staDS_MOVABLES_bg_ASK:-1" top="staDS_MOVABLES_bg_ASK:-30" width="80" height="30" cssclass="sta_WF_tablelabel" textDecoration="none" visible="false"/>
+                              <Static id="staDS_IMMOVABLES_bg_ASK" taborder="64" left="staDS_IMMOVABLES_ASK:-1" top="staDS_IMMOVABLES_ASK:-30" width="185" height="30" cssclass="sta_WF_tablebg" visible="false"/>
+                              <Edit id="txtDS_IMMOVABLES_ASK" taborder="21" left="staDS_IMMOVABLES_ASK:5" top="staDS_IMMOVABLES_ASK:-25" width="174" height="20" inputmode="normal" maxlength="20" visible="false"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab8" text="외국어">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staGridCrr" taborder="0" text="변경정보" left="4" top="0" width="50.00%" height="25" cssclass="sta_TITLE_Bg" textDecoration="none"/>
+                        <Grid id="objGridOlang" taborder="1" left="0" top="30" bottom="0" right="0"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta00" taborder="2" text="FORM 높이 : 720 &lt;&gt; 970" left="530" top="33" width="200" height="29" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+this.postTabIndex = 0;
+this.arrTabNm = ["Base", "Addr", "Fmy", "Sch", "Lic", "Crr", "Etc", "Olang"]	// 인사기본정보,주소,가족,학력,자격,경력,기타,외국어
+this.arrAppType = ["B", "A", "F", "S", "L", "C", "E", "G"] //B:인사정보  A :주소 F: 가족  S:학력  L:자격 C:경력  E:기타정보 G:언어
+//this.fv_BG_COLOR = "#fcf1c2"; //연노란색
+this.fv_BG_COLOR = "#e3f0f6"; //파란색
+//this.fv_BG_COLOR = "#03a9f3"; //진파란색
+
+this.fv_FONT_COLOR = "#ff0000"; //빨간색
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+
+	this.divData.form.tabData.set_tabindex(0);
+	
+	// 그리드 세팅
+	this.fnSetGridCellProperty(0);	// 로딩시 주소먼저	
+	
+	this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+	this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+	this.cboTY_STATUS.set_value("01");	
+	
+	this.fnSetSingleForm(0);
+	this.fnSetSingleForm(6);
+}; 
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnApproval = this.gfnFormButtonAdd("Approval", "fnApproval"); //승인
+	this.btnReject = this.gfnFormButtonAdd("Reject", "fnReject");//반려
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;			// 법인코드
+    this.cboTY_STATUS = this.divSearch.form.cboTY_STATUS;
+	
+	// 그리드변수 세팅
+	this.dxGridBase = this.divData.form.tabData.tab1.form.divLeft1.form.objGridBase; 		// 인사기본정보
+	this.dxGridAddr = this.divData.form.tabData.tab2.form.objGridAddr;  	// 주소
+	this.dxGridFmy = this.divData.form.tabData.tab3.form.objGridFmy;		// 가족
+	this.dxGridSch = this.divData.form.tabData.tab4.form.objGridSch; 		// 학력
+	this.dxGridLic = this.divData.form.tabData.tab5.form.objGridLic; 		// 자격
+	this.dxGridCrr = this.divData.form.tabData.tab6.form.objGridCrr; 		// 경력	
+	this.dxGridEtc = this.divData.form.tabData.tab7.form.divLeft7.form.objGridEtc; 		// 기타
+	this.dxGridOlang = this.divData.form.tabData.tab8.form.objGridOlang; 	// 외국어
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+}
+
+// 그리드 세팅
+this.fnSetGridCellProperty = function (nTabIdx){
+	var objTarget = this.fnGetTabInfo(nTabIdx);
+	var objDS = objTarget.objDsList;
+	var objGrd = objTarget.objGrid;
+	
+	// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+	switch(nTabIdx){
+	case 0:	// 인사기본정보
+		this.gfnGridInit(objGrd, objDS, "DA", "DAA_BASE_INFO"); 
+		break;		
+	case 1:	// 1 주소 그리드 세팅
+		this.gfnGridInit(objGrd, objDS, "DA", "DAA_ADDRESS_INFO");	// 만들어야함
+		objGrd.ExpandUp = "fnGrid_ExpandUp";
+		break;
+	case 2:	// 가족
+		this.gfnGridInit(objGrd, objDS, "DA", "DAA_FAMILY_INFO");
+		objGrd.ExpandUp = "fnGrid_ExpandUp";
+		break;
+	case 3:	// 학력
+		this.gfnGridInit(objGrd, objDS, "DA", "DAA_SCHOOLCAREER_INFO");
+		objGrd.ExpandUp = "fnGrid_ExpandUp";
+		break;
+	case 4:	// 자격
+		this.gfnGridInit(objGrd, objDS, "DA", "DAA_LICENSE_INFO");
+		objGrd.ExpandUp = "fnGrid_ExpandUp";
+		break;
+	case 5:	// 경력
+		this.gfnGridInit(objGrd, objDS, "DA", "DAA_CAREER_INFO");
+		objGrd.ExpandUp = "fnGrid_ExpandUp";
+		break;
+	case 6:	// 기타
+		this.gfnGridInit(objGrd, objDS, "DA", "DAA_BASE_ETC_INFO");
+		break;		
+	case 7:	// 외국어
+		this.gfnGridInit(objGrd, objDS, "DA", "DAA_OLANG_INFO");
+		objGrd.ExpandUp = "fnGrid_ExpandUp";
+		break;	
+	}
+}
+
+
+this.fnGetTabInfo = function (nTabIdx){
+	var objGrid = null;
+	var objDsList = null;
+	var objDivDetail = null;
+	
+	// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+	switch(nTabIdx){
+		case 0:	// 인사기본정보
+			objGrid = this.dxGridBase; 
+			objDsList = this.dsBaseList;
+			objDivDetail = this.divData.form.tabData.tab1.form.divBase;
+			break;
+		case 1:	// 주소	
+			objGrid = this.dxGridAddr;
+			objDsList = this.dsAddrList;
+			break;
+		case 2:	// 가족
+			objGrid = this.dxGridFmy;
+			objDsList = this.dsFmyList;
+			break;
+		case 3:	// 학력
+			objGrid = this.dxGridSch;
+			objDsList = this.dsSchList;
+			break;
+		case 4:	// 자격
+			objGrid = this.dxGridLic;
+			objDsList = this.dsLicList;
+			break;
+		case 5:	// 경력
+			objGrid = this.dxGridCrr;
+			objDsList = this.dsCrrList;
+			break;
+		case 6:	// 기타
+			objGrid = this.dxGridEtc; 
+			objDsList = this.dsEtcList;
+			objDivDetail = this.divData.form.tabData.tab7.form.divEtc;
+			break;
+		case 7:	// 외국어 
+			objGrid = this.dxGridOlang;
+			objDsList = this.dsOlangList;
+			break;			
+	}
+	var objTarget = {};
+	objTarget.objGrid = objGrid;
+	objTarget.objDsList = objDsList;
+	objTarget.objDivDetail = objDivDetail;
+	return objTarget;
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");		// 법인코드
+	this.dsSelect.addColumn("TY_STATUS", "string");		// 상태
+
+	// 승인 / 반려
+	this.dsUpdate = new Dataset();  
+    this.dsUpdate.addColumn("TY_GUBUN","string");		// 요청구분 A :주소 F: 가족  S:학력  L:자격 C:경력
+	this.dsUpdate.addColumn("TY_STATUS","string");		// 결재상태 >> 02 :승인 03:반려
+    this.dsUpdate.addColumn("CD_CORP","string");		// 법인코드
+	this.dsUpdate.addColumn("ID_PERSON","bigdecimal");	// 체크된 해당ROW ID_PERSON
+	this.dsUpdate.addColumn("NO_SEQ","bigdecimal");   	// 체크된 해당ROW NO_SEQ
+	this.dsUpdate.addColumn("ID_USER","string"); 		// 로그인ID
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+
+	var nTabIdx = this.divData.form.tabData.tabindex;	// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+	var sTabNm = this.arrTabNm[nTabIdx];
+
+	if (!this.fnSelectValid()) return false;
+
+	var objTarget = this.fnGetTabInfo(nTabIdx);
+	this.gfnGridBeforeSelect(objTarget.objGrid);
+
+	var objDs = objTarget.objGrid.getBindDataset();
+
+	objDs.clearData();
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow(); 
+	this.dsSelect.setColumn(0, "CD_CORP" , this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSelect.setColumn(0, "TY_STATUS", this.dsSearch.getColumn(0, "TY_STATUS"));
+	
+	var strSvcId    = "select_"+(nTabIdx+1);
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select" + sTabNm + "=dsSelect";
+	var outData     = objDs.name + "=select" + sTabNm + "0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+}
+
+// 승인/반려 처리
+this.fnUpdateApproval = function(sTyStatus) {
+	var nTabIdx = this.divData.form.tabData.tabindex; // 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+	var objTarget = this.fnGetTabInfo(nTabIdx);
+	var appType = this.arrAppType[nTabIdx];
+	var nRow = objTarget.objGrid.currentrow;
+	
+	//if (!this.gfnGridValidate(objTarget.objGrid)) return;
+	objTarget.objGrid.updateToDataset();
+	
+	this.dsUpdate.clearData();
+
+	for (var i = 0; i < objTarget.objDsList.rowcount; i++) {
+		var flag = objTarget.objDsList.getColumn(i,"CHK");
+		if(flag == 1){
+			var nrow = this.dsUpdate.addRow();
+
+			var ID_PERSON = objTarget.objDsList.getColumn(i, "ID_PERSON");
+			var CD_CORP = objTarget.objDsList.getColumn(i, "CD_CORP");
+			var ID_SABUN = objTarget.objDsList.getColumn(i, "ID_SABUN");
+			var NO_SEQ = objTarget.objDsList.getColumn(i, "NO_SEQ");
+
+			// 요청구분 A :주소 F: 가족  S:학력  L:자격 C:경력
+			this.dsUpdate.setColumn(nrow,"TY_GUBUN", appType); 
+			this.dsUpdate.setColumn(nrow,"TY_STATUS", sTyStatus);	// 결재상태 >> 02 :승인 03:반려	
+			this.dsUpdate.setColumn(nrow,"CD_CORP", CD_CORP);
+			this.dsUpdate.setColumn(nrow,"ID_PERSON", ID_PERSON);
+			this.dsUpdate.setColumn(nrow,"NO_SEQ", NO_SEQ);
+			this.dsUpdate.setColumn(nrow,"ID_USER", this.AuthClient.ID_USER);
+		}	
+	}
+
+  	if (this.dsUpdate.rowcount == 0 ) return;
+
+	var strSvcId    = "save_"+sTyStatus;
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "update=dsUpdate";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	var nTabIdx = this.divData.form.tabData.tabindex;	// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+	var objTarget = this.fnGetTabInfo(nTabIdx);
+	var tabObj = this.divData.form.tabData.tabpages[nTabIdx];
+	var sFileName = this.gfnGetArgument("NM_FORM")+"_"+tabObj.text+"_"+this.gfnGetDate();
+
+	this.gfnExcelExport(objTarget.objGrid,  null, sFileName);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+};
+
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+ this.fnSelectValid = function() {
+    var CD_CORP = this.dsSearch.getColumn(0, "CD_CORP");
+
+	if (this.gfnIsNull(CD_CORP)) {
+		this.gfnAlert("법인코드가 입력되지 않았습니다.");
+		this.ccfCD_CORP.form.CDTextBox.setFocus();
+		return false;
+	}
+	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	var nTabIdx = this.divData.form.tabData.tabindex;	// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+	var objTarget = this.fnGetTabInfo(nTabIdx);
+
+	if(svcID.startsWith("select_")){
+		this.gfnGridAfterSelect(objTarget.objGrid);
+		
+		var arrSvcID = svcID.split("_");
+		if(arrSvcID[1] == "1" || arrSvcID[1] == "7"){
+			if(objTarget.objDsList.rowposition == 0){
+				if ( objTarget.objDsList.rowcount > 1) {
+					objTarget.objDsList.set_rowposition(1);
+				}
+			}
+			if(arrSvcID[1] == "1"){
+				this.fnSetSingleFormColor(0); //인사기본정보
+			}else if( arrSvcID[1] == "7"){
+				this.fnSetSingleFormColor(6); //기타
+			}
+		}
+	}
+	else if(svcID.startsWith("save_")){
+		var arrSvcID = svcID.split("_");
+		var msg = "";
+		if(arrSvcID[1] == "02"){
+			msg = "승인되었습니다.";
+		}else{
+			msg = "반려되었습니다.";
+		}
+		
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+			this.gfnAlert(msg);
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+	if(id == "ccfCD_CORP") {// 법인코드
+		;
+	}	
+	return true;
+} 
+
+this.fnAfterCDTextChanged = function(id,codeFindData) {
+   	if(id == "ccfCD_CORP") {
+		;
+	}
+}
+ 
+ // 그리드 코드파인드
+this.fnGrid_BeforuserDataSetParam = function(id, dsUserParam, nrow) {
+}
+
+this.fnGrid_AfterCDTextChanged = function(id, codeFindData) {		
+};
+
+this.fnGrid_AfterAllCheck = function(obj:nexacro.Grid, cell, check){
+    var columnFam = this.gfnGridGetBindColumnNameByIndex(obj, cell);
+} 
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+// 첨부파일
+this.fnGrid_ExpandUp = function(obj:nexacro.Grid, e:nexacro.GridMouseEventInfo) {
+	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, e.cell);
+	var objDs = obj.getBindDataset();
+	var nTabIdx = this.divData.form.tabData.tabindex;
+	var aTabDir = ["","ADDRESS", "FAMILY", "SCHOOL", "LICENSE", "CAREER","","LANGUAGE"];	// 기본정보, 주소,가족,학력,자격,경력, 기타, 외국어
+	var sCdDir = "";
+
+	if(colnm == "NM_FILE") {
+		// 최초 작성시엔 NO_SEQ가 없기 때문에 저장 후에 파일 첨부를 진행하여야 함.
+		// CD_DIR에 넣어줄 값이 없기에 저장 후 진행!
+		if(this.gfnGetFlag(objDs, e.row) == "I"){
+			this.gfnAlert("저장 후 파일첨부 진행.");
+			return false;
+		}
+		/*
+			주소 >>	ADDRESS	/임직원ID_PERSON / 해당ROW의 NO_SEQ			
+			가족 >>	FAMILY	/임직원ID_PERSON / 해당ROW의 NO_SEQ			
+			학력 >>	SCHOOL	/임직원ID_PERSON / 해당ROW의 NO_SEQ			
+			자격 >>	LICENSE	/임직원ID_PERSON / 해당ROW의 NO_SEQ			
+			경력 >>	CAREER	/임직원ID_PERSON / 해당ROW의 NO_SEQ			
+		*/
+	
+		var fileManager = {};
+		fileManager.CD_GUBUN = "DA40";
+		//fileManager.CD_DIR = [this.dsList.getColumn(e.row, "CD_OWNER")];
+		fileManager.CD_DIR = [aTabDir[nTabIdx], objDs.getColumn(e.row, "ID_PERSON"), objDs.getColumn(e.row, "NO_SEQ")];	
+		fileManager.IS_READONLY = true; 
+	
+		this.gfnFileManager(fileManager, "fnFileCallback");
+	}
+}
+
+this.fnFileCallback = function(strID, val) {
+	
+	var nTabIdx = this.divData.form.tabData.tabindex;	// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+	var objTarget = this.fnGetTabInfo(nTabIdx);	
+	var objDs = objTarget.objGrid.getBindDataset();
+	
+
+	// val.IsChange : 변경여부, val.Cnt : 파일개수
+		
+	// 파일개수를 다시 셋팅
+	objDs.set_enableevent(false);
+	if(val.Cnt == 0) {
+		//objDs.setColumn(objDs2.rowposition, "NM_FILE", "첨부");
+	}
+	objDs.setColumn(objDs.rowposition, "NM_FILE", "첨부(" + val.Cnt + ")");
+	objDs.set_enableevent(true);
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo){
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);// 폼상태 초기화
+		
+		this.fnDataClear();
+	}
+};
+
+this.fnDataClear = function(){
+	var nTabIdx = this.divData.form.tabData.tabindex;
+	var objTarget = this.fnGetTabInfo(nTabIdx);
+	
+	this.gfnGridClear(objTarget.objGrid);
+}
+
+this.divData_tabData_canchange = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo){
+};
+
+this.divData_tabData_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo){
+	// 그리드 셋팅
+	this.fnSetGridCellProperty(e.postindex);
+	this.FormBtns.Select.click();
+};
+
+// 승인
+this.fnApproval = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	
+	var nTabIdx = this.divData.form.tabData.tabindex;
+	var objTarget = this.fnGetTabInfo(nTabIdx);
+	
+	var chkCnt =  objTarget.objDsList.getCaseCount("CHK == 1");
+	if(chkCnt == 0) {
+		this.gfnAlert("승인처리 대상 행을 선택하세요.");
+		return;
+	}
+	this.gfnConfirm("선택한 내역을 승인 하시겠습니까?", "fnConfirmCallback", "Approval");
+}
+
+// 반려
+this.fnReject = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+
+	var nTabIdx = this.divData.form.tabData.tabindex;
+	var objTarget = this.fnGetTabInfo(nTabIdx);
+	
+	var chkCnt =  objTarget.objDsList.getCaseCount("CHK == 1");
+	if(chkCnt == 0) {
+		this.gfnAlert("반려처리 대상 행을 선택하세요.");
+		return;
+	}
+
+	this.gfnConfirm("선택한 내역을 반려 하시겠습니까?", "fnConfirmCallback", "Reject");
+}
+
+this.fnConfirmCallback = function(strId, val) {
+	trace("strId", strId);
+	trace("val", val);
+
+	if(val) {
+		if(strId == "Approval") {
+			this.fnUpdateApproval("02");	// 승인
+		} else if( strId == "Reject"){
+			this.fnUpdateApproval("03");	// 반려
+		}
+	}
+};
+	
+this.fnSetSingleForm = function(nTabIdx){
+	var objTarget = this.fnGetTabInfo(nTabIdx);	// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+	var targetDiv = null;
+	
+	if(nTabIdx == 0){ //인사기본정보
+		 targetDiv = objTarget.objDivDetail; //this.divData.form.tabData.tab6.form.divBase;
+	}
+	else if(nTabIdx == 6){ //기타
+		targetDiv = objTarget.objDivDetail;
+	}
+	else{
+		return;
+	}
+	
+	var compArr = targetDiv.form.components;
+		 
+	for(var j=0;j<compArr.length; j++){
+		var comp = compArr[j];
+		
+		if(comp instanceof nexacro.Div){
+			if(!this.gfnIsNull(comp.url) && comp.url == "cmm::cmmCodeFind.xfdl"){
+				comp.form.set_readonly(true);
+			}else{
+				comp.set_enable(false);
+			}
+		}else if(comp instanceof nexacro.Grid){
+			;
+		}else if(comp instanceof nexacro.Edit || 
+				 comp instanceof nexacro.MaskEdit ||
+				 comp instanceof nexacro.Calendar ||
+				 comp instanceof nexacro.TextArea  ||
+				 comp instanceof nexacro.Radio
+		){
+			comp.set_readonly(true);
+		}else if(comp instanceof nexacro.Combo ||
+				 comp instanceof nexacro.CheckBox 
+		){
+			comp.set_enable(false);
+		}
+	}	
+}	
+
+this.divData_tabData_tab1_divSplitter1_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo){
+	e.set_userdata("splitter1");
+	return true;
+};
+
+this.divData_tabData_tab7_divSplitter7_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo){
+	e.set_userdata("splitter7");
+	return true;
+};
+
+this.divData_tabData_tab1_ondragmove = function(obj:nexacro.Tabpage,e:nexacro.DragEventInfo){
+	if(e.userdata == "splitter1") {
+		this.divData.form.tabData.tab1.form.divSplitter1.set_left(e.clientx);
+		this.divData.form.tabData.tab1.form.resetScroll();
+	}
+};
+
+this.divData_tabData_tab7_ondragmove = function(obj:nexacro.Tabpage,e:nexacro.DragEventInfo){
+	if(e.userdata == "splitter7") {
+		this.divData.form.tabData.tab7.form.divSplitter7.set_left(e.clientx);
+		this.divData.form.tabData.tab7.form.resetScroll();
+	}	
+};
+
+this.fnSetSingleFormColor = function(nTabIdx){
+	var objTarget = this.fnGetTabInfo(nTabIdx);	// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+	var targetDiv = null;
+	
+	if(nTabIdx == 0){ //인사기본정보
+		 targetDiv = objTarget.objDivDetail; //this.divData.form.tabData.tab6.form.divBase;
+	}
+	else if(nTabIdx == 6){ //기타
+		targetDiv = objTarget.objDivDetail;
+	}
+	else{
+		return;
+	}
+	
+	try {
+		var compArr = targetDiv.form.components;
+	 
+		for(var j=0;j<compArr.length; j++){
+			var comp = compArr[j];
+			
+			if(comp instanceof nexacro.Static
+				|| comp instanceof nexacro.Grid){
+				continue;
+			}
+			var compNmAsk = comp.name;
+			if(compNmAsk.length <= 4) continue;
+			if(this.gfnRight(compNmAsk, 4) != "_ASK") continue;
+			
+			var compNmOld = this.gfnLeft(compNmAsk, compNmAsk.length - 4);	
+			compNmOld = compNmOld + "_OLD";
+									
+			if(comp instanceof nexacro.Div){
+				if(!this.gfnIsNull(comp.url)){
+					if(comp.url == "cmm::cmmCodeFind.xfdl"){
+						var oldVal = "";
+						var askVal = "";
+						try{
+							askVal = compArr[compNmAsk].form.CDTextBox.value;
+						}catch(err){continue;}					
+						
+						try{
+							oldVal = compArr[compNmOld].form.CDTextBox.value;
+						}catch(err){continue;}
+						
+						if(oldVal == askVal){
+							compArr[compNmAsk].form.CDTextBox.set_background("");
+							compArr[compNmAsk].form.DSTextBox.set_background("");
+							
+							compArr[compNmAsk].form.CDTextBox.set_color("");
+							compArr[compNmAsk].form.DSTextBox.set_color("");
+						}else{
+							compArr[compNmAsk].form.CDTextBox.set_background(this.fv_BG_COLOR);
+							compArr[compNmAsk].form.DSTextBox.set_background(this.fv_BG_COLOR);
+							
+							compArr[compNmAsk].form.CDTextBox.set_color(this.fv_FONT_COLOR);
+							compArr[compNmAsk].form.DSTextBox.set_color(this.fv_FONT_COLOR);
+						}					
+					}
+				}
+
+			}else if(comp instanceof nexacro.Edit || 
+					 comp instanceof nexacro.MaskEdit ||
+					 comp instanceof nexacro.Calendar ||
+					 comp instanceof nexacro.TextArea ||
+					 comp instanceof nexacro.Combo ||
+					 comp instanceof nexacro.CheckBox ||
+					 comp instanceof nexacro.Radio){ 
+				
+				
+				var oldVal = "";
+				var askVal = "";
+				try{
+					askVal = compArr[compNmAsk].value;
+				}catch(err){continue;}	
+				
+				try{
+					oldVal = compArr[compNmOld].value;
+				}catch(err){continue;}
+				
+				if(oldVal == askVal){
+					compArr[compNmAsk].set_background("");
+					compArr[compNmAsk].set_color("");
+				}else{
+					compArr[compNmAsk].set_background(this.fv_BG_COLOR);
+					compArr[compNmAsk].set_color(this.fv_FONT_COLOR);
+				}
+			}
+		}	
+	
+	}catch(e){
+		trace("e.name>>", e.name);
+		trace("e.message>>", e.message);
+		trace("e.stack>>", e.stack);
+	}	
+	
+}	
+
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="dsAddrList"/>
+      <Dataset id="dsFmyList"/>
+      <Dataset id="dsLicList"/>
+      <Dataset id="dsSchList"/>
+      <Dataset id="dsCrrList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">selectAddr</Col>
+            <Col id="SP">DAAPR_ADDRESS_INFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectFmy</Col>
+            <Col id="SP">DAAPR_FAM_INFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectSch</Col>
+            <Col id="SP">DAAPR_SCHOOL_INFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectLic</Col>
+            <Col id="SP">DAAPR_LIC_INFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectCrr</Col>
+            <Col id="SP">DAAPR_CAREER_INFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectBase</Col>
+            <Col id="SP">DAAPR_BASEINFO_TEMPINFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DAAPR_BASEINFO_ETC_INFO_SELECT</Col>
+            <Col id="TARGET">selectEtc</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectOlang</Col>
+            <Col id="SP">DAAPR_OLANG_INFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DAAPR_BASEINFO_INFO_UPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_STATUS">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">01</Col>
+            <Col id="VALUE">변경요청</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">02</Col>
+            <Col id="VALUE">승인</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">03</Col>
+            <Col id="VALUE">반려</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="TY_STATUS" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TY_STATUS"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <FileDownTransfer id="FileDownTransfer00"/>
+      <Dataset id="dsYN_SOLAR">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">양</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">음</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_SUPPORTED">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">Y</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_HANDICAP">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">Y</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_MARRIAGE">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">Y</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_GENDER">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">M</Col>
+            <Col id="DS_CODE">남성</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">W</Col>
+            <Col id="DS_CODE">여성</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_FOREIGNER">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">Y</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_SMOKING">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">흡연</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">비흡연</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsBaseList">
+        <ColumnInfo>
+          <Column id="ID_PERSON" type="INT" size="256"/>
+          <Column id="NO_SEQ" type="INT" size="256"/>
+          <Column id="TY_STATUS" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="TY_STATUS1" type="STRING" size="256"/>
+          <Column id="DS_STATUS" type="STRING" size="256"/>
+          <Column id="DS_CNAME" type="STRING" size="256"/>
+          <Column id="DS_ENAME" type="STRING" size="256"/>
+          <Column id="DS_EMAIL" type="STRING" size="256"/>
+          <Column id="ID_RESIDENT" type="STRING" size="256"/>
+          <Column id="DT_BIRTH" type="STRING" size="256"/>
+          <Column id="YN_SOLAR" type="STRING" size="256"/>
+          <Column id="DS_HANDPHONE" type="STRING" size="256"/>
+          <Column id="DS_OFFICEPHONE" type="STRING" size="256"/>
+          <Column id="DS_EXTENSION" type="STRING" size="256"/>
+          <Column id="DS_HOMEPHONE" type="STRING" size="256"/>
+          <Column id="CD_RELIGION" type="STRING" size="256"/>
+          <Column id="DS_RELIGION" type="STRING" size="256"/>
+          <Column id="DS_HOBBY" type="STRING" size="256"/>
+          <Column id="DS_SPECIAL" type="STRING" size="256"/>
+          <Column id="YN_SUPPORTED" type="STRING" size="256"/>
+          <Column id="NO_SUPPORTED" type="STRING" size="256"/>
+          <Column id="CD_SUPPORTED" type="STRING" size="256"/>
+          <Column id="DS_SUPPORTED_FAM" type="STRING" size="256"/>
+          <Column id="DS_SUPPORTED" type="STRING" size="256"/>
+          <Column id="YN_FOREIGNER" type="STRING" size="256"/>
+          <Column id="CD_FOREIGNER" type="STRING" size="256"/>
+          <Column id="DS_FOREIGNER" type="STRING" size="256"/>
+          <Column id="YN_HANDICAP" type="STRING" size="256"/>
+          <Column id="NO_DISABILITY" type="STRING" size="256"/>
+          <Column id="CD_DISABILITY" type="STRING" size="256"/>
+          <Column id="DS_DISABILITY" type="STRING" size="256"/>
+          <Column id="CD_DISABILITY_GRADE" type="STRING" size="256"/>
+          <Column id="DS_DISABILITY_GRADE" type="STRING" size="256"/>
+          <Column id="YN_MARRIAGE" type="STRING" size="256"/>
+          <Column id="DT_MARRIAGE" type="STRING" size="256"/>
+          <Column id="DS_BIRTHPLACE" type="STRING" size="256"/>
+          <Column id="DS_FAMILYPLACE" type="STRING" size="256"/>
+          <Column id="YN_GENDER" type="STRING" size="256"/>
+          <Column id="CD_FAMILY_HEAD" type="STRING" size="256"/>
+          <Column id="DS_FAMILY_HEAD" type="STRING" size="256"/>
+          <Column id="DS_FAMILY_HEADNAME" type="STRING" size="256"/>
+          <Column id="CD_HOUSEHOLDER" type="STRING" size="256"/>
+          <Column id="DS_HOUSEHOLDER" type="STRING" size="256"/>
+          <Column id="DS_HOUSEHOLDER_NAME" type="STRING" size="256"/>
+          <Column id="DS_BUSINESS" type="STRING" size="256"/>
+          <Column id="DS_EMAIL_ETC" type="STRING" size="256"/>
+          <Column id="DS_FAX" type="STRING" size="256"/>
+          <Column id="CD_RESOURCE" type="STRING" size="256"/>
+          <Column id="DS_RESOURCE" type="STRING" size="256"/>
+          <Column id="CD_SERVICESTS" type="STRING" size="256"/>
+          <Column id="DS_SERVICESTS" type="STRING" size="256"/>
+          <Column id="CD_BRANCH" type="STRING" size="256"/>
+          <Column id="DS_BRANCH" type="STRING" size="256"/>
+          <Column id="CD_MILITARY" type="STRING" size="256"/>
+          <Column id="DS_MILITARY" type="STRING" size="256"/>
+          <Column id="CD_DISCHARGE" type="STRING" size="256"/>
+          <Column id="DS_DISCHARGE" type="STRING" size="256"/>
+          <Column id="CD_MILITARYRANK" type="STRING" size="256"/>
+          <Column id="DS_MILITARYRANK" type="STRING" size="256"/>
+          <Column id="DT_CHARGE" type="STRING" size="256"/>
+          <Column id="DT_DISCHARGE" type="STRING" size="256"/>
+          <Column id="DS_SERVICENO" type="STRING" size="256"/>
+          <Column id="DS_REASON" type="STRING" size="256"/>
+          <Column id="DS_CNAME_ASK" type="STRING" size="256"/>
+          <Column id="DS_ENAME_ASK" type="STRING" size="256"/>
+          <Column id="DS_EMAIL_ASK" type="STRING" size="256"/>
+          <Column id="ID_RESIDENT_ASK" type="STRING" size="256"/>
+          <Column id="DT_BIRTH_ASK" type="STRING" size="256"/>
+          <Column id="YN_SOLAR_ASK" type="STRING" size="256"/>
+          <Column id="DS_HANDPHONE_ASK" type="STRING" size="256"/>
+          <Column id="DS_OFFICEPHONE_ASK" type="STRING" size="256"/>
+          <Column id="DS_EXTENSION_ASK" type="STRING" size="256"/>
+          <Column id="DS_HOMEPHONE_ASK" type="STRING" size="256"/>
+          <Column id="CD_RELIGION_ASK" type="STRING" size="256"/>
+          <Column id="DS_RELIGION_ASK" type="STRING" size="256"/>
+          <Column id="DS_HOBBY_ASK" type="STRING" size="256"/>
+          <Column id="DS_SPECIAL_ASK" type="STRING" size="256"/>
+          <Column id="YN_SUPPORTED_ASK" type="STRING" size="256"/>
+          <Column id="NO_SUPPORTED_ASK" type="STRING" size="256"/>
+          <Column id="CD_SUPPORTED_ASK" type="STRING" size="256"/>
+          <Column id="DS_SUPPORTED_FAM_ASK" type="STRING" size="256"/>
+          <Column id="DS_SUPPORTED_ASK" type="STRING" size="256"/>
+          <Column id="YN_FOREIGNER_ASK" type="STRING" size="256"/>
+          <Column id="CD_FOREIGNER_ASK" type="STRING" size="256"/>
+          <Column id="DS_FOREIGNER_ASK" type="STRING" size="256"/>
+          <Column id="YN_HANDICAP_ASK" type="STRING" size="256"/>
+          <Column id="NO_DISABILITY_ASK" type="STRING" size="256"/>
+          <Column id="CD_DISABILITY_ASK" type="STRING" size="256"/>
+          <Column id="DS_DISABILITY_ASK" type="STRING" size="256"/>
+          <Column id="CD_DISABILITY_GRADE_ASK" type="STRING" size="256"/>
+          <Column id="DS_DISABILITY_GRADE_ASK" type="STRING" size="256"/>
+          <Column id="YN_MARRIAGE_ASK" type="STRING" size="256"/>
+          <Column id="DT_MARRIAGE_ASK" type="STRING" size="256"/>
+          <Column id="DS_BIRTHPLACE_ASK" type="STRING" size="256"/>
+          <Column id="DS_FAMILYPLACE_ASK" type="STRING" size="256"/>
+          <Column id="YN_GENDER_ASK" type="STRING" size="256"/>
+          <Column id="CD_FAMILY_HEAD_ASK" type="STRING" size="256"/>
+          <Column id="DS_FAMILY_HEAD_ASK" type="STRING" size="256"/>
+          <Column id="DS_FAMILY_HEADNAME_ASK" type="STRING" size="256"/>
+          <Column id="CD_HOUSEHOLDER_ASK" type="STRING" size="256"/>
+          <Column id="DS_HOUSEHOLDER_ASK" type="STRING" size="256"/>
+          <Column id="DS_HOUSEHOLDER_NAME_ASK" type="STRING" size="256"/>
+          <Column id="DS_BUSINESS_ASK" type="STRING" size="256"/>
+          <Column id="DS_EMAIL_ETC_ASK" type="STRING" size="256"/>
+          <Column id="DS_FAX_ASK" type="STRING" size="256"/>
+          <Column id="CD_RESOURCE_ASK" type="STRING" size="256"/>
+          <Column id="DS_RESOURCE_ASK" type="STRING" size="256"/>
+          <Column id="CD_SERVICESTS_ASK" type="STRING" size="256"/>
+          <Column id="DS_SERVICESTS_ASK" type="STRING" size="256"/>
+          <Column id="CD_BRANCH_ASK" type="STRING" size="256"/>
+          <Column id="DS_BRANCH_ASK" type="STRING" size="256"/>
+          <Column id="CD_MILITARY_ASK" type="STRING" size="256"/>
+          <Column id="DS_MILITARY_ASK" type="STRING" size="256"/>
+          <Column id="CD_DISCHARGE_ASK" type="STRING" size="256"/>
+          <Column id="DS_DISCHARGE_ASK" type="STRING" size="256"/>
+          <Column id="CD_MILITARYRANK_ASK" type="STRING" size="256"/>
+          <Column id="DS_MILITARYRANK_ASK" type="STRING" size="256"/>
+          <Column id="DT_CHARGE_ASK" type="STRING" size="256"/>
+          <Column id="DT_DISCHARGE_ASK" type="STRING" size="256"/>
+          <Column id="DS_SERVICENO_ASK" type="STRING" size="256"/>
+          <Column id="DS_REASON_ASK" type="STRING" size="256"/>
+          <Column id="DS_CNAME_COLOR" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEtcList">
+        <ColumnInfo>
+          <Column id="CHK" type="INT" size="256"/>
+          <Column id="ID_PERSON" type="INT" size="256"/>
+          <Column id="NO_SEQ" type="BIGDECIMAL" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="TY_STATUS" type="STRING" size="256"/>
+          <Column id="DS_STATUS" type="STRING" size="256"/>
+          <Column id="QT_HEIGHT" type="BIGDECIMAL" size="256"/>
+          <Column id="QT_WEIGHT" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_LEFTEYE" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_RIGHTEYE" type="BIGDECIMAL" size="256"/>
+          <Column id="CD_BLOOD" type="STRING" size="256"/>
+          <Column id="DS_BLOOD" type="STRING" size="256"/>
+          <Column id="DS_ALCOHOL" type="STRING" size="256"/>
+          <Column id="YN_SMOKING" type="STRING" size="256"/>
+          <Column id="DS_HEALTH_REMARK" type="STRING" size="256"/>
+          <Column id="DS_RECOM_HNAME" type="STRING" size="256"/>
+          <Column id="DS_RECOM_RELATION" type="STRING" size="256"/>
+          <Column id="DS_RECOM_JOB" type="STRING" size="256"/>
+          <Column id="DS_RECOM_ADDRESS" type="STRING" size="256"/>
+          <Column id="DS_MOVABLES" type="STRING" size="256"/>
+          <Column id="DS_IMMOVABLES" type="STRING" size="256"/>
+          <Column id="QT_HEIGHT_ASK" type="BIGDECIMAL" size="256"/>
+          <Column id="QT_WEIGHT_ASK" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_LEFTEYE_ASK" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_RIGHTEYE_ASK" type="BIGDECIMAL" size="256"/>
+          <Column id="CD_BLOOD_ASK" type="STRING" size="256"/>
+          <Column id="DS_BLOOD_ASK" type="STRING" size="256"/>
+          <Column id="DS_ALCOHOL_ASK" type="STRING" size="256"/>
+          <Column id="YN_SMOKING_ASK" type="STRING" size="256"/>
+          <Column id="DS_HEALTH_REMARK_ASK" type="STRING" size="256"/>
+          <Column id="DS_RECOM_HNAME_ASK" type="STRING" size="256"/>
+          <Column id="DS_RECOM_RELATION_ASK" type="STRING" size="256"/>
+          <Column id="DS_RECOM_JOB_ASK" type="STRING" size="256"/>
+          <Column id="DS_RECOM_ADDRESS_ASK" type="STRING" size="256"/>
+          <Column id="DS_MOVABLES_ASK" type="STRING" size="256"/>
+          <Column id="DS_IMMOVABLES_ASK" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsOlangList"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item2" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+      <BindItem id="item3" compid="divSearch.form.cboTY_STATUS" propid="value" datasetid="dsSearch" columnid="TY_STATUS"/>
+      <BindItem id="item0" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_CNAME_OLD" propid="value" datasetid="dsBaseList" columnid="DS_CNAME"/>
+      <BindItem id="item4" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_ENAME_OLD" propid="value" datasetid="dsBaseList" columnid="DS_ENAME"/>
+      <BindItem id="item5" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_EMAIL_OLD" propid="value" datasetid="dsBaseList" columnid="DS_EMAIL"/>
+      <BindItem id="item6" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_EMAIL_ETC_OLD" propid="value" datasetid="dsBaseList" columnid="DS_EMAIL_ETC"/>
+      <BindItem id="item7" compid="divData.form.tabData.tab1.form.divBase.form.tclDT_BIRTH_OLD" propid="value" datasetid="dsBaseList" columnid="DT_BIRTH"/>
+      <BindItem id="item8" compid="divData.form.tabData.tab1.form.divBase.form.ccfDS_DISABILITY_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_DISABILITY"/>
+      <BindItem id="item10" compid="divData.form.tabData.tab1.form.divBase.form.ccfDS_DISABILITY_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_DISABILITY"/>
+      <BindItem id="item12" compid="divData.form.tabData.tab1.form.divBase.form.ccfDS_DISABILITY_GRADE_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_DISABILITY_GRADE"/>
+      <BindItem id="item13" compid="divData.form.tabData.tab1.form.divBase.form.ccfDS_DISABILITY_GRADE_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_DISABILITY_GRADE"/>
+      <BindItem id="item14" compid="divData.form.tabData.tab1.form.divBase.form.txtID_RESIDENT_OLD" propid="value" datasetid="dsBaseList" columnid="ID_RESIDENT"/>
+      <BindItem id="item15" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_HANDPHONE_OLD" propid="value" datasetid="dsBaseList" columnid="DS_HANDPHONE"/>
+      <BindItem id="item16" compid="divData.form.tabData.tab1.form.divBase.form.rdoYN_SUPPORTED_OLD" propid="value" datasetid="dsBaseList" columnid="YN_SUPPORTED"/>
+      <BindItem id="item17" compid="divData.form.tabData.tab1.form.divBase.form.txtNO_SUPPORTED_OLD" propid="value" datasetid="dsBaseList" columnid="NO_SUPPORTED"/>
+      <BindItem id="item18" compid="divData.form.tabData.tab1.form.divBase.form.rdoYN_MARRIAGE_OLD" propid="value" datasetid="dsBaseList" columnid="YN_MARRIAGE"/>
+      <BindItem id="item19" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_BIRTHPLACE_OLD" propid="value" datasetid="dsBaseList" columnid="DS_BIRTHPLACE"/>
+      <BindItem id="item21" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_FAMILY_HEAD_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_FAMILY_HEAD"/>
+      <BindItem id="item22" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_FAMILY_HEAD_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_FAMILY_HEAD"/>
+      <BindItem id="item23" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_FAMILY_HEADNAME_OLD" propid="value" datasetid="dsBaseList" columnid="DS_FAMILY_HEADNAME"/>
+      <BindItem id="item24" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_HOUSEHOLDER_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_HOUSEHOLDER"/>
+      <BindItem id="item25" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_HOUSEHOLDER_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_HOUSEHOLDER"/>
+      <BindItem id="item26" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_HOUSEHOLDER_NAME_OLD" propid="value" datasetid="dsBaseList" columnid="DS_HOUSEHOLDER_NAME"/>
+      <BindItem id="item27" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_FAMILYPLACE_OLD" propid="value" datasetid="dsBaseList" columnid="DS_FAMILYPLACE"/>
+      <BindItem id="item28" compid="divData.form.tabData.tab1.form.divBase.form.rdoYN_HANDICAP_OLD" propid="value" datasetid="dsBaseList" columnid="YN_HANDICAP"/>
+      <BindItem id="item29" compid="divData.form.tabData.tab1.form.divBase.form.ctxtNO_DISABILITY_OLD" propid="value" datasetid="dsBaseList" columnid="NO_DISABILITY"/>
+      <BindItem id="item30" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_OFFICEPHONE_OLD" propid="value" datasetid="dsBaseList" columnid="DS_OFFICEPHONE"/>
+      <BindItem id="item31" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_EXTENSION_OLD" propid="value" datasetid="dsBaseList" columnid="DS_EXTENSION"/>
+      <BindItem id="item32" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_HOBBY_OLD" propid="value" datasetid="dsBaseList" columnid="DS_HOBBY"/>
+      <BindItem id="item33" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_HOMEPHONE_OLD" propid="value" datasetid="dsBaseList" columnid="DS_HOMEPHONE"/>
+      <BindItem id="item34" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_SPECIAL_OLD" propid="value" datasetid="dsBaseList" columnid="DS_SPECIAL"/>
+      <BindItem id="item35" compid="divData.form.tabData.tab1.form.divBase.form.rdoYN_GENDER_OLD" propid="value" datasetid="dsBaseList" columnid="YN_GENDER"/>
+      <BindItem id="item36" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_RELIGION_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_RELIGION"/>
+      <BindItem id="item37" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_RELIGION_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_RELIGION"/>
+      <BindItem id="item38" compid="divData.form.tabData.tab1.form.divBase.form.tclDT_MARRIAGE_OLD" propid="value" datasetid="dsBaseList" columnid="DT_MARRIAGE"/>
+      <BindItem id="item39" compid="divData.form.tabData.tab1.form.divBase.form.rdoYN_FOREIGNER_OLD" propid="value" datasetid="dsBaseList" columnid="YN_FOREIGNER"/>
+      <BindItem id="item40" compid="divData.form.tabData.tab1.form.divBase.form.ccfDS_FOREIGNER_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_FOREIGNER"/>
+      <BindItem id="item41" compid="divData.form.tabData.tab1.form.divBase.form.ccfDS_FOREIGNER_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_FOREIGNER"/>
+      <BindItem id="item42" compid="divData.form.tabData.tab1.form.divBase.form.rdoYN_SOLAR_OLD" propid="value" datasetid="dsBaseList" columnid="YN_SOLAR"/>
+      <BindItem id="item43" compid="divData.form.tabData.tab1.form.divBase.form.ccfCD_SUPPORTED_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_SUPPORTED"/>
+      <BindItem id="item44" compid="divData.form.tabData.tab1.form.divBase.form.ccfCD_SUPPORTED_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_SUPPORTED_FAM"/>
+      <BindItem id="item45" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_SUPPORTED_OLD" propid="value" datasetid="dsBaseList" columnid="DS_SUPPORTED"/>
+      <BindItem id="item46" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_EXTENSION_OLD" propid="value" datasetid="dsBaseList" columnid="DS_EXTENSION"/>
+      <BindItem id="item47" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_BUSINESS_OLD" propid="value" datasetid="dsBaseList" columnid="DS_BUSINESS"/>
+      <BindItem id="item48" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_BRANCH_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_BRANCH"/>
+      <BindItem id="item49" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_BRANCH_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_BRANCH"/>
+      <BindItem id="item50" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_RESOURCE_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_RESOURCE"/>
+      <BindItem id="item51" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_RESOURCE_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_RESOURCE"/>
+      <BindItem id="item52" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_SERVICESTS_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_SERVICESTS"/>
+      <BindItem id="item53" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_SERVICESTS_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_SERVICESTS"/>
+      <BindItem id="item54" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_DISCHARGE_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_DISCHARGE"/>
+      <BindItem id="item55" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_DISCHARGE_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_DISCHARGE"/>
+      <BindItem id="item56" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_MILITARYRANK_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_MILITARYRANK"/>
+      <BindItem id="item57" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_MILITARYRANK_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_MILITARYRANK"/>
+      <BindItem id="item60" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_MILITARY_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_MILITARY"/>
+      <BindItem id="item61" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_MILITARY_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_MILITARY"/>
+      <BindItem id="item62" compid="divData.form.tabData.tab1.form.divBase.form.tclDT_CHARGE_OLD" propid="value" datasetid="dsBaseList" columnid="DT_CHARGE"/>
+      <BindItem id="item63" compid="divData.form.tabData.tab1.form.divBase.form.tclDT_DISCHARGE_OLD" propid="value" datasetid="dsBaseList" columnid="DT_DISCHARGE"/>
+      <BindItem id="item64" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_SERVICENO_OLD" propid="value" datasetid="dsBaseList" columnid="DS_SERVICENO"/>
+      <BindItem id="item65" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_REASON_OLD" propid="value" datasetid="dsBaseList" columnid="DS_REASON"/>
+      <BindItem id="item66" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_EMAIL_ETC_OLD" propid="value" datasetid="dsBaseList" columnid="DS_EMAIL_ETC"/>
+      <BindItem id="item67" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_FAX_OLD" propid="value" datasetid="dsBaseList" columnid="DS_FAX"/>
+      <BindItem id="item20" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_CNAME_ASK" propid="value" datasetid="dsBaseList" columnid="DS_CNAME_ASK"/>
+      <BindItem id="item68" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_ENAME_ASK" propid="value" datasetid="dsBaseList" columnid="DS_ENAME_ASK"/>
+      <BindItem id="item69" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_EMAIL_ASK" propid="value" datasetid="dsBaseList" columnid="DS_EMAIL_ASK"/>
+      <BindItem id="item70" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_EMAIL_ETC_ASK" propid="value" datasetid="dsBaseList" columnid="DS_EMAIL_ETC_ASK"/>
+      <BindItem id="item71" compid="divData.form.tabData.tab1.form.divBase.form.tclDT_BIRTH_ASK" propid="value" datasetid="dsBaseList" columnid="DT_BIRTH_ASK"/>
+      <BindItem id="item72" compid="divData.form.tabData.tab1.form.divBase.form.ccfDS_DISABILITY_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_DISABILITY_ASK"/>
+      <BindItem id="item74" compid="divData.form.tabData.tab1.form.divBase.form.ccfDS_DISABILITY_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_DISABILITY_ASK"/>
+      <BindItem id="item76" compid="divData.form.tabData.tab1.form.divBase.form.ccfDS_DISABILITY_GRADE_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_DISABILITY_GRADE_ASK"/>
+      <BindItem id="item77" compid="divData.form.tabData.tab1.form.divBase.form.ccfDS_DISABILITY_GRADE_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_DISABILITY_GRADE_ASK"/>
+      <BindItem id="item78" compid="divData.form.tabData.tab1.form.divBase.form.txtID_RESIDENT_ASK" propid="value" datasetid="dsBaseList" columnid="ID_RESIDENT_ASK"/>
+      <BindItem id="item79" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_HANDPHONE_ASK" propid="value" datasetid="dsBaseList" columnid="DS_HANDPHONE_ASK"/>
+      <BindItem id="item80" compid="divData.form.tabData.tab1.form.divBase.form.rdoYN_SUPPORTED_ASK" propid="value" datasetid="dsBaseList" columnid="YN_SUPPORTED_ASK"/>
+      <BindItem id="item81" compid="divData.form.tabData.tab1.form.divBase.form.txtNO_SUPPORTED_ASK" propid="value" datasetid="dsBaseList" columnid="NO_SUPPORTED_ASK"/>
+      <BindItem id="item82" compid="divData.form.tabData.tab1.form.divBase.form.rdoYN_MARRIAGE_ASK" propid="value" datasetid="dsBaseList" columnid="YN_MARRIAGE_ASK"/>
+      <BindItem id="item83" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_BIRTHPLACE_ASK" propid="value" datasetid="dsBaseList" columnid="DS_BIRTHPLACE_ASK"/>
+      <BindItem id="item85" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_FAMILY_HEAD_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_FAMILY_HEAD_ASK"/>
+      <BindItem id="item86" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_FAMILY_HEAD_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_FAMILY_HEAD_ASK"/>
+      <BindItem id="item87" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_FAMILY_HEADNAME_ASK" propid="value" datasetid="dsBaseList" columnid="DS_FAMILY_HEADNAME_ASK"/>
+      <BindItem id="item88" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_HOUSEHOLDER_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_HOUSEHOLDER_ASK"/>
+      <BindItem id="item89" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_HOUSEHOLDER_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_HOUSEHOLDER_ASK"/>
+      <BindItem id="item90" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_HOUSEHOLDER_NAME_ASK" propid="value" datasetid="dsBaseList" columnid="DS_HOUSEHOLDER_NAME_ASK"/>
+      <BindItem id="item91" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_FAMILYPLACE_ASK" propid="value" datasetid="dsBaseList" columnid="DS_FAMILYPLACE_ASK"/>
+      <BindItem id="item92" compid="divData.form.tabData.tab1.form.divBase.form.rdoYN_HANDICAP_ASK" propid="value" datasetid="dsBaseList" columnid="YN_HANDICAP_ASK"/>
+      <BindItem id="item93" compid="divData.form.tabData.tab1.form.divBase.form.ctxtNO_DISABILITY_ASK" propid="value" datasetid="dsBaseList" columnid="NO_DISABILITY_ASK"/>
+      <BindItem id="item94" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_OFFICEPHONE_ASK" propid="value" datasetid="dsBaseList" columnid="DS_OFFICEPHONE_ASK"/>
+      <BindItem id="item95" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_HOBBY_ASK" propid="value" datasetid="dsBaseList" columnid="DS_HOBBY_ASK"/>
+      <BindItem id="item96" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_HOMEPHONE_ASK" propid="value" datasetid="dsBaseList" columnid="DS_HOMEPHONE_ASK"/>
+      <BindItem id="item97" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_SPECIAL_ASK" propid="value" datasetid="dsBaseList" columnid="DS_SPECIAL_ASK"/>
+      <BindItem id="item98" compid="divData.form.tabData.tab1.form.divBase.form.rdoYN_GENDER_ASK" propid="value" datasetid="dsBaseList" columnid="YN_GENDER_ASK"/>
+      <BindItem id="item99" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_RELIGION_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_RELIGION_ASK"/>
+      <BindItem id="item100" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_RELIGION_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_RELIGION_ASK"/>
+      <BindItem id="item101" compid="divData.form.tabData.tab1.form.divBase.form.tclDT_MARRIAGE_ASK" propid="value" datasetid="dsBaseList" columnid="DT_MARRIAGE_ASK"/>
+      <BindItem id="item102" compid="divData.form.tabData.tab1.form.divBase.form.rdoYN_FOREIGNER_ASK" propid="value" datasetid="dsBaseList" columnid="YN_FOREIGNER_ASK"/>
+      <BindItem id="item103" compid="divData.form.tabData.tab1.form.divBase.form.ccfDS_FOREIGNER_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_FOREIGNER_ASK"/>
+      <BindItem id="item104" compid="divData.form.tabData.tab1.form.divBase.form.ccfDS_FOREIGNER_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_FOREIGNER_ASK"/>
+      <BindItem id="item105" compid="divData.form.tabData.tab1.form.divBase.form.rdoYN_SOLAR_ASK" propid="value" datasetid="dsBaseList" columnid="YN_SOLAR_ASK"/>
+      <BindItem id="item106" compid="divData.form.tabData.tab1.form.divBase.form.ccfCD_SUPPORTED_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_SUPPORTED_ASK"/>
+      <BindItem id="item107" compid="divData.form.tabData.tab1.form.divBase.form.ccfCD_SUPPORTED_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_SUPPORTED_FAM_ASK"/>
+      <BindItem id="item108" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_SUPPORTED_ASK" propid="value" datasetid="dsBaseList" columnid="DS_SUPPORTED_ASK"/>
+      <BindItem id="item109" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_EXTENSION_ASK" propid="value" datasetid="dsBaseList" columnid="DS_EXTENSION_ASK"/>
+      <BindItem id="item110" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_BUSINESS_ASK" propid="value" datasetid="dsBaseList" columnid="DS_BUSINESS_ASK"/>
+      <BindItem id="item111" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_BRANCH_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_BRANCH_ASK"/>
+      <BindItem id="item112" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_BRANCH_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_BRANCH_ASK"/>
+      <BindItem id="item113" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_RESOURCE_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_RESOURCE_ASK"/>
+      <BindItem id="item114" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_RESOURCE_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_RESOURCE_ASK"/>
+      <BindItem id="item115" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_SERVICESTS_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_SERVICESTS_ASK"/>
+      <BindItem id="item116" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_SERVICESTS_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_SERVICESTS_ASK"/>
+      <BindItem id="item117" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_DISCHARGE_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_DISCHARGE_ASK"/>
+      <BindItem id="item118" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_DISCHARGE_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_DISCHARGE_ASK"/>
+      <BindItem id="item119" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_MILITARYRANK_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_MILITARYRANK_ASK"/>
+      <BindItem id="item120" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_MILITARYRANK_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_MILITARYRANK_ASK"/>
+      <BindItem id="item123" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_MILITARY_ASK.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="CD_MILITARY_ASK"/>
+      <BindItem id="item124" compid="divData.form.tabData.tab1.form.divBase.form.cfCD_MILITARY_ASK.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_MILITARY_ASK"/>
+      <BindItem id="item125" compid="divData.form.tabData.tab1.form.divBase.form.tclDT_CHARGE_ASK" propid="value" datasetid="dsBaseList" columnid="DT_CHARGE_ASK"/>
+      <BindItem id="item126" compid="divData.form.tabData.tab1.form.divBase.form.tclDT_DISCHARGE_ASK" propid="value" datasetid="dsBaseList" columnid="DT_DISCHARGE_ASK"/>
+      <BindItem id="item127" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_SERVICENO_ASK" propid="value" datasetid="dsBaseList" columnid="DS_SERVICENO_ASK"/>
+      <BindItem id="item128" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_REASON_ASK" propid="value" datasetid="dsBaseList" columnid="DS_REASON_ASK"/>
+      <BindItem id="item129" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_EMAIL_ETC_ASK" propid="value" datasetid="dsBaseList" columnid="DS_EMAIL_ETC_ASK"/>
+      <BindItem id="item130" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_FAX_ASK" propid="value" datasetid="dsBaseList" columnid="DS_FAX_ASK"/>
+      <BindItem id="item9" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_STATUS" propid="value" datasetid="dsBaseList" columnid="DS_STATUS"/>
+      <BindItem id="item11" compid="divData.form.tabData.tab1.form.divBase.form.cfID_SABUN_OLD.form.CDTextBox" propid="value" datasetid="dsBaseList" columnid="ID_SABUN"/>
+      <BindItem id="item58" compid="divData.form.tabData.tab1.form.divBase.form.cfID_SABUN_OLD.form.DSTextBox" propid="value" datasetid="dsBaseList" columnid="DS_HNAME"/>
+      <BindItem id="item241" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_STATUS7" propid="value" datasetid="dsEtcList" columnid="DS_STATUS"/>
+      <BindItem id="item242" compid="divData.form.tabData.tab7.form.divEtc.form.cfID_SABUN_OLD7.form.CDTextBox" propid="value" datasetid="dsEtcList" columnid="ID_SABUN"/>
+      <BindItem id="item243" compid="divData.form.tabData.tab7.form.divEtc.form.cfID_SABUN_OLD7.form.DSTextBox" propid="value" datasetid="dsEtcList" columnid="DS_HNAME"/>
+      <BindItem id="item59" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_RECOM_HNAME_OLD" propid="value" datasetid="dsEtcList" columnid="DS_RECOM_HNAME"/>
+      <BindItem id="item73" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_RECOM_RELATION_OLD" propid="value" datasetid="dsEtcList" columnid="DS_RECOM_RELATION"/>
+      <BindItem id="item75" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_RECOM_JOB_OLD" propid="value" datasetid="dsEtcList" columnid="DS_RECOM_JOB"/>
+      <BindItem id="item84" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_RECOM_ADDRESS_OLD" propid="value" datasetid="dsEtcList" columnid="DS_RECOM_ADDRESS"/>
+      <BindItem id="item121" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_HEALTH_REMARK_OLD" propid="value" datasetid="dsEtcList" columnid="DS_HEALTH_REMARK"/>
+      <BindItem id="item122" compid="divData.form.tabData.tab7.form.divEtc.form.txtQT_HEIGHT_OLD" propid="value" datasetid="dsEtcList" columnid="QT_HEIGHT"/>
+      <BindItem id="item131" compid="divData.form.tabData.tab7.form.divEtc.form.txtQT_WEIGHT_OLD" propid="value" datasetid="dsEtcList" columnid="QT_WEIGHT"/>
+      <BindItem id="item132" compid="divData.form.tabData.tab7.form.divEtc.form.txtRT_LEFTEYE_OLD" propid="value" datasetid="dsEtcList" columnid="RT_LEFTEYE"/>
+      <BindItem id="item133" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_ALCOHOL_OLD" propid="value" datasetid="dsEtcList" columnid="DS_ALCOHOL"/>
+      <BindItem id="item134" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_MOVABLES_OLD" propid="value" datasetid="dsEtcList" columnid="DS_MOVABLES"/>
+      <BindItem id="item135" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_IMMOVABLES_OLD" propid="value" datasetid="dsEtcList" columnid="DS_IMMOVABLES"/>
+      <BindItem id="item136" compid="divData.form.tabData.tab7.form.divEtc.form.txtRT_RIGHTEYE_OLD" propid="value" datasetid="dsEtcList" columnid="RT_RIGHTEYE"/>
+      <BindItem id="item137" compid="divData.form.tabData.tab7.form.divEtc.form.rdoYN_SMOKING_OLD" propid="value" datasetid="dsEtcList" columnid="YN_SMOKING"/>
+      <BindItem id="item138" compid="divData.form.tabData.tab7.form.divEtc.form.ccfTY_BLOOD_OLD.form.CDTextBox" propid="value" datasetid="dsEtcList" columnid="CD_BLOOD"/>
+      <BindItem id="item139" compid="divData.form.tabData.tab7.form.divEtc.form.ccfTY_BLOOD_OLD.form.DSTextBox" propid="value" datasetid="dsEtcList" columnid="DS_BLOOD"/>
+      <BindItem id="item140" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_RECOM_HNAME_ASK" propid="value" datasetid="dsEtcList" columnid="DS_RECOM_HNAME_ASK"/>
+      <BindItem id="item141" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_RECOM_RELATION_ASK" propid="value" datasetid="dsEtcList" columnid="DS_RECOM_RELATION_ASK"/>
+      <BindItem id="item142" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_RECOM_JOB_ASK" propid="value" datasetid="dsEtcList" columnid="DS_RECOM_JOB_ASK"/>
+      <BindItem id="item143" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_RECOM_ADDRESS_ASK" propid="value" datasetid="dsEtcList" columnid="DS_RECOM_ADDRESS_ASK"/>
+      <BindItem id="item144" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_HEALTH_REMARK_ASK" propid="value" datasetid="dsEtcList" columnid="DS_HEALTH_REMARK_ASK"/>
+      <BindItem id="item145" compid="divData.form.tabData.tab7.form.divEtc.form.txtQT_HEIGHT_ASK" propid="value" datasetid="dsEtcList" columnid="QT_HEIGHT_ASK"/>
+      <BindItem id="item146" compid="divData.form.tabData.tab7.form.divEtc.form.txtQT_WEIGHT_ASK" propid="value" datasetid="dsEtcList" columnid="QT_WEIGHT_ASK"/>
+      <BindItem id="item147" compid="divData.form.tabData.tab7.form.divEtc.form.txtRT_LEFTEYE_ASK" propid="value" datasetid="dsEtcList" columnid="RT_LEFTEYE_ASK"/>
+      <BindItem id="item148" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_ALCOHOL_ASK" propid="value" datasetid="dsEtcList" columnid="DS_ALCOHOL_ASK"/>
+      <BindItem id="item149" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_MOVABLES_ASK" propid="value" datasetid="dsEtcList" columnid="DS_MOVABLES_ASK"/>
+      <BindItem id="item150" compid="divData.form.tabData.tab7.form.divEtc.form.txtDS_IMMOVABLES_ASK" propid="value" datasetid="dsEtcList" columnid="DS_IMMOVABLES_ASK"/>
+      <BindItem id="item151" compid="divData.form.tabData.tab7.form.divEtc.form.txtRT_RIGHTEYE_ASK" propid="value" datasetid="dsEtcList" columnid="RT_RIGHTEYE_ASK"/>
+      <BindItem id="item152" compid="divData.form.tabData.tab7.form.divEtc.form.rdoYN_SMOKING_ASK" propid="value" datasetid="dsEtcList" columnid="YN_SMOKING_ASK"/>
+      <BindItem id="item153" compid="divData.form.tabData.tab7.form.divEtc.form.ccfTY_BLOOD_ASK.form.CDTextBox" propid="value" datasetid="dsEtcList" columnid="CD_BLOOD_ASK"/>
+      <BindItem id="item154" compid="divData.form.tabData.tab7.form.divEtc.form.ccfTY_BLOOD_ASK.form.DSTextBox" propid="value" datasetid="dsEtcList" columnid="DS_BLOOD_ASK"/>
+      <BindItem id="item155" compid="divData.form.tabData.tab1.form.divBase.form.txtDS_CNAME_ASK" propid="background-color" datasetid="dsBaseList" columnid="DS_CNAME_COLOR"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,580 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("DAV_INPUTDATA_PDF_DLG");
+            this.set_titletext("연말정산 PDF 입력팝업");
+            this.getSetter("maxwidth").set("720");
+            this.getSetter("maxheight").set("550");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(665,500);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">fileDirInfo</Col><Col id=\"SP\">DZUPR_FILEMANAGER_SELECT</Col></Row><Row><Col id=\"TARGET\">deletePdf</Col><Col id=\"SP\">DAVPR_PREPDF_DELETE</Col></Row><Row><Col id=\"TARGET\">A102Y</Col><Col id=\"SP\">DAVPR_A102Y_INSERT</Col></Row><Row><Col id=\"TARGET\">B101Y</Col><Col id=\"SP\">DAVPR_B101Y_INSERT</Col></Row><Row><Col id=\"TARGET\">B201Y</Col><Col id=\"SP\">DAVPR_B201Y_INSERT</Col></Row><Row><Col id=\"TARGET\">C101Y</Col><Col id=\"SP\">DAVPR_C101Y_INSERT</Col></Row><Row><Col id=\"TARGET\">C102Y</Col><Col id=\"SP\">DAVPR_C102Y_INSERT</Col></Row><Row><Col id=\"TARGET\">C202Y</Col><Col id=\"SP\">DAVPR_C202Y_INSERT</Col></Row><Row><Col id=\"TARGET\">C301Y</Col><Col id=\"SP\">DAVPR_C301Y_INSERT</Col></Row><Row><Col id=\"TARGET\">C401Y</Col><Col id=\"SP\">DAVPR_C401Y_INSERT</Col></Row><Row><Col id=\"TARGET\">D101Y</Col><Col id=\"SP\">DAVPR_D101Y_INSERT</Col></Row><Row><Col id=\"TARGET\">E102Y</Col><Col id=\"SP\">DAVPR_E102Y_INSERT</Col></Row><Row><Col id=\"TARGET\">F102Y</Col><Col id=\"SP\">DAVPR_F102Y_INSERT</Col></Row><Row><Col id=\"TARGET\">G109Y</Col><Col id=\"SP\">DAVPR_G109Y_INSERT</Col></Row><Row><Col id=\"TARGET\">G209M</Col><Col id=\"SP\">DAVPR_G209M_INSERT</Col></Row><Row><Col id=\"TARGET\">G309Y</Col><Col id=\"SP\">DAVPR_G309Y_INSERT</Col></Row><Row><Col id=\"TARGET\">G409Y</Col><Col id=\"SP\">DAVPR_G409Y_INSERT</Col></Row><Row><Col id=\"TARGET\">J101Y</Col><Col id=\"SP\">DAVPR_J101Y_INSERT</Col></Row><Row><Col id=\"TARGET\">J203Y</Col><Col id=\"SP\">DAVPR_J203Y_INSERT</Col></Row><Row><Col id=\"TARGET\">J301Y</Col><Col id=\"SP\">DAVPR_J301Y_INSERT</Col></Row><Row><Col id=\"TARGET\">J401Y</Col><Col id=\"SP\">DAVPR_J401Y_INSERT</Col></Row><Row><Col id=\"TARGET\">J501Y</Col><Col id=\"SP\">DAVPR_J501Y_INSERT</Col></Row><Row><Col id=\"TARGET\">K101M</Col><Col id=\"SP\">DAVPR_K101M_INSERT</Col></Row><Row><Col id=\"TARGET\">L102Y</Col><Col id=\"SP\">DAVPR_L101Y_INSERT</Col></Row><Row><Col id=\"TARGET\">N101Y</Col><Col id=\"SP\">DAVPR_N101Y_INSERT</Col></Row><Row><Col id=\"TARGET\">P102M</Col><Col id=\"SP\">DAVPR_P102M_INSERT</Col></Row><Row><Col id=\"TARGET\">E103Y</Col><Col id=\"SP\">DAVPR_E103Y_INSERT</Col></Row><Row><Col id=\"TARGET\">F103Y</Col><Col id=\"SP\">DAVPR_F103Y_INSERT</Col></Row><Row><Col id=\"TARGET\">G109Y</Col><Col id=\"SP\">DAVPR_G109Y_INSERT</Col></Row><Row><Col id=\"TARGET\">G209M</Col><Col id=\"SP\">DAVPR_G209M_INSERT</Col></Row><Row><Col id=\"SP\">DAVPR_G309Y_INSERT</Col><Col id=\"TARGET\">G309Y</Col></Row><Row><Col id=\"SP\">DAVPR_G409Y_INSERT</Col><Col id=\"TARGET\">G409Y</Col></Row><Row><Col id=\"SP\">DAVPR_Q101Y_INSERT</Col><Col id=\"TARGET\">Q101Y</Col></Row><Row><Col id=\"TARGET\">Q201Y</Col><Col id=\"SP\">DAVPR_Q101Y_INSERT</Col></Row><Row><Col id=\"TARGET\">Q301Y</Col><Col id=\"SP\">DAVPR_Q101Y_INSERT</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsInfoParam", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_GUBUN\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsFileDirInfo", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYearEndTagCol", this);
+            obj._setContents("<ColumnInfo><Column id=\"FORM\" type=\"STRING\" size=\"256\"/><Column id=\"RANGETAG\" type=\"STRING\" size=\"256\"/><Column id=\"ELEMENT\" type=\"STRING\" size=\"256\"/><Column id=\"ELEMATTRIBUTE\" type=\"STRING\" size=\"256\"/><Column id=\"DATA\" type=\"STRING\" size=\"256\"/><Column id=\"COL\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"FORM\">A102Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">A102Y</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">A102Y</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">A102Y</Col><Col id=\"DATA\">insu1_resid</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">ID_RESIDENT_INSU</Col></Row><Row><Col id=\"FORM\">A102Y</Col><Col id=\"DATA\">insu1_nm</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">DS_HNAME_INSU</Col></Row><Row><Col id=\"FORM\">A102Y</Col><Col id=\"DATA\">insu2_resid_1</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">ID_RESIDENT_INSU1</Col></Row><Row><Col id=\"FORM\">A102Y</Col><Col id=\"DATA\">insu2_nm_1</Col><Col id=\"COL\">DS_HNAME_INSU1</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">A102Y</Col><Col id=\"DATA\">insu2_resid_2</Col><Col id=\"COL\">ID_RESIDENT_INSU2</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">A102Y</Col><Col id=\"DATA\">insu2_nm_2</Col><Col id=\"COL\">DS_HNAME_INSU2</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">A102Y</Col><Col id=\"DATA\">insu2_resid_3</Col><Col id=\"COL\">ID_RESIDENT_INSU3</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">A102Y</Col><Col id=\"DATA\">insu2_nm_3</Col><Col id=\"COL\">DS_HNAME_INSU3</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">A102Y</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_SUBST1</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">B201Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col></Row><Row><Col id=\"FORM\">B201Y</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col></Row><Row><Col id=\"FORM\">B201Y</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col></Row><Row><Col id=\"FORM\">B201Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">busnid</Col><Col id=\"COL\">CD_MEDICAL</Col></Row><Row><Col id=\"FORM\">B201Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">trade_nm</Col><Col id=\"COL\">DS_MEDICAL</Col></Row><Row><Col id=\"FORM\">B201Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_LOSS</Col></Row><Row><Col id=\"FORM\">B101Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">B101Y</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">B101Y</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">B101Y</Col><Col id=\"DATA\">busnid</Col><Col id=\"COL\">CD_MEDICAL</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">B101Y</Col><Col id=\"DATA\">trade_nm</Col><Col id=\"COL\">DS_MEDICAL</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">B101Y</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_CARD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">C102Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C102Y</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C102Y</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C102Y</Col><Col id=\"DATA\">edu_tp</Col><Col id=\"COL\">CD_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C102Y</Col><Col id=\"DATA\">edu_cl</Col><Col id=\"COL\">EDU_CL</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C102Y</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">C202Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C202Y</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C202Y</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C202Y</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">C301Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C301Y</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C301Y</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C301Y</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">C401Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C401Y</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C401Y</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">C401Y</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">D101Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"COL\">DAT_CD</Col></Row><Row><Col id=\"FORM\">D101Y</Col><Col id=\"DATA\">acc_no</Col><Col id=\"COL\">CD_ACCOUNT</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">D101Y</Col><Col id=\"DATA\">com_cd</Col><Col id=\"COL\">CD_BANK</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">D101Y</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">E103Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">E103Y</Col><Col id=\"DATA\">resid</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col></Row><Row><Col id=\"FORM\">E103Y</Col><Col id=\"DATA\">acc_no</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"COL\">CD_ACCOUNT</Col></Row><Row><Col id=\"FORM\">E103Y</Col><Col id=\"DATA\">com_cd</Col><Col id=\"COL\">CD_BANK</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">E103Y</Col><Col id=\"DATA\">ddct_bs_ass_amt</Col><Col id=\"COL\">AM_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">E103Y</Col><Col id=\"DATA\">isa_ddct_bs_ass_amt</Col><Col id=\"COL\">AM_SUBST_ISA</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">F103Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">F103Y</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">F103Y</Col><Col id=\"DATA\">acc_no</Col><Col id=\"COL\">CD_ACCOUNT</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">F103Y</Col><Col id=\"DATA\">com_cd</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">CD_BANK</Col></Row><Row><Col id=\"FORM\">F103Y</Col><Col id=\"DATA\">ddct_bs_ass_amt</Col><Col id=\"COL\">AM_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">F103Y</Col><Col id=\"DATA\">isa_ddct_bs_ass_amt</Col><Col id=\"COL\">AM_SUBST_ISA</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">G109Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">G109Y</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">G109Y</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">G109Y</Col><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST80</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/></Row><Row><Col id=\"FORM\">G109Y</Col><Col id=\"DATA\"/><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/><Col id=\"COL\">AM_SUBST84</Col></Row><Row><Col id=\"FORM\">G109Y</Col><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST83</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/></Row><Row><Col id=\"FORM\">G109Y</Col><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST86</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/></Row><Row><Col id=\"FORM\">G109Y</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST800</Col></Row><Row><Col id=\"FORM\">G109Y</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST801</Col></Row><Row><Col id=\"FORM\">G209M</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">G209M</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">G209M</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">G209M</Col><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST80</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/></Row><Row><Col id=\"FORM\">G209M</Col><Col id=\"DATA\"/><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/><Col id=\"COL\">AM_SUBST84</Col></Row><Row><Col id=\"FORM\">G209M</Col><Col id=\"DATA\"/><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/><Col id=\"COL\">AM_SUBST83</Col></Row><Row><Col id=\"FORM\">G209M</Col><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST86</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/></Row><Row><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST800</Col><Col id=\"FORM\">G209M</Col></Row><Row><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST801</Col><Col id=\"FORM\">G209M</Col></Row><Row><Col id=\"FORM\">G309Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">G309Y</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">G309Y</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">G309Y</Col><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST80</Col><Col id=\"RANGETAG\">cal</Col></Row><Row><Col id=\"FORM\">G309Y</Col><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST84</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/></Row><Row><Col id=\"FORM\">G309Y</Col><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST83</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/></Row><Row><Col id=\"FORM\">G309Y</Col><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST86</Col><Col id=\"RANGETAG\">cal</Col></Row><Row><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST800</Col><Col id=\"FORM\">G309Y</Col></Row><Row><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST801</Col><Col id=\"FORM\">G309Y</Col></Row><Row><Col id=\"FORM\">G409Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col></Row><Row><Col id=\"FORM\">G409Y</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col></Row><Row><Col id=\"FORM\">G409Y</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col></Row><Row><Col id=\"FORM\">G409Y</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"COL\">AM_SUBST80</Col></Row><Row><Col id=\"FORM\">G409Y</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"COL\">AM_SUBST84</Col></Row><Row><Col id=\"FORM\">G409Y</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"COL\">AM_SUBST83</Col></Row><Row><Col id=\"FORM\">G409Y</Col><Col id=\"RANGETAG\">cal</Col><Col id=\"COL\">AM_SUBST86</Col></Row><Row><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST800</Col><Col id=\"FORM\">G409Y</Col></Row><Row><Col id=\"RANGETAG\">cal</Col><Col id=\"ELEMENT\"/><Col id=\"DATA\"/><Col id=\"COL\">AM_SUBST801</Col><Col id=\"FORM\">G409Y</Col></Row><Row><Col id=\"FORM\">J101Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">J101Y</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">J203Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">J203Y</Col><Col id=\"DATA\">start_dt</Col><Col id=\"COL\">DT_LOAN</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">J203Y</Col><Col id=\"DATA\">repay_years</Col><Col id=\"COL\">YY_PERIOD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">J203Y</Col><Col id=\"DATA\">fixed_rate_debt</Col><Col id=\"COL\">AM_SUBST_FIX</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">J203Y</Col><Col id=\"DATA\">not_defer_debt</Col><Col id=\"COL\">AM_SUBST_BI</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">J203Y</Col><Col id=\"DATA\">ddct</Col><Col id=\"COL\">AM_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">elemAttr</Col><Col id=\"ELEMATTRIBUTE\">sum</Col></Row><Row><Col id=\"FORM\">J301Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">J301Y</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">J301Y</Col><Col id=\"DATA\">acc_no</Col><Col id=\"COL\">CD_ACCOUNT</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">J301Y</Col><Col id=\"DATA\">saving_gubn</Col><Col id=\"COL\">CD_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">J301Y</Col><Col id=\"DATA\">com_cd</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">CD_BANK</Col></Row><Row><Col id=\"FORM\">J301Y</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">K101M</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">K101M</Col><Col id=\"DATA\">start_dt</Col><Col id=\"COL\">DT_START</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">K101M</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">end_dt</Col><Col id=\"COL\">DT_END</Col></Row><Row><Col id=\"FORM\">K101M</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_SUBST</Col></Row><Row><Col id=\"FORM\">L102Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">L102Y</Col><Col id=\"DATA\">resid</Col><Col id=\"COL\">ID_RESIDENT_FAMILY</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">L102Y</Col><Col id=\"DATA\">busnid</Col><Col id=\"COL\">CD_GIVE</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">L102Y</Col><Col id=\"DATA\">trade_nm</Col><Col id=\"COL\">DS_GIVE</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">L102Y</Col><Col id=\"DATA\">donation_cd</Col><Col id=\"COL\">TY_GIVE_PDF</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">L102Y</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_GIVE</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">N101Y</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">N101Y</Col><Col id=\"DATA\">secu_no</Col><Col id=\"COL\">CD_ACCOUNT</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">N101Y</Col><Col id=\"DATA\">com_cd</Col><Col id=\"COL\">CD_BANK</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">N101Y</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">P102M</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">P102M</Col><Col id=\"DATA\">name</Col><Col id=\"COL\">DS_HNAME</Col><Col id=\"RANGETAG\">man</Col><Col id=\"ELEMENT\">attribute</Col></Row><Row><Col id=\"FORM\">P102M</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">elemAttr</Col><Col id=\"ELEMATTRIBUTE\">sum</Col><Col id=\"DATA\">spym</Col><Col id=\"COL\">AM_SPYM</Col></Row><Row><Col id=\"FORM\">P102M</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">elemAttr</Col><Col id=\"ELEMATTRIBUTE\">sum</Col><Col id=\"DATA\">jlc</Col><Col id=\"COL\">AM_JLC</Col></Row><Row><Col id=\"FORM\">P102M</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">elemAttr</Col><Col id=\"ELEMATTRIBUTE\">sum</Col><Col id=\"DATA\">ntf</Col><Col id=\"COL\">AM_NTF</Col></Row><Row><Col id=\"FORM\">P102M</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">elemAttr</Col><Col id=\"DATA\">pmt</Col><Col id=\"COL\">AM_PMT</Col><Col id=\"ELEMATTRIBUTE\">sum</Col></Row><Row><Col id=\"FORM\">P102M</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_SUBST</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col></Row><Row><Col id=\"FORM\">J501Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col></Row><Row><Col id=\"FORM\">J501Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">lsor_no</Col><Col id=\"COL\">ID_RESIDENT_LEASE</Col></Row><Row><Col id=\"FORM\">J501Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">lsor_nm</Col><Col id=\"COL\">DS_NAME_LEASE</Col></Row><Row><Col id=\"FORM\">J501Y</Col><Col id=\"DATA\">start_dt</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">DT_FROM_LEASE</Col></Row><Row><Col id=\"FORM\">J501Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">end_dt</Col><Col id=\"COL\">DT_TO_LEASE</Col></Row><Row><Col id=\"FORM\">J501Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">adr</Col><Col id=\"COL\">DS_ADDRESS_LEASE</Col></Row><Row><Col id=\"FORM\">J501Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">area</Col><Col id=\"COL\">NO_SIZE</Col></Row><Row><Col id=\"FORM\">J501Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">typeCd</Col><Col id=\"COL\">TY_HOUSE</Col></Row><Row><Col id=\"FORM\">J501Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">sum</Col><Col id=\"COL\">AM_LEASE</Col></Row><Row><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"FORM\">Q101Y</Col></Row><Row><Col id=\"FORM\">Q101Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">busnid</Col><Col id=\"COL\">BUSNID</Col></Row><Row><Col id=\"FORM\">Q101Y</Col><Col id=\"DATA\">trade_nm</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"COL\">TRADE_NM</Col></Row><Row><Col id=\"FORM\">Q101Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">secu_no</Col><Col id=\"COL\">SECU_NO</Col></Row><Row><Col id=\"FORM\">Q101Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">fund_nm</Col><Col id=\"COL\">FUND_NM</Col></Row><Row><Col id=\"FORM\">Q101Y</Col><Col id=\"DATA\">reg_dt</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">REG_DT</Col></Row><Row><Col id=\"FORM\">Q101Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">vnt_asct_cl_cd</Col><Col id=\"COL\">CL_CD</Col></Row><Row><Col id=\"FORM\">Q101Y</Col><Col id=\"DATA\">com_cd</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">COM_CD</Col></Row><Row><Col id=\"FORM\">Q101Y</Col><Col id=\"DATA\">sum</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">AM_SUBST</Col></Row><Row><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"FORM\">Q201Y</Col></Row><Row><Col id=\"FORM\">Q201Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">busnid</Col><Col id=\"COL\">BUSNID</Col></Row><Row><Col id=\"FORM\">Q201Y</Col><Col id=\"DATA\">trade_nm</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"COL\">TRADE_NM</Col></Row><Row><Col id=\"FORM\">Q201Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">secu_no</Col><Col id=\"COL\">SECU_NO</Col></Row><Row><Col id=\"FORM\">Q201Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">fund_nm</Col><Col id=\"COL\">FUND_NM</Col></Row><Row><Col id=\"FORM\">Q201Y</Col><Col id=\"DATA\">reg_dt</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">REG_DT</Col></Row><Row><Col id=\"FORM\">Q201Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">vnt_asct_cl_cd</Col><Col id=\"COL\">CL_CD</Col></Row><Row><Col id=\"FORM\">Q201Y</Col><Col id=\"DATA\">com_cd</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">COM_CD</Col></Row><Row><Col id=\"FORM\">Q201Y</Col><Col id=\"DATA\">sum</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">AM_SUBST</Col></Row><Row><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">dat_cd</Col><Col id=\"COL\">DAT_CD</Col><Col id=\"FORM\">Q301Y</Col></Row><Row><Col id=\"FORM\">Q301Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">busnid</Col><Col id=\"COL\">BUSNID</Col></Row><Row><Col id=\"FORM\">Q301Y</Col><Col id=\"DATA\">trade_nm</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"COL\">TRADE_NM</Col></Row><Row><Col id=\"FORM\">Q301Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">attribute</Col><Col id=\"DATA\">secu_no</Col><Col id=\"COL\">SECU_NO</Col></Row><Row><Col id=\"FORM\">Q301Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">fund_nm</Col><Col id=\"COL\">FUND_NM</Col></Row><Row><Col id=\"FORM\">Q301Y</Col><Col id=\"DATA\">reg_dt</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">REG_DT</Col></Row><Row><Col id=\"FORM\">Q301Y</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"DATA\">vnt_asct_cl_cd</Col><Col id=\"COL\">CL_CD</Col></Row><Row><Col id=\"FORM\">Q301Y</Col><Col id=\"DATA\">com_cd</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">COM_CD</Col></Row><Row><Col id=\"FORM\">Q301Y</Col><Col id=\"DATA\">sum</Col><Col id=\"RANGETAG\">data</Col><Col id=\"ELEMENT\">element</Col><Col id=\"COL\">AM_SUBST</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYearEndFormList", this);
+            obj._setContents("<ColumnInfo><Column id=\"FORM\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"FORM\">A102Y</Col></Row><Row><Col id=\"FORM\">B201Y</Col></Row><Row><Col id=\"FORM\">B101Y</Col></Row><Row><Col id=\"FORM\">C102Y</Col></Row><Row><Col id=\"FORM\">C202Y</Col></Row><Row><Col id=\"FORM\">C301Y</Col></Row><Row><Col id=\"FORM\">C401Y</Col></Row><Row><Col id=\"FORM\">D101Y</Col></Row><Row><Col id=\"FORM\">E103Y</Col></Row><Row><Col id=\"FORM\">F103Y</Col></Row><Row><Col id=\"FORM\">G109Y</Col></Row><Row><Col id=\"FORM\">G209M</Col></Row><Row><Col id=\"FORM\">G309Y</Col></Row><Row><Col id=\"FORM\">G409Y</Col></Row><Row><Col id=\"FORM\">J101Y</Col></Row><Row><Col id=\"FORM\">J203Y</Col></Row><Row><Col id=\"FORM\">J301Y</Col></Row><Row><Col id=\"FORM\">J401Y</Col></Row><Row><Col id=\"FORM\">K101M</Col></Row><Row><Col id=\"FORM\">L102Y</Col></Row><Row><Col id=\"FORM\">M101Y</Col></Row><Row><Col id=\"FORM\">N101Y</Col></Row><Row><Col id=\"FORM\">O101M</Col></Row><Row><Col id=\"FORM\">P102M</Col></Row><Row><Col id=\"FORM\">J501Y</Col></Row><Row><Col id=\"FORM\">Q101Y</Col></Row><Row><Col id=\"FORM\">Q201Y</Col></Row><Row><Col id=\"FORM\">Q301Y</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("ds", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new FileUpTransfer("FileUpTransfer", this);
+            this.addChild(obj.name, obj);
+
+
+            obj = new FileDialog("fileUpDialog", this);
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Static("staTITLE","0","0",null,"30","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_text("국세청 PDF 올리기");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textAlign("left");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("sta00","0","40",null,"40","0",null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text(" PDF 화일은 국세청에서 다운받은 화일만 올리기 가능합니다.\r\n PDF 데이타는 기본소득공제인원에 해당할경우만 업로드 됩니다.");
+            obj.set_color("blue");
+            obj.set_font("bold 12px/normal \"Dotum\"");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("sta01","0","80",null,"25","0",null,null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_text(" ※ 기본공제외로 신용카드, 의료비, 교육비 입력시는 인적공제 등록에서 체크를 반드시 하시고 올리기 하십시요");
+            obj.set_color("red");
+            obj.set_font("bold 12px/normal \"Dotum\"");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("sta02","0","102",null,"25","0",null,null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_text(" 국세청 PDF 다운은 비밀번호를 걸지 말고 다운받아주십시요");
+            obj.set_font("bold 16px/normal \"Dotum\"");
+            obj.set_color("red");
+            this.addChild(obj.name, obj);
+
+            obj = new ImageViewer("imgHomeTax","0","227","665","223",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_stretch("fixaspectratio");
+            obj.set_border("none");
+            obj.set_image("url(\'theme://images/DAVINFO.png\')");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnPDFupload","515","134","90","20",null,null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_text(" >> PDF 올리기");
+            obj.set_enable("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("sta03","0","180",null,"25","0",null,null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_text(" ※ 아래와 같이 다운 받으신 화일만 업로드 됩니다(근무한 기간의 해당월을 클릭하여 다운받습니다.)");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("sta04","0","203",null,"30","0",null,null,null,null,null,this);
+            obj.set_taborder("7");
+            obj.set_text(" 근로기간 확인 후 한번에 내려받기 클릭, PDF 다운시 암호를 걸지 마시고 다운로드");
+            obj.set_font("bold 12px/normal \"Dotum\"");
+            obj.set_color("red");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnClose","304","460","57","22",null,null,null,null,null,null,this);
+            obj.set_taborder("8");
+            obj.set_text("닫기");
+            this.addChild(obj.name, obj);
+
+            obj = new FileUpload("fileUpload","18","134","492","20",null,null,null,null,null,null,this);
+            obj.set_taborder("9");
+            obj.set_buttontext("찾기");
+            obj.set_buttonsize("60");
+            obj.set_itemheight("20");
+            this.addChild(obj.name, obj);
+
+            obj = new TextArea("txtYearEndXml","670","0","269","145",null,null,null,null,null,null,this);
+            obj.set_taborder("10");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("DAV_INPUTDATA_PDF_DLG.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+        this.fileConfig = {
+        			host : this.gfnGetServerUrl(),
+        			//uploadUrl : "/file/saveFile.do",
+        			uploadUrl : "/file/readPDFfile.do",
+        			allowTypes : ["pdf"],
+        			maxCount : 1,
+        			maxSize : "10MB",
+        			maxTotalSize : "10MB"
+        		};
+        this.FileManager = {};
+        this.extUp;
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	//전달 값
+        	this.CD_CORP = this.getOwnerFrame().CD_CORP;
+        	this.ID_SABUN = this.getOwnerFrame().ID_SABUN;
+        	this.ID_RESIDENT = this.getOwnerFrame().ID_RESIDENT;
+        	this.YY_BASE = this.getOwnerFrame().YY_BASE;
+        	this.MM_BASE = this.getOwnerFrame().MM_BASE;
+        	this.YN_MID = this.getOwnerFrame().YN_MID;
+
+        	//업로드 경로
+        	this.fnFileDirInfo();
+
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+
+         /************************************************************************
+         * Validate
+         ************************************************************************/
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg, args)
+        {
+        	if(errorCode != 0 ){
+        		this.setWaitCursor(false,true);
+        	}
+        	if(svcID == "deletePdf"){	//기존자료 삭제
+        		if (errorCode == 0) {
+        			//this.setWaitCursor(true,true);
+        			//기존 자료 삭제후 PDF Upload
+         			this.fnExcute();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        			this.setWaitCursor(false,true);
+        		}
+        	} else if(svcID =="imagefile"){
+        		this.imgHomeTax.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+        	}
+        };
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+         /************************************************************************
+         * 확장버튼 이벤트
+         ************************************************************************/
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        //PDF 올리기
+        this.btnPDFupload_onclick = function(obj,e)
+        {
+        	this.setWaitCursor(true,true);
+        	this.FileUpTransfer.addFile(this.UpFile.filename, this.UpFile);
+        	var sUploadUrl = this.fileConfig.host + this.fileConfig.uploadUrl;
+        	this.FileManager.SERVER_PATH = this.dsFileDirInfo.getColumn(0, "DS_PATH").replace(/\//g, "\\") + "\\";
+        	this.FileManager.CD_DIR = [this.YY_BASE+this.MM_BASE, this.ID_SABUN];
+        	this.FileManager.FULL_PATH = this.FileManager.SERVER_PATH.replace(/\\\\/g, "\\") + this.FileManager.CD_DIR.join('\\');
+
+        	this.FileUpTransfer.setPostData("path", this.FileManager.FULL_PATH);
+        	this.FileUpTransfer.upload(sUploadUrl);
+        };
+
+        //닫기
+        this.btnClose_onclick = function(obj,e)
+        {
+        	this.getParentContext().close();
+        };
+
+        //파일 업로드
+        this.btnFileupload_onclick = function(obj,e)
+        {
+        	this.fnFileDirInfo();	//업로드 경로
+        };
+
+        //파일 선택 후
+        this.fileUpload_onitemchanged = function(obj,e)
+        {
+        	if(obj.filelist.length > 0){
+        		this.UpFile = obj.filelist[0];
+        		this.btnPDFupload.set_enable(true);
+        	}else{
+        		this.btnPDFupload.set_enable(false);
+        	}
+        };
+
+        //파일 업로드 경로 조회
+        this.fnFileDirInfo = function() {
+
+        	this.dsInfoParam.clearData();
+        	this.dsInfoParam.addRow();
+
+        	this.dsInfoParam.setColumn(0, "CD_GUBUN", "DA20");
+
+        	var strSvcId    = "fileDirInfo";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "fileDirInfo=dsInfoParam";
+        	var outData     = "dsFileDirInfo=fileDirInfo0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        //업로드 진행중
+        this.FileUpTransfer_onprogress = function(obj,e)
+        {
+        	//trace("FileUpTransfer_onprogress: " + e.loaded+"/"+e.total);
+        };
+
+        //업로드 성공
+        this.FileUpTransfer_onsuccess = function(obj,e)
+        {
+        	this.txtYearEndXml.set_value(e.datasets[0].getColumn("XML"));
+
+        	if(!this.gfnIsNull(this.txtYearEndXml.value)){
+        		//기존자료 삭제
+        		this.fnDeletePdf();
+        	}else{
+        		this.gfnAlert("업로드 파일 내용을 확인하세요.");
+        		this.setWaitCursor(false,true);
+        	}
+        };
+
+        //업로드 실패
+        this.FileUpTransfer_onerror = function(obj,e)
+        {
+        	this.gfnAlert(e.errormsg);
+        	this.setWaitCursor(false,true);
+        };
+
+        //기존자료 삭제
+        this.fnDeletePdf = function(){
+
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("CD_CORP", "string");
+        	this.dsSelect.addColumn("ID_RESIDENT", "string");
+        	this.dsSelect.addColumn("ID_SABUN", "string");
+        	this.dsSelect.addColumn("YY_BASE", "string");
+        	this.dsSelect.addColumn("MM_BASE", "string");
+        	this.dsSelect.addColumn("NO_APPLY", "bigdecimal");
+        	this.dsSelect.addColumn("YN_MID", "string");
+        	this.dsSelect.addColumn("YN_DELETE", "string");
+        	this.dsSelect.addColumn("ID_INSERT", "string");
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+
+        	this.dsSelect.setColumn(0, "CD_CORP", this.CD_CORP);
+        	this.dsSelect.setColumn(0, "ID_RESIDENT", this.ID_RESIDENT);
+        	this.dsSelect.setColumn(0, "ID_SABUN", this.ID_SABUN);
+        	this.dsSelect.setColumn(0, "YY_BASE", this.YY_BASE);
+        	this.dsSelect.setColumn(0, "MM_BASE", this.MM_BASE);
+        	this.dsSelect.setColumn(0, "NO_APPLY", "1");
+        	this.dsSelect.setColumn(0, "YN_MID", this.YN_MID);
+        	this.dsSelect.setColumn(0, "YN_DELETE", "Y");
+        	this.dsSelect.setColumn(0, "ID_INSERT", this.AuthClient.ID_USER);
+
+        	//transaction
+        	var strSvcId    = "deletePdf";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "deletePdf=dsSelect";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc,	// CallBack 함수명
+        						false); 		// 통신방법 정의 [생략가능]
+        };
+
+        //연말정산 XML 처리
+        this.fnExcute = function(){
+        	/*
+        		dsYearEndFormList 	처리할 FORM LIST (A102Y,B101Y...)
+        		dsYearEndTagCol		XML element Tag 와 transaction Dataset column mapping
+        	*/
+
+        	var parser = new DOMParser();
+        	var xmlDoc = parser.parseFromString(this.txtYearEndXml.value,"text/xml");
+
+        	//XML parse
+        	var xml = xmlDoc.getElementsByTagName("form");
+
+        	for( var i = 0 ; i < xml.length ; i ++){
+        		for( var j = 0 ; j < this.dsYearEndFormList.rowcount; j++){
+        			var form_cd = xml[i].attributes["form_cd"].textContent;
+
+        			//form_cd 별 dataset 생성후 transaction
+        			if( form_cd == this.dsYearEndFormList.getColumn(j, "FORM")){
+
+        				this.ds.clear();
+
+        				//form_cd 별 컬럼 추가
+        				this.fnAddCol(form_cd);
+
+        				//form_cd 별 dataset 에 Set Column
+        				this.dsYearEndTagCol.filter("FORM=='"+form_cd+"'");
+        				var formMan = xml[i].getElementsByTagName('man');
+
+        				for( var k = 0 ; k < formMan.length; k++){
+        					var nrow;
+        					var formManData = formMan[k].getElementsByTagName("data");
+        					//신용카드, 현금영수증, 직불카드는 man
+        					if(form_cd == "G109Y" || form_cd == "G209M" || form_cd == "G309Y" || form_cd == "G409Y"){
+        						nrow = this.ds.addRow();
+        						var formSumdata = formMan[k].getElementsByTagName("sum_data");
+        						var pre_year_sum = formSumdata[0].getElementsByTagName("tot_pre_year_sum")[0].textContent
+        						var curr_year_sum = formSumdata[0].getElementsByTagName("tot_curr_year_sum")[0].textContent
+        						var gnrl_sum = formSumdata[0].getElementsByTagName("gnrl_sum")[0].textContent
+        						var tdmr_sum = formSumdata[0].getElementsByTagName("tdmr_sum")[0].textContent
+        						var trp_sum = formSumdata[0].getElementsByTagName("trp_sum")[0].textContent
+        						var isld_sum = formSumdata[0].getElementsByTagName("isld_sum")[0].textContent
+
+        						this.ds.setColumn(nrow, "AM_SUBST800", pre_year_sum);
+        						this.ds.setColumn(nrow, "AM_SUBST801", curr_year_sum);
+        						this.ds.setColumn(nrow, "AM_SUBST80", gnrl_sum);
+        						this.ds.setColumn(nrow, "AM_SUBST84", tdmr_sum);
+        						this.ds.setColumn(nrow, "AM_SUBST83", trp_sum);
+        						this.ds.setColumn(nrow, "AM_SUBST86", isld_sum);
+
+        					}
+
+        					for( var l = 0 ; l < formManData.length; l++){
+        						if(form_cd != "G109Y" && form_cd != "G209M" && form_cd != "G309Y" && form_cd != "G409Y"){
+        							nrow = this.ds.addRow();
+        						}
+        						//기본정보 set
+        						this.ds.setColumn(nrow, "FORM_CD", form_cd);
+        						this.ds.setColumn(nrow, "CD_CORP", this.CD_CORP);
+        						this.ds.setColumn(nrow, "YY_BASE", this.YY_BASE);
+        						this.ds.setColumn(nrow, "MM_BASE", this.MM_BASE);
+        						this.ds.setColumn(nrow, "NO_APPLY", "1");
+        						this.ds.setColumn(nrow, "YN_MID", this.YN_MID);
+        						this.ds.setColumn(nrow, "ID_RESIDENT", this.ID_RESIDENT);
+        						this.ds.setColumn(nrow, "ID_SABUN", this.ID_SABUN);
+        						this.ds.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER+"_"+nrow);	//sp parameter 가 동일하면 oracleMapper 에서 호출누락시킴. 다른 점을 주기 위해 nrow 추가
+
+        						for( var m = 0 ; m < this.dsYearEndTagCol.rowcount; m ++){
+        							var rangeTag = this.dsYearEndTagCol.getColumn(m, "RANGETAG");			//man, data, cal
+        							var elementTag = this.dsYearEndTagCol.getColumn(m, "ELEMENT");			//element, attribute
+        							var eleAttriTag = this.dsYearEndTagCol.getColumn(m, "ELEMATTRIBUTE");	//attribute of element
+        							var dataTag = this.dsYearEndTagCol.getColumn(m, "DATA");				//dataAttributeTag
+        							var colName = this.dsYearEndTagCol.getColumn(m, "COL");					//dataset column name
+        							switch(rangeTag){
+        								case "man":		//man 은 attribute
+        									this.ds.setColumn(nrow, colName, formMan[k].attributes[dataTag].value);
+        									break;
+        								case "data":	//element, attribute, elemAttr
+        									if(elementTag == "element"){
+        										this.ds.setColumn(nrow, colName, formManData[l].getElementsByTagName(dataTag)[0].textContent);
+        									}else if(elementTag == "attribute"){
+        										this.ds.setColumn(nrow, colName, formManData[l].attributes[dataTag].value);
+        									}else if(elementTag == "elemAttr"){
+        										this.ds.setColumn(nrow, colName, formManData[l].getElementsByTagName(eleAttriTag)[0].attributes[dataTag].value);
+        									}
+        									break;
+
+        								default:
+
+        							}
+        						}//dsYearEndTagCol
+        					}//formManData
+        				}//formMan
+
+        				if(form_cd=="P102M"){
+
+        				   var AM_NTF = 0;
+        				   var AM_SUBST = 0;
+        				   var AM_PMT = 0;
+
+        				   AM_NTF = parseInt(this.ds.getColumn(0, "AM_NTF"));
+        				   AM_SUBST = parseInt(this.ds.getColumn(0, "AM_SUBST"));
+        				   AM_PMT = parseInt(this.ds.getColumn(0, "AM_PMT"));
+
+        				   if(AM_NTF == AM_SUBST){
+        				      console.log(form_cd);
+        					  console.log("고지금액(nft) :" + AM_NTF);
+        					  console.log("총합(sum) :" + AM_SUBST);
+        					  console.log("총 합계 금액과 직장가입자 고지금액이 같은경우 스킵.");
+        					  continue;
+        				   }else{
+        				      //고지금액이 다른경우
+        				      //추납보험료납부금액 + 실업크레딧납부금액 = 지역가입자 등 납부금액 합계
+        				      this.ds.setColumn(0, "AM_SUBST", AM_PMT)
+        					  this.ds.set_updatecontrol(false);//updatecontrol 속성이 false일때만 컬럼이 삭제됨
+        					  this.ds.deleteColumn("AM_JLC");
+        					  this.ds.deleteColumn("AM_PMT");
+        					  this.ds.deleteColumn("AM_SPYM");
+        					  this.ds.deleteColumn("AM_NTF");
+        					  this.ds.set_updatecontrol(true);
+        				   }
+        				}
+
+        				//if(form_cd=="G407Y")trace(this.ds.saveXML());
+        				//transaction
+        				var strSvcId    = "excute";
+        				var strSvcType  = "save";
+        				var inProc		= "_dsProc";
+        				var inData      = form_cd+"=ds";
+        				var outData     = "";
+        				var strArg      = "";
+        				var callBackFnc = "fnCallback";
+
+        				this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        									strSvcType , 	// transaction을 요청할 구분
+        									inProc,			// Procedure 정보 Dataset 이름
+        									inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        									outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        									strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        									callBackFnc,
+        									false); 		// 통신방법 정의 [생략가능]
+        			}//form 별 dataset 생성 및 transaction
+        		}//formList
+        	}//xml
+
+        	this.setWaitCursor(false,true);
+        	this.gfnAlert("PDF 업로드 완료되었습니다.", "fnClose");
+        };
+
+        //공통컬럼
+        this.fnAddCol = function(form_cd){
+        	this.ds.addColumn("FORM_CD", "string");
+        	this.ds.addColumn("CD_CORP", "string");
+        	this.ds.addColumn("YY_BASE", "string");
+        	this.ds.addColumn("MM_BASE", "string");
+        	this.ds.addColumn("NO_APPLY", "string");
+        	this.ds.addColumn("YN_MID", "string");
+        	this.ds.addColumn("ID_RESIDENT", "string");
+        	this.ds.addColumn("ID_SABUN", "string");
+        	this.ds.addColumn("ID_INSERT", "string");
+
+        	//Add Column
+        	this.dsYearEndTagCol.filter("FORM=='"+form_cd+"'");
+        	for( var i = 0 ; i < this.dsYearEndTagCol.rowcount; i++){
+        		if(!this.gfnIsNull(this.dsYearEndTagCol.getColumn(i,"COL"))){
+        			this.ds.addColumn(this.dsYearEndTagCol.getColumn(i,"COL"),"string");
+        		}
+        	}
+        };
+
+        this.fnClose = function() {
+        	this.getParentContext().close(true);
+        };
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.sta00.addEventHandler("onclick",this.sta00_onclick,this);
+            this.sta01.addEventHandler("onclick",this.sta00_onclick,this);
+            this.sta02.addEventHandler("onclick",this.sta00_onclick,this);
+            this.btnPDFupload.addEventHandler("onclick",this.btnPDFupload_onclick,this);
+            this.sta03.addEventHandler("onclick",this.sta00_onclick,this);
+            this.sta04.addEventHandler("onclick",this.sta00_onclick,this);
+            this.btnClose.addEventHandler("onclick",this.btnClose_onclick,this);
+            this.fileUpload.addEventHandler("onsuccess",this.fileUpload_onsuccess,this);
+            this.fileUpload.addEventHandler("onitemchanged",this.fileUpload_onitemchanged,this);
+            this.FileUpTransfer.addEventHandler("onprogress",this.FileUpTransfer_onprogress,this);
+            this.FileUpTransfer.addEventHandler("onsuccess",this.FileUpTransfer_onsuccess,this);
+            this.FileUpTransfer.addEventHandler("onerror",this.FileUpTransfer_onerror,this);
+            this.fileUpDialog.addEventHandler("onclose",this.fileUpDialog_onclose,this);
+        };
+        this.loadIncludeScript("DAV_INPUTDATA_PDF_DLG.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

@@ -1,0 +1,1461 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("DAV_YEARENDDISKDLG");
+            this.set_titletext("전산매체생성");
+            this.getSetter("maxwidth").set("420");
+            this.getSetter("maxheight").set("410");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(379,335);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList1", this);
+            obj._setContents("<ColumnInfo><Column id=\"COL\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsList2", this);
+            obj._setContents("<ColumnInfo><Column id=\"COL\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsList3", this);
+            obj._setContents("<ColumnInfo><Column id=\"COL\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsList4", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"SP\">DAWPR_RETIREDISKA_SELECT</Col><Col id=\"TARGET\">select0</Col></Row><Row><Col id=\"SP\">DAWPR_RETIREDISKB_SELECT</Col><Col id=\"TARGET\">select1</Col></Row><Row><Col id=\"SP\">DAWPR_RETIREDISKCD_SELECT</Col><Col id=\"TARGET\">select2</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new FileDownTransfer("FileDownTransfer00", this);
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divData","0","0",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staTITLE","1","0","360","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("10");
+            obj.set_text("전산매체생성");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textAlign("left");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTY_GUBUN","0","35","120","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("17");
+            obj.set_text("작업구분");
+            obj.set_visible("true");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTY_GUBUN_bg","staTY_GUBUN:-1","staTY_GUBUN:-30","260","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("21");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_visible("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Combo("cboTY_GUBUN","staTY_GUBUN:5","staTY_GUBUN:-25","120","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj.set_codecolumn("codecolumn");
+            obj.set_datacolumn("datacolumn");
+            obj.set_readonly("true");
+            var divData_form_cboTY_GUBUN_innerdataset = new nexacro.NormalDataset("divData_form_cboTY_GUBUN_innerdataset", obj);
+            divData_form_cboTY_GUBUN_innerdataset._setContents("<ColumnInfo><Column id=\"codecolumn\" size=\"256\"/><Column id=\"datacolumn\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"codecolumn\">1</Col><Col id=\"datacolumn\">퇴직소득</Col></Row></Rows>");
+            obj.set_innerdataset(divData_form_cboTY_GUBUN_innerdataset);
+            obj.set_text("퇴직소득");
+            obj.set_value("1");
+            obj.set_index("0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staYY_BASE","0","staTY_GUBUN:-1","120","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("11");
+            obj.set_text("정산년도");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staYY_BASE_bg","staYY_BASE:-1","staYY_BASE:-30","260","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("12");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("ctclYY_BASE","staYY_BASE:5","staYY_BASE:-25","80","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("1");
+            obj.set_url("cmm::cmmCalYY.xfdl");
+            obj.getSetter("onchanged").set("fnSearchInit");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staCD_CORP","0","staYY_BASE:-1","120","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("13");
+            obj.set_text("법인코드");
+            obj.set_visible("true");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staCD_CORP_bg","staCD_CORP:-1","staCD_CORP:-30","260","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("14");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_visible("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_CORP","staCD_CORP:5","staCD_CORP:-25","248","20",null,null,null,null,null,null,this.divData.form);
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("2");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.getSetter("CodeFindName").set("DAX_CFCORP_CODEFIND");
+            obj.getSetter("BeforeUserDataSetParam").set("fnBeforeUserDataSetParam");
+            obj.getSetter("AfterCDTextChanged").set("fnAfterCDTextChanged");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staCD_CFSELFACNT","0","staCD_CORP:-1","120","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("15");
+            obj.set_text("세무단위");
+            obj.getSetter("BeforeUserDataSetParam").set("fnBeforeUserDataSetParam");
+            obj.getSetter("AfterCDTextChanged").set("fnAfterCDTextChanged");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staCD_CFSELFACNT_bg","staCD_CFSELFACNT:-1","staCD_CFSELFACNT:-30","260","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("16");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_CFSELFACNT","staCD_CFSELFACNT:5","staCD_CFSELFACNT:-25","248","20",null,null,null,null,null,null,this.divData.form);
+            obj.getSetter("CodeFindName").set("DHX_CFSELFACNT");
+            obj.getSetter("CDTextWidth").set("70");
+            obj.set_taborder("3");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.set_visible("true");
+            obj.getSetter("BeforeUserDataSetParam").set("fnBeforeUserDataSetParam");
+            obj.getSetter("AfterCDTextChanged").set("fnAfterCDTextChanged");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staID_HOMETAX","0","staCD_CFSELFACNT:-1","120","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("18");
+            obj.set_text("홈텍스ID");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staID_HOMETAX_bg","staID_HOMETAX:-1","staID_HOMETAX:-30","260","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("19");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Edit("edtID_HOMETAX","staID_HOMETAX:5","staID_HOMETAX:-25","248","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("4");
+            obj.set_readonly("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_DEPT","0","staID_HOMETAX:-1","120","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("23");
+            obj.set_text("담당부서명");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_DEPT_bg","staDS_DEPT:-1","staDS_DEPT:-30","260","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("24");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_DEPT","staDS_DEPT:5","staDS_DEPT:-25","248","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("5");
+            obj.set_readonly("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_HNAME","0","staDS_DEPT:-1","120","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("25");
+            obj.set_text("담당자명");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_HNAME_bg","staDS_HNAME:-1","staDS_HNAME:-30","260","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("26");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_HNAME","staDS_HNAME:5","staDS_HNAME:-25","248","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("6");
+            obj.set_readonly("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_TELNO","0","staDS_HNAME:-1","120","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("27");
+            obj.set_text("담당자전화번호");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_TELNO_bg","staDS_TELNO:-1","staDS_TELNO:-30","260","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("28");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_TELNO","staDS_TELNO:5","staDS_TELNO:-25","247","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("7");
+            obj.set_textAlign("left");
+            obj.set_inputtype("digit");
+            obj.set_displaynulltext("- 없이 번호만 입력하세요.");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDT_PRINT","0","staDS_TELNO:-1","120","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("20");
+            obj.set_text("제출일");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDT_PRINT_bg","staDT_PRINT:-1","staDT_PRINT:-30","260","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("22");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Calendar("calDT_PRINT","staDT_PRINT:5","staDT_PRINT:-25","105","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("8");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new TextArea("txtCont","383","4","137","81",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("29");
+            obj.set_visible("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Edit("edtNO_SAUP","194","4","136","21",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("30");
+            obj.set_readonly("true");
+            obj.set_visible("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("divBtns","110","308","170","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("9");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Button("btnMakeLocalFile","0","0","80","27",null,null,null,null,null,null,this.divData.form.divBtns.form);
+            obj.set_taborder("0");
+            obj.set_text("전산매체생성");
+            this.divData.form.divBtns.addChild(obj.name, obj);
+
+            obj = new Button("btnCANCLE","btnMakeLocalFile:10","0","80","27",null,null,null,null,null,null,this.divData.form.divBtns.form);
+            obj.set_taborder("1");
+            obj.set_text("취소");
+            this.divData.form.divBtns.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCalYY.xfdl");
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DAW_RETIREDISKDLG.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        var context = "/";
+        if (nexacro.getEnvironmentVariable("evContextPath") != undefined) {
+        	context = nexacro.getEnvironmentVariable("evContextPath");
+        }
+
+        this.fileConfig = {
+        	host : this.gfnGetServerUrl(),
+        	downloadUrl : context + "file/downloadText.do",
+        	allowTypes : ["txt"],
+        	maxCount : 1,
+        	maxSize : "200MB",
+        	maxTotalSize : "200MB"
+        };
+
+        this.form_onload = function(obj,e) {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	//this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+
+        	//정산년도(현재)
+        	this.divData.form.ctclYY_BASE.form.TextBox.set_value(this.gfnGetDate().substr(0,4) - 1);
+
+        	// 법인코드 및 법인명 기본세팅
+        	this.divData.form.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+            this.divData.form.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+
+        	//제출일
+        	this.divData.form.calDT_PRINT.set_value(this.gfnGetDate().substr(0,4) + "0228");
+
+
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+        	// Select, Add, Del, Save, Excel, Print
+        	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+        	// this.FormBtns.Add.set_enable(false);
+        	// this.FormBtns.Del.set_enable(false);
+        };
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+
+        	this.grSearch = this.FormInfo.GR_SEARCH;					          // 권한
+        	this.cdGroup = this.AuthClient.CD_GROUP;					          // 그룹코드
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+
+        };
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+        	//SP input
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("YY_RETIRE", "string");
+        	this.dsSelect.addColumn("CD_CORP", "string");
+        	this.dsSelect.addColumn("DT_PRINT", "string");
+        	this.dsSelect.addColumn("ID_HOMETAX", "string");
+        	this.dsSelect.addColumn("DS_DEPT", "string");
+        	this.dsSelect.addColumn("DS_HNAME", "string");
+        	this.dsSelect.addColumn("DS_TELNO", "string");
+
+        	this.dsSelectSub = new Dataset();
+        	this.dsSelectSub.addColumn("YY_RETIRE", "string");
+        	this.dsSelectSub.addColumn("CD_CORP", "string");
+
+        };
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /************************************************************************
+         * Validate
+         ************************************************************************/
+        this.fnSelectValidate = function() {
+
+        	//정산년도
+        	if (this.gfnIsNull(this.ctclYY_BASE.form.TextBox.value)) {
+        		this.fnVaidateCallback = function() {
+        			this.ctclYY_BASE.form.TextBox.setFocus();
+        		}
+        		this.gfnAlert("정산년도를 입력하세요.");
+        		return false;
+        	}
+
+        	//법인
+        	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+        		this.fnVaidateCallback = function() {
+        			this.ccfCD_CORP.form.CDTextBox.setFocus();
+        		}
+        		this.gfnAlert("법인코드를 입력하세요.", "fnVaidateCallback");
+        		return false;
+        	}
+
+        	//세무단위
+        	if (this.gfnIsNull(this.ccfCD_CFSELFACNT.form.CDTextBox.value)) {
+        		this.fnVaidateCallback = function() {
+        			this.ccfCD_CFSELFACNT.form.CDTextBox.setFocus();
+        		}
+        		this.gfnAlert("세무단위 코드를 입력하세요.", "fnVaidateCallback");
+        		return false;
+        	}
+
+        	//담당부서명
+        	if (this.gfnIsNull(this.edtDS_DEPT.value)) {
+        		this.fnVaidateCallback = function() {
+        			this.edtDS_DEPT.setFocus();
+        		}
+        		this.gfnAlert("담당부서명을 입력하세요.", "fnVaidateCallback");
+        		return false;
+        	}
+
+        	//담당자명
+        	if (this.gfnIsNull(this.edtDS_HNAME.value)) {
+        		validate = false;
+        		this.fnVaidateCallback = function() {
+        			this.edtDS_HNAME.setFocus();
+        		}
+        		this.gfnAlert("담당자명을 입력하세요.", "fnVaidateCallback");
+        		return validate;
+        	}
+
+        	//담당자 전화번호
+        	if (this.gfnIsNull(this.edtDS_TELNO.value)) {
+        		this.fnVaidateCallback = function() {
+        			this.edtDS_TELNO.setFocus();
+        		}
+        		this.gfnAlert("담당자 전화번호를 입력하세요.", "fnVaidateCallback");
+        		return false;
+        	}
+
+        	//제출일
+        	if (this.gfnIsNull(this.calDT_PRINT.value)) {
+        		this.fnVaidateCallback = function() {
+        			this.calDT_PRINT.setFocus();
+        		}
+        		this.gfnAlert("제출일을 입력하세요.");
+        		return false;
+        	}
+
+        	//제출일
+        	if (this.gfnIsNull(this.edtID_HOMETAX.value)) {
+        		this.fnVaidateCallback = function() {
+        			this.edtID_HOMETAX.setFocus();
+        		}
+        		this.gfnAlert("홈텍스 ID를 입력하세요.");
+        		return false;
+        	}
+
+         	return true;
+        };
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	if(svcID == "makeLocalFile") {
+        		if (errorCode == 0) {
+
+        			//내용 txt 생성
+        			this.fnSetTextFileCont();
+
+        			if(!this.gfnIsNull(this.txtCont.value)){
+        				//파일 다운
+        				this.fnFileDown();
+
+        				//닫기
+        				this.getParentContext().close(true);
+
+        				//this.gfnAlert("국세청신고자료 생성이 완료되었습니다.","fnAlertCallback");
+        			}else{
+        				this.fnAlertCallback = function() {
+        					this.getParentContext().close(true);
+        				}
+        				this.gfnAlert("연말정산자료가 존재하지 않습니다.","fnAlertCallback");
+        			}
+
+        		}else{
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        };
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+         	switch(id) {
+        		case "ccfCD_CORP": // 법인코드
+        			dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+        			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+        			dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        			break;
+        		case "ccfCD_CFSELFACNT": // 세무단위
+        			if(this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+        				this.ccfCD_CORP.form.CDTextBox.setFocus();
+        				this.gfnAlert("법인을 먼저 선택하시기 바랍니다.");
+        				return false;
+        			}
+
+        			dsUserParam.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+        			//dsUserParam.setColumn(nrow, "CD_CORP", this.UserInfo.LEVCD_DEPT_ACNT);		// 닷넷에선 LEVCD_DEPT_ACNT 값을 셋팅함(SP에서는 주석처리되어 있음)
+
+        			break;
+
+        		default:
+         	}
+         	return true;
+        };
+
+        this.fnAfterCDTextChanged = function(id, codeFindData) {
+        	var arr = codeFindData;
+
+         	switch(id) {
+        		case "ccfCD_CORP": // 법인코드
+        			this.ccfCD_CFSELFACNT.form.fnCodeFindClear();
+        			break;
+        		case "ccfCD_CFSELFACNT": // 세무단위
+        			if(arr.length >0){
+        				this.edtNO_SAUP.set_value(arr[0]["NO_SJC"]);
+        			}else{
+        				this.edtNO_SAUP.set_value("");
+        			}
+        			break;
+
+        		default:
+         	}
+        };
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+         /************************************************************************
+         * 확장버튼 이벤트
+         ************************************************************************/
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        /*
+         *	조회 조건 변경시 초기화
+         */
+        this.fnSearchInit = function(obj,e) {
+        	if(e == null || (e.pretext != e.posttext)) {
+        		// 폼상태 초기화
+        		this.gfnSetFormStatus(this);
+        		this.gfnGridClear(this.dxGrid);
+        	}
+        };
+
+        //자료생성
+        /*
+        this.divBtns_btnCREATE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+        {
+        	if(!this.fnSelectValidate()) return false;
+
+        	this.dsSelect.clearData();
+
+        	var nrow = this.dsSelect.addRow();
+        	this.dsSelect.setColumn(nrow, "TY_GUBUN", 		"I");
+        	this.dsSelect.setColumn(nrow, "YY_BASE",		this.ctclYY_BASE.form.TextBox.value);
+        	this.dsSelect.setColumn(nrow, "CD_CORP_H",		this.ccfCD_CORP.form.CDTextBox.value);
+
+        	var strSvcId    = "create";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "create=dsSelect"
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+        */
+
+        //전산매체 생성
+        this.divBtns_btnMakeLocalFile_onclick = function(obj,e)
+        {
+        	if(!this.fnSelectValidate()) return false;
+
+        	//작업구분
+        	var tyGubun = this.cboTY_GUBUN.value;
+        	var inData  = "";
+        	var outData = "";
+
+        	this.dsList1.clearData();
+        	this.dsList2.clearData();
+        	this.dsList3.clearData();
+
+        	switch(tyGubun){
+        		case "1":	//근로소득
+        			inData = "select0=dsSelect select1=dsSelectSub select2=dsSelectSub";
+        			outData= "dsList1=select00 dsList2=select10 dsList3=select20";
+        			break;
+
+        		case "2":	//의료소득
+        			inData = "select3=dsSelect";
+        			outData= "dsList1=select30";
+        			break;
+        		/*
+        		case "3":	//기부금
+        			inData = "giveA=dsSelect giveB=dsSelect giveC=dsSelect giveD=dsSelect";
+        			outData= "dsListA=giveA0 dsListB=giveB0 dsListC=giveC0 dsListD=giveD0";
+        			break;
+        		*/
+        		default:
+        	}
+
+        	this.dsSelect.clearData();
+        	var nrow = this.dsSelect.addRow();
+
+        	this.dsSelect.setColumn(0, "YY_RETIRE", this.ctclYY_BASE.form.TextBox.value);
+        	this.dsSelect.setColumn(0, "CD_CORP", this.ccfCD_CFSELFACNT.form.CDTextBox.value);
+        	//this.dsSelect.setColumn(0, "CD_CORP", "0100000");		// 테스트데이터
+        	this.dsSelect.setColumn(0, "DT_PRINT", this.calDT_PRINT.value);
+        	this.dsSelect.setColumn(0, "ID_HOMETAX", this.edtID_HOMETAX.value);
+        	this.dsSelect.setColumn(0, "DS_DEPT", this.edtDS_DEPT.value);
+        	this.dsSelect.setColumn(0, "DS_HNAME", this.edtDS_HNAME.value);
+        	this.dsSelect.setColumn(0, "DS_TELNO", this.edtDS_TELNO.value);
+
+        	this.dsSelectSub.clearData();
+        	var nrow = this.dsSelectSub.addRow();
+
+        	this.dsSelectSub.setColumn(0, "YY_RETIRE", this.ctclYY_BASE.form.TextBox.value);
+        	this.dsSelectSub.setColumn(0, "CD_CORP", this.ccfCD_CFSELFACNT.form.CDTextBox.value);
+
+        	var strSvcId    = "makeLocalFile";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId , 	    // transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        };
+
+        this.divBtns_btnCANCLE_onclick = function(obj,e)
+        {
+        	this.getParentContext().close(false);
+        };
+
+        this.fnSetTextFileCont = function() {
+        	var strCont="";
+        	var tyGubun = this.cboTY_GUBUN.value;
+
+        	switch(tyGubun){
+        		case "1":	//퇴직
+        			strCont += this.fnGetTxtDataset(this.dsList1);
+        			strCont += this.fnGetTxtDataset(this.dsList2);
+        			strCont += this.fnGetTxtDatasetListC(this.dsList3);
+        			break;
+
+        		/*
+        		case "3":	//기부금
+        			strCont += this.fnGetTxtDataset(this.dsListA);
+        			strCont += this.fnGetTxtDataset(this.dsListB);
+        			strCont += this.fnGetTxtDataset(this.dsListC);
+        			strCont += this.fnGetTxtDataset(this.dsListD);
+        			break;
+        		*/
+
+        		default:
+        	}
+
+        	this.txtCont.set_value(strCont.replace(/■/g,''));
+        };
+
+        this.fnGetTxtDataset = function(dataset){
+        	var strCont= "";
+
+        	for(var row = 0; row < dataset.rowcount; row++) {
+        		//for( var col = 1 ; col <= dataset.colcount; col++){
+        		for( var col = 0 ; col < dataset.colcount; col++){
+        			//strCont += this.gfnNvl(dataset.getColumn(row, "COL_"+col),"");
+        			strCont += this.gfnNvl(dataset.getColumn(row, col),"");
+        		}
+        		strCont += "\n";
+        	}
+        	return strCont;
+        };
+
+        this.fnGetTxtDatasetListC = function(dataset){
+        	var strDiskC = "";
+        	var strDiskD1 = "";
+        	var strDiskD2 = "";
+        	var strDiskD3 = "";
+        	var strDiskD4 = "";
+        	var strDiskE1 = "";
+        	var strDiskE2 = "";
+
+        	var strDiskE3 = "";
+        	//2021-02-01  김민영: 2020귀속연말정산 자료형 길이 변경
+        	var strDiskE4 = "";
+        	var strDiskE5 = "";
+
+        	//2011년1월11일 By김현성 : 연금.저축 명세 추가
+        	var strDiskF = "";
+
+        	//2014년2월18일 By김현성 : G레코드 월세.거주자간 주택임차차입금 원리금 상환액 소득공제 명세 추가
+        	var strDiskG = "";
+
+        	var strDiskH = "";
+        	var strDiskH2 = "";
+        	var strDiskH3 = "";
+        	var strDiskH4 = "";
+        	var strDiskH5 = "";
+        	var strDiskH6 = "";
+        	var strDiskH7 = "";
+        	var strDiskH8 = "";
+
+        	//20190201 2018귀속연말정산 : H레코드 기부금 조정명세 레코드(추가)/ I레코드 해당 연도 기부명세 레코(추가)
+        	var strDiskH9 = "";
+        	var strDiskH10 = "";
+        	var strDiskH11 = "";
+        	var strDiskH12 = "";
+        	var strDiskH13 = "";
+        	var strDiskH14 = "";
+        	var strDiskH15 = "";
+        	var strDiskH16 = "";
+
+        	var strDiskI = "";
+        	var strDiskI2 = "";
+        	var strDiskI3 = "";
+        	var strDiskI4 = "";
+        	var strDiskI5 = "";
+        	var strDiskI6 = "";
+        	var strDiskI7 = "";
+        	var strDiskI8 = "";
+
+        	//20190201 2018귀속연말정산 : H레코드 기부금 조정명세 레코드(추가)/ I레코드 해당 연도 기부명세 레코(추가)
+        	var strDiskI9 = "";
+        	var strDiskI10 = "";
+        	var strDiskI11 = "";
+        	var strDiskI12 = "";
+        	var strDiskI13 = "";
+        	var strDiskI14 = "";
+        	var strDiskI15 = "";
+        	var strDiskI16 = "";
+
+        	var strCont= "";
+
+        	for(var i = 0; i < dataset.rowcount; i++) {
+
+        		strDiskC = "";
+        		strDiskD1 = "";
+        		strDiskD2 = "";
+        		strDiskD3 = "";
+        		strDiskD4 = "";
+        		strDiskE1 = "";
+        		strDiskE2 = "";
+
+        		strDiskE3 = "";
+        		//2021-02-01  김민영: 2020귀속연말정산 자료형 길이 변경
+        		strDiskE4 = "";
+        		strDiskE5 = "";
+        		//2011년1월11일 By김현성 : F레코드 추가
+        		strDiskF = "";
+
+        		//2014년2월18일 By김현성 : G레코드 월세.거주자간 주택임차차입금 원리금 상환액 소득공제 명세 추가
+        		strDiskG = "";
+
+        		//2018/02/08 2017귀속연말정산 : H레코드 기부금 조정명세 레코드(추가)/ I레코드 해당 연도 기부명세 레코(추가
+        		strDiskH = "";
+        		strDiskH2 = "";
+        		strDiskH3 = "";
+        		strDiskH4 = "";
+        		strDiskH5 = "";
+        		strDiskH6 = "";
+        		strDiskH7 = "";
+        		strDiskH8 = "";
+
+        		//20190201 2018귀속연말정산 : H레코드 기부금 조정명세 레코드(추가)/ I레코드 해당 연도 기부명세 레코(추가)
+        		strDiskH9 = "";
+        		strDiskH10 = "";
+        		strDiskH11 = "";
+        		strDiskH12 = "";
+        		strDiskH13 = "";
+        		strDiskH14 = "";
+        		strDiskH15 = "";
+        		strDiskH16 = "";
+
+        		strDiskI = "";
+        		strDiskI2 = "";
+        		strDiskI3 = "";
+        		strDiskI4 = "";
+        		strDiskI5 = "";
+        		strDiskI6 = "";
+        		strDiskI7 = "";
+        		strDiskI8 = "";
+
+        		//20190201 2018귀속연말정산 : H레코드 기부금 조정명세 레코드(추가)/ I레코드 해당 연도 기부명세 레코(추가)
+        		strDiskI9 = "";
+        		strDiskI10 = "";
+        		strDiskI11 = "";
+        		strDiskI12 = "";
+        		strDiskI13 = "";
+        		strDiskI14 = "";
+        		strDiskI15 = "";
+        		strDiskI16 = "";
+
+        		for( var j = 0 ; j < dataset.colcount; j++){
+        			//2021-02-01  김민영: 2020귀속연말정산 자료형 길이 변경
+        			//*** C레코드 주(현)근무처 레코드
+        			if (j < 201)
+        			{
+        				strDiskC = strDiskC + this.gfnNvl(dataset.getColumn(i, j),"");
+        			}
+        			//*** D레코드 종(전)근무처 레코드
+        			else if (j >= 201 && j < 274)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 201),"").search("D") != -1)
+        				{
+        					strDiskD1 = strDiskD1 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j >= 274 && j < 347)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 274),"").search("D") != -1)
+        				{
+        					strDiskD2 = strDiskD2 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j >= 347 && j < 420)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 347),"").search("D") != -1)
+        				{
+        					strDiskD3 = strDiskD3 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+
+        			}
+        			else if (j >= 420 && j < 493)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 420),"").search("D") != -1)
+        				{
+        					strDiskD4 = strDiskD4 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+
+        			}
+        			//*** E레코드 소득․세액 공제명세 레코드
+        			else if (j == 493)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 493),"").search("E") != -1)
+        				{
+        					strDiskE1 = strDiskE1 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 494)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 494),"").search("E") != -1)
+        				{
+        					strDiskE2 = strDiskE2 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 495)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 495),"").search("E") != -1)
+        				{
+        					strDiskE3 = strDiskE3 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			//2020귀속추가
+        			else if (j == 496)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 496),"").search("E") != -1)
+        				{
+        					strDiskE4 = strDiskE4 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 497)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 497),"").search("E") != -1)
+        				{
+        					strDiskE5 = strDiskE5 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 498)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 498),"").search("F") != -1)
+        				{
+        					strDiskF = strDiskF + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 499)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 499),"").search("G") != -1)
+        				{
+        					strDiskG = strDiskG + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 500)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 500),"").search("H") != -1)
+        				{
+        					strDiskH = strDiskH + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 501)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 501),"").search("H") != -1)
+        				{
+        					strDiskH2 = strDiskH2 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 502)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 502),"").search("H") != -1)
+        				{
+        					strDiskH3 = strDiskH3 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 503)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 503),"").search("H") != -1)
+        				{
+        					strDiskH4 = strDiskH4 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 504)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 504),"").search("H") != -1)
+        				{
+        					strDiskH5 = strDiskH5 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 505)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 505),"").search("H") != -1)
+        				{
+        					strDiskH6 = strDiskH6 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 506)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 506),"").search("H") != -1)
+        				{
+        					strDiskH7 = strDiskH7 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 507)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 507),"").search("H") != -1)
+        				{
+        					strDiskH8 = strDiskH8 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			//*** 기부금갯수증가**/
+        			else if (j == 508)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 508),"").search("H") != -1)
+        				{
+        					strDiskH9 = strDiskH9 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 509)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 509),"").search("H") != -1)
+        				{
+        					strDiskH10 = strDiskH10 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 510)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 510),"").search("H") != -1)
+        				{
+        					strDiskH11 = strDiskH11 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 511)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 511),"").search("H") != -1)
+        				{
+        					strDiskH12 = strDiskH12 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 512)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 512),"").search("H") != -1)
+        				{
+        					strDiskH13 = strDiskH13 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 513)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 513),"").search("H") != -1)
+        				{
+        					strDiskH14 = strDiskH14 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 514)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 514),"").search("H") != -1)
+        				{
+        					strDiskH15 = strDiskH15 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 515)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 515),"").search("H") != -1)
+        				{
+        					strDiskH16 = strDiskH16 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			//*** 기부금갯수증가**/
+
+        			//*** I레코드 해당연도 기부명세 레코드 **/
+        			else if (j == 516)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 516),"").search("I") != -1)
+        				{
+        					strDiskI = strDiskI + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 517)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 517),"").search("I") != -1)
+        				{
+        					strDiskI2 = strDiskI2 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 518)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 518),"").search("I") != -1)
+        				{
+        					strDiskI3 = strDiskI3 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 519)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 519),"").search("I") != -1)
+        				{
+        					strDiskI4 = strDiskI4 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 520)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 520),"").search("I") != -1)
+        				{
+        					strDiskI5 = strDiskI5 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 521)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 521),"").search("I") != -1)
+        				{
+        					strDiskI6 = strDiskI6 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 522)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 522),"").search("I") != -1)
+        				{
+        					strDiskI7 = strDiskI7 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 523)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 523),"").search("I") != -1)
+        				{
+        					strDiskI8 = strDiskI8 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 524)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 524),"").search("I") != -1)
+        				{
+        					strDiskI9 = strDiskI9 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 525)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 525),"").search("I") != -1)
+        				{
+        					strDiskI10 = strDiskI10 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 526)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 526),"").search("I") != -1)
+        				{
+        					strDiskI11 = strDiskI11 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 527)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 527),"").search("I") != -1)
+        				{
+        					strDiskI12 = strDiskI12 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 528)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 528),"").search("I") != -1)
+        				{
+        					strDiskI13 = strDiskI13 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 529)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 529),"").search("I") != -1)
+        				{
+        					strDiskI14 = strDiskI14 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 530)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 530),"").search("I") != -1)
+        				{
+        					strDiskI15 = strDiskI15 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        			else if (j == 531)
+        			{
+        				if (this.gfnNvl(dataset.getColumn(i, 531),"").search("I") != -1)
+        				{
+        					strDiskI16 = strDiskI16 + this.gfnNvl(dataset.getColumn(i, j),"");
+        				}
+        			}
+        		}
+
+        		strDiskC = nexacro.replaceAll(strDiskC, "■", "")
+        		strCont += strDiskC;
+        		strCont += "\n";
+
+        		if (!this.gfnIsNull(strDiskD1))
+        		{
+        			strDiskD1 = nexacro.replaceAll(strDiskD1, "■", "")
+        			strCont += strDiskD1;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskD2))
+        		{
+        			strDiskD2 = nexacro.replaceAll(strDiskD2, "■", "")
+        			strCont += strDiskD2;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskD3))
+        		{
+        			strDiskD3 = nexacro.replaceAll(strDiskD3, "■", "")
+        			strCont += strDiskD3;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskD4))
+        		{
+        			strDiskD4 = nexacro.replaceAll(strDiskD4, "■", "")
+        			strCont += strDiskD4;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskE1))
+        		{
+        			strDiskE1 = nexacro.replaceAll(strDiskE1, "■", "")
+        			strCont += strDiskE1;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskE2))
+        		{
+        			strDiskE2 = nexacro.replaceAll(strDiskE2, "■", "")
+        			strCont += strDiskE2;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskE3))
+        		{
+        			strDiskE3 = nexacro.replaceAll(strDiskE3, "■", "")
+        			strCont += strDiskE3;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskE4))
+        		{
+        			strDiskE4 = nexacro.replaceAll(strDiskE4, "■", "")
+        			strCont += strDiskE4;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskE5))
+        		{
+        			strDiskE5 = nexacro.replaceAll(strDiskE5, "■", "")
+        			strCont += strDiskE5;
+        			strCont += "\n";
+        		}
+        		//2011년1월11일 By김현성 : F레코드 추가
+        		if (!this.gfnIsNull(strDiskF))
+        		{
+        			strDiskF = nexacro.replaceAll(strDiskF, "■", "")
+        			strCont += strDiskF;
+        			strCont += "\n";
+        		}
+        		//2014년2월18일 By김현성 : G레코드 월세.거주자간 주택임차차입금 원리금 상환액 소득공제 명세 추가
+        		if (!this.gfnIsNull(strDiskG))
+        		{
+        			strDiskG = nexacro.replaceAll(strDiskG, "■", "")
+        			strCont += strDiskG;
+        			strCont += "\n";
+        		}
+        		//2018/02/08 김현성 : 2017귀속연말정산 - H레코드, I레코드 추가
+        		if (!this.gfnIsNull(strDiskH))
+        		{
+        			strDiskH = nexacro.replaceAll(strDiskH, "■", "")
+        			strCont += strDiskH;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH2))
+        		{
+        			strDiskH2 = nexacro.replaceAll(strDiskH2, "■", "")
+        			strCont += strDiskH2;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH3))
+        		{
+        			strDiskH3 = nexacro.replaceAll(strDiskH3, "■", "")
+        			strCont += strDiskH3;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH4))
+        		{
+        			strDiskH4 = nexacro.replaceAll(strDiskH4, "■", "")
+        			strCont += strDiskH4;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH5))
+        		{
+        			strDiskH5 = nexacro.replaceAll(strDiskH5, "■", "")
+        			strCont += strDiskH5;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH6))
+        		{
+        			strDiskH6 = nexacro.replaceAll(strDiskH6, "■", "")
+        			strCont += strDiskH6;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH7))
+        		{
+        			strDiskH7 = nexacro.replaceAll(strDiskH7, "■", "")
+        			strCont += strDiskH7;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH8))
+        		{
+        			strDiskH8 = nexacro.replaceAll(strDiskH8, "■", "")
+        			strCont += strDiskH8;
+        			strCont += "\n";
+        		}
+        		//20190201 2018귀속연말정산 : H레코드 기부금 조정명세 레코드(추가)/ I레코드 해당 연도 기부명세 레코(추가)
+        		if (!this.gfnIsNull(strDiskH9))
+        		{
+        			strDiskH9 = nexacro.replaceAll(strDiskH9, "■", "")
+        			strCont += strDiskH9;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH10))
+        		{
+        			strDiskH10 = nexacro.replaceAll(strDiskH10, "■", "")
+        			strCont += strDiskH10;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH11))
+        		{
+        			strDiskH11 = nexacro.replaceAll(strDiskH11, "■", "")
+        			strCont += strDiskH11;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH12))
+        		{
+        			strDiskH12 = nexacro.replaceAll(strDiskH12, "■", "")
+        			strCont += strDiskH12;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH13))
+        		{
+        			strDiskH13 = nexacro.replaceAll(strDiskH13, "■", "")
+        			strCont += strDiskH13;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH14))
+        		{
+        			strDiskH14 = nexacro.replaceAll(strDiskH14, "■", "")
+        			strCont += strDiskH14;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH15))
+        		{
+        			strDiskH15 = nexacro.replaceAll(strDiskH15, "■", "")
+        			strCont += strDiskH15;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskH16))
+        		{
+        			strDiskH16 = nexacro.replaceAll(strDiskH16, "■", "")
+        			strCont += strDiskH16;
+        			strCont += "\n";
+        		}
+
+        		if (!this.gfnIsNull(strDiskI))
+        		{
+        			strDiskI = nexacro.replaceAll(strDiskI, "■", "")
+        			strCont += strDiskI;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI2))
+        		{
+        			strDiskI2 = nexacro.replaceAll(strDiskI2, "■", "")
+        			strCont += strDiskI2;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI3))
+        		{
+        			strDiskI3 = nexacro.replaceAll(strDiskI3, "■", "")
+        			strCont += strDiskI3;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI4))
+        		{
+        			strDiskI4 = nexacro.replaceAll(strDiskI4, "■", "")
+        			strCont += strDiskI4;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI5))
+        		{
+        			strDiskI5 = nexacro.replaceAll(strDiskI5, "■", "")
+        			strCont += strDiskI5;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI6))
+        		{
+        			strDiskI6 = nexacro.replaceAll(strDiskI6, "■", "")
+        			strCont += strDiskI6;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI7))
+        		{
+        			strDiskI7 = nexacro.replaceAll(strDiskI7, "■", "")
+        			strCont += strDiskI7;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI8))
+        		{
+        			strDiskI8 = nexacro.replaceAll(strDiskI8, "■", "")
+        			strCont += strDiskI8;
+        			strCont += "\n";
+        		}
+        		//20190201 2018귀속연말정산 : H레코드 기부금 조정명세 레코드(추가)/ I레코드 해당 연도 기부명세 레코(추가)
+        		if (!this.gfnIsNull(strDiskI9))
+        		{
+        			strDiskI9 = nexacro.replaceAll(strDiskI9, "■", "")
+        			strCont += strDiskI9;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI10))
+        		{
+        			strDiskI10 = nexacro.replaceAll(strDiskI10, "■", "")
+        			strCont += strDiskI10;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI11))
+        		{
+        			strDiskI11 = nexacro.replaceAll(strDiskI11, "■", "")
+        			strCont += strDiskI11;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI12))
+        		{
+        			strDiskI12 = nexacro.replaceAll(strDiskI12, "■", "")
+        			strCont += strDiskI12;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI13))
+        		{
+        			strDiskI13 = nexacro.replaceAll(strDiskI13, "■", "")
+        			strCont += strDiskI13;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI14))
+        		{
+        			strDiskI14 = nexacro.replaceAll(strDiskI14, "■", "")
+        			strCont += strDiskI14;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI15))
+        		{
+        			strDiskI15 = nexacro.replaceAll(strDiskI15, "■", "")
+        			strCont += strDiskI15;
+        			strCont += "\n";
+        		}
+        		if (!this.gfnIsNull(strDiskI16))
+        		{
+        			strDiskI16 = nexacro.replaceAll(strDiskI16, "■", "")
+        			strCont += strDiskI16;
+        			strCont += "\n";
+        		}
+
+        	}
+
+        	return strCont;
+        };
+
+        this.fnFileDown = function() {
+
+        	var cFileName="";
+        	//연말정산 전산매체파일이름 = 연말정산 C + 사업자등록번호 앞 7자리 + '.' + 사업자등록번호 뒤3자리
+        	switch(this.cboTY_GUBUN.value){
+        		case "1"://퇴직소득
+        			cFileName= "EA";
+        			break;
+
+        		default:
+        	}
+        	var sNO_SAUP = this.edtNO_SAUP.value;
+        	//var sFilename = cFileName+ this.dsListA.getColumn(0, "COL_9").substring(0,7)+"."+this.dsListA.getColumn(0, "COL_9").substring(7,10)+".txt";
+        	//var sFilename = cFileName+ this.dsListA.getColumn(0, "NO_SAUP").substring(0,7)+"."+this.dsListA.getColumn(0, "NO_SAUP").substring(7,10)+".pdf";
+        	//var sFilename = cFileName+ this.dsList1.getColumn(0, "COL").substring(0,7)+"."+this.dsList1.getColumn(0, "COL").substring(7,10)+".txt";
+        	var sFilename = cFileName + sNO_SAUP.substring(0,7)+"."+sNO_SAUP.substring(7,10)+".txt";
+        	trace("sFilename", sFilename);
+        	var sFilecont = this.txtCont.value;
+        	var encodeFileName = encodeURIComponent(sFilename);
+
+        	var surl = this.fileConfig.host+ this.fileConfig.downloadUrl; // + encodeFileName;
+        	this.FileDownTransfer00.set_url(surl);
+        	this.FileDownTransfer00.setPostData("fileCont", sFilecont);
+        	this.FileDownTransfer00.setPostData("fileName", encodeFileName);
+        	this.FileDownTransfer00.setPostData("fileEncoding", "EUC-KR"); //UTF-8, EUC-KR;
+
+        	if( system.navigatorname =="nexacro"){
+        		this.FileDownTransfer00.set_downloadfilename(sFilename);
+        	}
+        	this.FileDownTransfer00.download();
+        };
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divData.form.cboTY_GUBUN.addEventHandler("onitemchanged",this.cboTY_GUBUN_onitemchanged,this);
+            this.divData.form.calDT_PRINT.addEventHandler("onchanged",this.fnSearchInit,this);
+            this.divData.form.divBtns.form.btnMakeLocalFile.addEventHandler("onclick",this.divBtns_btnMakeLocalFile_onclick,this);
+            this.divData.form.divBtns.form.btnCANCLE.addEventHandler("onclick",this.divBtns_btnCANCLE_onclick,this);
+        };
+        this.loadIncludeScript("DAW_RETIREDISKDLG.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="400" height="210" maxwidth="400" maxheight="360" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="입찰마감일시변경" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="center"/>
+              <Static id="staCD_SITE" taborder="1" text="현장코드" left="0" top="staTITLE:5" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staNO_BID" taborder="2" text="입찰번호" left="0" top="staCD_SITE:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staDT_BIDMAGAM_PRE" taborder="3" text="현재" left="0" top="staNO_BID:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staDT_BIDMAGAM" taborder="4" text="변경" left="0" top="staDT_BIDMAGAM_PRE:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staBg1" taborder="5" left="staCD_SITE:-1" top="staTITLE:5" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg2" taborder="6" left="staNO_BID:-1" top="staBg1:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg3" taborder="7" left="staDT_BIDMAGAM_PRE:-1" top="staBg2:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg4" taborder="8" left="staDT_BIDMAGAM:-1" top="staBg3:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="edtCD_SITE" taborder="9" left="staCD_SITE:5" top="staTITLE:10" right="208" height="20" readonly="true"/>
+              <Edit id="edtDS_SITE" taborder="10" left="edtCD_SITE:3" top="staTITLE:10" right="5" height="20" readonly="true"/>
+              <Edit id="edtNO_BID" taborder="11" left="staNO_BID:5" top="edtCD_SITE:9" right="208" height="20" readonly="true"/>
+              <Edit id="edtDS_BID" taborder="12" left="edtNO_BID:3" top="edtCD_SITE:9" right="5" height="20" readonly="true"/>
+              <Calendar id="ctclDT_BIDMAGAM_PRE" taborder="13" left="staDT_BIDMAGAM_PRE:5" top="edtNO_BID:9" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="true"/>
+              <Edit id="edtDT_BIDMAGAM_PRE_HOUR" taborder="14" left="ctclDT_BIDMAGAM_PRE:5" top="edtNO_BID:9" width="60" height="20" readonly="true"/>
+              <Static id="staDT_BIDMAGAM_PRE_HOUR" taborder="15" text="시" left="edtDT_BIDMAGAM_PRE_HOUR:3" top="staNO_BID:5" width="20" height="20"/>
+              <Edit id="edtDT_BIDMAGAM_PRE_MIN" taborder="16" left="staDT_BIDMAGAM_PRE_HOUR:3" top="edtNO_BID:9" width="60" height="20" readonly="true"/>
+              <Static id="staDT_BIDMAGAM_PRE_MIN" taborder="17" text="분" left="edtDT_BIDMAGAM_PRE_MIN:3" top="staNO_BID:5" width="20" height="20"/>
+              <Calendar id="ctclDT_BIDMAGAM" taborder="18" left="staDT_BIDMAGAM:5" top="ctclDT_BIDMAGAM_PRE:9" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Combo id="ccboDT_BIDMAGAM_HOUR" taborder="19" left="ctclDT_BIDMAGAM:5" top="ctclDT_BIDMAGAM_PRE:9" width="60" height="20" innerdataset="dsHOUR" codecolumn="CD_CODE" datacolumn="DS_CODE" index="0" text="00" value="00"/>
+              <Static id="staDT_BIDMAGAM_HOUR" taborder="20" text="시" left="ccboDT_BIDMAGAM_HOUR:3" top="staDT_BIDMAGAM_PRE:5" width="20" height="20"/>
+              <Combo id="ccboDT_BIDMAGAM_MIN" taborder="21" left="staDT_BIDMAGAM_HOUR:3" top="ctclDT_BIDMAGAM_PRE:9" width="60" height="20" innerdataset="dsMINUTE" codecolumn="CD_CODE" datacolumn="DS_CODE" index="0" text="00" value="00"/>
+              <Static id="staDT_BIDMAGAM_MIN" taborder="22" text="분" left="ccboDT_BIDMAGAM_MIN:3" top="staDT_BIDMAGAM_PRE:5" width="20" height="20"/>
+              <Button id="btnOk" taborder="23" text="확인" left="140" top="172" width="60" height="20" onclick="divData_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="24" text="취소" left="203" top="172" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 이전 화면에서 데이터 받기.
+	this.dsData.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+	this.dsData.setColumn(0, "DS_SITE", this.getOwnerFrame().DS_SITE);
+	this.dsData.setColumn(0, "NO_BID", this.getOwnerFrame().NO_BID);
+	this.dsData.setColumn(0, "DS_BID", this.getOwnerFrame().DS_BID);
+	this.dsData.setColumn(0, "DT_BIDMAGAM_PRE", this.getOwnerFrame().DT_BIDMAGAM_PRE);
+	this.dsData.setColumn(0, "DT_BIDMAGAM_PRE_HOUR",  this.getOwnerFrame().DT_BIDMAGAM_PRE_HOUR);
+	this.dsData.setColumn(0, "DT_BIDMAGAM_PRE_MIN", this.getOwnerFrame().DT_BIDMAGAM_PRE_MIN);
+
+	this.dsData.setColumn(0, "DT_BIDMAGAM", this.getOwnerFrame().DT_BIDMAGAM_PRE);
+	this.dsData.setColumn(0, "DT_BIDMAGAM_HOUR", 16);
+	this.dsData.setColumn(0, "DT_BIDMAGAM_MIN", "00");
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("CD_SITE", "string");
+	this.dsUpdate.addColumn("NO_BID", "string");
+	this.dsUpdate.addColumn("DT_ONLINEMAGAM", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSaveValidate = function()
+{
+	var validate = true;
+	var dt_onlinemagam_pre = this.dsData.getColumn(0, "DT_BIDMAGAM_PRE") + this.dsData.getColumn(0, "DT_BIDMAGAM_PRE_HOUR") + this.dsData.getColumn(0, "DT_BIDMAGAM_PRE_MIN");
+	var dt_onlinemagam = this.dsData.getColumn(0, "DT_BIDMAGAM") + this.dsData.getColumn(0, "DT_BIDMAGAM_HOUR") + this.dsData.getColumn(0, "DT_BIDMAGAM_MIN");
+
+	/*
+	if(nexacro.toNumber(dt_onlinemagam_pre) > nexacro.toNumber(dt_onlinemagam))
+	{
+		validate = false;
+		this.gfnAlert("변경일자가 현재일자보다 이전일 수는 없습니다.");
+	}
+	*/
+	
+	return validate;
+}
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "update") {
+		if(errorCode == 0)
+		{
+			// this.close()가 작동하지 않았고, 
+			// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+			this.getParentContext().close(true);
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ 
+// 확인 버튼 클릭
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(!this.fnSaveValidate()) return;
+	
+	this.dsUpdate.clearData();
+	var nrow = this.dsUpdate.addRow();
+
+	var dt_onlinemagam = this.dsData.getColumn(0, "DT_BIDMAGAM") + this.dsData.getColumn(0, "DT_BIDMAGAM_HOUR") + this.dsData.getColumn(0, "DT_BIDMAGAM_MIN");
+	
+	this.dsUpdate.setColumn(nrow, "CD_SITE", this.dsData.getColumn(0, "CD_SITE"));
+	this.dsUpdate.setColumn(nrow, "NO_BID", this.dsData.getColumn(0, "NO_BID"));
+	this.dsUpdate.setColumn(nrow, "DT_ONLINEMAGAM", dt_onlinemagam);
+	
+	var strSvcId    = "update";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "update=dsUpdate";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+	
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DCBPR_BIDMAGAMTIME_UPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData" onvaluechanged="dsData_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="NO_BID" type="STRING" size="256"/>
+          <Column id="DS_BID" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM_PRE" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM_PRE_HOUR" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM_PRE_MIN" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM_HOUR" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM_MIN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsHOUR">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">00</Col>
+            <Col id="DS_CODE">00</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">01</Col>
+            <Col id="DS_CODE">01</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">02</Col>
+            <Col id="DS_CODE">02</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">03</Col>
+            <Col id="DS_CODE">03</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">04</Col>
+            <Col id="DS_CODE">04</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">05</Col>
+            <Col id="DS_CODE">05</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">06</Col>
+            <Col id="DS_CODE">06</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">07</Col>
+            <Col id="DS_CODE">07</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">08</Col>
+            <Col id="DS_CODE">08</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">09</Col>
+            <Col id="DS_CODE">09</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">10</Col>
+            <Col id="DS_CODE">10</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">11</Col>
+            <Col id="DS_CODE">11</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">12</Col>
+            <Col id="DS_CODE">12</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">13</Col>
+            <Col id="DS_CODE">13</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">14</Col>
+            <Col id="DS_CODE">14</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">15</Col>
+            <Col id="DS_CODE">15</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">16</Col>
+            <Col id="DS_CODE">16</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">17</Col>
+            <Col id="DS_CODE">17</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">18</Col>
+            <Col id="DS_CODE">18</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">19</Col>
+            <Col id="DS_CODE">19</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">20</Col>
+            <Col id="DS_CODE">20</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">21</Col>
+            <Col id="DS_CODE">21</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">22</Col>
+            <Col id="DS_CODE">22</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">23</Col>
+            <Col id="DS_CODE">23</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMINUTE">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">00</Col>
+            <Col id="DS_CODE">00</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">05</Col>
+            <Col id="DS_CODE">05</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">10</Col>
+            <Col id="DS_CODE">10</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">15</Col>
+            <Col id="DS_CODE">15</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">20</Col>
+            <Col id="DS_CODE">20</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">25</Col>
+            <Col id="DS_CODE">25</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">30</Col>
+            <Col id="DS_CODE">30</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">35</Col>
+            <Col id="DS_CODE">35</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">40</Col>
+            <Col id="DS_CODE">40</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">45</Col>
+            <Col id="DS_CODE">45</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">50</Col>
+            <Col id="DS_CODE">50</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">55</Col>
+            <Col id="DS_CODE">55</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.edtCD_SITE" propid="value" datasetid="dsData" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divData.form.edtDS_SITE" propid="value" datasetid="dsData" columnid="DS_SITE"/>
+      <BindItem id="item2" compid="divData.form.edtNO_BID" propid="value" datasetid="dsData" columnid="NO_BID"/>
+      <BindItem id="item3" compid="divData.form.edtDS_BID" propid="value" datasetid="dsData" columnid="DS_BID"/>
+      <BindItem id="item4" compid="divData.form.ctclDT_BIDMAGAM_PRE" propid="value" datasetid="dsData" columnid="DT_BIDMAGAM_PRE"/>
+      <BindItem id="item5" compid="divData.form.edtDT_BIDMAGAM_PRE_HOUR" propid="value" datasetid="dsData" columnid="DT_BIDMAGAM_PRE_HOUR"/>
+      <BindItem id="item6" compid="divData.form.edtDT_BIDMAGAM_PRE_MIN" propid="value" datasetid="dsData" columnid="DT_BIDMAGAM_PRE_MIN"/>
+      <BindItem id="item7" compid="divData.form.ctclDT_BIDMAGAM" propid="value" datasetid="dsData" columnid="DT_BIDMAGAM"/>
+      <BindItem id="item8" compid="divData.form.ccboDT_BIDMAGAM_HOUR" propid="value" datasetid="dsData" columnid="DT_BIDMAGAM_HOUR"/>
+      <BindItem id="item9" compid="divData.form.ccboDT_BIDMAGAM_MIN" propid="value" datasetid="dsData" columnid="DT_BIDMAGAM_MIN"/>
+    </Bind>
+  </Form>
+</FDL>

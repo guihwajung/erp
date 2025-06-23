@@ -1,0 +1,634 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("New Form");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListSub", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_DANWI", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">1</Col><Col id=\"DS_CODE\">원</Col></Row><Row><Col id=\"CD_CODE\">1000</Col><Col id=\"DS_CODE\">천원</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DIQPR_BUDGET_REPORT_SELECT</Col></Row><Row><Col id=\"TARGET\">combo</Col><Col id=\"SP\">DZXPR_COMBO_SELECT</Col></Row><Row><Col id=\"TARGET\">selectSub</Col><Col id=\"SP\">DIQPR_BUDGET_REPORT_SELECT</Col></Row><Row><Col id=\"TARGET\">combo1</Col><Col id=\"SP\">DIQPR_GUBUN_SELECT</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"YM_BUDGET\" type=\"STRING\" size=\"256\"/><Column id=\"AM_DANWI\" type=\"STRING\" size=\"256\"/><Column id=\"TY_GUBUN\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"YM_BUDGET\"/><Col id=\"AM_DANWI\"/></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_GUBUN", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">N</Col><Col id=\"DS_CODE\">경영계획</Col></Row><Row><Col id=\"CD_CODE\">03</Col><Col id=\"DS_CODE\">3월전망</Col></Row><Row><Col id=\"CD_CODE\">06</Col><Col id=\"DS_CODE\">6월전망</Col></Row><Row><Col id=\"CD_CODE\">09</Col><Col id=\"DS_CODE\">9월전망</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0","10",null,"45","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_SEARCH_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staYM_BUDGET","0","10.0","112","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_text("누계실적년월");
+            obj.set_taborder("0");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ctclYM_BUDGET","112","10.0","80","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_url("cmm::cmmCalMM.xfdl");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staTY_DANWI","222","10","70","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_text("단위");
+            obj.set_taborder("2");
+            obj.set_cssclass("sta_WF_SchLabel");
+            obj.set_visible("true");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("ccboCD_DANWI","293","10","70","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("3");
+            obj.set_innerdataset("dsTY_DANWI");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_text("천원");
+            obj.set_value("1000");
+            obj.set_index("1");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_DEPT00","392","10","92","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_text("목표구분");
+            obj.set_taborder("4");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("ccboTY_GUBUN","483","10","97","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("5");
+            obj.set_innerdataset("dsTY_GUBUN");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_text("경영계획");
+            obj.set_value("N");
+            obj.set_index("0");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:10",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divSplitter","0","16%","100.00%","5",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("1");
+            obj.set_cursor("ns-resize");
+            obj.set_cssclass("div_Splitter");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("divDataTop","0","0",null,null,"0","divSplitter:5",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","0",null,null,null,null,this.divData.form.divDataTop.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.divDataTop.addChild(obj.name, obj);
+
+            obj = new Div("divDataBottom","0","divSplitter:5",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Grid("objGridSub","0","5",null,null,"0","0",null,null,null,null,this.divData.form.divDataBottom.form);
+            obj.getSetter("sub").set("true");
+            obj.set_taborder("1");
+            obj._setContents("");
+            this.divData.form.divDataBottom.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.ctclYM_BUDGET.form.TextBox","value","dsSearch","YM_BUDGET");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divSearch.form.ccboCD_DANWI","value","dsSearch","AM_DANWI");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divSearch.form.ccboTY_GUBUN","value","dsSearch","TY_GUBUN");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCalMM.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DIQ_BUDGET_REPORT.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+        	this.fnSetCombo();
+
+        	this.dsSearch.setColumn(0, "YM_BUDGET", this.gfnGetDate().substr(0,6));
+
+        	this.fnSetCombo1();
+        };
+
+        /************************************************************************
+         * 버튼 설정
+         ************************************************************************/
+        this.fnSetButton = function() {
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+           this.btnSearchSiljuk = this.gfnFormButtonAdd("SearchSiljuk", "fnSearchSiljuk");  // 예산실적조회
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+
+        	this.ctclYM_BUDGET = this.divSearch.form.ctclYM_BUDGET;
+        	this.ccboCD_DANWI = this.divSearch.form.ccboCD_DANWI;
+        	this.ccboTY_GUBUN = this.divSearch.form.ccboTY_GUBUN;
+
+        	this.dxGrid = this.divData.form.divDataTop.form.objGrid;
+        	this.dxGridSub = this.divData.form.divDataBottom.form.objGridSub;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	// 그리드 초기화
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DI", "DIQ_BUDGET_REPORT");
+        	this.gfnGridInit(this.dxGridSub, this.dsListSub, "DI", "DIQ_BUDGET_REPORT2");
+
+            this.fnsetGridCssCellProperty();
+
+        }
+
+        this.fnsetGridCssCellProperty = function() {
+
+        	var nCellIdxAM_MON = this.dxGridSub.getBindCellIndex("body", "AM_MON");
+        	var nCellIdxAM_BUDGET_MON = this.dxGridSub.getBindCellIndex("body", "AM_BUDGET_MON");
+        	var nCellIdxAM_JAN_MON = this.dxGridSub.getBindCellIndex("body", "AM_JAN_MON");
+        	var nCellIdxAM_MON_NU = this.dxGridSub.getBindCellIndex("body", "AM_MON_NU");
+        	var nCellIdxAM_BUDGET_NU = this.dxGridSub.getBindCellIndex("body", "AM_BUDGET_NU");
+        	var nCellIdxAM_JAN_NU = this.dxGridSub.getBindCellIndex("body", "AM_JAN_NU");
+        	var nCellIdxAM_SUM = this.dxGridSub.getBindCellIndex("body", "AM_SUM");
+        	var nCellIdxAM_BUDGET = this.dxGridSub.getBindCellIndex("body", "AM_BUDGET");
+        	var nCellIdxAM_JAN_PRO = this.dxGridSub.getBindCellIndex("body", "AM_JAN_PRO");
+        	var nCellIdxAM_JAN_BUDGET = this.dxGridSub.getBindCellIndex("body", "AM_JAN_BUDGET");
+        	var nCellIdxAM_JAN_SILJUK = this.dxGridSub.getBindCellIndex("body", "AM_JAN_SILJUK");
+        	var nCellIdxAM_JAN_CHA = this.dxGridSub.getBindCellIndex("body", "AM_JAN_CHA");
+
+        	var sGetProperty = this.dxGridSub.getCellProperty( "body", nCellIdxAM_MON, "cssclass" );
+        	trace(" sGetProperty=>" + sGetProperty);
+        	var sSetPropertyAM_MON = sGetProperty.replace("'BACK_GangJo' : '')", " (AM_MON < 0) ? 'BACK_GangJo,Red' : 'BACK_GangJo' : (AM_MON < 0) ? 'Red' : '')");
+        	//trace(" sSetPropertyAM_MON=>" + sSetPropertyAM_MON);
+        	var sSetPropertyAM_BUDGET_MON = sGetProperty.replace("'BACK_GangJo' : '')", " (AM_BUDGET_MON < 0) ? 'BACK_GangJo,Red' : 'BACK_GangJo' : (AM_BUDGET_MON < 0) ? 'Red' : '')");
+        	var sSetPropertyAM_JAN_MON = sGetProperty.replace("'BACK_GangJo' : '')", " (AM_JAN_MON < 0) ? 'BACK_GangJo,Red' : 'BACK_GangJo' : (AM_JAN_MON < 0) ? 'Red' : '')");//sGetProperty.replace(": '')", ": AM_JAN_MON < 0 ? 'Red' :' ')");
+        	var sSetPropertyAM_MON_NU = sGetProperty.replace("'BACK_GangJo' : '')", " (AM_MON_NU < 0) ? 'BACK_GangJo,Red' : 'BACK_GangJo' : (AM_MON_NU < 0) ? 'Red' : '')");//sGetProperty.replace(": '')", ": AM_MON_NU < 0 ? 'Red' :' ')");
+        	var sSetPropertyAM_BUDGET_NU = sGetProperty.replace("'BACK_GangJo' : '')", " (AM_BUDGET_NU < 0) ? 'BACK_GangJo,Red' : 'BACK_GangJo' : (AM_BUDGET_NU < 0) ? 'Red' : '')");//sGetProperty.replace(": '')", ": AM_BUDGET_NU < 0 ? 'Red' :' ')");
+        	var sSetPropertyAM_JAN_NU = sGetProperty.replace("'BACK_GangJo' : '')", " (AM_JAN_NU < 0) ? 'BACK_GangJo,Red' : 'BACK_GangJo' : (AM_JAN_NU < 0) ? 'Red' : '')"); //sGetProperty.replace(": '')", ": AM_JAN_NU < 0 ? 'Red' :' ')");
+        	var sSetPropertyAM_SUM = sGetProperty.replace("'BACK_GangJo' : '')", " (AM_SUM < 0) ? 'BACK_GangJo,Red' : 'BACK_GangJo' : (AM_SUM < 0) ? 'Red' : '')");//
+        	var sSetPropertyAM_BUDGET = sGetProperty.replace("'BACK_GangJo' : '')", " (AM_BUDGET < 0) ? 'BACK_GangJo,Red' : 'BACK_GangJo' : (AM_BUDGET < 0) ? 'Red' : '')");//sGetProperty.replace(": '')", ": AM_BUDGET < 0 ? 'Red' :' ')");
+        	var sSetPropertyAM_JAN_PRO = sGetProperty.replace("'BACK_GangJo' : '')", " (AM_JAN_PRO < 0) ? 'BACK_GangJo,Red' : 'BACK_GangJo' : (AM_JAN_PRO < 0) ? 'Red' : '')");//sGetProperty.replace(": '')", ": AM_JAN_PRO < 0 ? 'Red' :' ')");
+        	var sSetPropertyAM_JAN_BUDGET = sGetProperty.replace("'BACK_GangJo' : '')", " (AM_JAN_BUDGET < 0) ? 'BACK_GangJo,Red' : 'BACK_GangJo' : (AM_JAN_BUDGET < 0) ? 'Red' : '')");//sGetProperty.replace(": '')", ": AM_JAN_PRO < 0 ? 'Red' :' ')");
+        	var sSetPropertyAM_JAN_SILJUK = sGetProperty.replace("'BACK_GangJo' : '')", " (AM_JAN_SILJUK < 0) ? 'BACK_GangJo,Red' : 'BACK_GangJo' : (AM_JAN_SILJUK < 0) ? 'Red' : '')");//sGetProperty.replace(": '')", ": AM_JAN_PRO < 0 ? 'Red' :' ')");
+        	var sSetPropertyAM_JAN_CHA = sGetProperty.replace("'BACK_GangJo' : '')", " (AM_JAN_CHA < 0) ? 'BACK_GangJo,Red' : 'BACK_GangJo' : (AM_JAN_CHA < 0) ? 'Red' : '')");//sGetProperty.replace(": '')", ": AM_JAN_PRO < 0 ? 'Red' :' ')");
+
+        	this.dxGridSub.setCellProperty( "body", nCellIdxAM_MON, "cssclass" , sSetPropertyAM_MON);
+        	this.dxGridSub.setCellProperty( "body", nCellIdxAM_BUDGET_MON, "cssclass" , sSetPropertyAM_BUDGET_MON);
+        	this.dxGridSub.setCellProperty( "body", nCellIdxAM_JAN_MON, "cssclass" , sSetPropertyAM_JAN_MON);
+        	this.dxGridSub.setCellProperty( "body", nCellIdxAM_MON_NU, "cssclass" , sSetPropertyAM_MON_NU);
+        	this.dxGridSub.setCellProperty( "body", nCellIdxAM_BUDGET_NU, "cssclass" , sSetPropertyAM_BUDGET_NU);
+        	this.dxGridSub.setCellProperty( "body", nCellIdxAM_JAN_NU, "cssclass" , sSetPropertyAM_JAN_NU);
+        	this.dxGridSub.setCellProperty( "body", nCellIdxAM_SUM, "cssclass" , sSetPropertyAM_SUM);
+        	this.dxGridSub.setCellProperty( "body", nCellIdxAM_BUDGET, "cssclass" , sSetPropertyAM_BUDGET);
+        	this.dxGridSub.setCellProperty( "body", nCellIdxAM_JAN_PRO, "cssclass" , sSetPropertyAM_JAN_PRO);
+        	this.dxGridSub.setCellProperty( "body", nCellIdxAM_JAN_BUDGET, "cssclass" , sSetPropertyAM_JAN_BUDGET);
+        	this.dxGridSub.setCellProperty( "body", nCellIdxAM_JAN_SILJUK, "cssclass" , sSetPropertyAM_JAN_SILJUK);
+        	this.dxGridSub.setCellProperty( "body", nCellIdxAM_JAN_CHA, "cssclass" , sSetPropertyAM_JAN_CHA);
+
+
+        	nCellIdxAM_MON = this.dxGrid.getBindCellIndex("body", "AM_MON");
+        	nCellIdxAM_BUDGET_MON = this.dxGrid.getBindCellIndex("body", "AM_BUDGET_MON");
+        	nCellIdxAM_JAN_MON = this.dxGrid.getBindCellIndex("body", "AM_JAN_MON");
+        	nCellIdxAM_MON_NU = this.dxGrid.getBindCellIndex("body", "AM_MON_NU");
+        	nCellIdxAM_BUDGET_NU = this.dxGrid.getBindCellIndex("body", "AM_BUDGET_NU");
+        	nCellIdxAM_JAN_NU = this.dxGrid.getBindCellIndex("body", "AM_JAN_NU");
+        	nCellIdxAM_SUM = this.dxGrid.getBindCellIndex("body", "AM_SUM");
+        	nCellIdxAM_BUDGET = this.dxGrid.getBindCellIndex("body", "AM_BUDGET");
+        	nCellIdxAM_JAN_PRO = this.dxGrid.getBindCellIndex("body", "AM_JAN_PRO");
+        	nCellIdxAM_JAN_BUDGET = this.dxGrid.getBindCellIndex("body", "AM_JAN_BUDGET");
+        	nCellIdxAM_JAN_SILJUK = this.dxGrid.getBindCellIndex("body", "AM_JAN_SILJUK");
+        	nCellIdxAM_JAN_CHA = this.dxGrid.getBindCellIndex("body", "AM_JAN_CHA");
+
+        	sGetProperty = this.dxGrid.getCellProperty( "body", nCellIdxAM_MON, "cssclass" );
+
+        	sSetPropertyAM_MON = sGetProperty.replace(": '')", ": AM_MON < 0 ? 'Red' : ' ')");
+        	sSetPropertyAM_BUDGET_MON = sGetProperty.replace(": '')", ": AM_BUDGET_MON < 0 ? 'Red' : ' ')");
+        	sSetPropertyAM_JAN_MON = sGetProperty.replace(": '')", ": AM_JAN_MON < 0 ? 'Red' : ' ')");
+        	sSetPropertyAM_MON_NU = sGetProperty.replace(": '')", ": AM_MON_NU < 0 ? 'Red' : ' ')");
+        	sSetPropertyAM_BUDGET_NU = sGetProperty.replace(": '')", ": AM_BUDGET_NU < 0 ? 'Red' : ' ')");
+        	sSetPropertyAM_JAN_NU = sGetProperty.replace(": '')", ": AM_JAN_NU < 0 ? 'Red' : ' ')");
+        	sSetPropertyAM_SUM = sGetProperty.replace(": '')", ": AM_SUM < 0 ? 'Red' : ' ')");
+        	sSetPropertyAM_BUDGET = sGetProperty.replace(": '')", ": AM_BUDGET < 0 ? 'Red' : ' ')");
+        	sSetPropertyAM_JAN_PRO = sGetProperty.replace(": '')", ": AM_JAN_PRO < 0 ? 'Red' : ' ')");
+        	sSetPropertyAM_JAN_BUDGET = sGetProperty.replace(": '')", ": AM_JAN_BUDGET < 0 ? 'Red' : ' ')");
+        	sSetPropertyAM_JAN_SILJUK = sGetProperty.replace(": '')", ": AM_JAN_SILJUK < 0 ? 'Red' : ' ')");
+        	sSetPropertyAM_JAN_CHA = sGetProperty.replace(": '')", ": AM_JAN_CHA < 0 ? 'Red' : ' ')");
+
+        	this.dxGrid.setCellProperty( "body", nCellIdxAM_MON, "cssclass" , sSetPropertyAM_MON);
+        	this.dxGrid.setCellProperty( "body", nCellIdxAM_BUDGET_MON, "cssclass" , sSetPropertyAM_BUDGET_MON);
+        	this.dxGrid.setCellProperty( "body", nCellIdxAM_JAN_MON, "cssclass" , sSetPropertyAM_JAN_MON);
+        	this.dxGrid.setCellProperty( "body", nCellIdxAM_MON_NU, "cssclass" , sSetPropertyAM_MON_NU);
+        	this.dxGrid.setCellProperty( "body", nCellIdxAM_BUDGET_NU, "cssclass" , sSetPropertyAM_BUDGET_NU);
+        	this.dxGrid.setCellProperty( "body", nCellIdxAM_JAN_NU, "cssclass" , sSetPropertyAM_JAN_NU);
+        	this.dxGrid.setCellProperty( "body", nCellIdxAM_SUM, "cssclass" , sSetPropertyAM_SUM);
+        	this.dxGrid.setCellProperty( "body", nCellIdxAM_BUDGET, "cssclass" , sSetPropertyAM_BUDGET);
+        	this.dxGrid.setCellProperty( "body", nCellIdxAM_JAN_PRO, "cssclass" , sSetPropertyAM_JAN_PRO);
+        	this.dxGrid.setCellProperty( "body", nCellIdxAM_JAN_BUDGET, "cssclass" , sSetPropertyAM_JAN_BUDGET);
+        	this.dxGrid.setCellProperty( "body", nCellIdxAM_JAN_SILJUK, "cssclass" , sSetPropertyAM_JAN_SILJUK);
+        	this.dxGrid.setCellProperty( "body", nCellIdxAM_JAN_CHA, "cssclass" , sSetPropertyAM_JAN_CHA);
+        }
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+
+            this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("YM_BUDGET", "string");
+        	this.dsSelect.addColumn("AM_DANWI", "bigdecimal");
+        	this.dsSelect.addColumn("TY_GUBUN", "string");
+
+        }
+
+        /************************************************************************
+         * 버튼 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+        	if (!this.fnSelectValidate()) return false;
+
+        	this.gfnGridBeforeSelect(this.dxGrid);
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+
+        	this.dsSelect.setColumn(0, "YM_BUDGET", this.dsSearch.getColumn(0, "YM_BUDGET"));
+        	this.dsSelect.setColumn(0, "AM_DANWI", nexacro.toNumber(this.dsSearch.getColumn(0, "AM_DANWI")));
+        	this.dsSelect.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0 dsListSub=select1";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); 	// 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	//this.gfnExcelExportMulti([this.dxGrid, this.dxGridSub]);
+
+        	// 멀티시트 샘플
+        	var arrGrid = [this.dxGridSub, this.dxGrid];
+        	var arrSheetName = ["시트1", "시트2"];
+        	var sFileName = "테스트";
+
+        	// 1 (시트명: sheet1,sheet2.. 사용, 파일명: 화면명_날짜)
+        	this.gfnExcelExportMulti(arrGrid);
+
+
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * 서브 버튼 이벤트
+         ************************************************************************/
+        this.fnExcelSub = function() {
+        	this.gfnExcelExport(this.dxGridSub);
+        }
+
+         // 예산실적조회
+        this.fnSearchSiljuk = function(obj,e) {
+
+        	if (!this.gfnGridIsRow(this.dxGridSub)) { return false; }
+
+        	var nIndex = this.dxGridSub.getCellPos();
+        	var column = this.gfnGridGetBindColumnNameByIndex(this.dxGridSub, nIndex);
+
+
+        	this.fnSiljukPopup(column);
+
+        }
+
+        this.fnSiljukPopup = function(column)
+        {
+        	    trace(" fnSiljukPopup column=>" + column );
+
+        		var DS_GUBUN = this.dsListSub.getColumn(this.dsListSub.rowposition, "DS_GUBUN");
+        		var DS_ITEM = this.dsListSub.getColumn(this.dsListSub.rowposition, "DS_ITEM");
+
+        		var param = {};
+        		param.CD_DEPT = "";
+        		param.DS_DEPT =  "";
+        		param.CD_GUBUN = this.dsListSub.getColumn(this.dsListSub.rowposition, "CD_GUBUN");
+        		param.DS_GUBUN = this.dsListSub.getColumn(this.dsListSub.rowposition, "DS_GUBUN");
+        		param.CD_ITEM = this.dsListSub.getColumn(this.dsListSub.rowposition, "CD_ITEM");
+        		param.DS_ITEM = this.dsListSub.getColumn(this.dsListSub.rowposition, "DS_ITEM");
+
+        		param.YM_BUDGET = this.dsSearch.getColumn(0, "YM_BUDGET");		   //
+        		if (column == "AM_MON" || column == "AM_BUDGET_MON" || column =="AM_JAN_MON") {
+        			param.GUBUN = "1";
+        		}
+
+        		this.gfnFormOpen("DHQ", "DIQ_BUDGET_SILJUK_ITEMSEARCH", "", param);
+
+
+        }
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+
+         this.fnSelectValidate = function() {
+        	var validate = true;
+
+        	if (this.gfnIsNull(this.dsSearch.getColumn(0,"YM_BUDGET"))) {
+        		validate = false;
+        		// Alert후 실행할 처리
+        		this.fnVaidateCallback = function() {
+        			this.ctclYM_BUDGET.setFocus();
+        		}
+        		this.gfnAlert("조회년월을 입력하세요.", "fnVaidateCallback");
+        	}
+
+
+        	return validate;
+        };
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	if (svcID == "select") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+        		//this.fnColor();
+        	}
+        	else if (svcID == "detail") {
+        		this.gfnGridAfterSelect(this.dxGridSub);
+        	}else if (svcID == "combo") {
+        		if (errorCode == 0) {
+        			this.dsSearch.setColumn(0, "AM_DANWI", 1000);  // 천원단위조회되게
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}else if (svcID == "combo1") {
+        		if (errorCode == 0) {
+        			this.ccboTY_GUBUN.set_index(0);
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+
+        	}
+
+        }
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+        // 예산실적조회(더블클릭)
+        this.objGridSub_oncelldblclick = function(obj,e)
+        {
+            if (!this.gfnGridIsRow(this.dxGridSub)) { return false; }
+
+        	var column = this.gfnGridGetBindColumnNameByIndex(this.dxGridSub, e.cell);
+
+        	this.fnSiljukPopup(column);
+        };
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        this.fnSearchInit = function(obj,e) {
+        	if(e == null || (e.pretext != e.posttext)) {
+        		this.gfnSetFormStatus(this);
+        		this.gfnGridClear(this.dxGrid);
+        		this.gfnGridClear(this.dxGridSub);
+        	}
+        }
+
+        //콤보박스 코드 조회
+        this.fnSetCombo = function() {
+
+        	this.dsCombo = new Dataset();
+        	this.dsCombo.addColumn("CD_SYSTEM", "string");
+        	this.dsCombo.addColumn("CD_TYPE", "string");
+
+        	this.dsCombo.addRow();
+        	this.dsCombo.setColumn(0, "CD_SYSTEM", "DH");
+        	this.dsCombo.setColumn(0, "CD_TYPE",  "I10");	// 결재문서 자동전표코드(LegacyFormID)
+
+        	var strSvcId    = "combo";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "combo=dsCombo";
+        	var outData     = "dsTY_DANWI=combo0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        //콤보박스 코드 조회
+        this.fnSetCombo1 = function() {
+
+        	this.dsCombo1 = new Dataset();
+        	this.dsCombo1.addColumn("YR_ACCOUNT", "string");
+
+        	this.dsCombo1.addRow();
+        	this.dsCombo1.setColumn(0, "YR_ACCOUNT", this.dsSearch.getColumn(0, "YM_BUDGET").substr(0,4));
+
+        	var strSvcId    = "combo1";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "combo1=dsCombo1";
+        	var outData     = "dsTY_GUBUN=combo10";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        this.dsSearch_onvaluechanged = function(obj,e)
+        {
+        	if(e.oldvalue != e.newvalue) {
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.gfnGridClear(this.dxGrid);
+        		this.gfnGridClear(this.dxGridSub);
+
+        		if(e.columnid == "YM_BUDGET"){
+        		   if(e.oldvalue.substr(0,4) != e.newvalue.substr(0,4)){
+        			this.fnSetCombo1();
+        			}
+        		}
+
+        	}
+        };
+
+        this.fnColor = function()
+        {
+        	this.dxGridSub.set_enableredraw(false);
+
+        	//var expr = "DS_ACTIVE != '소계' && DS_ACCOUNT != '중계 &&' DS_ACCOUNT_M != '합계' && (CD_GUBUN == '계획' || CD_GUBUN == '실적')";
+        	//this.gfnGridColumnColor(this.dxGrid, "", "BACK_ReadOnly", "YN_COLOR == 'Y'", true);
+        	this.gfnGridColumnColor(this.dxGridSub, "", "BACK_SoKe", "DS_ITEM == '소계'", true);
+        	this.gfnGridColumnColor(this.dxGridSub, "", "BACK_SoKe", "DS_ITEM == '중계'", true);
+        	this.gfnGridColumnColor(this.dxGridSub, "", "BACK_Sum", "DS_ITEM == '합계'", true);
+        	this.dxGridSub.set_enableredraw(true);
+        }
+
+        this.divData_ondragmove = function(obj,e)
+        {
+        	if(e.userdata == "splitter") {
+        		this.divData.form.divSplitter.set_top(e.clienty);
+        		this.divData.form.resetScroll();
+        	}
+        };
+
+        this.divData_divSplitter_ondrag = function(obj,e)
+        {
+        	e.set_userdata("splitter");
+        	return true;
+        };
+
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divSearch.form.ccboCD_DANWI.addEventHandler("onitemchanged",this.divSearch_ccboTY_PAY_onitemchanged,this);
+            this.divSearch.form.ccboTY_GUBUN.addEventHandler("onitemchanged",this.divSearch_ccboTY_PAY_onitemchanged,this);
+            this.divData.addEventHandler("ondragmove",this.divData_ondragmove,this);
+            this.divData.form.divSplitter.addEventHandler("ondrag",this.divData_divSplitter_ondrag,this);
+            this.divData.form.divDataBottom.form.objGridSub.addEventHandler("oncelldblclick",this.objGridSub_oncelldblclick,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+        };
+        this.loadIncludeScript("DIQ_BUDGET_REPORT.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

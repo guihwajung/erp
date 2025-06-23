@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="cmmCardBill" width="330" height="360" onload="cmmFileManager_onload" onbeforeclose="cmmFileManager_onbeforeclose">
+    <Layouts>
+      <Layout>
+        <Static id="staNO_CARD" taborder="1" text="카드번호" left="18" top="20" height="30" cssclass="sta_WF_tablelabelN" width="95" onclick="divData_staCD_CORP00_00_onclick" textAlign="left" padding="0px 0px 0px 15px"/>
+        <Static id="staNO_CARD_bg" taborder="2" left="staNO_CARD:-1" top="staNO_CARD:-30" cssclass="sta_WF_tablebg" height="30" width="200"/>
+        <Button id="btnClose" taborder="0" left="260" top="320" width="52" height="26" multiselect="true" text="닫기" visible="true" onclick="btnClose_onclick"/>
+        <Static id="staDT_APPROVAL" taborder="3" text="승인일자" left="staNO_CARD:-95" top="staNO_CARD:-1" height="30" cssclass="sta_WF_tablelabelN" width="95" onclick="divData_staCD_CORP00_00_onclick" textAlign="left" padding="0px 0px 0px 15px"/>
+        <Static id="staDT_APPROVAL_bg" taborder="4" left="staDT_APPROVAL:-1" top="staDT_APPROVAL:-30" cssclass="sta_WF_tablebg" height="30" width="200"/>
+        <Static id="staAM_APPROVAL" taborder="5" text="승인금액" left="staDT_APPROVAL:-95" top="staDT_APPROVAL:-1" height="30" cssclass="sta_WF_tablelabelN" width="95" onclick="divData_staCD_CORP00_00_onclick" textAlign="left" padding="0px 0px 0px 15px"/>
+        <Static id="staAM_APPROVAL_bg" taborder="6" left="staAM_APPROVAL:-1" top="staAM_APPROVAL:-30" cssclass="sta_WF_tablebg" height="30" width="200"/>
+        <Static id="staAM_SURTAX" taborder="7" text="공급가" left="staAM_APPROVAL:-95" top="staAM_APPROVAL:-1" height="30" cssclass="sta_WF_tablelabelN" width="95" onclick="divData_staCD_CORP00_00_onclick" textAlign="left" padding="0px 0px 0px 15px"/>
+        <Static id="staAM_SURTAX_bg" taborder="8" left="staAM_SURTAX:-1" top="staAM_SURTAX:-30" cssclass="sta_WF_tablebg" height="30" width="200"/>
+        <Static id="staAM_VATSUPPLY" taborder="9" text="부가세" left="staAM_SURTAX:-95" top="staAM_SURTAX:-1" height="30" cssclass="sta_WF_tablelabelN" width="95" onclick="divData_staCD_CORP00_00_onclick" textAlign="left" padding="0px 0px 0px 15px"/>
+        <Static id="staAM_VATSUPPLY_bg" taborder="10" left="staAM_VATSUPPLY:-1" top="staAM_VATSUPPLY:-30" cssclass="sta_WF_tablebg" height="30" width="200"/>
+        <Static id="staCD_VENDORCODE" taborder="11" text="사업자번호" left="staAM_VATSUPPLY:-95" top="staAM_VATSUPPLY:-1" height="30" cssclass="sta_WF_tablelabelN" width="95" onclick="divData_staCD_CORP00_00_onclick" textAlign="left" padding="0px 0px 0px 15px"/>
+        <Static id="staCD_VENDORCODE_bg" taborder="12" left="staCD_VENDORCODE:-1" top="staCD_VENDORCODE:-30" cssclass="sta_WF_tablebg" height="30" width="200"/>
+        <Static id="staDS_VENDOR" taborder="13" text="가맹점명" left="staCD_VENDORCODE:-95" top="staCD_VENDORCODE:-1" height="30" cssclass="sta_WF_tablelabelN" width="95" onclick="divData_staCD_CORP00_00_onclick" textAlign="left" padding="0px 0px 0px 15px"/>
+        <Static id="staDS_VENDOR_bg" taborder="14" left="staDS_VENDOR:-1" top="staDS_VENDOR:-30" cssclass="sta_WF_tablebg" height="30" width="200"/>
+        <Static id="staDS_TAXTYPE" taborder="15" text="과세유형" left="staDS_VENDOR:-95" top="staDS_VENDOR:-1" height="30" cssclass="sta_WF_tablelabelN" width="95" onclick="divData_staCD_CORP00_00_onclick" textAlign="left" padding="0px 0px 0px 15px"/>
+        <Static id="staDS_TAXTYPE_bg" taborder="16" left="staDS_TAXTYPE:-1" top="staDS_TAXTYPE:-30" cssclass="sta_WF_tablebg" height="30" width="200"/>
+        <Static id="staCD_USETYPE" taborder="17" text="사용목적" left="staDS_TAXTYPE:-95" top="staDS_TAXTYPE:-1" height="30" cssclass="sta_WF_tablelabelN" width="95" onclick="divData_staCD_CORP00_00_onclick" textAlign="left" padding="0px 0px 0px 15px"/>
+        <Static id="staCD_USETYPE_bg" taborder="18" left="staCD_USETYPE:-1" top="staCD_USETYPE:-30" cssclass="sta_WF_tablebg" height="30" width="200"/>
+        <Static id="staDS_HNAME" taborder="19" text="사용인" left="staCD_USETYPE:-95" top="staCD_USETYPE:-1" height="30" cssclass="sta_WF_tablelabelN" width="95" onclick="divData_staCD_CORP00_00_onclick" textAlign="left" padding="0px 0px 0px 15px"/>
+        <Static id="staDS_HNAME_bg" taborder="20" left="staDS_HNAME:-1" top="staDS_HNAME:-30" cssclass="sta_WF_tablebg" height="30" width="200"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DZZPR_CARDBILL_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCardBill"/>
+      <Dataset id="dsSelect">
+        <ColumnInfo>
+          <Column id="NO_SEQ" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.cmmFileManager_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	//this.gfnFormInfo(this);
+	// ---------------------------//
+	
+	var NO_SEQ = this.getOwnerFrame().NO_SEQ;
+	this.fnSelect(NO_SEQ);
+}
+
+this.fnSelect = function(NO_SEQ) {
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "NO_SEQ", NO_SEQ);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsCardBill=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, 		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+}
+
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if (svcID == "select") {
+		this.staNO_CARD_bg.set_text(this.dsCardBill.getColumn(0, "NO_CARD"));
+		this.staDT_APPROVAL_bg.set_text(this.dsCardBill.getColumn(0, "DT_APPROVAL"));
+		this.staAM_APPROVAL_bg.set_text(this.dsCardBill.getColumn(0, "AM_APPROVAL"));
+		this.staAM_SURTAX_bg.set_text(this.dsCardBill.getColumn(0, "AM_SURTAX"));
+		this.staAM_VATSUPPLY_bg.set_text(this.dsCardBill.getColumn(0, "AM_VATSUPPLY"));
+		this.staCD_VENDORCODE_bg.set_text(this.dsCardBill.getColumn(0, "CD_VENDORCODE"));
+		this.staDS_VENDOR_bg.set_text(this.dsCardBill.getColumn(0, "DS_VENDOR"));
+		this.staDS_TAXTYPE_bg.set_text(this.dsCardBill.getColumn(0, "DS_TAXTYPE"));
+		this.staCD_USETYPE_bg.set_text(this.dsCardBill.getColumn(0, "CD_USETYPE"));
+		this.staDS_HNAME_bg.set_text(this.dsCardBill.getColumn(0, "DS_HNAME"));
+	}
+}
+
+this.btnClose_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	this.close(false);
+}
+]]></Script>
+  </Form>
+</FDL>

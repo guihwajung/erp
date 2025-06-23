@@ -1,0 +1,1664 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("인사법인정보등록");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CORP\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsDetail", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_GUBUN\" type=\"STRING\" size=\"256\"/><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"NO_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"NO_ZIP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_ADDR\" type=\"STRING\" size=\"256\"/><Column id=\"NO_TEL\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CHIEFNAME\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CHIEFNAME_ENG\" type=\"STRING\" size=\"256\"/><Column id=\"NO_CHIEFID\" type=\"STRING\" size=\"256\"/><Column id=\"CD_TAXOFFICE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_TAXOFFICE\" type=\"STRING\" size=\"256\"/><Column id=\"NM_OWNER\" type=\"STRING\" size=\"256\"/><Column id=\"NO_BUSINESS\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CONSTTYPE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_LICENSE\" type=\"STRING\" size=\"256\"/><Column id=\"CD_BANK\" type=\"STRING\" size=\"256\"/><Column id=\"DS_BANK\" type=\"STRING\" size=\"256\"/><Column id=\"NO_ACCOUNT\" type=\"STRING\" size=\"256\"/><Column id=\"YN_DELETE\" type=\"STRING\" size=\"256\"/><Column id=\"STAMP_IMG\" type=\"STRING\" size=\"256\"/><Column id=\"STAMP_IMG2\" type=\"STRING\" size=\"256\"/><Column id=\"STAMP_IMG3\" type=\"STRING\" size=\"256\"/><Column id=\"LOGO1_IMG\" type=\"STRING\" size=\"256\"/><Column id=\"LOGO2_IMG\" type=\"STRING\" size=\"256\"/><Column id=\"LOGO3_IMG\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CADDR\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CORP_ENG\" type=\"STRING\" size=\"256\"/><Column id=\"NO_ZIP_ENG\" type=\"STRING\" size=\"256\"/><Column id=\"DS_ADDR_ENG\" type=\"STRING\" size=\"256\"/><Column id=\"SN_PRINT\" type=\"INT\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DAZPR_CORP_MASTER_SELECT</Col></Row><Row><Col id=\"TARGET\">d_select</Col><Col id=\"SP\">DAZPR_CORP_SELECT</Col></Row><Row><Col id=\"SP\">DAZPR_CORP_SAVE</Col><Col id=\"TARGET\">save</Col></Row><Row><Col id=\"TARGET\">image</Col><Col id=\"SP\">DAZPR_CORP_IMAGE_SAVE</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYN_DELETE", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"VALUE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CODE\">%</Col><Col id=\"VALUE\">전체</Col></Row><Row><Col id=\"CODE\">N</Col><Col id=\"VALUE\">사용</Col></Row><Row><Col id=\"CODE\">Y</Col><Col id=\"VALUE\">미사용</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYN_CORPANTE", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"VALUE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CODE\"/><Col id=\"VALUE\"/></Row><Row><Col id=\"CODE\">N</Col><Col id=\"VALUE\">N</Col></Row><Row><Col id=\"CODE\">Y</Col><Col id=\"VALUE\">Y</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsImageFile", this);
+            obj._setContents("<ColumnInfo><Column id=\"filepath\" type=\"STRING\" size=\"256\"/><Column id=\"filename\" type=\"STRING\" size=\"256\"/><Column id=\"filereturn\" type=\"STRING\" size=\"10000\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsDeleteFile", this);
+            obj._setContents("<ColumnInfo><Column id=\"filepath\" type=\"STRING\" size=\"256\"/><Column id=\"filename\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new FileDialog("fdg00", this);
+            this.addChild(obj.name, obj);
+
+
+            obj = new FileUpTransfer("FileUpTransfer00", this);
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0","0",null,"46.0","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_SEARCH_Bg");
+            obj.set_formscrolltype("none");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staYN_DELETE","0.0","10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("0");
+            obj.set_text("사용여부");
+            obj.set_rtl("false");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("cboYN_DELETE_COND","staYN_DELETE:0.0","10.0","80","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_innerdataset("dsYN_DELETE");
+            obj.set_datacolumn("VALUE");
+            obj.set_codecolumn("CODE");
+            obj.set_value("N");
+            obj.set_index("1");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:10",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divDataLeft","0","0","300",null,null,"0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","0",null,null,null,null,this.divData.form.divDataLeft.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.divDataLeft.addChild(obj.name, obj);
+
+            obj = new Div("divDataRight","divDataLeft:10","0",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staCD_CORP","0","0","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("0");
+            obj.set_text("법인코드 / 구분");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staCD_CORP_bg","staCD_CORP:-1","0","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("1");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_CORP","staCD_CORP:5","staCD_CORP:-25","150","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCORPNEW");
+            obj.getSetter("CDTextWidth").set("25");
+            obj.set_taborder("2");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staCD_CORP_slash","cfCD_CORP:5","staCD_CORP:-30","20","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("3");
+            obj.set_text("/");
+            obj.set_visible("true");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtCD_GUBUN","staCD_CORP_slash:-9","staCD_CORP:-25","74","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("4");
+            obj.set_maxlength("3");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_CORP_ENG","0","staCD_CORP:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("5");
+            obj.set_text("영문명");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_CORP_ENG_bg","staDS_CORP_ENG:-1","staDS_CORP_ENG:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("6");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_CORP_ENG","staDS_CORP_ENG:5","staDS_CORP_ENG:-25","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("7");
+            obj.set_maxlength("20");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staNO_BUSINESS","0","staDS_CORP_ENG:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("8");
+            obj.set_text("사업자번호");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staNO_BUSINESS_bg","staNO_BUSINESS:-1","staNO_BUSINESS:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("9");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtNO_BUSINESS","staNO_BUSINESS:5","staNO_BUSINESS:-25","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("10");
+            obj.set_maxlength("20");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staNO_CORP","0","staNO_BUSINESS:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("11");
+            obj.set_text("법인번호");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staNO_CORP_bg","staNO_CORP:-1","staNO_CORP:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("12");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtNO_CORP","staNO_CORP:5","staNO_CORP:-25","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("13");
+            obj.set_maxlength("13");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staNO_TEL","0","staNO_CORP:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("14");
+            obj.set_text("전화번호");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staNO_TEL_bg","staNO_TEL:-1","staNO_TEL:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("15");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtNO_TEL","staNO_TEL:5","staNO_TEL:-25","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("16");
+            obj.set_maxlength("20");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_CHIEFNAME","0","staNO_TEL:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("17");
+            obj.set_text("대표자");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_CHIEFNAME_bg","staDS_CHIEFNAME:-1","staDS_CHIEFNAME:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("18");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_CHIEFNAME","staDS_CHIEFNAME:5","staDS_CHIEFNAME:-25","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("19");
+            obj.set_maxlength("20");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_CHIEFNAME_ENG","0","staDS_CHIEFNAME:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("17");
+            obj.set_text("대표자(영문)");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_CHIEFNAME_ENG_bg","staDS_CHIEFNAME_ENG:-1","staDS_CHIEFNAME_ENG:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("18");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_CHIEFNAME_ENG","staDS_CHIEFNAME_ENG:5","staDS_CHIEFNAME_ENG:-25","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("19");
+            obj.set_maxlength("20");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staNO_CHIEFID","0","staDS_CHIEFNAME_ENG:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("20");
+            obj.set_text("대표자주민번호");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staNO_CHIEFID_bg","staNO_CHIEFID:-1","staNO_CHIEFID:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("21");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtNO_CHIEFID","staNO_CHIEFID:5","staNO_CHIEFID:-25","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("22");
+            obj.set_maxlength("13");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staCD_TAXOFFICE","0","staNO_CHIEFID:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("23");
+            obj.set_text("사업지세무소");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staCD_TAXOFFICE_bg","staCD_TAXOFFICE:-1","staCD_TAXOFFICE:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("24");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtCD_TAXOFFICE","staCD_TAXOFFICE:5","edtNO_CHIEFID:9","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("25");
+            obj.set_maxlength("3");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_TAXOFFICE","0","staCD_TAXOFFICE:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("26");
+            obj.set_text("건설업종");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_TAXOFFICE_bg","staDS_TAXOFFICE:-1","staDS_TAXOFFICE:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("27");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_TAXOFFICE","staDS_TAXOFFICE:5","staDS_TAXOFFICE:-25","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("28");
+            obj.set_maxlength("50");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_LICENSE","0","staDS_TAXOFFICE:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("29");
+            obj.set_text("면접번호/등록번호");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_LICENSE_bg","staDS_LICENSE:-1","staDS_LICENSE:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("30");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_LICENSE","staDS_LICENSE:5","staDS_LICENSE:-25","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("31");
+            obj.set_maxlength("50");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staCD_BANK","0","staDS_LICENSE:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("32");
+            obj.set_text("은행코드");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staCD_BANK_bg","staCD_BANK:-1","staCD_BANK:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("33");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_BANK","staCD_BANK:5","staCD_BANK:-25","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.getSetter("CodeFindName").set("DSX_CFBANK_CODE");
+            obj.getSetter("CDTextWidth").set("40");
+            obj.set_taborder("34");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staNM_OWNER","0","staCD_BANK:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("35");
+            obj.set_text("예금주");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staNM_OWNER_bg","staNM_OWNER:-1","staNM_OWNER:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("36");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtNM_OWNER","staNM_OWNER:5","staNM_OWNER:-25","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("37");
+            obj.set_maxlength("20");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staNO_ACCOUNT","0","staNM_OWNER:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("38");
+            obj.set_text("계좌번호");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staNO_ACCOUNT_bg","staNO_ACCOUNT:-1","staNO_ACCOUNT:-30","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("39");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtNO_ACCOUNT","staNO_ACCOUNT:5","staNO_ACCOUNT:-25","240","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("40");
+            obj.set_maxlength("20");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_ADDR","0","staNO_ACCOUNT:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("41");
+            obj.set_text("주소");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_ADDR_bg","staDS_ADDR:-1","staDS_ADDR:-30","582","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("42");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_ADDR","staDS_ADDR:5","staDS_ADDR:-25","570","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.getSetter("CodeFindName").set("DZX_CFZIP_STREET");
+            obj.getSetter("CDTextWidth").set("70");
+            obj.set_taborder("43");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_CADDR","0","staDS_ADDR:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("44");
+            obj.set_text("영문주소");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staDS_CADDR_bg","staDS_CADDR:-1","staDS_CADDR:-30","582","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("45");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtNO_ZIP_ENG","staDS_CADDR:5","staDS_CADDR:-25","70","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("77");
+            obj.set_inputtype("digit,number");
+            obj.set_maxlength("5");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_ADDR_ENG","edtNO_ZIP_ENG:5","staDS_CADDR:-25","495","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("78");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staYN_DELETE","0","staDS_CADDR:-1","130","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("46");
+            obj.set_text("사용여부/출력순서");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staYN_DELETE_bg","staYN_DELETE:-1","staDS_CADDR_bg:-1","254","30",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("47");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Combo("cboYN_DELETE","staYN_DELETE:5","staYN_DELETE:-25","80","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("48");
+            obj.set_innerdataset("dsYN_DELETE");
+            obj.set_datacolumn("VALUE");
+            obj.set_codecolumn("CODE");
+            obj.set_text("사용");
+            obj.set_value("N");
+            obj.set_index("1");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("staYN_DELETE_slash","cboYN_DELETE:10","staYN_DELETE:-30","20","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("49");
+            obj.set_text("/");
+            obj.set_visible("true");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Edit("edtSN_PRINT","staYN_DELETE_slash:0","staYN_DELETE:-25","62","20",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("50");
+            obj.set_maxlength("3");
+            obj.set_textAlign("right");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("sta30","397","0","314","22","90",null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("51");
+            obj.set_text("인감등록");
+            obj.set_cssclass("sta_TITLE_Bg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("sta31","398","sta30:5","80","23",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("52");
+            obj.set_text("인감1");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("sta32","sta31:25","sta30:5","80","23",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("53");
+            obj.set_text("인감2");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("sta33","sta32:25","sta30:5","80","23",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("54");
+            obj.set_text("인감3");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Button("btnSTAMP_IMG","398","sta31:2","39","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("55");
+            obj.set_text("등록");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Button("btnSTAMP_DEL_IMG","btnSTAMP_IMG:2","sta31:2","39","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("71");
+            obj.set_text("삭제");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Button("btnSTAMP_IMG2","btnSTAMP_DEL_IMG:25","sta32:2","39","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("56");
+            obj.set_text("등록");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Button("btnSTAMP_DEL_IMG2","btnSTAMP_IMG2:2","sta32:2","39","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("72");
+            obj.set_text("삭제");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Button("btnSTAMP_IMG3","btnSTAMP_DEL_IMG2:25","sta33:2","39","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("57");
+            obj.set_text("등록");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new ImageViewer("imgSTAMP_IMG","398","btnSTAMP_IMG:3","80","72",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("58");
+            obj.set_stretch("fixaspectratio");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new ImageViewer("imgSTAMP_IMG2","imgSTAMP_IMG:25","btnSTAMP_IMG2:3","80","72",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("59");
+            obj.set_stretch("fixaspectratio");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new ImageViewer("imgSTAMP_IMG3","imgSTAMP_IMG2:25","btnSTAMP_IMG3:3","80","72",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("60");
+            obj.set_stretch("fixaspectratio");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("sta40","397","sta30:145","314","22",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("61");
+            obj.set_text("회사 로고등록");
+            obj.set_cssclass("sta_TITLE_Bg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("sta41","398","194","80","23",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("62");
+            obj.set_text("회사 로고1");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("sta42","sta41:25","194","80","23",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("63");
+            obj.set_text("회사 로고2");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Static("sta43","sta42:25","194","80","23",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("64");
+            obj.set_text("회사 로고3");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Button("btnLOGO1_IMG","398","sta41:2","39","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("65");
+            obj.set_text("등록");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Button("btnLOGO1_DEL_IMG","btnLOGO1_IMG:2","sta41:2","39","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("74");
+            obj.set_text("삭제");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Button("btnLOGO2_IMG","btnLOGO1_DEL_IMG:25","sta42:2","39","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("66");
+            obj.set_text("등록");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Button("btnLOGO2_DEL_IMG","btnLOGO2_IMG:2","sta42:2","39","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("75");
+            obj.set_text("삭제");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Button("btnLOGO3_IMG","btnLOGO2_DEL_IMG:25","sta43:2","39","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("67");
+            obj.set_text("등록");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new ImageViewer("imgLOGO1_IMG","398","btnLOGO1_IMG:3","80","72",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("68");
+            obj.set_stretch("fixaspectratio");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new ImageViewer("imgLOGO2_IMG","imgLOGO1_IMG:25","btnLOGO2_IMG:3","80","72",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("69");
+            obj.set_stretch("fixaspectratio");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new ImageViewer("imgLOGO3_IMG","imgLOGO2_IMG:25","btnLOGO3_IMG:3","80","72",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("70");
+            obj.set_stretch("fixaspectratio");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Button("btnSTAMP_DEL_IMG3","btnSTAMP_IMG3:2","sta33:2","39","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("73");
+            obj.set_text("삭제");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Button("btnLOGO3_DEL_IMG","btnLOGO3_IMG:2","sta43:2","39","28",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("76");
+            obj.set_text("삭제");
+            obj.set_textAlign("center");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item1","divData.form.divDataRight.form.cfCD_CORP.form.CDTextBox","value","dsDetail","CD_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divData.form.divDataRight.form.cfCD_CORP.form.DSTextBox","value","dsDetail","DS_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divData.form.divDataRight.form.edtNO_BUSINESS","value","dsDetail","NO_BUSINESS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","divData.form.divDataRight.form.edtNO_CORP","value","dsDetail","NO_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item5","divData.form.divDataRight.form.edtNO_TEL","value","dsDetail","NO_TEL");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item6","divData.form.divDataRight.form.edtDS_CHIEFNAME","value","dsDetail","DS_CHIEFNAME");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item7","divData.form.divDataRight.form.edtNO_CHIEFID","value","dsDetail","NO_CHIEFID");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item8","divData.form.divDataRight.form.edtCD_TAXOFFICE","value","dsDetail","DS_TAXOFFICE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item9","divData.form.divDataRight.form.edtDS_TAXOFFICE","value","dsDetail","DS_CONSTTYPE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item10","divData.form.divDataRight.form.edtDS_LICENSE","value","dsDetail","DS_LICENSE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item11","divData.form.divDataRight.form.cfCD_BANK.form.CDTextBox","value","dsDetail","CD_BANK");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item12","divData.form.divDataRight.form.cfCD_BANK.form.DSTextBox","value","dsDetail","DS_BANK");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item13","divData.form.divDataRight.form.edtNM_OWNER","value","dsDetail","NM_OWNER");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item14","divData.form.divDataRight.form.edtNO_ACCOUNT","value","dsDetail","NO_ACCOUNT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item15","divData.form.divDataRight.form.cfCD_ADDR.form.CDTextBox","value","dsDetail","NO_ZIP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item16","divData.form.divDataRight.form.cfCD_ADDR.form.DSTextBox","value","dsDetail","DS_ADDR");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item17","divData.form.divDataRight.form.cboYN_DELETE","value","dsDetail","YN_DELETE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item18","divData.form.divDataRight.form.edtDS_CORP_ENG","value","dsDetail","DS_CORP_ENG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item20","divData.form.divDataRight.form.edtSN_PRINT","value","dsDetail","SN_PRINT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item23","divData.form.divDataRight.form.edtCD_GUBUN","value","dsDetail","CD_GUBUN");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item0","divData.form.divDataRight.form.edtNO_ZIP_ENG","value","dsDetail","NO_ZIP_ENG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item19","divData.form.divDataRight.form.edtDS_ADDR_ENG","value","dsDetail","DS_ADDR_ENG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item21","divData.form.divDataRight.form.edtDS_CHIEFNAME_ENG","value","dsDetail","DS_CHIEFNAME_ENG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DAZ_CORP.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.filepath = "/DA/CORP/";
+        this.fileuploads = {};
+        this.filecnt = 1;
+        this.filecnt2 = 1;
+        this.filecnt3 = 1;
+        this.filecnt4 = 1;
+        this.filecnt5 = 1;
+        this.filecnt6 = 1;
+
+        this.fileid6 = "";
+
+        this.fileup = new FileUpload();
+        this.no = 0;
+
+        this.form_onload = function(obj, e) {
+            // -- 필수 -------------------//
+            this.gfnFormOnLoad(this);
+            this.gfnFormInfo(this);
+            // ---------------------------//
+
+            this.fnSetButton();
+            this.fnSetExtendButton();
+            this.fnSetVariable();
+            this.fnSetEvent();
+            this.fnSetParameter();
+
+        	var context = "/";
+        	if (nexacro.getEnvironmentVariable("evContextPath") != undefined) {
+        		context = nexacro.getEnvironmentVariable("evContextPath");
+        	}
+
+            // 파일설정
+            this.fileConfig = this.gfnGetFileConfig();
+            this.fileConfig.allowTypes = ["jpg", "jpeg", "gif", "png"]; // 넥사브라우저 전용, 웹은 적용불가
+            this.fileConfig.uploadUrl = context + "file/saveEmpImg.do"; 			// 법인 이미지 따로 저장
+
+        	//default
+        	this.fnSet_button(false);
+
+            this.cfCD_CORP.set_enable(false);
+            this.cfCD_BANK.set_enable(false);
+            this.cfCD_ADDR.set_enable(false);
+
+            this.divData.form.divDataRight.form.edtNO_BUSINESS.set_inputtype("number");
+            this.divData.form.divDataRight.form.edtNO_CORP.set_inputtype("number");
+            this.divData.form.divDataRight.form.edtNO_TEL.set_inputtype("number");
+            this.divData.form.divDataRight.form.edtNO_CHIEFID.set_inputtype("number");
+            this.divData.form.divDataRight.form.edtDS_LICENSE.set_inputtype("number");
+            this.divData.form.divDataRight.form.edtNO_ACCOUNT.set_inputtype("number");
+
+            this.FormBtns.Select.click();
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+            this.cfCD_CORP = this.divData.form.divDataRight.form.cfCD_CORP;
+            this.cfCD_BANK = this.divData.form.divDataRight.form.cfCD_BANK;
+            this.cfCD_ADDR = this.divData.form.divDataRight.form.cfCD_ADDR;
+
+
+            this.cboYN_DELETE_COND = this.divSearch.form.cboYN_DELETE_COND;
+            this.dxGrid = this.divData.form.divDataLeft.form.objGrid;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+            this.cfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+            this.cfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+            this.cfCD_BANK.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+            this.cfCD_BANK.AfterCDTextChanged = "fnAfterCDTextChanged";
+            this.cfCD_ADDR.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+            this.cfCD_ADDR.AfterCDTextChanged = "fnAfterCDTextChanged";
+
+            // 그리드 초기화
+            this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAZ_CORP_NEW");
+
+            this.dxGrid.set_selecttype("row");
+            this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+
+            // 그리드 코드파인드 설정
+            this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+
+        };
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+            this.dsSelect = new Dataset();
+            this.dsSelect.addColumn("YN_DELETE", "string");
+
+            this.dsSelect2 = new Dataset();
+            this.dsSelect2.addColumn("CD_CORP", "string");
+
+            this.dsSave = new Dataset();
+        	this.dsSave.addColumn("TY_SAVE", "string");
+        	this.dsSave.addColumn("CD_GUBUN", "string");
+        	this.dsSave.addColumn("CD_CORP", "string");
+        	this.dsSave.addColumn("DS_CORP", "string");
+        	this.dsSave.addColumn("NO_CORP", "string");
+        	this.dsSave.addColumn("NO_ZIP", "string");
+        	this.dsSave.addColumn("DS_ADDR", "string");
+        	this.dsSave.addColumn("NO_TEL", "string");
+        	this.dsSave.addColumn("DS_CHIEFNAME", "string");
+        	this.dsSave.addColumn("DS_CHIEFNAME_ENG", "string");
+        	this.dsSave.addColumn("NO_CHIEFID", "string");
+        	this.dsSave.addColumn("CD_TAXOFFICE", "string");
+        	this.dsSave.addColumn("DS_TAXOFFICE", "string");
+        	this.dsSave.addColumn("NO_BUSINESS", "string");
+        	this.dsSave.addColumn("DS_CONSTTYPE", "string");
+        	this.dsSave.addColumn("DS_LICENSE", "string");
+        	this.dsSave.addColumn("CD_BANK", "string");
+        	this.dsSave.addColumn("NO_ACCOUNT", "string");
+        	this.dsSave.addColumn("NM_OWNER", "string");
+        	this.dsSave.addColumn("STAMP_IMG", "string");
+        	this.dsSave.addColumn("STAMP_IMG2", "string");
+        	this.dsSave.addColumn("STAMP_IMG3", "string");
+        	this.dsSave.addColumn("LOGO1_IMG", "string");
+        	this.dsSave.addColumn("LOGO2_IMG", "string");
+        	this.dsSave.addColumn("LOGO3_IMG", "string");
+        	this.dsSave.addColumn("DS_CADDR", "string");
+        	this.dsSave.addColumn("ID_INSERT", "string");
+        	this.dsSave.addColumn("DS_CORP_ENG", "string");
+        	this.dsSave.addColumn("SN_PRINT", "int");
+        	this.dsSave.addColumn("YN_DELETE", "string");
+        	this.dsSave.addColumn("DS_ADDR_ENG", "string");
+        	this.dsSave.addColumn("NO_ZIP_ENG", "string");
+
+            this.dsUpdateFile = new Dataset();
+            this.dsUpdateFile.addColumn("CD_CORP", "string");
+            this.dsUpdateFile.addColumn("STAMP_IMG", "string");
+            this.dsUpdateFile.addColumn("ID_UPDATE", "string");
+
+            this.dsImage = new Dataset();
+            this.dsImage.addColumn("TY_SAVE", "string");
+            this.dsImage.addColumn("CD_CORP", "string");
+            this.dsImage.addColumn("TY_GUBUN", "string"); //(1: 인감1, 2: 인감2, 3: 인감3, 4: 회사로고1, 5: 회사로고2, 6: 회사로고3)
+            this.dsImage.addColumn("DS_IMAGE", "string");
+            this.dsImage.addColumn("ID_UPDATE", "string");
+
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+        /*
+         *	조회 버튼
+         */
+        this.fnSelect = function() {
+            //if (!this.fnSelectValidate()) return false;
+
+            this.gfnGridBeforeSelect(this.dxGrid);
+
+            this.dsSelect.clearData();
+            this.dsSelect.addRow();
+            this.dsSelect.setColumn(0, "YN_DELETE", this.cboYN_DELETE_COND.value);
+
+            var strSvcId 	= "select";
+            var strSvcType 	= "grid";
+            var inProc 		= "_dsProc";
+            var inData 		= "select=dsSelect";
+            var outData 	= "dsList=select0";
+            var strArg 		= "";
+            var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+
+            //this.fnSelect2();
+        }
+
+        this.fnSelect2 = function() {
+            if (this.dxGrid.rowcount == 0 || this.dxGrid.currentrow < 0) return false;
+
+            this.dsSelect2.clearData();
+            this.dsSelect2.addRow();
+            this.dsSelect2.setColumn(0, "CD_CORP", this.dsList.getColumn(this.dsList.rowposition, "CD_CORP"));
+
+            var strSvcId 	= "detail";
+            var strSvcType 	= "grid";
+            var inProc 		= "_dsProc";
+            var inData 		= "d_select=dsSelect2";
+            var outData 	= "dsDetail=d_select0";
+            var strArg 		= "";
+            var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+            var nRow = this.gfnGridAdd(this.dxGrid);
+            this.gfnSetFormStatus(this, "I");
+            this.dsDetail.clearData();
+            this.dsDetail.addRow();
+
+            this.cfCD_CORP.set_enable(true);
+
+        	this.divData.form.divDataRight.form.imgSTAMP_IMG.set_image(null);
+        	this.divData.form.divDataRight.form.imgSTAMP_IMG2.set_image(null);
+        	this.divData.form.divDataRight.form.imgSTAMP_IMG3.set_image(null);
+
+        	this.divData.form.divDataRight.form.imgLOGO1_IMG.set_image(null);
+        	this.divData.form.divDataRight.form.imgLOGO2_IMG.set_image(null);
+        	this.divData.form.divDataRight.form.imgLOGO3_IMG.set_image(null);
+
+            this.fnSet_button(false);
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+            this.gfnGridDel(this.dxGrid);
+            this.gfnSetFormStatus(this, "D");
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+            this.dsSave.clearData();
+
+            var flag = this.gfnGetFormStatus(this);
+            switch (flag) {
+                case "I":
+                case "U":
+                case "D":
+                    if (!this.fnDataValidate()) return;
+                    var nrow = this.dsSave.addRow();
+        			this.dsSave.setColumn(nrow, "TY_SAVE", flag);
+        			this.dsSave.setColumn(nrow, "CD_GUBUN", this.dsDetail.getColumn(0, "CD_GUBUN"));
+        			this.dsSave.setColumn(nrow, "CD_CORP", this.dsDetail.getColumn(0, "CD_CORP"));
+        			this.dsSave.setColumn(nrow, "DS_CORP", this.dsDetail.getColumn(0, "DS_CORP"));
+        			this.dsSave.setColumn(nrow, "NO_CORP", this.dsDetail.getColumn(0, "NO_CORP"));
+        			this.dsSave.setColumn(nrow, "NO_ZIP", this.dsDetail.getColumn(0, "NO_ZIP"));
+        			this.dsSave.setColumn(nrow, "DS_ADDR", this.dsDetail.getColumn(0, "DS_ADDR"));
+        			this.dsSave.setColumn(nrow, "NO_TEL", this.dsDetail.getColumn(0, "NO_TEL"));
+        			this.dsSave.setColumn(nrow, "DS_CHIEFNAME", this.dsDetail.getColumn(0, "DS_CHIEFNAME"));
+        			this.dsSave.setColumn(nrow, "DS_CHIEFNAME_ENG", this.dsDetail.getColumn(0, "DS_CHIEFNAME_ENG"));
+        			this.dsSave.setColumn(nrow, "NO_CHIEFID", this.dsDetail.getColumn(0, "NO_CHIEFID"));
+        			this.dsSave.setColumn(nrow, "CD_TAXOFFICE", this.dsDetail.getColumn(0, "CD_TAXOFFICE"));
+        			this.dsSave.setColumn(nrow, "DS_TAXOFFICE", this.dsDetail.getColumn(0, "DS_TAXOFFICE"));
+        			this.dsSave.setColumn(nrow, "NO_BUSINESS", this.dsDetail.getColumn(0, "NO_BUSINESS"));
+        			this.dsSave.setColumn(nrow, "DS_CONSTTYPE", this.dsDetail.getColumn(0, "DS_CONSTTYPE"));
+        			this.dsSave.setColumn(nrow, "DS_LICENSE", this.dsDetail.getColumn(0, "DS_LICENSE"));
+        			this.dsSave.setColumn(nrow, "CD_BANK", this.dsDetail.getColumn(0, "CD_BANK"));
+        			this.dsSave.setColumn(nrow, "NO_ACCOUNT", this.dsDetail.getColumn(0, "NO_ACCOUNT"));
+        			this.dsSave.setColumn(nrow, "NM_OWNER", this.dsDetail.getColumn(0, "NM_OWNER"));
+        			this.dsSave.setColumn(nrow, "STAMP_IMG", this.dsDetail.getColumn(0, "STAMP_IMG"));
+        			this.dsSave.setColumn(nrow, "STAMP_IMG2", this.dsDetail.getColumn(0, "STAMP_IMG2"));
+        			this.dsSave.setColumn(nrow, "STAMP_IMG3", this.dsDetail.getColumn(0, "STAMP_IMG3"));
+        			this.dsSave.setColumn(nrow, "LOGO1_IMG", this.dsDetail.getColumn(0, "LOGO1_IMG"));
+        			this.dsSave.setColumn(nrow, "LOGO2_IMG", this.dsDetail.getColumn(0, "LOGO2_IMG"));
+        			this.dsSave.setColumn(nrow, "LOGO3_IMG", this.dsDetail.getColumn(0, "LOGO3_IMG"));
+        			this.dsSave.setColumn(nrow, "DS_CADDR", this.dsDetail.getColumn(0, "DS_CADDR"));
+        			this.dsSave.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+        			this.dsSave.setColumn(nrow, "DS_CORP_ENG", this.dsDetail.getColumn(0, "DS_CORP_ENG"));
+        			this.dsSave.setColumn(nrow, "SN_PRINT", this.dsDetail.getColumn(0, "SN_PRINT"));
+        			this.dsSave.setColumn(nrow, "YN_DELETE", this.dsDetail.getColumn(0, "YN_DELETE"));
+        			this.dsSave.setColumn(nrow, "DS_ADDR_ENG", this.dsDetail.getColumn(0, "DS_ADDR_ENG"));
+        			this.dsSave.setColumn(nrow, "NO_ZIP_ENG", this.dsDetail.getColumn(0, "NO_ZIP_ENG"));
+                    break;
+            }
+
+            if (this.dsSave.rowcount == 0) return;
+
+            var strSvcId 	= "save";
+            var strSvcType 	= "save";
+            var inProc 		= "_dsProc";
+            var inData 		= "save=dsSave";
+            var outData 	= "";
+            var strArg 		= "";
+            var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc,
+        						false); // 통신방법 정의 [생략가능]
+
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+         */
+        this.fnSelectValidate = function() {
+        	true;
+        };
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg) {
+           if (svcID == "select") {
+
+                this.gfnGridAfterSelect(this.dxGrid);
+        		this.fnSet_button(true);
+
+            } else if (svcID == "detail") {
+
+                //this.gfnGridAfterSelect(this.dxGrid);
+
+                this.cfCD_BANK.set_enable(true);
+                this.cfCD_ADDR.set_enable(true);
+
+                this.fileuploads = {};
+
+                this.divData.form.divDataRight.form.imgSTAMP_IMG.set_image(null);
+                this.divData.form.divDataRight.form.imgSTAMP_IMG2.set_image(null);
+                this.divData.form.divDataRight.form.imgSTAMP_IMG3.set_image(null);
+
+                this.divData.form.divDataRight.form.imgLOGO1_IMG.set_image(null);
+                this.divData.form.divDataRight.form.imgLOGO2_IMG.set_image(null);
+                this.divData.form.divDataRight.form.imgLOGO3_IMG.set_image(null);
+
+                if (this.dsDetail.rowcount > 0) {
+                    this.fnSet_button(true);
+
+                    this.fnImageView("STAMP_IMG");
+                    this.fnImageView("STAMP_IMG2");
+                    this.fnImageView("STAMP_IMG3");
+                    this.fnImageView("LOGO1_IMG");
+                    this.fnImageView("LOGO2_IMG");
+                    this.fnImageView("LOGO3_IMG");
+                }
+        	}
+        	else if (svcID == "save") {
+
+                this.dsList.setColumn(this.dsList.rowposition, this.ucFlag, "");
+                this.gfnSetFormStatus(this);
+
+                this.FormBtns.Select.click();
+
+            }
+        	else if (svcID == "STAMP_IMG") {
+                this.divData.form.divDataRight.form.imgSTAMP_IMG.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+            }
+        	else if (svcID == "STAMP_IMG2") {
+                this.divData.form.divDataRight.form.imgSTAMP_IMG2.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+            }
+        	else if (svcID == "STAMP_IMG3") {
+                this.divData.form.divDataRight.form.imgSTAMP_IMG3.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+            }
+        	else if (svcID == "LOGO1_IMG") {
+                this.divData.form.divDataRight.form.imgLOGO1_IMG.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+            }
+        	else if (svcID == "LOGO2_IMG") {
+                this.divData.form.divDataRight.form.imgLOGO2_IMG.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+            }
+        	else if (svcID == "LOGO3_IMG") {
+                this.divData.form.divDataRight.form.imgLOGO3_IMG.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+            }
+        	else if (svcID == "deletefile") {
+        		this.divData.form.divDataRight.form["img"+this._fileColName].set_image(null);
+        	}
+        	else if (svcID == "image") {
+            }
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        this.fnAfterCDTextChanged = function(id, codeFindData) {
+            var arr = codeFindData;
+
+            if (id == "cfCD_CORP") {
+                if (arr.length > 0) {
+                    this.dsDetail.setColumn(0, "NO_CORP", arr[0].NO_CORP);
+                    this.dsDetail.setColumn(0, "NO_BUSINESS", arr[0].NO_SAUP);
+                    this.dsDetail.setColumn(0, "NO_TEL", arr[0].NO_SAUPTEL);
+                    this.dsDetail.setColumn(0, "DS_CHIEFNAME", arr[0].DS_NAME);
+                    this.dsDetail.setColumn(0, "NO_ZIP", arr[0].NO_ZIP);
+                    this.dsDetail.setColumn(0, "DS_ADDR", arr[0].DS_SAUPADDR);
+                }else{
+                    this.dsDetail.setColumn(0, "NO_CORP", "");
+                    this.dsDetail.setColumn(0, "NO_BUSINESS", "");
+                    this.dsDetail.setColumn(0, "NO_TEL", "");
+                    this.dsDetail.setColumn(0, "DS_CHIEFNAME", "");
+                    this.dsDetail.setColumn(0, "NO_ZIP", "");
+                    this.dsDetail.setColumn(0, "DS_ADDR", "");
+        		}
+            }
+        	else if(id == "cfCD_ADDR"){
+        		if (arr.length > 0) {
+        			this.dsDetail.setColumn(0, "NO_ZIP_ENG", arr[0].ZIPCODE);
+        		}else{
+        			this.dsDetail.setColumn(0, "NO_ZIP_ENG", "");
+        		}
+        	}
+        }
+
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+            if (id == "cfCD_CORP") {
+                ;
+            }
+            return true;
+        }
+
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+        this.fnGrid_BeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+            return true;
+        }
+
+        this.fnGrid_RowCellChanged = function(obj, e) {
+        	console.log('fnGrid_RowCellChanged 1');
+            if ((obj.oldrow > -1 && obj.oldrow == e.row) || (obj.oldrow == -1 && e.oldrow != e.row)) {
+        		console.log('fnGrid_RowCellChanged 2');
+                if (this.dxGrid.rowcount == 0 || this.dxGrid.currentrow < 0) return false;
+        		console.log('fnGrid_RowCellChanged 3');
+                if (this.dsList.getColumn(e.row, this.ucFlag) != "I") {
+        			console.log('fnGrid_RowCellChanged 4');
+                    // 싱글폼 조회
+                    this.fnSelect2();
+                }
+
+        		console.log('fnGrid_RowCellChanged 5');
+                obj.oldrow = -1;
+            }
+        };
+
+        this.dsDetail_oncolumnchanged = function(obj, e) {
+            if (this.gfnGetFormStatus(this) != "I") {
+                this.gfnSetFormStatus(this, "U");
+            }
+        };
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        /*
+         *	조회 조건 변경시 초기화
+         */
+        this.fnSearchInit = function(obj, e) {
+            if (e.pretext != e.posttext) {
+                this.gfnSetFormStatus(this); // 폼상태 초기화
+                this.gfnGridClear(this.dxGrid);
+
+                this.dsDetail.clearData();
+
+                this.cfCD_CORP.set_enable(false);
+                this.cfCD_BANK.set_enable(false);
+                this.cfCD_ADDR.set_enable(false);
+
+                this.divData.form.divDataRight.form.imgSTAMP_IMG.set_image(null);
+                this.divData.form.divDataRight.form.imgSTAMP_IMG2.set_image(null);
+                this.divData.form.divDataRight.form.imgSTAMP_IMG3.set_image(null);
+
+                this.divData.form.divDataRight.form.imgLOGO1_IMG.set_image(null);
+                this.divData.form.divDataRight.form.imgLOGO2_IMG.set_image(null);
+                this.divData.form.divDataRight.form.imgLOGO3_IMG.set_image(null);
+
+                this.fnSet_button(false);
+            }
+        };
+
+        this.fnSet_button = function(val) {
+
+            if (val == true) {
+                this.divData.form.divDataRight.form.btnSTAMP_IMG.set_enable(true);
+                this.divData.form.divDataRight.form.btnSTAMP_IMG2.set_enable(true);
+                this.divData.form.divDataRight.form.btnSTAMP_IMG3.set_enable(true);
+
+                this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG.set_enable(true);
+                this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG2.set_enable(true);
+                this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG3.set_enable(true);
+
+                this.divData.form.divDataRight.form.btnLOGO1_IMG.set_enable(true);
+                this.divData.form.divDataRight.form.btnLOGO2_IMG.set_enable(true);
+                this.divData.form.divDataRight.form.btnLOGO3_IMG.set_enable(true);
+
+                this.divData.form.divDataRight.form.btnLOGO1_DEL_IMG.set_enable(true);
+                this.divData.form.divDataRight.form.btnLOGO2_DEL_IMG.set_enable(true);
+                this.divData.form.divDataRight.form.btnLOGO3_DEL_IMG.set_enable(true);
+
+            } else {
+                this.divData.form.divDataRight.form.btnSTAMP_IMG.set_enable(false);
+                this.divData.form.divDataRight.form.btnSTAMP_IMG2.set_enable(false);
+                this.divData.form.divDataRight.form.btnSTAMP_IMG3.set_enable(false);
+
+                this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG.set_enable(false);
+                this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG2.set_enable(false);
+                this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG3.set_enable(false);
+
+                this.divData.form.divDataRight.form.btnLOGO1_IMG.set_enable(false);
+                this.divData.form.divDataRight.form.btnLOGO2_IMG.set_enable(false);
+                this.divData.form.divDataRight.form.btnLOGO3_IMG.set_enable(false);
+
+                this.divData.form.divDataRight.form.btnLOGO1_DEL_IMG.set_enable(false);
+                this.divData.form.divDataRight.form.btnLOGO2_DEL_IMG.set_enable(false);
+                this.divData.form.divDataRight.form.btnLOGO3_DEL_IMG.set_enable(false);
+            }
+        }
+
+        this.fnDataValidate = function() {
+            var msg = "은(는) 필수입력 입니다.";
+
+            var flag = this.gfnGetFormStatus(this);
+
+            if (flag == "I" || flag == "U") {
+                var cd_corp = this.divData.form.divDataRight.form.cfCD_CORP.form.CDTextBox.value;
+                var no_business = this.divData.form.divDataRight.form.edtNO_BUSINESS.value;
+                var no_corp = this.divData.form.divDataRight.form.edtNO_CORP.value;
+                var no_tel = this.divData.form.divDataRight.form.edtNO_TEL.value;
+                var ds_chiefname = this.divData.form.divDataRight.form.edtDS_CHIEFNAME.value;
+                var ds_addr = this.divData.form.divDataRight.form.cfCD_ADDR.form.CDTextBox.value;
+
+                if (this.gfnIsNull(this.gfnTrim(cd_corp))) {
+                    this.gfnAlert("법인코드" + msg);
+                    this.divData.form.divDataRight.form.cfCD_CORP.form.CDTextBox.setFocus();
+                    return false;
+                }
+
+                if (this.gfnIsNull(this.gfnTrim(no_business))) {
+                    this.gfnAlert("사업자번호" + msg);
+                    this.divData.form.divDataRight.form.edtNO_BUSINESS.setFocus();
+                    return false;
+                }
+
+
+                if (this.gfnIsNull(this.gfnTrim(no_corp))) {
+                    this.gfnAlert("법인번호" + msg);
+                    this.divData.form.divDataRight.form.edtNO_CORP.setFocus();
+                    return false;
+                }
+
+                if (this.gfnIsNull(this.gfnTrim(ds_chiefname))) {
+                    this.gfnAlert("대표자" + msg);
+                    this.divData.form.divDataRight.form.edtDS_CHIEFNAME.setFocus();
+                    return false;
+                }
+
+                if (this.gfnIsNull(this.gfnTrim(ds_addr))) {
+                    this.gfnAlert("주소" + msg);
+                    this.divData.form.divDataRight.form.cfCD_ADDR.form.CDTextBox.setFocus();
+                    return false;
+                }
+
+            }
+
+            return true;
+        }
+
+        /**********************************************************************************************/
+        /*** 이미지 삭제 ***/
+
+        // 인감1
+        this.divData_divDataRight_btnSTAMP_DEL_IMG_onclick = function(obj, e) {
+            this.gfnConfirm("인감1 사진을 삭제하시겠습니까??", "fnbtnSTAMP_callback");
+        };
+        this.fnbtnSTAMP_callback = function(strId, val) {
+            if (val == true) {
+                this.saveImage("D", 1);
+            }
+        }
+
+        // 인감2
+        this.divData_divDataRight_btnSTAMP_DEL_IMG2_onclick = function(obj, e) {
+            this.gfnConfirm("인감2 사진을 삭제하시겠습니까??", "fnbtnSTAMP2_callback");
+        };
+        this.fnbtnSTAMP2_callback = function(strId, val) {
+            if (val == true) {
+                this.saveImage("D", 2);
+            }
+        }
+
+
+        // 인감3
+        this.divData_divDataRight_btnSTAMP_DEL_IMG3_onclick = function(obj, e) {
+            this.gfnConfirm("인감3 사진을 삭제하시겠습니까??", "fnbtnSTAMP3_callback");
+        };
+        this.fnbtnSTAMP3_callback = function(strId, val) {
+            if (val == true) {
+                this.saveImage("D", 3);
+            }
+        }
+
+
+        // 회사로고1
+        this.divData_divDataRight_btnLOGO_DEL_IMG_onclick = function(obj, e) {
+            this.gfnConfirm("회사로고1 사진을 삭제하시겠습니까??", "fnbtnLOGO_callback");
+        };
+        this.fnbtnLOGO_callback = function(strId, val) {
+            if (val == true) {
+                this.saveImage("D", 4);
+            }
+        }
+
+        // 회사로고2
+        this.divData_divDataRight_btnLOGO2_DEL_IMG_onclick = function(obj, e) {
+            this.gfnConfirm("회사로고2 사진을 삭제하시겠습니까??", "fnbtnLOGO2_callback");
+        };
+        this.fnbtnLOGO2_callback = function(strId, val) {
+            if (val == true) {
+                this.saveImage("D", 5);
+            }
+        }
+
+        // 회사로고3
+        this.divData_divDataRight_btnLOGO3_DEL_IMG_onclick = function(obj, e) {
+            this.gfnConfirm("회사로고3 사진을 삭제하시겠습니까??", "fnbtnLOGO3_callback");
+        };
+        this.fnbtnLOGO3_callback = function(strId, val) {
+            if (val == true) {
+                this.saveImage("D", 6);
+            }
+        }
+
+        this.deletefile = function(ty_gubun) {
+            this.dsDeleteFile.clearData();
+            this.dsDeleteFile.addRow();
+
+            var key = this.dsDetail.getColumn(0, "CD_CORP");
+
+            var fileColName;
+
+            if (ty_gubun == 1) {
+                fileColName = "STAMP_IMG";
+            } else if (ty_gubun == 2) {
+                fileColName = "STAMP_IMG2";
+            } else if (ty_gubun == 3) {
+                fileColName = "STAMP_IMG3";
+            } else if (ty_gubun == 4) {
+                fileColName = "LOGO1_IMG";
+            } else if (ty_gubun == 5) {
+                fileColName = "LOGO2_IMG";
+            } else if (ty_gubun == 6) {
+                fileColName = "LOGO3_IMG";
+            }
+
+            this.dsDeleteFile.setColumn(0, "filepath", this.filepath + key);
+            this.dsDeleteFile.setColumn(0, "filename", this.dsDetail.getColumn(0, fileColName));
+
+
+            // 서버 파일 삭제
+            if (this.dsDeleteFile.rowcount > 0) {
+        		this._fileColName = fileColName;
+                var strSvcId 	= "deletefile";
+                var strSvcType 	= "file/deleteFile";
+                var inProc 		= "";
+                var inData 		= "input=dsDeleteFile";
+                var outData 	= "";
+                var strArg 		= "";
+                var callBackFnc = "fnCallback";
+
+        		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        							strSvcType , 	// transaction을 요청할 구분
+        							inProc,			// Procedure 정보 Dataset 이름
+        							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        							strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        							callBackFnc); 	// 통신방법 정의 [생략가능]
+
+            }
+        }
+
+        this.saveImage = function(ty_save, ty_gubun, ds_image) {
+        	// 물리적 파일 삭제
+        	if(ty_save == "D") {
+        		this.deletefile(ty_gubun);
+        	}
+
+            this.dsImage.clearData();
+            var nrow = this.dsImage.addRow();
+
+            this.dsImage.setColumn(nrow, "TY_SAVE", ty_save);
+            this.dsImage.setColumn(nrow, "CD_CORP", this.dsDetail.getColumn(0, "CD_CORP"));
+            this.dsImage.setColumn(nrow, "TY_GUBUN", ty_gubun);
+            this.dsImage.setColumn(nrow, "DS_IMAGE", ds_image);
+            this.dsImage.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+
+            var strSvcId 	= "image";
+            var strSvcType 	= "save";
+            var inProc 		= "_dsProc";
+            var inData 		= "image=dsImage";
+            var outData 	= "dsImage=image";
+            var strArg 		= "";
+            var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /******************************************************************************************/
+
+
+        this.fnFile = function(obj, e) {
+
+            var sPopupCallBack = "fnFileCallback";
+            var options = {
+                title: "파일업로드",
+                resizable: true
+            }
+            this.gfnOpenPopup("filelist", "cmm::cmmFileManager.xfdl", null, sPopupCallBack, options);
+        };
+
+        this.fnFileCallback = function() {};
+
+        // 파일저장
+        this.fdg00_onclose = function(obj, e) {
+            this.addFileList(obj, e.virtualfiles);
+        }
+
+        this.addFileList = function(obj, filelist) {
+            this.FileList = filelist;
+            if (filelist.length > 0) {
+                var vFile;
+                for (var i = 0; i < filelist.length; i++) {
+                    vFile = filelist[i];
+                    vFile.fileColName = obj.fileColName;
+                    var extFile = vFile.filename.substring(vFile.filename.lastIndexOf('.') + 1);
+                    if (!this.gfnIsExistInArray(this.fileConfig.allowTypes, extFile)) {
+                        this.gfnAlert("이미지 파일(" + this.fileConfig.allowTypes.join(',') + ")을 선택하세요.");
+                        return;
+                    }
+
+                    vFile.addEventHandler("onsuccess", this.FileList_onsuccess, this);
+                    vFile.addEventHandler("onerror", this.FileList_onerror, this);
+
+                    vFile.open(null, 1);
+                }
+            }
+        }
+
+        this.FileList_onsuccess = function(obj, e) {
+            switch (e.reason) {
+                case 1:
+                    obj.getFileSize();
+                    break;
+                case 9:
+                    // 하나씩 올리는 화면이므로 바로 업로드 처리
+                    this.FileUpTransfer00.clearFileList();
+                    this.FileUpTransfer00.addFile(obj.filename, obj);
+                    if (this.FileUpTransfer00.filelist.length > 0) {
+                        this._waitCursor(true);
+                        var sUploadUrl = this.fileConfig.host + this.fileConfig.uploadUrl;
+
+                        var fileColName = obj.fileColName;
+                        var filename = this.FileUpTransfer00.filelist[0].filename;
+                        var fileext = filename.substring(filename.lastIndexOf('.'));
+
+                        var key = this.dsDetail.getColumn(0, "CD_CORP");
+
+        				this.FileUpTransfer00.setPostData("colname", fileColName);
+
+        				trace("filepath:" + this.filepath);
+        				trace("key:" + this.key);
+        				trace("fileColName:" + this.fileColName);
+
+
+
+                        this.FileUpTransfer00.setPostData("path", this.filepath + key + "|" + fileColName);
+                        this.FileUpTransfer00.upload(sUploadUrl);
+
+        				this.dsDetail.set_enableevent(false);
+                        this.dsDetail.setColumn(0, fileColName, fileColName + fileext);
+        				this.dsDetail.set_enableevent(true);
+
+                    }
+                    break;
+            }
+        }
+
+        this.FileList_onerror = function(obj, e) {
+            trace("errortype: " + e.errortype);
+            trace("errormsg: " + e.errormsg);
+            trace("statuscode: " + e.statuscode);
+        }
+
+        this.FileUpTransfer00_onprogress = function(obj, e) {
+            trace("FileUpTransfer00_onprogress: " + e.loaded + "/" + e.total);
+        };
+
+        this.FileUpTransfer00_onsuccess = function(obj, e) {
+            this._waitCursor(false);
+            trace("FileUpTransfer00_onsuccess: " + e.code + "/" + e.message);
+        	if(obj.getPostData("colname") != null) {
+        		var fileColName = obj.getPostData("colname");
+        		this.fnImageView(fileColName);
+        		this.fnUpdateFile(fileColName);
+        	}
+        };
+
+        this.FileUpTransfer00_onerror = function(obj, e) {
+            this._waitCursor(false);
+            if (e.errormsg.indexOf("maxsize") > -1) {
+                this.gfnAlert("첨부파일 허용용량(" + this.gfnCutFileSize(nexacro.toNumber(e.errormsg.split(':')[1])) + ")을 초과할 수 없습니다.");
+            } else {
+                this.gfnAlert(e.errormsg);
+            }
+        };
+
+        //인감
+        this.divData_divDataRight_btnSTAMP_IMG_onclick = function(obj, e) {
+            this.fdg00.fileColName = "STAMP_IMG";
+            this.fdg00.open('FileOpen', FileDialog.LOAD);
+        };
+
+        //인감2
+        this.divData_divDataRight_btnSTAMP_IMG1_onclick = function(obj, e) {
+            this.fdg00.fileColName = "STAMP_IMG2";
+            this.fdg00.open('FileOpen', FileDialog.LOAD);
+        };
+
+        //인감3
+        this.divData_divDataRight_btnSTAMP_IMG2_onclick = function(obj, e) {
+            this.fdg00.fileColName = "STAMP_IMG3";
+            this.fdg00.open('FileOpen', FileDialog.LOAD);
+        };
+
+        //로고1
+        this.divData_divDataRight_btnLOGO1_IMG_onclick = function(obj, e) {
+            this.fdg00.fileColName = "LOGO1_IMG";
+            this.fdg00.open('FileOpen', FileDialog.LOAD);
+        };
+
+        //로고2
+        this.divData_divDataRight_btnLOGO2_IMG_onclick = function(obj, e) {
+            this.fdg00.fileColName = "LOGO2_IMG";
+            this.fdg00.open('FileOpen', FileDialog.LOAD);
+        };
+
+        //로고3
+        this.divData_divDataRight_btnLOGO3_IMG_onclick = function(obj, e) {
+            this.fdg00.fileColName = "LOGO3_IMG";
+            this.fdg00.open('FileOpen', FileDialog.LOAD);
+        };
+
+        this.fnImageView = function(fileColName) {
+            if (this.gfnIsNull(this.dsDetail.getColumn(0, fileColName))) {
+                return false;
+            }
+
+            this.dsImageFile.clearData();
+            this.dsImageFile.addRow();
+            var key = this.dsDetail.getColumn(0, "CD_CORP");
+            this.dsImageFile.setColumn(0, "filepath", this.filepath + key);
+            this.dsImageFile.setColumn(0, "filename", this.dsDetail.getColumn(0, fileColName));
+
+            // 서버 이미지파일 base64 로 받아오기
+            var strSvcId = fileColName;
+            var strSvcType = "file/imageFile";
+            var inProc = "";
+            var inData = "input=dsImageFile";
+            var outData = "dsImageFile=input";
+            var strArg = "";
+            var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId, // transaction을 구분하기 위한 svc id값
+                strSvcType, // transaction을 요청할 구분
+                inProc, // Procedure 정보 Dataset 이름
+                inData, // 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+                outData, // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+                strArg, // 입력갑스로 보낼 arguments, strFormData="20120607"
+                callBackFnc,
+                false); // 통신방법 정의 [생략가능]
+        };
+
+        this.fnUpdateFile = function(fileColName) {
+            var ty_gubun = 0;
+            switch (fileColName) {
+                case "STAMP_IMG":
+                    ty_gubun = 1;
+                    break;
+                case "STAMP_IMG2":
+                    ty_gubun = 2;
+                    break;
+                case "STAMP_IMG3":
+                    ty_gubun = 3;
+                    break;
+                case "LOGO1_IMG":
+                    ty_gubun = 4;
+                    break;
+                case "LOGO2_IMG":
+                    ty_gubun = 5;
+                    break;
+                case "LOGO3_IMG":
+                    ty_gubun = 6;
+                    break;
+            }
+            this.saveImage("U", ty_gubun, this.dsDetail.getColumn(0, fileColName));
+        }
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divSearch.form.cboYN_DELETE_COND.addEventHandler("onitemchanged",this.fnSearchInit,this);
+            this.divData.form.divDataRight.form.staCD_CORP.addEventHandler("onclick",this.divData_divDataRight_staCD_CORP_onclick,this);
+            this.divData.form.divDataRight.form.staCD_CORP_bg.addEventHandler("onclick",this.divData_divDataRight_staCD_CORP_bg_onclick,this);
+            this.divData.form.divDataRight.form.staNO_BUSINESS_bg.addEventHandler("onclick",this.divData_divDataRight_staNO_BUSINESS_bg_onclick,this);
+            this.divData.form.divDataRight.form.staNO_CHIEFID_bg.addEventHandler("onclick",this.divData_divDataRight_staNO_CHIEFID_bg_onclick,this);
+            this.divData.form.divDataRight.form.cboYN_DELETE.addEventHandler("onitemchanged",this.divData_divDataRight_cboYN_DELETE_onitemchanged,this);
+            this.divData.form.divDataRight.form.btnSTAMP_IMG.addEventHandler("onclick",this.divData_divDataRight_btnSTAMP_IMG_onclick,this);
+            this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG.addEventHandler("onclick",this.divData_divDataRight_btnSTAMP_DEL_IMG_onclick,this);
+            this.divData.form.divDataRight.form.btnSTAMP_IMG2.addEventHandler("onclick",this.divData_divDataRight_btnSTAMP_IMG1_onclick,this);
+            this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG2.addEventHandler("onclick",this.divData_divDataRight_btnSTAMP_DEL_IMG2_onclick,this);
+            this.divData.form.divDataRight.form.btnSTAMP_IMG3.addEventHandler("onclick",this.divData_divDataRight_btnSTAMP_IMG2_onclick,this);
+            this.divData.form.divDataRight.form.btnLOGO1_IMG.addEventHandler("onclick",this.divData_divDataRight_btnLOGO1_IMG_onclick,this);
+            this.divData.form.divDataRight.form.btnLOGO1_DEL_IMG.addEventHandler("onclick",this.divData_divDataRight_btnLOGO_DEL_IMG_onclick,this);
+            this.divData.form.divDataRight.form.btnLOGO2_IMG.addEventHandler("onclick",this.divData_divDataRight_btnLOGO2_IMG_onclick,this);
+            this.divData.form.divDataRight.form.btnLOGO2_DEL_IMG.addEventHandler("onclick",this.divData_divDataRight_btnLOGO2_DEL_IMG_onclick,this);
+            this.divData.form.divDataRight.form.btnLOGO3_IMG.addEventHandler("onclick",this.divData_divDataRight_btnLOGO3_IMG_onclick,this);
+            this.divData.form.divDataRight.form.btnSTAMP_DEL_IMG3.addEventHandler("onclick",this.divData_divDataRight_btnSTAMP_DEL_IMG3_onclick,this);
+            this.divData.form.divDataRight.form.btnLOGO3_DEL_IMG.addEventHandler("onclick",this.divData_divDataRight_btnLOGO3_DEL_IMG_onclick,this);
+            this.dsDetail.addEventHandler("oncolumnchanged",this.dsDetail_oncolumnchanged,this);
+            this.fdg00.addEventHandler("onclose",this.fdg00_onclose,this);
+            this.FileUpTransfer00.addEventHandler("onprogress",this.FileUpTransfer00_onprogress,this);
+            this.FileUpTransfer00.addEventHandler("onsuccess",this.FileUpTransfer00_onsuccess,this);
+            this.FileUpTransfer00.addEventHandler("onerror",this.FileUpTransfer00_onerror,this);
+        };
+        this.loadIncludeScript("DAZ_CORP.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

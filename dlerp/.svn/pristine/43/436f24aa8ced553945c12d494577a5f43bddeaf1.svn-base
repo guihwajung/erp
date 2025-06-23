@@ -1,0 +1,1156 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("cmmFileSabunManager");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(690,270);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("<ColumnInfo><Column id=\"nx_flag\" type=\"STRING\" size=\"256\"/><Column id=\"CHK\" type=\"INT\" size=\"256\"/><Column id=\"NO_SEQ\" type=\"INT\" size=\"256\"/><Column id=\"DS_PATH\" type=\"STRING\" size=\"256\"/><Column id=\"DS_FILEIMG\" type=\"STRING\" size=\"256\"/><Column id=\"NM_FILE\" type=\"STRING\" size=\"256\"/><Column id=\"SZ_FILE\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"DS_ETC\" type=\"STRING\" size=\"256\"/><Column id=\"YN_UPLOAD\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">info</Col><Col id=\"SP\">DZUPR_FILEMANAGER_SELECT</Col></Row><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DZZPR_FILEMANAGERALL_SELECT</Col></Row><Row><Col id=\"TARGET\">save</Col><Col id=\"SP\">DZZPR_FILEMANAGER_SAVE</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsInfo", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsInfoParam", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_GUBUN\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsParam", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_GUBUN\" type=\"STRING\" size=\"256\"/><Column id=\"CD_REF1\" type=\"STRING\" size=\"256\"/><Column id=\"CD_REF2\" type=\"STRING\" size=\"256\"/><Column id=\"CD_REF3\" type=\"STRING\" size=\"256\"/><Column id=\"CD_REF4\" type=\"STRING\" size=\"256\"/><Column id=\"CD_REF5\" type=\"STRING\" size=\"256\"/><Column id=\"YN_DESC\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSave", this);
+            obj._setContents("<ColumnInfo><Column id=\"TY_SAVE\" type=\"STRING\" size=\"256\"/><Column id=\"NO_SEQ\" type=\"INT\" size=\"256\"/><Column id=\"CD_GUBUN\" type=\"STRING\" size=\"256\"/><Column id=\"DS_PATH\" type=\"STRING\" size=\"256\"/><Column id=\"NM_FILE\" type=\"STRING\" size=\"256\"/><Column id=\"SZ_FILE\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"DS_ETC\" type=\"STRING\" size=\"256\"/><Column id=\"CD_REF1\" type=\"STRING\" size=\"256\"/><Column id=\"CD_REF2\" type=\"STRING\" size=\"256\"/><Column id=\"CD_REF3\" type=\"STRING\" size=\"256\"/><Column id=\"CD_REF4\" type=\"STRING\" size=\"256\"/><Column id=\"CD_REF5\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSaveList", this);
+            obj._setContents("<ColumnInfo><Column id=\"NO_SEQ\" type=\"INT\" size=\"256\"/><Column id=\"DS_PATH\" type=\"STRING\" size=\"256\"/><Column id=\"DS_FILEIMG\" type=\"STRING\" size=\"256\"/><Column id=\"NM_FILE\" type=\"STRING\" size=\"256\"/><Column id=\"SZ_FILE\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"DS_ETC\" type=\"STRING\" size=\"256\"/><Column id=\"CD_REF\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsDupeList", this);
+            obj._setContents("<ColumnInfo><Column id=\"NO_SEQ\" type=\"INT\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsDeleteList", this);
+            obj._setContents("<ColumnInfo><Column id=\"filepath\" type=\"STRING\" size=\"256\"/><Column id=\"filename\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsImageFile", this);
+            obj._setContents("<ColumnInfo><Column id=\"filepath\" type=\"STRING\" size=\"256\"/><Column id=\"filename\" type=\"STRING\" size=\"256\"/><Column id=\"filereturn\" type=\"STRING\" size=\"1000000\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsPreviewList", this);
+            obj._setContents("<ColumnInfo><Column id=\"filepath\" type=\"STRING\" size=\"512\"/><Column id=\"filename\" type=\"STRING\" size=\"512\"/><Column id=\"copypath\" type=\"STRING\" size=\"512\"/><Column id=\"copyname\" type=\"STRING\" size=\"512\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new FileDialog("fdg00", this);
+            this.addChild(obj.name, obj);
+
+
+            obj = new FileUpTransfer("FileUpTransfer00", this);
+            this.addChild(obj.name, obj);
+
+
+            obj = new FileDownTransfer("FileDownTransfer00", this);
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Static("staMessage","20","5",null,"13","20",null,null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_visible("false");
+            obj.set_usedecorate("true");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("grd00","20","staMessage:2",null,null,"20","65",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_binddataset("dsList");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"20\"/><Column size=\"25\"/><Column size=\"0\"/><Column size=\"29\"/><Column size=\"220\"/><Column size=\"350\"/><Column size=\"0\"/><Column size=\"0\"/><Column size=\"0\"/></Columns><Rows><Row size=\"32\" band=\"head\"/><Row size=\"29\"/></Rows><Band id=\"head\"><Cell/><Cell col=\"1\" displaytype=\"checkboxcontrol\" edittype=\"none\"/><Cell col=\"2\" text=\"NO_SEQ\"/><Cell col=\"3\" text=\"\"/><Cell col=\"4\" text=\"파일경로\"/><Cell col=\"5\" text=\"파일명\"/><Cell col=\"6\" text=\"크기(KB)\" displaytype=\"normal\"/><Cell col=\"7\" text=\"비고\"/><Cell col=\"8\" text=\"YN_UPLOAD\"/></Band><Band id=\"body\"><Cell text=\"bind:nx_flag\" cssclass=\"expr:nx_flag=='U'?'update':''\"/><Cell col=\"1\" text=\"bind:CHK\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"2\" text=\"bind:NO_SEQ\"/><Cell col=\"3\" displaytype=\"imagecontrol\" text=\"expr:comp.parent.getFileIcon(dataset.getColumn(rowidx,'DS_FILEIMG'))\"/><Cell col=\"4\" text=\"bind:DS_PATH\" cssclass=\"expr:nx_flag=='U'?'update':YN_UPLOAD=='Y'?'Green':''\"/><Cell col=\"5\" text=\"bind:NM_FILE\" cssclass=\"expr:nx_flag=='U'?'update':YN_UPLOAD=='Y'?'Green':''\"/><Cell col=\"6\" text=\"bind:SZ_FILE\" textAlign=\"right\" displaytype=\"number\" cssclass=\"expr:nx_flag=='U'?'update':YN_UPLOAD=='Y'?'Green':''\"/><Cell col=\"7\" text=\"bind:DS_ETC\" edittype=\"text\" cssclass=\"expr:nx_flag=='U'?'update':YN_UPLOAD=='Y'?'Green':''\"/><Cell col=\"8\" text=\"bind:YN_UPLOAD\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnUpload","20","grd00:20","52","26",null,null,null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.getSetter("multiselect").set("true");
+            obj.set_text("업로드");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnDelete","btnUpload:4","grd00:20","52","26",null,null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("삭제");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnEtcSave","btnDelete:4","grd00:20","52","26",null,null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_text("저장");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnDownload",null,"grd00:20","70","26","20",null,null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_text("다운로드");
+            this.addChild(obj.name, obj);
+
+            obj = new ProgressBar("progressBar","100","130",null,"20","100",null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_visible("false");
+            obj.set_min("0");
+            obj.set_max("100");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnDownloadAll",null,"grd00:20","70","25","btnDownload:5",null,null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_text("전체다운");
+            this.addChild(obj.name, obj);
+
+            obj = new ImageViewer("imgViewer","grd00:10","10","300",null,null,"10",null,null,null,null,this);
+            obj.set_taborder("7");
+            obj.set_stretch("fixaspectratio");
+            obj.set_border("1px solid #d2cfcd");
+            obj.set_image("url(\'imagerc::nopreview.jpg\')");
+            obj.set_cursor("pointer");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnPreview",null,"grd00:20","70","25","btnDownloadAll:5",null,null,null,null,null,this);
+            obj.set_taborder("8");
+            obj.set_text("웹뷰어");
+            obj.set_enable("false");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("cmmFileSabunManager.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        // 비고 사용 여부
+        this.UseEtc = false;
+
+        // 변경여부
+        this.IsChange = false;
+
+
+        //아이콘별 확장자 목록.
+        this.iconInfo = {
+        		file_icon_ZIP: ["zip","rar","7z"],
+        		file_icon_IMG: ["jpg", "jpeg", "gif", "png", "bmp"],
+        		file_icon_TXT: ["txt", "xml"],
+        		file_icon_DOC: ["doc", "docx"],
+        		file_icon_XLS: ["xls", "xlsx"],
+        		file_icon_PPT: ["ppt", "pptx"],
+        		file_icon_PDF: ["pdf"],
+        		file_icon_HWP: ["hwp", "hwpx"],
+        		file_icon_ETC: ["etc"] //위 확장자 목록에 일치하지 않을 경우. default icon
+        };
+
+        this.img_filters = [ "png", "jpg", "jpeg", "gif", "bmp", "tif", "tiff" ];
+        this.doc_filters = [ "xls", "xlsx", "doc", "docx", "ppt", "pptx", "hwp", "hwpx", "pdf", "txt", "rtf" ];
+
+        //확장자별 아이콘 정보
+        this.extToIcon = {};
+        this.fileConfig = {};
+        this.FileManager = {};
+        this.fnGetServerHost = function() {
+        	var url = this.gfnGetServerUrl();
+        	// 개발의뢰는 로컬에서 다운가능하도록 개발서버를 바라보게 변경. (단, 업로드는 안됨)
+        	if(this.FileManager.CD_GUBUN == "DZ30" && url.indexOf("localhost") > -1) {
+        		//url = "http://dev.mango.com";
+        	}
+        	return url;
+        };
+
+        this.cmmFileManager_onload = function(obj,e) {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	//this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	var fileManager = {};
+        	if (this.QuickViewParam != null && this.QuickViewParam.CD_GUBUN != null) {
+        		fileManager["CD_GUBUN"] = this.QuickViewParam.CD_GUBUN;
+        		fileManager["CD_REF1"] = this.QuickViewParam.CD_REF1;
+        		fileManager["CD_REF2"] = this.QuickViewParam.CD_REF2;
+        		fileManager["CD_REF3"] = this.QuickViewParam.CD_REF3;
+        		fileManager["CD_REF4"] = this.QuickViewParam.CD_REF4;
+        		fileManager["CD_REF5"] = this.QuickViewParam.CD_REF5;
+        		fileManager["DS_MDIR"] = this.QuickViewParam.DS_MDIR;
+
+         		fileManager["CD_REF"] = new Array();
+        		if (fileManager["CD_REF1"] != "") fileManager["CD_REF"].push(fileManager["CD_REF1"]);
+        		if (fileManager["CD_REF2"] != "") fileManager["CD_REF"].push(fileManager["CD_REF2"]);
+        		if (fileManager["CD_REF3"] != "") fileManager["CD_REF"].push(fileManager["CD_REF3"]);
+        		if (fileManager["CD_REF4"] != "") fileManager["CD_REF"].push(fileManager["CD_REF4"]);
+        		if (fileManager["CD_REF5"] != "") fileManager["CD_REF"].push(fileManager["CD_REF5"]);
+
+        	} else {
+        		fileManager = this.getOwnerFrame().FileManager;
+        	}
+
+        	this.setFileManager(fileManager);
+
+
+        	this.grd00.addEventHandler("onheadclick", this.gfnGrid_onheadclick, this);
+
+        	// 첨부파일 공지가 있는경우
+        	if(!this.gfnIsNull(this.FileManager.TXT_MESSAGE)){
+        		this.fnMsgSetting();
+        	}
+        	this.resetScroll();
+        	var top = (this.objApp.mainframe.height - this.height)/2;
+        	var left = (this.objApp.mainframe.width - this.width)/2;
+        	this.getOwnerFrame().set_top(top);
+        	this.getOwnerFrame().set_left(left);
+        };
+
+        this.fnMsgSetting = function() {
+        	var line = 1;
+        	var tmpContent = this.FileManager.TXT_MESSAGE;
+        	while(tmpContent.indexOf('\n') > -1) {
+        		tmpContent = tmpContent.substring(tmpContent.indexOf('\n') + 1);
+        		line++;
+        	}
+
+        	this.staMessage.set_visible(true);
+
+        	var fheight   = this.getOwnerFrame().height;	//폼의 높이
+        	var lblheight = 20;	//1라인당 20px 적용
+
+        	//기본 사이즈 2줄 적용
+        	this.staMessage.set_height(lblheight*2);
+        	this.getOwnerFrame().set_height(fheight+(lblheight*2));
+
+        	//2줄 이상일 경우 사이즈 조정
+        	if(line > 2) {
+        		var h = this.getOwnerFrame().height;
+        		h += line * 20;
+
+        		this.staMessage.set_height(line * lblheight);
+        		this.getOwnerFrame().set_height(h);
+        	}
+
+        	this.staMessage.set_text(tmpContent);
+         };
+
+        this.setFileManager = function(fm) {
+        	if (new String(fm).valueOf() != "undefined") {
+        		this.FileManager = fm;
+        		this.fileConfig = this.gfnGetFileConfig();
+        		this.initExtToIcon();
+        		this.fnInfo();
+        	}
+        }
+
+        /**
+         * @description 확장자별 파일 아이콘 설정
+        */
+        this.initExtToIcon = function () {
+        	var extToIcon = this.extToIcon;
+        	var iconInfo = this.iconInfo;
+
+        	for (var name in iconInfo) {
+        		var len = iconInfo[name].length;
+        		for (var i=0; i<len; i++)
+        		{
+        			extToIcon[iconInfo[name][i]] = name;
+        		}
+        	}
+        };
+
+        /**
+         * @description 파일 확장자에 해당하는 이미지경로 반환.
+         * @param {string} fileName file name
+         * @return {string} image full path
+        */
+        this.getFileIcon = function(fileName) {
+        	if(this.gfnIsNull(fileName)) return;
+
+        	fileName = fileName.toLowerCase();
+        	var ext = (/[.]/.exec(fileName)) ? /[^.]+$/.exec(fileName) : undefined;
+        	var icon = this.extToIcon[ext];
+
+        	if(icon == undefined) ext = "etc";
+
+        	return "theme://" + this.extToIcon[ext] + ".gif";
+        };
+
+        this.fnInfo = function() {
+        	this.dsInfoParam.clearData();
+        	this.dsInfoParam.addRow();
+
+        	this.dsInfoParam.setColumn(0, "CD_GUBUN", this.FileManager.CD_GUBUN);
+
+        	var strSvcId    = "info";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "info=dsInfoParam";
+        	var outData     = "dsInfo=info0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId, 		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); 	// 통신방법 정의 [생략가능]
+        }
+
+        this.fnCallback = function(svcID, errorCode, errorMsg) {
+        	if (svcID == "info") {
+        		if (this.dsInfo.rowcount == 0) {
+        			this.gfnAlert("[" + this.FileManager.CD_GUBUN + "] 설정값이 없습니다.");
+        			return;
+        		}
+
+        		if (this.FileManager.IS_READONLY == false) {
+        			this.btnUpload.set_visible(true);
+        			this.btnDelete.set_visible(true);
+        			if (this.FileManager.IS_DELETE == false) {
+        				this.btnDelete.set_visible(false);
+        			}
+        			if (this.UseEtc == true) {
+        				this.btnEtcSave.set_visible(true);
+        			}
+        		}
+
+        		this.btnDownload.set_visible(this.FileManager.IS_DOWNLOAD==undefined?true:this.FileManager.IS_DOWNLOAD);
+        		if (system.navigatorname == "IE") {
+        			this.btnDownloadAll.set_visible(false);
+        		} else {
+        			this.btnDownloadAll.set_visible(this.FileManager.IS_DOWNLOAD==undefined?true:this.FileManager.IS_DOWNLOAD);
+        		}
+
+        		// title = this.dsInfo.getColumn(0, "DS_SUB");
+        		this.FileManager.SERVER_PATH = this.dsInfo.getColumn(0, "DS_PATH").replace(/\//g, "\\") + "\\";
+        		if (this.FileManager.CD_DIR != null) {
+        			this.FileManager.FULL_PATH = this.FileManager.SERVER_PATH.replace(/\\\\/g, "\\") + this.FileManager.CD_DIR.join('\\') + '\\';
+        		}
+        // 		if (this.FileManager.FULL_PATH == null) {
+        // 			this.FileManager.FULL_PATH = (this.dsInfo.getColumn(0, "DS_PATH") + this.FileManager.CD_REF.join('/')).replace(/\//g, "\\") ;
+        // 		}
+
+        		var cd_ref;
+        		var cd_ref1 = "";
+        		var cd_ref2 = "";
+        		var cd_ref3 = "";
+        		var cd_ref4 = "";
+        		var cd_ref5 = "";
+        		if (!this.gfnIsNull(this.FileManager.CD_REF)) {
+        			cd_ref = this.FileManager.CD_REF;
+        		} else {
+        			cd_ref = this.FileManager.CD_DIR;
+        		}
+
+        		if (cd_ref.length > 0) {
+        			cd_ref1 = cd_ref[0];
+        		}
+        		if (cd_ref.length > 1) {
+        			cd_ref2 = cd_ref[1];
+        		}
+        		if (cd_ref.length > 2) {
+        			cd_ref3 = cd_ref[2];
+        		}
+        		if (cd_ref.length > 3) {
+        			cd_ref4 = cd_ref[3];
+        		}
+        		if (cd_ref.length > 4) {
+        			cd_ref5 = cd_ref[4];
+        		}
+        		this.FileManager.CD_REF1 = cd_ref1;
+        		this.FileManager.CD_REF2 = cd_ref2;
+        		this.FileManager.CD_REF3 = cd_ref3;
+        		this.FileManager.CD_REF4 = cd_ref4;
+        		this.FileManager.CD_REF5 = cd_ref5;
+
+
+        		this.fnSelect();
+        	}
+        	else if (svcID == "imagefile") {
+        		if (this.dsImageFile.rowcount > 0){
+        			if (this.dsImageFile.getColumn(0, "filereturn") != null) {
+        				//this.btnPreview.set_enable(true);
+        				this.imgViewer.set_cursor("pointer");
+        				this.imgViewer.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+        			}
+        		}
+        		var fileName = this.dsList.getColumn(this.dsList.rowposition, "NM_FILE");
+        		var fileExt = fileName.substring(fileName.lastIndexOf(".")).toLocaleLowerCase();
+        		if (fileExt == ".pdf") {
+        			//this.btnPreview.set_enable(true);
+        			this.imgViewer.set_cursor("pointer");
+        		}
+        	}
+        }
+
+        this.fnSelect = function() {
+        	if (this.gfnIsNull(this.FileManager.CD_REF1) && this.gfnIsNull(this.FileManager.CD_REF2) && this.gfnIsNull(this.FileManager.CD_REF3)
+        		 && this.gfnIsNull(this.FileManager.CD_REF4) && this.gfnIsNull(this.FileManager.CD_REF5)) {
+        		this.dsList.clearData();
+        		this.btnUpload.set_visible(false);
+        		this.btnDelete.set_visible(false);
+        		this.btnEtcSave.set_visible(false);
+        		return;
+        	}
+
+        	this.imgViewer.set_image("url('imagerc::nopreview.jpg')");
+        	//this.btnPreview.set_enable(false);
+
+        	this.dsParam.clearData();
+        	this.dsParam.addRow();
+
+        	this.dsParam.setColumn(0, "CD_GUBUN", this.FileManager.CD_GUBUN);
+        	this.dsParam.setColumn(0, "CD_REF1", this.FileManager.CD_REF1);
+        	this.dsParam.setColumn(0, "CD_REF2", this.FileManager.CD_REF2);
+        	this.dsParam.setColumn(0, "CD_REF3", this.FileManager.CD_REF3);
+        	this.dsParam.setColumn(0, "CD_REF4", this.FileManager.CD_REF4);
+        	this.dsParam.setColumn(0, "CD_REF5", this.FileManager.CD_REF5);
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsParam";
+        	var outData     = "dsList=select0";
+        	var strArg      = "";
+        	var callBackFnc = "fnListCallback";
+
+        	this.gfnTransaction(strSvcId, 		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); 	// 통신방법 정의 [생략가능]
+        }
+
+        this.fnListCallback = function(svcID, errorCode, errorMsg) {
+        	if (svcID == "select") {
+        		this.grd00.setCellProperty("head", 1, "text", "0");
+        	} else if(svcID == "save") {
+        		if (errorCode == 0) {
+        			this.IsChange = true;
+        			this.fnSelect();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        }
+
+        this.fnSave = function() {
+
+        	this.dsSave.clearData();
+        	for (var i = 0; i < this.dsSaveList.rowcount; i++) {
+        		var nrow = this.dsSave.addRow();
+        		this.dsSave.setColumn(nrow, "TY_SAVE", "I");
+        		this.dsSave.setColumn(nrow, "NO_SEQ", this.dsSaveList.getColumn(i, "NO_SEQ"));
+        		this.dsSave.setColumn(nrow, "CD_GUBUN", this.FileManager.CD_GUBUN);
+        		this.dsSave.setColumn(nrow, "DS_PATH", this.dsSaveList.getColumn(i, "DS_PATH"));
+        		this.dsSave.setColumn(nrow, "NM_FILE", this.dsSaveList.getColumn(i, "NM_FILE"));
+        		this.dsSave.setColumn(nrow, "SZ_FILE", this.dsSaveList.getColumn(i, "SZ_FILE"));
+        		this.dsSave.setColumn(nrow, "DS_ETC", this.dsSaveList.getColumn(i, "DS_ETC"));
+        		this.dsSave.setColumn(nrow, "CD_REF1", this.FileManager.CD_REF1 );
+        		this.dsSave.setColumn(nrow, "CD_REF2", this.FileManager.CD_REF2 );
+        		this.dsSave.setColumn(nrow, "CD_REF3", this.dsSaveList.getColumn(i, "CD_REF"));
+        		this.dsSave.setColumn(nrow, "CD_REF4", this.FileManager.CD_REF4 );
+        		this.dsSave.setColumn(nrow, "CD_REF5", this.FileManager.CD_REF5 );
+        	}
+
+        	for (var i = 0; i < this.dsDupeList.rowcount; i++) {
+        		var nrow = this.dsSave.addRow();
+        		this.dsSave.setColumn(nrow, "TY_SAVE", "D");
+        		this.dsSave.setColumn(nrow, "NO_SEQ", this.dsDupeList.getColumn(i, "NO_SEQ"));
+        	}
+
+        	if (this.dsSave.rowcount == 0) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save=dsSave";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnListCallback";
+
+        	this.gfnTransaction(strSvcId, 		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); 	// 통신방법 정의 [생략가능]
+        };
+
+        this.fnDelete = function() {
+        	this.dsSave.clearData();
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		if (this.dsList.getColumn(i, "CHK") == 1) {
+        			var nrow = this.dsSave.addRow();
+        			this.dsSave.setColumn(nrow, "TY_SAVE", "D");
+        			this.dsSave.setColumn(nrow, "NO_SEQ", this.dsList.getColumn(i, "NO_SEQ"));
+        			this.dsSave.setColumn(nrow, "CD_REF1", this.FileManager.CD_REF1);
+        			this.dsSave.setColumn(nrow, "CD_REF2", this.FileManager.CD_REF2);
+        			this.dsSave.setColumn(nrow, "CD_REF3", this.FileManager.CD_REF3);
+        			this.dsSave.setColumn(nrow, "CD_REF4", this.FileManager.CD_REF4);
+        			this.dsSave.setColumn(nrow, "CD_REF5", this.FileManager.CD_REF5);
+        		}
+        	}
+
+        	if (this.dsSave.rowcount == 0 && this.dsList.rowcount > 0) {
+        		var nrow = this.dsSave.addRow();
+        		this.dsSave.setColumn(nrow, "TY_SAVE", "D");
+        			this.dsSave.setColumn(nrow, "NO_SEQ", this.dsList.getColumn(this.dsList.rowposition, "NO_SEQ"));
+        			this.dsSave.setColumn(nrow, "CD_REF1", this.FileManager.CD_REF1);
+        			this.dsSave.setColumn(nrow, "CD_REF2", this.FileManager.CD_REF2);
+        			this.dsSave.setColumn(nrow, "CD_REF3", this.FileManager.CD_REF3);
+        			this.dsSave.setColumn(nrow, "CD_REF4", this.FileManager.CD_REF4);
+        			this.dsSave.setColumn(nrow, "CD_REF5", this.FileManager.CD_REF5);
+        	}
+
+        	if (this.dsSave.rowcount == 0) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save=dsSave";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnListCallback";
+
+        	this.gfnTransaction(strSvcId , 		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); 	// 통신방법 정의 [생략가능]
+        };
+
+        this.btnDelete_onclick = function(obj,e) {
+        	if (this.dsList.rowcount > 0) {
+        		this.gfnConfirm("삭제하시겠습니까?", "btnDeleteConfirm");
+        	}
+        };
+
+        this.btnDeleteConfirm = function(strId, val) {
+        	if (val == false) return;
+
+        	this.dsDeleteList.clearData();
+
+        	for( var i=0; i<this.dsList.rowcount;i++)
+        	{
+        		if(this.dsList.getColumn(i, "CHK") == 1) {
+        			var nrow = this.dsDeleteList.addRow();
+        			this.dsDeleteList.setColumn(nrow, "filepath", this.dsList.getColumn(i, "DS_PATH"));
+        			this.dsDeleteList.setColumn(nrow, "filename", this.dsList.getColumn(i, "NM_FILE"));
+        		}
+        	}
+
+        	if (this.dsDeleteList.rowcount == 0 && this.dsList.rowcount > 0) {
+        		var nrow = this.dsDeleteList.addRow();
+        		this.dsDeleteList.setColumn(nrow, "filepath", this.dsList.getColumn(this.dsList.rowposition, "DS_PATH"));
+        		this.dsDeleteList.setColumn(nrow, "filename", this.dsList.getColumn(this.dsList.rowposition, "NM_FILE"));
+        	}
+
+        	var strSvcId    = "deletefile";
+        	var strSvcType  = "file/deleteFile";
+        	var inProc		= "";
+        	var inData      = "input=dsDeleteList";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnDeleteCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        this.fnDeleteCallback = function(svcID, errorCode, errorMsg) {
+        	if(svcID == "deletefile") {
+        		if (errorCode == 0) {
+        			this.fnDelete();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        	else if(svcID == "delete") {
+        	}
+        }
+
+        this.btnDownload_onclick = function(obj,e)
+        {
+        	//this.fnDownload();
+        	this.fnbtnDownload();	// 선택한 내역 다운로드
+        };
+
+        this.fnbtnDownload = function() {
+        	if (this.dsList.rowcount == 0) return false;
+        	for(var i = 0; i < this.dsList.rowcount; i++) {
+        		if(this.dsList.getColumn(i, "CHK") == 1) {
+        			var sFilename = this.dsList.getColumn(i, "NM_FILE");
+        			var sFilepath = this.dsList.getColumn(i, "DS_PATH");
+        			var encodeFileName = encodeURIComponent(sFilename).replace(/[!'()*]/g, escape);
+
+        			var fileDownTransID = "FileDownTransfer_"+i;
+        			if(this[fileDownTransID] != null) {
+        				this.removeChild(fileDownTransID);
+        			}
+        			var fileDownTrans = new nexacro.FileDownTransfer(fileDownTransID, this);
+        			this.addChild(fileDownTransID, fileDownTrans);
+
+         			trace("fnbtnDownload FULL_PATH =>" + this.FileManager.FULL_PATH);
+         			trace(" sFilepath =>" + sFilepath);
+         			trace(" sFilename =>" + sFilename);
+
+        			var surl = this.fileConfig.host+ this.fileConfig.downloadUrl; // + encodeFileName;
+        			fileDownTrans.set_url(surl);
+        			fileDownTrans.setPostData("path", sFilepath);
+        			//fileDownTrans.setPostData("path", this.FileManager.FULL_PATH);
+        			fileDownTrans.setPostData("fileName", encodeFileName);
+        			if( system.navigatorname =="nexacro"){
+        				fileDownTrans.set_downloadfilename(sFilename);
+        			}
+        			fileDownTrans.download();
+        		}
+        	}
+        };
+
+        this.fnDownload = function() {
+        	if (this.dsList.rowcount == 0) return false;
+        	var sFilename = this.dsList.getColumn(this.dsList.rowposition, "NM_FILE");
+        	var sFilepath = this.dsList.getColumn(this.dsList.rowposition, "DS_PATH");
+        	var encodeFileName = encodeURIComponent(sFilename).replace(/[!'()*]/g, escape);
+
+        // 	trace("fnDownload FULL_PATH =>" + this.FileManager.FULL_PATH);
+        // 	trace(" sFilepath =>" + sFilepath);
+        // 	trace(" sFilename =>" + sFilename);
+
+        	var surl = this.fileConfig.host+ this.fileConfig.downloadUrl; // + encodeFileName;
+        	this.FileDownTransfer00.set_url(surl);
+        	this.FileDownTransfer00.setPostData("path", sFilepath);
+        	//this.FileDownTransfer00.setPostData("path", this.FileManager.FULL_PATH);
+        	this.FileDownTransfer00.setPostData("fileName", encodeFileName);
+
+        	if( system.navigatorname =="nexacro"){
+        		this.FileDownTransfer00.set_downloadfilename(sFilename);
+        	}
+        	this.FileDownTransfer00.download();
+        };
+
+        this.btnEtcSave_onclick = function(obj,e)
+        {
+        	this.dsSave.clearData();
+        	for( var i=0; i<this.dsList.rowcount;i++)
+        	{
+        		if(this.dsList.getColumn(i, this.ucFlag) == "U") {
+        			var nrow = this.dsSave.addRow();
+        			this.dsSave.setColumn(nrow, "TY_SAVE", "U");
+        			this.dsSave.setColumn(nrow, "NO_SEQ", this.dsList.getColumn(i, "NO_SEQ"));
+        			this.dsSave.setColumn(nrow, "CD_GUBUN", this.FileManager.CD_GUBUN);
+        			this.dsSave.setColumn(nrow, "DS_PATH", this.FileManager.FULL_PATH);
+        			this.dsSave.setColumn(nrow, "NM_FILE", this.dsList.getColumn(i, "NM_FILE"));
+        			this.dsSave.setColumn(nrow, "SZ_FILE", this.dsList.getColumn(i, "SZ_FILE"));
+        			this.dsSave.setColumn(nrow, "DS_ETC", this.dsList.getColumn(i, "DS_ETC"));
+        			this.dsSave.setColumn(nrow, "CD_REF1", this.FileManager.CD_REF1);
+        			this.dsSave.setColumn(nrow, "CD_REF2", this.FileManager.CD_REF2);
+        			this.dsSave.setColumn(nrow, "CD_REF3", this.FileManager.CD_REF3);
+        			this.dsSave.setColumn(nrow, "CD_REF4", this.FileManager.CD_REF4);
+        			this.dsSave.setColumn(nrow, "CD_REF5", this.FileManager.CD_REF5);
+        		}
+        	}
+
+        	if (this.dsSave.rowcount == 0) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save=dsSave";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnListCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        this.grd00_oncelldblclick = function(obj,e)
+        {
+        	if(this.gfnGridGetBindColumnNameByIndex(obj, e.cell) == "NM_FILE") {
+        		this.fnDownload();
+        	}
+        };
+
+        this.dsList_oncolumnchanged = function(obj,e)
+        {
+        	if(e.columnid == "DS_ETC") {
+        		obj.setColumn(e.row, this.ucFlag, "U");
+        	}
+        };
+
+        this.set_enable = function(enable) {
+        	this.grd00.set_enable(enable);
+
+        	this.btnDownload.set_enable(enable);
+        	this.btnDownloadAll.set_enable(enable);
+        	this.btnUpload.set_enable(enable);
+        	this.btnDelete.set_enable(enable);
+        	this.btnEtcSave.set_enable(enable);
+        	//this.btnPreview.set_enable(enable);
+        }
+
+        this.cmmFileManager_onbeforeclose = function(obj,e)
+        {
+        	this.getOwnerFrame()._close_argument = { IsChange: this.IsChange, Cnt: this.dsList.rowcount };
+        };
+
+
+        this.fdg00_onclose = function(obj,e)
+        {
+        	this.addFileList(e.virtualfiles);
+        };
+
+        this.addFileList = function(filelist)
+        {
+        	this.FileList = filelist;
+
+        	if(filelist.length > 0) {
+        		this.FileUpTransfer00.clearFileList();
+        		this.dsSaveList.clearData();
+
+        		var vFile;
+        		for (var i = 0; i < filelist.length; i++)
+        		{
+        			vFile = filelist[i];
+        			vFile.addEventHandler("onsuccess", this.FileList_onsuccess, this);
+        			vFile.addEventHandler("onerror", this.FileList_onerror , this);
+
+        			vFile.open(null, 1);
+        		}
+
+        	}
+        }
+
+        this.FileList_onsuccess = function(obj, e)
+        {
+        	switch (e.reason)
+        	{
+        		case 1:
+        			obj.getFileSize();
+        			break;
+        		case 9:
+
+        			this.FileUpTransfer00.addFile(obj.filename, obj);
+
+        			var sFileName = obj.filename;
+        			var dirExptType = sFileName.lastIndexOf(".")+1;
+        			var sFileType = sFileName.substr(dirExptType);
+        			var sIconImage = this.getFileIcon(sFileName);
+
+        			// 중복체크
+        			var nrow = this.dsSaveList.addRow();
+        			this.dsSaveList.setColumn(nrow, "NO_SEQ", 0);
+        			this.dsSaveList.setColumn(nrow, "DS_PATH", sFileName);
+        			this.dsSaveList.setColumn(nrow, "DS_FILEIMG", sIconImage);
+        			this.dsSaveList.setColumn(nrow, "NM_FILE", sFileName);
+        			this.dsSaveList.setColumn(nrow, "DS_EXT", sFileType);
+        			this.dsSaveList.setColumn(nrow, "YN_UPLOAD", "Y");
+        			//trace(" sFileName =>" + sFileName);
+        			if(this.FileList.length == this.FileUpTransfer00.filelist.length) {
+        	// 			for(var f = 0; f < this.FileUpTransfer00.filelist.length; f++) {
+        	// 				this.FileUpTransfer00.filelist[f].id += f.toString();
+        	// 				this.FileUpTransfer00.filelist[f].name += f.toString();
+        	// 			}
+        				var _contextPath = nexacro.getEnvironmentVariable("evContextPath");
+        				if (_contextPath == undefined) {
+        					_contextPath = "/"
+        				}
+        				var sUploadUrl = this.fileConfig.host + _contextPath + "file/saveAllFile.do";
+
+        				this.FileUpTransfer00.setPostData("path", this.FileManager.FULL_PATH);
+        				if (this.FileManager.IS_OVERWRITE != true) {
+        					this.FileUpTransfer00.setPostData("overwrite", "N");
+        				}
+        				// 파일명에서 찾을 디렉토리 명칭
+        				this.FileUpTransfer00.setPostData("finddir", this.FileManager.DS_FIND.join(";"));
+        //  				trace(" sUploadUrl =>" + sUploadUrl);
+        //  				trace(" FULL_PATH =>" + this.FileManager.FULL_PATH);
+        				//this._waitCursor(true);
+        				this.progressBar.set_pos(0);
+        				this.progressBar.set_visible(true);
+        				this.FileUpTransfer00.upload(sUploadUrl);
+        			}
+        			break;
+        	}
+        }
+
+        this.FileList_onerror = function(obj, e)
+        {
+        	trace("errortype: "+e.errortype);
+        	trace("errormsg: "+e.errormsg);
+        	trace("statuscode: "+e.statuscode);
+        }
+
+        // https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications#Example_Showing_file(s)_size
+        this.cutFileSize = function(filesize)
+        {
+        	var sOutput = filesize + " bytes";
+        	for (var aMultiples = ["KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"], nMultiple = 0, nApprox = filesize / 1024; nApprox > 1; nApprox /= 1024, nMultiple++)
+        	{
+        		sOutput = nApprox.toFixed(0) + " " + aMultiples[nMultiple];
+        	}
+        	return sOutput;
+        };
+
+        this.btnUpload_onclick = function(obj,e)
+        {
+        	this.fdg00.open('nexacro17', FileDialog.MULTILOAD);
+        };
+
+        this.FileUpTransfer00_onprogress = function(obj,e)
+        {
+        	trace("FileUpTransfer00_onprogress: " + e.loaded+"/"+e.total);
+        	this.progressBar.set_max(e.total);
+        	this.progressBar.set_pos(e.loaded);
+        };
+
+        this.FileUpTransfer00_onsuccess = function(obj,e)
+        {
+        	//this._waitCursor(false);
+        	this.progressBar.set_visible(false);
+        	trace("FileUpTransfer00_onsuccess: " + e.code + "/" + e.message);
+        	if(e.code == 0) {
+        		if(e.datasets.length > 0) {
+        			this.dsSaveList.clearData();
+        			this.dsDupeList.clearData();
+        			for(var i = 0; i < e.datasets[0].rowcount; i++) {
+        				var sFileName = e.datasets[0].getColumn(i, "filename");
+        				var iFileSize = e.datasets[0].getColumn(i, "filesize");
+        				var sFilePath = e.datasets[0].getColumn(i, "filepath");
+        				var refPath = e.datasets[0].getColumn(i, "spath");
+        				var dirExptType = sFileName.lastIndexOf(".")+1;
+        				var sFileType = sFileName.substr(dirExptType);
+        				var sIconImage = this.getFileIcon(sFileName);
+
+        				var dupeRow = this.dsList.findRow("NM_FILE", sFileName);
+        				if(dupeRow > -1) {
+        					var nrow = this.dsDupeList.addRow();
+        					this.dsDupeList.setColumn(nrow, "NO_SEQ", this.dsList.getColumn(dupeRow, "NO_SEQ"));
+        				}
+
+        				var nrow = this.dsSaveList.addRow();
+        				this.dsSaveList.setColumn(nrow, "NO_SEQ", 0);
+        				this.dsSaveList.setColumn(nrow, "DS_PATH", sFilePath);
+        				this.dsSaveList.setColumn(nrow, "DS_FILEIMG", sIconImage);
+        				this.dsSaveList.setColumn(nrow, "NM_FILE", sFileName);
+        				this.dsSaveList.setColumn(nrow, "SZ_FILE", iFileSize);
+        				this.dsSaveList.setColumn(nrow, "DS_EXT", sFileType);
+        				this.dsSaveList.setColumn(nrow, "CD_REF", refPath);
+        				this.dsSaveList.setColumn(nrow, "YN_UPLOAD", "Y");
+        			}
+        			this.fnSave();
+        		}
+        	}
+        };
+
+        this.FileUpTransfer00_onerror = function(obj,e)
+        {
+        	//this._waitCursor(false);
+        	this.progressBar.set_visible(false);
+        	if(e.errormsg.indexOf("maxsize") > -1) {
+        		this.gfnAlert("첨부파일 허용용량("+ this.cutFileSize(nexacro.toNumber(e.errormsg.split(':')[1])) + ")을 초과할 수 없습니다.");
+        	} else {
+        		this.gfnAlert(e.errormsg);
+        	}
+        };
+
+        this.grd00_ondragenter = function(obj,e)
+        {
+        	if(e.datatype == "file")
+        	{
+        		this.grd00.set_opacity(0.5);
+        	}
+        };
+
+        this.grd00_ondragleave = function(obj,e)
+        {
+        	this.grd00.set_opacity(1);
+        };
+
+        this.grd00_ondrop = function(obj,e)
+        {
+        	this.grd00.set_opacity(1);
+
+        	if(this.FileManager.IS_READONLY == false) {
+        		if(e.datatype == "file")
+        		{
+        			this.addFileList(e.filelist);
+        		}
+        	}
+        };
+
+        this.btnDownloadAll_onclick = function(obj,e)
+        {
+        	if (this.dsList.rowcount == 0) return false;
+        	for(var i = 0; i < this.dsList.rowcount; i++) {
+        		var sFilename = this.dsList.getColumn(i, "NM_FILE");
+        		var sFilepath = this.dsList.getColumn(i, "DS_PATH");
+        		var encodeFileName = encodeURIComponent(sFilename).replace(/[!'()*]/g, escape);
+
+        		var fileDownTransID = "FileDownTransfer_"+i;
+        		if(this[fileDownTransID] != null) {
+        			this.removeChild(fileDownTransID);
+        		}
+        		var fileDownTrans = new nexacro.FileDownTransfer(fileDownTransID, this);
+        		this.addChild(fileDownTransID, fileDownTrans);
+
+        // 	trace("fnDownload FULL_PATH =>" + this.FileManager.FULL_PATH);
+        // 	trace(" sFilepath =>" + sFilepath);
+        // 	trace(" sFilename =>" + sFilename);
+
+        		var surl = this.fileConfig.host+ this.fileConfig.downloadUrl; // + encodeFileName;
+        		fileDownTrans.set_url(surl);
+        		fileDownTrans.setPostData("path", sFilepath);
+        		//fileDownTrans.setPostData("path", this.FileManager.FULL_PATH);
+        		fileDownTrans.setPostData("fileName", encodeFileName);
+        		if( system.navigatorname =="nexacro"){
+        			fileDownTrans.set_downloadfilename(sFilename);
+        		}
+        		fileDownTrans.download();
+        	}
+        };
+
+
+        this.fnImageView = function() {
+
+        	this.imgViewer.set_image("url('imagerc::nopreview.jpg')");
+
+        	this.dsImageFile.clearData();
+        	var nrow = this.dsImageFile.addRow();
+        	this.dsImageFile.setColumn(nrow, "filepath", this.FileManager.FULL_PATH + "\\thumb\\");
+        	this.dsImageFile.setColumn(nrow, "filename", this.dsList.getColumn(this.dsList.rowposition, "NM_FILE") + ".jpg");
+
+        	// 서버 이미지파일 base64 로 받아오기
+        	var strSvcId    = "imagefile";
+        	var strSvcType  = "file/imageFile";
+        	var inProc		= "";
+        	var inData      = "input=dsImageFile";
+        	var outData     = "dsImageFile=input";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        this.dsList_onrowposchanged = function(obj,e) {
+        	if (e.oldrow != e.newrow) {
+        		this.fnCheckImageView(e.newrow);
+        	}
+        };
+
+        this.fnCheckImageView = function(row) {
+        	//this.btnPreview.set_enable(false);
+        	this.imgViewer.set_cursor("default");
+
+        	var fileName = this.dsList.getColumn(row, "NM_FILE");
+        	fileName = fileName.toLowerCase();
+        	var ext = (/[.]/.exec(fileName)) ? /[^.]+$/.exec(fileName) : undefined;
+        	var isDoc = this.gfnIsExistInArray(this.doc_filters, ext);
+        	if (this.gfnIsExistInArray(this.img_filters, ext) || isDoc) {
+        		this.fnImageView();
+        	}
+        }
+
+        this.imgViewer_onclick = function(obj,e)
+        {
+        	this.fnPreview();
+        };
+
+        this.btnPreview_onclick = function(obj,e)
+        {
+        	this.fnPreview();
+        };
+
+        this.fnPreview = function() {
+        	if (!this.btnPreview.enable) {
+        		return;
+        	}
+        	var filePath = this.FileManager.FULL_PATH;
+        	var fileName = this.dsList.getColumn(this.dsList.rowposition, "NM_FILE");
+        	var fileExt = fileName.substring(fileName.lastIndexOf(".")).toLocaleLowerCase();
+        // 	var previewFileName = new Date().getTime();
+        // 	previewFileName += "_" + this.gfnGetRandomID(6) + fileExt;
+        	if (fileExt != ".pdf" && !this.gfnIsExistInArray(this.img_filters, fileExt.replace('.',''))) {
+        		filePath += "\\thumb\\";
+        		fileName += ".pdf";
+        //		previewFileName += ".pdf";
+        	}
+
+        	this.dsPreviewList.clearData();
+        	var nrow = this.dsPreviewList.addRow();
+        	this.dsPreviewList.setColumn(nrow, "filepath", filePath);
+        	this.dsPreviewList.setColumn(nrow, "filename", fileName);
+        	this.dsPreviewList.setColumn(nrow, "copypath", "Preview/"+filePath);
+        	this.dsPreviewList.setColumn(nrow, "copyname", fileName); //previewFileName
+
+        	var strSvcId    = "previewfile";
+        	var strSvcType  = "file/cloneFile";
+        	var inProc		= "";
+        	var inData      = "input=dsPreviewList";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnPreviewCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        this.fnPreviewCallback = function(svcID, errorCode, errorMsg) {
+        	if(svcID == "previewfile") {
+        		if (errorCode == 0) {
+        			var filepath = this.dsPreviewList.getColumn(0, "copypath");
+        			var filename = this.dsPreviewList.getColumn(0, "copyname");
+        			var winName = "previewFile";
+        			var winWidth = Number(window.innerWidth);
+        			var winHeight = Number(window.innerHeight);
+        			var win = window.open('about:blank', winName,'width='+winWidth+',height='+winHeight+',resizable=yes');
+
+        			var formEL = document.createElement("form");
+        			var element1 = document.createElement("input");
+        			var element2 = document.createElement("input");
+
+        			formEL.method = "POST";
+        			formEL.target = winName;
+        			formEL.style.display = "none";
+
+        			var ext = (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
+        			if (this.gfnIsExistInArray(this.img_filters, ext)) {
+        				formEL.action = "/file/viewImage.do";
+        			} else {
+        				formEL.action = "/file/previewFile.do";
+        			}
+
+        			element1.value=filepath;
+        			element1.name="filePath";
+        			formEL.appendChild(element1);
+
+        			element2.value=filename;
+        			element2.name="fileName";
+        			formEL.appendChild(element2);
+
+        			document.documentElement.appendChild(formEL);
+        			formEL.submit();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        }
+
+        this.grd00_oncellclick = function(obj, e) {
+        	if (this.imgViewer.image.indexOf('imagerc::') > -1 && e.oldrow == e.row) {
+        		this.fnCheckImageView(e.row);
+        	}
+        }
+
+        this.cmmFileManager_onkeyup = function(obj, e) {
+        	if (obj.name == "cmmFileManager" && e.keycode == 27) {
+        		this.close();
+        	}
+        }
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.cmmFileManager_onload,this);
+            this.addEventHandler("onbeforeclose",this.cmmFileManager_onbeforeclose,this);
+            this.addEventHandler("onkeyup",this.cmmFileManager_onkeyup,this);
+            this.grd00.addEventHandler("oncelldblclick",this.grd00_oncelldblclick,this);
+            this.grd00.addEventHandler("ondragenter",this.grd00_ondragenter,this);
+            this.grd00.addEventHandler("ondragleave",this.grd00_ondragleave,this);
+            this.grd00.addEventHandler("ondrop",this.grd00_ondrop,this);
+            this.btnUpload.addEventHandler("onclick",this.btnUpload_onclick,this);
+            this.btnDelete.addEventHandler("onclick",this.btnDelete_onclick,this);
+            this.btnEtcSave.addEventHandler("onclick",this.btnEtcSave_onclick,this);
+            this.btnDownload.addEventHandler("onclick",this.btnDownload_onclick,this);
+            this.btnDownloadAll.addEventHandler("onclick",this.btnDownloadAll_onclick,this);
+            this.imgViewer.addEventHandler("onclick",this.imgViewer_onclick,this);
+            this.btnPreview.addEventHandler("onclick",this.btnPreview_onclick,this);
+            this.dsList.addEventHandler("oncolumnchanged",this.dsList_oncolumnchanged,this);
+            this.dsList.addEventHandler("onrowposchanged",this.dsList_onrowposchanged,this);
+            this.fdg00.addEventHandler("onclose",this.fdg00_onclose,this);
+            this.FileUpTransfer00.addEventHandler("onprogress",this.FileUpTransfer00_onprogress,this);
+            this.FileUpTransfer00.addEventHandler("onsuccess",this.FileUpTransfer00_onsuccess,this);
+            this.FileUpTransfer00.addEventHandler("onerror",this.FileUpTransfer00_onerror,this);
+        };
+        this.loadIncludeScript("cmmFileSabunManager.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

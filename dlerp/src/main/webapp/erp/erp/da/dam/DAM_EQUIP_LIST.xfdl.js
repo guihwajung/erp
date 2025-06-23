@@ -1,0 +1,605 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("전체 비품현황 조회");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj.set_useclientlayout("true");
+            obj.set_enableevent("false");
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">headALL</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_HEAD1_SELECT</Col></Row><Row><Col id=\"TARGET\">headBon</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_HEAD2_SELECT</Col></Row><Row><Col id=\"TARGET\">headMH</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_HEAD3_SELECT</Col></Row><Row><Col id=\"TARGET\">headCITE</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_HEAD4_SELECT</Col></Row><Row><Col id=\"TARGET\">headLOCAL</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_HEAD5_SELECT</Col></Row><Row><Col id=\"TARGET\">selectALL</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_SELECT1</Col></Row><Row><Col id=\"TARGET\">selectBon</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_SELECT2</Col></Row><Row><Col id=\"TARGET\">selectMH</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_SELECT2</Col></Row><Row><Col id=\"TARGET\">selectCITE</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_SELECT2</Col></Row><Row><Col id=\"TARGET\">selectLOCAL</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_SELECT2</Col></Row><Row><Col id=\"TARGET\">selectHeadALLRpt</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_HEAD1_SELECT</Col></Row><Row><Col id=\"TARGET\">selectHeadBonRpt</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_HEAD2_SELECT</Col></Row><Row><Col id=\"TARGET\">selectHeadMHRpt</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_HEAD3_SELECT</Col></Row><Row><Col id=\"TARGET\">selectHeadCITERpt</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_HEAD4_SELECT</Col></Row><Row><Col id=\"TARGET\">selectHeadLOCALRpt</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_HEAD5_SELECT</Col></Row><Row><Col id=\"TARGET\">selectALLRpt</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_SELECT1</Col></Row><Row><Col id=\"TARGET\">selectBonRpt</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_SELECT2</Col></Row><Row><Col id=\"TARGET\">selectMHRpt</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_SELECT2</Col></Row><Row><Col id=\"TARGET\">selectCITERpt</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_SELECT2</Col></Row><Row><Col id=\"TARGET\">selectLOCALRpt</Col><Col id=\"SP\">DGAPR_EQUIP_REPORT_SELECT2</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"DT_IN\" type=\"STRING\" size=\"256\"/><Column id=\"SCH_SCOPE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsHead1", this);
+            obj.set_enableevent("false");
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DEPT_MST\" type=\"STRING\" size=\"256\"/><Column id=\"HEAD_COUNT\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsHead2", this);
+            obj.set_enableevent("false");
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DEPT_MST\" type=\"STRING\" size=\"256\"/><Column id=\"HEAD_COUNT\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsHead3", this);
+            obj.set_enableevent("false");
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DEPT_MST\" type=\"STRING\" size=\"256\"/><Column id=\"HEAD_COUNT\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsHead4", this);
+            obj.set_enableevent("false");
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DEPT_MST\" type=\"STRING\" size=\"256\"/><Column id=\"HEAD_COUNT\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsHead5", this);
+            obj.set_enableevent("false");
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DEPT_MST\" type=\"STRING\" size=\"256\"/><Column id=\"HEAD_COUNT\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0","0",null,"46.0","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_SEARCH_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staDT","0.0","10.0","79.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("기준일");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Calendar("calDT_IN","staDT:0.0","10.0","105","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("0");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Radio("rdoSCH_SCOPE","calDT_IN:0.0","10.0","380","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("2");
+            obj.set_codecolumn("codecolumn");
+            obj.set_datacolumn("datacolumn");
+            obj.set_direction("vertical");
+            obj.set_fittocontents("none");
+            var divSearch_form_rdoSCH_SCOPE_innerdataset = new nexacro.NormalDataset("divSearch_form_rdoSCH_SCOPE_innerdataset", obj);
+            divSearch_form_rdoSCH_SCOPE_innerdataset._setContents("<ColumnInfo><Column id=\"codecolumn\" size=\"256\"/><Column id=\"datacolumn\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"codecolumn\">A</Col><Col id=\"datacolumn\">전체</Col></Row><Row><Col id=\"codecolumn\">B</Col><Col id=\"datacolumn\">본사</Col></Row><Row><Col id=\"codecolumn\">C</Col><Col id=\"datacolumn\">영업소</Col></Row><Row><Col id=\"codecolumn\">D</Col><Col id=\"datacolumn\">현장</Col></Row><Row><Col id=\"codecolumn\">E</Col><Col id=\"datacolumn\">지역본부</Col></Row></Rows>");
+            obj.set_innerdataset(divSearch_form_rdoSCH_SCOPE_innerdataset);
+            obj.set_text("전체");
+            obj.set_value("A");
+            obj.set_index("0");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","40",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item1","divSearch.form.calDT_IN","value","dsSearch","DT_IN");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item0","divSearch.form.rdoSCH_SCOPE","value","dsSearch","SCH_SCOPE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("DAM_EQUIP_LIST.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+        	this.fnSetButton();
+        	//this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+        	this.fnSetParameterForRpt();
+        	this.fnSetCombo();
+
+        	//기준일자
+        	this.calDT_IN.set_value(this.gfnGetDate());
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+        	// 서브 버튼 사용
+        	//this.gfnUseSubBtn(true, this.divData, this.divData.form.divSplitter); // divSplitter sync
+        	this.FormBtns.Add.set_enable(false);
+        	this.FormBtns.Del.set_enable(false);
+        	this.FormBtns.Save.set_enable(false);
+        	this.FormBtns.Print.set_enable(false);
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.calDT_IN = this.divSearch.form.calDT_IN;
+        	this.rdoSCH_SCOPE = this.divSearch.form.rdoSCH_SCOPE;
+
+        	this.dxGrid = this.divData.form.objGrid;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+
+        	//this.gfnGridInit(this.dxGrid, this.dsList, "DG", "DGA_EQUIP_LIST");
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAM_EQUIP_LIST");
+
+        	this.dsSearch.addEventHandler("onvaluechanged", this.dsSearch_onvaluechanged, this);
+
+        	this.dsSearch.setColumn(0, "SCH_SCOPE", "A");	// 전체 (디폴트)
+        }
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("DT_IN", "string");
+        	this.dsSelect.addColumn("SCH_SCOPE", "string");		// A : 전체, B - 본사
+        	this.dsSelect.addColumn("TY_DEPT", "string");		// null : 전체, '01' - 본사
+
+        }
+
+        this.fnSetParameterForRpt = function() {
+
+        	this.dsReportParam = new Dataset();
+        	//1.기본 PARAM
+        	this.dsReportParam.addColumn("NM_PRT_USR", "string");	//발행자명
+        	this.dsReportParam.addColumn("DT_PRT", "string");	    //발행일
+        	this.dsReportParam.addColumn("DT_IN", "string");	    //기준일
+
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+          /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+
+        	if (!this.fnSelectValidate()) return false;
+        	// 그리드 헤더정보 셋팅
+        	var tyDeptVal = "";
+        	if(this.rdoSCH_SCOPE.value == "A" ){           // 전체
+        		tyDeptVal = "";
+        		this.fnSetGridColunm(this.dsHead1);
+        	} else if(this.rdoSCH_SCOPE.value == "B" ){    // 본사
+        		tyDeptVal = "1";
+        		this.fnSetGridColunm(this.dsHead2);
+        	}	else if(this.rdoSCH_SCOPE.value == "C" ){    // 영업소
+        		tyDeptVal = "3";
+        		this.fnSetGridColunm(this.dsHead3);
+        	}	else if(this.rdoSCH_SCOPE.value == "D" ){    // 현장
+        		tyDeptVal = "4";
+        		this.fnSetGridColunm(this.dsHead4);
+        	}	else if(this.rdoSCH_SCOPE.value == "E" ){    // 지역본부
+        		tyDeptVal = "2";
+        		this.fnSetGridColunm(this.dsHead5);
+        	}
+
+        	this.gfnGridBeforeSelect(this.dxGrid);
+
+        	this.dsList.clearData();
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+        	this.dsSelect.setColumn(0, "DT_IN", this.dsSearch.getColumn(0, "DT_IN"));
+        	this.dsSelect.setColumn(0, "SCH_SCOPE", this.dsSearch.getColumn(0, "SCH_SCOPE"));
+        	this.dsSelect.setColumn(0, "TY_DEPT", tyDeptVal);
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "";
+        	var outData     = "";
+        	if ( this.rdoSCH_SCOPE.value == "A" ){  // 전체
+        		inData      = "selectALL=dsSelect";
+        		outData     = "dsList=selectALL0";
+        	} else if ( this.rdoSCH_SCOPE.value == "B" ){  // 본사
+        		inData      = "selectBon=dsSelect";
+        		outData     = "dsList=selectBon0";
+        	} else if ( this.rdoSCH_SCOPE.value == "C" ){  // 영업소
+        		inData      = "selectMH=dsSelect";
+        		outData     = "dsList=selectMH0";
+        	} else if ( this.rdoSCH_SCOPE.value == "D" ){  // 현장
+        		inData      = "selectCITE=dsSelect";
+        		outData     = "dsList=selectCITE0";
+        	} else if ( this.rdoSCH_SCOPE.value == "E" ){  // 지역본부
+        		inData      = "selectLOCAL=dsSelect";
+        		outData     = "dsList=selectLOCAL0";
+        	}
+
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// trabsaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        	// 확인
+        	if(!this.fnSelectValidate()) return;
+        	this.fnSelectRpt();
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+         */
+        this.fnSelectValidate = function() {
+        	var validate = true;
+        	if (this.gfnIsNull(this.calDT_IN.value)) {
+        		validate = false;
+        		this.fnVaidateCallback = function() {
+        			this.calDT_IN.setFocus();
+        			return false;
+        		}
+        		this.gfnAlert("기준일을 입력하세요.", "fnVaidateCallback");
+        	}
+        	return validate;
+        }
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	if (svcID == "select") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+        		if(this.dsList.rowcount > 0){
+        			//this.btnFormButton.set_enable(true);
+        		}
+        	} else if (svcID == "combo") {
+        		this.rdoSCH_SCOPE.set_index(0);
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+        	return true;
+        }
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        this.fnSelectRpt = function() {
+
+        	var inDataVal      = "selectHeadALLRpt=dsSelectRpt selectALLRpt=dsSelectRpt";
+        	var reportpathVal  = "/dg/dga/DGA_EQUIP_LIST_ALL.ozr";
+        	var tyDeptVal = "";
+
+        	if(this.rdoSCH_SCOPE.value == "A" ){           // 전체
+                tyDeptVal      = "";
+        		inDataVal      = "selectHeadALLRpt=dsSelectRpt selectALLRpt=dsSelectRpt";
+        		reportpathVal  = "/dg/dga/DGA_EQUIP_LIST_ALL.ozr";
+        	} else if(this.rdoSCH_SCOPE.value == "B" ){    // 본사
+        		tyDeptVal      = "1";
+        		inDataVal      = "selectHeadBonRpt=dsSelectRpt selectBonRpt=dsSelectRpt";
+        		reportpathVal  = "/dg/dga/DGA_EQUIP_LIST_MAIN.ozr";
+        	}	else if(this.rdoSCH_SCOPE.value == "C" ){    // 영업소
+        		tyDeptVal      = "3";
+        		inDataVal      = "selectHeadMHRpt=dsSelectRpt selectBonRpt=dsSelectRpt";
+        		reportpathVal  = "/dg/dga/DGA_EQUIP_LIST_MAIN.ozr";
+        	}	else if(this.rdoSCH_SCOPE.value == "D" ){    // 현장
+        		tyDeptVal      = "4";
+        		inDataVal      = "selectHeadCITERpt=dsSelectRpt selectBonRpt=dsSelectRpt";
+        		reportpathVal  = "/dg/dga/DGA_EQUIP_LIST_MAIN.ozr";
+        	}	else if(this.rdoSCH_SCOPE.value == "E" ){    // 지역본부
+        		tyDeptVal      = "2";
+        		inDataVal      = "selectHeadLOCALRpt=dsSelectRpt selectBonRpt=dsSelectRpt";
+        		reportpathVal  = "/dg/dga/DGA_EQUIP_LIST_MAIN.ozr";
+        	}
+
+        	this.dsSelectRpt = new Dataset();
+        	this.dsSelectRpt.addColumn("DT_IN", "string");	//법인코드
+        	this.dsSelectRpt.addColumn("SCH_SCOPE", "string"); 	//부서코드
+        	this.dsSelectRpt.addColumn("TY_DEPT", "string"); 	//전체, 본사
+        	this.dsSelectRpt.addColumn("PRINT_YN", "string"); 	//프린트여부
+
+        	var nrow = this.dsSelectRpt.addRow();
+        	this.dsSelectRpt.setColumn(0, "DT_IN", this.dsSearch.getColumn(0, "DT_IN"));
+        	this.dsSelectRpt.setColumn(0, "SCH_SCOPE", this.dsSearch.getColumn(0, "SCH_SCOPE"));
+        	this.dsSelectRpt.setColumn(0, "TY_DEPT", tyDeptVal);
+        	this.dsSelectRpt.setColumn(0, "PRINT_YN", "Y");
+
+        	this.dsReportParam.clearData();
+        	this.dsReportParam.addRow();
+
+        	//1.기본 PARAM
+        	this.dsReportParam.setColumn(0, "NM_PRT_USR", this.AuthClient.DS_HNAME);					//발행자명
+        	this.dsReportParam.setColumn(0, "DT_PRT", this.fnDateToFormatStr(this.gfnGetDate("time"))); //발행일
+        	this.dsReportParam.setColumn(0, "DT_IN", this.dsSearch.getColumn(0, "DT_IN")); //기준일자
+
+
+        	var inProc		= "_dsProc";
+        	var inParam 	= "params=dsReportParam";	// 조회SP이외 사용할 정보
+        	var inData      = inDataVal;
+        	var reportpath  = reportpathVal;
+
+        	gfnOpenReport(this, reportpath, inProc, inParam, inData);
+
+        }
+
+        /*
+         *	조회 조건 변경시 초기화
+         */
+        this.dsSearch_onvaluechanged = function(obj,e)
+        {
+        	if(e.oldvalue != e.newvalue) {
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.gfnGridClear(this.dxGrid);
+        		//this.btnFormButton.set_enable(false);
+        		this.gfnGridInit(this.dxGrid, this.dsList, "DG", "DGA_EQUIP_LIST");
+        	}
+        };
+
+        /*
+         *	콤보박스 값 설정
+         */
+        this.fnSetCombo = function() {
+        	// 전체
+        	this.dsCombo = new Dataset();
+        	this.dsCombo.addColumn("DT_IN", "string");
+        	this.dsCombo.addRow();
+        	this.dsCombo.setColumn(0, "DT_IN", this.dsSearch.getColumn(0, "DT_IN"));
+
+        	// '01' - 본사
+        	this.dsCombo2 = new Dataset();
+        	this.dsCombo2.addColumn("DT_IN", "string");
+        	this.dsCombo2.addColumn("TY_DEPT", "string");
+        	this.dsCombo2.addRow();
+        	this.dsCombo2.setColumn(0, "DT_IN", this.dsSearch.getColumn(0, "DT_IN"));
+        	this.dsCombo2.setColumn(0, "TY_DEPT", "1");
+
+        	// '03' - 영업소
+        	this.dsCombo3 = new Dataset();
+        	this.dsCombo3.addColumn("DT_IN", "string");
+        	this.dsCombo3.addColumn("TY_DEPT", "string");
+        	this.dsCombo3.addRow();
+        	this.dsCombo3.setColumn(0, "DT_IN", this.dsSearch.getColumn(0, "DT_IN"));
+        	this.dsCombo3.setColumn(0, "TY_DEPT", "3");
+
+        	// '04' - 현장
+        	this.dsCombo4 = new Dataset();
+        	this.dsCombo4.addColumn("DT_IN", "string");
+        	this.dsCombo4.addColumn("TY_DEPT", "string");
+        	this.dsCombo4.addRow();
+        	this.dsCombo4.setColumn(0, "DT_IN", this.dsSearch.getColumn(0, "DT_IN"));
+        	this.dsCombo4.setColumn(0, "TY_DEPT", "4");
+
+        	// '02' - 지역본부
+        	this.dsCombo5 = new Dataset();
+        	this.dsCombo5.addColumn("DT_IN", "string");
+        	this.dsCombo5.addColumn("TY_DEPT", "string");
+        	this.dsCombo5.addRow();
+        	this.dsCombo5.setColumn(0, "DT_IN", this.dsSearch.getColumn(0, "DT_IN"));
+        	this.dsCombo5.setColumn(0, "TY_DEPT", "2");
+
+        	var strSvcId    = "combo";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "headALL=dsCombo headBon=dsCombo2 headMH=dsCombo3 headCITE=dsCombo4 headLOCAL=dsCombo5";
+        	var outData     = "dsHead1=headALL0 dsHead2=headBon0 dsHead3=headMH0 dsHead4=headCITE0 dsHead5=headLOCAL0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+
+        };
+
+        this.fnSetGridColunm = function ( objDataSet ){
+        	var ncol1 = 0;
+        	//var ncol2 = 0;
+        	var ncol3 = 1;
+        	var cols = 0; // merge 되면서 cell index가 조정된다.
+        	this.dxGrid.set_enableredraw(false);
+        	this.dsList.set_enableevent(false);
+         	for ( var i =this.dxGrid.getCellCount("body")-1; 3 < i ; i--){
+         		if( this.gfnGridGetBindColumnNameByIndex( this.dxGrid, i).search("DS_") > -1 ){
+         			this.dxGrid.deleteContentsCol("body",i);
+         		}
+         	}
+
+        	for ( var i =this.dsList.colcount-1; -1 < i ; i--){
+        		//trace(i+"=" + this.dsList.getColID(i));
+        		if( this.dsList.getColID(i).search("DS_") > -1 ){
+        			this.dsList.deleteColumn(i);
+        		}
+        	}
+
+        	for( var i = 0; i < objDataSet.rowcount; i++ ){
+        		var objColinfo = new ColumnInfo() ;
+        		objColinfo.set_type( "INT" );
+        		objColinfo.set_size( 256 );
+
+        		//this.dsList.addColumnInfo("CD_"+objDataSet.getColumn(i,"CD_CODE"),objColinfo);
+        		this.dsList.addColumnInfo(objDataSet.getColumn(i,"DS_CODE"),objColinfo);
+
+        		ncol1 = this.dxGrid.appendContentsCol();
+        		this.dxGrid.setFormatColProperty(ncol1, "size", 90);
+        //		this.dxGrid.setCellProperty("head", ncol1, "text", objDataSet.getColumn(i,"CD_CODE").substr(0,4)+"-"+objDataSet.getColumn(i,"CD_CODE").substr(4,2) );
+        		this.dxGrid.setCellProperty("head", ncol1, "text", objDataSet.getColumn(i,"DS_DEPT_MST"));
+        		this.dxGrid.setCellProperty("body", ncol1, "displaytype", "number");
+        //		this.dxGrid.setCellProperty("body", ncol1, "text", "bind:" + "CD_"+objDataSet.getColumn(i,"CD_CODE"));
+        		this.dxGrid.setCellProperty("body", ncol1, "text", "bind:" + objDataSet.getColumn(i,"DS_CODE"));
+        		this.dxGrid.setCellProperty("summ", ncol1, "displaytype", "number");
+        //		this.dxGrid.setCellProperty("summ", ncol1 , "text", "expr:dataset.getSum('CD_" + objDataSet.getColumn(i,"CD_CODE") + "')");
+        		this.dxGrid.setCellProperty("summ", ncol1 , "text", "expr:dataset.getSum('" + objDataSet.getColumn(i,"DS_CODE") + "')");
+
+        	}
+        	this.dxGrid.set_enableredraw(true);
+        	this.dsList.set_enableevent(true);
+        };
+
+        this.dsList_onload = function(obj,e)
+        {
+        	//suppress 주석처리
+        	/*
+        	this.dxGrid.set_enableredraw(false);
+        	this.dsList.set_enableevent(false);
+        	this.dxGrid.setCellProperty( "body", 1, "suppress", "1" );
+        	this.dxGrid.setCellProperty( "body", 2, "suppress", "2" );
+        	this.dxGrid.setCellProperty( "body", 3, "suppress", "3" );
+        	this.dxGrid.set_enableredraw(true);
+        	this.dsList.set_enableevent(true);
+        	*/
+        };
+
+        this.fnDateToFormatStr = function(argDate, argFormat){
+        	//argDate : 8자리
+        	//argFormat : 분리문자
+        	var strFormat = "/";
+
+        	if(this.gfnIsNull(argDate)) return "";
+        	if(!this.gfnIsNull(argFormat)) strFormat = argFormat;
+
+        	var strRtn = "";
+            var strYYYY = argDate.substr(0, 4);
+            var strMM = argDate.substr(4, 2);
+        	var strDD = "";
+
+        	if(argDate.length >= 6){  // YYYYMM
+        		strRtn =  strYYYY + strFormat + strMM;
+
+        		if(argDate.length >= 8){  // YYYYMMDD
+        			strDD = argDate.substr(6, 2);
+        			strRtn =  strRtn + strFormat + strDD;
+
+        			if(argDate.length >= 14){ // YYYYMMDDHH24MISS
+        				var hh = argDate.substring(8,10);
+        				var mm = argDate.substring(10,12);
+        				var ss = argDate.substring(12,14);
+        				strRtn = strRtn + " " + hh+":"+mm+":"+ss;
+        			}
+        		}
+        	}else{
+        		;
+        	}
+
+        //	trace("fnDateToFormatStr==>:",strRtn);
+
+        	return strRtn;
+        }
+
+        this.divSearch_rdoSCH_SCOPE_onitemchanged = function(obj,e)
+        {
+
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divSearch.form.rdoSCH_SCOPE.addEventHandler("onitemchanged",this.divSearch_rdoSCH_SCOPE_onitemchanged,this);
+            this.dsList.addEventHandler("onload",this.dsList_onload,this);
+        };
+        this.loadIncludeScript("DAM_EQUIP_LIST.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

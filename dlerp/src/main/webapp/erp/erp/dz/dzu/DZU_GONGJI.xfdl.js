@@ -1,0 +1,897 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("New Form");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(600,520);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DZZPR_DOTNET_GONGJI_SELECT</Col></Row><Row><Col id=\"TARGET\">insert</Col><Col id=\"SP\">DZZPR_DOTNET_GONGJI_INSERT</Col></Row><Row><Col id=\"TARGET\">update</Col><Col id=\"SP\">DZZPR_DOTNET_GONGJI_UPDATE</Col></Row><Row><Col id=\"TARGET\">delete</Col><Col id=\"SP\">DZZPR_DOTNET_GONGJI_DELETE</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsList", this);
+            obj._setContents("<ColumnInfo><Column id=\"NM_TITLE\" type=\"STRING\" size=\"256\"/><Column id=\"RM_CONTENT\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HNAME\" type=\"STRING\" size=\"256\"/><Column id=\"SN_SEQ\" type=\"STRING\" size=\"256\"/><Column id=\"DT_UPDATE\" type=\"STRING\" size=\"256\"/><Column id=\"YN_POPUP\" type=\"INT\" size=\"256\"/><Column id=\"DT_START\" type=\"DATETIME\" size=\"256\"/><Column id=\"DT_END\" type=\"DATETIME\" size=\"256\"/><Column id=\"NO_LEFT\" type=\"INT\" size=\"256\"/><Column id=\"NO_TOP\" type=\"INT\" size=\"256\"/><Column id=\"NO_WIDTH\" type=\"INT\" size=\"256\"/><Column id=\"NO_HEIGHT\" type=\"INT\" size=\"256\"/><Column id=\"TY_GUBUN\" type=\"STRING\" size=\"256\"/><Column id=\"YN_MAIN\" type=\"INT\" size=\"256\"/><Column id=\"DT_START_MAIN\" type=\"DATETIME\" size=\"256\"/><Column id=\"DT_END_MAIN\" type=\"DATETIME\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"NO_LEFT\">100</Col><Col id=\"NO_TOP\">100</Col><Col id=\"NO_HEIGHT\">400</Col><Col id=\"NO_WIDTH\">500</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"SN_SEQ\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"SN_SEQ\"/></Row></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divData","0","0",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staTITLE","0","0",null,"22","0",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("4");
+            obj.set_text("공지사항관리");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textAlign("left");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_GONGJI","0","40","87","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("6");
+            obj.set_text("제목");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("right");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_POPUP","0","staDS_GONGJI:-1","87","60",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("5");
+            obj.set_text("팝업");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("right");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_MAIN","0","staDS_POPUP:-1","87","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("6");
+            obj.set_text("메인");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("right");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_CONTENT","0","staDS_MAIN:-1","87","221",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("7");
+            obj.set_text("내용");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("right");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDT_CONFIRM","0","staDS_CONTENT:-1","87","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("8");
+            obj.set_text("작성자");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("right");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTY_APPROVAL","0","staDT_CONFIRM:-1","87","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("9");
+            obj.set_text("최종수정일");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("right");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staBg0","staDS_GONGJI:-1","40",null,"30","0%",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("10");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staBg1","staDS_POPUP:-1","staBg0:-1",null,"60","0%",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("11");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staBg5","staDS_MAIN:-1","staBg1:-1",null,"30","0%",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("15");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staBg2","staDS_CONTENT:-1","staBg5:-1",null,"221","0.00%",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("12");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staBg3","staDT_CONFIRM:-1","staBg2:-1",null,"30","0.00%",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("13");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staBg4","staTY_APPROVAL:-1","staBg3:-1",null,"30","0.00%",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("14");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_POPUP","95","staBg0:4","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("2");
+            obj.set_text("메인팝업");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("divYN_POPUP","chkYN_POPUP:5","staBg0:0",null,"54","2",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("3");
+            obj.set_text("");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("sta00","0","4","25","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("17");
+            obj.set_text("기간");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Calendar("ctclDT_START","sta00:7","4","105","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("5");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Spin("spnDT_START_HH","ctclDT_START:2","4","37","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("4");
+            obj.set_increment("1");
+            obj.set_min("0");
+            obj.set_max("23");
+            obj.set_value("0");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Static("sta02","spnDT_START_HH:1","4","3","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("7");
+            obj.set_text(":");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Spin("spnDT_START_MM","sta02:1","4","37","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("3");
+            obj.set_increment("10");
+            obj.set_min("0");
+            obj.set_max("50");
+            obj.set_value("0");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Static("sta01","spnDT_START_MM:5","4","10","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("6");
+            obj.set_text("~");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Calendar("ctclDT_END","sta01:5","4","105","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("2");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Spin("spnDT_END_HH","ctclDT_END:2","4","37","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("1");
+            obj.set_increment("1");
+            obj.set_min("0");
+            obj.set_max("23");
+            obj.set_value("23");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Static("sta03","spnDT_END_HH:1","4","3","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("8");
+            obj.set_text(":");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Spin("spnDT_END_MM","sta03:1","4","37","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("0");
+            obj.set_increment("10");
+            obj.set_min("0");
+            obj.set_max("50");
+            obj.set_value("50");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Static("sta04","0","sta00:7","25","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("10");
+            obj.set_text("left");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Edit("edt00","sta04:7","sta00:7","40","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("11");
+            obj.set_value("100");
+            obj.set_textAlign("right");
+            obj.set_inputtype("number");
+            obj.set_autoselect("true");
+            obj.set_text("100");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Static("sta05","edt00:10","sta00:7","25","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("12");
+            obj.set_text("top");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Edit("edt01","sta05:5","sta00:7","40","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("13");
+            obj.set_value("100");
+            obj.set_textAlign("right");
+            obj.set_inputtype("number");
+            obj.set_autoselect("true");
+            obj.set_text("100");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Static("sta06","edt01:10","sta00:7","30","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("14");
+            obj.set_text("width");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Edit("edt02","sta06:10","sta00:7","40","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("15");
+            obj.set_value("500");
+            obj.set_textAlign("right");
+            obj.set_inputtype("number");
+            obj.set_autoselect("true");
+            obj.set_text("500");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Static("sta07","252","sta00:7","35","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("17");
+            obj.set_text("height");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new Edit("edt03","sta07:10","sta00:7","40","20",null,null,null,null,null,null,this.divData.form.divYN_POPUP.form);
+            obj.set_taborder("16");
+            obj.set_value("400");
+            obj.set_textAlign("right");
+            obj.set_inputtype("number");
+            obj.set_autoselect("true");
+            obj.set_text("400");
+            this.divData.form.divYN_POPUP.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_MAIN","95","staBg1:4","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("2");
+            obj.set_text("메인공지");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("divYN_MAIN","chkYN_MAIN:5","staBg1:0",null,"28","2",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("3");
+            obj.set_text("");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("sta00_MAIN","0","4","25","20",null,null,null,null,null,null,this.divData.form.divYN_MAIN.form);
+            obj.set_taborder("17");
+            obj.set_text("기간");
+            this.divData.form.divYN_MAIN.addChild(obj.name, obj);
+
+            obj = new Calendar("ctclDT_START_MAIN","sta00_MAIN:7","4","105","20",null,null,null,null,null,null,this.divData.form.divYN_MAIN.form);
+            obj.set_taborder("5");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            this.divData.form.divYN_MAIN.addChild(obj.name, obj);
+
+            obj = new Spin("spnDT_START_HH_MAIN","ctclDT_START_MAIN:2","4","37","20",null,null,null,null,null,null,this.divData.form.divYN_MAIN.form);
+            obj.set_taborder("4");
+            obj.set_increment("1");
+            obj.set_min("0");
+            obj.set_max("23");
+            obj.set_value("0");
+            this.divData.form.divYN_MAIN.addChild(obj.name, obj);
+
+            obj = new Static("sta02_MAIN","spnDT_START_HH_MAIN:1","4","3","20",null,null,null,null,null,null,this.divData.form.divYN_MAIN.form);
+            obj.set_taborder("7");
+            obj.set_text(":");
+            this.divData.form.divYN_MAIN.addChild(obj.name, obj);
+
+            obj = new Spin("spnDT_START_MM_MAIN","sta02_MAIN:1","4","37","20",null,null,null,null,null,null,this.divData.form.divYN_MAIN.form);
+            obj.set_taborder("3");
+            obj.set_increment("10");
+            obj.set_min("0");
+            obj.set_max("50");
+            obj.set_value("0");
+            this.divData.form.divYN_MAIN.addChild(obj.name, obj);
+
+            obj = new Static("sta01_MAIN","spnDT_START_MM_MAIN:5","4","10","20",null,null,null,null,null,null,this.divData.form.divYN_MAIN.form);
+            obj.set_taborder("6");
+            obj.set_text("~");
+            this.divData.form.divYN_MAIN.addChild(obj.name, obj);
+
+            obj = new Calendar("ctclDT_END_MAIN","sta01_MAIN:5","4","105","20",null,null,null,null,null,null,this.divData.form.divYN_MAIN.form);
+            obj.set_taborder("2");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            this.divData.form.divYN_MAIN.addChild(obj.name, obj);
+
+            obj = new Spin("spnDT_END_HH_MAIN","ctclDT_END_MAIN:2","4","37","20",null,null,null,null,null,null,this.divData.form.divYN_MAIN.form);
+            obj.set_taborder("1");
+            obj.set_increment("1");
+            obj.set_min("0");
+            obj.set_max("23");
+            obj.set_value("23");
+            this.divData.form.divYN_MAIN.addChild(obj.name, obj);
+
+            obj = new Static("sta03_MAIN","spnDT_END_HH_MAIN:1","4","3","20",null,null,null,null,null,null,this.divData.form.divYN_MAIN.form);
+            obj.set_taborder("8");
+            obj.set_text(":");
+            this.divData.form.divYN_MAIN.addChild(obj.name, obj);
+
+            obj = new Spin("spnDT_END_MM_MAIN","sta03_MAIN:1","4","37","20",null,null,null,null,null,null,this.divData.form.divYN_MAIN.form);
+            obj.set_taborder("0");
+            obj.set_increment("10");
+            obj.set_min("0");
+            obj.set_max("50");
+            obj.set_value("50");
+            this.divData.form.divYN_MAIN.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_GONGJI","staDS_GONGJI:5","45",null,"20","5",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("1");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_HNAME","92","staBg2:4",null,"20","5",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("15");
+            obj.set_readonly("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Edit("edtDT_UPDATE","92","staBg3:4",null,"20","5",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("16");
+            obj.set_readonly("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new TextArea("edtDS_CONTENT","staDS_CONTENT:5","staBg5:5",null,"209","5",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj.set_autoselect("false");
+            obj.set_enableevent("true");
+            obj.set_accessibilitydesclevel("all");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divData.form.edtDS_GONGJI","value","dsList","NM_TITLE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divData.form.edtDS_CONTENT","value","dsList","RM_CONTENT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divData.form.edtDS_HNAME","value","dsList","DS_HNAME");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divData.form.edtDT_UPDATE","value","dsList","DT_UPDATE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item6","divData.form.chkYN_POPUP","value","dsList","YN_POPUP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","divData.form.divYN_POPUP.form.edt00","value","dsList","NO_LEFT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item5","divData.form.divYN_POPUP.form.edt01","value","dsList","NO_TOP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item7","divData.form.divYN_POPUP.form.edt02","value","dsList","NO_WIDTH");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item8","divData.form.divYN_POPUP.form.edt03","value","dsList","NO_HEIGHT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item9","divData.form.chkYN_MAIN","value","dsList","YN_MAIN");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("DZU_GONGJI.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+
+        	if(!this.gfnIsNull(this.getOwnerFrame().SN_SEQ)) {
+        		if(this.getOwnerFrame().TY_ACTIVE == "MAIN" || this.FormInfo.TY_AUTH == "R") {
+        			this.divData.form.staDS_CONTENT.set_top("staDS_GONGJI:-1");
+        			this.divData.form.staBg2.set_top("staDS_GONGJI:-1");
+        			this.divData.form.edtDS_CONTENT.set_top("staDS_GONGJI:4");
+        			this.divData.form.resetScroll();
+        			this.FormBtns.Select.set_visible(false);
+        			this.FormBtns.Add.set_visible(false);
+        			this.FormBtns.Del.set_visible(false);
+        			this.FormBtns.Save.set_visible(false);
+        			this.FormBtns.Excel.set_visible(false);
+        			this.FormBtns.Print.set_visible(false);
+        			this.gfnSetAllReadonly(this.divData.form, true);
+        		}
+
+        		this.dsSearch.setColumn(0, "SN_SEQ", this.getOwnerFrame().SN_SEQ);
+        		this.FormBtns.Select.click();
+        	} else {
+
+        		this.fnAdd();
+        	}
+        };
+
+        /************************************************************************
+         * 버튼 설정
+         * 서브버튼 사용 처리. 공통 및 확장버튼 버튼관리화면에서 셋팅.
+         ************************************************************************/
+        this.fnSetButton = function() {
+
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        	 this.btn = this.gfnFormButtonAdd("btnFile", "fnFile");
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.edtDS_GONGJI = this.divData.form.edtDS_GONGJI;
+        	this.edtDS_CONTENT = this.divData.form.edtDS_CONTENT;
+        	this.edtDT_CONFIRM = this.divData.form.edtDT_CONFIRM;
+        	this.edtTY_APPROVAL = this.divData.form.edtTY_APPROVAL;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+
+        };
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("SN_SEQ", "string");
+
+        	this.dsInsert = new Dataset();
+        	this.dsInsert.addColumn("NM_TITLE", "string");
+        	this.dsInsert.addColumn("ID_USER", "string");
+        	this.dsInsert.addColumn("RM_CONTENT", "string");
+        	this.dsInsert.addColumn("YN_POPUP", "int");
+        	this.dsInsert.addColumn("DT_START", "datetime");
+        	this.dsInsert.addColumn("DT_END", "datetime");
+        	this.dsInsert.addColumn("NO_LEFT", "int");
+        	this.dsInsert.addColumn("NO_TOP", "int");
+        	this.dsInsert.addColumn("NO_WIDTH", "int");
+        	this.dsInsert.addColumn("NO_HEIGHT", "int");
+        	this.dsInsert.addColumn("TY_GUBUN", "string");
+        	this.dsInsert.addColumn("CD_CORP", "string");
+        	this.dsInsert.addColumn("YN_MAIN", "int");
+        	this.dsInsert.addColumn("DT_START_MAIN", "datetime");
+        	this.dsInsert.addColumn("DT_END_MAIN", "datetime");
+
+        	this.dsUpdate = new Dataset();
+        	this.dsUpdate.addColumn("SN_SEQ", "int");
+        	this.dsUpdate.addColumn("NM_TITLE", "string");
+        	this.dsUpdate.addColumn("RM_CONTENT", "string");
+        	this.dsUpdate.addColumn("YN_POPUP", "int");
+        	this.dsUpdate.addColumn("DT_START", "datetime");
+        	this.dsUpdate.addColumn("DT_END", "datetime");
+        	this.dsUpdate.addColumn("NO_LEFT", "int");
+        	this.dsUpdate.addColumn("NO_TOP", "int");
+        	this.dsUpdate.addColumn("NO_WIDTH", "int");
+        	this.dsUpdate.addColumn("NO_HEIGHT", "int");
+        	this.dsUpdate.addColumn("YN_MAIN", "int");
+        	this.dsUpdate.addColumn("DT_START_MAIN", "datetime");
+        	this.dsUpdate.addColumn("DT_END_MAIN", "datetime");
+
+        	this.dsDelete = new Dataset();
+        	this.dsDelete.addColumn("SN_SEQ", "string");
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+        	//this.gfnGridBeforeSelect(this.dxGrid);
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+
+        	this.dsSelect.setColumn(0, "SN_SEQ", this.dsSearch.getColumn(0, "SN_SEQ"));
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *   입력 버튼
+         */
+        this.fnAdd = function() {
+        	this.dsList.setColumn(0, "NM_TITLE", "");
+        	this.dsList.setColumn(0, "RM_CONTENT", "");
+        	this.dsList.setColumn(0, "DT_UPDATE", "");
+        	this.dsList.setColumn(0, "DS_HNAME", this.AuthClient.DS_HNAME);
+        	this.dsList.setColumn(0, "SN_SEQ", "");	//내용
+        	if(!this.gfnIsNull(this.getOwnerFrame().TY_GUBUN)) {
+        		this.dsList.setColumn(0, "TY_GUBUN", this.getOwnerFrame().TY_GUBUN);
+        	} else {
+        		this.dsList.setColumn(0, "TY_GUBUN", "");
+        	}
+
+        // 	this.FormBtns.Del.set_enable(false);
+        // 	this.FormBtns.Save.set_enable(false);
+
+        	this.gfnSetFormStatus(this, "I");
+        }
+
+        /*
+        	저장
+        */
+        this.fnSave = function() {
+        	// 그리드 필수항목 체크
+        		//if (!this.gfnGridValidate(this.dxGrid)) return;
+        	if(!this.fnSaveValidate()) return;
+
+        	this.dsInsert.clearData();
+        	this.dsUpdate.clearData();
+        	this.dsDelete.clearData();
+
+        	if(this.dsList.rowcount > 0) {
+        		// 메인팝업 여부
+        		var dt_start_day = this.divData.form.divYN_POPUP.form.ctclDT_START.value;
+        		var dt_end_day = this.divData.form.divYN_POPUP.form.ctclDT_END.value;
+        		var dt_start_hh = String(this.divData.form.divYN_POPUP.form.spnDT_START_HH.value);
+        		var dt_start_mm = String(this.divData.form.divYN_POPUP.form.spnDT_START_MM.value);
+        		var dt_end_hh = String(this.divData.form.divYN_POPUP.form.spnDT_END_HH.value);
+        		var dt_end_mm = String(this.divData.form.divYN_POPUP.form.spnDT_END_MM.value);
+        		var dt_start = null;
+        		var dt_end = null;
+        		if(!this.gfnIsNull(dt_start_day)) {
+        			dt_start = dt_start_day + (dt_start_hh < 10 ? '0'+dt_start_hh:dt_start_hh) + (dt_start_mm < 10 ? '0'+dt_start_mm:dt_start_mm);
+        		}
+        		if(!this.gfnIsNull(dt_end_day)) {
+        			dt_end = dt_end_day + (dt_end_hh < 10 ? '0'+dt_end_hh:dt_end_hh) + (dt_end_mm < 10 ? '0'+dt_end_mm:dt_end_mm);
+        		}
+
+        		// 메인공지 여부
+        		var dt_start_day_main = this.divData.form.divYN_MAIN.form.ctclDT_START_MAIN.value;
+        		var dt_end_day_main = this.divData.form.divYN_MAIN.form.ctclDT_END_MAIN.value;
+        		var dt_start_hh_main = String(this.divData.form.divYN_MAIN.form.spnDT_START_HH_MAIN.value);
+        		var dt_start_mm_main = String(this.divData.form.divYN_MAIN.form.spnDT_START_MM_MAIN.value);
+        		var dt_end_hh_main = String(this.divData.form.divYN_MAIN.form.spnDT_END_HH_MAIN.value);
+        		var dt_end_mm_main = String(this.divData.form.divYN_MAIN.form.spnDT_END_MM_MAIN.value);
+        		var dt_start_main = null;
+        		var dt_end_main = null;
+        		if(!this.gfnIsNull(dt_start_day_main)) {
+        			dt_start_main = dt_start_day_main + (dt_start_hh_main < 10 ? '0'+dt_start_hh_main:dt_start_hh_main) + (dt_start_mm_main < 10 ? '0'+dt_start_mm_main:dt_start_mm_main);
+        		}
+        		if(!this.gfnIsNull(dt_end_day_main)) {
+        			dt_end_main = dt_end_day_main + (dt_end_hh_main < 10 ? '0'+dt_end_hh_main:dt_end_hh_main) + (dt_end_mm_main < 10 ? '0'+dt_end_mm_main:dt_end_mm_main);
+        		}
+
+        		if(this.gfnGetFormStatus(this) == "I") {
+        			var nrow = this.dsInsert.addRow();
+        			this.dsInsert.setColumn(nrow, "NM_TITLE", this.dsList.getColumn(0, "NM_TITLE"));
+        			this.dsInsert.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        			this.dsInsert.setColumn(nrow, "RM_CONTENT", this.dsList.getColumn(0, "RM_CONTENT"));
+        			this.dsInsert.setColumn(nrow, "YN_POPUP", this.dsList.getColumn(0, "YN_POPUP"));
+        			this.dsInsert.setColumn(nrow, "DT_START", dt_start);
+        			this.dsInsert.setColumn(nrow, "DT_END", dt_end);
+        			this.dsInsert.setColumn(nrow, "NO_LEFT", this.dsList.getColumn(0, "NO_LEFT"));
+        			this.dsInsert.setColumn(nrow, "NO_TOP", this.dsList.getColumn(0, "NO_TOP"));
+        			this.dsInsert.setColumn(nrow, "NO_WIDTH", this.dsList.getColumn(0, "NO_WIDTH"));
+        			this.dsInsert.setColumn(nrow, "NO_HEIGHT", this.dsList.getColumn(0, "NO_HEIGHT"));
+        			this.dsInsert.setColumn(nrow, "TY_GUBUN", this.dsList.getColumn(0, "TY_GUBUN"));
+        			this.dsInsert.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+        			this.dsInsert.setColumn(nrow, "YN_MAIN", this.dsList.getColumn(0, "YN_MAIN"));
+        			this.dsInsert.setColumn(nrow, "DT_START_MAIN", dt_start_main);
+        			this.dsInsert.setColumn(nrow, "DT_END_MAIN", dt_end_main);
+        		}
+        		else if(this.gfnGetFormStatus(this) == "U") {
+        			var nrow = this.dsUpdate.addRow();
+        			this.dsUpdate.setColumn(nrow, "SN_SEQ", this.dsList.getColumn(0, "SN_SEQ"));
+        			this.dsUpdate.setColumn(nrow, "NM_TITLE", this.dsList.getColumn(0, "NM_TITLE"));
+        			this.dsUpdate.setColumn(nrow, "RM_CONTENT", this.dsList.getColumn(0, "RM_CONTENT"));
+        			this.dsUpdate.setColumn(nrow, "YN_POPUP", this.dsList.getColumn(0, "YN_POPUP"));
+        			this.dsUpdate.setColumn(nrow, "DT_START", dt_start);
+        			this.dsUpdate.setColumn(nrow, "DT_END", dt_end);
+        			this.dsUpdate.setColumn(nrow, "NO_LEFT", this.dsList.getColumn(0, "NO_LEFT"));
+        			this.dsUpdate.setColumn(nrow, "NO_TOP", this.dsList.getColumn(0, "NO_TOP"));
+        			this.dsUpdate.setColumn(nrow, "NO_WIDTH", this.dsList.getColumn(0, "NO_WIDTH"));
+        			this.dsUpdate.setColumn(nrow, "NO_HEIGHT", this.dsList.getColumn(0, "NO_HEIGHT"));
+        			this.dsUpdate.setColumn(nrow, "YN_MAIN", this.dsList.getColumn(0, "YN_MAIN"));
+        			this.dsUpdate.setColumn(nrow, "DT_START_MAIN", dt_start_main);
+        			this.dsUpdate.setColumn(nrow, "DT_END_MAIN", dt_end_main);
+        		}
+        		else if(this.gfnGetFormStatus(this) == "D") {
+        			var nrow = this.dsDelete.addRow();
+        			this.dsDelete.setColumn(nrow, "SN_SEQ", this.dsList.getColumn(0, "SN_SEQ"));
+        		}
+        	}
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+        	this.gfnConfirm("삭제하시겠습니까?","fnDel_callback");
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        this.fnSaveValidate = function() {
+        	if (this.gfnIsNull(this.dsList.getColumn(0, "NM_TITLE"))) {
+        		this.gfnAlert("제목은 반드시 입력하셔야 합니다.");
+        		return false;
+        	}
+
+        	if(this.dsList.getColumn(0, "YN_POPUP") == 1) {
+        	}
+
+        	return true;
+        }
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg, strArg)
+        {
+        	if (svcID == "select") {
+        		if(this.dsList.rowcount > 0) {
+        			if(this.dsList.getColumn(0, "YN_POPUP") == 1) {
+        				this.divData.form.divYN_POPUP.set_enable(true);
+
+        				var dt_start = this.dsList.getColumn(0, "DT_START");
+        				var dt_end = this.dsList.getColumn(0, "DT_END");
+        				if(!this.gfnIsNull(dt_start)) {
+        					this.divData.form.divYN_POPUP.form.ctclDT_START.set_value(dt_start);
+        					this.divData.form.divYN_POPUP.form.spnDT_START_HH.set_value(dt_start.getHours());
+        					this.divData.form.divYN_POPUP.form.spnDT_START_MM.set_value(dt_start.getMinutes());
+        				}
+        				if(!this.gfnIsNull(dt_end)) {
+        					this.divData.form.divYN_POPUP.form.ctclDT_END.set_value(dt_end);
+        					this.divData.form.divYN_POPUP.form.spnDT_END_HH.set_value(dt_end.getHours());
+        					this.divData.form.divYN_POPUP.form.spnDT_END_MM.set_value(dt_end.getMinutes());
+        				}
+        			} else {
+        				this.divData.form.divYN_POPUP.set_enable(false);
+        			}
+
+        			if(this.dsList.getColumn(0, "YN_MAIN") == 1) {
+        				this.divData.form.divYN_MAIN.set_enable(true);
+
+        				var dt_start_main = this.dsList.getColumn(0, "DT_START_MAIN");
+        				var dt_end_main = this.dsList.getColumn(0, "DT_END_MAIN");
+        				if(!this.gfnIsNull(dt_start_main)) {
+        					this.divData.form.divYN_MAIN.form.ctclDT_START_MAIN.set_value(dt_start_main);
+        					this.divData.form.divYN_MAIN.form.spnDT_START_HH_MAIN.set_value(dt_start_main.getHours());
+        					this.divData.form.divYN_MAIN.form.spnDT_START_MM_MAIN.set_value(dt_start_main.getMinutes());
+        				}
+        				if(!this.gfnIsNull(dt_end_main)) {
+        					this.divData.form.divYN_MAIN.form.ctclDT_END_MAIN.set_value(dt_end_main);
+        					this.divData.form.divYN_MAIN.form.spnDT_END_HH_MAIN.set_value(dt_end_main.getHours());
+        					this.divData.form.divYN_MAIN.form.spnDT_END_MM_MAIN.set_value(dt_end_main.getMinutes());
+        				}
+        			} else {
+        				this.divData.form.divYN_MAIN.set_enable(false);
+        			}
+        		}
+        	}
+         	else if (svcID == "save") {
+         		switch(this.gfnGetFormStatus(this))
+        		{
+        			case "I" :
+        				//저장 후 삭제 버튼 활성화
+        				//this.FormBtns.Del.set_enable(true);
+        				this.gfnAlert("입력이 완료되었습니다.", "fnClose_callback");
+        				//this.FormBtns.Select.click();
+        				break;
+        			case "U" :
+        				//저장 후 삭제 버튼 활성화
+        				//this.FormBtns.Del.set_enable(true);
+        				//this.gfnAlert("저장이 완료되었습니다.");
+        				this.FormBtns.Select.click();
+        				break;
+        			case "D" :
+        				this.gfnAlert("삭제가 되었습니다.", "fnClose_callback");
+        				break;
+        		}
+         	}
+        }
+
+        this.fnDel_callback = function(strId, val)
+        {
+        	if(val == true)
+        	{
+        		this.gfnSetFormStatus(this, "D");
+        	}
+        	this.fnSave();
+        }
+
+        // 삭제 메시지 후 창을 닫기 위한 콜백함수.
+        this.fnClose_callback = function(strID)
+        {
+        	this.getParentContext().close(true);
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        this.fnFile = function(obj,e) {
+
+        	var fileManager = {};
+
+            fileManager.CD_GUBUN = "DZ01";
+        	fileManager.CD_DIR = [this.dsList.getColumn(0, "SN_SEQ")];
+        	if(this.getOwnerFrame().TY_ACTIVE == "MAIN" || this.FormInfo.TY_AUTH == "R") {
+        		fileManager.IS_READONLY = true;
+        	} else {
+        		fileManager.IS_READONLY = false;
+        	}
+            this.gfnFileManager(fileManager, "fnFileCallback");
+
+        };
+
+
+        this.fnFileCallback = function() {
+        	this.fnSelect();
+        };
+
+
+        this.dsList_onvaluechanged = function(obj,e)
+        {
+        	if(e.oldvalue != e.newvalue) {
+        		if(!this.gfnIsNull(this.dsList.getColumn(0, "SN_SEQ"))) {
+        			this.gfnSetFormStatus(this, "U");
+        		} else {
+        			this.gfnSetFormStatus(this, "I");
+        		}
+        	}
+        };
+
+        this.divData_chkYN_POPUP_onchanged = function(obj,e)
+        {
+        	if(e.postvalue == 1) {
+        		this.divData.form.divYN_POPUP.set_enable(true);
+        		var dt_now = this.gfnGetDate();
+        		if(this.gfnIsNull(this.divData.form.divYN_POPUP.form.ctclDT_START.value)) {
+        			this.divData.form.divYN_POPUP.form.ctclDT_START.set_value(dt_now);
+        		}
+        		if(this.gfnIsNull(this.divData.form.divYN_POPUP.form.ctclDT_END.value)) {
+        			this.divData.form.divYN_POPUP.form.ctclDT_END.set_value(dt_now);
+        		}
+        	} else {
+        		this.divData.form.divYN_POPUP.set_enable(false);
+        	}
+        };
+
+        this.divData_chkYN_MAIN_onchanged = function(obj,e)
+        {
+        	if(e.postvalue == 1) {
+        		this.divData.form.divYN_MAIN.set_enable(true);
+        		var dt_now = this.gfnGetDate();
+        		if(this.gfnIsNull(this.divData.form.divYN_MAIN.form.ctclDT_START_MAIN.value)) {
+        			this.divData.form.divYN_MAIN.form.ctclDT_START_MAIN.set_value(dt_now);
+        		}
+        		if(this.gfnIsNull(this.divData.form.divYN_MAIN.form.ctclDT_END_MAIN.value)) {
+        			this.divData.form.divYN_MAIN.form.ctclDT_END_MAIN.set_value(dt_now);
+        		}
+        	} else {
+        		this.divData.form.divYN_MAIN.set_enable(false);
+        	}
+        };
+
+        this.divData_onchanged = function(obj,e)
+        {
+        	if(e.prevalue != e.postvalue) {
+        		if(!this.gfnIsNull(this.dsList.getColumn(0, "SN_SEQ"))) {
+        			this.gfnSetFormStatus(this, "U");
+        		} else {
+        			this.gfnSetFormStatus(this, "I");
+        		}
+        	}
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divData.form.staDT_CONFIRM.addEventHandler("onclick",this.divData_staTY_APPROVAL_onclick,this);
+            this.divData.form.chkYN_POPUP.addEventHandler("onchanged",this.divData_chkYN_POPUP_onchanged,this);
+            this.divData.form.divYN_POPUP.form.ctclDT_START.addEventHandler("onchanged",this.divData_onchanged,this);
+            this.divData.form.divYN_POPUP.form.spnDT_START_HH.addEventHandler("onchanged",this.divData_onchanged,this);
+            this.divData.form.divYN_POPUP.form.spnDT_START_MM.addEventHandler("onchanged",this.divData_onchanged,this);
+            this.divData.form.divYN_POPUP.form.ctclDT_END.addEventHandler("onchanged",this.divData_onchanged,this);
+            this.divData.form.divYN_POPUP.form.spnDT_END_HH.addEventHandler("onchanged",this.divData_onchanged,this);
+            this.divData.form.divYN_POPUP.form.spnDT_END_MM.addEventHandler("onchanged",this.divData_onchanged,this);
+            this.divData.form.chkYN_MAIN.addEventHandler("onchanged",this.divData_chkYN_MAIN_onchanged,this);
+            this.divData.form.divYN_MAIN.form.ctclDT_START_MAIN.addEventHandler("onchanged",this.divData_onchanged,this);
+            this.divData.form.divYN_MAIN.form.spnDT_START_HH_MAIN.addEventHandler("onchanged",this.divData_onchanged,this);
+            this.divData.form.divYN_MAIN.form.spnDT_START_MM_MAIN.addEventHandler("onchanged",this.divData_onchanged,this);
+            this.divData.form.divYN_MAIN.form.ctclDT_END_MAIN.addEventHandler("onchanged",this.divData_onchanged,this);
+            this.divData.form.divYN_MAIN.form.spnDT_END_HH_MAIN.addEventHandler("onchanged",this.divData_onchanged,this);
+            this.divData.form.divYN_MAIN.form.spnDT_END_MM_MAIN.addEventHandler("onchanged",this.divData_onchanged,this);
+            this.dsList.addEventHandler("onvaluechanged",this.dsList_onvaluechanged,this);
+        };
+        this.loadIncludeScript("DZU_GONGJI.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_ACNTUNIT" taborder="0" text="사업지코드" left="0.0" top="10.0" width="105.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtCD_ACNTUNIT" taborder="1" left="staCD_ACNTUNIT:0.0" top="10.0" width="110" height="24.0" value="" readonly="true" maxlength="4" textAlign="left"/>
+              <Edit id="ctxtDS_ACNTUNIT" taborder="2" left="ctxtCD_ACNTUNIT:0.0" top="10.0" width="200" height="24.0" value="" readonly="true" maxlength="4" textAlign="left"/>
+              <Static id="staNO_DONG" taborder="3" text="동층호" left="ctxtDS_ACNTUNIT:0.0" top="10.0" width="105.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtNO_DONG" taborder="4" left="staNO_DONG:0.0" top="10.0" width="80" height="24.0" value="" readonly="true" maxlength="4" textAlign="center"/>
+              <Edit id="ctxtNO_FLOOR" taborder="5" left="ctxtNO_DONG:0.0" top="10.0" width="60" height="24.0" value="" readonly="true" maxlength="2" textAlign="center"/>
+              <Edit id="ctxtNO_HO" taborder="6" left="ctxtNO_FLOOR:0.0" top="10.0" width="80" height="24.0" value="" readonly="true" maxlength="3" textAlign="center"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staTitle" taborder="0" text="계약자정보" left="0" top="0" width="100%" height="22" cssclass="sta_TITLE_Bg"/>
+              <Static id="staDS_CONTRACTOR" taborder="1" text="성명" left="10" top="staTitle:5" width="100" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staBgDS_CONTRACTOR" taborder="2" left="staDS_CONTRACTOR:-1" top="staTitle:5" width="250" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="staAM_BUNYANGPLAN" taborder="3" text="약정보증금" left="staBgDS_CONTRACTOR:-1" top="staTitle:5" width="100" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staBgAM_BUNYANGPLAN" taborder="4" left="staAM_BUNYANGPLAN:-1" top="staTitle:5" width="250" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="staDT_LEASE" taborder="5" text="계약기간" left="10" top="staDS_CONTRACTOR:-1" width="100" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staBgDT_LEASE" taborder="6" left="staDT_LEASE:-1" top="staBgDS_CONTRACTOR:-1" width="250" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="staAM_BUNYANGGET" taborder="7" text="수납보증금" left="staBgDT_LEASE:-1" top="staAM_BUNYANGPLAN:-1" width="100" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staBgAM_BUNYANGGET" taborder="8" left="staAM_BUNYANGGET:-1" top="staBgAM_BUNYANGPLAN:-1" width="250" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="staAM_LEASE" taborder="9" text="월임대료" left="10" top="staDT_LEASE:-1" width="100" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staBgAM_LEASE" taborder="10" left="staAM_LEASE:-1" top="staBgDT_LEASE:-1" width="250" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="staAM_KASU" taborder="11" text="예수금" left="staBgAM_LEASE:-1" top="staAM_BUNYANGGET:-1" width="100" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staBgAM_KASU" taborder="12" left="staAM_KASU:-1" top="staBgAM_BUNYANGGET:-1" width="250" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="staTitleBottom" taborder="13" text="분양전환금 관리" left="0" top="staBgAM_KASU:5" width="100%" height="22" cssclass="sta_TITLE_Bg"/>
+              <Grid id="objGrid" taborder="14" left="0" top="staTitleBottom:5" bottom="0" right="0"/>
+              <Edit id="ctxtDS_CONTRACTOR" taborder="15" left="staDS_CONTRACTOR:5" top="staTitle:10" width="200" height="20" value="" readonly="true"/>
+              <MaskEdit id="ctxtAM_BUNYANGPLAN" taborder="16" left="staAM_BUNYANGPLAN:5" top="staTitle:10" width="200" height="20" value="" format="#,#0" readonly="true"/>
+              <Calendar id="ctclDT_LEASE_FR" taborder="17" left="staDT_LEASE:5" top="ctxtDS_CONTRACTOR:9" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="true"/>
+              <Static id="staDT_LEASE_range" taborder="18" text="~" left="ctclDT_LEASE_FR:10" top="ctxtDS_CONTRACTOR:9" width="10" height="20"/>
+              <Calendar id="ctclDT_LEASE_TO" taborder="19" left="staDT_LEASE_range:10" top="ctxtDS_CONTRACTOR:9" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="true"/>
+              <MaskEdit id="ctxtAM_BUNYANGGET" taborder="20" left="staAM_BUNYANGGET:5" top="ctxtAM_BUNYANGPLAN:9" width="200" height="20" value="" format="#,#0" readonly="true"/>
+              <MaskEdit id="ctxtAM_LEASE" taborder="21" left="staAM_LEASE:5" top="ctclDT_LEASE_FR:9" width="200" height="20" value="" format="#,#0" readonly="true"/>
+              <MaskEdit id="ctxtAM_KASU" taborder="22" left="staAM_KASU:5" top="ctxtAM_BUNYANGGET:9" width="200" height="20" value="" format="#,#0" readonly="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	
+	this.dsSearch.setColumn(0, "CD_ACNTUNIT", this.getOwnerFrame().CD_ACNTUNIT);
+	this.dsSearch.setColumn(0, "DS_ACNTUNIT", this.getOwnerFrame().DS_ACNTUNIT);
+	this.dsSearch.setColumn(0, "NO_DONG", this.getOwnerFrame().DONG);
+	this.dsSearch.setColumn(0, "NO_FLOOR", this.getOwnerFrame().FLOOR);
+	this.dsSearch.setColumn(0, "NO_HO", this.getOwnerFrame().HO);
+	this.dsSearch.setColumn(0, "DS_CONTRACTOR", this.getOwnerFrame().CONTRACTOR);
+	this.dsSearch.setColumn(0, "AM_LAND", this.getOwnerFrame().AM_LAND);
+	
+	this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DL", "DLB_TRANSAGREEMENT");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_ACNTUNIT", "string");
+	this.dsSelect.addColumn("TY_GUBUN", "string");
+	this.dsSelect.addColumn("NO_CHASU", "string");
+	this.dsSelect.addColumn("NO_DONG", "string");
+	this.dsSelect.addColumn("NO_FLOOR", "string");
+	this.dsSelect.addColumn("NO_HO", "string");
+	
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("CD_ACNTUNIT", "string");
+	this.dsInsert.addColumn("TY_GUBUN", "string");
+	this.dsInsert.addColumn("NO_CHASU", "string");
+	this.dsInsert.addColumn("NO_DONG", "string");
+	this.dsInsert.addColumn("NO_FLOOR", "string");
+	this.dsInsert.addColumn("NO_HO", "string");
+	this.dsInsert.addColumn("TY_NAPIP", "string");
+	this.dsInsert.addColumn("NO_NAPCHA", "string");
+	this.dsInsert.addColumn("DT_STARTAGREE", "string");
+	this.dsInsert.addColumn("DT_ENDAGREE", "string");
+	this.dsInsert.addColumn("AM_LAND", "bigdecimal");
+	this.dsInsert.addColumn("AM_BUILDING", "bigdecimal");
+	this.dsInsert.addColumn("AM_VAT", "bigdecimal");
+	this.dsInsert.addColumn("AM_SELLING", "bigdecimal");
+	this.dsInsert.addColumn("ID_INSERT", "string");
+
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("CD_ACNTUNIT", "string");
+	this.dsUpdate.addColumn("TY_GUBUN", "string");
+	this.dsUpdate.addColumn("NO_CHASU", "string");
+	this.dsUpdate.addColumn("NO_DONG", "string");
+	this.dsUpdate.addColumn("NO_FLOOR", "string");
+	this.dsUpdate.addColumn("NO_HO", "string");
+	this.dsUpdate.addColumn("TY_NAPIP", "string");
+	this.dsUpdate.addColumn("NO_NAPCHA", "string");
+	this.dsUpdate.addColumn("DT_STARTAGREE", "string");
+	this.dsUpdate.addColumn("DT_ENDAGREE", "string");
+	this.dsUpdate.addColumn("AM_LAND", "bigdecimal");
+	this.dsUpdate.addColumn("AM_BUILDING", "bigdecimal");
+	this.dsUpdate.addColumn("AM_VAT", "bigdecimal");
+	this.dsUpdate.addColumn("AM_SELLING", "bigdecimal");
+	this.dsUpdate.addColumn("ID_UPDATE", "string");
+
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("CD_ACNTUNIT", "string");
+	this.dsDelete.addColumn("TY_GUBUN", "string");
+	this.dsDelete.addColumn("NO_CHASU", "string");
+	this.dsDelete.addColumn("NO_DONG", "string");
+	this.dsDelete.addColumn("NO_FLOOR", "string");
+	this.dsDelete.addColumn("NO_HO", "string");
+	this.dsDelete.addColumn("TY_NAPIP", "string");
+	this.dsDelete.addColumn("NO_NAPCHA", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0,6));
+	this.dsSelect.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6,1));
+	this.dsSelect.setColumn(0, "NO_CHASU", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7,2));
+	this.dsSelect.setColumn(0, "NO_DONG", this.dsSearch.getColumn(0, "NO_DONG"));
+	this.dsSelect.setColumn(0, "NO_FLOOR", this.dsSearch.getColumn(0, "NO_FLOOR"));
+	this.dsSelect.setColumn(0, "NO_HO", this.dsSearch.getColumn(0, "NO_HO"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect select_single=dsSelect";
+	var outData     = "dsList=select0 dsListSingle=select_single0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	var nrow = this.gfnGridAdd(this.dxGrid); // top (default), bottom, current
+	this.dsList.setColumn(nrow, "NO_NAPIP", "X"); // 분양전환잔금
+	this.dsList.setColumn(nrow, "AM_LAND", 0);
+	this.dsList.setColumn(nrow, "AM_BUILDING", this.gfnNvl(this.dsSearch.getColumn(0, "AM_LAND"),0));
+	this.dsList.setColumn(nrow, "AM_VAT", 0);
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	// 그리드 필수항목 체크
+	if (!this.gfnGridValidate(this.dxGrid)) return;	
+
+	this.dxGrid.updateToDataset();
+		
+	this.dsInsert.clearData();
+	this.dsUpdate.clearData();
+	this.dsDelete.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+			case "I":
+				var nrow = this.dsInsert.addRow();
+				this.dsInsert.setColumn(nrow, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0,6));
+				this.dsInsert.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6,1));
+				this.dsInsert.setColumn(nrow, "NO_CHASU", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7,2));
+				this.dsInsert.setColumn(nrow, "NO_DONG", this.dsSearch.getColumn(0, "NO_DONG"));
+				this.dsInsert.setColumn(nrow, "NO_FLOOR", this.dsSearch.getColumn(0, "NO_FLOOR"));
+				this.dsInsert.setColumn(nrow, "NO_HO", this.dsSearch.getColumn(0, "NO_HO"));
+				this.dsInsert.setColumn(nrow, "TY_NAPIP", this.dsList.getColumn(i, "TY_NAPIP"));
+				this.dsInsert.setColumn(nrow, "NO_NAPCHA", this.dsList.getColumn(i, "NO_NAPCHA"));
+				this.dsInsert.setColumn(nrow, "DT_STARTAGREE", this.dsList.getColumn(i, "DT_STARTAGREE"));
+				this.dsInsert.setColumn(nrow, "DT_ENDAGREE", this.dsList.getColumn(i, "DT_ENDAGREE"));
+				this.dsInsert.setColumn(nrow, "AM_LAND", this.dsList.getColumn(i, "AM_LAND"));
+				this.dsInsert.setColumn(nrow, "AM_BUILDING", this.dsList.getColumn(i, "AM_BUILDING"));
+				this.dsInsert.setColumn(nrow, "AM_VAT", this.dsList.getColumn(i, "AM_VAT"));
+				this.dsInsert.setColumn(nrow, "AM_SELLING", this.dsList.getColumn(i, "AM_SELLING"));
+				this.dsInsert.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+				break;
+				
+			case "U":
+				var nrow = this.dsUpdate.addRow();
+				this.dsUpdate.setColumn(nrow, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0,6));
+				this.dsUpdate.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6,1));
+				this.dsUpdate.setColumn(nrow, "NO_CHASU", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7,2));
+				this.dsUpdate.setColumn(nrow, "NO_DONG", this.dsSearch.getColumn(0, "NO_DONG"));
+				this.dsUpdate.setColumn(nrow, "NO_FLOOR", this.dsSearch.getColumn(0, "NO_FLOOR"));
+				this.dsUpdate.setColumn(nrow, "NO_HO", this.dsSearch.getColumn(0, "NO_HO"));
+				// 금성백조 소스에서 아래 부분은 전송하지 않음.
+// 				this.dsUpdate.setColumn(nrow, "TY_NAPIP", this.dsList.getColumn(i, "TY_NAPIP"));
+// 				this.dsUpdate.setColumn(nrow, "NO_NAPCHA", this.dsList.getColumn(i, "NO_NAPCHA"));
+// 				this.dsUpdate.setColumn(nrow, "DT_STARTAGREE", this.dsList.getColumn(i, "DT_STARTAGREE"));
+// 				this.dsUpdate.setColumn(nrow, "DT_ENDAGREE", this.dsList.getColumn(i, "DT_ENDAGREE"));
+// 				this.dsUpdate.setColumn(nrow, "AM_LAND", this.dsList.getColumn(i, "AM_LAND"));
+// 				this.dsUpdate.setColumn(nrow, "AM_BUILDING", this.dsList.getColumn(i, "AM_BUILDING"));
+// 				this.dsUpdate.setColumn(nrow, "AM_VAT", this.dsList.getColumn(i, "AM_VAT"));
+// 				this.dsUpdate.setColumn(nrow, "AM_SELLING", this.dsList.getColumn(i, "AM_SELLING"));
+// 				this.dsUpdate.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+				break;
+				
+			case "D":
+				var nrow = this.dsDelete.addRow();
+				this.dsDelete.setColumn(nrow, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0,6));
+				this.dsDelete.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6,1));
+				this.dsDelete.setColumn(nrow, "NO_CHASU", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7,2));
+				this.dsDelete.setColumn(nrow, "NO_DONG", this.dsSearch.getColumn(0, "NO_DONG"));
+				this.dsDelete.setColumn(nrow, "NO_FLOOR", this.dsSearch.getColumn(0, "NO_FLOOR"));
+				this.dsDelete.setColumn(nrow, "NO_HO", this.dsSearch.getColumn(0, "NO_HO"));
+				this.dsDelete.setColumn(nrow, "TY_NAPIP", this.dsList.getColumn(i, "TY_NAPIP"));
+				this.dsDelete.setColumn(nrow, "NO_NAPCHA", this.dsList.getColumn(i, "NO_NAPCHA"));
+				break;
+		}
+	}
+	
+	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	/*
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_SYSTEM"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SYSTEM.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("시스템을 입력하세요.", "fnVaidateCallback");
+	}
+	*/
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+	}
+	else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+
+
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue)
+	{
+		if(e.columnid == "AM_LAND" || e.columnid == "AM_BUILDING" || e.columnid == "AM_VAT")
+		{
+			var am_land = nexacro.toNumber(this.dsList.getColumn(e.row, "AM_LAND"),0);
+			var am_build = nexacro.toNumber(this.dsList.getColumn(e.row, "AM_BUILDING"),0);
+			var am_vat = nexacro.toNumber(this.dsList.getColumn(e.row, "AM_VAT"),0);
+			
+			this.dsList.setColumn(e.row, "AM_SELLING", am_land + am_build + am_vat);
+		}
+		else if(e.columnid == "NO_NAPCHA")
+		{
+			if(this.gfnNvl(e.newvalue,"").length == 1)
+			{
+				this.dsList.setColumn(e.row, "NO_NAPCHA", "0" + e.newvalue);
+			}
+		}
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select_single</Col>
+            <Col id="SP">DLBPR_JEONGSAN_DEPOSIT_INFO_DETAIL</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DLBPR_AGREEMENT_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DLBPR_AGREEMENT_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DLBPR_AGREEMENT_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DLBPR_AGREEMENT_DELETE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_ACNTUNIT" type="STRING" size="256"/>
+          <Column id="DS_ACNTUNIT" type="STRING" size="256"/>
+          <Column id="NO_DONG" type="STRING" size="256"/>
+          <Column id="NO_FLOOR" type="STRING" size="256"/>
+          <Column id="NO_HO" type="STRING" size="256"/>
+          <Column id="DS_CONTRACTOR" type="STRING" size="256"/>
+          <Column id="AM_LAND" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListSingle">
+        <ColumnInfo>
+          <Column id="DT_LEASE_FR" type="STRING" size="256"/>
+          <Column id="DT_LEASE_TO" type="STRING" size="256"/>
+          <Column id="AM_BUNYANGPLAN" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_BUNYANGGET" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_KASU" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_LEASE" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_APPROLEASE" type="BIGDECIMAL" size="256"/>
+          <Column id="CK_LAW" type="INT" size="256"/>
+          <Column id="CK_REMARK" type="INT" size="256"/>
+          <Column id="YN_VACNT" type="STRING" size="256"/>
+          <Column id="CD_GUJA" type="STRING" size="256"/>
+          <Column id="NO_GUJA" type="STRING" size="256"/>
+          <Column id="DS_BANK" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctxtCD_ACNTUNIT" propid="value" datasetid="dsSearch" columnid="CD_ACNTUNIT"/>
+      <BindItem id="item1" compid="divSearch.form.ctxtDS_ACNTUNIT" propid="value" datasetid="dsSearch" columnid="DS_ACNTUNIT"/>
+      <BindItem id="item2" compid="divSearch.form.ctxtNO_DONG" propid="value" datasetid="dsSearch" columnid="NO_DONG"/>
+      <BindItem id="item3" compid="divSearch.form.ctxtNO_FLOOR" propid="value" datasetid="dsSearch" columnid="NO_FLOOR"/>
+      <BindItem id="item4" compid="divSearch.form.ctxtNO_HO" propid="value" datasetid="dsSearch" columnid="NO_HO"/>
+      <BindItem id="item5" compid="divData.form.ctxtDS_CONTRACTOR" propid="value" datasetid="dsSearch" columnid="DS_CONTRACTOR"/>
+      <BindItem id="item6" compid="divData.form.ctxtAM_BUNYANGPLAN" propid="value" datasetid="dsListSingle" columnid="AM_BUNYANGPLAN"/>
+      <BindItem id="item7" compid="divData.form.ctclDT_LEASE_FR" propid="value" datasetid="dsListSingle" columnid="DT_LEASE_FR"/>
+      <BindItem id="item8" compid="divData.form.ctclDT_LEASE_TO" propid="value" datasetid="dsListSingle" columnid="DT_LEASE_TO"/>
+      <BindItem id="item9" compid="divData.form.ctxtAM_BUNYANGGET" propid="value" datasetid="dsListSingle" columnid="AM_BUNYANGGET"/>
+      <BindItem id="item10" compid="divData.form.ctxtAM_LEASE" propid="value" datasetid="dsListSingle" columnid="AM_LEASE"/>
+      <BindItem id="item11" compid="divData.form.ctxtAM_KASU" propid="value" datasetid="dsListSingle" columnid="AM_KASU"/>
+    </Bind>
+  </Form>
+</FDL>

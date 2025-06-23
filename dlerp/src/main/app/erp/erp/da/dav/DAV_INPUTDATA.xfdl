@@ -1,0 +1,4025 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DAV_INPUTDATA" width="1280" height="1120" titletext="개인별 공제자료등록" onload="form_onload" visible="true">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0" top="0" height="110.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_CORP" taborder="0" text="법인" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Static id="staYN_MID" taborder="1" text="작업구분" left="staCD_CORP:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Combo id="cboYN_MID" taborder="2" left="staYN_MID:0.0" top="10.0" width="80" height="24.0" innerdataset="innerdataset" datacolumn="datacolumn" codecolumn="codecolumn" index="0" value="1" text="연말정산" readonly="true" onitemchanged="divSearch_cboYN_MID_onitemchanged">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="datacolumn">연말정산</Col>
+                      <Col id="codecolumn">N</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">중도정산</Col>
+                      <Col id="codecolumn">Y</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="staWORK_BASE" taborder="3" text="적용년도" left="cboYN_MID:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_CORP" CDTextWidth="50" taborder="8" left="staCD_CORP:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" CodeFindName="DAX_CFCORP_CODEFIND" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+              <Static id="staID_RESIDENT" taborder="5" text="주민번호" left="ccfCD_CORP:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Static id="staCD_EMPTYPE" taborder="6" text="구분" left="0.0" top="staCD_CORP:10.0" width="92.0" height="24.0" rtl="false" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfID_RESIDENT" CodeFindName="DAX_CFYEAREND" CDTextWidth="130" taborder="7" left="staID_RESIDENT:0.0" top="10.0" width="240" height="24.0" url="cmm::cmmCodeFind.xfdl" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+              <Radio id="rdoTY_GUBUN" taborder="9" left="staYN_MID:0.0" top="cboYN_MID:10.0" height="24.0" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" fittocontents="width" width="120" index="0" value="E" onitemchanged="fnSearchInit" text="임직원">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="datacolumn">임직원</Col>
+                      <Col id="codecolumn">E</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">일용직</Col>
+                      <Col id="codecolumn">T</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Button id="btnGetRetire" taborder="10" text="등록완료 및 세액계산" top="staCD_CORP:10.0" height="24.0" right="10" width="129" onclick="divSearch_btnGetRetire_onclick"/>
+              <Edit id="edtID_SABUN" taborder="11" left="ccfID_RESIDENT:0.0" top="10.0" width="79" height="24.0" visible="false" readonly="true"/>
+              <Div id="ctclWORK_BASE" taborder="4" left="staWORK_BASE:0.0" top="10.0" width="80" height="24.0" enableevent="true" url="cmm::cmmCalYY.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Tab id="tabData" taborder="0" tabindex="0" left="0" top="0" bottom="0" right="0" onchanged="divData_tabData_onchanged" canchange="divData_tabData_canchange" enable="true">
+                <Tabpages>
+                  <Tabpage id="tab1" text="기본공제">
+                    <Layouts>
+                      <Layout>
+                        <Div id="div00" taborder="5" text="div00" left="2" top="2" right="2" bottom="2">
+                          <Layouts>
+                            <Layout>
+                              <Grid id="objGrid" taborder="1" left="5" top="41" bottom="7" right="5" BeforeUserDataSetParam="fnGrid_BeforeUserDataSetParam" AfterCDTextChanged="fnGrid_AfterCDTextChanged"/>
+                              <Static id="staYN_HOUSEHOLD" taborder="0" text="세대주여부" left="10" top="11" width="60" height="20" rtl="false" cssclass="sta_WF_tablelabelE"/>
+                              <Radio id="rdoYN_HOUSEHOLD" taborder="2" left="staYN_HOUSEHOLD:10" top="11" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" fittocontents="width" width="120" index="0" value="Y" text="세대주" onitemchanged="divData_tabData_tab1_rdoYN_HOUSEHOLD_onitemchanged">
+                                <Dataset id="innerdataset">
+                                  <ColumnInfo>
+                                    <Column id="codecolumn" size="256"/>
+                                    <Column id="datacolumn" size="256"/>
+                                  </ColumnInfo>
+                                  <Rows>
+                                    <Row>
+                                      <Col id="datacolumn">세대주</Col>
+                                      <Col id="codecolumn">1</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="datacolumn">세대원</Col>
+                                      <Col id="codecolumn">2</Col>
+                                    </Row>
+                                  </Rows>
+                                </Dataset>
+                              </Radio>
+                              <Static id="staYN_DEDUCTION_CHG" taborder="3" text="인적공제항목 변동여부" left="220" top="11" width="130" height="20" rtl="false" cssclass="sta_WF_tablelabelE"/>
+                              <Radio id="rdoYN_DEDUCTION_CHG" taborder="4" left="staYN_DEDUCTION_CHG:10" top="11" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" fittocontents="width" width="130" index="0" value="Y" text="전년과동일" onitemchanged="divData_tabData_tab1_rdoYN_DEDUCTION_CHG_onitemchanged">
+                                <Dataset id="innerdataset">
+                                  <ColumnInfo>
+                                    <Column id="codecolumn" size="256"/>
+                                    <Column id="datacolumn" size="256"/>
+                                  </ColumnInfo>
+                                  <Rows>
+                                    <Row>
+                                      <Col id="codecolumn">1</Col>
+                                      <Col id="datacolumn">전년과 동일</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">2</Col>
+                                      <Col id="datacolumn">변동</Col>
+                                    </Row>
+                                  </Rows>
+                                </Dataset>
+                              </Radio>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab2" text="추가/특별/세액공제">
+                    <Layouts>
+                      <Layout>
+                        <Div id="div00" taborder="125" text="div00" left="5" top="5" right="5" bottom="5">
+                          <Layouts>
+                            <Layout>
+                              <Static id="staTITLE" taborder="0" text="인적공제" left="19" top="6" width="550" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+                              <Static id="staCD_WOMAN" taborder="1" text="부녀자공제" left="19" top="41" width="80" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta02" taborder="2" left="98" top="41" width="25" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staCD_ONEPARENTS" taborder="3" text="한부모가족공제" left="122" top="41" width="100" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta07" taborder="4" left="221" top="41" width="24" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staTITLE00" taborder="5" text="주택자금공제" left="19" top="79" width="550" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+                              <Static id="staAM_HOUSPRINC" taborder="6" text="주택임차차입금원리금상환액(기관)" left="19" top="114" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta00" taborder="7" left="418" top="114" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <CheckBox id="chkCD_WOMAN" taborder="8" left="staCD_WOMAN:5" top="47" width="27" height="18" readonly="false" onchanged="fnUpdateEtc"/>
+                              <CheckBox id="chkONEPARENTS" taborder="9" left="staCD_ONEPARENTS:5" top="47" width="27" height="18" readonly="false" onchanged="fnUpdateEtc"/>
+                              <Static id="staAM_HOUSPRINC2" taborder="10" text="주택임차차입금원리금상환액(거주자)" left="19" top="143" width="285" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta01" taborder="11" left="303" top="143" width="266" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSEREFUND" taborder="12" text="장기주택저당자입금이자상환액 10~15년(03.12.31일 이전 차입분)" left="19" top="172" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta03" taborder="13" left="418" top="172" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSEREFUND2" taborder="14" text="장기주택저당자입금이자상환액 15~29년(12. 1. 1일 이전 차입분)" left="19" top="201" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta04" taborder="15" left="418" top="201" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSEREFUND3" taborder="16" text="장기주택저당자입금이자상환액 30년이상(12. 1. 1일 이전 차입분)" left="19" top="230" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta05" taborder="17" left="418" top="230" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSEREFUND12" taborder="18" text="장기주택저당자입금이자상환액 15년이상(12. 1. 1일 이후 신규차입분/&#13;&#10;차입금 상환기간 연장분) 고정금리(or)비거치식상환대출" left="19" top="259" width="400" height="40" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta06" taborder="19" left="418" top="259" width="151" height="40" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSEREFUND12_1" taborder="20" text="장기주택저당자입금이자상환액 15년이상(12. 1. 1일 이후 신규차입분/&#13;&#10;차입금 상환기간 연장분) 기타대출" left="19" top="298" width="400" height="40" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta08" taborder="21" left="418" top="298" width="151" height="40" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSEREFUND2015_1" taborder="22" text="장기주택저당자입금이자상환액 15년이상(15. 1. 1일 이후 신규차입분/&#13;&#10;차입금 상환기간 연장분) 고정금리(and)비거치식상환대출" left="19" top="337" width="400" height="40" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta09" taborder="23" left="418" top="337" width="151" height="40" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSEREFUND2015_2" taborder="24" text="장기주택저당자입금이자상환액 15년이상(15. 1. 1일 이후 신규차입분/&#13;&#10;차입금 상환기간 연장분) 고정금리(or)비거치식상환대출" left="19" top="376" width="400" height="40" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta10" taborder="25" left="418" top="376" width="151" height="40" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSEREFUND2015_3" taborder="26" text="장기주택저당자입금이자상환액 15년이상(15. 1. 1일 이후 신규차입분/&#13;&#10;차입금 상환기간 연장분) 기타대출" left="19" top="415" width="400" height="40" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta11" taborder="27" left="418" top="415" width="151" height="40" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSEREFUND2015_4" taborder="28" text="장기주택저당자입금이자상환액 10년이상 ~ 15년미만(15. 1. 1일 이후&#13;&#10;신규차입분/차입금 상환기간 연장분)  고정금리(or)비거치식상환대출" left="19" top="454" width="400" height="40" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta12" taborder="29" left="418" top="454" width="151" height="40" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_LEASE" taborder="30" text="월세액" left="19" top="493" width="285" height="30" cssclass="sta_WF_tablelabel" visible="true" textAlign="center"/>
+                              <Static id="sta13" taborder="31" left="303" top="493" width="266" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staYEAREND_PRINT" taborder="32" text="월세액.거주자간 주택임차차입금 원리금상환액 소득공제 명세서-&gt;&gt;" left="19" top="522" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true" onclick="divData_tabData_tab2_staAM_HOUSEREFUND09_onclick"/>
+                              <Static id="sta14" taborder="33" left="418" top="522" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Button id="btnHOUSE_LR" taborder="34" text="거주자간계약사항" left="staAM_HOUSPRINC2:5" top="148" width="110" height="20" onclick="divData_tabData_tab2_btnHOUSE_LR_onclick"/>
+                              <Static id="staAM_HOUSESUM1_1" taborder="35" text="청약저축" left="19" top="551" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true" onclick="divData_tabData_tab2_staAM_HOUSEREFUND09_onclick" textAlign="center"/>
+                              <Static id="sta15" taborder="36" left="418" top="551" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSESUM1_2" taborder="37" text="주택청약종합저축" left="19" top="580" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true" onclick="divData_tabData_tab2_staAM_HOUSEREFUND09_onclick" textAlign="center"/>
+                              <Static id="sta16" taborder="38" left="418" top="580" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSESUM1_4" taborder="39" text="근로자주택마련저축" left="19" top="609" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true" onclick="divData_tabData_tab2_staAM_HOUSEREFUND09_onclick" textAlign="center"/>
+                              <Static id="sta17" taborder="40" left="418" top="609" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Div id="ccfCFBANK_401" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="70" taborder="41" left="584" top="556" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+                              <Div id="ccfCFBANK_402" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="70" taborder="42" left="584" top="585" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+                              <Div id="ccfCFBANK_404" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="70" taborder="43" left="584" top="614" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+                              <Static id="staTITLE01" taborder="44" text="저축공제" left="599" top="6" width="350" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+                              <Static id="staAM_PENSIONSUBST1" taborder="45" text="개인연금저축(2000.12.31이전)" left="599" top="41" width="200" height="30" cssclass="sta_WF_tablelabel" visible="true" textAlign="center"/>
+                              <Static id="sta18" taborder="46" left="798" top="41" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_PENSIONSUBST2" taborder="47" text="연금저축(2001.1.1이후)" left="599" top="70" width="200" height="30" cssclass="sta_WF_tablelabel" visible="true" textAlign="center"/>
+                              <Static id="sta19" taborder="48" left="798" top="70" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_PENSIONSUBST3" taborder="49" text="퇴직연금" left="599" top="99" width="200" height="30" cssclass="sta_WF_tablelabel" visible="true" textAlign="center"/>
+                              <Static id="sta20" taborder="50" left="798" top="99" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_WOORISAJU" taborder="51" text="우리사주조합출연금" left="599" top="128" width="200" height="30" cssclass="sta_WF_tablelabel" visible="true" textAlign="center"/>
+                              <Static id="sta21" taborder="52" left="798" top="128" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_INVEST2" taborder="53" text="벤처투자보합출자등_조합" left="599" top="157" width="200" height="30" cssclass="sta_WF_tablelabel" visible="true" textAlign="center"/>
+                              <Static id="sta22" taborder="54" left="798" top="157" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_SMALLBUSINESSOUT" taborder="55" text="소기업.소상공인 공제부금" left="599" top="215" width="200" height="30" cssclass="sta_WF_tablelabel" visible="true" textAlign="center"/>
+                              <Static id="sta23" taborder="56" left="798" top="215" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Div id="ccfCFBANK_60" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="70" taborder="57" left="954" top="46" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+                              <Div id="ccfCFBANK_61" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="70" taborder="58" left="954" top="75" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+                              <Div id="ccfCFBANK_62" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="70" taborder="59" left="954" top="104" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+                              <Button id="btnMONTH_CONT_REMARK" taborder="60" text="월세계약사항" left="309" top="498" width="110" height="20" onclick="divData_tabData_tab2_btnMONTH_CONT_REMARK_onclick"/>
+                              <Button id="btnYEAREND_PRINT" taborder="61" text="명세서 출력" left="425" top="527" width="140" height="20" onclick="divData_tabData_tab2_btnYEAREND_PRINT_onclick"/>
+                              <Static id="staTITLE02" taborder="62" text="세액 감면 및 공제" left="19" top="659" width="550" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+                              <Static id="staAM_HOUSPRINC00" taborder="63" text="감면세액(소득세법)" left="19" top="694" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta24" taborder="64" left="418" top="694" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSPRINC01" taborder="65" text="중소기업 취업 청년 감면세액(조세특례제한법 제30조)" left="19" top="723" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta25" taborder="66" left="418" top="723" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="sta26" taborder="67" left="418" top="752" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSPRINC02" taborder="68" text="중소기업 취업 청년 감면세액(취업일)" left="19" top="752" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta27" taborder="69" left="418" top="781" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSPRINC03" taborder="70" text="중소기업 취업 청년 감면세액(감면기간 종료일)" left="19" top="781" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Static id="sta28" taborder="72" left="418" top="810" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <Static id="staAM_HOUSPRINC04" taborder="73" text="주택차입금이자(95.11.1~97.12.31 기간중에 미분양주택관련)" left="19" top="810" width="400" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+                              <Edit id="edtAM_ETCSUBST12" taborder="71" left="424" top="815" width="140" height="20" readonly="false" onchanged="fnUpdateEtc"/>
+                              <Calendar id="calAM_ETCSUBST98" taborder="74" left="424" top="757" width="140" height="20" readonly="false" dateformat="yyyy-MM-dd" onchanged="fnUpdateEtc"/>
+                              <Calendar id="calAM_ETCSUBST99" taborder="75" left="424" top="786" width="140" height="20" readonly="false" dateformat="yyyy-MM-dd" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST02" taborder="76" left="424" top="119" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc" enable="true" enableevent="true"/>
+                              <MaskEdit id="edtAM_ETCSUBST02_1" taborder="77" left="424" top="148" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST03" taborder="78" left="424" top="177" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST04" taborder="79" left="424" top="206" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST19" taborder="80" left="424" top="235" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST55" taborder="81" left="424" top="269" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST56" taborder="82" left="424" top="308" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST65" taborder="83" left="424" top="347" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST66" taborder="84" left="424" top="386" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST67" taborder="85" left="424" top="425" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST68" taborder="86" left="424" top="464" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST48" taborder="87" left="424" top="498" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST401" taborder="88" left="424" top="556" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST402" taborder="89" left="424" top="585" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST404" taborder="90" left="424" top="614" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST403" taborder="91" left="425" top="644" width="140" height="20" readonly="false" format="#,##0" visible="false"/>
+                              <MaskEdit id="edtAM_ETCSUBST10" taborder="92" left="424" top="699" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST11" taborder="93" left="424" top="728" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST05" taborder="94" left="804" top="46" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST06" taborder="95" left="804" top="75" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST07" taborder="96" left="804" top="104" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST08" taborder="97" left="804" top="133" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST09" taborder="98" left="804" top="162" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <MaskEdit id="edtAM_ETCSUBST77" taborder="99" left="804" top="220" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                              <Combo id="cboETCSUBST01" taborder="100" text="cbo00" left="575" top="699" width="85" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" visible="false">
+                                <Dataset id="innerdataset">
+                                  <ColumnInfo>
+                                    <Column id="codecolumn" size="256"/>
+                                    <Column id="datacolumn" size="256"/>
+                                  </ColumnInfo>
+                                  <Rows>
+                                    <Row>
+                                      <Col id="codecolumn">0</Col>
+                                      <Col id="datacolumn">0</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">1</Col>
+                                      <Col id="datacolumn">1</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">2</Col>
+                                      <Col id="datacolumn">2</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">3</Col>
+                                      <Col id="datacolumn">3</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">4</Col>
+                                      <Col id="datacolumn">4</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">5</Col>
+                                      <Col id="datacolumn">5</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">6</Col>
+                                      <Col id="datacolumn">6</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">7</Col>
+                                      <Col id="datacolumn">7</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">8</Col>
+                                      <Col id="datacolumn">8</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">9</Col>
+                                      <Col id="datacolumn">9</Col>
+                                    </Row>
+                                  </Rows>
+                                </Dataset>
+                              </Combo>
+                              <Combo id="cboETCSUBST02" taborder="101" text="cbo00" left="575" top="728" width="85" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" visible="false">
+                                <Dataset id="innerdataset">
+                                  <ColumnInfo>
+                                    <Column id="codecolumn" size="256"/>
+                                    <Column id="datacolumn" size="256"/>
+                                  </ColumnInfo>
+                                  <Rows>
+                                    <Row>
+                                      <Col id="codecolumn">0</Col>
+                                      <Col id="datacolumn">0</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">1</Col>
+                                      <Col id="datacolumn">1</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">2</Col>
+                                      <Col id="datacolumn">2</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">3</Col>
+                                      <Col id="datacolumn">3</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">4</Col>
+                                      <Col id="datacolumn">4</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">5</Col>
+                                      <Col id="datacolumn">5</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">6</Col>
+                                      <Col id="datacolumn">6</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">7</Col>
+                                      <Col id="datacolumn">7</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">8</Col>
+                                      <Col id="datacolumn">8</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">9</Col>
+                                      <Col id="datacolumn">9</Col>
+                                    </Row>
+                                  </Rows>
+                                </Dataset>
+                              </Combo>
+                              <Combo id="cboETCSUBST03" taborder="102" text="cbo00" left="575" top="757" width="85" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" visible="false">
+                                <Dataset id="innerdataset">
+                                  <ColumnInfo>
+                                    <Column id="codecolumn" size="256"/>
+                                    <Column id="datacolumn" size="256"/>
+                                  </ColumnInfo>
+                                  <Rows>
+                                    <Row>
+                                      <Col id="codecolumn">0</Col>
+                                      <Col id="datacolumn">0</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">1</Col>
+                                      <Col id="datacolumn">1</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">2</Col>
+                                      <Col id="datacolumn">2</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">3</Col>
+                                      <Col id="datacolumn">3</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">4</Col>
+                                      <Col id="datacolumn">4</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">5</Col>
+                                      <Col id="datacolumn">5</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">6</Col>
+                                      <Col id="datacolumn">6</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">7</Col>
+                                      <Col id="datacolumn">7</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">8</Col>
+                                      <Col id="datacolumn">8</Col>
+                                    </Row>
+                                    <Row>
+                                      <Col id="codecolumn">9</Col>
+                                      <Col id="datacolumn">9</Col>
+                                    </Row>
+                                  </Rows>
+                                </Dataset>
+                              </Combo>
+                              <Div id="ccfCFBANK_44" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="70" taborder="103" left="954" top="296" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+                              <Div id="ccfCFBANK_45" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="70" taborder="104" left="954" top="325" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+                              <Div id="ccfCFBANK_46" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="70" taborder="105" left="954" top="354" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+                              <Edit id="edt_ACCOUNT401" taborder="106" left="844" top="556" width="126" height="20" visible="false"/>
+                              <Edit id="edt_ACCOUNT402" taborder="107" left="844" top="586" width="126" height="20" visible="false"/>
+                              <Edit id="edt_ACCOUNT403" taborder="108" left="844" top="645" width="126" height="20" visible="false"/>
+                              <Div id="ccfCFBANK_403" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="70" taborder="109" left="584" top="644" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+                              <Edit id="edt_ACCOUNT404" taborder="110" left="844" top="615" width="126" height="20" visible="false"/>
+                              <Edit id="edt_ACCOUNT60" taborder="111" left="1211" top="46" width="40" height="20" visible="false"/>
+                              <Edit id="edt_ACCOUNT61" taborder="112" left="1211" top="75" width="40" height="20" visible="false"/>
+                              <Edit id="edt_ACCOUNT62" taborder="113" left="1211" top="105" width="40" height="20" visible="false"/>
+                              <Edit id="edt_ACCOUNT44" taborder="114" left="1211" top="225" width="40" height="20" visible="false"/>
+                              <MaskEdit id="edtAM_ETCSUBST16" taborder="115" left="804" top="298" width="140" height="20" readonly="true" format="#,##0" visible="false"/>
+                              <MaskEdit id="edtAM_ETCSUBST17" taborder="116" left="804" top="326" width="140" height="20" readonly="true" format="#,##0" visible="false"/>
+                              <MaskEdit id="edtAM_ETCSUBST18" taborder="117" left="804" top="355" width="140" height="20" readonly="true" format="#,##0" visible="false"/>
+                              <Edit id="edt_ACCOUNT45" taborder="118" left="1211" top="255" width="40" height="20" visible="false"/>
+                              <Edit id="edt_ACCOUNT46" taborder="119" left="1211" top="285" width="40" height="20" visible="false"/>
+                              <MaskEdit id="edtAM_ETCSUBST199" taborder="120" left="804" top="385" width="140" height="20" readonly="true" format="#,##0" visible="false"/>
+                              <MaskEdit id="edtAM_ETCSUBST01" taborder="121" left="975" top="556" width="140" height="20" readonly="true" format="#,##0" visible="false"/>
+                              <Static id="staAM_INVEST2_00" taborder="122" text="벤처투자보합출자등_벤처" left="599" top="186" width="200" height="30" cssclass="sta_WF_tablelabel" visible="true" textAlign="center"/>
+                              <Static id="sta22_00" taborder="124" left="798" top="186" width="151" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+                              <MaskEdit id="edtAM_ETCSUBST09_00" taborder="123" left="804" top="191" width="140" height="20" readonly="false" format="#,##0" onchanged="fnUpdateEtc"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SUBST" type="STRING" size="256"/>
+          <Column id="DS_SUBST" type="STRING" size="256"/>
+          <Column id="NO_SEQ" type="STRING" size="256"/>
+          <Column id="YN_BASE" type="STRING" size="256"/>
+          <Column id="YN_HANDICAP" type="STRING" size="256"/>
+          <Column id="YN_CHILDREN" type="STRING" size="256"/>
+          <Column id="YN_INSURANCE" type="STRING" size="256"/>
+          <Column id="YN_MEDICAL" type="STRING" size="256"/>
+          <Column id="YN_EDUCATION" type="STRING" size="256"/>
+          <Column id="YN_CREDIT" type="STRING" size="256"/>
+          <Column id="YN_FOREIGNER" type="STRING" size="256"/>
+          <Column id="YN_BIRTH" type="STRING" size="256"/>
+          <Column id="CD_FAMILY" type="STRING" size="256"/>
+          <Column id="DS_FAMILY" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+          <Column id="ID_RESIDENT_FAMILY" type="STRING" size="256"/>
+          <Column id="DS_ADDRESS" type="STRING" size="256"/>
+          <Column id="ID_RESIDENT_FAMILY_OLD" type="STRING" size="256"/>
+          <Column id="NO_AGE" type="STRING" size="256"/>
+          <Column id="CD_HANDICAP" type="STRING" size="256"/>
+          <Column id="DS_HANDICAP" type="STRING" size="256"/>
+          <Column id="YN_HOUSEHOLDER" type="STRING" size="256"/>
+          <Column id="YN_CHANGE" type="STRING" size="256"/>
+          <Column id="TY_BORN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsYnClose">
+        <ColumnInfo>
+          <Column id="YEAREND_CLOSE" type="STRING" size="256"/>
+          <Column id="YN_CLOSE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DAVPR_BASESUBST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">closeCheck</Col>
+            <Col id="SP">DAVPR_CLOSE_CHECK2</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectEtc</Col>
+            <Col id="SP">DAVPR_ETCSUBST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DAVPR_BASESUBST_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DAVPR_BASESUBST_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">updateEtc</Col>
+            <Col id="SP">DAVPR_ETCSUBST_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DAVPR_BASESUBST_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">deleteEtc</Col>
+            <Col id="SP">DAVPR_ETCSUBST_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">calTax</Col>
+            <Col id="SP">DAVPR_CALCTAX_TEMP</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">houseRpt</Col>
+            <Col id="SP">DAVPR_YEARENDSUBSTHOUSERPT_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">houseMonth</Col>
+            <Col id="SP">DAVPR_HOUSEMONTH_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">houseMoney</Col>
+            <Col id="SP">DAVPR_HOUSEMONEY_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">houseRent</Col>
+            <Col id="SP">DAVPR_HOUSERENT_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectReceipt</Col>
+            <Col id="SP">DAVPR_YEARENDRECEIPT2016_SELECT</Col>
+          </Row>
+
+<Row>
+            <Col id="TARGET">selectReceipt_sub</Col>
+            <Col id="SP">DAVPR_YEARENDSUBSTSUB1_SELECT</Col>
+</Row>
+
+
+          <Row>
+            <Col id="TARGET">yearEndReport</Col>
+            <Col id="SP">DAVPR_YEARENDSUBST_SELECT_2021</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">yearEndReportSub1</Col>
+            <Col id="SP">DAVPR_YEARENDSUBSTSUB1_2021_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">yearEndReportSub2</Col>
+            <Col id="SP">DAVPR_YEARENDSUBSTSUB2_2021_SELECT</Col>
+          </Row>
+
+          <Row>
+            <Col id="TARGET">pensionReport</Col>
+            <Col id="SP">DAVPR_YEARENDSUBSTPENSIONRPT_SELECT</Col>
+          </Row>
+
+          <Row>
+            <Col id="TARGET">houseRpt</Col>
+            <Col id="SP">DAVPR_YEARENDSUBSTHOUSERPT_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">houseMonth</Col>
+            <Col id="SP">DAVPR_HOUSEMONTH_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">houseMoney</Col>
+            <Col id="SP">DAVPR_HOUSEMONEY_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">houseRent</Col>
+            <Col id="SP">DAVPR_HOUSERENT_SELECT</Col>
+          </Row>
+
+          <Row>
+            <Col id="TARGET">Medical</Col>
+            <Col id="SP">DAVPR_MEDICALSUBST_PRINT</Col>
+          </Row>
+
+          <Row>
+            <Col id="TARGET">Give</Col>
+            <Col id="SP">DAVPR_GIVESUBST_PRINT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">Give_sub</Col>
+            <Col id="SP">DAVPR_GIVESUBST_RPT_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">Give_sub2</Col>
+            <Col id="SP">DAVPR_GIVESUBST_RPT2_SELECT</Col>
+          </Row>
+
+          <Row>
+            <Col id="TARGET">regComplete</Col>
+            <Col id="SP">DAVPR_CLOSEINPUT_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">Card1</Col>
+            <Col id="SP">DAVPR_CARDSUBSTRPT1_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">dsAuthForm</Col>
+            <Col id="SP">DZZPR_DOTNET_AUTHORITYFORM_SELECT_NEW</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">info</Col>
+            <Col id="SP">DZUPR_FILEMANAGER_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListEtc" onvaluechanged="dsListEtc_onvaluechanged"/>
+      <FileDialog id="fileUpDialog" onclose="fileUpDialog_onclose"/>
+      <FileUpTransfer id="FileUpTransfer" onprogress="FileUpTransfer_onprogress" onsuccess="FileUpTransfer_onsuccess" onerror="FileUpTransfer_onerror"/>
+      <Dataset id="dsInfoParam">
+        <ColumnInfo>
+          <Column id="CD_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsInfo"/>
+      <Dataset id="dsYearEndTagCol">
+        <ColumnInfo>
+          <Column id="FORM" type="STRING" size="256"/>
+          <Column id="RANGETAG" type="STRING" size="256"/>
+          <Column id="ELEMENT" type="STRING" size="256"/>
+          <Column id="ELEMATTRIBUTE" type="STRING" size="256"/>
+          <Column id="DATA" type="STRING" size="256"/>
+          <Column id="COL" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+            <Col id="DATA">name</Col>
+            <Col id="COL">DS_HNAME</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+            <Col id="DATA">resid</Col>
+            <Col id="COL">ID_RESIDENT_FAMILY</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+            <Col id="DATA">insu1_resid</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+            <Col id="COL">ID_RESIDENT_INSU</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+            <Col id="DATA">insu1_nm</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+            <Col id="COL">DS_HNAME_INSU</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+            <Col id="DATA">insu2_resid_1</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+            <Col id="COL">ID_RESIDENT_INSU1</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+            <Col id="DATA">insu2_nm_1</Col>
+            <Col id="COL">DS_HNAME_INSU1</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+            <Col id="DATA">insu2_resid_2</Col>
+            <Col id="COL">ID_RESIDENT_INSU2</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+            <Col id="DATA">insu2_nm_2</Col>
+            <Col id="COL">DS_HNAME_INSU2</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+            <Col id="DATA">insu2_resid_3</Col>
+            <Col id="COL">ID_RESIDENT_INSU3</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+            <Col id="DATA">insu2_nm_3</Col>
+            <Col id="COL">DS_HNAME_INSU3</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_SUBST1</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">B101Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">B101Y</Col>
+            <Col id="DATA">name</Col>
+            <Col id="COL">DS_HNAME</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">B101Y</Col>
+            <Col id="DATA">resid</Col>
+            <Col id="COL">ID_RESIDENT_FAMILY</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">B101Y</Col>
+            <Col id="DATA">busnid</Col>
+            <Col id="COL">CD_MEDICAL</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">B101Y</Col>
+            <Col id="DATA">trade_nm</Col>
+            <Col id="COL">DS_MEDICAL</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">B101Y</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_CARD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C102Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C102Y</Col>
+            <Col id="DATA">name</Col>
+            <Col id="COL">DS_HNAME</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C102Y</Col>
+            <Col id="DATA">resid</Col>
+            <Col id="COL">ID_RESIDENT_FAMILY</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C102Y</Col>
+            <Col id="DATA">edu_tp</Col>
+            <Col id="COL">CD_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C102Y</Col>
+            <Col id="DATA">edu_cl</Col>
+            <Col id="COL">EDU_CL</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C102Y</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C202Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C202Y</Col>
+            <Col id="DATA">name</Col>
+            <Col id="COL">DS_HNAME</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C202Y</Col>
+            <Col id="DATA">resid</Col>
+            <Col id="COL">ID_RESIDENT_FAMILY</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C202Y</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C301Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C301Y</Col>
+            <Col id="DATA">name</Col>
+            <Col id="COL">DS_HNAME</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C301Y</Col>
+            <Col id="DATA">resid</Col>
+            <Col id="COL">ID_RESIDENT_FAMILY</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C301Y</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C401Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C401Y</Col>
+            <Col id="DATA">name</Col>
+            <Col id="COL">DS_HNAME</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C401Y</Col>
+            <Col id="DATA">resid</Col>
+            <Col id="COL">ID_RESIDENT_FAMILY</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C401Y</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">D101Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+            <Col id="COL">DAT_CD</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">D101Y</Col>
+            <Col id="DATA">acc_no</Col>
+            <Col id="COL">CD_ACCOUNT</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">D101Y</Col>
+            <Col id="DATA">com_cd</Col>
+            <Col id="COL">CD_BANK</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">D101Y</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">E102Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">E102Y</Col>
+            <Col id="DATA">resid</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+            <Col id="COL">ID_RESIDENT_FAMILY</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">E102Y</Col>
+            <Col id="DATA">acc_no</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+            <Col id="COL">CD_ACCOUNT</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">E102Y</Col>
+            <Col id="DATA">com_cd</Col>
+            <Col id="COL">CD_BANK</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">E102Y</Col>
+            <Col id="DATA">ddct_bs_ass_amt</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">F102Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">F102Y</Col>
+            <Col id="DATA">resid</Col>
+            <Col id="COL">ID_RESIDENT_FAMILY</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">F102Y</Col>
+            <Col id="DATA">acc_no</Col>
+            <Col id="COL">CD_ACCOUNT</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">F102Y</Col>
+            <Col id="DATA">com_cd</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+            <Col id="COL">CD_BANK</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">F102Y</Col>
+            <Col id="DATA">ddct_bs_ass_amt</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">name</Col>
+            <Col id="COL">DS_HNAME</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">resid</Col>
+            <Col id="COL">ID_RESIDENT_FAMILY</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST1</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+            <Col id="COL">AM_SUBST2</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST3</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">pre_tot_amt</Col>
+            <Col id="COL">AM_SUBST4</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">pre_market_tot_amt</Col>
+            <Col id="COL">AM_SUBST5</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">pre_tmoney_tot_amt</Col>
+            <Col id="COL">AM_SUBST6</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST7_1</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST7_2</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+            <Col id="COL">AM_SUBST7_3</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST8_1</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST8_2</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST8_3</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">ftyr_tot_amt</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+            <Col id="COL">AM_FTYR_TOT</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">ftyr_market_tot_amt</Col>
+            <Col id="COL">AM_FTYR_MARKET_TOT</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">ftyr_tmoney_tot_amt</Col>
+            <Col id="COL">AM_FTYR_TMONEY_TOT</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">sum_first_year_tot_amt</Col>
+            <Col id="COL">AM_FIRST_YEAR_TOT_AMT</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">sum_second_year_tot_amt</Col>
+            <Col id="COL">AM_SECOND_YEAR_TOT_AMT</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">MM_INQR_STRT_MM</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">MM_INQR_END_MM</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST9</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">pre_book_tot_amt</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+            <Col id="COL">AM_SUBST10</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+            <Col id="COL">AM_SUBST7_4</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST8_4</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+            <Col id="DATA">ftyr_book_tot_amt</Col>
+            <Col id="COL">AM_FTYR_BOOK_TOT</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">name</Col>
+            <Col id="COL">DS_HNAME</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">resid</Col>
+            <Col id="COL">ID_RESIDENT_FAMILY</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST1</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+            <Col id="COL">AM_SUBST2</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+            <Col id="COL">AM_SUBST3</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">pre_tot_amt</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+            <Col id="COL">AM_SUBST4</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">pre_market_tot_amt</Col>
+            <Col id="COL">AM_SUBST5</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">pre_tmoney_tot_amt</Col>
+            <Col id="COL">AM_SUBST6</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST7_1</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST7_2</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST7_3</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST8_1</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST8_2</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST8_3</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">ftyr_tot_amt</Col>
+            <Col id="COL">AM_FTYR_TOT</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">ftyr_market_tot_amt</Col>
+            <Col id="COL">AM_FTYR_MARKET_TOT</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">ftyr_tmoney_tot_amt</Col>
+            <Col id="COL">AM_FTYR_TMONEY_TOT</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">sum_first_year_tot_amt</Col>
+            <Col id="COL">AM_FIRST_YEAR_TOT_AMT</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">sum_second_year_tot_amt</Col>
+            <Col id="COL">AM_SECOND_YEAR_TOT_AMT</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="COL">MM_INQR_STRT_MM</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="COL">MM_INQR_END_MM</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST9</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">pre_book_tot_amt</Col>
+            <Col id="COL">AM_SUBST10</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST7_4</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST8_4</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G207M</Col>
+            <Col id="DATA">ftyr_book_tot_amt</Col>
+            <Col id="COL">AM_FTYR_BOOK_TOT</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">name</Col>
+            <Col id="COL">DS_HNAME</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">resid</Col>
+            <Col id="COL">ID_RESIDENT_FAMILY</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST1</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST2</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST3</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">pre_tot_amt</Col>
+            <Col id="COL">AM_SUBST4</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">pre_market_tot_amt</Col>
+            <Col id="COL">AM_SUBST5</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">pre_tmoney_tot_amt</Col>
+            <Col id="COL">AM_SUBST6</Col>
+            <Col id="RANGETAG">cal</Col>
+            <Col id="ELEMENT"/>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST7_1</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST7_2</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST7_3</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST8_1</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST8_2</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST8_3</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">ftyr_tot_amt</Col>
+            <Col id="COL">AM_FTYR_TOT</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">ftyr_market_tot_amt</Col>
+            <Col id="COL">AM_FTYR_MARKET_TOT</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">ftyr_tmoney_tot_amt</Col>
+            <Col id="COL">AM_FTYR_TMONEY_TOT</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">sum_first_year_tot_amt</Col>
+            <Col id="COL">AM_FIRST_YEAR_TOT_AMT</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">sum_second_year_tot_amt</Col>
+            <Col id="COL">AM_SECOND_YEAR_TOT_AMT</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">MM_INQR_STRT_MM</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">MM_INQR_END_MM</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST9</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">pre_book_tot_amt</Col>
+            <Col id="COL">AM_SUBST10</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST7_4</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA"/>
+            <Col id="COL">AM_SUBST8_4</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+            <Col id="DATA">ftyr_book_tot_amt</Col>
+            <Col id="COL">AM_FTYR_BOOK_TOT</Col>
+            <Col id="RANGETAG">cal</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J101Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J101Y</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J203Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J203Y</Col>
+            <Col id="DATA">start_dt</Col>
+            <Col id="COL">DT_LOAN</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J203Y</Col>
+            <Col id="DATA">repay_years</Col>
+            <Col id="COL">YY_PERIOD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J203Y</Col>
+            <Col id="DATA">fixed_rate_debt</Col>
+            <Col id="COL">AM_SUBST_FIX</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J203Y</Col>
+            <Col id="DATA">not_defer_debt</Col>
+            <Col id="COL">AM_SUBST_BI</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J203Y</Col>
+            <Col id="DATA">ddct</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">elemAttr</Col>
+            <Col id="ELEMATTRIBUTE">sum</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J301Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J301Y</Col>
+            <Col id="DATA">name</Col>
+            <Col id="COL">DS_HNAME</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J301Y</Col>
+            <Col id="DATA">acc_no</Col>
+            <Col id="COL">CD_ACCOUNT</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J301Y</Col>
+            <Col id="DATA">saving_gubn</Col>
+            <Col id="COL">CD_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J301Y</Col>
+            <Col id="DATA">com_cd</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+            <Col id="COL">CD_BANK</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J301Y</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">K101M</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">K101M</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">L102Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">L102Y</Col>
+            <Col id="DATA">resid</Col>
+            <Col id="COL">ID_RESIDENT_FAMILY</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">L102Y</Col>
+            <Col id="DATA">busnid</Col>
+            <Col id="COL">CD_GIVE</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">L102Y</Col>
+            <Col id="DATA">trade_nm</Col>
+            <Col id="COL">DS_GIVE</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">L102Y</Col>
+            <Col id="DATA">donation_cd</Col>
+            <Col id="COL">TY_GIVE_PDF</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">L102Y</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_GIVE</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">N101Y</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">N101Y</Col>
+            <Col id="DATA">secu_no</Col>
+            <Col id="COL">CD_ACCOUNT</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">N101Y</Col>
+            <Col id="DATA">com_cd</Col>
+            <Col id="COL">CD_BANK</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">N101Y</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">P102M</Col>
+            <Col id="DATA">dat_cd</Col>
+            <Col id="COL">DAT_CD</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">P102M</Col>
+            <Col id="DATA">name</Col>
+            <Col id="COL">DS_HNAME</Col>
+            <Col id="RANGETAG">man</Col>
+            <Col id="ELEMENT">attribute</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">P102M</Col>
+            <Col id="DATA">sum</Col>
+            <Col id="COL">AM_SUBST</Col>
+            <Col id="RANGETAG">data</Col>
+            <Col id="ELEMENT">element</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYearEndFormList">
+        <ColumnInfo>
+          <Column id="FORM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="FORM">A102Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">B101Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C102Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C202Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C301Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">C401Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">D101Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">E102Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">F102Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G107Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G307Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">G407Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J101Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J203Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J301Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">J401Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">L102Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">M101Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">N101Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">O101M</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">P102M</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">Q101Y</Col>
+          </Row>
+          <Row>
+            <Col id="FORM">Q201Y</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds"/>
+      <Dataset id="dsListRpt"/>
+      <Dataset id="dsListEtcMapping">
+        <ColumnInfo>
+          <Column id="CD_SUBST" type="STRING" size="256"/>
+          <Column id="COMP1" type="STRING" size="256"/>
+          <Column id="COMP2" type="STRING" size="256"/>
+          <Column id="COMP3" type="STRING" size="256"/>
+          <Column id="COMP4" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_SUBST">B07</Col>
+            <Col id="COMP1">chkCD_WOMAN</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">B13</Col>
+            <Col id="COMP1">chkONEPARENTS</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C40</Col>
+            <Col id="COMP1">edtAM_ETCSUBST01</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C41</Col>
+            <Col id="COMP1">edtAM_ETCSUBST02</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C49</Col>
+            <Col id="COMP1">edtAM_ETCSUBST02_1</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C42</Col>
+            <Col id="COMP1">edtAM_ETCSUBST03</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C43</Col>
+            <Col id="COMP1">edtAM_ETCSUBST04</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C47</Col>
+            <Col id="COMP1">edtAM_ETCSUBST19</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C55</Col>
+            <Col id="COMP1">edtAM_ETCSUBST55</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C56</Col>
+            <Col id="COMP1">edtAM_ETCSUBST56</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C65</Col>
+            <Col id="COMP1">edtAM_ETCSUBST65</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C66</Col>
+            <Col id="COMP1">edtAM_ETCSUBST66</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C67</Col>
+            <Col id="COMP1">edtAM_ETCSUBST67</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C68</Col>
+            <Col id="COMP1">edtAM_ETCSUBST68</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C48</Col>
+            <Col id="COMP1">edtAM_ETCSUBST48</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C401</Col>
+            <Col id="COMP1">edtAM_ETCSUBST401</Col>
+            <Col id="COMP2">ccfCFBANK_401</Col>
+            <Col id="COMP3">ccfCFBANK_401</Col>
+            <Col id="COMP4">edt_ACCOUNT401</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C402</Col>
+            <Col id="COMP1">edtAM_ETCSUBST402</Col>
+            <Col id="COMP2">ccfCFBANK_402</Col>
+            <Col id="COMP3">ccfCFBANK_402</Col>
+            <Col id="COMP4">edt_ACCOUNT402</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C403</Col>
+            <Col id="COMP1">edtAM_ETCSUBST403</Col>
+            <Col id="COMP2">ccfCFBANK_403</Col>
+            <Col id="COMP3">ccfCFBANK_403</Col>
+            <Col id="COMP4">edt_ACCOUNT403</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C404</Col>
+            <Col id="COMP1">edtAM_ETCSUBST404</Col>
+            <Col id="COMP2">ccfCFBANK_404</Col>
+            <Col id="COMP3">ccfCFBANK_404</Col>
+            <Col id="COMP4">edt_ACCOUNT404</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C60</Col>
+            <Col id="COMP1">edtAM_ETCSUBST05</Col>
+            <Col id="COMP2">ccfCFBANK_60</Col>
+            <Col id="COMP3">ccfCFBANK_60</Col>
+            <Col id="COMP4">edt_ACCOUNT60</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C61</Col>
+            <Col id="COMP1">edtAM_ETCSUBST06</Col>
+            <Col id="COMP2">ccfCFBANK_61</Col>
+            <Col id="COMP3">ccfCFBANK_61</Col>
+            <Col id="COMP4">edt_ACCOUNT61</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C62</Col>
+            <Col id="COMP1">edtAM_ETCSUBST07</Col>
+            <Col id="COMP2">ccfCFBANK_62</Col>
+            <Col id="COMP3">ccfCFBANK_62</Col>
+            <Col id="COMP4">edt_ACCOUNT62</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C63</Col>
+            <Col id="COMP1">edtAM_ETCSUBST08</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C77</Col>
+            <Col id="COMP1">edtAM_ETCSUBST77</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C99</Col>
+            <Col id="COMP1">edtAM_ETCSUBST199</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C71</Col>
+            <Col id="COMP1">edtAM_ETCSUBST09</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C72</Col>
+            <Col id="COMP1">edtAM_ETCSUBST09_00</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C90</Col>
+            <Col id="COMP1">cboETCSUBST01</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C91</Col>
+            <Col id="COMP1">cboETCSUBST02</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C92</Col>
+            <Col id="COMP1">cboETCSUBST03</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">D10</Col>
+            <Col id="COMP1">edtAM_ETCSUBST10</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">D11</Col>
+            <Col id="COMP1">edtAM_ETCSUBST11</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">D98</Col>
+            <Col id="COMP1">calAM_ETCSUBST98</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">D99</Col>
+            <Col id="COMP1">calAM_ETCSUBST99</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">D20</Col>
+            <Col id="COMP1">edtAM_ETCSUBST12</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C44</Col>
+            <Col id="COMP1">edtAM_ETCSUBST16</Col>
+            <Col id="COMP2">ccfCFBANK_44</Col>
+            <Col id="COMP3">ccfCFBANK_44</Col>
+            <Col id="COMP4">edt_ACCOUNT44</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C45</Col>
+            <Col id="COMP1">edtAM_ETCSUBST17</Col>
+            <Col id="COMP2">ccfCFBANK_45</Col>
+            <Col id="COMP3">ccfCFBANK_45</Col>
+            <Col id="COMP4">edt_ACCOUNT45</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SUBST">C46</Col>
+            <Col id="COMP1">edtAM_ETCSUBST18</Col>
+            <Col id="COMP2">ccfCFBANK_46</Col>
+            <Col id="COMP3">ccfCFBANK_46</Col>
+            <Col id="COMP4">edt_ACCOUNT46</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsOutput">
+        <ColumnInfo>
+          <Column id="YN_MESSAGE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+// flag 값
+this.EtcFlag = "";
+this.YearEndClose = "";	// 마감여부
+this.loadFlag = "";
+
+//상황별 코드파인더 동작을 위한 스위치
+this.CD_CORP = "";
+this.YY_BASE = "";
+this.YN_MID = "";
+this.ID_SABUN = "";
+
+this.fv_DS_CORP = "";  
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+
+	//작업구분
+	this.cboYN_MID.set_index(0);
+	if(!this.gfnIsNull(this.getOwnerFrame().YN_MID)) this.cboYN_MID.set_value(this.getOwnerFrame().YN_MID);	
+	
+	//구분 - 일용직 삭제
+	this.rdoTY_GUBUN.getInnerDataset().deleteRow(1);
+	
+	//적용년도(현재)
+	var today = this.gfnGetDate().substring(0,4) - 1; //전년도	
+	
+	this.ctclWORK_BASE.set_url(this.cboYN_MID.value == "Y"?"cmm::cmmCalMM.xfdl":"cmm::cmmCalYY.xfdl");
+	this.ctclWORK_BASE.form.TextBox.set_value(today);
+	if(!this.gfnIsNull(this.getOwnerFrame().WORK_BASE)) this.ctclWORK_BASE.form.TextBox.set_value(this.getOwnerFrame().WORK_BASE);
+	this.divSearch.form.staWORK_BASE.set_text(this.cboYN_MID.value=="Y"?"적용년월":"적용년도");
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_CORP) && !this.gfnIsNull(this.getOwnerFrame().ID_SABUN)) {
+	
+	    this.CD_CORP = this.getOwnerFrame().CD_CORP;
+		this.YY_BASE = this.getOwnerFrame().WORK_BASE;
+        this.YN_MID = this.getOwnerFrame().YN_MID;
+        this.ID_SABUN = this.getOwnerFrame().ID_SABUN;
+		
+		this.ccfCD_CORP.form.CDTextBox.set_value(this.getOwnerFrame().CD_CORP);
+		this.ccfCD_CORP.form.fnCodeFindLoad();
+		
+		this.ccfID_RESIDENT.form.CDTextBox.set_value(this.getOwnerFrame().ID_SABUN);
+		this.ccfID_RESIDENT.form.fnCodeFindLoad();
+		
+		if(this.ccfCD_CORP.form.CDTextBox.value != ""){
+			this.FormBtns.Select.click();
+		}
+		
+	}else{
+	
+	    this.CD_CORP = this.AuthClient.CD_CORP;
+		this.YY_BASE = today;
+        this.YN_MID = "N";
+        this.ID_SABUN = ""; //this.AuthClient.ID_SABUN;
+		
+		this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+		this.ccfCD_CORP.form.fnCodeFindLoad();
+		this.ccfID_RESIDENT.form.CDTextBox.set_value(this.AuthClient.ID_SABUN);
+		this.ccfID_RESIDENT.form.fnCodeFindLoad();
+		if(this.ccfCD_CORP.form.CDTextBox.value != "") this.FormBtns.Select.click();
+	}
+
+	
+	//탭 초기화
+	this.divData.form.tabData.set_enableevent(false);
+	this.divData.form.tabData.set_tabindex(0);
+	this.divData.form.tabData.set_enableevent(true);
+	
+	this.loadFlag = "Y";
+	
+	
+	if(this.FormInfo.GR_SEARCH == "1"){
+		this.ccfCD_CORP.set_enable(true);
+	}else{
+		this.ccfCD_CORP.set_enable(false);
+	}		
+	
+	if(this.FormInfo.GR_SEARCH == "9"){
+		this.ccfID_RESIDENT.set_enable(false);
+	}else{
+		this.ccfID_RESIDENT.set_enable(true);
+	}	
+	
+	this.fv_DS_CORP = this.AuthClient.DS_CORP;  
+	
+	trace("this.fv_DS_CORP", this.fv_DS_CORP);
+	
+	if(this.fnIsForbidStatus()){
+		this.gfnAlert("연말정산 점검 중 입니다. 공지 내용 참고하시기 바랍니다.");
+	}
+};
+
+//true 이면 막힘
+this.fnIsForbidStatus = function(){
+	var bRtn = false;
+	
+// 	if(this.fv_DS_CORP == "대우조선해양건설"){
+// 		if(this.FormInfo.GR_SEARCH == "9"){
+// 			bRtn = true;
+// 		}
+// 	}
+	return bRtn;
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+if(this.fnIsForbidStatus()){
+	this.FormBtns.Add.set_enable(false);
+	this.FormBtns.Del.set_enable(false);
+	this.FormBtns.Save.set_enable(false);
+	return;
+}
+
+
+
+	// this.FormBtns.Del.set_enable(false);
+	this.FormBtns.Print.set_enable(true);
+	this.FormBtns.Excel.set_enable(false);
+	if(this.divData.form.tabData.tabindex == 0){
+		//this.FormBtns.Add.set_enable(true);
+		//this.FormBtns.Excel.set_enable(true);
+	}else{
+		//this.FormBtns.Add.set_enable(false);
+	}
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnEtcUpload = this.gfnFormButtonAdd("EtcUpload", "fnExtBtnEvent", "기타증빙 첨부");
+	this.btnPdfUpload = this.gfnFormButtonAdd("PdfUpload", "fnExtBtnEvent", "연말정산PDF 업로드");		//tbbPdfUplad
+	this.btnPreCompany = this.gfnFormButtonAdd("PreCompany", "fnExtBtnEvent", "전근무지정보");
+	this.btnCardSubst = this.gfnFormButtonAdd("CardSubst", "fnExtBtnEvent", "신용카드");					//tbbCard
+	this.btnInsuSubst = this.gfnFormButtonAdd("InsuSubst", "fnExtBtnEvent", "보험료");						//tbbInsu
+	this.btnEduSubst = this.gfnFormButtonAdd("EduSubst", "fnExtBtnEvent", "교육비");						//tbbEdu
+	this.btnMedicalSubst = this.gfnFormButtonAdd("MedicalSubst", "fnExtBtnEvent", "의료비");				//tbbMedi
+	this.btnGiveSubst = this.gfnFormButtonAdd("GiveSubst", "fnExtBtnEvent", "기부금");						//tbbGive
+	this.btnHouseSubst = this.gfnFormButtonAdd("HouseSubst", "fnExtBtnEvent", "주택마련저축");			//tbbHouse
+	this.btnPensionSubst = this.gfnFormButtonAdd("PensionSubst", "fnExtBtnEvent", "연금저축");				//tbbPen
+	this.btnStockSubst = this.gfnFormButtonAdd("StockSubst", "fnExtBtnEvent", "장기집합투자증권저축");	//tbbStock
+	this.btnYesOne = this.gfnFormButtonAdd("YesOne", "fnExtBtnEvent", "연말정산간소화서비스");			//tbbYesone
+	//this.btnYearEndSubstPesionRpt = this.gfnFormButtonAdd("YearEndSubstPesionRpt", "fnExtBtnEvent", "연금저축소득공제명세서");
+	//this.btnYearEndReceiptRpt = this.gfnFormButtonAdd("YearEndReceiptRpt", "fnExtBtnEvent", "원천징수영수증");
+};
+
+
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	//작업구분
+	this.cboYN_MID = this.divSearch.form.cboYN_MID;
+	//적용년도
+	this.staWORK_BASE = this.divSearch.form.staWORK_BASE;
+	this.ctclWORK_BASE = this.divSearch.form.ctclWORK_BASE;
+	//법인코드
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+	//주민번호
+	this.ccfID_RESIDENT = this.divSearch.form.ccfID_RESIDENT;
+	this.edtID_SABUN = this.divSearch.form.edtID_SABUN;
+	//구분
+	this.rdoTY_GUBUN = this.divSearch.form.rdoTY_GUBUN;
+	
+	this.btnGetRetire = this.divSearch.form.btnGetRetire; //등록완료버튼
+	
+	//그리드
+	this.dxGrid = this.divData.form.tabData.tab1.form.div00.form.objGrid;
+
+	this.grSearch = this.FormInfo.GR_SEARCH;					          // 권한
+	this.cdGroup = this.AuthClient.CD_GROUP;					          // 그룹코드
+	
+	
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAV_BASESUBST");
+	
+	// 셀 수정가능 여부
+	this.dxGrid.EnterCell = "fnGrid_EnterCell";	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+	//조회
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("ID_RESIDENT", "string");
+	this.dsSelect.addColumn("ID_SABUN", "string");
+	this.dsSelect.addColumn("YY_BASE", "string");
+	this.dsSelect.addColumn("MM_BASE", "string");
+	this.dsSelect.addColumn("NO_APPLY", "int");
+	this.dsSelect.addColumn("YN_MID", "string");
+	
+	
+	//입력
+	/*
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("CD_CORP", "string");
+	this.dsInsert.addColumn("ID_RESIDENT", "string");
+	this.dsInsert.addColumn("ID_SABUN", "string");
+	this.dsInsert.addColumn("YY_BASE", "string");
+	this.dsInsert.addColumn("MM_BASE", "string");
+	this.dsInsert.addColumn("NO_APPLY", "bigdecimal");
+	this.dsInsert.addColumn("YN_MID", "string");
+	this.dsInsert.addColumn("CD_SUBST", "string");
+	this.dsInsert.addColumn("YN_BASE", "string");
+	this.dsInsert.addColumn("YN_HANDICAP", "string");
+	this.dsInsert.addColumn("YN_CHILDREN", "string");
+	this.dsInsert.addColumn("YN_INSURANCE", "string");
+	this.dsInsert.addColumn("YN_MEDICAL", "string");
+	this.dsInsert.addColumn("YN_EDUCATION", "string");
+	this.dsInsert.addColumn("YN_FOREIGNER", "string");
+	this.dsInsert.addColumn("YN_CREDIT", "string");
+	this.dsInsert.addColumn("YN_BIRTH", "string");
+	this.dsInsert.addColumn("CD_FAMILY", "string");
+	this.dsInsert.addColumn("DS_HNAME", "string");
+	this.dsInsert.addColumn("ID_RESIDENT_FAMILY", "string");
+	this.dsInsert.addColumn("DS_ADDRESS", "string");
+	this.dsInsert.addColumn("ID_UPDATE", "string");
+	this.dsInsert.addColumn("YN_HOUSEHOLDER", "string");
+	this.dsInsert.addColumn("YN_CHANGE", "string");
+	this.dsInsert.addColumn("CD_HANDICAP", "string");
+	this.dsInsert.addColumn("TY_BORN", "string");
+	*/
+	
+	//수정
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("CD_CORP", "string");
+	this.dsUpdate.addColumn("ID_RESIDENT", "string");
+	this.dsUpdate.addColumn("ID_SABUN", "string");
+	this.dsUpdate.addColumn("YY_BASE", "string");
+	this.dsUpdate.addColumn("MM_BASE", "string");
+	this.dsUpdate.addColumn("NO_APPLY", "int");
+	this.dsUpdate.addColumn("YN_MID", "string");
+	this.dsUpdate.addColumn("CD_SUBST", "string");
+	this.dsUpdate.addColumn("NO_SEQ", "int");
+	this.dsUpdate.addColumn("YN_BASE", "string");
+	this.dsUpdate.addColumn("YN_HANDICAP", "string");
+	this.dsUpdate.addColumn("YN_CHILDREN", "string");
+	this.dsUpdate.addColumn("YN_INSURANCE", "string");
+	this.dsUpdate.addColumn("YN_MEDICAL", "string");
+	this.dsUpdate.addColumn("YN_EDUCATION", "string");
+	this.dsUpdate.addColumn("YN_FOREIGNER", "string");
+	this.dsUpdate.addColumn("YN_CREDIT", "string");
+	this.dsUpdate.addColumn("YN_BIRTH", "string");
+	this.dsUpdate.addColumn("CD_FAMILY", "string");
+	this.dsUpdate.addColumn("DS_HNAME", "string");
+	this.dsUpdate.addColumn("ID_RESIDENT_FAMILY", "string");
+	this.dsUpdate.addColumn("ID_RESIDENT_FAMILY_OLD", "string");
+	this.dsUpdate.addColumn("DS_ADDRESS", "string");
+	this.dsUpdate.addColumn("ID_UPDATE", "string");
+	this.dsUpdate.addColumn("YN_HOUSEHOLDER", "string");
+	this.dsUpdate.addColumn("YN_CHANGE", "string");
+	this.dsUpdate.addColumn("CD_HANDICAP", "string");
+	this.dsUpdate.addColumn("TY_BORN", "string");
+	
+	// ETC 수정
+	this.dsUpdateEtc = new Dataset();
+	this.dsUpdateEtc.addColumn("ID_RESIDENT", "string");
+	this.dsUpdateEtc.addColumn("ID_SABUN", "string");
+	this.dsUpdateEtc.addColumn("YY_BASE", "string");
+	this.dsUpdateEtc.addColumn("MM_BASE", "string");
+	this.dsUpdateEtc.addColumn("NO_APPLY", "int");
+	this.dsUpdateEtc.addColumn("YN_MID", "string");
+	this.dsUpdateEtc.addColumn("CD_SUBST", "string");
+	this.dsUpdateEtc.addColumn("NO_SEQ", "int");
+	this.dsUpdateEtc.addColumn("CD_FAMILY", "string");
+	this.dsUpdateEtc.addColumn("DS_HNAME", "string");
+	this.dsUpdateEtc.addColumn("AM_SUBST", "int");
+	this.dsUpdateEtc.addColumn("ID_UPDATE", "string");
+	this.dsUpdateEtc.addColumn("CD_CORP", "string");
+	this.dsUpdateEtc.addColumn("CD_BANK", "string");
+	this.dsUpdateEtc.addColumn("CD_ACCOUNT", "string");
+	
+	//삭제
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("CD_CORP", "string");
+	this.dsDelete.addColumn("ID_RESIDENT", "string");
+	this.dsDelete.addColumn("YY_BASE", "string");
+	this.dsDelete.addColumn("MM_BASE", "string");
+	this.dsDelete.addColumn("NO_APPLY", "int");
+	this.dsDelete.addColumn("YN_MID", "string");
+	this.dsDelete.addColumn("CD_SUBST", "string");
+	this.dsDelete.addColumn("NO_SEQ", "int");
+
+	
+	//ETC 삭제
+	/*
+	this.dsDeleteEtc = new Dataset();
+	this.dsDeleteEtc.addColumn("CD_CORP", "string");
+	this.dsDeleteEtc.addColumn("ID_RESIDENT", "string");
+	this.dsDeleteEtc.addColumn("YY_BASE", "string");
+	this.dsDeleteEtc.addColumn("MM_BASE", "string");
+	this.dsDeleteEtc.addColumn("NO_APPLY", "bigdecimal");
+	this.dsDeleteEtc.addColumn("YN_MID", "string");
+	this.dsDeleteEtc.addColumn("ID_UPDATE", "string");
+	*/
+	
+	//등록완료1 closeInput 
+	this.dsRegComplete = new Dataset();
+	this.dsRegComplete.addColumn("ID_RESIDENT", "string");
+	this.dsRegComplete.addColumn("ID_SABUN", "string");
+	this.dsRegComplete.addColumn("YY_BASE", "string");
+	this.dsRegComplete.addColumn("MM_BASE", "string");
+	this.dsRegComplete.addColumn("NO_APPLY", "int");
+	this.dsRegComplete.addColumn("YN_MID", "string");
+	this.dsRegComplete.addColumn("AM_RESULT", "int");
+	this.dsRegComplete.addColumn("ID_UPDATE", "string");
+	this.dsRegComplete.addColumn("CD_CORP", "string");
+	//등록완료2 closeInput 
+	this.dsReg = new Dataset();
+	this.dsReg.addColumn("ID_RESIDENT", "string");
+	this.dsReg.addColumn("ID_SABUN", "string");
+	this.dsReg.addColumn("YY_BASE", "string");
+	this.dsReg.addColumn("MM_BASE", "string");
+	this.dsReg.addColumn("NO_APPLY", "bigdecimal");
+	this.dsReg.addColumn("YN_MID", "string");
+	this.dsReg.addColumn("ID_UPDATE", "string");
+	this.dsReg.addColumn("CD_CORP", "string");
+	
+	//명세서출력
+	this.dsReport1 = new Dataset();
+	this.dsReport1.addColumn("YY_BASE", "string");
+	this.dsReport1.addColumn("NO_APPLY", "string");
+	this.dsReport1.addColumn("ID_RESIDENT", "string");
+	this.dsReport1.addColumn("TY_ORDERBY", "string");
+	this.dsReport1.addColumn("YN_MID", "string");
+	this.dsReport1.addColumn("CD_CORP", "string");
+	this.dsReport1.addColumn("MM_BASE", "string");
+	this.dsReport1.addColumn("DT_PRINT", "string");
+	this.dsReport1.addColumn("ID_SABUN", "string");	
+	
+	this.dsReport2 = new Dataset();
+	this.dsReport2.addColumn("CD_CORP", "string");
+	this.dsReport2.addColumn("ID_RESIDENT", "string");
+	this.dsReport2.addColumn("ID_SABUN", "string");
+	this.dsReport2.addColumn("YY_BASE", "string");
+	this.dsReport2.addColumn("MM_BASE", "string");
+	this.dsReport2.addColumn("NO_APPLY", "int");
+	this.dsReport2.addColumn("YN_MID", "string");		 
+	
+	//소득·세액 공제신고서 main
+	this.dsYearEndReport = new Dataset();
+	this.dsYearEndReport.addColumn("YY_BASE", "string");
+	this.dsYearEndReport.addColumn("NO_APPLY", "int");
+	this.dsYearEndReport.addColumn("ID_RESIDENT", "string");
+	this.dsYearEndReport.addColumn("TY_ORDERBY", "int");
+	this.dsYearEndReport.addColumn("YN_MID", "string");
+	this.dsYearEndReport.addColumn("CD_CORP", "string");
+	//소득·세액 공제신고서 sub
+	this.dsYearEndReportSub = new Dataset();
+	this.dsYearEndReportSub.addColumn("YY_BASE", "string");
+	this.dsYearEndReportSub.addColumn("MM_BASE", "string");
+	this.dsYearEndReportSub.addColumn("NO_APPLY", "int");
+	this.dsYearEndReportSub.addColumn("ID_RESIDENT", "string");
+	this.dsYearEndReportSub.addColumn("YN_MID", "string");
+	this.dsYearEndReportSub.addColumn("CD_CORP", "string");
+	//연금ㆍ저축 등 소득ㆍ세액 공제명세서 
+	this.dsPensionReport = new Dataset();
+	this.dsPensionReport.addColumn("YY_BASE", "string");
+	this.dsPensionReport.addColumn("NO_APPLY", "int");
+	this.dsPensionReport.addColumn("ID_RESIDENT", "string");
+	this.dsPensionReport.addColumn("TY_ORDERBY", "int");
+	this.dsPensionReport.addColumn("YN_MID", "string");
+	this.dsPensionReport.addColumn("CD_CORP", "string");	
+	
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	var tabIdx = this.divData.form.tabData.tabindex;
+	
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+
+	if (!this.fnSelectValidate()) return false;
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+
+	this.dsSelect.setColumn(0, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+	this.dsSelect.setColumn(0, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value);
+	this.dsSelect.setColumn(0, "ID_SABUN", this.edtID_SABUN.value);
+	this.dsSelect.setColumn(0, "YY_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+	this.dsSelect.setColumn(0, "MM_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");
+	this.dsSelect.setColumn(0, "NO_APPLY", "1");
+	this.dsSelect.setColumn(0, "YN_MID", this.cboYN_MID.value);
+
+	if(tabIdx == 0){
+		this.gfnGridBeforeSelect(this.dxGrid);
+		inData      = "select=dsSelect closeCheck=dsSelect";
+		outData     = "dsList=select0 dsYnClose=closeCheck0";
+	}else{
+		inData      = "selectEtc=dsSelect closeCheck=dsSelect";
+		outData     = "dsListEtc=selectEtc0 dsYnClose=closeCheck0";
+	}
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+					strSvcType , 	// trabsaction을 요청할 구분
+					inProc,			// Procedure 정보 Dataset 이름
+					inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+					outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+					strArg, 	    // 입력갑스로 보낼 arguments, strFormData="20120607"
+					callBackFnc); 	// 통신방법 정의 [생략가능]
+
+};
+
+
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	this.gfnGridAdd(this.dxGrid);
+};
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	var tabIdx = this.divData.form.tabData.tabindex;
+	
+	trace(tabIdx);
+	if( tabIdx == 0 ){	
+		this.gfnGridDel(this.dxGrid);
+	} else {
+		this.EtcFlag = "D";	
+		this.gfnSetFormStatus(this, "D");
+	}
+};
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+
+if(this.fnIsForbidStatus()){
+	this.gfnAlert("연말정산 점검 중 입니다. 공지 내용 참고하시기 바랍니다.");
+	return;
+}
+	
+	var tabIdx = this.divData.form.tabData.tabindex;
+	var inData="";
+
+	if( tabIdx == 0){
+		//  그리드 필수항목 체크
+		if (!this.gfnGridValidate(this.dxGrid)) return;
+		if (!this.gfValidate()) return;	
+
+		this.dxGrid.updateToDataset();
+
+		//this.dsInsert.clearData();
+		this.dsUpdate.clearData();
+		this.dsDelete.clearData();
+		
+		//출생입양여부
+		this.dsList.filter("YN_BIRTH == 'Y' && (TY_BORN == ' ' || TY_BORN == null)");
+		if(this.dsList.rowcount != 0){
+			this.gfnAlert("출생입양 여부가 Y 인경우 출생입양자녀구분 값을 입력하셔야 됩니다.");
+			this.dsList.filter("");
+			return false;
+		}
+		//장애인 여부
+		this.dsList.filter("YN_HANDICAP == 'Y' && (CD_HANDICAP == null || CD_HANDICAP == ' ')");
+		if(this.dsList.rowcount != 0){
+			this.gfnAlert("장애 여부가 Y 인경우 장애구분 값을 입력하셔야 됩니다.");
+			this.dsList.filter("");
+			return false;
+		}
+		this.dsList.filter("");
+			
+		for (var i = 0; i < this.dsList.rowcount; i++) {
+		
+			var flag = this.gfnGetFlag(this.dsList, i);
+
+			
+			switch(flag) {
+				case "I":
+					
+				case "U":
+					var nrow = this.dsUpdate.addRow();
+
+					this.dsUpdate.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+					this.dsUpdate.setColumn(nrow, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value);
+					this.dsUpdate.setColumn(nrow, "ID_SABUN", this.edtID_SABUN.value);
+					this.dsUpdate.setColumn(nrow, "YY_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+					this.dsUpdate.setColumn(nrow, "MM_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");
+					this.dsUpdate.setColumn(nrow, "NO_APPLY", "1");
+					this.dsUpdate.setColumn(nrow, "YN_MID", this.cboYN_MID.value);
+					this.dsUpdate.setColumn(nrow, "CD_SUBST", this.dsList.getColumn(i, "CD_SUBST"));
+					this.dsUpdate.setColumn(nrow, "NO_SEQ", this.dsList.getColumn(i, "NO_SEQ"));
+					this.dsUpdate.setColumn(nrow, "YN_BASE", this.dsList.getColumn(i, "YN_BASE"));
+					this.dsUpdate.setColumn(nrow, "YN_HANDICAP", this.dsList.getColumn(i, "YN_HANDICAP"));
+					this.dsUpdate.setColumn(nrow, "YN_CHILDREN", this.dsList.getColumn(i, "YN_CHILDREN"));
+					this.dsUpdate.setColumn(nrow, "YN_INSURANCE", this.dsList.getColumn(i, "YN_INSURANCE"));
+					this.dsUpdate.setColumn(nrow, "YN_MEDICAL", this.dsList.getColumn(i, "YN_MEDICAL"));
+					this.dsUpdate.setColumn(nrow, "YN_EDUCATION", this.dsList.getColumn(i, "YN_EDUCATION"));
+					this.dsUpdate.setColumn(nrow, "YN_FOREIGNER", this.dsList.getColumn(i, "YN_FOREIGNER"));
+					this.dsUpdate.setColumn(nrow, "YN_CREDIT", this.dsList.getColumn(i, "YN_CREDIT"));
+					this.dsUpdate.setColumn(nrow, "YN_BIRTH", this.dsList.getColumn(i, "YN_BIRTH"));
+					this.dsUpdate.setColumn(nrow, "CD_FAMILY", this.dsList.getColumn(i, "CD_FAMILY"));
+					this.dsUpdate.setColumn(nrow, "DS_HNAME", this.dsList.getColumn(i, "DS_HNAME"));
+					this.dsUpdate.setColumn(nrow, "ID_RESIDENT_FAMILY", nexacro.replaceAll(this.gfnNvl(this.dsList.getColumn(i, "ID_RESIDENT_FAMILY"),""), "-", ""));
+					this.dsUpdate.setColumn(nrow, "ID_RESIDENT_FAMILY_OLD", nexacro.replaceAll(this.gfnNvl(this.dsList.getColumn(i, "ID_RESIDENT_FAMILY_OLD"),""), "-", ""));
+					this.dsUpdate.setColumn(nrow, "DS_ADDRESS", this.dsList.getColumn(i, "DS_ADDRESS"));
+					this.dsUpdate.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+					this.dsUpdate.setColumn(nrow, "YN_HOUSEHOLDER", this.dsList.getColumn(i, "YN_HOUSEHOLDER"));
+					this.dsUpdate.setColumn(nrow, "YN_CHANGE", this.dsList.getColumn(i, "YN_CHANGE"));
+					this.dsUpdate.setColumn(nrow, "CD_HANDICAP", this.dsList.getColumn(i, "CD_HANDICAP"));
+					
+					var tyBorn = "";
+					if(this.dsList.getColumn(i, "TY_BORN") == "첫째"){
+						tyBorn = "1";
+					}else if(this.dsList.getColumn(i, "TY_BORN") == "둘째"){
+						tyBorn = "2";
+					}else if(this.dsList.getColumn(i, "TY_BORN") == "셋째이상"){
+						tyBorn = "3";
+					}else{
+						tyBorn = "";
+					}
+					
+					this.dsUpdate.setColumn(nrow, "TY_BORN", tyBorn);					
+					break;
+				case "D":
+					var nrow = this.dsDelete.addRow();
+
+					this.dsDelete.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+					this.dsDelete.setColumn(nrow, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value);
+					this.dsDelete.setColumn(nrow, "YY_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+					this.dsDelete.setColumn(nrow, "MM_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");
+					this.dsDelete.setColumn(nrow, "NO_APPLY", "1");
+					this.dsDelete.setColumn(nrow, "YN_MID", this.cboYN_MID.value);
+					this.dsDelete.setColumn(nrow, "CD_SUBST", this.dsList.getColumn(i, "CD_SUBST"));
+					this.dsDelete.setColumn(nrow, "NO_SEQ", this.dsList.getColumn(i, "NO_SEQ"));
+					break;
+			}
+		}
+
+		//inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+		//if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+		inData      = "update=dsUpdate delete=dsDelete";
+		if (this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+		
+	}//tab index != 0
+	else{
+		if (!this.gfValidate2()) return;	
+
+		this.dsUpdateEtc.clearData();
+		//this.dsDelete.clearData();
+
+		if(this.dsListEtc.getColumn(i, "CD_SUBST") == "B07"){
+			if(this.divData.form.tabData.tab2.form.div00.form.chkCD_WOMAN.value == true){
+				this.dsListEtc.setColumn(i, "CD_FAMILY", "00");
+			}else{
+				this.dsListEtc.setColumn(i, "CD_FAMILY", "");
+				this.dsListEtc.setColumn(i, "DS_FAMILY", "");
+			}                     
+		}else if(this.dsListEtc.getColumn(i, "CD_SUBST") == "B13"){
+			if(this.divData.form.tabData.tab2.form.div00.form.chkONEPARENTS.value == true){
+				this.dsListEtc.setColumn(i, "CD_FAMILY", "00");
+			}else{
+				this.dsListEtc.setColumn(i, "CD_FAMILY", "");
+				this.dsListEtc.setColumn(i, "DS_FAMILY", "");
+			}
+		}
+
+		for( var i = 0 ; i < this.dsListEtc.rowcount; i++){
+			//var flag = this.gfnGetFlag(this.dsListEtc, i);		
+			//switch(flag) {
+			switch(this.EtcFlag) {
+				case "I":
+				case "U":
+					var nrow = this.dsUpdateEtc.addRow();
+					this.dsUpdateEtc.setColumn(nrow, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value);
+					this.dsUpdateEtc.setColumn(nrow, "ID_SABUN", this.edtID_SABUN.value);
+					this.dsUpdateEtc.setColumn(nrow, "YY_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+					this.dsUpdateEtc.setColumn(nrow, "MM_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");
+					this.dsUpdateEtc.setColumn(nrow, "NO_APPLY", "1");
+					this.dsUpdateEtc.setColumn(nrow, "YN_MID", this.cboYN_MID.value);
+					this.dsUpdateEtc.setColumn(nrow, "CD_SUBST", this.dsListEtc.getColumn(i, "CD_SUBST"));
+					this.dsUpdateEtc.setColumn(nrow, "NO_SEQ", this.dsListEtc.getColumn(i, "NO_SEQ"));
+					this.dsUpdateEtc.setColumn(nrow, "CD_FAMILY", this.dsListEtc.getColumn(i, "CD_FAMILY"));
+					this.dsUpdateEtc.setColumn(nrow, "DS_HNAME", this.dsListEtc.getColumn(i, "DS_HNAME"));
+					this.dsUpdateEtc.setColumn(nrow, "AM_SUBST", this.dsListEtc.getColumn(i, "AM_SUBST"));
+					this.dsUpdateEtc.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+					this.dsUpdateEtc.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+					this.dsUpdateEtc.setColumn(nrow, "CD_BANK", this.dsListEtc.getColumn(i, "CD_BANK"));
+					this.dsUpdateEtc.setColumn(nrow, "CD_ACCOUNT", this.dsListEtc.getColumn(i, "CD_ACCOUNT"));
+
+					break;
+				case "D":
+					/*
+					var nrow = this.dsDeleteEtc.addRow();					
+					this.dsDeleteEtc.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+					this.dsDeleteEtc.setColumn(nrow, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""));
+					this.dsDeleteEtc.setColumn(nrow, "YY_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+					this.dsDeleteEtc.setColumn(nrow, "MM_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");
+					this.dsDeleteEtc.setColumn(nrow, "NO_APPLY", "1");
+					this.dsDeleteEtc.setColumn(nrow, "YN_MID", this.cboYN_MID.value);
+					this.dsDeleteEtc.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+
+					break;
+					*/
+			}
+		}
+		
+		//inData      = "updateEtc=dsUpdateEtc deleteEtc=dsDeleteEtc";
+		//if (this.dsUpdateEtc.rowcount == 0 && this.dsDeleteEtc.rowcount == 0) return;
+		inData      = "updateEtc=dsUpdateEtc";
+		if (this.dsUpdateEtc.rowcount == 0) return;
+	}
+
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+};
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+	this.fnPrintProc("S");
+	return false;
+};
+
+this.fnPrintProc = function(callType) {
+
+	this.dsListRpt.clearData();
+
+	this.dsYearEndReport.clearData();//소득·세액 공제신고서 main
+	this.dsYearEndReportSub.clearData();//소득·세액 공제신고서 sub
+	this.dsPensionReport.clearData();//연금ㆍ저축 등 소득ㆍ세액 공제명세서 
+	
+	this.dsYearEndReport.addRow();
+	this.dsYearEndReportSub.addRow(); 
+	this.dsPensionReport.addRow(); 
+	
+	this.dsYearEndReport.setColumn(0, "YY_BASE", this.cboYN_MID.value == "Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+	this.dsYearEndReport.setColumn(0, "NO_APPLY", "1");
+	this.dsYearEndReport.setColumn(0, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""));
+	this.dsYearEndReport.setColumn(0, "TY_ORDERBY", "2");		// 1 부서, 2 주민번호, 3 법인
+	this.dsYearEndReport.setColumn(0, "YN_MID", this.cboYN_MID.value);
+	this.dsYearEndReport.setColumn(0, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+	
+	this.dsYearEndReportSub.setColumn(0, "YY_BASE", this.cboYN_MID.value == "Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+	this.dsYearEndReportSub.setColumn(0, "MM_BASE", this.cboYN_MID.value == "Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");
+	this.dsYearEndReportSub.setColumn(0, "NO_APPLY",  "1");
+	this.dsYearEndReportSub.setColumn(0, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""));
+	this.dsYearEndReportSub.setColumn(0, "YN_MID", this.cboYN_MID.value);
+	this.dsYearEndReportSub.setColumn(0, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);	
+	
+	this.dsPensionReport.setColumn(0, "YY_BASE", this.cboYN_MID.value == "Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+	this.dsPensionReport.setColumn(0, "NO_APPLY",  "1");
+	this.dsPensionReport.setColumn(0, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""));
+	this.dsPensionReport.setColumn(0, "TY_ORDERBY", "2");		// 1 부서, 2 주민번호, 3 법인
+	this.dsPensionReport.setColumn(0, "YN_MID", this.cboYN_MID.value);
+	this.dsPensionReport.setColumn(0, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);	
+	
+	if(callType == "S"){
+		var strSvcId    = "print";
+		var strSvcType  = "select";
+		var inProc		= "_dsProc";
+		var inData      = "yearEndReport=dsYearEndReport yearEndReportSub1=dsYearEndReportSub yearEndReportSub2=dsYearEndReportSub"; //소득·세액 공제신고서
+		    inData     += " pensionReport=dsPensionReport"; //연금ㆍ저축 등 소득ㆍ세액 공제명세서 
+		var outData     = "dsListRpt=yearEndReport0";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}else{
+		var inProc		= "_dsProc";
+		var inParam 	= "";				
+		var inData      = "yearEndReport=dsYearEndReport yearEndReportSub1=dsYearEndReportSub yearEndReportSub2=dsYearEndReportSub"; //소득·세액 공제신고서
+		    inData     += " pensionReport=dsPensionReport"; //연금ㆍ저축 등 소득ㆍ세액 공제명세서 
+		var reportpath  = "/da/dav/DAV_YEAREND.ozr"; 
+
+		gfnOpenReport(this, reportpath, inProc, inParam, inData);	
+	}
+	
+}	
+
+/*
+ *	리셋 버튼
+ */
+this.fnReset = function() {
+	this.ctclWORK_BASE.form.TextBox.set_value("");
+	this.ccfCD_CORP.form.CDTextBox.set_value("");
+	this.ccfCD_CORP.form.DSTextBox.set_value("");
+	this.ccfID_RESIDENT.form.CDTextBox.set_value("");
+	this.ccfID_RESIDENT.form.DSTextBox.set_value("");
+	this.edtID_SABUN.set_value("");	
+	this.rdoTY_GUBUN.set_value("E");
+};
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+
+	//적용년월
+	if (this.gfnIsNull(this.ctclWORK_BASE.form.TextBox.value)) {
+		this.fnVaidateCallback = function() {
+			this.ctclWORK_BASE.form.TextBox.setFocus();
+		}
+		this.gfnAlert(this.staWORK_BASE.text+ "을/를 입력하세요.");
+		return false;
+	}
+	
+	//법인
+	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+		this.fnVaidateCallback = function() {
+			this.ccfCD_CORP.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("법인코드를 입력하세요.", "fnVaidateCallback");
+		return false;
+	}
+	
+	//주민등록번호
+	if (this.gfnIsNull(this.ccfID_RESIDENT.form.CDTextBox.value)) {
+		this.fnVaidateCallback = function() {
+			this.ccfID_RESIDENT.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("주민등록번호를 입력하세요.", "fnVaidateCallback");
+		return false;
+	}
+
+ 	return true;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+
+this.fnCallback = function(svcID, errorCode, errorMsg, args)
+{
+	if (svcID == "select") {
+		this.fnSetButton();
+		
+		if(this.divData.form.tabData.tabindex == 0){
+
+			this.gfnGridAfterSelect(this.dxGrid);
+			
+			//세대주여부
+			//this.dsList.filter("CD_FAMILY=='00'");
+			this.divData.form.tabData.tab1.form.div00.form.rdoYN_HOUSEHOLD.set_value(this.dsList.getColumn(0,"YN_HOUSEHOLDER")=="1"?"1":"2");	// 값이 숫자로 되어있음
+			//변동여부
+			this.divData.form.tabData.tab1.form.div00.form.rdoYN_DEDUCTION_CHG.set_value(this.dsList.getColumn(0,"YN_CHANGE")=="1"?"1":"2");	// 값이 숫자로 되어있음
+			//this.dsList.filter("");
+		}else{
+			//추가/특별공제
+			
+			//이하 데이타 바인팅처리
+			
+			var compArr = this.divData.form.tabData.tab2.form.div00.form.components;
+			
+			for(var i = 0 ; i < this.dsListEtc.rowcount; i++){
+				var cdSubst = this.dsListEtc.getColumn(i, "CD_SUBST");
+				this.dsListEtcMapping.filter("CD_SUBST == '"+cdSubst+"'");
+
+				if(this.dsListEtcMapping.rowcount > 0){
+				
+					if(cdSubst== "B07"){
+						if(this.dsListEtc.getColumn(i, "CD_FAMILY") == "00"){
+							this.divData.form.tabData.tab2.form.div00.form.chkCD_WOMAN.set_value(true);
+						}else{
+							this.divData.form.tabData.tab2.form.div00.form.chkCD_WOMAN.set_value(false);
+						}
+					}else if(cdSubst == "B13"){
+						if(this.dsListEtc.getColumn(i, "CD_FAMILY") == "00"){
+							this.divData.form.tabData.tab2.form.div00.form.chkONEPARENTS.set_value(true);
+						}else{
+							this.divData.form.tabData.tab2.form.div00.form.chkONEPARENTS.set_value(false);
+						}
+					}else{
+						var compAm = this.divData.form.tabData.tab2.form.div00.form.components.getItem(this.dsListEtcMapping.getColumn(0, "COMP1"));
+						
+						compAm.set_value(this.dsListEtc.getColumn(i, "AM_SUBST"));
+						
+						if(!this.gfnIsNull(this.dsListEtcMapping.getColumn(0, "COMP2"))){
+							//코드파인드
+							var compCCF = this.divData.form.tabData.tab2.form.div00.form.components.getItem(this.dsListEtcMapping.getColumn(0, "COMP2"));
+							compCCF.form.CDTextBox.set_value(this.dsListEtc.getColumn(i, "CD_BANK"));
+							compCCF.form.DSTextBox.set_value(this.dsListEtc.getColumn(i, "DS_BANK"));
+							
+							//계좌번호
+							var compEdt = this.divData.form.tabData.tab2.form.div00.form.components.getItem(this.dsListEtcMapping.getColumn(0, "COMP4"));
+							compEdt.set_value(this.dsListEtc.getColumn(i, "CD_ACCOUNT"));
+						}
+					}
+				}
+				this.dsListEtcMapping.filter("");
+				
+			} //for end
+		} 
+
+		this.EtcFlag = "";	// 초기화
+		
+
+		this.fnSetFormEnable(this.divData.form.tabData.tabindex);
+		this.fnSetBtnEnable(); 
+
+	} else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.gfnAlert("저장되었습니다.");
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if( svcID == "regNCalTax"){
+		if (errorCode == 0) {	
+			var sMsg = "등록완료 및 세액계산이 완료 되었습니다.";
+			trace(this.dsOutput.saveXML());			
+			if(this.dsOutput.rowcount > 0){
+				if(this.gfnNvl(this.dsOutput.getColumn(0, "YN_MESSAGE"), "N") == "Y"){
+					sMsg = "표준세액공제 대상자이므로 재 작업시 PDF업로드 및 입력사항을 반드시 확인하시기 바랍니다.";
+				}
+			}
+			this.gfnAlert(sMsg);
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if(svcID == "info"){	//PDF 파일 
+		//File Dialog
+		this.fileUpDialog.open('nexacro17', FileDialog.LOAD);
+	} else if(svcID == "selectPension"){
+		//연금저축명세서
+		//trace(this.dsListRpt.saveXML());
+	}
+	else if (svcID == "selectReceipt") {
+		// 원천징수영수증
+		//trace(this.dsList.saveXML());
+	}	
+	else if (svcID == "houseRpt") {
+		//명세서출력
+		if (errorCode == 0) {
+			this.fnHouseRpt("P");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if (svcID == "print") {
+		if (errorCode == 0) {
+			if(this.dsListRpt.rowcount > 0 ){
+				this.fnPrintProc("P");
+			}else{
+				this.gfnAlert("데이터가 없습니다.");
+			}
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "regComplete"){
+		if (errorCode == 0) {
+			this.fnRegNCalTax();
+		} else {
+			this.gfnAlert(errorMsg);
+		}	
+	}
+	
+};
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+ 	switch(id) {
+		case "ccfCD_CORP": // 법인코드
+			dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+			dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+			break;
+
+		case "ccfID_RESIDENT":
+			if (this.gfnIsNull(this.cboYN_MID.value)) {
+				this.gfnAlert("작업구분을 먼저 입력하세요.");
+				return false;
+			}	
+			if (this.gfnIsNull(this.ctclWORK_BASE.form.TextBox.value)) {
+				this.gfnAlert("적용년도를 먼저 입력하세요.");
+				return false;
+			}
+			if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+				this.gfnAlert("법인을 먼저 입력하세요.");
+				return false;
+			}			
+
+			dsUserParam.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+			dsUserParam.setColumn(nrow, "YY_BASE", this.ctclWORK_BASE.form.TextBox.value);
+			dsUserParam.setColumn(nrow, "YN_MID", this.cboYN_MID.value);
+			dsUserParam.setColumn(nrow, "ID_SABUN", this.gfnNvl(this.ID_SABUN, "")); //타화면에서 넘어온값이 있으면 그걸로 조회되도록. 아니면 입력한 VALUE 값으로 조회
+			
+			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+			dsUserParam.setColumn(nrow, "GR_DEPT", this.AuthClient.CD_DEPT);
+			dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);	
+			break;
+		
+		case "ccfCFBANK_60":
+			dsUserParam.setColumn(nrow, "CD_PREFIX", "FI");
+			break;
+		case "ccfCFBANK_61":
+			dsUserParam.setColumn(nrow, "CD_PREFIX", "FI");
+			break;
+		case "ccfCFBANK_62":
+			dsUserParam.setColumn(nrow, "CD_PREFIX", "FI");
+			break;
+		case "ccfCFBANK_44":
+			dsUserParam.setColumn(nrow, "CD_PREFIX", "FI");
+			break;
+		case "ccfCFBANK_45":
+			dsUserParam.setColumn(nrow, "CD_PREFIX", "FI");
+			break;
+		case "ccfCFBANK_46":
+			dsUserParam.setColumn(nrow, "CD_PREFIX", "FI");
+			break;
+		case "ccfCFBANK_401":
+			dsUserParam.setColumn(nrow, "CD_PREFIX", "FI");
+			break;
+		case "ccfCFBANK_402":
+			dsUserParam.setColumn(nrow, "CD_PREFIX", "FI");
+			break;
+		case "ccfCFBANK_403":
+			dsUserParam.setColumn(nrow, "CD_PREFIX", "FI");
+			break;
+		case "ccfCFBANK_404":
+			dsUserParam.setColumn(nrow, "CD_PREFIX", "FI");
+			break;
+			
+		default:
+		
+ 	}
+ 	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+
+	var arr = codeFindData;
+	switch(id) {
+		case "ccfCD_CORP": // 법인코드
+		    if(this.loadFlag != ""){
+			this.ccfID_RESIDENT.form.CDTextBox.set_value("");
+			this.ccfID_RESIDENT.form.DSTextBox.set_value("");
+			this.edtID_SABUN.set_value("");
+			}
+			break;
+		
+		case "ccfID_RESIDENT"://주민등록번호
+			if(arr.length > 0) {
+				this.edtID_SABUN.set_value(arr[0]["ID_SABUN"]);
+			}else{
+				this.edtID_SABUN.set_value("");
+			}
+			break;	
+			
+		default:
+	}
+//alert("12");
+	this.fnSearchInit();
+	
+};
+
+//그리드 코드파인드
+this.fnGrid_BeforeUserDataSetParam = function(id, dsUserParam, nrow){
+
+	switch(id) {
+		case "ccfFamily":
+			dsUserParam.setColumn(nrow, "CD_PREFIX", "FA");
+			break;
+		/*	
+		case "ccfFamilyID":
+			dsUserParam.setColumn(nrow, "YY_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+			dsUserParam.setColumn(nrow, "MM_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");
+			dsUserParam.setColumn(nrow, "YN_MID", this.cboYN_MID.value);
+			dsUserParam.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+			dsUserParam.setColumn(nrow, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""));
+			break;
+		*/	
+		case "ccfCD_HANDICAP":
+			dsUserParam.setColumn(nrow, "CD_PREFIX","HA");
+			break;
+		default:
+	}
+
+	return true;
+};
+this.fnGrid_AfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+	
+};
+/************************************************************************
+* 그리드 이벤트
+************************************************************************/
+this.fnGrid_EnterCell = function(obj:nexacro.Grid, row, cell) {
+// 	var colnm = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, cell);
+// 	if(this.dsList.getColumn(row, colnm) == "TEST") {
+// 		return false;
+// 	}
+
+	var bRtn = this.fnIsChangePossible();
+	
+	if(bRtn == false){
+		return false;
+	}
+}
+
+/************************************************************************
+* 확장버튼 이벤트
+************************************************************************/
+this.fnExtBtnEvent = function(btn){	
+	
+	if(this.ctclWORK_BASE.form.TextBox.value.substring(0,4) >= "2010"){
+		if (this.gfnIsNull(this.divData.form.tabData.tab1.form.div00.form.rdoYN_HOUSEHOLD.value) || this.gfnIsNull(this.divData.form.tabData.tab1.form.div00.form.rdoYN_DEDUCTION_CHG.value))
+		{
+			this.gfnAlert("세대주여부,인적공제변동여부를 먼저 입력저장하십시요.");
+			return;
+		}
+	}
+
+	
+	var param = {};
+	var btnUrl;
+
+	param={
+			WORK_BASE: this.ctclWORK_BASE.form.TextBox.value,
+			CD_CORP: this.ccfCD_CORP.form.CDTextBox.value,
+			DS_CORP: this.ccfCD_CORP.form.DSTextBox.value,
+			ID_RESIDENT: nexacro.replaceAll(this.gfnNvl(this.ccfID_RESIDENT.form.CDTextBox.value,""), "-", ""),
+			DS_HNAME:this.ccfID_RESIDENT.form.DSTextBox.value,
+			ID_SABUN:this.edtID_SABUN.value,
+			YN_MID: this.cboYN_MID.value,
+			NO_APPLY: "1"
+			};
+			
+	switch(btn.id){
+		case "btnExt_EtcUpload":	//기타증빙 첨부
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}
+			this.fnEtcUpload();
+			return;
+			break;
+		
+		case "btnExt_PdfUpload":	//PDF 업로드
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}
+			this.fnPdfUpload();
+			return;
+			break;
+			
+		case "btnExt_PreCompany": //전근무지정보
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}		
+			var Gubun_T = "N"; //노무자
+			var Gubun_E = "N"; //임직원
+			var Gubun_All = "N"; //전체
+				
+			param.Gubun_T = Gubun_T;
+			param.Gubun_E = Gubun_E;
+			param.Gubun_All = Gubun_All;
+			btnUrl = "DAV_PRECOMPANY";
+			break;			
+			
+		case "btnExt_CardSubst": //신용카드공제
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}		
+			if(this.ctclWORK_BASE.form.TextBox.value.substring(0,4) == "2020"){
+				btnUrl = "DAV_CARDSUBST2020";
+			}else{
+				btnUrl = "DAV_CARDSUBST";
+			}
+			
+			break;
+		case "btnExt_InsuSubst": //보험료공제
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}		
+			btnUrl = "DAV_INSUSUBST";
+			break;
+		case "btnExt_EduSubst": //교육비공제
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}
+			btnUrl = "DAV_EDUSUBST";
+			break;
+		case "btnExt_MedicalSubst": //의료비공제
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}
+			btnUrl = "DAV_MEDICALSUBST";
+			break;
+		case "btnExt_GiveSubst": //기부금공제
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}
+			btnUrl = "DAV_GIVESUBST";
+			break;
+		case "btnExt_HouseSubst": //주택마련저축공제
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}
+			if(this.divData.form.tabData.tab1.form.div00.form.rdoYN_HOUSEHOLD.value != "1"){ //1	세대주
+				this.gfnAlert("주택마련저축공제는 세대주만 가능합니다.");
+				return;
+			}
+		
+			btnUrl = "DAV_HOUSESUBST";
+			break;
+		case "btnExt_PensionSubst": //연금저축공제
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}
+			btnUrl = "DAV_PENSIONSUBST";
+			break;
+		case "btnExt_StockSubst": //장기집합투자증권저축공제
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}
+			btnUrl = "DAV_STOCKSUBST";
+			break;
+		case "btnExt_YesOne": //연말정산 간소화
+			//btnUrl = "DAV_YESONE";
+			window.open("http://www.hometax.go.kr");
+			return;
+			break;
+		/*	
+		case "btnExt_YearEndSubstPesionRpt": //연금저축소득공제명세서
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}
+			this.fnYearEndSubstPesionRpt();
+			return;
+			break;
+		case "btnExt_YearEndReceiptRpt"://원천징수영수증
+			if(this.gfnIsNull(this.divSearch.form.ccfID_RESIDENT.form.CDTextBox.value)){
+				this.gfnAlert("주민번호를 확인하시기바랍니다.");
+				return;
+			}
+			this.fnYearEndReceiptRpt();
+			return;
+			break;			
+		*/
+		default:
+	}
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, btnUrl, "fnFromCallback", param, this.width, this.height);
+	
+	
+
+};
+
+this.fnFromCallback = function(svcID, value) {
+	trace("콜백"+value);
+	if(value != false) {
+		this.FormBtns.Select.click();
+	}
+}
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		// 폼상태 초기화
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+		this.EtcFlag = "";	// 초기화
+	}
+};
+
+//거주자간 계약사항
+this.divData_tabData_tab2_btnHOUSE_LR_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	//금전소비대차계약, 임대차계약
+	var param={
+			WORK_BASE: this.ctclWORK_BASE.form.TextBox.value,
+			CD_CORP: this.ccfCD_CORP.form.CDTextBox.value,
+			DS_CORP: this.ccfCD_CORP.form.DSTextBox.value,
+			ID_RESIDENT: this.ccfID_RESIDENT.form.CDTextBox.value,
+			DS_HNAME:this.ccfID_RESIDENT.form.DSTextBox.value,
+			ID_SABUN:this.edtID_SABUN.value,
+			YN_MID: this.cboYN_MID.value
+	};
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DAV_HOUSESUBMIT_DLG", "fnPopupCallback", param);
+};
+
+//월세계약사항
+this.divData_tabData_tab2_btnMONTH_CONT_REMARK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//월세계약
+	var param={
+			WORK_BASE: this.ctclWORK_BASE.form.TextBox.value,
+			CD_CORP: this.ccfCD_CORP.form.CDTextBox.value,
+			DS_CORP: this.ccfCD_CORP.form.DSTextBox.value,
+			ID_RESIDENT: this.ccfID_RESIDENT.form.CDTextBox.value,
+			DS_HNAME:this.ccfID_RESIDENT.form.DSTextBox.value,
+			ID_SABUN:this.edtID_SABUN.value,
+			YN_MID: this.cboYN_MID.value
+		};
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DAV_HOUSEMONTH", "fnFromCallback", param, this.width, this.height);
+	
+};
+
+//명세서출력
+this.divData_tabData_tab2_btnYEAREND_PRINT_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnHouseRpt("S");
+};
+
+this.fnHouseRpt = function(callType){
+	this.dsReport1.clearData();
+	this.dsReport2.clearData();
+	
+	this.dsReport1.addRow();
+	this.dsReport1.setColumn(0, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+	this.dsReport1.setColumn(0, "YY_BASE", this.cboYN_MID.value == "Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+	this.dsReport1.setColumn(0, "MM_BASE", this.cboYN_MID.value == "Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");
+	this.dsReport1.setColumn(0, "NO_APPLY", "1");
+	this.dsReport1.setColumn(0, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""));
+	this.dsReport1.setColumn(0, "ID_SABUN", this.edtID_SABUN.value);
+	this.dsReport1.setColumn(0, "YN_MID", this.cboYN_MID.value);
+	this.dsReport1.setColumn(0, "DT_PRINT", this.gfnGetDate());
+	this.dsReport1.setColumn(0, "TY_ORDERBY", "2");		// 1 부서, 2 주민번호, 3 법인
+	
+	this.dsReport2.addRow();
+	this.dsReport2.setColumn(0, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+	this.dsReport2.setColumn(0, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""));
+	this.dsReport2.setColumn(0, "ID_SABUN", this.edtID_SABUN.value);
+	this.dsReport2.setColumn(0, "YY_BASE", this.cboYN_MID.value == "Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+	this.dsReport2.setColumn(0, "MM_BASE", this.cboYN_MID.value == "Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");
+	this.dsReport2.setColumn(0, "NO_APPLY", "1");
+	this.dsReport2.setColumn(0, "YN_MID", this.cboYN_MID.value);	
+	
+	
+	this.dsHouseRpt1 = new Dataset();
+	this.dsHouseRpt2 = new Dataset();
+	this.dsHouseRpt3 = new Dataset();
+	this.dsHouseRpt4 = new Dataset();
+
+	if(callType == "S"){
+		var strSvcId    = "houseRpt";
+		var strSvcType  = "select";
+		var inProc		= "_dsProc";
+		var inData      = "houseRpt=dsReport1 houseMonth=dsReport2 houseMoney=dsReport2 houseRent=dsReport2";
+		var outData     = "dsHouseRpt1=houseRpt0 dsHouseRpt2=houseMonth0 dsHouseRpt3=houseMoney0 dsHouseRpt4=houseRent0";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}else{
+		var inProc		= "_dsProc";
+		//var inParam 	= "params=dsReportParam";	// 조회SP이외 사용할 정보
+		var inParam 	= "";						// 필요없는 경우 생략
+		var inData      = "houseRpt=dsReport1 houseMonth=dsReport2 houseMoney=dsReport2 houseRent=dsReport2";
+		var reportpath  = "/da/dav/DAV_YEARENDSUBSTHOUSE.ozr";
+
+		gfnOpenReport(this, reportpath, inProc, inParam, inData);	
+	}
+}
+
+//등록완료및 세액계산
+this.divSearch_btnGetRetire_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(!this.fnSelectValidate()) return;
+	
+	this.gfnConfirm("등록을 완료하고 세금계산을 하시겠습니까?","fnGetRetireCallback","RegNCalTax"); //fnPopupCallback
+};
+
+this.fnGetRetireCallback = function(strID, val){
+
+	if(strID == "RegNCalTax"){
+		if(val)
+		{
+			if(!this.fnSelectValidate()) return false;
+			
+			this.dsRegComplete.clearData();	
+			var nrow = this.dsRegComplete.addRow();
+			
+			this.dsRegComplete.setColumn(nrow, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""));
+			this.dsRegComplete.setColumn(nrow, "ID_SABUN", this.edtID_SABUN.value);
+			this.dsRegComplete.setColumn(nrow, "YY_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+			this.dsRegComplete.setColumn(nrow, "MM_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");
+			this.dsRegComplete.setColumn(nrow, "NO_APPLY", "1");
+			this.dsRegComplete.setColumn(nrow, "YN_MID", this.cboYN_MID.value);
+			this.dsRegComplete.setColumn(nrow, "AM_RESULT", 0);
+			this.dsRegComplete.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+			this.dsRegComplete.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+			
+			var strSvcId    = "regComplete";
+			var strSvcType  = "save";
+			var inProc		= "_dsProc";
+			var inData      = "regComplete=dsRegComplete";
+			var outData     = "";
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// trabsaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 	    // 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc); 	// 통신방법 정의 [생략가능]
+		
+			
+		}
+	}
+};
+
+this.fnRegNCalTax = function(){
+	if(!this.fnSelectValidate()) return false;
+	
+	this.dsReg.clearData();
+	var nrow = this.dsReg.addRow();
+	this.dsReg.setColumn(nrow, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""));
+	this.dsReg.setColumn(nrow, "ID_SABUN", this.edtID_SABUN.value);
+	this.dsReg.setColumn(nrow, "YY_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+	this.dsReg.setColumn(nrow, "MM_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");	
+	this.dsReg.setColumn(nrow, "NO_APPLY","1");
+	this.dsReg.setColumn(nrow, "YN_MID", this.cboYN_MID.value);			
+	this.dsReg.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+	this.dsReg.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+	
+	var strSvcId    = "regNCalTax";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "calTax=dsReg";
+	var outData     = "dsOutput=calTax";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+}
+
+this.fnPopupCallback = function(strID, val){
+
+//fnGetRetireCallback << 여기로 옮김
+// 	if(strID == "RegNCalTax"){
+// 		if(val)
+// 		{
+// 			this.dsReg.clearData();
+// 			var nrow = this.dsReg.addRow();
+// 			this.dsReg.setColumn(nrow, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""));
+// 			this.dsReg.setColumn(nrow, "ID_SABUN", this.edtID_SABUN.value);
+// 			this.dsReg.setColumn(nrow, "YY_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+// 			this.dsReg.setColumn(nrow, "MM_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");	
+// 			this.dsReg.setColumn(nrow, "NO_APPLY","1");
+// 			this.dsReg.setColumn(nrow, "YN_MID", this.cboYN_MID.value);			
+// 			this.dsReg.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+// 			this.dsReg.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+// 			
+// 			var strSvcId    = "regNCalTax";
+// 			var strSvcType  = "save";
+// 			var inProc		= "_dsProc";
+// 			var inData      = "calTax=dsReg";
+// 			var outData     = "";
+// 			var strArg      = "";
+// 			var callBackFnc = "fnCallback";
+// 
+// 			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+// 								strSvcType , 	// transaction을 요청할 구분
+// 								inProc,			// Procedure 정보 Dataset 이름
+// 								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+// 								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+// 								strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+// 								callBackFnc); 	// 통신방법 정의 [생략가능]
+// 		}
+// 	}
+	
+	//거주자간 주택임차차입금
+	if(strID.indexOf("DAV_HOUSESUBMIT_DLG") > 0) {
+		if(val != false){
+			var json = JSON.parse(val);
+			var param={
+						WORK_BASE: this.ctclWORK_BASE.form.TextBox.value,
+						CD_CORP: this.ccfCD_CORP.form.CDTextBox.value,
+						DS_CORP: this.ccfCD_CORP.form.DSTextBox.value,
+						ID_RESIDENT: this.ccfID_RESIDENT.form.CDTextBox.value,
+						DS_HNAME:this.ccfID_RESIDENT.form.DSTextBox.value,
+						ID_SABUN:this.edtID_SABUN.value,
+						YN_MID: this.cboYN_MID.value
+					};
+			this.gfnFormOpen(this.FormInfo.CD_MODULE, json.OPEN_URL, "fnFromCallback", param, this.width, this.height);
+		}
+	}
+};
+
+//탭변경
+this.divData_tabData_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	this.fnSelect();
+	
+	if(this.divData.form.tabData.tabindex == 1){
+		this.divSearch.form.btnGetRetire.set_enable(false);
+	}else{
+		this.divSearch.form.btnGetRetire.set_enable(true);
+	}
+};
+
+//연급저축 소득공제 명세서
+this.fnYearEndSubstPesionRpt = function(){
+	
+	this.dsReport = new Dataset();
+	this.dsReport.addColumn("YY_BASE", "string");
+	this.dsReport.addColumn("YY_BASE_TO", "string");
+	this.dsReport.addColumn("NO_APPLY", "string");
+	this.dsReport.addColumn("ID_RESIDENT", "string");
+	this.dsReport.addColumn("YN_MID", "string");
+	this.dsReport.addColumn("CD_CORP", "string");
+	this.dsReport.addColumn("DT_PRINT", "string");
+	this.dsReport.addColumn("MM_BASE", "string");
+	this.dsReport.addColumn("TY_ORDERBY", "string");
+	
+	var nrow = this.dsReport.addRow();
+	
+	this.dsReport.setColumn(nrow, "YY_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+	this.dsReport.setColumn(nrow, "YY_BASE_TO", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+	this.dsReport.setColumn(nrow, "NO_APPLY", "1");
+	this.dsReport.setColumn(nrow, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""));
+	this.dsReport.setColumn(nrow, "YN_MID", this.cboYN_MID.value);	
+	this.dsReport.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+	this.dsReport.setColumn(nrow, "DT_PRINT", this.gfnGetDate());
+	this.dsReport.setColumn(nrow, "MM_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12");
+	this.dsReport.setColumn(nrow, "TY_ORDERBY", "2");	//1:부서,2:주민등록번호,3:법인
+	
+// 	var strSvcId    = "report";
+// 	var strSvcType  = "select";
+// 	var inProc		= "_dsProc";
+// 	var inData      = "selectPension=dsReport";
+// 	var outData     = "dsListRpt=selectPension0";
+// 	var strArg 		= "";
+// 	var callBackFnc = "fnCallback";
+// 	
+// 	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+// 						strSvcType , 	// trabsaction을 요청할 구분
+// 						inProc,			// Procedure 정보 Dataset 이름
+// 						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+// 						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+// 						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+// 						callBackFnc); // 통신방법 정의 [생략가능]
+
+	var inProc		= "_dsProc";
+	//var inParam 	= "params=dsReportParam";	// 조회SP이외 사용할 정보
+	var inParam 	= "";						// 필요없는 경우 생략
+	var inData      = "selectPension=dsReport";
+	var reportpath  = "/da/dav/DAV_YEARENDSUBSTPENSION.ozr";
+
+	gfnOpenReport(this, reportpath, inProc, inParam, inData);
+};
+
+//원천징수영수증
+this.fnYearEndReceiptRpt = function(){
+	
+	this.dsReport = new Dataset();
+	this.dsReport.addColumn("YY_BASE", "string"); 		//적용년월(시작일)
+	this.dsReport.addColumn("YY_BASE_TO", "string");	//적용년월(종료일)
+	this.dsReport.addColumn("NO_APPLY", "string");		
+	this.dsReport.addColumn("ID_RESIDENT", "string");	//주민등록번호
+	this.dsReport.addColumn("TY_ORDERBY", "string");	//정렬순서
+	this.dsReport.addColumn("TY_SIGN", "string");
+	this.dsReport.addColumn("YN_MID", "string");	
+	this.dsReport.addColumn("CD_CORP", "string");
+	this.dsReport.addColumn("ID_LOGIN", "string");
+	this.dsReport.addColumn("GR_SEARCH", "string");
+	this.dsReport.addColumn("YN_INGAM", "string");
+	
+	var nrow = this.dsReport.addRow();
+	
+	this.dsReport.setColumn(nrow, "YY_BASE", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);
+	this.dsReport.setColumn(nrow, "YY_BASE_TO", this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value);	
+	//this.dsReport.setColumn(nrow, "CD_CORP", this.FormInfo.GR_SEARCH == "1" ? (this.gfnIsNull(this.ccfID_RESIDENT.form.CDTextBox.value)==true?this.ccfCD_CORP.form.CDTextBox.value : "%") : "%");
+	this.dsReport.setColumn(nrow, "NO_APPLY", 1);
+	this.dsReport.setColumn(nrow, "ID_RESIDENT", this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""));
+	//this.dsReport.setColumn(nrow, "TY_ORDERBY", "%");
+	this.dsReport.setColumn(nrow, "YN_MID", this.cboYN_MID.value);  
+	//this.dsReport.setColumn(nrow, "TY_SIGN", "%");
+	this.dsReport.setColumn(nrow, "ID_LOGIN", this.AuthClient.ID_USER);
+	this.dsReport.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	this.dsReport.setColumn(nrow, "YN_INGAM", "N");
+	
+	trace(this.dsReport.saveXML());
+	var strSvcId    = "selectReceipt";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "selectReceipt=dsReport";//20200317 주석 reportFSub=dsSelectRptF reportFPension=dsSelectRptF";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	 
+						strSvcType , 	 
+						inProc,			 
+						inData , 		 
+						outData , 	 
+						strArg, 		 
+						callBackFnc);  
+	
+	var inProc		= "_dsProc";
+	var inParam 	= "";	//"params=dsReportParam";						 
+	var inData      = "selectReceipt=dsReport";//20200317 주석 reportFSub=dsSelectRptF reportFPension=dsSelectRptF";
+	var reportpath  = "/da/dav/DAV_YEARENDRECEIPT.ozr";
+
+	gfnOpenReport(this, reportpath, inProc, inParam, inData);	
+};
+
+//기타증빙 첨부
+this.fnEtcUpload = function(){
+	var sYY_BASE = this.ctclWORK_BASE.form.TextBox.value.substring(0,4);
+	var sID_SABUN = this.edtID_SABUN.value;
+	var bIS_READONLY = false; //쓰기,삭제 가능 모드로
+	
+	var bRtn = this.fnIsChangePossible();
+	if(!bRtn){
+		bIS_READONLY = true; //수정불가능하면 readonly 모드로 오픈
+	}
+	
+	trace("sYY_BASE", sYY_BASE);
+	trace("sID_SABUN", sID_SABUN);	
+	trace("bIS_READONLY", bIS_READONLY);	
+
+	var fileManager = {};
+	fileManager.CD_GUBUN = "DA21";
+	fileManager.CD_DIR = [sYY_BASE, sID_SABUN];	
+	fileManager.IS_READONLY = bIS_READONLY;
+	this.gfnFileManager(fileManager, "fnFileCallback");
+}
+
+this.fnFileCallback = function(strID, val) {
+	// val.IsChange : 변경여부, val.Cnt : 파일개수
+	
+// 	// 변경시 조회를 다시 하거나
+// 	if(val.IsChange == true) {
+// 		this.FormBtns.Select.click();
+// 	}
+// 	// 파일개수를 다시 셋팅
+// 	this.dsList13.set_enableevent(false);
+// 	this.dsList13.setColumn(this.dsList13.rowposition, "FILE_CNT", val.Cnt);
+// 	if(val.Cnt == 0) {
+// 		this.dsList13.setColumn(this.dsList13.rowposition, "DS_FILE_NAME", "첨부");
+// 		this.dsList13.setColumn(this.dsList13.rowposition, "DS_FILE_PATH", "");
+// 	} else {
+// 		this.dsList13.setColumn(this.dsList13.rowposition, "DS_FILE_NAME", "첨부(" + val.Cnt + ")");
+// 	}
+// 	this.dsList13.set_enableevent(true);
+};
+
+//PDF 업로드
+this.fnPdfUpload = function(){
+	var param = {
+					CD_CORP:this.ccfCD_CORP.form.CDTextBox.value,
+					ID_RESIDENT:this.ccfID_RESIDENT.form.CDTextBox.value.replace(/-/g,""),
+					ID_SABUN:this.edtID_SABUN.value,
+					YN_MID:this.cboYN_MID.value,
+					YY_BASE:this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(0,4):this.ctclWORK_BASE.form.TextBox.value,
+					MM_BASE:this.cboYN_MID.value=="Y"?this.ctclWORK_BASE.form.TextBox.value.substring(4,6):"12"
+	};
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DAV_INPUTDATA_PDF_DLG", "fnPdfCallback", param);
+};
+
+this.fnPdfCallback =  function(strId, val) {
+	this.FormBtns.Select.click();
+};
+
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	this.fnSetButton();
+	/*
+	if(e.columnid == "YN_BIRTH"){
+		if(e.newvalue == "N"){
+			this.dsList.setColumn(e.row, "TY_BORN","");
+		}
+	}else if(e.columnid == "YN_HANDICAP"){
+		if(e.newvalue == "N"){
+			this.dsList.setColumn(e.row, "CD_HANDICAP","");
+		}
+	}
+	*/
+};
+
+this.dsListEtc_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	this.fnSetButton();
+	//"U"모드로 변경
+	this.EtcFlag = "U";
+};
+
+//세대주 변경
+this.divData_tabData_tab1_rdoYN_HOUSEHOLD_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	this.gfnSetFormStatus(this, "U");
+	//this.dsList.filter("CD_FAMILY=='00'");
+	this.dsList.setColumn(0, "YN_HOUSEHOLDER", e.postvalue);
+	//this.dsList.filter("");
+};
+
+//변동사항 변경
+this.divData_tabData_tab1_rdoYN_DEDUCTION_CHG_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	this.gfnSetFormStatus(this, "U");
+	//this.dsList.filter("CD_FAMILY=='00'");
+	this.dsList.setColumn(0, "YN_CHANGE", e.postvalue);
+	//this.dsList.filter("");
+};
+this.divData_tabData_canchange = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	if(this.gfnIsNull(this.ccfID_RESIDENT.form.CDTextBox.value)){
+		this.fnValidateCallback = function(){
+			this.ccfID_RESIDENT.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("주민등록 번호를 입력하세요.","fnValidateCallback");
+		return false;
+	}
+	return true;
+};
+
+this.fnUpdateEtc = function(obj:nexacro.MaskEdit,e:nexacro.ChangeEventInfo)
+{
+	var etcMapRow = this.dsListEtcMapping.findRow("COMP1", obj.id);
+	//var nrow = this.dsListEtc.findRow("CD_SUBST1",this.dsListEtcMapping.getColumn(etcMapRow, "CD_SUBST"));
+	var nrow = this.dsListEtc.findRow("CD_SUBST",this.dsListEtcMapping.getColumn(etcMapRow, "CD_SUBST"));
+
+	// 부녀자, 한부모 둘중에 1개만 체크가능	
+	if(this.divData.form.tabData.tab2.form.div00.form.chkCD_WOMAN.value == true 
+		&& this.divData.form.tabData.tab2.form.div00.form.chkONEPARENTS.value == true){
+		this.gfnAlert("부녀자공제, 한부모가족공제 중에 1개만 선택 가능합니다.");
+		this.divData.form.tabData.tab2.form.div00.form.chkCD_WOMAN.set_value(false);
+		this.divData.form.tabData.tab2.form.div00.form.chkONEPARENTS.set_value(false);
+	}
+	
+	// 부녀자제공 체크값 변경시
+	if(obj.name == "chkCD_WOMAN"){
+		if(this.divData.form.tabData.tab2.form.div00.form.chkCD_WOMAN.value == true){
+			var idResident = nexacro.replaceAll(this.gfnNvl(this.ccfID_RESIDENT.form.CDTextBox.value,""), "-", "");
+			if(!this.gfnIsNull(idResident) && (idResident.substr(6,1) == "1" || idResident.substr(6,1) == "3" || idResident.substr(6,1) == "5" || idResident.substr(6,1) == "7")){
+				this.divData.form.tabData.tab2.form.div00.form.chkCD_WOMAN.set_value(false);
+				this.gfnAlert("남자는 선택할 수 없습니다.");
+				return;
+			}
+			
+			// 부녀자공제 선택시 경고메세지 추가
+			this.gfnAlert("부녀자공제 선택시 해당 과세기간의 근로소득금액이 3천만원 이하인 대상자만 공제됨을 유의바랍니다.");
+		}
+	}
+	//alert(nexacro.replaceAll(this.gfnNvl(this.ccfID_RESIDENT.form.CDTextBox.value,""), "-", "").substr(6,1));
+	
+	
+	//if(!this.gfnIsNull(nrow)){
+	if(nrow >= 0){
+		this.dsListEtc.setColumn(nrow, "AM_SUBST", obj.value);
+		this.dsListEtc.setColumn(nrow, this.ucFlag, "U");
+		this.gfnSetFormStatus(this, "U");
+		this.EtcFlag = "U";
+	}
+	
+	this.fnSetButton();
+};
+
+//그리드 필수 체크
+this.gfValidate = function ()
+{
+	var colID_RESIDENT_FAMILY = this.dxGrid.getBindCellIndex("body", "ID_RESIDENT_FAMILY");
+	var headText   = this.dxGrid.getCellProperty("head" , colID_RESIDENT_FAMILY, "text");
+	
+	for(var i=0;i<this.dsList.rowcount;i++){
+		if(this.dsList.getColumn(i, this.ucFlag) == "I" || this.dsList.getColumn(i, this.ucFlag) == "U"){
+		
+			var residentfamily = nexacro.replaceAll(this.gfnTrim(this.gfnNvl(this.dsList.getColumn(i, "ID_RESIDENT_FAMILY"),"")), "-", "");
+			trace("residentfamily"+residentfamily);
+			trace("gfnIsSSN"+this.gfnIsSSN(residentfamily))
+// 			if(!this.gfnIsSSN(residentfamily)){	
+// 				this.gfnAlert((i + 1) +"열: ["+headText+"]가 유효하지 않습니다.");
+// 				this.dsList.set_rowposition(i);
+// 				this.dxGrid.setCellPos(colID_RESIDENT_FAMILY);
+// 				return false;
+// 			}				
+		}
+	}
+	return true;
+};
+
+// 싱글폼 저장전 체크
+this.gfValidate2 = function ()
+{
+	var strMsg = "";
+	
+	if(this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST11.value > 0){
+		if(this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST98.value == 0 || this.gfnIsNull(this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST98.value)){
+			strMsg = "※중소기업 취업청년 세액감면시 취업일은 필수입력입니다.\n";
+		}
+		
+		if(this.divData.form.tabData.tab2.form.div00.form.calAM_ETCSUBST98.value.length >= 4){
+			if(this.divData.form.tabData.tab2.form.div00.form.calAM_ETCSUBST98.value.substr(0,4) != this.ctclWORK_BASE.form.TextBox.value.substr(0,4)){
+				strMsg = strMsg + "※중소기업 취업청년 세액감면 취업일은 \n해당 과세기간 내에 기재해야함\n해당 과세기간 이전이면 1월1일을 입력\n";
+			}
+		}
+		
+		if(this.divData.form.tabData.tab2.form.div00.form.calAM_ETCSUBST99.value.length >= 4){
+			if(this.divData.form.tabData.tab2.form.div00.form.calAM_ETCSUBST99.value.substr(0,4) != this.ctclWORK_BASE.form.TextBox.value.substr(0,4)){
+				strMsg = strMsg + "※중소기업 취업청년 세액감면 종료일은 \n해당 과세기간 내에 기재해야함\n해당 과세기간 이후이면 12월31일을 입력\n";
+			}
+		}
+		
+		if(this.gfnIsNull(this.divData.form.tabData.tab2.form.div00.form.calAM_ETCSUBST99.value.length)){
+			strMsg = strMsg + "※중소기업 취업청년 세액감면시 감면기간 종료일은 필수입력입니다.\n";
+		}
+		
+		if(this.divData.form.tabData.tab2.form.div00.form.calAM_ETCSUBST98.value.length > this.divData.form.tabData.tab2.form.div00.form.calAM_ETCSUBST99.value){
+			strMsg = strMsg + "※중소기업 취업청년 세액감면 취업일, 종료일 입력이 잘못되었습니다.\n";
+		}
+	}
+	
+	if(this.divData.form.tabData.tab2.form.div00.form.chkCD_WOMAN.value == true && this.divData.form.tabData.tab2.form.div00.form.chkONEPARENTS.value == true){
+		strMsg = strMsg + "부녀자공제 와 한부모가족공제를 동시에 만족하는 경우\n한부모가족공제만 체크해주시기 바랍니다.";
+	}
+	
+	if(!this.gfnIsNull(strMsg)){
+		this.gfnAlert(strMsg);
+		return false;
+	}
+	
+	return true;
+};
+
+// 폼상태에 따른 셋팅
+this.fnSetBtnEnable = function() {
+
+if(this.fnIsForbidStatus()){
+	this.btnCardSubst.set_enable(false);
+	this.btnInsuSubst.set_enable(false);
+	this.btnGiveSubst.set_enable(false);
+	this.btnMedicalSubst.set_enable(false);
+	this.btnEduSubst.set_enable(false);
+	this.btnYesOne.set_enable(false);
+	this.btnHouseSubst.set_enable(false);
+	this.btnPensionSubst.set_enable(false);
+	this.btnStockSubst.set_enable(false);
+	this.btnPdfUpload.set_enable(false);
+	this.btnGetRetire.set_enable(false);
+	this.btnPreCompany.set_enable(false);
+	return;
+}
+
+	var tabIdx = this.divData.form.tabData.tabindex;
+	if(tabIdx == 0){
+		if(this.gfnIsNull(this.gfnGetFormStatus(this))){	// 초기화상태
+			this.btnCardSubst.set_enable(false);
+			this.btnInsuSubst.set_enable(false);
+			this.btnGiveSubst.set_enable(false);
+			this.btnMedicalSubst.set_enable(false);
+			this.btnEduSubst.set_enable(false);
+			this.btnYesOne.set_enable(false);
+			this.btnHouseSubst.set_enable(false);
+			this.btnPensionSubst.set_enable(false);
+			this.btnStockSubst.set_enable(false);
+			this.btnPreCompany.set_enable(false);
+			//this.btnPdfUpload.set_enable(false);//연말정산PDF 업로드
+		}else if(this.gfnGetFormStatus(this) == "U") {
+			this.btnCardSubst.set_enable(false);
+			this.btnInsuSubst.set_enable(false);
+			this.btnGiveSubst.set_enable(false);
+			this.btnMedicalSubst.set_enable(false);
+			this.btnEduSubst.set_enable(false);
+			this.btnYesOne.set_enable(false);
+			this.btnHouseSubst.set_enable(false);
+			this.btnPensionSubst.set_enable(false);
+			this.btnStockSubst.set_enable(false);
+			this.btnPreCompany.set_enable(false);
+			//this.btnPdfUpload.set_enable(false);
+		}else if(this.dsList.rowcount < 1) {
+			this.btnCardSubst.set_enable(false);
+			this.btnInsuSubst.set_enable(false);
+			this.btnGiveSubst.set_enable(false);
+			this.btnMedicalSubst.set_enable(false);
+			this.btnEduSubst.set_enable(false);
+			this.btnYesOne.set_enable(false);
+			this.btnHouseSubst.set_enable(false);
+			this.btnPensionSubst.set_enable(false);
+			this.btnStockSubst.set_enable(false);
+			this.btnPreCompany.set_enable(false);
+			//this.btnPdfUpload.set_enable(false);
+		}else{
+			this.btnCardSubst.set_enable(true);
+			this.btnInsuSubst.set_enable(true);
+			this.btnGiveSubst.set_enable(true);
+			this.btnMedicalSubst.set_enable(true);
+			this.btnEduSubst.set_enable(true);
+			this.btnYesOne.set_enable(true);
+			this.btnHouseSubst.set_enable(true);
+			this.btnPensionSubst.set_enable(true);
+			this.btnStockSubst.set_enable(true);
+			this.btnPreCompany.set_enable(true);
+			//this.btnPdfUpload.set_enable(true);
+		}
+		
+		//this.FormBtns.Add.set_enable(false);
+		this.FormBtns.Del.set_enable(true);
+	}else if(tabIdx == 1){
+		if(this.gfnIsNull(this.gfnGetFormStatus(this))){	// 초기화상태
+			this.btnCardSubst.set_enable(false);
+			this.btnInsuSubst.set_enable(false);
+			this.btnGiveSubst.set_enable(false);
+			this.btnMedicalSubst.set_enable(false);
+			this.btnEduSubst.set_enable(false);
+			this.btnYesOne.set_enable(false);
+			this.btnHouseSubst.set_enable(false);
+			this.btnPensionSubst.set_enable(false);
+			this.btnStockSubst.set_enable(false);
+			this.btnPreCompany.set_enable(false);
+			//this.btnPdfUpload.set_enable(false);
+		}else if(this.gfnGetFormStatus(this) == "U") {
+			this.btnCardSubst.set_enable(false);
+			this.btnInsuSubst.set_enable(false);
+			this.btnGiveSubst.set_enable(false);
+			this.btnMedicalSubst.set_enable(false);
+			this.btnEduSubst.set_enable(false);
+			this.btnYesOne.set_enable(false);
+			this.btnHouseSubst.set_enable(false);
+			this.btnPensionSubst.set_enable(false);
+			this.btnStockSubst.set_enable(false);
+			this.btnPreCompany.set_enable(false);
+			//this.btnPdfUpload.set_enable(false);
+		}else if(this.dsList.rowcount < 1) {
+			this.btnCardSubst.set_enable(false);
+			this.btnInsuSubst.set_enable(false);
+			this.btnGiveSubst.set_enable(false);
+			this.btnMedicalSubst.set_enable(false);
+			this.btnEduSubst.set_enable(false);
+			this.btnYesOne.set_enable(false);
+			this.btnHouseSubst.set_enable(false);
+			this.btnPensionSubst.set_enable(false);
+			this.btnStockSubst.set_enable(false);
+			this.btnPreCompany.set_enable(false);
+			//this.btnPdfUpload.set_enable(false);
+		}else{
+			this.btnCardSubst.set_enable(true);
+			this.btnInsuSubst.set_enable(true);
+			this.btnGiveSubst.set_enable(true);
+			this.btnMedicalSubst.set_enable(true);
+			this.btnEduSubst.set_enable(true);
+			this.btnYesOne.set_enable(true);
+			this.btnHouseSubst.set_enable(true);
+			this.btnPensionSubst.set_enable(true);
+			this.btnStockSubst.set_enable(true);
+			this.btnPreCompany.set_enable(true);
+			//this.btnPdfUpload.set_enable(true);
+		}
+		
+		//this.FormBtns.Add.set_enable(false);
+		this.FormBtns.Del.set_enable(false);	
+	}
+	
+	if(this.YearEndClose == "false"){
+		this.FormBtns.Del.set_enable(false);	
+		this.FormBtns.Save.set_enable(false);	
+		this.FormBtns.Excel.set_enable(false);	
+		this.FormBtns.Print.set_enable(false);				
+	}
+	/*
+	else{
+		this.FormBtns.Del.set_enable(true);	
+		this.FormBtns.Save.set_enable(true);	
+		this.FormBtns.Excel.set_enable(true);	
+		this.FormBtns.Print.set_enable(true);	
+	}
+	*/
+
+	
+	//pdf업로드버튼 및 등록완료버튼 외	
+	var bRtn = this.fnIsChangePossible();
+	this.btnPdfUpload.set_enable(bRtn);
+	this.btnGetRetire.set_enable(bRtn);
+	
+}
+
+this.fnIsChangePossible = function(){
+	var bPossible = false;
+	
+	var YEAREND_CLOSE = this.dsYnClose.getColumn(0, "YEAREND_CLOSE");
+	var YN_CLOSE = this.dsYnClose.getColumn(0, "YN_CLOSE");	
+	
+	if(YEAREND_CLOSE == "Y" && YN_CLOSE == "Y"){
+		bPossible = false;
+	}
+	else if(YEAREND_CLOSE == "Y" && YN_CLOSE == "N"){
+		bPossible = false;
+	}
+	else if(YEAREND_CLOSE == "N" && YN_CLOSE == "Y"){
+		bPossible = false;
+	}
+	else if(YEAREND_CLOSE == "N" && YN_CLOSE == "N"){
+		bPossible = true;
+	}	
+	
+	if(bPossible){
+		trace("fnIsChangePossible>>수정가능");
+	}else{
+		trace("fnIsChangePossible>>수정불가");
+	}
+	
+	return bPossible;
+}
+
+this.fnSetFormEnable = function(nTabIdx){
+	var bRtn = this.fnIsChangePossible();
+
+	if(nTabIdx === 0){
+		this.divData.form.tabData.tab1.form.div00.form.rdoYN_HOUSEHOLD.set_enable(bRtn);
+		this.divData.form.tabData.tab1.form.div00.form.rdoYN_DEDUCTION_CHG.set_enable(bRtn);
+	}else{
+	
+		var targetDiv = this.divData.form.tabData.tab2.form.div00;
+		var compArr = targetDiv.form.components;	
+		
+
+		for(var j=0;j<compArr.length; j++){
+			var comp = compArr[j];
+			
+			if(comp instanceof nexacro.Div){
+				if(!this.gfnIsNull(comp.url) && comp.url == "cmm::cmmCodeFind.xfdl"){
+					comp.form.set_readonly(!bRtn);
+				}else{
+					comp.set_enable(bRtn);
+				}
+			}else if(comp instanceof nexacro.Grid){
+				;
+			}else if(comp instanceof nexacro.Edit || 
+					 comp instanceof nexacro.MaskEdit ||
+					 comp instanceof nexacro.Calendar ||
+					 comp instanceof nexacro.TextArea  ||
+					 comp instanceof nexacro.Radio
+			){
+				comp.set_readonly(!bRtn);
+			}else if(comp instanceof nexacro.Combo ||
+					 comp instanceof nexacro.CheckBox 
+			){
+				comp.set_enable(bRtn);
+			}
+		}		
+		
+		//this.FormBtns.Add.set_enable(false);
+		this.FormBtns.Save.set_enable(bRtn);
+		this.FormBtns.Del.set_enable(bRtn);
+		
+		
+		//내부 버튼은 데이타 없을때만 enable false
+		if(this.dsListEtc.rowcount == 0){
+			this.divData.form.tabData.tab2.form.div00.form.btnHOUSE_LR.set_enable(false);//거주자간계약사항
+			this.divData.form.tabData.tab2.form.div00.form.btnMONTH_CONT_REMARK.set_enable(false);//월세계약사항
+			this.divData.form.tabData.tab2.form.div00.form.btnYEAREND_PRINT.set_enable(false);//명세서출력	
+		}else{
+			this.divData.form.tabData.tab2.form.div00.form.btnHOUSE_LR.set_enable(true);//거주자간계약사항
+			this.divData.form.tabData.tab2.form.div00.form.btnMONTH_CONT_REMARK.set_enable(true);//월세계약사항
+			this.divData.form.tabData.tab2.form.div00.form.btnYEAREND_PRINT.set_enable(true);//명세서출력	
+		}	
+		
+		//항상 수정못하는
+		this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST401.set_enable(false);
+		this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST402.set_enable(false);
+		this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST403.set_enable(false);
+		this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST404.set_enable(false);
+		this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST05.set_enable(false);
+		this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST06.set_enable(false);
+		this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST07.set_enable(false);
+		this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST16.set_enable(false);
+		this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST17.set_enable(false);
+		this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST18.set_enable(false);
+		this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST48.set_enable(false);
+		this.divData.form.tabData.tab2.form.div00.form.edtAM_ETCSUBST02_1.set_enable(false);	
+	}
+		
+}	
+
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="390" height="220" titletext="전표연결" onload="form_onload">
+    <Layouts>
+      <Layout height="220" width="390">
+        <Div id="divData" taborder="1" left="0" top="-40" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staBar02" taborder="4" left="119" top="167" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staTitle" taborder="0" text="전표대상정보" left="20" top="60" height="22" cssclass="sta_TITLE_Bg" width="350"/>
+              <Static id="staTitle00" taborder="1" text="전표정보" left="20" top="141" height="22" cssclass="sta_TITLE_Bg" width="350"/>
+              <Static id="staItem02" taborder="2" text="전표번호" left="20" top="167" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <Div id="cflCD_TRADE" CDTextWidth="120" taborder="3" left="125" top="171" width="238" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Button id="btnOk" taborder="5" text="확인" left="143" width="45" height="21" onclick="btnOk_onclick" uWord="popup.ok" top="207"/>
+              <Button id="btnCancle" taborder="6" text="취소" left="193" width="45" height="21" onclick="btnCancle_onclick" uWord="popup.cancel" top="207"/>
+              <Static id="staItem01_00" taborder="7" text="거래일자" left="20" top="88" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staBar01_00" taborder="8" left="119" top="88" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Calendar id="calDT_TRADE" taborder="9" left="125" top="93" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" enable="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmPopup.xfdl (공통 팝업페이지)
+*  @FileName 	cmmPopup.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.10.19
+*  @Desction         스크립트 표준 및 주석 표준 정의
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.pv_AM_TRADE;
+this.pv_AM_EZA;
+// this.pv_AM_CORP_JUMIN;
+// this.pv_AM_ETC;
+// this.pv_AM_TOTAL;
+ this.pv_CD_CORP;
+//this.pv_NO_ACCOUNT;
+this.pv_DT_TRADE;
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this); //초기화[필수]
+	this.gfnFormInfo(this);
+	this.fnSetParameter();
+	this.fnSetEvent();
+
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	var frame = this.getOwnerFrame();	
+		
+	this.pv_AM_TRADE = frame.AM_TRADE;				// 거래금액
+	this.pv_AM_EZA = frame.AM_EZA;					// 이자금액
+// 	this.pv_AM_CORP_JUMIN = frame.AM_CORP_JUMIN;	// 법인/주민세
+// 	this.pv_AM_ETC = frame.AM_ETC;					// 부대비용
+// 	this.pv_AM_TOTAL = frame.AM_TOTAL;				// 합계
+ 	this.pv_CD_CORP = frame.CD_CORP;				// 법인코드
+// 	this.pv_NO_ACCOUNT = frame.NO_ACCOUNT;			// 계좌번호
+	this.pv_DT_TRADE = frame.DT_TRADE;				// 거래일자	
+	
+// 	this.mskAM_TRADE.set_value(this.pv_AM_TRADE);			// 거래금액
+// 	this.mskAM_EZA.set_value(this.pv_AM_EZA);				// 이자금액
+// 	this.mskAM_CORP_JUMIN.set_value(this.pv_AM_CORP_JUMIN);	// 법인세/주민세
+// 	this.mskAM_ETC.set_value(this.pv_AM_ETC);				// 부대비용
+// 	this.mskAM_TOTAL.set_value(this.pv_AM_TOTAL);			// 입금예상금액
+	this.calDT_TRADE.set_value(this.pv_DT_TRADE);	
+	
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	this.cflCD_TRADE.CodeFindName = "DFX_NO_SLIP_YEJUKUM";
+	this.cflCD_TRADE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	
+	this.cflCD_TRADE.AfterCDTextChanged = "fnAfterCDTextChanged";
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+// 	this.mskAM_TRADE = this.divData.form.mskAM_TRADE;			// 거래금액
+// 	this.mskAM_EZA = this.divData.form.mskAM_EZA;					// 이자금액
+// 	this.mskAM_CORP_JUMIN = this.divData.form.mskAM_CORP_JUMIN;		// 법인세/주민세
+// 	this.mskAM_ETC = this.divData.form.mskAM_ETC;			// 부대비용
+// 	this.mskAM_TOTAL = this.divData.form.mskAM_TOTAL;			// 입금예상금액
+	this.cflCD_TRADE = this.divData.form.cflCD_TRADE;		//전표번호 
+	this.calDT_TRADE = this.divData.form.calDT_TRADE;		//전표일자 
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnValidation = function() {
+	if (this.gfnIsNull(this.cflCD_TRADE.form.CDTextBox.value)) {
+		this.gfnAlert("전표 번호를 입력하십시오.");
+		this.cflCD_TRADE.form.CDTextBox.setFocus();
+		return false;
+	}
+	
+	return true;
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+	dsUserParam.setColumn(nrow, "CD_CORP", this.pv_CD_CORP);	
+	dsUserParam.setColumn(nrow, "DT_SLIP", this.pv_DT_TRADE);		
+
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {	
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* @ OK버튼이벤트
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnValidation()) return false;
+
+	// 확인
+	var json = {};
+	
+	json.CD_TRADE = this.cflCD_TRADE.form.CDTextBox.value;	// 거래내역번호(입금번호)
+	
+	
+	this.getParentContext().close(JSON.stringify(json));
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_TRADE" type="FLOAT" size="256"/>
+          <Column id="DT_TRADE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

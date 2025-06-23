@@ -1,0 +1,977 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="410" height="360" titletext="재입찰" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="재입찰" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staCD_SITE" taborder="1" text="현장코드" left="0" top="40" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staNO_BID" taborder="2" text="입찰번호" left="0" top="staCD_SITE:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staTY_WORK" taborder="4" text="유형" left="0" top="staNO_BID:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staDT_BIDMAGAM_PRE" taborder="3" text="현재" left="0" top="staTY_WORK:-1" width="87" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDT_BIDMAGAM" taborder="5" text="변경" left="0" top="staDT_BIDMAGAM_PRE:-1" width="87" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_REASON" taborder="6" text="사유" left="0" top="staDT_BIDMAGAM:-1" width="87" height="90" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staBg1" taborder="7" left="staCD_SITE:-1" top="40" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg2" taborder="8" left="86" top="69" right="0.00%" height="31" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg3" taborder="9" left="staTY_WORK:-1" top="staBg2:-2" right="0.00%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg4" taborder="10" left="staDT_BIDMAGAM_PRE:-1" top="staBg3:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg5" taborder="11" left="staDT_BIDMAGAM:-1" top="staBg4:-1" right="0.00%" height="31" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg6" taborder="12" left="86" top="185" right="0.00%" height="90" cssclass="sta_WF_tablebg"/>
+              <Edit id="edtCD_SITE" taborder="13" left="staCD_SITE:5" top="staTITLE:15" width="90" height="20" readonly="true" maxlength="50"/>
+              <Edit id="edtDS_SITE" taborder="14" left="edtCD_SITE:5" top="staTITLE:15" right="5" height="20" readonly="true" maxlength="50"/>
+              <Edit id="edtNO_BID" taborder="15" left="staNO_BID:5" top="edtCD_SITE:10" height="20" width="90" readonly="true" maxlength="50"/>
+              <Edit id="edtDS_SUBCON" taborder="16" left="edtNO_BID:5" top="edtCD_SITE:10" right="5" height="20" readonly="true" maxlength="50"/>
+              <Combo id="ccboTY_WORK" taborder="17" left="staTY_WORK:5" top="edtNO_BID:9" height="20" innerdataset="dsTY_WORK" codecolumn="CD_CODE" datacolumn="DS_CODE" right="5"/>
+              <Calendar id="ctclDT_BIDMAGAM_PRE" taborder="18" left="staDT_BIDMAGAM_PRE:5" top="ccboTY_WORK:9" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="true"/>
+              <Edit id="edtDT_BIDMAGAM_PRE_HOUR" taborder="19" left="ctclDT_BIDMAGAM_PRE:5" top="ccboTY_WORK:9" width="60" height="20" readonly="true"/>
+              <Static id="staDT_BIDMAGAM_PRE_HOUR" taborder="20" text="시" left="edtDT_BIDMAGAM_PRE_HOUR:3" top="ccboTY_WORK:9" width="20" height="20"/>
+              <Edit id="edtDT_BIDMAGAM_PRE_MIN" taborder="21" left="staDT_BIDMAGAM_PRE_HOUR:3" top="ccboTY_WORK:9" width="60" height="20" readonly="true"/>
+              <Static id="staDT_BIDMAGAM_PRE_MIN" taborder="22" text="분" left="edtDT_BIDMAGAM_PRE_MIN:3" top="ccboTY_WORK:9" width="20" height="20"/>
+              <Calendar id="ctclDT_BIDMAGAM" taborder="23" left="staDT_BIDMAGAM:5" top="ctclDT_BIDMAGAM_PRE:9" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Combo id="ccboDT_BIDMAGAM_HOUR" taborder="24" left="ctclDT_BIDMAGAM:5" top="ctclDT_BIDMAGAM_PRE:9" width="60" height="20" innerdataset="dsHOUR" codecolumn="CD_CODE" datacolumn="DS_CODE" index="0" text="00" value="00"/>
+              <Static id="staDT_BIDMAGAM_HOUR" taborder="25" text="시" left="ccboDT_BIDMAGAM_HOUR:3" top="staDT_BIDMAGAM_PRE:5" width="20" height="20"/>
+              <Combo id="ccboDT_BIDMAGAM_MIN" taborder="26" left="staDT_BIDMAGAM_HOUR:3" top="ctclDT_BIDMAGAM_PRE:9" width="60" height="20" innerdataset="dsMINUTE" codecolumn="CD_CODE" datacolumn="DS_CODE" index="0" text="00" value="00"/>
+              <Static id="staDT_BIDMAGAM_MIN" taborder="27" text="분" left="ccboDT_BIDMAGAM_MIN:3" top="staDT_BIDMAGAM_PRE:5" width="20" height="20"/>
+              <TextArea id="edtDS_FALLREASON" taborder="28" left="staDS_REASON:5" top="ctclDT_BIDMAGAM:9" height="80" right="5"/>
+              <Button id="btnOk" taborder="29" text="확인" left="136" top="300" width="62" height="20" onclick="divData_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="30" text="취소" left="201" top="300" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+              <Button id="btnOk00" taborder="31" text="재입찰/유찰첨부파일" left="5" top="300" width="128" height="20" onclick="divData_btnOk00_onclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "lib::libCommon.xjs";
+this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.fnSetCombo();
+	
+	// 이전 화면에서 데이터 받기.
+	this.dsData.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+	this.dsData.setColumn(0, "DS_SITE", this.getOwnerFrame().DS_SITE);
+	this.dsData.setColumn(0, "NO_BID", this.getOwnerFrame().NO_BID);
+	this.dsData.setColumn(0, "DS_SUBCON", this.getOwnerFrame().DS_SUBCON);
+	this.dsData.setColumn(0, "CD_SYSTEM", this.getOwnerFrame().CD_SYSTEM);
+	
+	this.dsData.setColumn(0, "DT_BIDMAGAM_HOUR", 16);
+	this.dsData.setColumn(0, "DT_BIDMAGAM_MIN", "00");
+	
+	if(!this.gfnIsNull(this.dsData.getColumn(0, "NO_BID")))
+	{
+		this.fnSelect();
+	}
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	//this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {	
+	this.dsMagam = new Dataset();
+	this.dsMagam.addColumn("NO_BID", "string");
+	
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("CD_SITE", "string");
+	this.dsSave.addColumn("NO_BID", "string");
+	this.dsSave.addColumn("DS_REASON", "string");
+	this.dsSave.addColumn("DS_REMARK", "string");
+	this.dsSave.addColumn("TY_WORK", "string");
+	this.dsSave.addColumn("YN_SMS", "string");
+	this.dsSave.addColumn("YN_MAIL", "string");
+	this.dsSave.addColumn("DT_ONLINEMAGAM", "string");
+	this.dsSave.addColumn("ID_USER", "string");
+	
+	this.dsSendSms = new Dataset();
+	this.dsSendSms.addColumn("NO_BID", "string");
+	this.dsSendSms.addColumn("TY_GUBUN", "string");
+	this.dsSendSms.addColumn("CD_CODE", "string");
+	
+	this.dsAppParam = new Dataset();
+	this.dsAppParam.addColumn("CD_SITE", "string");
+	this.dsAppParam.addColumn("NO_BID", "string");
+	this.dsAppParam.addColumn("URL", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	this.dsMagam.clearData();
+	this.dsMagam.addRow();
+		
+	this.dsMagam.setColumn(0, "NO_BID", this.dsData.getColumn(0, "NO_BID"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsMagam";
+	var outData     = "dsDT_MAGAM=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSaveValidate = function()
+{
+	var validate = true;
+	if(this.dsData.getColumn(0, "TY_WORK") != "04") {
+		var dt_onlinemagam_pre = this.dsData.getColumn(0, "DT_BIDMAGAM_PRE") + this.dsData.getColumn(0, "DT_BIDMAGAM_PRE_HOUR") + this.dsData.getColumn(0, "DT_BIDMAGAM_PRE_MIN");
+		var dt_onlinemagam = this.dsData.getColumn(0, "DT_BIDMAGAM") + this.dsData.getColumn(0, "DT_BIDMAGAM_HOUR") + this.dsData.getColumn(0, "DT_BIDMAGAM_MIN");
+
+		if(nexacro.toNumber(dt_onlinemagam_pre) > nexacro.toNumber(dt_onlinemagam))
+		{
+			validate = false;
+			this.gfnAlert("변경일자가 현재일자보다 이전일 수는 없습니다.");
+		}
+	}
+	return validate;
+}
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if( svcID == "select") {
+		if(this.dsDT_MAGAM.rowcount > 0)
+		{
+			var magam = this.dsDT_MAGAM.getColumn(0, "DT_BIDMAGAM");
+			this.dsData.setColumn(0, "DT_BIDMAGAM_PRE", magam.substr(0,8));
+			this.dsData.setColumn(0, "DT_BIDMAGAM_PRE_HOUR", magam.substr(8,2));
+			this.dsData.setColumn(0, "DT_BIDMAGAM_PRE_MIN", magam.substr(10,2));
+			this.dsData.setColumn(0, "DT_BIDMAGAM", magam.substr(0,8));
+			this.dsData.setColumn(0, "CT_BID", this.dsDT_MAGAM.getColumn(0, "CT_BID"));
+		}
+	}
+	else if (svcID == "save") {
+		if(errorCode == 0)
+		{
+			// this.close()가 작동하지 않았고, 
+			// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+			if(this.dsData.getColumn(0, "YN_SMS") == "Y")
+			{
+				this.fnSendSMS();
+			}
+			else
+			{
+				this.getParentContext().close(true);
+			}
+			//this.fnSelectEPS("RB");
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if (svcID == "saveYouchal") {
+		if(errorCode == 0)
+		{
+			this.fnApp_callback(svcID, true);
+		}
+	}
+	else if(svcID == "esp")
+	{
+		if(errorCode == 0)
+		{
+			this.getParentContext().close(true);
+		}
+		else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if (svcID == "send_sms") {
+		if(errorCode == 0)
+		{
+			this.getParentContext().close(true);
+		}
+		else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "appChk") 
+	{
+		if (errorCode == 0) 
+		{
+			this.fnAppSelect();
+		}
+		else
+		{	
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "appSelect") {
+		if (errorCode == 0) 
+		{
+			this.fnAppOpen();
+		}
+		else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+// 확인 버튼 클릭
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(!this.fnSaveValidate()) return;
+	
+	var nData = this.dsData.rowposition;
+	var sTY_WORK = this.dsData.getColumn(nData, "TY_WORK");
+	
+	if(sTY_WORK == "02")
+	{
+		var msg = "유찰결재의뢰를 진행하시겠습니까?";
+		this.gfnConfirm(msg, "fnApp_before_callback", "");
+	}
+	else
+	{
+		this.dsSave.clearData();
+		var nrow = this.dsSave.addRow();	
+		
+		var dt_onlinemagam = this.dsData.getColumn(0, "DT_BIDMAGAM") + this.dsData.getColumn(0, "DT_BIDMAGAM_HOUR") + this.dsData.getColumn(0, "DT_BIDMAGAM_MIN");
+		
+		this.dsSave.setColumn(nrow, "CD_SITE", this.dsData.getColumn(0, "CD_SITE"));
+		this.dsSave.setColumn(nrow, "NO_BID", this.dsData.getColumn(0, "NO_BID"));
+		this.dsSave.setColumn(nrow, "DS_REASON", this.dsData.getColumn(0, "DS_REASON"));
+		this.dsSave.setColumn(nrow, "TY_WORK", this.dsData.getColumn(0, "TY_WORK"));
+		this.dsSave.setColumn(nrow, "YN_SMS", this.dsData.getColumn(0, "YN_SMS"));
+		this.dsSave.setColumn(nrow, "YN_MAIL", this.dsData.getColumn(0, "YN_MAIL"));
+		this.dsSave.setColumn(nrow, "DT_ONLINEMAGAM", dt_onlinemagam);
+		this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+
+		var strSvcId    = "save";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "save=dsSave";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+
+this.fnSetCombo = function()
+{
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	var nrow = this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DC");
+	this.dsCombo.setColumn(0, "CD_TYPE", "64");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_WORK=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnSendSMS = function()
+{
+	this.dsSendSms.clearData();
+	var nrow = this.dsSendSms.addRow();	
+
+	this.dsSendSms.setColumn(nrow, "NO_BID", this.dsData.getColumn(0, "NO_BID"));
+	this.dsSendSms.setColumn(nrow, "TY_GUBUN", "S");
+	this.dsSendSms.setColumn(nrow, "CD_CODE", "DC04");
+	
+	var strSvcId    = "send_sms";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "send_sms=dsSendSms";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+
+}
+
+// 
+// this.fnSelectEPS = function(lv_app) {
+// 	
+// 	this.dsEPS = new Dataset();
+// 	
+// 	this._dsProcEPS = new Dataset();
+// 	this._dsProcEPS.addColumn("TARGET", "string");
+// 	this._dsProcEPS.addColumn("SP", "string");
+// 	
+// 	this._dsProcEPS.addRow();
+// 	this._dsProcEPS.setColumn(0, "TARGET", "eps");
+// 	this._dsProcEPS.setColumn(0, "SP", "DZZPR_EPS_BID_SAP_MIDDLE_POPUP_SELECT");
+// 	
+// 	this.dsSelectEPS = new Dataset();
+// 	this.dsSelectEPS.addColumn("NO_BID", "string");		// ERP발주(입찰)번호
+// 	this.dsSelectEPS.addColumn("YN_UNION", "string");	// 통합입찰여부
+// 	this.dsSelectEPS.addColumn("ID_USER", "string");
+// 	
+// 	this.dsSelectEPS.addRow();
+// 	
+// 	this.dsSelectEPS.setColumn(0, "NO_BID", this.dsData.getColumn(0, "NO_BID"));
+// 	this.dsSelectEPS.setColumn(0, "YN_UNION", "N");
+// 	this.dsSelectEPS.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+// 
+// 	var strSvcId    = "eps";
+// 	var strSvcType  = "select";
+// 	var inProc		= "_dsProcEPS";
+// 	var inData      = "eps=dsSelectEPS";
+// 	var outData     = "dsEPS=eps0";
+// 	var strArg      = "P_APP=" + lv_app;
+// 	var callBackFnc = "fnCallbackEPS";
+// 	
+// 	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+// 						strSvcType , 	// transaction을 요청할 구분
+// 						inProc,			// Procedure 정보 Dataset 이름
+// 						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+// 						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+// 						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+// 						callBackFnc); // 통신방법 정의 [생략가능]
+// 	
+// }
+// 
+// this.fnCallbackEPS = function(svcID, errorCode, errorMsg, strArg)
+// {
+// 	if (errorCode!=0) {
+// 		this.gfnAlert(errorMsg);
+// 		return;
+// 	}
+// 	
+// 	var url = "";
+// 	if (svcID == "eps") {		
+// 		url = "/buyer/bid/pop/bid_sap_middle_pop.do";
+// 	}
+// 	else if (svcID == "eps2") {		
+// 		url = "/buyer/bid/open_su_nosave.do";
+// 	}
+// 	
+// 	if(this.dsEPS.rowcount > 0) {	
+// 		var arr_param = [];
+// 		
+// 		arr_param.push(strArg);
+// 		for(var c = 0; c < this.dsEPS.colinfos.length; c++) {
+// 			var colid = this.dsEPS.colinfos[c].name;			
+// 			var val = this.dsEPS.getColumn(0, colid);
+// 			if(val==null) val="";
+// 			arr_param.push(colid + "=" + val);
+// 		}
+// 		
+// 		this.gfnOpenEPS(url, arr_param.join('&'));
+// 	}
+// };
+
+this.fnApp_before_callback = function(strId, val) 
+{
+	if(val == true) 
+	{
+		this.dsSave.clearData();
+		var nrow = this.dsSave.addRow();	
+		
+		this.dsSave.setColumn(nrow, "CD_SITE", this.dsData.getColumn(0, "CD_SITE"));
+		this.dsSave.setColumn(nrow, "NO_BID", this.dsData.getColumn(0, "NO_BID"));
+		this.dsSave.setColumn(nrow, "TY_WORK", "DC05");
+		this.dsSave.setColumn(nrow, "DS_REMARK", this.dsData.getColumn(0, "DS_REASON"));
+
+		var strSvcId    = "saveYouchal";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "saveYouchal=dsSave";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}
+
+this.fnApp_callback = function(strId, val) 
+{
+	if(val == true) 
+	{
+		this.dsAppParam.clearData();
+		var nrow = this.dsAppParam.addRow();
+		
+		this.dsAppParam.setColumn(nrow, "CD_SITE", this.dsData.getColumn(0, "CD_SITE"));
+		this.dsAppParam.setColumn(nrow, "NO_BID", this.dsData.getColumn(0, "NO_BID"));
+		
+		if (this.dsAppParam.rowcount == 0) return;
+		
+		var strSvcId    = "appChk";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "appChk=dsAppParam";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}
+
+this.fnAppSelect = function()
+{
+	var url = this.gfnGetServerUrl();
+	
+	if(url == "http://localhost:8080")
+	{
+		url += "/erp";
+	}
+	
+	this.dsAppParam.setColumn(0, "URL", url);
+
+	var strSvcId    = "appSelect";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "appSelect=dsAppParam";
+	var outData     = "dsAppList=appSelect0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnAppOpen = function()
+{
+	if(this.dsAppList.rowcount > 0) 
+	{
+		var vCD_SYSTEM = this.dsData.getColumn(0, "CD_SYSTEM");
+	
+		var sApType = "";
+		var sTitle  = "";
+		
+		var ds_site = this.dsData.getColumn(0, "DS_SITE");
+		var ds_cont = this.dsData.getColumn(0, "DS_SUBCON");
+		
+		if(vCD_SYSTEM == "DM")
+		{
+			sApType = "DM05";
+			sTitle  = "[유찰품의/자재]"+ ds_site + "/" + ds_cont;
+		}
+		else
+		{
+			sApType = "DC05";
+			sTitle  = "[유찰품의/외주]"+ ds_site + "/" + ds_cont;
+		}
+		
+		var sRef01  = this.dsData.getColumn(0, "CD_SITE");
+		var sRef02  = this.dsData.getColumn(0, "NO_BID");
+		var sRef03  = "";
+		var sRef04  = "";
+		var oParam  = this.gfnDataSetToJson(this.dsAppList, this.dsAppList.rowposition)
+
+		console.info("================ oParam");
+		console.info(oParam);
+	
+		this.gfnApprove(sApType, sTitle, sRef01, sRef02, "", "", oParam, "fnAprvDialogCallback");
+	}
+}
+
+this.fnAprvDialogCallback = function(svcID, value) {
+	// 리턴값
+	if(value){
+		// 결재완료, 결재취소, 결재상신 후에는 재조회를 한다
+		this.FormBtns.Select.click();
+	}
+};
+
+this.divData_btnOk00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var strKey = this.dsData.getColumn(0, "NO_BID") + this.dsData.getColumn(0, "CT_BID");
+
+	var fileManager = {};
+	fileManager.CD_GUBUN = "DC59";
+	fileManager.CD_DIR = [strKey];
+	fileManager.IS_READONLY = false;
+	this.gfnFileManager(fileManager, "fnFileCallback");
+};
+
+this.dsData_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.columnid == "TY_WORK") {
+		if(e.newvalue == "04") {
+			this.divData.form.ctclDT_BIDMAGAM.set_enable(false);
+			this.divData.form.ccboDT_BIDMAGAM_HOUR.set_enable(false);
+			this.divData.form.ccboDT_BIDMAGAM_MIN.set_enable(false);
+			
+			this.dsData.setColumn(0, "DT_BIDMAGAM", "");
+			this.dsData.setColumn(0, "DT_BIDMAGAM_HOUR", "");
+			this.dsData.setColumn(0, "DT_BIDMAGAM_MIN", "");
+		} else {
+			this.divData.form.ctclDT_BIDMAGAM.set_enable(true);
+			this.divData.form.ccboDT_BIDMAGAM_HOUR.set_enable(true);
+			this.divData.form.ccboDT_BIDMAGAM_MIN.set_enable(true);
+			
+			var magam = this.dsDT_MAGAM.getColumn(0, "DT_BIDMAGAM");
+			this.dsData.setColumn(0, "DT_BIDMAGAM", magam.substr(0,8));
+			this.dsData.setColumn(0, "DT_BIDMAGAM_HOUR", 16);
+			this.dsData.setColumn(0, "DT_BIDMAGAM_MIN", "00");
+		}
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DCBPR_BID_DTMAGAM_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DCBPR_BID_CANCEL</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">send_sms</Col>
+            <Col id="SP">DZZPR_BID_MAIL_SMS_SEND</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appChk</Col>
+            <Col id="SP">DCBPR_APP_DC05_CHK</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appSelect</Col>
+            <Col id="SP">DCBPR_APP_DC05_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">saveYouchal</Col>
+            <Col id="SP">DCBPR_APP_REMARK_SAVE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData" onvaluechanged="dsData_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="NO_BID" type="STRING" size="256"/>
+          <Column id="DS_SUBCON" type="STRING" size="256"/>
+          <Column id="TY_WORK" type="STRING" size="256"/>
+          <Column id="DS_REASON" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM_PRE" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM_PRE_HOUR" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM_PRE_MIN" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM_HOUR" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM_MIN" type="STRING" size="256"/>
+          <Column id="YN_SMS" type="STRING" size="256"/>
+          <Column id="YN_MAIL" type="STRING" size="256"/>
+          <Column id="CD_SYSTEM" type="STRING" size="256"/>
+          <Column id="CT_BID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TY_WORK">01</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_WORK">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsHOUR">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">00</Col>
+            <Col id="DS_CODE">00</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">01</Col>
+            <Col id="DS_CODE">01</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">02</Col>
+            <Col id="DS_CODE">02</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">03</Col>
+            <Col id="DS_CODE">03</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">04</Col>
+            <Col id="DS_CODE">04</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">05</Col>
+            <Col id="DS_CODE">05</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">06</Col>
+            <Col id="DS_CODE">06</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">07</Col>
+            <Col id="DS_CODE">07</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">08</Col>
+            <Col id="DS_CODE">08</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">09</Col>
+            <Col id="DS_CODE">09</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">10</Col>
+            <Col id="DS_CODE">10</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">11</Col>
+            <Col id="DS_CODE">11</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">12</Col>
+            <Col id="DS_CODE">12</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">13</Col>
+            <Col id="DS_CODE">13</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">14</Col>
+            <Col id="DS_CODE">14</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">15</Col>
+            <Col id="DS_CODE">15</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">16</Col>
+            <Col id="DS_CODE">16</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">17</Col>
+            <Col id="DS_CODE">17</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">18</Col>
+            <Col id="DS_CODE">18</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">19</Col>
+            <Col id="DS_CODE">19</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">20</Col>
+            <Col id="DS_CODE">20</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">21</Col>
+            <Col id="DS_CODE">21</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">22</Col>
+            <Col id="DS_CODE">22</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">23</Col>
+            <Col id="DS_CODE">23</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMINUTE">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">00</Col>
+            <Col id="DS_CODE">00</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">05</Col>
+            <Col id="DS_CODE">05</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">10</Col>
+            <Col id="DS_CODE">10</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">15</Col>
+            <Col id="DS_CODE">15</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">20</Col>
+            <Col id="DS_CODE">20</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">25</Col>
+            <Col id="DS_CODE">25</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">30</Col>
+            <Col id="DS_CODE">30</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">35</Col>
+            <Col id="DS_CODE">35</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">40</Col>
+            <Col id="DS_CODE">40</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">45</Col>
+            <Col id="DS_CODE">45</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">50</Col>
+            <Col id="DS_CODE">50</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">55</Col>
+            <Col id="DS_CODE">55</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDT_MAGAM"/>
+      <Dataset id="dsAppList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="NO_BID" type="STRING" size="256"/>
+          <Column id="NO_HADO" type="STRING" size="256"/>
+          <Column id="DS_SUBCON" type="STRING" size="256"/>
+          <Column id="TY_ACCOUNT" type="STRING" size="256"/>
+          <Column id="RT_TAX" type="BIGDECIMAL" size="256"/>
+          <Column id="TY_TAX" type="STRING" size="256"/>
+          <Column id="RT_JIBUN" type="INT" size="256"/>
+          <Column id="DT_FROM" type="STRING" size="256"/>
+          <Column id="DT_TO" type="STRING" size="256"/>
+          <Column id="DS_FROMTO" type="STRING" size="256"/>
+          <Column id="DT_REQ_SITE" type="STRING" size="256"/>
+          <Column id="DT_HQRECEIPT" type="STRING" size="256"/>
+          <Column id="DT_HQAPPR" type="STRING" size="256"/>
+          <Column id="AM_TT_DOKUB" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_TT_SILHENG" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_REQUEST" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_GONGSA" type="BIGDECIMAL" size="256"/>
+          <Column id="UP_PYEONG" type="INT" size="256"/>
+          <Column id="CD_VENDOR" type="STRING" size="256"/>
+          <Column id="CD_COSTCLASS" type="STRING" size="256"/>
+          <Column id="DS_COSTCLASS" type="STRING" size="256"/>
+          <Column id="CD_LICCOST" type="STRING" size="256"/>
+          <Column id="DS_LICCOST" type="STRING" size="256"/>
+          <Column id="CD_SPECCONST" type="STRING" size="256"/>
+          <Column id="CD_AREA" type="STRING" size="256"/>
+          <Column id="DS_AREA" type="STRING" size="256"/>
+          <Column id="NO_RFQ" type="STRING" size="256"/>
+          <Column id="DS_CONTMETHOD" type="STRING" size="256"/>
+          <Column id="AREA_SITE" type="INT" size="256"/>
+          <Column id="AM_BASIC" type="INT" size="256"/>
+          <Column id="YN_PUBLISH_BID" type="STRING" size="256"/>
+          <Column id="YN_ATTACH_ILSIK" type="STRING" size="256"/>
+          <Column id="YN_HASU" type="STRING" size="256"/>
+          <Column id="YN_EXFILE_SEPARATE" type="STRING" size="256"/>
+          <Column id="NO_UNION_HADO" type="STRING" size="256"/>
+          <Column id="NO_UNION_BID_CONNECT" type="STRING" size="256"/>
+          <Column id="YN_UNION_BID" type="STRING" size="256"/>
+          <Column id="YN_UNION_BID_ING" type="STRING" size="256"/>
+          <Column id="CT_GONGU" type="INT" size="256"/>
+          <Column id="NUM_GONGU" type="BIGDECIMAL" size="256"/>
+          <Column id="AREA_SITE1" type="BIGDECIMAL" size="256"/>
+          <Column id="AREA_SITE2" type="BIGDECIMAL" size="256"/>
+          <Column id="AREA_SITE3" type="BIGDECIMAL" size="256"/>
+          <Column id="AREA_SITE4" type="BIGDECIMAL" size="256"/>
+          <Column id="AREA_SITEALL" type="BIGDECIMAL" size="256"/>
+          <Column id="ID_MANAGER" type="BIGDECIMAL" size="256"/>
+          <Column id="NM_MANAGER" type="STRING" size="256"/>
+          <Column id="NO_MANAGERTEL" type="STRING" size="256"/>
+          <Column id="ID_SITESABUN" type="STRING" size="256"/>
+          <Column id="NM_SITESABUN" type="STRING" size="256"/>
+          <Column id="NO_SITETEL" type="STRING" size="256"/>
+          <Column id="RM_BIDREMARK" type="STRING" size="256"/>
+          <Column id="RM_REMARK" type="STRING" size="256"/>
+          <Column id="YN_EXPLAIN" type="STRING" size="256"/>
+          <Column id="ONOFF_EXPLAIN" type="STRING" size="256"/>
+          <Column id="AT_SITEEXPLAIN" type="STRING" size="256"/>
+          <Column id="DT_EXPLAIN" type="STRING" size="256"/>
+          <Column id="DT_EXPLAIN_GONGO" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM" type="STRING" size="256"/>
+          <Column id="DT_BIDMAGAM_GONGO" type="STRING" size="256"/>
+          <Column id="TY_BID" type="STRING" size="256"/>
+          <Column id="DS_BID_SUCCESS" type="STRING" size="256"/>
+          <Column id="ONOFF" type="STRING" size="256"/>
+          <Column id="ID_BIDCOORDI" type="STRING" size="256"/>
+          <Column id="NM_BIDCOORDI" type="STRING" size="256"/>
+          <Column id="NO_BIDCOORDITEL" type="STRING" size="256"/>
+          <Column id="EM_BIDCOORDI" type="STRING" size="256"/>
+          <Column id="ID_BIDDAM1" type="STRING" size="256"/>
+          <Column id="NM_BIDDAM1" type="STRING" size="256"/>
+          <Column id="NO_BIDDAM1TEL" type="STRING" size="256"/>
+          <Column id="EM_BIDDAM1" type="STRING" size="256"/>
+          <Column id="ID_BIDDAM2" type="STRING" size="256"/>
+          <Column id="NM_BIDDAM2" type="STRING" size="256"/>
+          <Column id="NO_BIDDAM2TEL" type="STRING" size="256"/>
+          <Column id="EM_BIDDAM2" type="STRING" size="256"/>
+          <Column id="ID_QUESTION" type="STRING" size="256"/>
+          <Column id="NM_QUESTION" type="STRING" size="256"/>
+          <Column id="NO_QUESTIONTEL" type="STRING" size="256"/>
+          <Column id="EM_QUESTION" type="STRING" size="256"/>
+          <Column id="ID_INSERT" type="STRING" size="256"/>
+          <Column id="NM_INSERT" type="STRING" size="256"/>
+          <Column id="DT_INSERT" type="STRING" size="256"/>
+          <Column id="ID_UPDATE" type="STRING" size="256"/>
+          <Column id="NM_UPDATE" type="STRING" size="256"/>
+          <Column id="DT_UPDATE" type="STRING" size="256"/>
+          <Column id="GW_STATUS1" type="STRING" size="256"/>
+          <Column id="DS_STATUS1" type="STRING" size="256"/>
+          <Column id="TY_BIDSTATUS" type="STRING" size="256"/>
+          <Column id="DS_BIDSTATUS" type="STRING" size="256"/>
+          <Column id="CT_HOUSEHOLDS" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_CONTGUARANTEE" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_ASGUARANTEE" type="BIGDECIMAL" size="256"/>
+          <Column id="DT_ASFROMTO" type="STRING" size="256"/>
+          <Column id="CT_JICHAE" type="INT" size="256"/>
+          <Column id="TY_RETIRE_BUGEUM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.edtCD_SITE" propid="value" datasetid="dsData" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divData.form.edtDS_SITE" propid="value" datasetid="dsData" columnid="DS_SITE"/>
+      <BindItem id="item2" compid="divData.form.edtNO_BID" propid="value" datasetid="dsData" columnid="NO_BID"/>
+      <BindItem id="item3" compid="divData.form.edtDS_SUBCON" propid="value" datasetid="dsData" columnid="DS_SUBCON"/>
+      <BindItem id="item4" compid="divData.form.ccboTY_WORK" propid="value" datasetid="dsData" columnid="TY_WORK"/>
+      <BindItem id="item5" compid="divData.form.edtDS_FALLREASON" propid="value" datasetid="dsData" columnid="DS_REASON"/>
+      <BindItem id="item6" compid="divData.form.ctclDT_BIDMAGAM_PRE" propid="value" datasetid="dsData" columnid="DT_BIDMAGAM_PRE"/>
+      <BindItem id="item7" compid="divData.form.edtDT_BIDMAGAM_PRE_HOUR" propid="value" datasetid="dsData" columnid="DT_BIDMAGAM_PRE_HOUR"/>
+      <BindItem id="item8" compid="divData.form.edtDT_BIDMAGAM_PRE_MIN" propid="value" datasetid="dsData" columnid="DT_BIDMAGAM_PRE_MIN"/>
+      <BindItem id="item9" compid="divData.form.ctclDT_BIDMAGAM" propid="value" datasetid="dsData" columnid="DT_BIDMAGAM"/>
+      <BindItem id="item10" compid="divData.form.ccboDT_BIDMAGAM_HOUR" propid="value" datasetid="dsData" columnid="DT_BIDMAGAM_HOUR"/>
+      <BindItem id="item11" compid="divData.form.ccboDT_BIDMAGAM_MIN" propid="value" datasetid="dsData" columnid="DT_BIDMAGAM_MIN"/>
+    </Bind>
+  </Form>
+</FDL>

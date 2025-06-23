@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="cmmFilterList" width="200" height="300" titletext="데이터필터설정" onload="form_onload" background="white" border="1px solid gainsboro">
+    <Layouts>
+      <Layout height="300" width="200">
+        <Edit id="txtSerach" taborder="3" left="5" top="5" height="20" displaynulltext="검색" onkeydown="txtSerach_onkeydown" right="50"/>
+        <Grid id="grdList" taborder="0" left="5" top="50" height="215" right="5" binddataset="dsFilter" griduserproperty="!sort,!rowfix,!colfix,!filter,!initial,checkbox" autofittype="col" selecttype="multiarea" onselectchanged="grdList_onselectchanged" onlbuttondown="grdList_onlbuttondown" onlbuttonup="grdList_onlbuttonup" onkeydown="grdList_onkeydown">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="30"/>
+                <Column size="130"/>
+                <Column size="0"/>
+              </Columns>
+              <Rows>
+                <Row size="0" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell/>
+                <Cell col="1" text="데이터"/>
+                <Cell col="2"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:chk" displaytype="checkboxcontrol" edittype="none"/>
+                <Cell col="1" text="bind:value"/>
+                <Cell col="2" text="bind:combo"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="Button01" taborder="1" text="취소" top="grdList:5" height="20" onclick="Button01_onclick" uWord="popup.cancel" right="5" width="45"/>
+        <Button id="btnOK" taborder="2" text="확인" top="grdList:5" height="20" tabstop="true" onclick="btnOK_onclick" uWord="popup.ok" right="Button01:5" width="45"/>
+        <Button id="btnNext" taborder="5" text="&gt;" top="5" height="20" right="5" onclick="_grd_find_next_click" width="21"/>
+        <Button id="btnPrev" taborder="4" text="&lt;" top="5" width="19" height="20" right="btnNext:2" onclick="_grd_find_prev_click"/>
+        <Button id="btnClear" taborder="6" text="Clear" left="5" top="grdList:5" width="35" height="20" onclick="btnClear_onclick"/>
+        <CheckBox id="chkAllView" taborder="7" text="전체보기" left="128" top="29" width="68" height="20" onchanged="chkAllView_onchanged"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsFilter" oncolumnchanged="dsFilter_oncolumnchanged" keystring="S:-sort">
+        <ColumnInfo>
+          <Column id="chk" type="INT" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+          <Column id="combo" type="STRING" size="256"/>
+          <Column id="sort" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsFilterAll" oncolumnchanged="dsFilter_oncolumnchanged" keystring="S:-sort">
+        <ColumnInfo>
+          <Column id="chk" type="INT" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+          <Column id="combo" type="STRING" size="256"/>
+          <Column id="sort" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmFilterList (공통 그리드 헤더필터)
+*  @FileName 	cmmFilterList.xfdl 
+*  @Creator 	mango
+*  @CreateDate 	2021.03.09
+*  @Desction    그리드 필터
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2021.03.09     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var objApp = this.gfnGetApplication();
+	
+	//초기값 설정
+	var objFilterArray = this.parent.pvFilterArray;
+	var objFilterArrayCombo = this.parent.pvFilterArrayCombo;
+	var oldFilterList = this.parent.pvFilterList;
+	
+	this.fnSetDatasetFilterList(objFilterArray, objFilterArrayCombo, this.dsFilter, oldFilterList);
+	
+	this.gfnSetTimer(this, function() {
+		this.txtSerach.setFocus();
+	}, 1);
+};
+
+this.fnSetDatasetFilterList = function(objArray, comboArray, objDs, oldArray) {
+
+	objDs.set_enableevent(false);
+	var isCombo = false;
+	if (comboArray.length > 0) {
+		isCombo = true;
+	}
+	for(var i = 0; i < objArray.length; i++) {
+		var nrow = objDs.addRow();
+		if(isCombo) {
+			objDs.setColumn(nrow, "value", comboArray[i]);
+			objDs.setColumn(nrow, "combo", objArray[i]);
+		} else {
+			objDs.setColumn(nrow, "value", objArray[i]);
+		}
+	}
+	
+	var nrow = objDs.insertRow(0);
+	objDs.setColumn(nrow, "value", "빈값제외");
+	objDs.setColumn(nrow, "combo", "빈값제외");
+	objDs.setColumn(frow, "sort", 2);
+	nrow = objDs.insertRow(0);
+	objDs.setColumn(nrow, "value", "빈값");
+	objDs.setColumn(nrow, "combo", "빈값");
+	objDs.setColumn(frow, "sort", 3);
+	nrow = objDs.insertRow(0);
+	objDs.setColumn(nrow, "value", ":: 전체선택 ::");	
+	objDs.setColumn(nrow, "combo", ":: 전체선택 ::");	
+	objDs.setColumn(frow, "sort", 4);
+	
+	for(var j = 0; j < oldArray.length; j++) {
+		var val = oldArray[j];
+		if(val == "#empty#") {
+			val = "빈값";
+		}
+		else if(val == "#notempty#") {
+			val = "빈값제외";
+		}
+
+		var frow = -1;
+		if(isCombo) {
+			frow = objDs.findRowNF("combo", val);
+		} else {
+			frow = objDs.findRowNF("value", val);
+		}
+		if(frow > -1) {
+			objDs.setColumn(frow, "chk", 1);
+			objDs.setColumn(frow, "sort", 1);
+		}
+	}
+	
+	objDs.set_enableevent(true);
+	objDs.updateSortGroup();
+};
+
+/************************************************************************************************
+* TRANSACTION 서비스 호출 처리
+************************************************************************************************/
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+
+ /************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+* @description 필터설정
+*/
+this.fnSetColumn = function()
+{	
+	var objDs = this.grdList.getBindDataset();
+	var comboArray = this.parent.pvFilterArrayCombo;
+	var isCombo = false;
+	if (comboArray.length > 0) {
+		isCombo = true;
+	}
+	
+	//체크값 확인
+	var arr_chk = [];
+	for(var i = 0; i < objDs.rowcount; i++) {
+		var chk = objDs.getColumn(i, "chk");
+		if(chk == 1) {
+			var val = objDs.getColumn(i, "value");
+			if(val.indexOf("전체선택") > -1) {
+				continue;
+			}
+			
+			if(val.indexOf("빈값제외") > -1) {
+				arr_chk.push("#notempty#");
+			}
+			else if(val.indexOf("빈값") > -1) {
+				arr_chk.push("#empty#");
+			}
+			else {
+				if(isCombo) {
+					val = objDs.getColumn(i, "combo");
+				} 
+				arr_chk.push(val);
+			}
+		}		
+	}
+	
+	this.parent.closePopup(JSON.stringify(arr_chk));
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+************************************************************************************************/
+/**
+* @description  확인버튼클릭
+*/
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSetColumn();
+};
+
+/**
+* @description  취소버튼클릭
+*/
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.parent.closePopup();
+};
+
+this.dsFilter_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.col == 0) {
+		if(obj.getColumn(e.row, "value").indexOf("전체선택") > -1) {
+			obj.set_enableevent(false);
+			for(var i = 0; i < obj.rowcount; i++) {
+				if(obj.getColumn(i, "value").indexOf("전체선택") > -1) {
+					continue;
+				}
+				if(e.newvalue == 1 && obj.getColumn(i, "value").indexOf("빈값") > -1) {
+					continue;
+				}
+				if(e.newvalue == 1 && obj.getColumn(i, "value").indexOf("빈값제외") > -1) {
+					continue;
+				}
+				
+				obj.setColumn(i, "chk" , e.newvalue);
+			}
+			obj.set_enableevent(true);
+		}
+	}	
+};
+
+this.txtSerach_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13) {
+		this._grd_find_next_click(obj, e);
+	}
+};
+
+
+this._grd_find_prev_click = function(obj, e) {
+	this._grd_find_prevnext(obj, e, false);
+ };
+ 
+this._grd_find_next_click = function(obj, e) {
+	this._grd_find_prevnext(obj, e, true);
+};
+ 
+this._grd_find_prevnext = function(obj, e, next) {
+	var search = this.txtSerach.text;
+	var objGrid = this.grdList;
+	if (objGrid._FIND_TEXT_ROWS == null || objGrid._FIND_TEXT != search) {
+		objGrid._FIND_TEXT_ROWS = -1;
+	} 
+	var objDs = objGrid.getBindDataset();
+	var expr = [];
+	for(var k=0; k<objGrid.getFormatColCount(); k++){
+		var ds_field = objGrid.getCellProperty("body", k, "text");
+		if(ds_field.indexOf("bind:") > -1) {
+			ds_field = ds_field.replace("bind:", "");
+			expr.push("String("+ds_field+").toLocaleLowerCase().indexOf('" + search.toLocaleLowerCase() + "') > -1");
+		}
+	}
+	if(expr.length > 0) {
+		var crow = objGrid._FIND_TEXT_ROWS;
+		if(next) {
+			crow++;
+		} else {
+			crow--;
+		}
+			
+		if(objGrid._FIND_TEXT_ROWS < 0) {
+			objGrid._FIND_TEXT_ROWS = 0;
+		}
+				
+		var frow = objDs.findRowExpr(expr.join(" || "), crow);
+		objGrid._FIND_TEXT = search;
+		
+		if(frow > -1) {		
+			if(!next && frow > crow) {
+				if(crow > 0) {
+					objGrid._FIND_TEXT_ROWS = crow;
+					this._grd_find_prevnext(obj, e, next);
+				} else {
+					objGrid._FIND_TEXT_ROWS = frow;
+				}				
+				return;
+			}		
+			objGrid._FIND_TEXT_ROWS = frow;
+			
+			// 커서선택을 위한 처리
+			var org_selecttype = objGrid.selecttype;				
+			objGrid.set_selecttype("cell");
+			objDs.set_rowposition(objGrid._FIND_TEXT_ROWS);
+			objGrid.set_selecttype(org_selecttype);		
+			
+		} else {
+			if(!next) {
+				objGrid._FIND_TEXT_ROWS--;
+				if(objGrid._FIND_TEXT_ROWS > -1) {
+					this._grd_find_prevnext(obj, e, next);
+				}
+				return;
+			}
+		}
+	} else {
+		objGrid._FIND_TEXT_ROWS = 0;
+	}
+};
+
+this.btnClear_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objDs = this.grdList.getBindDataset();
+	objDs.set_enableevent(false);
+	for(var i = 0; i < objDs.rowcount; i++) {
+		objDs.setColumn(i, "chk", 0);
+	}	
+	objDs.set_enableevent(true);
+};
+this.grdList_onselectchanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{	
+	if (e.cell == 0 && e.oldrow != e.row) {
+		this._selectchanged = true;
+	}
+};
+
+this.grdList_onlbuttondown = function(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo)
+{
+	if (e.cell == 0) {
+		this._selectchanged = false;
+	}
+};
+
+this.grdList_onlbuttonup = function(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo)
+{
+	if (e.cell == 0) {
+		var objDs = this.grdList.getBindDataset();
+		if (this._selectchanged) {
+			for(var i = obj.selectstartrow[0]; i <= obj.selectendrow[0]; i++) {
+				objDs.setColumn(i, "chk", !objDs.getColumn(i, "chk"));
+			}
+		} else {
+			objDs.setColumn(e.row, "chk", !objDs.getColumn(e.row, "chk"));
+		}
+	}
+};
+
+this.grdList_onkeydown = function(obj:nexacro.Grid,e:nexacro.KeyEventInfo)
+{
+	if (e.keycode == 32) {
+		var objDs = this.grdList.getBindDataset();
+		var row = objDs.rowposition;
+		objDs.setColumn(row, "chk", !objDs.getColumn(row, "chk"));
+	}
+};
+
+this.chkAllView_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	if(this.chkAllView.value == true) {
+		if (this.dsFilterAll.rowcount == 0) {
+			var objFilterArrayAll = this.parent.pvFilterArrayAll;
+			var objFilterArrayComboAll = this.parent.pvFilterArrayComboAll;
+			var oldFilterList = this.parent.pvFilterList;
+			
+			this.fnSetDatasetFilterList(objFilterArrayAll, objFilterArrayComboAll, this.dsFilterAll, oldFilterList);
+		}
+		this.grdList.set_binddataset("dsFilterAll");
+	} else {
+		this.grdList.set_binddataset("dsFilter");
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

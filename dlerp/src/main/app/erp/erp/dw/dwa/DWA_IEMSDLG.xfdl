@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="400" height="210" titletext="IEMS내역등록" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="6" text="IEMS 내역 불러오기" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="center"/>
+              <Static id="staDS_SITE" taborder="7" text="IEMS현장코드" left="0" top="40" width="100" height="30" cssclass="sta_WF_tablelabel" textAlign="center"/>
+              <Static id="staDS_SILHENG" taborder="8" text="IEMS작업구분" left="0" top="staDS_SITE:-1" width="100" height="30" cssclass="sta_WF_tablelabel" textAlign="center"/>
+              <Static id="staTY_APPROVAL" taborder="9" text="IEMS내역번호" left="0" top="staDS_SILHENG:-1" width="100" height="30" cssclass="sta_WF_tablelabel" textAlign="center"/>
+              <Static id="staBg1" taborder="10" left="staDS_SITE:-1" top="40" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg2" taborder="5" left="staDS_SILHENG:-1" top="staBg1:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg3" taborder="11" left="staTY_APPROVAL:-1" top="staBg2:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="txtCD_SITE" taborder="0" left="staDS_SITE:5" top="45" right="5" height="20" readonly="false"/>
+              <Edit id="txtCD_CONST" taborder="1" left="staDS_SILHENG:5" top="txtCD_SITE:9" right="5" height="20" readonly="false"/>
+              <Button id="btnOk" taborder="3" text="확인" left="35%" top="staTY_APPROVAL:20" width="60" height="20" onclick="divData_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="4" text="취소" left="55%" top="staTY_APPROVAL:20" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+              <Edit id="txtNO_SILHENG" taborder="2" left="staTY_APPROVAL:5" top="txtCD_CONST:9" right="5" height="20" readonly="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 이전 화면에서 데이터 받기.
+	this.dsData.setColumn(0, "CD_SITE", this.getOwnerFrame().pCd_Site);
+	this.dsData.setColumn(0, "NO_SILHENG", this.getOwnerFrame().pNO_Silheng);
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+this.fnSaveValidate = function() {
+	var validate = true;
+	
+	if(this.gfnIsNull(this.divData.form.txtCD_SITE.value)) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.divData.form.txtCD_SITE.setFocus();
+		}
+		this.gfnAlert("IEMS현장코드를 입력하세요.", "fnVaidateCallback");
+	}else if(this.gfnIsNull(this.divData.form.txtCD_CONST.value)) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.divData.form.txtCD_CONST.setFocus();
+		}
+		this.gfnAlert("IEMS작업구분을 입력하세요.", "fnVaidateCallback");
+	}else if(this.gfnIsNull(this.divData.form.txtNO_SILHENG.value)) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.divData.form.txtNO_SILHENG.setFocus();
+		}
+		this.gfnAlert("IEMS내역번호를 입력하세요.", "fnVaidateCallback");
+	}
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "save") {
+		if(errorCode == 0)
+		{
+			// this.close()가 작동하지 않았고, 
+			// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+			this.getParentContext().close(true);
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ 
+// 확인 버튼 클릭
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnSaveValidate()) return false;
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsData";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+	
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DWAPR_CBSFROMWBS_INSERT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData" onvaluechanged="dsData_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="NO_SILHENG" type="STRING" size="256"/>
+          <Column id="CD_SITE_IEMS" type="STRING" size="256"/>
+          <Column id="CD_CONST_IEMS" type="STRING" size="256"/>
+          <Column id="NO_SILHENG_IEMS" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_SITE"/>
+            <Col id="NO_SILHENG"/>
+            <Col id="CD_SITE_IEMS"/>
+            <Col id="NO_SILHENG_IEMS"/>
+            <Col id="CD_CONST_IEMS"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.txtCD_SITE" propid="value" datasetid="dsData" columnid="CD_SITE_IEMS"/>
+      <BindItem id="item1" compid="divData.form.txtCD_CONST" propid="value" datasetid="dsData" columnid="CD_CONST_IEMS"/>
+      <BindItem id="item2" compid="divData.form.txtNO_SILHENG" propid="value" datasetid="dsData" columnid="NO_SILHENG_IEMS"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="개인별출역조회" onload="form_onload" onclick="form_onclick">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta02" taborder="1" text="현장/부서 코드" left="0.0" top="10.0" width="144.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_SITE" CDTextWidth="80" taborder="0" left="sta02:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DZX_CFDEPTCORP"/>
+              <Static id="staCD_HADO" taborder="4" text="작업반" left="ccfCD_SITE:0.0" top="10.0" width="144.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="cfSEARCH_CD_HADO" CDTextWidth="120" taborder="5" left="staCD_HADO:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="staYM_WORK" taborder="3" text="작업년월" left="cfSEARCH_CD_HADO:0.0" top="10.0" width="144.0" height="24.0" onclick="divSearch_staYM_WORK_onclick" cssclass="sta_WF_SchLabelE"/>
+              <Div id="tclYM_YYMM" taborder="2" left="staYM_WORK:0.0" top="10.0" width="90" height="24.0" url="cmm::cmmCalMM.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove" text="">
+          <Layouts>
+            <Layout>
+              <Div id="divSplitter" taborder="0" left="25%" top="0" width="5" height="100%" background="skyblue" cursor="ew-resize" ondrag="divData_divSplitter_ondrag"/>
+              <Div id="divDataLeft" taborder="0" left="0" top="0" bottom="0" right="divSplitter:5">
+                <Layouts>
+                  <Layout>
+                    <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataRight" taborder="0" left="divSplitter:5" top="0" bottom="0" right="0" text="">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta02" taborder="0" text="기본사항" left="1" top="0" width="646" height="20" cssclass="sta_TITLE_Bg"/>
+                    <Static id="sta11" taborder="1" left="119" top="190" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta12" taborder="2" left="119" top="219" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta13" taborder="3" left="119" top="248" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta14" taborder="4" left="119" top="277" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta15" taborder="5" left="119" top="306" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta16" taborder="6" left="119" top="335" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta17" taborder="7" left="119" top="364" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <MaskEdit id="txtTT_NW" taborder="8" left="125" top="253" width="183" height="20" format="9,999" readonly="true" enable="true" textAlign="right"/>
+                    <Static id="sta07" taborder="9" text="기타수당" left="0" top="364" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta06" taborder="10" text="년차수당" left="0" top="335" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta05" taborder="11" text="주차수당" left="0" top="306" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta04" taborder="12" text="휴일수당" left="0" top="277" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta03" taborder="13" text="야간수당" left="0" top="248" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta00" taborder="14" text="연장수당" left="0" top="219" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta01" taborder="15" text="기본급" left="0" top="190" width="120" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" fittocontents="none" textAlign="left"/>
+                    <Static id="sta08" taborder="16" text="급여사항" left="-1" top="156" width="314" height="25" cssclass="sta_TITLE_Bg"/>
+                    <Static id="sta09" taborder="17" left="119" top="30" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta10" taborder="18" left="452" top="30" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta20" taborder="19" left="118" top="87" width="196" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="txtDS_NAME" taborder="20" left="125" top="35" height="20" width="183" enable="true" readonly="true" textAlign="left"/>
+                    <Static id="sta29" taborder="21" text="성명" left="0" top="30" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta30" taborder="22" text="주민등록번호" left="333" top="30" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta40" taborder="23" text="채용구분" left="0" top="87" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta43" taborder="24" left="452" top="87" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta47" taborder="25" left="119" top="59" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta49" taborder="26" text="시급" left="333" top="87" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta53" taborder="27" text="직종명" left="0" top="59" width="120" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" textAlign="left"/>
+                    <Edit id="txtDS_JIKJONG" taborder="28" left="125" top="64" height="20" width="183" enable="true" readonly="true" textAlign="left"/>
+                    <MaskEdit id="txtTT_OT" taborder="29" left="125" top="224" width="183" height="20" format="9,999" enable="true" readonly="true" textAlign="right"/>
+                    <MaskEdit id="txtTT_WW" taborder="30" left="125" top="311" width="183" height="20" enable="true" readonly="true" format="9,999" textAlign="right"/>
+                    <Static id="sta77" taborder="31" text="합계내역" left="1" top="490" height="25" cssclass="sta_TITLE_Bg" width="645"/>
+                    <Static id="sta24" taborder="32" text="요양보험" left="334" top="335" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta25" taborder="33" text="건강보험" left="334" top="306" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta26" taborder="34" text="국민연금" left="334" top="277" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta27" taborder="35" text="고용보험료" left="334" top="248" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta28" taborder="36" text="주민세" left="334" top="219" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta31" taborder="37" text="소득세" left="334" top="190" width="120" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" textAlign="left"/>
+                    <Static id="sta32" taborder="38" left="453" top="190" width="193" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta33" taborder="39" left="452" top="307" width="193" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta34" taborder="40" left="453" top="248" width="193" height="30" cssclass="sta_WF_tablebg"/>
+                    <MaskEdit id="txtAM_GOYONGPER" taborder="41" left="458" top="253" width="183" height="20" format="9,999" readonly="true" enable="true" textAlign="right"/>
+                    <Static id="sta36" taborder="42" left="453" top="217" width="193" height="31" cssclass="sta_WF_tablebg" onclick="divData_divDataRight_sta36_onclick"/>
+                    <MaskEdit id="txtAM_MEDICARE" taborder="43" left="458" top="312" width="183" height="20" enable="true" readonly="true" format="9,999" textAlign="right"/>
+                    <Static id="sta35" taborder="44" left="453" top="277" width="193" height="30" cssclass="sta_WF_tablebg"/>
+                    <MaskEdit id="txtAM_KOOKMIN" taborder="45" left="458" top="282" width="183" height="20" format="9,999" readonly="true" enable="true" textAlign="right"/>
+                    <Static id="sta38" taborder="46" left="453" top="335" width="193" height="30" cssclass="sta_WF_tablebg"/>
+                    <MaskEdit id="txtAM_SILVER" taborder="47" left="459" top="341" width="182" height="20" format="9,999" readonly="true" enable="true" textAlign="right"/>
+                    <MaskEdit id="txtTT_HW" taborder="48" left="125" top="282" width="183" height="20" format="9,999" readonly="true" enable="true" textAlign="right"/>
+                    <MaskEdit id="txtTT_ETC1" taborder="49" left="125" top="369" width="183" height="20" format="9,999" readonly="true" enable="true" textAlign="right"/>
+                    <MaskEdit id="txtTT_RW" taborder="50" left="125" top="195" width="183" height="20" format="9,999" readonly="true" enable="true" textAlign="right"/>
+                    <MaskEdit id="txtAM_SODUK" taborder="51" left="458" top="194" width="183" height="20" format="9,999" readonly="true" enable="true" textAlign="right"/>
+                    <MaskEdit id="txtAM_JUMIN" taborder="52" left="458" top="223" width="183" height="20" format="9,999" enable="true" readonly="true" textAlign="right"/>
+                    <Static id="sta68" taborder="53" left="120" top="549" width="194" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta69" taborder="54" text="차인지급액" left="1" top="549" width="120" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" textAlign="left"/>
+                    <Static id="sta70" taborder="55" text="공제계" left="333" top="520" width="122" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" textAlign="left"/>
+                    <Static id="sta71" taborder="56" left="454" top="520" width="192" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta72" taborder="57" left="120" top="520" width="194" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta73" taborder="58" text="총액" left="1" top="520" width="120" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick" fittocontents="none" textAlign="left"/>
+                    <MaskEdit id="txtAM_WJIGUB" taborder="59" left="126" top="525" width="183" height="20" format="9,999" readonly="true" textAlign="right"/>
+                    <MaskEdit id="txtTT_GONGJE" taborder="60" left="459" top="525" width="183" height="20" format="9,999" readonly="true" textAlign="right"/>
+                    <MaskEdit id="txtTT_JIGUB" taborder="61" left="125" top="555" width="183" height="20" format="9,999" readonly="true" textAlign="right"/>
+                    <Edit id="txtNO_JUMIN" taborder="62" left="458" top="35" height="20" width="183" enable="true" readonly="true" textAlign="left"/>
+                    <Edit id="txtTY_CHAIYONG" taborder="63" left="125" top="92" height="20" width="183" enable="true" readonly="true" textAlign="left"/>
+                    <Static id="sta18" taborder="64" text="실근무시간" left="0" top="116" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta19" taborder="65" left="118" top="116" width="196" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta21" taborder="66" text="환산시간" left="333" top="116" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+                    <Static id="sta22" taborder="67" left="451" top="116" width="196" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta23" taborder="68" text="퇴사일자" left="333" top="59" height="30" cssclass="sta_WF_tablelabel" textAlign="left" width="121"/>
+                    <Static id="sta37" taborder="69" left="452" top="59" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="txtDT_TOIJIK" taborder="70" left="458" top="64" height="20" width="183" enable="true" readonly="true" textAlign="left"/>
+                    <Static id="sta39" taborder="71" text="공제내역" left="333" top="156" width="314" height="25" cssclass="sta_TITLE_Bg"/>
+                    <MaskEdit id="txtTT_MW" taborder="72" left="125" top="341" width="183" height="20" format="9,999" readonly="true" enable="true" textAlign="right"/>
+                    <MaskEdit id="txtAM_SIGUB" taborder="73" left="458" top="92" width="183" height="20" format="9,999" enable="true" readonly="true" textAlign="right"/>
+                    <MaskEdit id="txtTM_SUM" taborder="74" left="125" top="121" width="183" height="20" format="9,999" readonly="true" enable="true" textAlign="right"/>
+                    <MaskEdit id="txtTM_SUM_CONVERT" taborder="75" left="458" top="121" width="183" height="20" format="9,999" readonly="true" enable="true" textAlign="right"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsSearch.setColumn(0, "YM_JIGUB", this.gfnGetDate().substr(0,6));	// 년월 현재월로 셋팅
+	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+	//this.FormBtns.Save.set_enable(true);
+	// 서브 버튼 사용(2개 그리드 중간에 있는 파란선) 상단에 공통 셋트가 하나더 생긴다
+	//this.gfnUseSubBtn(true, this.divData, this.divData.form.divSplitter); // divSplitter sync
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.cfSEARCH_CD_HADO = this.divSearch.form.cfSEARCH_CD_HADO;
+	this.tclYM_YYMM = this.divSearch.form.tclYM_YYMM;	
+	this.dxGrid = this.divData.form.divDataLeft.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	this.gfnGridInit(this.dxGrid, this.dsList, "DS", "DSB_PERSONPAY");	
+	this.dxGrid.set_selecttype("cell");	
+	this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+	this.dsList.addEventHandler("canrowposchange", this.dsList_canrowposchange, this);
+	
+	this.cfSEARCH_CD_HADO.CodeFindName = "DWX_CFHADO_JIK";	// 계약번호
+	this.ccfCD_SITE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfSEARCH_CD_HADO.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("YM_JIGUB", "string");
+	this.dsSelect.addColumn("NO_ID", "string");
+	this.dsSelect.addColumn("CD_HADO", "string");
+
+	this.dsSelectSub = new Dataset();
+	this.dsSelectSub.addColumn("CD_SITE", "string");
+	this.dsSelectSub.addColumn("YM_JIGUB", "string");
+	this.dsSelectSub.addColumn("NO_ID", "string");
+	
+}
+
+/************************************************************************
+ * 버튼 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {	
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();	
+	
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "YM_JIGUB", this.dsSearch.getColumn(0, "YM_JIGUB").substr(0,6));
+	this.dsSelect.setColumn(0, "NO_ID", "");
+	this.dsSelect.setColumn(0, "CD_HADO", this.dsSearch.getColumn(0, "CD_HADO"));
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {	
+}
+
+/*
+ *	삭제 버튼
+ */ 
+this.fnDel = function() {
+	//this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	저장 버튼
+ */ 
+this.fnSave = function() {
+	}
+/*
+ *	엑셀 버튼
+ */ 
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+ 
+/************************************************************************
+ * 서브 버튼 이벤트
+ ************************************************************************/
+this.fnSelectSub = function() {
+	if (this.dxGrid.rowcount == 0 || this.dxGrid.currentrow < 0) return false;
+		
+	// 디테일 데이터셋 데이터 삭제
+	this.dsListSub.clearData();
+
+	// 디테일 싱글폼 파마리터 데이터셋 셋팅
+	this.dsSelectSub.clearData();
+	this.dsSelectSub.addRow();
+	
+	this.dsSelectSub.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelectSub.setColumn(0, "YM_JIGUB", this.dsSearch.getColumn(0, "YM_JIGUB").substr(0,6));
+	this.dsSelectSub.setColumn(0, "NO_ID", this.dsList.getColumn(this.dsList.rowposition, "NO_ID_REAL"));
+	
+	var strSvcId    = "detail";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "d_select=dsSelectSub";
+	var outData     = "dsListSub=d_select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {	
+	var validate = true;
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_SITE"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+		
+	}else if (this.gfnIsNull(this.dsSearch.getColumn(0,"YM_JIGUB"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.tclYM_YYMM.form.TextBox.setFocus();
+		}
+		this.gfnAlert("작업년월은 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}
+	
+	return validate;
+	
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {	
+		this.gfnGridAfterSelect(this.dxGrid);		
+	}
+	else if(svcID == "detail") {
+		if (errorCode == 0) {			
+			//this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+		}
+	}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+//코드파인드의 파라미터 값을 넘겨줄때 사용하는 함수
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if (id == "ccfCD_SITE") {  
+		dsUserParam.setColumn(nrow, "CD_CORP", this.objApp.gdsUserInfo.getColumn(0, "CD_CORP"));		
+ 	} else if (id == "cfSEARCH_CD_HADO") {  
+		dsUserParam.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));		
+ 	}
+	return true;
+}
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGrid_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+    if ((obj.oldrow > -1 && obj.oldrow == e.row)
+		|| (obj.oldrow == -1 && e.oldrow != e.row)) {		
+		
+		
+		// 마스터 그리드 클릭 이벤트(디테일 그리드 조회)		
+		this.FormBtns.SubSelect.click();
+		obj.oldrow = -1;
+		
+		}
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+		this.dsListSub.clearData();
+
+	}
+};
+
+this.divData_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+   if(e.userdata == "splitter") {
+      this.divData.form.divSplitter.set_left(e.clientx);
+      this.divData.form.resetScroll();
+   }
+};
+
+this.divData_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+   e.set_userdata("splitter");
+   return true;
+};
+
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+
+
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DSBPR_PERSONPAYLIST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">d_select</Col>
+            <Col id="SP">DSBPR_PERSONPAY_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListSub">
+        <ColumnInfo>
+          <Column id="DS_NAME" type="STRING" size="256"/>
+          <Column id="NO_ID" type="STRING" size="256"/>
+          <Column id="DS_JIKJONG" type="STRING" size="256"/>
+          <Column id="DT_TOIJIK" type="STRING" size="256"/>
+          <Column id="TY_CHAIYONG" type="STRING" size="256"/>
+          <Column id="AM_SIGUB" type="STRING" size="256"/>
+          <Column id="TM_SUM" type="STRING" size="256"/>
+          <Column id="TM_SUM_CONVERT" type="STRING" size="256"/>
+          <Column id="TT_RW" type="STRING" size="256"/>
+          <Column id="TT_OT" type="STRING" size="256"/>
+          <Column id="TT_NW" type="STRING" size="256"/>
+          <Column id="TT_HW" type="STRING" size="256"/>
+          <Column id="TT_WW" type="STRING" size="256"/>
+          <Column id="TT_MW" type="STRING" size="256"/>
+          <Column id="TT_ETC1" type="STRING" size="256"/>
+          <Column id="AM_SODUK" type="STRING" size="256"/>
+          <Column id="AM_JUMIN" type="STRING" size="256"/>
+          <Column id="AM_GOYONGPER" type="STRING" size="256"/>
+          <Column id="AM_KOOKMIN" type="STRING" size="256"/>
+          <Column id="AM_MEDICARE" type="STRING" size="256"/>
+          <Column id="AM_SILVER" type="STRING" size="256"/>
+          <Column id="AM_WJIGUB" type="STRING" size="256"/>
+          <Column id="TT_GONGJE" type="STRING" size="256"/>
+          <Column id="TT_JIGUB" type="STRING" size="256"/>
+          <Column id="AM_YEARSODUK" type="STRING" size="256"/>
+          <Column id="AM_YEARJUMIN" type="STRING" size="256"/>
+          <Column id="AM_YEASUGUM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="YM_JIGUB" type="STRING" size="256"/>
+          <Column id="NO_ID" type="STRING" size="256"/>
+          <Column id="CD_HADO" type="STRING" size="256"/>
+          <Column id="DS_HADO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_SITE"/>
+            <Col id="YM_JIGUB"/>
+            <Col id="NO_ID"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item2" compid="divData.form.divDataRight.form.txtDS_NAME" propid="value" datasetid="dsListSub" columnid="DS_NAME"/>
+      <BindItem id="item3" compid="divData.form.divDataRight.form.txtNO_JUMIN" propid="value" datasetid="dsListSub" columnid="NO_ID"/>
+      <BindItem id="item4" compid="divData.form.divDataRight.form.txtDS_JIKJONG" propid="value" datasetid="dsListSub" columnid="DS_JIKJONG"/>
+      <BindItem id="item7" compid="divData.form.divDataRight.form.txtTY_CHAIYONG" propid="value" datasetid="dsListSub" columnid="TY_CHAIYONG"/>
+      <BindItem id="item9" compid="divData.form.divDataRight.form.txtTT_RW" propid="value" datasetid="dsListSub" columnid="TT_RW"/>
+      <BindItem id="item10" compid="divData.form.divDataRight.form.txtTT_OT" propid="value" datasetid="dsListSub" columnid="TT_OT"/>
+      <BindItem id="item11" compid="divData.form.divDataRight.form.txtTT_NW" propid="value" datasetid="dsListSub" columnid="TT_NW"/>
+      <BindItem id="item12" compid="divData.form.divDataRight.form.txtTT_HW" propid="value" datasetid="dsListSub" columnid="TT_HW"/>
+      <BindItem id="item13" compid="divData.form.divDataRight.form.txtTT_WW" propid="value" datasetid="dsListSub" columnid="TT_WW"/>
+      <BindItem id="item15" compid="divData.form.divDataRight.form.txtAM_KOOKMIN" propid="value" datasetid="dsListSub" columnid="AM_KOOKMIN"/>
+      <BindItem id="item16" compid="divData.form.divDataRight.form.txtAM_MEDICARE" propid="value" datasetid="dsListSub" columnid="AM_MEDICARE"/>
+      <BindItem id="item17" compid="divData.form.divDataRight.form.txtAM_GOYONGPER" propid="value" datasetid="dsListSub" columnid="AM_GOYONGPER"/>
+      <BindItem id="item18" compid="divData.form.divDataRight.form.txtAM_JUMIN" propid="value" datasetid="dsListSub" columnid="AM_JUMIN"/>
+      <BindItem id="item19" compid="divData.form.divDataRight.form.txtAM_SODUK" propid="value" datasetid="dsListSub" columnid="AM_SODUK"/>
+      <BindItem id="item20" compid="divData.form.divDataRight.form.txtAM_WJIGUB" propid="value" datasetid="dsListSub" columnid="AM_WJIGUB"/>
+      <BindItem id="item21" compid="divSearch.form.tclYM_YYMM.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_JIGUB"/>
+      <BindItem id="item1" compid="divData.form.divDataRight.form.txtTT_GONGJE" propid="value" datasetid="dsListSub" columnid="TT_GONGJE"/>
+      <BindItem id="item22" compid="divData.form.divDataRight.form.txtTT_JIGUB" propid="value" datasetid="dsListSub" columnid="TT_JIGUB"/>
+      <BindItem id="item8" compid="divData.form.divDataRight.form.txtTT_ETC1" propid="value" datasetid="dsListSub" columnid="TT_ETC1"/>
+      <BindItem id="item24" compid="divData.form.divDataRight.form.txtDT_TOIJIK" propid="value" datasetid="dsListSub" columnid="DT_TOIJIK"/>
+      <BindItem id="item14" compid="divData.form.divDataRight.form.txtTT_MW" propid="value" datasetid="dsListSub" columnid="TT_MW"/>
+      <BindItem id="item6" compid="divData.form.divDataRight.form.txtAM_SIGUB" propid="value" datasetid="dsListSub" columnid="AM_SIGUB"/>
+      <BindItem id="item25" compid="divData.form.divDataRight.form.txtAM_SILVER" propid="value" datasetid="dsListSub" columnid="AM_SILVER"/>
+      <BindItem id="item5" compid="divData.form.divDataRight.form.txtTM_SUM" propid="value" datasetid="dsListSub" columnid="TM_SUM"/>
+      <BindItem id="item23" compid="divData.form.divDataRight.form.txtTM_SUM_CONVERT" propid="value" datasetid="dsListSub" columnid="TM_SUM_CONVERT"/>
+      <BindItem id="item26" compid="divSearch.form.cfSEARCH_CD_HADO.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_HADO"/>
+      <BindItem id="item27" compid="divSearch.form.cfSEARCH_CD_HADO.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_HADO"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="예산현황" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="현장코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtCdSite" taborder="1" left="sta00:0.0" top="10.0" width="150" height="24.0" readonly="true"/>
+              <Static id="sta01" taborder="2" text="현장명" left="edtCdSite:0.0" top="10.0" width="92.0" height="24.0" textAlign="right" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtDsSite" taborder="3" left="sta01:0.0" top="10.0" width="150" height="24.0" readonly="true"/>
+              <Static id="sta02" taborder="4" text="공종코드" left="0.0" top="sta00:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtCdDk" taborder="5" left="sta02:0.0" top="edtCdSite:10.0" width="150" height="24.0" readonly="true"/>
+              <Static id="sta03" taborder="6" text="일련번호" left="edtCdDk:0.0" top="sta01:10.0" width="92.0" height="24.0" textAlign="center" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtCdCost" taborder="7" left="sta03:0.0" top="edtDsSite:10.0" width="150" height="24.0" readonly="true"/>
+              <Static id="sta04" taborder="8" text="명칭" left="edtCdCost:0.0" top="sta00:10.0" width="92.0" height="24.0" textAlign="center" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtDsCost" taborder="9" left="sta04:0.0" top="sta00:10.0" width="120" height="24.0" readonly="true"/>
+              <Static id="sta05" taborder="11" text="규격" left="edtDsCost:0.0" top="sta00:10.0" width="92.0" height="24.0" textAlign="center" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtSzSize" taborder="10" left="sta05:0.0" top="sta00:10.0" width="120" height="24.0" readonly="true"/>
+              <Static id="sta06" taborder="13" text="단위" left="edtSzSize:0.0" top="sta00:10.0" width="92.0" height="24.0" textAlign="center" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtDsUnit" taborder="12" left="sta06:0.0" top="sta00:10.0" width="40" height="24.0" readonly="true"/>
+              <CheckBox id="chkYN_DOKUB" taborder="14" text="도급" left="edtDsUnit:0.0" top="sta00:10.0" width="50" height="24.0" truevalue="Y" falsevalue="N" onchanged="divSearch_chkYN_DOKUB_onchanged"/>
+              <CheckBox id="chkYN_EXSILHENG" taborder="15" text="현장예산" left="chkYN_DOKUB:0.0" top="sta00:10.0" width="76" height="24.0" truevalue="Y" falsevalue="N" onchanged="divSearch_chkYN_EXSILHENG_onchanged" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="50" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Tab id="tabData" taborder="0" tabindex="0" left="0" top="0" bottom="0" right="0" onchanged="divData_tabData_onchanged" preload="true">
+                <Tabpages>
+                  <Tabpage id="tab1" text="실행예산 변경이력">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab2" text="분할발주 현황">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid2" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab3" text="원가투입 현황">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid3" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBottom" taborder="2" left="0" cssclass="div_SEARCH_Bg" right="0" bottom="0" height="30">
+          <Layouts>
+            <Layout>
+              <Static id="sta02" taborder="0" text="실행예산" left="10" top="4" width="50" height="20"/>
+              <MaskEdit id="mskTtSil" taborder="4" left="sta02:10" top="4" width="150" height="20" readonly="true" type="number" limitbymask="decimal" clipmode="includespace" format="9,999"/>
+              <Static id="sta03" taborder="1" text="발주금액" left="mskTtSil:20" top="4" width="50" height="20" textAlign="center"/>
+              <MaskEdit id="mskHado" taborder="5" left="sta03:10" top="4" width="150" height="20" readonly="true" type="number" format="9,999"/>
+              <Static id="sta04" taborder="2" text="투입금액" left="mskHado:20" top="4" width="50" height="20" textAlign="center"/>
+              <MaskEdit id="mskCost" taborder="6" left="sta04:10" top="4" width="150" height="20" readonly="true" type="number" format="9,999"/>
+              <Static id="sta05" taborder="3" text="가용예산" left="mskCost:20" top="4" width="50" height="20" textAlign="center"/>
+              <MaskEdit id="mskSil" taborder="7" left="sta05:10" top="4" width="150" height="20" readonly="true" type="number" format="9,999" displaynulltext="0" color="red"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.divSearch_chkYN_DOKUB_onchanged(this.divSearch.form.chkYN_DOKUB, {postvalue:this.divSearch.form.chkYN_DOKUB.value});	
+	this.divSearch_chkYN_EXSILHENG_onchanged(this.divSearch.form.chkYN_EXSILHENG, {postvalue:this.divSearch.form.chkYN_EXSILHENG.value});	
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	this.FormBtns.Add.set_enable(false);
+	this.FormBtns.Del.set_enable(false);
+	this.FormBtns.Save.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.dxGrid = this.divData.form.tabData.tab1.form.objGrid;
+	this.dxGrid2 = this.divData.form.tabData.tab2.form.objGrid2;
+	this.dxGrid3 = this.divData.form.tabData.tab3.form.objGrid3;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DW", "DWX_COSTTUJA");
+	this.gfnGridInit(this.dxGrid2, this.dsList2, "DW", "DWX_COSTTUJA2");
+	this.gfnGridInit(this.dxGrid3, this.dsList3, "DW", "DWX_COSTTUJA3");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("CD_COST", "string");
+
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_SITE)){
+	
+		this.divSearch.form.edtCdSite.set_value(this.getOwnerFrame().CD_SITE);
+		this.divSearch.form.edtDsSite.set_value(this.getOwnerFrame().DS_SITE);
+		this.divSearch.form.edtCdDk.set_value(this.getOwnerFrame().CD_DKCOST);
+		this.divSearch.form.edtCdCost.set_value(this.getOwnerFrame().CD_COST);
+		this.divSearch.form.edtDsCost.set_value(this.getOwnerFrame().DS_COST);
+		this.divSearch.form.edtSzSize.set_value(this.getOwnerFrame().SZ_SIZE);
+		this.divSearch.form.edtDsUnit.set_value(this.getOwnerFrame().DS_UNIT);
+		
+		this.FormBtns.Select.click();
+	}
+	
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	//if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	this.gfnGridBeforeSelect(this.dxGrid2);
+	this.gfnGridBeforeSelect(this.dxGrid3);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();	
+	this.dsSelect.setColumn(0, "CD_SITE", this.divSearch.form.edtCdSite.value);
+	this.dsSelect.setColumn(0, "CD_COST", this.divSearch.form.edtCdCost.value);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0 dsList2=select1 dsList3=select2 dsListT=select3";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+			
+
+
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	switch(this.divData.form.tabData.tabindex) {
+		case 0:
+			this.gfnExcelExport(this.dxGrid);
+			break;
+		case 1:
+			this.gfnExcelExport(this.dxGrid2);
+			break;
+		case 2:
+			this.gfnExcelExport(this.dxGrid3);
+			break;	
+	}
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+		this.gfnGridAfterSelect(this.dxGrid2);
+		this.gfnGridAfterSelect(this.dxGrid3);
+		
+		if(this.dsListT.rowcount > 0){
+			this.divBottom.form.mskTtSil.set_value(this.dsListT.getColumn(0, "AM_TT_SILHENG"));
+			this.divBottom.form.mskHado.set_value(this.dsListT.getColumn(0, "AM_HADO"));
+			this.divBottom.form.mskCost.set_value(this.dsListT.getColumn(0, "AM_COST"));
+			this.divBottom.form.mskSil.set_value(this.dsListT.getColumn(0, "AM_SILHENG"));
+		}
+		
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		this.gfnGridClear(this.dxGrid2);	
+		this.gfnGridClear(this.dxGrid3);
+	}
+};
+
+this.divData_tabData_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+
+};
+
+
+
+// 도급 체크박스
+this.divSearch_chkYN_DOKUB_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	var 도급수량전_Index = this.dxGrid.getBindCellIndex("body", "도급수량전");
+	var 도급단가전_Index = this.dxGrid.getBindCellIndex("body", "도급단가전");
+	var 도급금액전_Index = this.dxGrid.getBindCellIndex("body", "도급금액전");
+	var 도급수량_Index = this.dxGrid.getBindCellIndex("body", "도급수량");
+	var 도급단가_Index = this.dxGrid.getBindCellIndex("body", "도급단가");
+	var 도급금액_Index = this.dxGrid.getBindCellIndex("body", "도급금액");
+	var 도급수량증감_Index = this.dxGrid.getBindCellIndex("body", "도급수량증감");
+	var 도급금액증감_Index = this.dxGrid.getBindCellIndex("body", "도급금액증감");
+	
+	
+	if(obj.isChecked())
+	{
+		this.dxGrid.setRealColSize("body", 도급수량전_Index, 80);
+		this.dxGrid.setRealColSize("body", 도급단가전_Index, 80);
+		this.dxGrid.setRealColSize("body", 도급금액전_Index, 80);
+		this.dxGrid.setRealColSize("body", 도급수량_Index, 80);
+		this.dxGrid.setRealColSize("body", 도급단가_Index, 80);
+		this.dxGrid.setRealColSize("body", 도급금액_Index, 80);
+		this.dxGrid.setRealColSize("body", 도급수량증감_Index, 80);
+		this.dxGrid.setRealColSize("body", 도급금액증감_Index, 80);
+		
+	}
+	else
+	{
+		this.dxGrid.setRealColSize("body", 도급수량전_Index, 0);
+		this.dxGrid.setRealColSize("body", 도급단가전_Index, 0);
+		this.dxGrid.setRealColSize("body", 도급금액전_Index, 0);
+		this.dxGrid.setRealColSize("body", 도급수량_Index, 0);
+		this.dxGrid.setRealColSize("body", 도급단가_Index, 0);
+		this.dxGrid.setRealColSize("body", 도급금액_Index, 0);
+		this.dxGrid.setRealColSize("body", 도급수량증감_Index, 0);
+		this.dxGrid.setRealColSize("body", 도급금액증감_Index, 0);
+		
+	}
+};
+
+// 현장예산 체크박스
+this.divSearch_chkYN_EXSILHENG_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	var 계획수량전_Index = this.dxGrid.getBindCellIndex("body", "계획수량전");
+	var 계획단가전_Index = this.dxGrid.getBindCellIndex("body", "계획단가전");
+	var 계획금액전_Index = this.dxGrid.getBindCellIndex("body", "계획금액전");
+	var 계획수량_Index = this.dxGrid.getBindCellIndex("body", "계획수량");
+	var 계획단가_Index = this.dxGrid.getBindCellIndex("body", "계획단가");
+	var 계획금액_Index = this.dxGrid.getBindCellIndex("body", "계획금액");
+	var 계획수량증감_Index = this.dxGrid.getBindCellIndex("body", "계획수량증감");
+	var 계획금액증감_Index = this.dxGrid.getBindCellIndex("body", "계획금액증감");
+	
+	
+	if(obj.isChecked())
+	{
+		this.dxGrid.setRealColSize("body", 계획수량전_Index, 80);
+		this.dxGrid.setRealColSize("body", 계획단가전_Index, 80);
+		this.dxGrid.setRealColSize("body", 계획금액전_Index, 80);
+		this.dxGrid.setRealColSize("body", 계획수량_Index, 80);
+		this.dxGrid.setRealColSize("body", 계획단가_Index, 80);
+		this.dxGrid.setRealColSize("body", 계획금액_Index, 80);
+		this.dxGrid.setRealColSize("body", 계획수량증감_Index, 80);
+		this.dxGrid.setRealColSize("body", 계획금액증감_Index, 80);
+		
+	}
+	else
+	{
+		this.dxGrid.setRealColSize("body", 계획수량전_Index, 0);
+		this.dxGrid.setRealColSize("body", 계획단가전_Index, 0);
+		this.dxGrid.setRealColSize("body", 계획금액전_Index, 0);
+		this.dxGrid.setRealColSize("body", 계획수량_Index, 0);
+		this.dxGrid.setRealColSize("body", 계획단가_Index, 0);
+		this.dxGrid.setRealColSize("body", 계획금액_Index, 0);
+		this.dxGrid.setRealColSize("body", 계획수량증감_Index, 0);
+		this.dxGrid.setRealColSize("body", 계획금액증감_Index, 0);
+		
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DWXPR_COSTTUJA_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select2</Col>
+            <Col id="SP">DZZPR_GROUPCODE_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged"/>
+      <Dataset id="dsList2"/>
+      <Dataset id="dsList3"/>
+      <Dataset id="dsListT"/>
+    </Objects>
+  </Form>
+</FDL>

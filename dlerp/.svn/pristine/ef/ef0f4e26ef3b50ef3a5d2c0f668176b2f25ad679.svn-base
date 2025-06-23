@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!--Mybatis 설정 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="false"/>
+		<setting name="jdbcTypeForNull" value="VARCHAR"/>
+		<setting name="callSettersOnNulls" value="true"/>
+		<setting name="returnInstanceForEmptyRow" value="true"/>
+		<setting name="defaultExecutorType" value="REUSE"/>
+		<setting name="defaultScriptingLanguage" value="com.goodcen.cenerp.mybatis.CENMybatisLanguageDriver"/>
+	</settings>
+	
+	<!-- Type Aliases 설정-->
+	<typeAliases>
+		<typeAlias alias="map" type="java.util.Map" />
+		<typeAlias alias="linkedHashMap" type="java.util.LinkedHashMap" />
+		<typeAlias alias="cenMap" type="com.goodcen.common.model.CENCallableMap" />
+		<typeAlias alias="dataSet" type="com.nexacro17.xapi.data.DataSet" />
+	</typeAliases>
+	
+	<typeHandlers>
+    	<typeHandler jdbcType="TINYINT" javaType="int" handler="org.apache.ibatis.type.IntegerTypeHandler"/>
+    	<typeHandler jdbcType="SMALLINT" javaType="int" handler="org.apache.ibatis.type.IntegerTypeHandler"/>
+    	<typeHandler jdbcType="BIGINT" javaType="bigdecimal" handler="org.apache.ibatis.type.BigDecimalTypeHandler"/>
+    	<typeHandler jdbcType="LONGVARCHAR" javaType="string" handler="org.apache.ibatis.type.StringTypeHandler"/>
+    	<typeHandler jdbcType="CLOB" javaType="string" handler="org.apache.ibatis.type.StringTypeHandler"/>
+    </typeHandlers>
+    
+	<plugins>
+		<plugin interceptor="com.goodcen.common.nexacro.mybatis.NexacroMybatisMetaDataProvider"/>
+		<plugin interceptor="com.goodcen.common.nexacro.mybatis.NexacroMybatisResultSetHandler"/>
+	</plugins>
+</configuration>

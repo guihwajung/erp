@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1090" height="315" titletext="수주-도급-입찰금액결정" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="78.0" right="0" cssclass="div_SEARCH_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_PROJ" taborder="0" text="프로젝트코드" left="0.0" top="10.0" width="118.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtCD_PROJ" taborder="1" width="66" height="24.0" value="" left="0.0" top="staCD_PROJ:10.0" readonly="true" enable="true"/>
+              <Edit id="ctxtDS_PROJ" taborder="2" width="405" height="24.0" value="" left="ctxtCD_PROJ:0.0" top="staCD_PROJ:10.0" readonly="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" ondragmove="divData_ondragmove" cssclass="div_DATA_Bg" top="50" text="" bottom="3" right="4">
+          <Layouts>
+            <Layout>
+              <Static id="staAM_ESTM" taborder="7" text="추정가격" left="5" width="130" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="7"/>
+              <Static id="sta14" taborder="8" width="949" height="30" cssclass="sta_WF_tablebg" left="134" top="7"/>
+              <Static id="staAM_INIT" taborder="9" text="예가대비낙착율" left="5" width="130" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="65"/>
+              <Static id="sta17" taborder="10" width="949" height="30" cssclass="sta_WF_tablebg" left="134" top="65"/>
+              <Static id="staDS_OPNI" taborder="11" text="비고" left="5" width="130" height="90" cssclass="sta_WF_tablelabel" textAlign="right" top="123"/>
+              <Static id="sta24" taborder="12" width="949" height="90" cssclass="sta_WF_tablebg" left="134" top="123"/>
+              <MaskEdit id="ctxtAM_ESTM" taborder="13" width="140" height="20" value="" textAlign="right" format="#,0" top="12" left="139" autoselect="true" readonly="true" displaynulltext=" "/>
+              <TextArea id="txtDS_OPNI" taborder="3" top="128" width="939" height="80" maxlength="1000" enable="true" readonly="false" left="139"/>
+              <Static id="sta23_00" taborder="14" text="(VAT 포함)" left="288" top="11" width="121" height="20"/>
+              <Static id="staAM_ESTM00" taborder="0" text="기초금액" left="5" width="130" height="30" textAlign="right" top="36" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta14_00" taborder="1" width="949" height="30" cssclass="sta_WF_tablebg" left="134" top="36"/>
+              <MaskEdit id="ctxtAM_ESTM00" taborder="2" width="140" height="20" value="" textAlign="right" format="#,0" top="41" left="139" autoselect="true" readonly="false" displaynulltext=" "/>
+              <Static id="sta23_00_01" taborder="15" text="(VAT 포함)" left="288" top="40" width="121" height="20"/>
+              <Button id="btnCancel" taborder="6" text="취소" left="53.85%" width="60" height="24" top="228" onclick="divData_btnCancel_onclick"/>
+              <Button id="btnSave" taborder="4" text="저장" left="41.01%" width="60" height="24" top="228" onclick="divData_btnSave_onclick"/>
+              <Button id="btnDelete" taborder="5" text="삭제" left="47.52%" width="60" height="24" top="228" onclick="divData_btnDelete_onclick"/>
+              <Static id="sta22_00" taborder="16" width="949" height="30" cssclass="sta_WF_tablebg" top="94" left="134"/>
+              <MaskEdit id="ctxtAM_ESTM00_00" taborder="17" width="140" height="20" value="" textAlign="right" format="#,0" top="70" left="139" autoselect="true" readonly="false" displaynulltext=" "/>
+              <MaskEdit id="ctxtAM_ESTM00_00_00" taborder="18" width="140" height="20" value="" textAlign="right" format="#,0" top="99" left="139" autoselect="true" readonly="false" displaynulltext=" "/>
+              <Static id="sta23_00_01_00" taborder="19" text="%" left="288" top="70" width="121" height="20"/>
+              <Static id="sta23_00_01_00_00" taborder="20" text="%" left="288" top="100" width="121" height="20"/>
+              <Static id="staAM_INIT00" taborder="21" text="기초대비낙찰율" left="5" width="130" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="94"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <MaskEdit id="ctxtAM_INIT" taborder="2" width="140" height="20" value="" textAlign="right" format="#,0" top="30" left="1190" autoselect="true" readonly="true" displaynulltext=" " visible="false"/>
+        <Static id="sta23_00_00" taborder="3" text="원" left="1253" top="37" width="29" height="20" visible="false"/>
+        <Static id="sta23_00_00_00" taborder="4" text="X" left="1333" top="37" width="10" height="20" visible="false"/>
+        <Static id="staRT_INIT" taborder="5" text="예정가 사정" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="1354" top="32" visible="false"/>
+        <MaskEdit id="ctxtRT_INIT" taborder="6" width="80" height="20" value="" textAlign="right" format="#,0.000" top="37" autoselect="true" readonly="false" left="1478" visible="false"/>
+        <Static id="sta23" taborder="7" text="%" left="1563" top="37" width="41" height="20" visible="false"/>
+        <Static id="staRT_BID" taborder="8" text="투찰율" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="1617" top="32" visible="false"/>
+        <MaskEdit id="ctxtRT_BID" taborder="9" width="80" height="20" value="" textAlign="right" format="#,0.000" top="37" autoselect="true" readonly="false" left="1741" visible="false"/>
+        <Static id="sta26" taborder="10" text="%" top="37" width="21" height="20" left="1826" visible="false"/>
+        <Static id="sta26_00" taborder="11" text=" =" top="37" width="31" height="20" left="1856" visible="false"/>
+        <MaskEdit id="ctxtRT_SC" taborder="12" width="161" height="20" value="" textAlign="right" format="#,0" top="37" autoselect="true" readonly="true" left="1905" visible="false"/>
+        <Static id="sta27" taborder="13" text="원" top="37" height="20" width="21" left="2070" visible="false"/>
+        <Static id="staRT_BID00" taborder="14" text="만점△" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="1408" top="80" visible="false"/>
+        <MaskEdit id="ctxtRT_BID_OUR" taborder="15" width="80" height="20" value="" textAlign="right" format="#,0.000" top="85" autoselect="true" readonly="false" left="1532" visible="false"/>
+        <Static id="sta25" taborder="16" text="%" left="1617" top="85" width="41" height="20" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);	
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	
+	
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	
+	this.dsSearch.setColumn(0, "CD_PROJ", this.getOwnerFrame().CD_PROJ);
+	this.dsSearch.setColumn(0, "DS_PROJ", this.getOwnerFrame().DS_PROJ);
+	
+	this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 담당자 여부 검사
+ ************************************************************************/
+ this.fnGetYNCharge = function(){
+	
+	this.dsReqYNCharge = new Dataset();
+	this.dsReqYNCharge.addColumn("CD_PROJ", "string");
+	this.dsReqYNCharge.addColumn("ID_USER", "string");
+	
+	this.dsReqYNCharge.addRow();
+	this.dsReqYNCharge.setColumn(0, "CD_PROJ", this.getOwnerFrame().CD_PROJ);
+	this.dsReqYNCharge.setColumn(0, "ID_USER", this.objApp.gdsUserInfo.getColumn(0, "ID_USER"));
+		
+	var strSvcId    = "selectCharge";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+		inData      = "selectCharge=dsReqYNCharge";
+		outData     = "dsRcvYNCharge=selectCharge0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+		
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+ }
+ 
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	if(this.FormInfo.TY_AUTH == "R") {
+		this.divData.form.btnSave.set_enable(false);
+		this.divData.form.btnDelete.set_enable(false);
+	}
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+};
+
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+	this.dsSave = new Dataset();
+	
+	this.dsSave.addColumn("CD_PROJ", "string");		// 프로젝트 코드
+	this.dsSave.addColumn("AM_INIT", "bigdecimal");		// 기초금액
+	this.dsSave.addColumn("RT_ESTM", "bigdecimal");	// 예정가 사정
+	this.dsSave.addColumn("RT_QUAL", "bigdecimal");	// 만점
+	this.dsSave.addColumn("RT_PERPECT", "bigdecimal");	// 만점
+	this.dsSave.addColumn("RT_YBID", "bigdecimal");  // 예가대비낙착율
+	this.dsSave.addColumn("RT_GBID", "bigdecimal");  // 기초대비낙찰율
+	this.dsSave.addColumn("DS_RM", "string");		// 비고
+	this.dsSave.addColumn("ID_USER", "string");
+		
+}
+
+
+/************************************************************************
+ * 트렌젝션 이벤트
+ ************************************************************************/
+this.fnSelect = function(){
+
+	var strSvcId    = "select";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSearch";
+	var outData     = "dsBase=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";	
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "select") {
+	
+	} else if(svcID == "save") {
+		this.fnSelect();
+	} else if(svcID == "delete") {
+		this.getParentContext().close(true);
+	} 
+	this.fnSetButton();	
+};
+
+this.dsBase_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue){
+		var amRst = 0;
+		
+		if(e.columnid == "AM_INIT"){
+			//기초금액
+			obj.setColumn(0, "AM_PROJ", e.newvalue);
+		} else if(e.columnid == "AM_PROJ"){
+			//투찰금액
+			amRst = this.dsBase.getColumn(0, "AM_PROJ") * (this.dsBase.getColumn(0, "RT_ESTM") / 100) * ((this.dsBase.getColumn(0, "RT_PERPECT") + this.dsBase.getColumn(0, "RT_QUAL")) / 100);
+			this.dsBase.setColumn(0, "AM_RST", amRst);
+		} else if(e.columnid == "RT_ESTM"){
+			//예정가 사정
+			amRst = this.dsBase.getColumn(0, "AM_PROJ") * (this.dsBase.getColumn(0, "RT_ESTM") / 100) * ((this.dsBase.getColumn(0, "RT_PERPECT") + this.dsBase.getColumn(0, "RT_QUAL")) / 100);
+			this.dsBase.setColumn(0, "AM_RST", amRst);
+		} else if(e.columnid == "RT_PERPECT" || e.columnid == "RT_QUAL"){
+			//투찰율
+			amRst = this.dsBase.getColumn(0, "AM_PROJ") * (this.dsBase.getColumn(0, "RT_ESTM") / 100) * ((this.dsBase.getColumn(0, "RT_PERPECT") + this.dsBase.getColumn(0, "RT_QUAL")) / 100);
+			this.dsBase.setColumn(0, "AM_RST", amRst);
+		}
+	}
+};
+
+this.divData_btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "AM_INIT"))){
+		this.gfnAlert("기초금액을 입력하세요.");
+		return;
+	}
+	this.dsSave.clearData();
+	this.dsSave.addRow();
+	
+	this.dsSave.copyRow(0, this.dsBase, 0);
+	this.dsSave.setColumn(0, "ID_USER", this.objApp.gdsUserInfo.getColumn(0, "ID_USER"));
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+};
+
+this.divData_btnDelete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnConfirm("삭제 하시겠습니까?", function(strId, val){
+		if(val == true) {
+			var strSvcId    = "delete";
+			var strSvcType  = "save";
+			var inProc		= "_dsProc";
+			var inData      = "delete=dsSearch";
+			var outData     = "";
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+			
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// transaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc,false); // 통신방법 정의 [생략가능]
+		}
+	})
+	
+};
+
+
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(true);
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DOBPR_CIVL_PROJ_AM_DCID_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DOBPR_CIVL_PROJ_AM_DCID_MERGE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DOBPR_CIVL_PROJ_AM_DCID_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectCharge</Col>
+            <Col id="SP">DOAPR_PROJ_YNCHARGE_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_PROJ" type="STRING" size="256"/>
+          <Column id="DS_PROJ" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsBase" onvaluechanged="dsBase_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_PROJ" type="STRING" size="256"/>
+          <Column id="DS_PROJ" type="STRING" size="256"/>
+          <Column id="AM_ESTM" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_CONST" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_ESTM_CONST" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_INIT" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_PROJ" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_ESTM" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_QUAL" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_PERPECT" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_RST" type="BIGDECIMAL" size="256"/>
+          <Column id="DS_RM" type="STRING" size="256"/>
+          <Column id="RT_YBID" type="STRING" size="256"/>
+          <Column id="RT_GBID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRcvYNCharge">
+        <ColumnInfo>
+          <ConstColumn id="YN_EXISTS" type="STRING" size="30"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctxtCD_PROJ" propid="value" datasetid="dsSearch" columnid="CD_PROJ"/>
+      <BindItem id="item1" compid="divSearch.form.ctxtDS_PROJ" propid="value" datasetid="dsSearch" columnid="DS_PROJ"/>
+      <BindItem id="item2" compid="divData.form.ctxtAM_ESTM" propid="value" datasetid="dsBase" columnid="AM_ESTM_CONST"/>
+      <BindItem id="item3" compid="divData.form.tabData.tab8.form.ctxtAM_ESTM00" propid="value" datasetid="dsDetail3" columnid="AM_INIT"/>
+      <BindItem id="item7" compid="divData.form.tabData.tab8.form.ctxtRT_BID_OUR" propid="value" datasetid="dsDetail3" columnid="RT_PERPECT"/>
+      <BindItem id="item10" compid="divData.form.txtDS_OPNI" propid="value" datasetid="dsBase" columnid="DS_RM"/>
+      <BindItem id="item11" compid="divData.form.ctxtAM_ESTM00" propid="value" datasetid="dsBase" columnid="AM_INIT"/>
+      <BindItem id="item4" compid="ctxtAM_INIT" propid="value" datasetid="dsBase" columnid="AM_PROJ"/>
+      <BindItem id="item5" compid="ctxtRT_INIT" propid="value" datasetid="dsBase" columnid="RT_ESTM"/>
+      <BindItem id="item6" compid="ctxtRT_BID" propid="value" datasetid="dsBase" columnid="RT_QUAL"/>
+      <BindItem id="item9" compid="ctxtRT_SC" propid="value" datasetid="dsBase" columnid="AM_RST"/>
+      <BindItem id="item8" compid="ctxtRT_BID_OUR" propid="value" datasetid="dsBase" columnid="RT_PERPECT"/>
+      <BindItem id="item12" compid="divData.form.ctxtAM_ESTM00_00" propid="value" datasetid="dsBase" columnid="RT_YBID"/>
+      <BindItem id="item13" compid="divData.form.ctxtAM_ESTM00_00_00" propid="value" datasetid="dsBase" columnid="RT_GBID"/>
+    </Bind>
+  </Form>
+</FDL>

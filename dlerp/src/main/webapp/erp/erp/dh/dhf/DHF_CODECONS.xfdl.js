@@ -1,0 +1,884 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("재무제표구조관리");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DHFPR_CONS_SELECT</Col></Row><Row><Col id=\"SP\">DHFPR_CONS_INSERT</Col><Col id=\"TARGET\">insert</Col></Row><Row><Col id=\"SP\">DHFPR_CONS_UPDATE</Col><Col id=\"TARGET\">update</Col></Row><Row><Col id=\"SP\">DHFPR_CONS_DELETE</Col><Col id=\"TARGET\">delete</Col></Row><Row><Col id=\"TARGET\">combo</Col><Col id=\"SP\">DHXPR_COMBO_SELECT</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"TY_CONS\" type=\"STRING\" size=\"256\"/><Column id=\"TY_CLOSE\" type=\"STRING\" size=\"256\"/><Column id=\"NM_CLOSE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TY_CONS\">T</Col><Col id=\"TY_CLOSE\"/><Col id=\"NM_CLOSE\"/></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_REGIST", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_ETC1\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">T</Col><Col id=\"DS_CODE\">합계잔액시산표</Col></Row><Row><Col id=\"CD_CODE\">B</Col><Col id=\"DS_CODE\">재무상태표</Col></Row><Row><Col id=\"CD_CODE\">P</Col><Col id=\"DS_CODE\">손익계산서</Col></Row><Row><Col id=\"CD_CODE\">S</Col><Col id=\"DS_CODE\">원가명세서</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_ATTR", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">제목</Col><Col id=\"DS_CODE\">제목</Col></Row><Row><Col id=\"CD_CODE\">공란</Col><Col id=\"DS_CODE\">공란</Col></Row><Row><Col id=\"CD_CODE\">자산합계</Col><Col id=\"DS_CODE\">자산합계</Col></Row><Row><Col id=\"CD_CODE\">부채합계</Col><Col id=\"DS_CODE\">부채합계</Col></Row><Row><Col id=\"CD_CODE\">자본합계</Col><Col id=\"DS_CODE\">자본합계</Col></Row><Row><Col id=\"CD_CODE\">손익합계</Col><Col id=\"DS_CODE\">손익합계</Col></Row><Row><Col id=\"CD_CODE\">일반항목및합계</Col><Col id=\"DS_CODE\">일반항목및합계</Col></Row><Row><Col id=\"CD_CODE\">부채와자본총계</Col><Col id=\"DS_CODE\">부채와자본총계</Col></Row><Row><Col id=\"CD_CODE\">차기이월이익잉여금</Col><Col id=\"DS_CODE\">차기이월이익잉여금</Col></Row><Row><Col id=\"CD_CODE\">이익잉여금소계</Col><Col id=\"DS_CODE\">이익잉여금소계</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_ATTR01", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">제목</Col><Col id=\"DS_CODE\">제목</Col></Row><Row><Col id=\"CD_CODE\">공란</Col><Col id=\"DS_CODE\">공란</Col></Row><Row><Col id=\"CD_CODE\">자산합계</Col><Col id=\"DS_CODE\">자산합계</Col></Row><Row><Col id=\"CD_CODE\">부채합계</Col><Col id=\"DS_CODE\">부채합계</Col></Row><Row><Col id=\"CD_CODE\">자본합계</Col><Col id=\"DS_CODE\">자본합계</Col></Row><Row><Col id=\"CD_CODE\">부채와자본총계</Col><Col id=\"DS_CODE\">부채와자본총계</Col></Row><Row><Col id=\"CD_CODE\">이익잉여금소계</Col><Col id=\"DS_CODE\">이익잉여금소계</Col></Row><Row><Col id=\"CD_CODE\">차기이월이익잉여금</Col><Col id=\"DS_CODE\">차기이월이익잉여금</Col></Row><Row><Col id=\"CD_CODE\">전기순이익</Col><Col id=\"DS_CODE\">전기순이익</Col></Row><Row><Col id=\"CD_CODE\">당기순이익</Col><Col id=\"DS_CODE\">당기순이익</Col></Row><Row><Col id=\"CD_CODE\">결산정리</Col><Col id=\"DS_CODE\">결산정리</Col></Row><Row><Col id=\"CD_CODE\">일반항목및합계</Col><Col id=\"DS_CODE\">일반항목및합계</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_ATTR02", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">제목</Col><Col id=\"DS_CODE\">제목</Col></Row><Row><Col id=\"CD_CODE\">공란</Col><Col id=\"DS_CODE\">공란</Col></Row><Row><Col id=\"CD_CODE\">수입합계항목</Col><Col id=\"DS_CODE\">수입합계항목</Col></Row><Row><Col id=\"CD_CODE\">비용합계항목</Col><Col id=\"DS_CODE\">비용합계항목</Col></Row><Row><Col id=\"CD_CODE\">손익합계항목</Col><Col id=\"DS_CODE\">손익합계항목</Col></Row><Row><Col id=\"CD_CODE\">당기순이익</Col><Col id=\"DS_CODE\">당기순이익</Col></Row><Row><Col id=\"CD_CODE\">일반항목및합계</Col><Col id=\"DS_CODE\">일반항목및합계</Col></Row><Row><Col id=\"CD_CODE\">포괄손익합계</Col><Col id=\"DS_CODE\">포괄손익합계</Col></Row><Row><Col id=\"CD_CODE\">포괄손익항목</Col><Col id=\"DS_CODE\">포괄손익항목</Col></Row><Row><Col id=\"CD_CODE\">당기총포괄손익</Col><Col id=\"DS_CODE\">당기총포괄손익</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListSub", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_ATTR03", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"TEXT\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CODE\">제목</Col><Col id=\"TEXT\">제목</Col></Row><Row><Col id=\"CODE\">공란</Col><Col id=\"TEXT\">공란</Col></Row><Row><Col id=\"CODE\">수입합계항목</Col><Col id=\"TEXT\">수입합계항목</Col></Row><Row><Col id=\"CODE\">비용합계항목</Col><Col id=\"TEXT\">비용합계항목</Col></Row><Row><Col id=\"CODE\">손익합계항목</Col><Col id=\"TEXT\">손익합계항목</Col></Row><Row><Col id=\"CODE\">당기순이익</Col><Col id=\"TEXT\">당기순이익</Col></Row><Row><Col id=\"CODE\">일반항목및합계</Col><Col id=\"TEXT\">일반항목및합계</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0.0","10.0",null,"46.0","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_SEARCH_Bg");
+            obj.set_formscrolltype("none");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staTY_CONS","0.0","10.0","118.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("재무제표구조");
+            obj.set_textDecoration("none");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("ccboTY_CONS","staTY_CONS:0.0","10.0","140","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("2");
+            obj.set_innerdataset("dsTY_REGIST");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staTY_CLOSE","ccboTY_CONS:0.0","10.0","118.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("3");
+            obj.set_text("재무제표유형");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfTY_CLOSE","staTY_CLOSE:0.0","10.0","269","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CodeFindName").set("DHX_CFMAGAM_TYCLOSE");
+            obj.getSetter("CDTextWidth").set("80");
+            obj.set_taborder("4");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:10",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divSplitter","78.5%","0","5","100%",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("1");
+            obj.set_cssclass("div_Splitter");
+            obj.set_cursor("ew-resize");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("divDataLeft","0","0",null,null,"divSplitter:5","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTitle01","0","0","200","22",null,null,null,null,null,null,this.divData.form.divDataLeft.form);
+            obj.set_taborder("2");
+            obj.set_text("재무제표 구조");
+            obj.set_cssclass("sta_TITLE_Bg");
+            this.divData.form.divDataLeft.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","staTitle01:5",null,null,"0","0",null,null,null,null,this.divData.form.divDataLeft.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.divDataLeft.addChild(obj.name, obj);
+
+            obj = new Div("divDataRight","divSplitter:5","0",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTitle02","0","0","200","22",null,null,null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("3");
+            obj.set_text("누락계정");
+            obj.set_cssclass("sta_TITLE_Bg");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+
+            obj = new Grid("objGridSub","0","staTitle02:5",null,null,"0","0",null,null,null,null,this.divData.form.divDataRight.form);
+            obj.set_taborder("0");
+            obj.set_binddataset("dsListSub");
+            obj._setContents("<Formats><Format id=\"default\"/></Formats>");
+            this.divData.form.divDataRight.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.ccboTY_CONS","value","dsSearch","TY_CONS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divSearch.form.ccfTY_CLOSE.form.CDTextBox","value","dsSearch","TY_CLOSE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divSearch.form.ccfTY_CLOSE.form.DSTextBox","value","dsSearch","NM_CLOSE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DHF_CODECONS.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	/*this.fnSetExtendButton();*/
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+        	this.fnSetCombo();
+
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+        	// Select, Add, Del, Save, Excel, Print
+        	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+        	//this.FormBtns.Select.set_enable(false);
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.ccfTY_CLOSE = this.divSearch.form.ccfTY_CLOSE;
+        	this.ccboTY_CONS = this.divSearch.form.ccboTY_CONS;
+        	//this.dxGrid = this.divData.form.objGrid;
+        	//this.dxGridSub = this.divData.form.objGridSub;
+        	this.dxGrid = this.divData.form.divDataLeft.form.objGrid;
+        	this.dxGridSub = this.divData.form.divDataRight.form.objGridSub;
+
+        	this.vNewRow = -1;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	this.ccfTY_CLOSE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+
+        	// 그리드 초기화
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHF_CODECONS");
+        	this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+        	this.dxGrid.AfterCDTextChanged     = "fnGrid_AfterCDTextChanged";
+
+        	this.gfnGridInit(this.dxGridSub, this.dsListSub, "DH", "DHF_CODECONS_ACNT_MISS");
+
+        	// 셀 수정가능 여부
+        	this.dxGrid.EnterCell = "fnGrid_EnterCell";
+
+        	// 셀 변경 후 이벤트
+        	this.dxGrid.AfterEdit = "fnGrid_AfterEdit";
+
+        	// 특정컬럼 배경색 채색
+        	this.fnSetGridColor();
+
+         	this.divSearch_ccboTY_CONS_onitemchanged();
+        };
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("TY_CONS", "string");
+        	this.dsSelect.addColumn("TY_CLOSE", "string");
+
+        	this.dsInsert = new Dataset();
+        	this.dsInsert.addColumn("TY_CONS", "string");
+        	this.dsInsert.addColumn("TY_CLOSE", "string");
+        	this.dsInsert.addColumn("YN_CORE", "string");
+        	this.dsInsert.addColumn("CD_CODE", "string");
+        	this.dsInsert.addColumn("SN_CODE", "bigdecimal");
+        	this.dsInsert.addColumn("TY_ATTR", "string");
+        	this.dsInsert.addColumn("TY_COMP", "string");
+        	this.dsInsert.addColumn("CD_ACNT1", "string");
+        	this.dsInsert.addColumn("CD_ACNT2", "string");
+        	this.dsInsert.addColumn("DS_PRINT", "string");
+        	this.dsInsert.addColumn("DS_PRINT_ENG", "string");
+        	this.dsInsert.addColumn("TY_TITLENUM", "string");
+        	this.dsInsert.addColumn("YN_SURPLUS", "string");
+        	this.dsInsert.addColumn("YN_EIS", "string");
+        	this.dsInsert.addColumn("ID_TRANS", "string");
+        	this.dsInsert.addColumn("CD_ACCOUNT", "string");
+
+        	this.dsUpdate = new Dataset();
+        	this.dsUpdate.addColumn("TY_CONS", "string");
+        	this.dsUpdate.addColumn("TY_CLOSE", "string");
+        	this.dsUpdate.addColumn("CD_CODE", "string");
+        	this.dsUpdate.addColumn("SN_CODE", "bigdecimal");
+        	this.dsUpdate.addColumn("TY_ATTR", "string");
+        	this.dsUpdate.addColumn("TY_COMP", "string");
+        	this.dsUpdate.addColumn("CD_ACNT1", "string");
+        	this.dsUpdate.addColumn("CD_ACNT2", "string");
+        	this.dsUpdate.addColumn("DS_PRINT", "string");
+        	this.dsUpdate.addColumn("DS_PRINT_ENG", "string");
+        	this.dsUpdate.addColumn("TY_TITLENUM", "string");
+        	this.dsUpdate.addColumn("YN_SURPLUS", "string");
+        	this.dsUpdate.addColumn("YN_CORE", "string");
+        	this.dsUpdate.addColumn("YN_EIS", "string");
+        	this.dsUpdate.addColumn("ID_TRANS", "string");
+        	this.dsUpdate.addColumn("CD_ACCOUNT", "string");
+
+        	this.dsDelete = new Dataset();
+        	this.dsDelete.addColumn("TY_CONS", "string");
+        	this.dsDelete.addColumn("TY_CLOSE", "string");
+        	this.dsDelete.addColumn("CD_CODE", "string");
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+        	if (!this.fnSelectValidate()) return false;
+
+        	this.gfnGridBeforeSelect(this.dxGrid);
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+
+        	this.dsSelect.setColumn(0, "TY_CONS", this.dsSearch.getColumn(0, "TY_CONS"));
+        	this.dsSelect.setColumn(0, "TY_CLOSE", this.dsSearch.getColumn(0, "TY_CLOSE"));
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0 dsListSub=select1";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+        	var nrow = this.gfnGridAdd(this.dxGrid, "current"); // top (default), bottom, current
+        	var maxSN_CODE = this.dsList.getMax("SN_CODE");
+        		if (maxSN_CODE == null) {
+        			if (this.dsList.rowcount == 1) maxSN_CODE = 0;
+        			else maxSN_CODE = -1;
+        		}
+        	this.dsList.setColumn(nrow, "SN_CODE", maxSN_CODE);
+
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+        	this.gfnGridDel(this.dxGrid);
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+
+        	// 그리드 필수항목 체크
+        	if (!this.gfnGridValidate(this.dxGrid)) return;
+
+        	this.dxGrid.updateToDataset();
+
+        	this.dsInsert.clearData();
+        	this.dsUpdate.clearData();
+        	this.dsDelete.clearData();
+
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var flag = this.gfnGetFlag(this.dsList, i);
+        		switch(flag) {
+        			case "I":
+        				if(!this.fnSaveValidate(i)) return;
+        				var nrow = this.dsInsert.addRow();
+        				this.dsInsert.setColumn(nrow, "TY_CONS", this.dsSearch.getColumn(0, "TY_CONS"));
+        				this.dsInsert.setColumn(nrow, "TY_CLOSE", this.dsSearch.getColumn(0, "TY_CLOSE"));
+        				this.dsInsert.setColumn(nrow, "YN_CORE", this.dsList.getColumn(i, "YN_CORE"));
+        				this.dsInsert.setColumn(nrow, "CD_CODE", this.dsList.getColumn(i, "CD_CODE"));
+        				this.dsInsert.setColumn(nrow, "SN_CODE", this.dsList.getColumn(i, "SN_CODE"));
+        				this.dsInsert.setColumn(nrow, "TY_ATTR", this.dsList.getColumn(i, "TY_ATTR"));
+        				this.dsInsert.setColumn(nrow, "TY_COMP", this.dsList.getColumn(i, "TY_COMP"));
+        				this.dsInsert.setColumn(nrow, "CD_ACNT1", this.dsList.getColumn(i, "CD_ACNT1"));
+        				this.dsInsert.setColumn(nrow, "CD_ACNT2", this.dsList.getColumn(i, "CD_ACNT2"));
+        				this.dsInsert.setColumn(nrow, "DS_PRINT", this.dsList.getColumn(i, "DS_PRINT"));
+        				this.dsInsert.setColumn(nrow, "DS_PRINT_ENG", this.dsList.getColumn(i, "DS_PRINT_ENG"));
+        				this.dsInsert.setColumn(nrow, "TY_TITLENUM", this.dsList.getColumn(i, "TY_TITLENUM"));
+        				this.dsInsert.setColumn(nrow, "YN_SURPLUS", this.dsList.getColumn(i, "YN_SURPLUS"));
+        				this.dsInsert.setColumn(nrow, "YN_EIS", this.dsList.getColumn(i, "YN_EIS"));
+        				this.dsInsert.setColumn(nrow, "ID_TRANS", this.AuthClient.ID_USER);
+        				this.dsInsert.setColumn(nrow, "CD_ACCOUNT",  this.dsList.getColumn(i, "CD_ACCOUNT"));
+        				break;
+
+        			case "U":
+        				if(!this.fnSaveValidate(i)) return;
+        				var nrow = this.dsUpdate.addRow();
+        				this.dsUpdate.setColumn(nrow, "TY_CONS", this.dsSearch.getColumn(0, "TY_CONS"));
+        				this.dsUpdate.setColumn(nrow, "TY_CLOSE", this.dsSearch.getColumn(0, "TY_CLOSE"));
+        				this.dsUpdate.setColumn(nrow, "YN_CORE", this.dsList.getColumn(i, "YN_CORE"));
+        				this.dsUpdate.setColumn(nrow, "CD_CODE", this.dsList.getColumn(i, "CD_CODE"));
+        				this.dsUpdate.setColumn(nrow, "SN_CODE", this.dsList.getColumn(i, "SN_CODE"));
+        				this.dsUpdate.setColumn(nrow, "TY_ATTR", this.dsList.getColumn(i, "TY_ATTR"));
+        				this.dsUpdate.setColumn(nrow, "TY_COMP", this.dsList.getColumn(i, "TY_COMP"));
+        				this.dsUpdate.setColumn(nrow, "CD_ACNT1", this.dsList.getColumn(i, "CD_ACNT1"));
+        				this.dsUpdate.setColumn(nrow, "CD_ACNT2", this.dsList.getColumn(i, "CD_ACNT2"));
+        				this.dsUpdate.setColumn(nrow, "DS_PRINT", this.dsList.getColumn(i, "DS_PRINT"));
+        				this.dsUpdate.setColumn(nrow, "DS_PRINT_ENG", this.dsList.getColumn(i, "DS_PRINT_ENG"));
+        				this.dsUpdate.setColumn(nrow, "TY_TITLENUM", this.dsList.getColumn(i, "TY_TITLENUM"));
+        				this.dsUpdate.setColumn(nrow, "YN_SURPLUS", this.dsList.getColumn(i, "YN_SURPLUS"));
+        				this.dsUpdate.setColumn(nrow, "YN_EIS", this.dsList.getColumn(i, "YN_EIS"));
+        				this.dsUpdate.setColumn(nrow, "ID_TRANS", this.AuthClient.ID_USER);
+        				this.dsUpdate.setColumn(nrow, "CD_ACCOUNT",  this.dsList.getColumn(i, "CD_ACCOUNT"));
+        				break;
+
+        			case "D":
+        				var nrow = this.dsDelete.addRow();
+        				this.dsDelete.setColumn(nrow, "TY_CONS", this.dsSearch.getColumn(0, "TY_CONS"));
+        				this.dsDelete.setColumn(nrow, "TY_CLOSE", this.dsSearch.getColumn(0, "TY_CLOSE"));
+        				this.dsDelete.setColumn(nrow, "CD_CODE", this.dsList.getColumn(i, "CD_CODE"));
+        				break;
+        		}
+        	}
+
+        	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+         */
+        this.fnSelectValidate = function() {
+        	var validate = true;
+        	if (this.gfnIsNull(this.dsSearch.getColumn(0,"TY_CLOSE"))) {
+        		validate = false;
+        		// Alert후 실행할 처리
+        		this.fnVaidateCallback = function() {
+        			this.ccfTY_CLOSE.form.CDTextBox.setFocus();
+        		}
+        		this.gfnAlert("재무제표 유형을 선택하세요.", "fnVaidateCallback");
+        	}
+        	return validate;
+        };
+
+
+        this.fnSaveValidate = function(row) {
+        	var validate = true;
+
+        	var chkCnt = this.dsList.getCaseCount("nx_flag != '#' && SN_CODE =='"+this.dsList.getColumn(row, "SN_CODE")+"'");
+        	if(chkCnt > 1) {
+        		this.gfnAlert("동일한 순번이 존재합니다.");
+        		return false;
+        	}
+        	else
+        	{
+        		switch(this.dsList.getColumn(row, "TY_ATTR"))
+        		{
+        			case "R" : // "수입합계항목":
+        			case "E" : //"비용합계항목":
+        			case "X" : //"손익합계항목":
+        			case "H" : //"일반항목및합계":
+        				if(this.gfnIsNull(this.dsList.getColumn(row, "TY_COMP")))
+        				{
+        					this.gfnAlert("순번 : [" + this.dsList.getColumn(row, "SN_CODE") + " ] 구분을 입력하셔야합니다.\n");
+        					validate = false;
+        				}
+        				else
+
+        				if(this.gfnIsNull(this.dsList.getColumn(row, "CD_ACNT1")) && this.gfnIsNull(this.dsList.getColumn(row, "CD_ACNT2")))
+        				{
+        					this.gfnAlert("순번 : [" + this.dsList.getColumn(row, "SN_CODE") + " ] 구분코드 1,2중 하나는 입력하셔야합니다.\n");
+        					validate = false;
+        				}
+
+        			break;
+        			case "P" : // "당기순이익":
+        				if(this.gfnIsNull(this.dsList.getColumn(row, "DS_PRINT")))
+        				{
+        					this.gfnAlert("순번 : [ " + this.dsList.getColumn(row, "SN_CODE") + " ] 인쇄내역을 입력하셔야합니다.\n");
+        					validate = false;
+        				}
+        			break;
+        		}
+        	}
+
+        	return validate;
+        }
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	if (svcID == "select") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+        	}
+        	else if(svcID == "save") {
+        		if (errorCode == 0) {
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        	else if(svcID =="combo") {
+        		this.ccboTY_CONS.set_index(0);
+        		//this.dsSearch.setColumn(0, "TY_CLOSE", this.dsTY_REGIST.getColumn(0, "DS_ETC1"));
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+        	if (id == "ccfTY_CLOSE") {
+        		dsUserParam.setColumn(nrow, "TY_TBP", this.ccboTY_CONS.value);
+        	}
+        	return true;
+        }
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+        this.fnGrid_EnterCell = function(obj, row, cell) {
+         	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, cell);
+
+        	switch(colnm)
+        	{
+        		case "TY_COMP"     :
+        		case "CD_ACNT1"    :
+        		case "CD_ACNT2"    :
+        		case "TY_TITLENUM" :
+        			switch(this.dsList.getColumn(this.dsList.rowposition, "TY_ATTR"))
+        			{
+        				case "T" :// "제목":
+        				case "Y" :// "이익잉여금소계":
+        				case "Q" :// "전기순이익":
+        				case "P" :// "당기순이익":
+        				case "B" :// "공란":
+        					return false;
+        				default : return;
+        			}
+        		break;
+        		case "DS_PRINT" :
+        			if(this.dsList.getColumn(this.dsList.rowposition, "TY_ATTR") == "B") // 공란")
+        			{
+        				return false;
+        			}
+        			else return;
+        		break;
+        	}
+
+        }
+
+        this.fnGrid_AfterEdit = function(obj,e) {
+
+        	if(e.columnid == "TY_ATTR") {
+        		if(e.oldvalue != e.newvalue) {
+        			if(this.dsList.getColumn(e.row, "TY_ATTR") == "T") { //제목"){// || this.dsList.getColumn(e.row, "TY_ATTR") == "당기순이익") {
+        				this.dsList.setColumn(e.row, "TY_COMP" ,"");
+        				this.dsList.setColumn(e.row, "CD_ACNT1" ,"");
+        				this.dsList.setColumn(e.row, "CD_ACNT2" ,"");
+        				this.dsList.setColumn(e.row, "TY_TITLENUM" ,"");
+
+        			}
+        			else if(this.dsList.getColumn(e.row, "TY_ATTR") == "B") { // 공란") {
+        				this.dsList.setColumn(e.row, "TY_COMP" ,"");
+        				this.dsList.setColumn(e.row, "CD_ACNT1" ,"");
+        				this.dsList.setColumn(e.row, "CD_ACNT2" ,"");
+        				this.dsList.setColumn(e.row, "TY_TITLENUM" ,"");
+        				this.dsList.setColumn(e.row, "YN_SURPLUS" ,"");
+        			}
+        		}
+        	}
+        	else if(e.columnid == "TY_COMP") {
+        		if(e.oldvalue != e.newvalue) {
+        			this.dsList.setColumn(e.row, "CD_ACNT1" ,"");
+        			this.dsList.setColumn(e.row, "CD_ACNT2" ,"");
+        			this.dsList.setColumn(e.row, "DS_PRINT" ,"");
+        			this.dsList.setColumn(e.row, "DS_PRINT_ENG" ,"");
+        		}
+        	}
+        	else if(e.columnid == "SN_CODE") {
+        		if(this.gfnGetFlag(this.dsList, e.row) == "I") {
+        			if(this.gfnIsNull(e.oldvalue) || e.row != this.dsList.rowposition) return;
+        			if(!this.gfnIsNull(e.newvalue) && e.oldvalue != e.newvalue) {
+        				this.vNewRow = e.row;
+        				this.gfnConfirm("입력에 따라 순번을 일괄 조정합니다. 계속하시겠습니까?","fnNumberCallback");
+        			}
+        		}
+        	}
+
+        }
+
+        this.fnNumberCallback = function(strId, val) {
+
+        	if(val == false) return;
+
+        	this.numbering();
+        };
+
+        this.numbering = function() {
+        	this.dsList.set_enableevent(false);
+
+        	//this.vNewRow
+        	for(var i = this.vNewRow+1; i <= this.dsList.rowcount-1; i++) {
+        		var flag = this.gfnGetFlag(this.dsList, i);
+        		this.dsList.setColumn(i , "SN_CODE", this.dsList.getColumn(i  -1, "SN_CODE") + 1);
+
+        		if(this.gfnIsNull(flag)) {
+        			this.dsList.setColumn(i, this.ucFlag, "U");
+        		}
+        	}
+          	this.dsList.set_enableevent(true);
+        };
+
+        this.fnGrid_BeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+        	// 그리드에서 코드파인드 id는 그리드셋팅의 코드파인드 식별ID
+         	if (id == "DHX_CFCODECONS1" || id == "DHX_CFCODECONS2") {
+        		var gubun = "";
+        		var param1 = "";
+        		var ty_gubun = this.dsList.getColumn(this.dsList.rowposition, "TY_COMP");
+
+        		if(ty_gubun=="과목" || ty_gubun =="G") {
+        			gubun = "G";
+        			param1 = "";
+        		}
+        		else if(ty_gubun=="시산" || ty_gubun == "T") {
+        			gubun = "Y";
+        			param1 = "Y";
+        		}
+        		else
+        		{
+        			gubun = "Y";
+        			param1 = "N";
+        		}
+
+        		if (id == "DHX_CFCODECONS2") {
+        			var sTyClose = this.dsSearch.getColumn(0, "TY_CLOSE");
+        			//제무제표유형이 대차대조표 이고 항목유형이 결산정리일 경우
+        			//if(this.ccfTY_CLOSE.form.CDTextBox.value == "BS00000" && this.dsList.getColumn(this.dsList.rowposition, "TY_ATTR") == "결산정리"){
+        			//if(sTyClose.substring(0, 2) == "BS" && this.dsList.getColumn(this.dsList.rowposition, "TY_ATTR") == "결산정리"){
+        			if(sTyClose.substring(0, 2) == "BS" && this.dsList.getColumn(this.dsList.rowposition, "TY_ATTR") == "X"){
+        				gubun = "G";
+        				param1 = "";
+        			}
+        		}
+         		dsUserParam.setColumn(nrow, "TY_COMP", gubun);
+        		dsUserParam.setColumn(nrow, "PARAM1", param1);
+         	}
+
+        	return true;
+        };
+
+
+        this.fnGrid_AfterCDTextChanged = function(id, codeFindData) {
+        	var arrData = codeFindData;
+        	var rowPos = this.dsList.rowposition;
+        	switch(id) {
+        		case "DHX_CFCODECONS1" :
+        		case "DHX_CFCODECONS2" :
+        			if (arrData.length > 0) {
+        				var DS_PRINT = arrData[0]["DS_CODE"];
+        				trace(id + " / DS_PRINT->" + DS_PRINT);
+        				//인쇄내역
+        				this.dsList.setColumn(rowPos, "DS_PRINT", DS_PRINT);
+        			}
+        		break;
+        	}
+        };
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        this.divSearch_ccboTY_CONS_onitemchanged = function(obj,e)
+        {
+        	this.ccfTY_CLOSE.form.fnCodeFindClear();
+        	this.gfnSetFormStatus(this);
+        	this.gfnGridClear(this.dxGrid);
+        	this.gfnGridClear(this.dxGridSub);
+
+        	var TY_CONS = this.dsSearch.getColumn(0, "TY_CONS");
+        	var CD_ACNT2_INDEX = this.dxGrid.getBindCellIndex("body", "CD_ACNT2");
+        	var YN_SURPLUS_INDEX = this.dxGrid.getBindCellIndex("body", "YN_SURPLUS");
+
+        	var DS_PRINT_ENG_INDEX = this.dxGrid.getBindCellIndex("body", "DS_PRINT_ENG");
+        	//this.dxGrid.setFormatColProperty(DS_PRINT_ENG_INDEX, "size", (TY_CONS == "B" || TY_CONS == "P") ? 120 : 0);
+
+        	this.dxGrid.setFormatColProperty(CD_ACNT2_INDEX, "size", 90);
+        	//this.dxGrid.setFormatColProperty(7, "size", 195);
+        	//this.dxGrid.setFormatColProperty(8, "size", 180);
+        	//this.dxGrid.setFormatColProperty(8, "size", 160);
+        	this.dxGrid.setFormatColProperty(YN_SURPLUS_INDEX, "size", 100);
+        	//this.dxGrid.setFormatColProperty(10, "size", 150);
+        	//this.dxGrid.setFormatColProperty(10, "size", 100);	// 요약사용여부
+        	/*
+        		6	CD_ACNT2	구분코드2
+        		7	DS_PRINT	인쇄내역
+        		8	TY_TITLENUM	번호유형
+        		9	YN_SURPLUS	출력괘선유형
+        		10	YN_CORE	요약사용여부
+        		11	YN_EIS	EIS여부
+        		12	DS_PRINT_ENG	인쇄내역(영문)
+        	*/
+        	var frow = this.dsTY_REGIST.findRow( "CD_CODE", this.dsSearch.getColumn(0, "TY_CONS"));
+        	this.dsSearch.setColumn(0, "TY_CLOSE", this.dsTY_REGIST.getColumn(frow,"DS_ETC1"));
+        	this.ccfTY_CLOSE.form.fnCodeFindLoad();
+
+        	switch(this.dsSearch.getColumn(0, "TY_CONS"))
+        	{
+        		case "T" :	// 합계잔액시산표
+        			this.dxGrid.setFormatColProperty(6, "size", 0);
+        			this.dxGrid.setFormatColProperty(9, "size", 0);
+        			this.dxGrid.setCellProperty("body", 3, "combodataset", 'dsTY_ATTR');
+        			this.dxGrid.setCellProperty("body", 3, "combocodecol", "CD_CODE");
+         			this.dxGrid.setCellProperty("body", 3, "combodatacol", "DS_CODE");
+
+        			// TB00000	합계잔액시산표
+        			//this.dsSearch.setColumn(0, "TY_CLOSE", "TB00000");
+
+
+        		break;
+        		case "B" : 	// 재무상태표
+        			this.dxGrid.setCellProperty( "body", 3, "combodataset", 'dsTY_ATTR01');
+        			this.dxGrid.setCellProperty("body", 3, "combocodecol", "CD_CODE");
+         			this.dxGrid.setCellProperty("body", 3, "combodatacol", "DS_CODE");
+        			// BS00000	대차대조표
+        // 			this.dsSearch.setColumn(0, "TY_CLOSE", "BS00000");
+        // 			this.ccfTY_CLOSE.form.fnCodeFindLoad();
+        		break;
+        		case "A" :		// 이익잉여금처분표
+        		case "P" :		// 손익계산서
+        			this.dxGrid.setCellProperty( "body", 3, "combodataset", 'dsTY_ATTR02');
+        			this.dxGrid.setCellProperty("body", 3, "combocodecol", "CD_CODE");
+         			this.dxGrid.setCellProperty("body", 3, "combodatacol", "DS_CODE");
+        			// PL00000	손익계산서
+        // 			this.dsSearch.setColumn(0, "TY_CLOSE", "PL00000");
+        // 			this.ccfTY_CLOSE.form.fnCodeFindLoad();
+
+        		break;
+        		case "S" : 		// 원가명세서
+        			this.dxGrid.setFormatColProperty(9, "size", 0);
+        			this.dxGrid.setCellProperty( "body", 3, "combodataset", 'dsTY_ATTR03');
+        			this.dxGrid.setCellProperty("body", 3, "combocodecol", "CD_CODE");
+         			this.dxGrid.setCellProperty("body", 3, "combodatacol", "DS_CODE");
+        			// SC00000	공사원가명세서
+        // 			this.dsSearch.setColumn(0, "TY_CLOSE", "SC00000");
+        // 			this.ccfTY_CLOSE.form.fnCodeFindLoad();
+        		break;
+        	}
+        };
+
+        this.divData_ondragmove = function(obj,e)
+        {
+           if(e.userdata == "splitter") {
+              this.divData.form.divSplitter.set_left(e.clientx);
+              this.divData.form.resetScroll();
+           }
+        };
+
+        this.divData_divSplitter_ondrag = function(obj,e)
+        {
+           e.set_userdata("splitter");
+           return true;
+        };
+
+        // 특정컬럼 배경색 채색
+        this.fnSetGridColor = function()
+        {
+        	var TY_COMP_INDEX = this.dxGrid.getBindCellIndex("body", "TY_COMP");
+        	var CD_ACNT1_INDEX = this.dxGrid.getBindCellIndex("body", "CD_ACNT1");
+        	var CD_ACNT2_INDEX = this.dxGrid.getBindCellIndex("body", "CD_ACNT2");
+        	var DS_PRINT_INDEX = this.dxGrid.getBindCellIndex("body", "DS_PRINT");
+        	var TY_TITLENUM_INDEX = this.dxGrid.getBindCellIndex("body", "TY_TITLENUM");
+
+        	this.dxGrid.setCellProperty("body", TY_COMP_INDEX , "cssclass", "expr:currow==0?'filter':(TY_ATTR=='B' || TY_ATTR=='P' || TY_ATTR=='T' || TY_ATTR=='Y' || TY_ATTR=='Q') ? 'BACK_Frozen' : (TY_COMP=='G') ? 'BACK_GangJo' : (TY_COMP=='T') ? 'BACK_ReadOnly' : ''");
+        	this.dxGrid.setCellProperty("body", CD_ACNT1_INDEX , "cssclass", "expr:currow==0?'filter':(TY_ATTR=='B' || TY_ATTR=='P' || TY_ATTR=='T' || TY_ATTR=='Y' || TY_ATTR=='Q') ? 'BACK_Frozen' : (TY_COMP=='G') ? 'BACK_GangJo' : (TY_COMP=='T') ? 'BACK_ReadOnly' : ''");
+        	this.dxGrid.setCellProperty("body", CD_ACNT2_INDEX , "cssclass", "expr:currow==0?'filter':(TY_ATTR=='B' || TY_ATTR=='P' || TY_ATTR=='T' || TY_ATTR=='Y' || TY_ATTR=='Q') ? 'BACK_Frozen' : (TY_COMP=='G') ? 'BACK_GangJo' : (TY_COMP=='T') ? 'BACK_ReadOnly' : ''");
+        	this.dxGrid.setCellProperty("body", TY_TITLENUM_INDEX , "cssclass", "expr:currow==0?'filter':(TY_ATTR=='B' || TY_ATTR=='P' || TY_ATTR=='T' || TY_ATTR=='Y' || TY_ATTR=='Q') ? 'BACK_Frozen' : (TY_COMP=='G') ? 'BACK_GangJo' : (TY_COMP=='T') ? 'BACK_ReadOnly' : ''");
+        	this.dxGrid.setCellProperty("body", DS_PRINT_INDEX , "cssclass", "expr:currow==0?'filter':(TY_ATTR == 'B') ? 'BACK_Frozen' : (TY_COMP=='G') ? 'BACK_GangJo' : (TY_COMP=='T') ? 'BACK_ReadOnly' : ''");
+        	// BACK_READONLY가 GRAY임.
+        // 	this.dxGrid.setCellProperty("body", TY_COMP_INDEX , "cssclass", "expr:currow==0?'filter':(TY_ATTR=='공란' || TY_ATTR=='당기순이익' || TY_ATTR=='제목' || TY_ATTR=='이익잉여금소계' || TY_ATTR=='전기순이익') ? 'BACK_Frozen' : (TY_COMP=='과목') ? 'BACK_GangJo' : (TY_COMP=='시산') ? 'BACK_ReadOnly' : ''");
+        // 	this.dxGrid.setCellProperty("body", CD_ACNT1_INDEX , "cssclass", "expr:currow==0?'filter':(TY_ATTR=='공란' || TY_ATTR=='당기순이익' || TY_ATTR=='제목' || TY_ATTR=='이익잉여금소계' || TY_ATTR=='전기순이익') ? 'BACK_Frozen' : (TY_COMP=='과목') ? 'BACK_GangJo' : (TY_COMP=='시산') ? 'BACK_ReadOnly' : ''");
+        // 	this.dxGrid.setCellProperty("body", CD_ACNT2_INDEX , "cssclass", "expr:currow==0?'filter':(TY_ATTR=='공란' || TY_ATTR=='당기순이익' || TY_ATTR=='제목' || TY_ATTR=='이익잉여금소계' || TY_ATTR=='전기순이익') ? 'BACK_Frozen' : (TY_COMP=='과목') ? 'BACK_GangJo' : (TY_COMP=='시산') ? 'BACK_ReadOnly' : ''");
+        // 	this.dxGrid.setCellProperty("body", TY_TITLENUM_INDEX , "cssclass", "expr:currow==0?'filter':(TY_ATTR=='공란' || TY_ATTR=='당기순이익' || TY_ATTR=='제목' || TY_ATTR=='이익잉여금소계' || TY_ATTR=='전기순이익') ? 'BACK_Frozen' : (TY_COMP=='과목') ? 'BACK_GangJo' : (TY_COMP=='시산') ? 'BACK_ReadOnly' : ''");
+        // 	this.dxGrid.setCellProperty("body", DS_PRINT_INDEX , "cssclass", "expr:currow==0?'filter':(TY_ATTR == '공란') ? 'BACK_Frozen' : (TY_COMP=='과목') ? 'BACK_GangJo' : (TY_COMP=='시산') ? 'BACK_ReadOnly' : ''");
+        }
+
+        this.fnSetCombo = function(){
+        	this.dsCombo = new Dataset();
+        	this.dsCombo.addColumn("CD_SYSTEM", "string");
+        	this.dsCombo.addColumn("CD_TYPE", "string");
+        	this.dsCombo.addColumn("TY_SEL" , "string");
+
+        	this.dsCombo.addRow();
+        	this.dsCombo.setColumn(0, "CD_SYSTEM", "DH");
+        	this.dsCombo.setColumn(0, "CD_TYPE", "A27");  //구조
+        	this.dsCombo.setColumn(0, "TY_SEL", "D");
+
+        	this.dsCombo.addRow();
+        	this.dsCombo.setColumn(1, "CD_SYSTEM", "DH");
+        	this.dsCombo.setColumn(1, "CD_TYPE", "A28");  //합잔
+        	this.dsCombo.setColumn(1, "TY_SEL", "C");
+
+        	this.dsCombo.addRow();
+        	this.dsCombo.setColumn(2, "CD_SYSTEM", "DH");
+        	this.dsCombo.setColumn(2, "CD_TYPE", "A32");  //BS
+        	this.dsCombo.setColumn(2, "TY_SEL", "C");
+
+        	this.dsCombo.addRow();
+        	this.dsCombo.setColumn(3, "CD_SYSTEM", "DH");
+        	this.dsCombo.setColumn(3, "CD_TYPE", "A31");  //PL
+        	this.dsCombo.setColumn(3, "TY_SEL", "C");
+
+        	this.dsCombo.addRow();
+        	this.dsCombo.setColumn(4, "CD_SYSTEM", "DH");
+        	this.dsCombo.setColumn(4, "CD_TYPE", "A29");  //SC
+        	this.dsCombo.setColumn(4, "TY_SEL", "C");
+
+        	var strSvcId    = "combo";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "combo=dsCombo";
+        	var outData     = "dsTY_REGIST=combo0 dsTY_ATTR=combo1 dsTY_ATTR01=combo2 dsTY_ATTR02=combo3 dsTY_ATTR03=combo4";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); 	// 통신방법 정의 [생략가능]
+
+
+        }
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divSearch.form.staTY_CONS.addEventHandler("onclick",this.divSearch_staCD_SYSTEM_onclick,this);
+            this.divSearch.form.ccboTY_CONS.addEventHandler("onitemchanged",this.divSearch_ccboTY_CONS_onitemchanged,this);
+            this.divData.addEventHandler("ondragmove",this.divData_ondragmove,this);
+            this.divData.form.divSplitter.addEventHandler("ondrag",this.divData_divSplitter_ondrag,this);
+            this.dsList.addEventHandler("cancolumnchange",this.dsList_cancolumnchange,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+            this.dsListSub.addEventHandler("cancolumnchange",this.dsList_cancolumnchange,this);
+        };
+        this.loadIncludeScript("DHF_CODECONS.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

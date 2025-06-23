@@ -1,0 +1,650 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1400" height="720" titletext="외화획득명세서" onload="form_onload">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_CORP" taborder="0" text="법인코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_CORP" CodeFindName="DHX_CFCORP" CDTextWidth="50" taborder="1" left="staCD_CORP:0.0" top="10.0" width="240" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="sta00" taborder="4" text="세무단위" left="ccfCD_CORP:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_DEPT" CodeFindName="DHX_CFSELFACNT" CDTextWidth="70" taborder="0" left="sta00:0.0" top="10.0" width="300" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staYY_WORK" taborder="3" text="작성년도" left="ccfCD_DEPT:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYY_WORK" taborder="1" left="staYY_WORK:0.0" top="10.0" width="60" height="24.0" url="cmm::cmmCalYY.xfdl"/>
+              <Static id="staYY_WORK00" taborder="5" text="작성기수" left="ctclYY_WORK:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Combo id="ccboNO_TAX" taborder="2" text="cbo00" left="staYY_WORK00:0.0" top="10.0" width="98" height="24.0" codecolumn="CD_CODE" datacolumn="DS_CODE" innerdataset="dsNO_TAX"/>
+              <Edit id="ctxtDT_FROM" taborder="8" left="ccboNO_TAX:5" top="10.0" height="24.0" autoselect="true" width="80" textAlign="left" inputtype="digit" text="2020-04-04" readonly="true"/>
+              <Static id="staDT_WORK" taborder="6" text="~" left="ctxtDT_FROM:0.0" top="10.0" width="30.0" height="24.0" cssclass="sta_WF_AC"/>
+              <Edit id="ctxtDT_TO" taborder="7" left="staDT_WORK:0.0" top="10.0" height="24.0" autoselect="true" width="80" textAlign="left" inputtype="digit" text="2020-04-04" readonly="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="1" text="7) 영세율 적용근거" left="3" top="30" width="150" height="27" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Grid id="objGrid" taborder="0" left="3" top="124" right="-3" bottom="0"/>
+              <Static id="staBg00" taborder="2" left="sta00:-1" top="30" height="27" cssclass="sta_WF_tablebg" width="1044"/>
+              <Static id="staBg01" taborder="3" left="152" top="56" height="27" cssclass="sta_WF_tablebg" width="542"/>
+              <Static id="sta02" taborder="4" text="9) 법정서식 제출 불능사유" left="573" top="56" width="220" height="27" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="sta03" taborder="6" text="10) 법정서식 제출 가능여부 및 일자" left="573" top="sta00:-27" width="220" height="27" cssclass="sta_WF_tablelabel" textAlign="center"/>
+              <Static id="staBg03" taborder="5" left="sta03:-1" top="staBg00:-1" height="27" cssclass="sta_WF_tablebg" width="404"/>
+              <Static id="staTITLE" taborder="7" text="기본사항" left="10" top="-1" height="30" cssclass="sta_TITLE_Bg" textAlign="left" right="-10"/>
+              <Static id="sta03_00" taborder="8" text="8) 법정제출 서류명" left="3" top="56" width="150" height="27" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Edit id="txtDS_BASE" taborder="9" left="157" top="34" width="383" height="20" maxlength="0" enable="true"/>
+              <Edit id="txtDS_UNREASON" taborder="12" left="798" top="59" width="353" height="20" maxlength="0" enable="true"/>
+              <Edit id="txtDS_DOC" taborder="13" left="157" top="59" width="382" height="20" maxlength="0" enable="true"/>
+              <Radio id="rdoYN_DOC" taborder="10" left="805" top="34" width="129" height="20" codecolumn="CODE" datacolumn="NAME" direction="vertical" index="0" text="여" value="Y" font="normal 10pt/normal &quot;Arial&quot;" onitemchanged="divData_rdoYN_DOC_onitemchanged" innerdataset="dsYN_DOC"/>
+              <Calendar id="calDT_DOC" taborder="11" left="921" top="34" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Static id="staTITLE00" taborder="14" text="외화획득명세" left="10" top="89" height="30" cssclass="sta_TITLE_Bg" textAlign="left" right="-10"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------// 
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetVariable();
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetParameter();
+	this.fnSetEvent();
+	
+	this.dsSearch.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+	this.dsSearch.setColumn(0, "DS_CORP", this.AuthClient.DS_CORP);
+	
+	this.dsSearch.setColumn(0, "YY_WORK", this.gfnGetDate().substring(0, 4));
+	this.dsSearch.setColumn(0, "CD_DEPT", this.UserInfo.CD_DEPT_SELFACNT);
+	if (!this.gfnIsNull(this.dsSearch.getColumn(0, "CD_DEPT")))
+		this.ccfCD_DEPT.form.fnCodeFindLoad();
+}; 
+
+this.fnSetButton = function() {
+}
+
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;	// 법인코드
+	this.ccfCD_DEPT = this.divSearch.form.ccfCD_DEPT;
+	this.ctclYY_WORK = this.divSearch.form.ctclYY_WORK;
+	this.ccboNO_TAX = this.divSearch.form.ccboNO_TAX;
+	this.ctxtDT_FROM = this.divSearch.form.ctxtDT_FROM;
+	this.ctxtDT_TO = this.divSearch.form.ctxtDT_TO;
+
+	this.dxGrid = this.divData.form.objGrid;
+	
+    this.txtDS_BASE = this.divData.form.txtDS_BASE;	
+	this.rdoYN_DOC = this.divData.form.rdoYN_DOC;	
+	this.calDT_DOC = this.divData.form.calDT_DOC;	
+	this.txtDS_DOC = this.divData.form.txtDS_DOC;	
+	this.txtDS_UNREASON = this.divData.form.txtDS_UNREASON;
+};
+
+this.fnSetEvent = function() {		
+	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHV_FORCURR_GAIN");
+
+	this.dxGrid.AfterEdit = "fnGrid_AfterEdit";
+    this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+	
+	this.dsList.addEventHandler("onvaluechanged", this.dsList_onvaluechanged, this);
+
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_DEPT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+}
+
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();	
+	this.dsSelect.addColumn("CD_DEPT_SELFACNT", "string");
+	this.dsSelect.addColumn("YR_TAX", "string");
+	this.dsSelect.addColumn("NO_TAX", "string");
+	
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("CD_DEPT_SELFACNT", "string");
+	this.dsInsert.addColumn("YR_TAX", "string");
+	this.dsInsert.addColumn("NO_TAX", "int");
+	this.dsInsert.addColumn("DS_BASE", "string");
+	this.dsInsert.addColumn("DS_DOC", "string");
+	this.dsInsert.addColumn("DS_UNREASON", "string");
+	this.dsInsert.addColumn("YN_DOC", "string");
+	this.dsInsert.addColumn("DT_DOC", "string");
+	this.dsInsert.addColumn("DT_SUPPLY", "string");
+	this.dsInsert.addColumn("DS_VENDOR", "string");
+	this.dsInsert.addColumn("CD_NATION", "string");
+	this.dsInsert.addColumn("TY_GUBUN", "string");
+	this.dsInsert.addColumn("DS_REM", "string");
+	this.dsInsert.addColumn("AM_WON_SP", "bigdecimal");
+	this.dsInsert.addColumn("AM_FOREIGN_SP", "bigdecimal");
+	this.dsInsert.addColumn("ID_INSERT", "string");
+
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("CD_DEPT_SELFACNT", "string");
+	this.dsUpdate.addColumn("YR_TAX", "string");
+	this.dsUpdate.addColumn("NO_TAX", "int");
+	this.dsUpdate.addColumn("NO_SEQ", "int");
+	this.dsUpdate.addColumn("DS_BASE", "string");
+	this.dsUpdate.addColumn("DS_DOC", "string");
+	this.dsUpdate.addColumn("DS_UNREASON", "string");
+	this.dsUpdate.addColumn("YN_DOC", "string");
+	this.dsUpdate.addColumn("DT_DOC", "string");
+	this.dsUpdate.addColumn("DT_SUPPLY", "string");
+	this.dsUpdate.addColumn("DS_VENDOR", "string");
+	this.dsUpdate.addColumn("CD_NATION", "string");
+	this.dsUpdate.addColumn("TY_GUBUN", "string");
+	this.dsUpdate.addColumn("DS_REM", "string");
+	this.dsUpdate.addColumn("AM_WON_SP", "bigdecimal");
+	this.dsUpdate.addColumn("AM_FOREIGN_SP", "bigdecimal");
+	this.dsUpdate.addColumn("ID_UPDATE", "string");
+
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("CD_DEPT_SELFACNT", "string");
+	this.dsDelete.addColumn("YR_TAX", "string");
+	this.dsDelete.addColumn("NO_TAX", "int");
+	this.dsDelete.addColumn("NO_SEQ", "int");
+	
+	this.dsSelectUser = new Dataset();
+	this.dsSelectUser.addColumn("ID_USER", "string");
+	this.dsSelectUser.addColumn("CD_DEPT", "string");
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+this.fnSelect = function() {
+	if (!this.fnSelectValidation()) return;
+
+	this.gfnGridBeforeSelect(this.dxGrid);
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_DEPT_SELFACNT", this.gfnTrim(this.dsSearch.getColumn(0, "CD_DEPT")));
+	this.dsSelect.setColumn(0, "YR_TAX", this.dsSearch.getColumn(0, "YY_WORK"));
+	this.dsSelect.setColumn(0, "NO_TAX", this.dsSearch.getColumn(0, "NO_TAX"));
+		
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect"; 
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.fnAdd = function() {
+
+    var oldRow = this.dsList.rowcount	
+    var nRow = this.gfnGridAdd(this.dxGrid);
+	this.dsList.set_enableevent(false);
+	//trace("fnAdd  oldRow=>" + oldRow);
+	
+	if (oldRow == 0)
+	{
+		this.dsList.setColumn(nRow, "DS_BASE", "");		
+		this.dsList.setColumn(nRow, "DT_DOC", "");	
+		this.dsList.setColumn(nRow, "DS_DOC", "");	
+		this.dsList.setColumn(nRow, "DS_UNREASON", "");	
+		this.dsList.setColumn(nRow, "YN_DOC", "Y");
+	}
+	else
+	{
+		this.dsList.setColumn(nRow, "DS_BASE", this.dsList.getColumn(oldRow , "DS_BASE"));					// 계좌구분
+		this.dsList.setColumn(nRow, "DT_DOC", this.dsList.getColumn(oldRow , "DT_DOC"));
+		this.dsList.setColumn(nRow, "DS_DOC", this.dsList.getColumn(oldRow , "DS_DOC"));
+		this.dsList.setColumn(nRow, "DS_UNREASON", this.dsList.getColumn(oldRow , "DS_UNREASON"));
+		this.dsList.setColumn(nRow, "YN_DOC", this.dsList.getColumn(oldRow, "YN_DOC"));
+	}
+	
+	this.dsList.set_enableevent(true);
+	
+	this.dsList.set_rowposition(nRow);
+	this.dxGrid.setCellPos(1);
+	this.fnReadOnlySetting(false);
+}
+
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+this.fnSave = function() {
+	if (!this.gfnGridValidate(this.dxGrid)) return;	
+	if (!this.fnSaveValidate()) return;
+	
+	this.dxGrid.updateToDataset();
+	
+	this.dsInsert.clearData();
+	this.dsUpdate.clearData();
+	this.dsDelete.clearData();
+
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+			case "I":		
+				var nrow = this.dsInsert.addRow();
+				this.dsInsert.setColumn(nrow, "CD_DEPT_SELFACNT", this.dsSearch.getColumn(0, "CD_DEPT"));
+				this.dsInsert.setColumn(nrow, "YR_TAX", this.dsSearch.getColumn(0, "YY_WORK"));
+				this.dsInsert.setColumn(nrow, "NO_TAX", this.dsSearch.getColumn(0, "NO_TAX"));
+				this.dsInsert.setColumn(nrow, "DS_BASE", this.dsList.getColumn(i, "DS_BASE"));
+				this.dsInsert.setColumn(nrow, "DS_DOC", this.dsList.getColumn(i, "DS_DOC"));
+				this.dsInsert.setColumn(nrow, "DS_UNREASON", this.dsList.getColumn(i, "DS_UNREASON"));
+				this.dsInsert.setColumn(nrow, "YN_DOC", this.dsList.getColumn(i, "YN_DOC"));
+				this.dsInsert.setColumn(nrow, "DT_DOC", this.dsList.getColumn(i, "DT_DOC"));
+				this.dsInsert.setColumn(nrow, "DT_SUPPLY", this.dsList.getColumn(i, "DT_SUPPLY"));
+				this.dsInsert.setColumn(nrow, "DS_VENDOR", this.dsList.getColumn(i, "DS_VENDOR"));
+				this.dsInsert.setColumn(nrow, "CD_NATION", this.dsList.getColumn(i, "CD_NATION"));
+				this.dsInsert.setColumn(nrow, "TY_GUBUN", this.dsList.getColumn(i, "TY_GUBUN"));
+				this.dsInsert.setColumn(nrow, "DS_REM", this.dsList.getColumn(i, "DS_REM"));
+				this.dsInsert.setColumn(nrow, "AM_WON_SP", this.dsList.getColumn(i, "AM_WON_SP"));
+				this.dsInsert.setColumn(nrow, "AM_FOREIGN_SP", this.dsList.getColumn(i, "AM_FOREIGN_SP"));
+				this.dsInsert.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+				
+				break;
+			case "U":		
+				var nrow = this.dsUpdate.addRow();
+				this.dsUpdate.setColumn(nrow, "CD_DEPT_SELFACNT", this.dsSearch.getColumn(0, "CD_DEPT"));
+				this.dsUpdate.setColumn(nrow, "YR_TAX", this.dsSearch.getColumn(0, "YY_WORK"));
+				this.dsUpdate.setColumn(nrow, "NO_TAX", this.dsSearch.getColumn(0, "NO_TAX"));
+				this.dsUpdate.setColumn(nrow, "NO_SEQ", this.dsList.getColumn(i, "NO_SEQ"));
+				this.dsUpdate.setColumn(nrow, "DS_BASE", this.dsList.getColumn(i, "DS_BASE"));
+				this.dsUpdate.setColumn(nrow, "DS_DOC", this.dsList.getColumn(i, "DS_DOC"));
+				this.dsUpdate.setColumn(nrow, "DS_UNREASON", this.dsList.getColumn(i, "DS_UNREASON"));
+				this.dsUpdate.setColumn(nrow, "YN_DOC", this.dsList.getColumn(i, "YN_DOC"));
+				this.dsUpdate.setColumn(nrow, "DT_DOC", this.dsList.getColumn(i, "DT_DOC"));
+				this.dsUpdate.setColumn(nrow, "DT_SUPPLY", this.dsList.getColumn(i, "DT_SUPPLY"));
+				this.dsUpdate.setColumn(nrow, "DS_VENDOR", this.dsList.getColumn(i, "DS_VENDOR"));
+				this.dsUpdate.setColumn(nrow, "CD_NATION", this.dsList.getColumn(i, "CD_NATION"));
+				this.dsUpdate.setColumn(nrow, "TY_GUBUN", this.dsList.getColumn(i, "TY_GUBUN"));
+				this.dsUpdate.setColumn(nrow, "DS_REM", this.dsList.getColumn(i, "DS_REM"));
+				this.dsUpdate.setColumn(nrow, "AM_WON_SP", this.dsList.getColumn(i, "AM_WON_SP"));
+				this.dsUpdate.setColumn(nrow, "AM_FOREIGN_SP", this.dsList.getColumn(i, "AM_FOREIGN_SP"));
+				this.dsUpdate.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+				
+				break;
+			case "D":		
+				var nrow = this.dsDelete.addRow();
+				this.dsDelete.setColumn(nrow, "CD_DEPT_SELFACNT", this.dsSearch.getColumn(0, "CD_DEPT"));
+				this.dsDelete.setColumn(nrow, "YR_TAX", this.dsSearch.getColumn(0, "YY_WORK"));
+				this.dsDelete.setColumn(nrow, "NO_TAX", this.dsSearch.getColumn(0, "NO_TAX"));
+				this.dsDelete.setColumn(nrow, "NO_SEQ", this.dsList.getColumn(i, "NO_SEQ"));
+				break;
+		}
+	}
+
+	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidation = function() {
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_DEPT"))) {
+		this.fnVaidateCallback = function() {
+			this.ccfCD_DEPT.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("세무단위를 입력하세요.", "fnVaidateCallback");
+		return false;
+	}
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "YY_WORK"))) {
+		this.fnVaidateCallback = function() {
+			this.ctclYY_WORK.form.TextBox.setFocus();
+		}
+		this.gfnAlert("작성년도를 입력하세요.", "fnVaidateCallback");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "NO_TAX"))) {
+		this.fnVaidateCallback = function() {
+			this.ccboNO_TAX.setFocus();
+		}
+		this.gfnAlert("작성기수를 입력하세요.", "fnVaidateCallback");
+		return false;
+	}
+	
+	return true;
+}
+
+this.fnSaveValidate = function() {
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_DEPT"))) {
+		this.fnVaidateCallback = function() {
+			this.ccfCD_DEPT.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("세무단위를 입력하세요.", "fnVaidateCallback");
+		return false;
+	}
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "YY_WORK"))) {
+		this.fnVaidateCallback = function() {
+			this.ctclYY_WORK.form.TextBox.setFocus();
+		}
+		this.gfnAlert("작성년도를 입력하세요.", "fnVaidateCallback");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "NO_TAX"))) {
+		this.fnVaidateCallback = function() {
+			this.ccboNO_TAX.setFocus();
+		}
+		this.gfnAlert("작성기수를 입력하세요.", "fnVaidateCallback");
+		return false;
+	}
+	
+	return true;
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+		
+		this.fnReadOnlySetting();
+	}
+	else if (svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}		
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	var cdCorp = this.dsSearch.getColumn(0, "CD_CORP");
+	switch(id) {
+		case "ccfCD_CORP": // 법인코드
+			dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+			break;	
+		
+		case "ccfCD_DEPT": // 세무단위
+			if (this.gfnIsNull(cdCorp)) {
+				this.gfnAlert("법인코드를 먼저 선택하세요.");
+				this.ccfCD_CORP.form.CDTextBox.setFocus();
+				return false;
+			}
+			dsUserParam.setColumn(nrow, "CD_CORP", cdCorp);
+			//dsUserParam.setColumn(nrow, "LV_DEPT", this.UserInfo.LEVLV_DEPT_ACNT);
+			break;
+	}
+
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arrData = codeFindData;
+	
+	switch(id) {
+		case "ccfCD_CORP": // 법인코드
+			this.ccfCD_DEPT.form.fnCodeFindClear();
+			break;
+	}
+	return true;
+};
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if (e.oldvalue != e.newvalue) {
+		if (e.columnid ==  "YN_DOC") {
+			this.fnReadOnlySetting(true);
+		}
+	}
+}
+
+this.fnReadOnlySetting  = function(val){
+ var ynDoc = this.dsList.getColumn(this.dsList.rowposition, "YN_DOC");
+ 
+ //trace(" fnReadOnlySetting ynDoc=>" + ynDoc);
+ if (ynDoc == "Y")
+ {
+ 	this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "DT_DOC"), "edittype", "text");
+    this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "DS_DOC"), "edittype", "text");
+    this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "DS_UNREASON"), "edittype", "none");
+	this.calDT_DOC.set_enable(true);
+	this.txtDS_DOC.set_enable(true);
+	this.txtDS_UNREASON.set_enable(false);
+	if (val)
+	{
+		this.txtDS_UNREASON.set_value("");
+	}
+ }
+ else
+ {
+ 	this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "DT_DOC"), "edittype", "none");
+    this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "DS_DOC"), "edittype", "none");
+    this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "DS_UNREASON"), "edittype", "text");
+    this.calDT_DOC.set_enable(false);
+	this.txtDS_DOC.set_enable(false);
+	this.txtDS_UNREASON.set_enable(true);
+	if (val)
+	{
+		this.txtDS_DOC.set_value("");
+		this.calDT_DOC.set_value("");
+	}
+ }
+}
+
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+    if (e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);	
+
+		switch(e.columnid) {
+			case "YY_WORK" :
+			case "NO_TAX" :
+				this.fnMagamSetting();
+				break;
+		}
+    }
+}
+
+this.fnMagamSetting = function() {
+	var dtFrom;
+	var dtTo;
+	
+	var ymMagam = this.dsSearch.getColumn(0, "YY_WORK");
+	var noTax = this.dsSearch.getColumn(0, "NO_TAX");
+	
+	if (this.gfnIsNull(ymMagam) || this.gfnIsNull(noTax)) {
+		dtFrom = "";
+		dtTo = "";
+	}
+	else {
+		switch(noTax) {
+			case "1" :
+				dtFrom = ymMagam + "-01-01";
+				dtTo = ymMagam + "-03-31";
+				break;
+			case "2" :
+				dtFrom = ymMagam + "-04-01";
+				dtTo = ymMagam + "-06-30";
+				break;
+			case "3" :
+				dtFrom = ymMagam + "-07-01";
+				dtTo = ymMagam + "-09-20";
+				break;
+			case "4" :
+				dtFrom = ymMagam + "-10-01";
+				dtTo = ymMagam + "-12-31";
+				break;
+			default :
+				dtFrom = "";
+				dtTo = "";
+				break;
+		}
+	}
+	
+	this.dsSearch.setColumn(0, "DT_FROM", dtFrom);
+	this.dsSearch.setColumn(0, "DT_TO", dtTo);
+}
+]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="NO_SEQ" type="INT" size="256"/>
+          <Column id="DS_BASE" type="STRING" size="256"/>
+          <Column id="DS_DOC" type="STRING" size="256"/>
+          <Column id="DS_UNREASON" type="STRING" size="256"/>
+          <Column id="YN_DOC" type="STRING" size="256"/>
+          <Column id="DT_DOC" type="STRING" size="256"/>
+          <Column id="DT_SUPPLY" type="STRING" size="256"/>
+          <Column id="DS_VENDOR" type="STRING" size="256"/>
+          <Column id="CD_NATION" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+          <Column id="DS_REM" type="STRING" size="256"/>
+          <Column id="AM_WON_SP" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_FOREIGN_SP" type="BIGDECIMAL" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DHVPR_FOREIGNCUR_GAIN_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DHVPR_FOREIGNCUR_GAIN_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DHVPR_FOREIGNCUR_GAIN_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DHVPR_FOREIGNCUR_GAIN_DELETE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="YY_WORK" type="STRING" size="256"/>
+          <Column id="NO_TAX" type="STRING" size="256"/>
+          <Column id="DT_FROM" type="STRING" size="256"/>
+          <Column id="DT_TO" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsNO_TAX">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">1</Col>
+            <Col id="DS_CODE">1기예정</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">2</Col>
+            <Col id="DS_CODE">1기확정</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">3</Col>
+            <Col id="DS_CODE">2기예정</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">4</Col>
+            <Col id="DS_CODE">2기확정</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_DOC">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="NAME">여</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="NAME">부</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_DEPT.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_DEPT"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_DEPT.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_DEPT"/>
+      <BindItem id="item2" compid="divSearch.form.ctclYY_WORK.form.TextBox" propid="value" datasetid="dsSearch" columnid="YY_WORK"/>
+      <BindItem id="item3" compid="divSearch.form.ccboNO_TAX" propid="value" datasetid="dsSearch" columnid="NO_TAX"/>
+      <BindItem id="item4" compid="divSearch.form.ctxtDT_FROM" propid="value" datasetid="dsSearch" columnid="DT_FROM"/>
+      <BindItem id="item5" compid="divSearch.form.ctxtDT_TO" propid="value" datasetid="dsSearch" columnid="DT_TO"/>
+      <BindItem id="item6" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item7" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+      <BindItem id="item8" compid="divData.form.rdoYN_DOC" propid="value" datasetid="dsList" columnid="YN_DOC"/>
+      <BindItem id="item9" compid="divData.form.txtDS_BASE" propid="value" datasetid="dsList" columnid="DS_BASE"/>
+      <BindItem id="item10" compid="divData.form.calDT_DOC" propid="value" datasetid="dsList" columnid="DT_DOC"/>
+      <BindItem id="item11" compid="divData.form.txtDS_UNREASON" propid="value" datasetid="dsList" columnid="DS_UNREASON"/>
+      <BindItem id="item12" compid="divData.form.txtDS_DOC" propid="value" datasetid="dsList" columnid="DS_DOC"/>
+    </Bind>
+  </Form>
+</FDL>

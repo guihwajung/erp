@@ -1,0 +1,2214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1290" height="880" titletext="주택-프로젝트관리" onload="form_onload" scrolltype="both" onclick="form_onclick">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="78.0" right="0" cssclass="div_SEARCH_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_PROJ" taborder="0" text="프로젝트코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Edit id="ctxtCD_PROJ" taborder="1" width="66" height="24.0" value="" left="0.0" top="staCD_PROJ:10.0" readonly="true"/>
+              <Edit id="ctxtDS_PROJ" taborder="2" width="500" height="24.0" value="" left="ctxtCD_PROJ:0.0" top="staCD_PROJ:10.0" onchanged="divSearch_ctxtDS_PROJ_onchanged"/>
+              <Edit id="edtDS_SAUP" taborder="5" top="staCD_PROJ:10.0" height="24.0" right="10" width="200"/>
+              <Edit id="edtCD_SAUP" taborder="4" top="staCD_PROJ:10.0" height="24.0" right="edtDS_SAUP:3" width="68" readonly="true"/>
+              <Static id="sta00" taborder="3" text="사업비프로젝트코드" top="10.0" height="24.0" right="edtCD_SAUP:3" width="92.0" cssclass="sta_WF_SchLabel"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" right="0" ondragmove="divData_ondragmove" cssclass="div_DATA_Bg" top="50" bottom="0">
+          <Layouts>
+            <Layout>
+              <Tab id="tabData" taborder="0" tabindex="0" left="0" top="0" bottom="0" right="0" onchanged="divData_tabData_onchanged">
+                <Tabpages>
+                  <Tabpage id="tab1" text="기본정보">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staDS_RM_CONST" taborder="56" text="공사개요" left="5" width="120" height="90" cssclass="sta_WF_tablelabel" textAlign="left" top="188"/>
+                        <Static id="staCD_CLS_CONST" taborder="76" text="상품분류" width="120" height="30" textAlign="left" left="855" top="72" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta04" taborder="77" width="308" height="30" cssclass="sta_WF_tablebg" top="72" left="974"/>
+                        <Static id="staNO_TERM" taborder="78" text="공사기간" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="855" top="101"/>
+                        <Static id="sta05" taborder="79" width="308" height="30" cssclass="sta_WF_tablebg" top="101" left="974"/>
+                        <Static id="staTab1Title" taborder="40" text="프로젝트 개요" left="5" top="10" right="5" height="22" cssclass="sta_TITLE_Bg"/>
+                        <Static id="staCD_CV_GO" taborder="41" text="공공/민간" left="5" width="120" height="30" textAlign="left" top="72" onclick="divData_tabData_tab1_staCD_CV_GO_onclick" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="staTY_ORD" taborder="42" text="발주방식" left="5" width="120" height="30" textAlign="left" top="101" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="staCD_LOC" taborder="43" text="지역" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="130"/>
+                        <Static id="sta00" taborder="44" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="72"/>
+                        <Static id="sta01" taborder="45" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="101"/>
+                        <Static id="sta02" taborder="46" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="130"/>
+                        <Static id="staCD_CLS" taborder="47" text="공사분야" width="120" height="30" textAlign="left" left="430" top="72" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta18" taborder="48" width="307" height="30" cssclass="sta_WF_tablebg" top="72" left="549"/>
+                        <Static id="staCD_PRC_BID" taborder="49" text="입찰추진" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="430" top="101"/>
+                        <Div id="ccfCD_CLS_CONST" CodeFindName="CF_CODE_DO_41" CDTextWidth="80" taborder="2" width="298" height="20" url="cmm::cmmCodeFind.xfdl" left="979" top="77"/>
+                        <Static id="staAM_CONST" taborder="50" text="관급금액" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="159"/>
+                        <Static id="sta09" taborder="51" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="159"/>
+                        <Static id="staAM_BIZ" taborder="52" text="추정가격" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="430" top="159"/>
+                        <Combo id="ccboCD_CLS" taborder="1" width="132" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="554" top="77" innerdataset="dsDS_CD_CLS" index="-1"/>
+                        <Static id="sta10" taborder="53" width="307" height="30" cssclass="sta_WF_tablebg" top="101" left="549"/>
+                        <Combo id="ccboCD_PRC_BID" taborder="4" width="132" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="554" top="106" innerdataset="dsDS_CD_PRC_BID"/>
+                        <Static id="sta12" taborder="54" width="733" height="30" cssclass="sta_WF_tablebg" top="159" left="549"/>
+                        <Static id="sta03" taborder="55" width="1158" height="90" cssclass="sta_WF_tablebg" left="124" top="188"/>
+                        <Static id="staTab1Title01" taborder="57" text="입찰정보" left="5" top="281" right="35" height="22" cssclass="sta_TITLE_Bg"/>
+                        <Static id="staDT_BID_PUB" taborder="58" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="307" text="입찰공고일"/>
+                        <Static id="staDT_PQ" taborder="59" text="실적/PQ마감" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="336"/>
+                        <Static id="sta16" taborder="60" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="307" text=""/>
+                        <Static id="sta17" taborder="61" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="336"/>
+                        <Static id="staDS_BID_LIC" taborder="62" text="입찰자격 면허" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="430" top="307"/>
+                        <Static id="staDT_AGREE" taborder="63" text="공동협정" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="365"/>
+                        <Static id="sta19" taborder="64" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="365"/>
+                        <Static id="staDS_BID_CONST" taborder="65" text="입찰자격 실적" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="430" top="336"/>
+                        <Static id="sta20" taborder="66" width="733" height="30" cssclass="sta_WF_tablebg" top="307" left="549"/>
+                        <Static id="sta22" taborder="67" width="733" height="30" cssclass="sta_WF_tablebg" top="336" left="549"/>
+                        <Static id="staDS_BID_CO" taborder="68" text="입찰자격 공동도급" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="430" top="365"/>
+                        <Static id="sta24" taborder="69" width="733" height="30" cssclass="sta_WF_tablebg" top="365" left="549"/>
+                        <Static id="sta25" taborder="70" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="394" text=""/>
+                        <Static id="staDT_SITE_EXPL" taborder="71" text="현장설명" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="394"/>
+                        <Static id="sta27" taborder="72" width="1158" height="149" cssclass="sta_WF_tablebg" left="124" top="597"/>
+                        <Static id="staID_FILE_ATTCH" taborder="73" text="첨부파일" left="5" width="120" height="149" cssclass="sta_WF_tablelabel" textAlign="left" top="597"/>
+                        <Static id="staDS_EXPL_AREA" taborder="74" text="현설장소" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="430" top="394"/>
+                        <Static id="sta28" taborder="75" width="733" height="30" cssclass="sta_WF_tablebg" top="394" left="549"/>
+                        <MaskEdit id="ctxtNO_TERM" taborder="5" width="80" height="20" value="" textAlign="right" top="106" left="978" autoselect="true"/>
+                        <Div id="ccfDS_LOC" CodeFindName="DZX_CFZIP_STREET" CDTextWidth="50" taborder="7" left="228" top="135" width="320" url="cmm::cmmCodeFind.xfdl" height="20"/>
+                        <Edit id="ctxtDS_ADDR2" taborder="8" width="294" height="20" value="" left="551" top="135"/>
+                        <Div id="divFile" taborder="39" left="127" top="597" url="cmm::cmmFileManager.xfdl" text="" width="1144" height="150"/>
+                        <Static id="staPercent16" taborder="80" text="개월" width="40" height="20" top="106" left="1065"/>
+                        <Combo id="ccboCD_CV_GO" taborder="0" width="132" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="129" top="77" innerdataset="dsDS_CD_CV_GO"/>
+                        <TextArea id="txtDS_RM_CONST" taborder="13" left="129" top="193" width="1148" height="80" maxlength="1000"/>
+                        <Combo id="ccboCD_LOC" taborder="6" width="96" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="129" top="135" innerdataset="dsCD_LOC"/>
+                        <Div id="ccfTY_ORD" CodeFindName="CF_CODE_DO_30" CDTextWidth="132" taborder="3" width="298" height="20" url="cmm::cmmCodeFind.xfdl" left="129" top="106" text=""/>
+                        <MaskEdit id="ctxtAM_BIZ" taborder="10" width="200" height="20" value="" textAlign="right" format="#,##0" top="164" left="129" autoselect="true"/>
+                        <Static id="staDS_SITE_EXPL" taborder="81" text="의견" width="120" height="117" cssclass="sta_WF_tablelabel" textAlign="left" left="430" top="452"/>
+                        <Static id="sta07" taborder="82" width="733" height="117" cssclass="sta_WF_tablebg" top="452" left="549"/>
+                        <Static id="staDT_BID_WIN" taborder="83" text="낙찰일자" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="539"/>
+                        <Static id="sta08" taborder="84" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="539" text=""/>
+                        <Static id="staDT_SC_COMPL" taborder="85" text="준공예정" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="568"/>
+                        <Static id="sta11" taborder="86" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="568" text=""/>
+                        <Static id="staID_USER_EXPL" taborder="87" text="현설의뢰자" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="430" top="568"/>
+                        <Static id="sta15" taborder="88" width="733" height="30" cssclass="sta_WF_tablebg" top="568" left="549"/>
+                        <Calendar id="ctclDT_BID_PUB" taborder="14" left="129" top="312" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101"/>
+                        <Calendar id="ctclDT_PQ" taborder="15" left="129" top="341" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101"/>
+                        <Calendar id="ctclDT_AGREE" taborder="17" left="129" top="370" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101"/>
+                        <Calendar id="ctclDT_SITE_EXPL" taborder="19" left="129" top="399" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101"/>
+                        <Calendar id="ctclDT_BID_WIN" taborder="30" left="129" top="544" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101"/>
+                        <Calendar id="ctclDT_SC_COMPL" taborder="32" left="129" top="573" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101"/>
+                        <Edit id="ctxtDS_BID_LIC" taborder="33" width="723" height="20" value="" left="554" top="312"/>
+                        <Edit id="ctxtDS_BID_CONST" taborder="34" width="723" height="20" value="" left="554" top="341"/>
+                        <Edit id="ctxtDS_BID_CO" taborder="35" width="723" height="20" value="" left="554" top="370"/>
+                        <Edit id="ctxtDS_EXPL_AREA" taborder="36" width="723" height="20" value="" left="554" top="399"/>
+                        <TextArea id="txtDS_SITE_EXPL" taborder="37" left="554" top="456" width="723" height="109" maxlength="1000"/>
+                        <MaskEdit id="ctxtAM_ESTM" taborder="11" width="200" height="20" value="" textAlign="right" format="#,##0" top="164" left="554" autoselect="true"/>
+                        <Div id="ccfID_USER_EXPL" CodeFindName="DOXPR_USERID_BYCORP_CODEFIND" CDTextWidth="80" taborder="38" width="298" height="20" url="cmm::cmmCodeFind.xfdl" left="554" top="573"/>
+                        <MaskEdit id="ctxtAM_CONST" taborder="12" width="200" height="20" value="" textAlign="right" format="#,##0" top="164" left="767" autoselect="true"/>
+                        <Static id="staPercent16_00" taborder="89" text="(VAT)" width="40" height="20" top="164" left="972"/>
+                        <Static id="staDT_BID01" taborder="90" text="입찰등록" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="423"/>
+                        <Static id="sta06_01" taborder="91" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="423" text=""/>
+                        <Static id="staDT_BID02" taborder="92" text="심의일자" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="510"/>
+                        <Static id="sta06_02" taborder="93" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="510" text=""/>
+                        <Calendar id="ctclDT_BID_REG" taborder="21" left="129" top="428" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101"/>
+                        <Calendar id="ctclDT_REVIEW" taborder="28" left="129" top="515" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101"/>
+                        <Static id="staDT_BID02_00" taborder="94" text="입찰일자" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="452"/>
+                        <Static id="staDT_BID_WIN00" taborder="95" text="개찰일자" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="481" onclick="divData_tabData_tab1_staDT_BID_WIN00_onclick"/>
+                        <Static id="sta08_00" taborder="96" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="481" text=""/>
+                        <Static id="sta06_02_00" taborder="97" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="452" text=""/>
+                        <Calendar id="ctclDT_BID_OPEN00" taborder="26" left="129" top="486" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101"/>
+                        <Calendar id="ctclDT_BID00" taborder="24" left="129" top="457" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101"/>
+                        <MaskEdit id="ctxtHM_PQ" taborder="16" left="245" top="340" width="45" height="22" format="##:##" type="string" autoselect="true" maskchar="-"/>
+                        <MaskEdit id="ctxtHM_PQ00" taborder="18" left="245" top="369" width="45" height="22" format="##:##" type="string" autoselect="true" maskchar="-"/>
+                        <MaskEdit id="ctxtHM_PQ00_00" taborder="20" left="245" top="398" width="45" height="22" format="##:##" type="string" autoselect="true" maskchar="-"/>
+                        <MaskEdit id="ctxtHM_PQ00_00_00" taborder="22" left="245" top="427" width="45" height="22" format="##:##" type="string" autoselect="true" maskchar="-"/>
+                        <MaskEdit id="ctxtHM_PQ00_00_00_00" taborder="25" left="245" top="456" width="45" height="22" format="##:##" type="string" autoselect="true" maskchar="-"/>
+                        <MaskEdit id="ctxtHM_PQ00_00_00_00_00" taborder="27" left="245" top="485" width="45" height="22" format="##:##" type="string" autoselect="true" maskchar="-"/>
+                        <MaskEdit id="ctxtHM_PQ00_00_00_00_00_00" taborder="29" left="245" top="514" width="45" height="22" format="##:##" type="string" autoselect="true" maskchar="-"/>
+                        <MaskEdit id="ctxtHM_PQ00_00_00_00_00_00_00" taborder="31" left="245" top="543" width="45" height="22" format="##:##" type="string" autoselect="true" maskchar="-"/>
+                        <Button id="btnApp" taborder="98" text="결재요청" height="24" width="70" top="5" onclick="divData_tabData_btnApp_onclick" right="5" visible="false"/>
+                        <Static id="staTab1Title01_00_01" taborder="99" text="결재 상태 :" left="1021" top="6" right="208" height="22" visible="false"/>
+                        <Static id="staTab1Title01_00_01_00" taborder="100" left="1088" top="6" right="81" height="22" text="" textAlign="right" font="bold 12px/normal &quot;Dotum&quot;" visible="false"/>
+                        <Static id="staNO_TERM00" taborder="101" text="주요공사" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="855" top="130" onclick="divData_tabData_tab1_staNO_TERM00_onclick"/>
+                        <Static id="sta05_00" taborder="102" width="308" height="30" cssclass="sta_WF_tablebg" top="130" left="974"/>
+                        <Combo id="ccboCD_CLS00" taborder="9" width="132" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="staNO_TERM00:3" top="135" innerdataset="dsTY_MJ_CONST" index="-1"/>
+                        <Static id="staDS_EXPL_AREA00" taborder="103" text="참여 예정사" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="430" top="423"/>
+                        <Static id="sta28_00" taborder="104" width="733" height="30" cssclass="sta_WF_tablebg" top="423" left="549"/>
+                        <MaskEdit id="ctxtAM_CONST_VAT" taborder="23" width="200" height="20" value="" textAlign="right" format="#,0" top="428" left="554" autoselect="true"/>
+                        <Static id="staCD_SAUP" taborder="105" text="사업관리부서" width="120" height="30" textAlign="left" left="855" top="43" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta00_3" taborder="106" width="308" height="30" cssclass="sta_WF_tablebg" top="43" left="974"/>
+                        <Div id="ccfCD_SAUP" CodeFindName="DOS_CFACNTUNIT" CDTextWidth="80" taborder="107" width="298" height="20" url="cmm::cmmCodeFind.xfdl" left="979" top="48"/>
+                        <Static id="staCD_CORP" taborder="108" text="법인코드" left="5" width="120" height="30" textAlign="left" top="43" onclick="divData_tabData_tab1_staCD_CV_GO_onclick" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta00_1" taborder="109" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="43"/>
+                        <Div id="ccfCD_CORP" CDTextWidth="100" CodeFindName="DHX_CFCORP" taborder="106" width="298" height="20" url="cmm::cmmCodeFind.xfdl" left="129" top="48" text=""/>
+                        <Static id="staYN_SAUP" taborder="111" text="사업관리여부" width="120" height="30" textAlign="left" left="430" top="43" visible="false" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta00_2" taborder="112" width="307" height="30" cssclass="sta_WF_tablebg" top="43" left="549" visible="false"/>
+                        <Combo id="ccboYN_SAUP" taborder="113" width="132" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" innerdataset="dsYN_SAUP" left="554" top="48" index="-1" visible="false"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab5" text="공동도급사">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrdtab5" taborder="0" left="5" top="37" right="5" bottom="5"/>
+                        <Button id="btnReg" taborder="1" text="등록" height="24" onclick="divData_tabData_btnReg_onclick" right="5" width="50" top="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab6" text="관계사">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrdtab6" taborder="0" left="5" top="37" right="5" bottom="5"/>
+                        <Button id="btnReg" taborder="1" text="등록" height="24" onclick="divData_tabData_btnReg_onclick" right="5" width="50" top="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab7" text="담당자 / 열람부서">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staTitle00" taborder="1" text="담당자" left="10" top="10" height="24" cssclass="sta_TITLE_Bg" right="5"/>
+                        <Grid id="objGrdtab7" taborder="0" left="5" top="44" right="5" height="265"/>
+                        <Button id="btnReg" taborder="1" text="등록" onclick="divData_tabData_btnReg_onclick" width="50" top="10" right="10" bottom="objGrdtab7:10"/>
+                        <Static id="staTitle01" taborder="3" text="열람부서" left="10" top="objGrdtab7:10" height="24" cssclass="sta_TITLE_Bg" right="10"/>
+                        <Grid id="objGrdtab7_Auth" taborder="4" left="5" top="staTitle01:10" right="5" height="265"/>
+                        <Button id="btnReg_Auth" taborder="5" text="등록" onclick="divData_tabData_btnReg_Auth_onclick" width="50" top="objGrdtab7:10" bottom="objGrdtab7_Auth:10" left="staTitle01:-50"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab2" text="현설결과">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staID_FILE_ATTCH" taborder="18" text="첨부파일" left="5" width="120" height="149" cssclass="sta_WF_tablelabel" textAlign="left" top="360"/>
+                        <Static id="sta27" taborder="19" width="1158" height="149" cssclass="sta_WF_tablebg" left="124" top="360"/>
+                        <Static id="staDS_RM_SP" taborder="14" text="특기사항" left="5" width="120" height="90" cssclass="sta_WF_tablelabel" textAlign="left" top="271"/>
+                        <Static id="sta06" taborder="16" width="1158" height="90" cssclass="sta_WF_tablebg" left="124" top="271"/>
+                        <Button id="btnRegFieldExpl" taborder="0" text="등록" height="24" width="50" top="5" onclick="divData_tabData_tab2_btnRegFieldExpl_onclick" right="5"/>
+                        <Static id="staDT_SITE_EXPL" taborder="1" text="현장설명회 일자" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="37"/>
+                        <Static id="sta02" taborder="2" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="37"/>
+                        <Static id="staID_USER_EXPL" taborder="3" text="현설참가자" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="66"/>
+                        <Static id="sta00" taborder="4" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="66"/>
+                        <Static id="staDS_EXPL" taborder="5" text="공사개요" left="5" width="120" height="90" cssclass="sta_WF_tablelabel" textAlign="left" top="95"/>
+                        <Static id="sta03" taborder="7" width="1158" height="90" cssclass="sta_WF_tablebg" left="124" top="95"/>
+                        <TextArea id="txtDS_EXPL" taborder="6" left="129" top="100" width="1148" height="80" maxlength="1000" enable="true" readonly="true"/>
+                        <Static id="staDS_INCU_CONST" taborder="8" text="포함공사" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="184"/>
+                        <Static id="sta01" taborder="9" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="184"/>
+                        <Static id="staDS_EXCP_CONST" taborder="10" text="제외공사" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="213"/>
+                        <Static id="sta04" taborder="11" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="213"/>
+                        <Static id="staDS_MAT_PAY" taborder="12" text="지급자재" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="242"/>
+                        <Static id="sta05" taborder="13" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="242"/>
+                        <TextArea id="txtDS_RM_SP" taborder="15" left="129" top="276" width="1148" height="80" maxlength="1000" enable="true" readonly="true"/>
+                        <Div id="divFile" taborder="17" left="119" top="354" url="cmm::cmmFileManager.xfdl" text="" width="1145" height="150"/>
+                        <Edit id="ctxtID_USER_EXPL" taborder="20" width="111" height="20" value="" left="129" top="71" enable="true" readonly="true"/>
+                        <Edit id="ctxtDS_USER_EXPL" taborder="21" width="183" height="20" value="" left="244" top="71" enable="true" readonly="true"/>
+                        <Edit id="ctxtDS_INCU_CONST" taborder="22" width="298" height="20" value="" left="129" top="189" enable="true" readonly="true"/>
+                        <Edit id="ctxtDS_EXCP_CONST" taborder="23" width="298" height="20" value="" left="129" top="218" enable="true" readonly="true"/>
+                        <Edit id="ctxtDS_MAT_PAY" taborder="24" width="298" height="20" value="" left="129" top="247" enable="true" readonly="true"/>
+                        <Calendar id="ctclDT_SITE_EXPL" taborder="25" left="130" top="43" width="132" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101" enable="true" visible="true" readonly="true"/>
+                        <Combo id="ccboH_SITE_EXPL" taborder="26" width="45" height="20" left="267" top="43" innerdataset="dshours" codecolumn="CD_CODE" datacolumn="DS_CODE" index="-1" text="00" value="00" readonly="true"/>
+                        <Combo id="ccboM_SITE_EXPL" taborder="27" width="45" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="317" top="43" innerdataset="dsMinutes" index="-1" text="00" value="00" readonly="true"/>
+                        <Button id="btnApp" taborder="28" text="결재요청" height="24" width="70" top="5" onclick="divData_tabData_btnApp_onclick" right="65" visible="false"/>
+                        <Static id="staTab1Title01_00_01_00" taborder="29" left="1032" top="7" right="147" height="22" text="" textAlign="right" font="bold 12px/normal &quot;Dotum&quot;" visible="false"/>
+                        <Static id="staTab1Title01_00_01" taborder="30" text="결재 상태 :" left="963" top="7" right="266" height="22" visible="false"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab3" text="설계심의">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staDS_RM_OP" taborder="2" text="의견" left="5" width="120" height="90" cssclass="sta_WF_tablelabel" textAlign="left" top="37"/>
+                        <Static id="sta03" taborder="4" width="1158" height="90" cssclass="sta_WF_tablebg" left="124" top="37"/>
+                        <Grid id="objGrdtab3" taborder="0" left="5" top="211" right="5" bottom="32" oncelldblclick="divData_tabData_tab3_objGrdtab3_oncelldblclick"/>
+                        <Static id="staTab1Title" taborder="1" text="컨소시엄" left="5" top="179" right="5" height="22" cssclass="sta_TITLE_Bg"/>
+                        <TextArea id="txtDS_RM_OP" taborder="3" left="129" top="42" width="1148" height="80" maxlength="1000" enable="true" readonly="false"/>
+                        <Button id="btnDelConsor" taborder="5" text="삭제" height="24" top="178" onclick="divData_tabData_tab3_btnDelConsor_onclick" width="50" right="6"/>
+                        <Button id="btnRegConsor" taborder="6" text="등록" height="24" width="50" top="178" onclick="divData_tabData_tab3_btnRegConsor_onclick" tooltiptext="컨소시엄 추가" right="66"/>
+                        <Button id="btnApp" taborder="7" text="결재요청" height="24" width="70" top="7" onclick="divData_tabData_btnApp_onclick" right="6" visible="false"/>
+                        <Static id="staTab1Title01_00_01_00" taborder="8" left="1098" top="8" right="81" height="22" text="" textAlign="right" font="bold 12px/normal &quot;Dotum&quot;" visible="false"/>
+                        <Static id="staTab1Title01_00_01" taborder="9" text="결재 상태 :" left="1028" top="8" right="201" height="22" visible="false"/>
+                        <Static id="staDS_RM_OP00" taborder="10" text="만점점수" left="5" width="120" height="32" cssclass="sta_WF_tablelabel" textAlign="left" top="126"/>
+                        <Static id="sta03_00" taborder="11" width="1158" height="32" cssclass="sta_WF_tablebg" left="124" top="126"/>
+                        <Static id="staPercent01" taborder="12" text="설계점수" width="60" height="20" top="133" left="144" textAlign="right"/>
+                        <MaskEdit id="ctxtNO_DSN_SCO" taborder="13" width="77" height="20" value="" textAlign="right" format="#,0.000" top="133" left="212" autoselect="true" readonly="false"/>
+                        <MaskEdit id="ctxtNO_COST_SCO" taborder="14" width="77" height="20" value="" textAlign="right" format="#,0.000" top="133" left="371" autoselect="true" readonly="false"/>
+                        <Static id="staPercent01_00" taborder="15" text="가격점수" width="60" height="20" top="133" left="303" textAlign="right"/>
+                        <MaskEdit id="ctxtNO_COST_SCO_TT" taborder="16" width="77" height="20" value="" textAlign="right" format="#,0.000" top="133" left="548" autoselect="true" readonly="true"/>
+                        <Static id="staPercent01_00_00" taborder="17" text="합계" width="60" height="20" top="133" left="480" textAlign="right"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab8" text="입찰금액결정">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staAM_ESTM" taborder="0" text="추정가격" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="37"/>
+                        <Static id="sta14" taborder="1" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="37"/>
+                        <Static id="staRT_BID" taborder="2" text="투찰율" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="1945" top="40" visible="false"/>
+                        <Static id="staAM_INIT" taborder="3" text="예가대비낙착율" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="95"/>
+                        <Static id="sta17" taborder="4" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="95"/>
+                        <Static id="staRT_INIT" taborder="5" text="예정가 사정" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="1662" top="40" visible="false"/>
+                        <Static id="sta22" taborder="6" width="1158" height="30" cssclass="sta_WF_tablebg" top="124" left="124"/>
+                        <Static id="staDS_OPNI" taborder="7" text="비고" left="5" width="120" height="90" cssclass="sta_WF_tablelabel" textAlign="right" top="153"/>
+                        <Static id="sta24" taborder="8" width="1158" height="90" cssclass="sta_WF_tablebg" left="124" top="153"/>
+                        <MaskEdit id="ctxtAM_ESTM" taborder="9" width="140" height="20" value="" textAlign="right" format="#,0" top="42" left="129" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <MaskEdit id="ctxtAM_INIT" taborder="10" width="140" height="20" value="" textAlign="right" format="#,0" top="45" left="1361" autoselect="true" readonly="true" displaynulltext=" " visible="false"/>
+                        <MaskEdit id="ctxtRT_INIT" taborder="11" width="80" height="20" value="" textAlign="right" format="#,0.000" top="45" autoselect="true" readonly="true" left="1786" visible="false"/>
+                        <MaskEdit id="ctxtRT_BID" taborder="12" width="80" height="20" value="" textAlign="right" format="#,0.000" top="45" autoselect="true" readonly="true" left="2069" visible="false"/>
+                        <MaskEdit id="ctxtRT_SC" taborder="13" width="161" height="20" value="" textAlign="right" format="#,0" top="45" autoselect="true" readonly="true" left="2233" visible="false"/>
+                        <MaskEdit id="ctxtRT_BID_OUR" taborder="14" width="80" height="20" value="" textAlign="right" format="#,0.000" top="54" autoselect="true" readonly="true" left="1473" visible="false"/>
+                        <TextArea id="txtDS_OPNI" taborder="15" top="158" width="1148" height="80" maxlength="1000" enable="false" readonly="true" left="129"/>
+                        <Static id="sta23" taborder="16" text="%" left="1871" top="45" width="41" height="20" visible="false"/>
+                        <Static id="sta25" taborder="17" text="%" left="1558" top="54" width="41" height="20" visible="false"/>
+                        <Static id="sta26" taborder="18" text="%" top="45" width="21" height="20" left="2154" visible="false"/>
+                        <Static id="sta27" taborder="19" text="원" top="45" height="20" width="21" left="2398" visible="false"/>
+                        <Static id="sta23_00" taborder="20" text="원(VAT 포함)" left="278" top="41" width="121" height="20"/>
+                        <Static id="sta23_00_00" taborder="21" text="원" left="1510" top="45" width="29" height="20" visible="false"/>
+                        <Static id="staAM_ESTM00" taborder="22" text="기초금액" left="5" width="120" height="30" textAlign="right" top="66" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta14_00" taborder="23" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="66"/>
+                        <MaskEdit id="ctxtAM_ESTM00" taborder="24" width="140" height="20" value="" textAlign="right" format="#,0" top="71" left="129" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <Static id="sta23_00_01" taborder="25" text="원(VAT 포함)" left="278" top="70" width="121" height="20"/>
+                        <Static id="sta23_00_00_00" taborder="26" text="X" left="1630" top="45" width="29" height="20" visible="false"/>
+                        <Static id="sta23_00_00_00_00" taborder="27" text="X" left="1913" top="45" width="29" height="20" visible="false"/>
+                        <Static id="sta26_00" taborder="28" text=")   =" top="45" width="31" height="20" left="2184" visible="false"/>
+                        <Static id="staRT_BID00" taborder="29" text="만점△" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="1349" top="49" visible="false"/>
+                        <Button id="btnReg" taborder="30" text="등록" height="24" onclick="divData_tabData_btnReg_onclick" right="5" width="50" top="5"/>
+                        <Button id="btnApp" taborder="31" text="결재요청" height="24" width="70" top="5" right="65" onclick="divData_tabData_btnApp_onclick" visible="false"/>
+                        <Static id="staTab1Title01_00_01_00" taborder="32" left="1042" top="8" right="142" height="22" text="" textAlign="right" font="bold 12px/normal &quot;Dotum&quot;" visible="false"/>
+                        <Static id="staTab1Title01_00_01" taborder="33" text="결재 상태 :" left="973" top="8" right="256" height="22" visible="false"/>
+                        <Static id="staAM_INIT00" taborder="34" text="기초대비낙찰율" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="124"/>
+                        <MaskEdit id="ctxtAM_ESTM00_00" taborder="35" width="140" height="20" value="" textAlign="right" format="#,0" top="100" left="129" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <MaskEdit id="ctxtAM_ESTM00_00_00" taborder="36" width="140" height="20" value="" textAlign="right" format="#,0" top="129" left="129" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <Static id="sta23_00_01_00" taborder="37" text="%" left="278" top="100" width="29" height="20"/>
+                        <Static id="sta23_00_01_00_00" taborder="38" text="%" left="278" top="129" width="29" height="20"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab4" text="입찰결과">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staDT_BID_RECOG" taborder="0" text="수주인식" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="37"/>
+                        <Static id="sta00" taborder="1" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="37"/>
+                        <Static id="staAM_DESIGN" taborder="2" text="설계금액" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="430" top="37"/>
+                        <Static id="sta18" taborder="3" width="307" height="30" cssclass="sta_WF_tablebg" top="37" left="549"/>
+                        <Static id="staTY_BID_RLT" taborder="4" text="입찰결과" width="120" height="30" textAlign="right" left="855" top="37" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta04" taborder="5" width="308" height="30" cssclass="sta_WF_tablebg" top="37" left="974"/>
+                        <Button id="btnRegBidRlt" taborder="46" text="등록" height="24" width="50" top="5" onclick="divData_tabData_tab4_btnRegBidRlt_onclick" right="5"/>
+                        <Static id="staDT_FIX" taborder="6" text="수주확정" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="66"/>
+                        <Static id="sta01" taborder="7" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="66"/>
+                        <Static id="staAM_FIX_SUP" taborder="8" text="수주확정 공급가" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="430" top="66"/>
+                        <Static id="sta02" taborder="9" width="307" height="30" cssclass="sta_WF_tablebg" top="66" left="549"/>
+                        <Static id="staAM_FIX_VAT" taborder="10" text="수주확정 부가세" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="855" top="66"/>
+                        <Static id="sta03" taborder="11" width="308" height="30" cssclass="sta_WF_tablebg" top="66" left="974"/>
+                        <Static id="staAM_ESTM_CAL" taborder="12" text="예정가격" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="95"/>
+                        <Static id="sta05" taborder="13" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="95"/>
+                        <Static id="staCD_CLS01" taborder="14" text="예정가격 공급가" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="430" top="95"/>
+                        <Static id="sta06" taborder="15" width="307" height="30" cssclass="sta_WF_tablebg" top="95" left="549"/>
+                        <Static id="staCD_CLS_CONST01" taborder="16" text="예정가격 부가세" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="855" top="95"/>
+                        <Static id="sta07" taborder="17" width="308" height="30" cssclass="sta_WF_tablebg" top="95" left="974"/>
+                        <Static id="staAM_BID_CAL" taborder="18" text="낙찰가격" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="124"/>
+                        <Static id="sta08" taborder="19" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="124"/>
+                        <Static id="staAM_BID_SUP" taborder="20" text="낙찰가격 공급가" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="430" top="124"/>
+                        <Static id="sta09" taborder="21" width="307" height="30" cssclass="sta_WF_tablebg" top="124" left="549"/>
+                        <Static id="staAM_BID_VAT" taborder="22" text="낙찰가격 부가세" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="855" top="124"/>
+                        <Static id="sta10" taborder="23" width="308" height="30" cssclass="sta_WF_tablebg" top="124" left="974"/>
+                        <Static id="staNO_BID_CO" taborder="24" text="입찰참여사" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="153"/>
+                        <Static id="sta11" taborder="25" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="153"/>
+                        <Static id="staNO_FCT" taborder="26" text="난이도계수" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="430" top="153"/>
+                        <Static id="sta12" taborder="27" width="307" height="30" cssclass="sta_WF_tablebg" top="153" left="549"/>
+                        <Static id="staTY_ENTY" taborder="28" text="참가방법" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="855" top="153"/>
+                        <Static id="sta13" taborder="29" width="308" height="30" cssclass="sta_WF_tablebg" top="153" left="974"/>
+                        <Static id="staAM_ESTM" taborder="30" text="추정가격" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="182"/>
+                        <Static id="sta14" taborder="31" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="182"/>
+                        <Static id="staRT_BID" taborder="36" text="낙찰사 투찰율" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="713" top="211"/>
+                        <Static id="sta15" taborder="37" width="166" height="30" cssclass="sta_WF_tablebg" top="211" left="832"/>
+                        <Static id="staAM_INIT" taborder="32" text="기초금액" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="211"/>
+                        <Static id="sta17" taborder="33" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="211"/>
+                        <Static id="staRT_INIT" taborder="34" text="기초금액 사정율" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="430" top="211"/>
+                        <Static id="sta19" taborder="35" width="165" height="30" cssclass="sta_WF_tablebg" top="211" left="549"/>
+                        <Static id="staRT_SC" taborder="38" text="추첨예가 사정율" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="997" top="211"/>
+                        <Static id="sta20" taborder="39" width="166" height="30" cssclass="sta_WF_tablebg" top="211" left="1116"/>
+                        <Static id="staAM_BID_OUR" taborder="40" text="당사투찰가격" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="240"/>
+                        <Static id="sta21" taborder="41" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="240"/>
+                        <Static id="staRT_BID_OUR" taborder="42" text="당사투찰율" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="430" top="240"/>
+                        <Static id="sta22" taborder="43" width="733" height="30" cssclass="sta_WF_tablebg" top="240" left="549"/>
+                        <Static id="staDS_OPNI" taborder="44" text="의견" left="5" width="120" height="90" cssclass="sta_WF_tablelabel" textAlign="right" top="269"/>
+                        <Static id="sta24" taborder="45" width="1158" height="90" cssclass="sta_WF_tablebg" left="124" top="269"/>
+                        <MaskEdit id="ctxtAM_DESIGN" taborder="47" width="140" height="20" value="" textAlign="right" format="#,###" top="42" left="554" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <Edit id="ctxtTY_BID_RLT" taborder="48" left="978" top="42" width="140" height="20" readonly="true"/>
+                        <MaskEdit id="ctxtAM_FIX_SUP" taborder="49" width="140" height="20" value="" textAlign="right" format="#,###" top="71" left="554" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <MaskEdit id="ctxtAM_FIX_VAT" taborder="50" width="140" height="20" value="" textAlign="right" format="#,###" top="71" left="979" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <MaskEdit id="ctxtAM_ESTM_SUP" taborder="51" width="140" height="20" value="" textAlign="right" format="#,###" top="100" left="554" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <MaskEdit id="ctxtAM_BID_SUP" taborder="52" width="140" height="20" value="" textAlign="right" format="#,###" top="129" left="554" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <MaskEdit id="ctxtAM_ESTM_CAL" taborder="53" width="140" height="20" value="" textAlign="right" format="#,###" top="100" left="129" autoselect="true" readonly="true"/>
+                        <MaskEdit id="ctxtAM_BID_CAL" taborder="54" width="140" height="20" value="" textAlign="right" format="#,###" top="129" autoselect="true" readonly="true" left="129"/>
+                        <MaskEdit id="ctxtAM_ESTM_VAT" taborder="55" width="140" height="20" value="" textAlign="right" format="#,###" top="100" left="979" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <MaskEdit id="ctxtAM_BID_VAT" taborder="56" width="140" height="20" value="" textAlign="right" format="#,###" top="129" left="979" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <MaskEdit id="ctxtAM_ESTM" taborder="57" width="140" height="20" value="" textAlign="right" format="#,###" top="187" left="129" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <MaskEdit id="ctxtAM_INIT" taborder="58" width="140" height="20" value="" textAlign="right" format="#,###" top="216" left="129" autoselect="true" readonly="true" displaynulltext=" "/>
+                        <MaskEdit id="ctxtAM_BID_OUR" taborder="59" width="140" height="20" value="" textAlign="right" format="#,###" top="245" autoselect="true" readonly="true" displaynulltext=" " left="129"/>
+                        <MaskEdit id="ctxtNO_FCT" taborder="60" width="80" height="20" value="" textAlign="right" format="#.###" top="158" autoselect="true" readonly="true" left="554" displaynulltext="0"/>
+                        <Edit id="ctxtTY_ENTY" taborder="61" top="158" width="140" height="20" left="979" readonly="true"/>
+                        <MaskEdit id="ctxtRT_INIT" taborder="62" width="80" height="20" value="" textAlign="right" format="#.###" top="216" autoselect="true" readonly="true" left="554"/>
+                        <MaskEdit id="ctxtRT_BID" taborder="63" width="80" height="20" value="" textAlign="right" format="#.###" top="216" autoselect="true" readonly="true" left="837"/>
+                        <MaskEdit id="ctxtRT_SC" taborder="64" width="80" height="20" value="" textAlign="right" format="#.###" top="216" autoselect="true" readonly="true" left="1121"/>
+                        <MaskEdit id="ctxtRT_BID_OUR" taborder="65" width="80" height="20" value="" textAlign="right" format="#.###" top="245" autoselect="true" readonly="true" left="554"/>
+                        <MaskEdit id="ctxtNO_BID_CO" taborder="67" width="140" height="20" value="" textAlign="right" format="#,###" top="158" autoselect="true" readonly="true" displaynulltext=" " left="129"/>
+                        <Static id="staTab1Title" taborder="68" text="투찰사 목록" left="5" top="361" height="22" cssclass="sta_TITLE_Bg" width="100"/>
+                        <Static id="staTab1Title00" taborder="69" text="낙찰 공동도급사" left="729" top="365" height="22" cssclass="sta_TITLE_Bg" width="140"/>
+                        <Grid id="objGrdtab4_1" taborder="70" left="5" top="388" height="160" width="714"/>
+                        <Grid id="objGrdtab4_2" taborder="71" left="729" top="388" height="160" width="553"/>
+                        <TextArea id="txtDS_OPNI" taborder="66" top="274" width="1148" height="80" maxlength="1000" enable="true" readonly="true" left="129"/>
+                        <Div id="divFile" taborder="72" left="5" top="559" url="cmm::cmmFileManager.xfdl" text="" width="1277" height="150"/>
+                        <Static id="sta16" taborder="73" text="(개사)" left="274" top="158" width="41" height="20"/>
+                        <Static id="sta23" taborder="74" text="%" left="639" top="216" width="41" height="20"/>
+                        <Static id="sta25" taborder="75" text="%" left="639" top="245" width="41" height="20"/>
+                        <Static id="sta26" taborder="76" text="%" top="216" width="41" height="20" left="922"/>
+                        <Static id="sta27" taborder="77" text="%" top="216" height="20" width="41" left="1206"/>
+                        <Calendar id="ctclDT_BID_RECOG" taborder="78" left="130" top="42" width="132" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101" enable="true" visible="true" readonly="true"/>
+                        <Calendar id="ctclDT_FIX" taborder="79" left="130" top="71" width="132" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="20200101" enable="true" visible="true" readonly="true"/>
+                        <Button id="btnApp" taborder="80" text="결재요청" height="24" width="70" top="5" onclick="divData_tabData_btnApp_onclick" right="65" visible="false"/>
+                        <Static id="staTab1Title01_00_01_00" taborder="81" left="1042" top="7" right="139" height="22" text="" textAlign="right" font="bold 12px/normal &quot;Dotum&quot;" visible="false"/>
+                        <Static id="staTab1Title01_00_01" taborder="82" text="결재 상태 :" left="973" top="7" right="256" height="22" visible="false"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+              <Static id="sta00" taborder="1" text="＊ 사업비프로젝트코드생성 : 사업비 회계 처리를 위한 프로젝트 코드 생성 " top="0" width="410" height="20" right="0" color="#2d33fa"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "lib::libCommon.xjs";
+
+this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);	
+	// ---------------------------//
+	this.fnSetExtendButton();
+	
+	this.fnSetVariable();
+	this.fnSetParameter();
+	this.fnSetEvent();
+	
+	this.fnSetCombo();
+	
+	// 파일관리자 - 조회전에는 disable
+	this.divData.form.tabData.tab1.form.divFile.form.set_enable(false);
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_PROJ))
+	{
+		this.dsSearch.setColumn(0, "CD_PROJ", this.getOwnerFrame().CD_PROJ);
+		this.fnSelect();
+	} else {
+		this.gfnSetFormStatus(this, "I");
+		this.dsBase.setColumn(0, "CD_DEPT", this.AuthClient.CD_DEPT);
+		this.divData.form.tabData.tab1.form.ccfCD_SAUP.form.fnCodeFindLoad();
+	}
+	
+	this.fnSetButton();
+};
+
+/************************************************************************
+ * 담당자 여부 검사
+ ************************************************************************/
+ this.fnGetYNCharge = function(){
+	
+	this.dsReqYNCharge = new Dataset();
+	this.dsReqYNCharge.addColumn("CD_PROJ", "string");
+	this.dsReqYNCharge.addColumn("ID_USER", "string");
+	
+	this.dsReqYNCharge.addRow();
+	this.dsReqYNCharge.setColumn(0, "CD_PROJ", this.getOwnerFrame().CD_PROJ);
+	this.dsReqYNCharge.setColumn(0, "ID_USER", this.objApp.gdsUserInfo.getColumn(0, "ID_USER"));
+		
+	var strSvcId    = "selectCharge";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+		inData      = "selectCharge=dsReqYNCharge";
+		outData     = "dsRcvYNCharge=selectCharge0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+		
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+ }
+ 
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Select.set_enable(false);
+	this.FormBtns.Add.set_enable(false);
+	this.FormBtns.Save.set_enable(false);
+	this.FormBtns.Del.set_enable(false);
+// 	this.FormBtns.Excel.set_enable(false);
+// 	this.FormBtns.Print.set_enable(false);
+	
+	if(this.FormInfo.TY_AUTH == "R") {
+		this.FormBtns.Select.set_enable(true);
+		//this.divData.form.tabData.tab3.form.btnRegConsor.set_enable(false);
+		this.divData.form.tabData.tab3.form.btnDelConsor.set_enable(false);
+		return;
+	}
+	
+	var frmStatus = this.gfnGetFormStatus(this);
+	switch(frmStatus) {
+	case "I":
+		this.FormBtns.Select.set_enable(false);
+		this.FormBtns.Save.set_enable(true);
+		this.FormBtns.Del.set_enable(false);
+		/*Tab제어*/
+		this.divData.form.tabData.tab2.set_enable(false);
+		this.divData.form.tabData.tab3.set_enable(false);
+		this.divData.form.tabData.tab4.set_enable(false);
+		this.divData.form.tabData.tab5.set_enable(false);
+		this.divData.form.tabData.tab6.set_enable(false);
+		this.divData.form.tabData.tab7.set_enable(false);
+		this.divData.form.tabData.tab8.set_enable(false);
+		
+		this.btnCreate.set_enable(false);
+		this.btnHqCreate.set_enable(false);
+		break;
+	case "U":
+		this.FormBtns.Select.set_enable(true);
+		this.FormBtns.Save.set_enable(true);
+		this.FormBtns.Del.set_enable(true);
+		
+		this.btnCreate.set_enable(false);
+		this.btnHqCreate.set_enable(false);
+		break;
+	case "D":
+		break;
+	default: /*기본(조회완료)*/
+		this.FormBtns.Select.set_enable(true);
+		this.FormBtns.Save.set_enable(false);
+		this.FormBtns.Del.set_enable(true);
+		/*Tab제어*/
+		this.divData.form.tabData.tab2.set_enable(true);
+		if(this.dsBase.getColumn(0, "YN_ORD") == "Y"){
+			this.divData.form.tabData.tab3.set_enable(true);
+		}else{
+			this.divData.form.tabData.tab3.set_enable(false);
+		}
+		this.divData.form.tabData.tab4.set_enable(true);
+		this.divData.form.tabData.tab5.set_enable(true);
+		this.divData.form.tabData.tab6.set_enable(true);
+		this.divData.form.tabData.tab7.set_enable(true);
+		this.divData.form.tabData.tab8.set_enable(true);
+		this.btnCreate.set_enable(true);
+		this.btnHqCreate.set_enable(true);
+	}
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+    this.btnVendor = this.gfnFormButtonAdd("btnVendor", "fnVendor");
+	this.btnCreate = this.gfnFormButtonAdd("btnContCreate", "fnContCreate");
+	this.btnHqCreate = this.gfnFormButtonAdd("btnHqCreate", "fnHqCreate");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.dsAppParam = new Dataset();
+	this.dsAppParam.addColumn("CD_PROJ", "string");
+	this.dsAppParam.addColumn("DOC_APP", "string"); 
+	this.dsAppParam.addColumn("DOC_NO", "int"); 
+	
+	this.dsDelete = new Dataset();
+		
+	this.dsDelete.addColumn("TY_WRK","string");
+	this.dsDelete.addColumn("CD_PROJ","string");
+	this.dsDelete.addColumn("NO_CONSOR","string");	
+	this.dsDelete.addRow();
+ 	
+	this.CD_CORP = this.AuthClient.CD_CORP;
+ 	
+ 	this.ccfCD_CLS_CONST = this.divData.form.tabData.tab1.form.ccfCD_CLS_CONST;
+	this.ccfTY_ORD = this.divData.form.tabData.tab1.form.ccfTY_ORD;
+	this.ccfDS_LOC = this.divData.form.tabData.tab1.form.ccfDS_LOC;
+	this.ccfID_USER_EXPL = this.divData.form.tabData.tab1.form.ccfID_USER_EXPL;	
+	this.ccfCD_CORP =  this.divData.form.tabData.tab1.form.ccfCD_CORP;
+	this.ccfCD_SAUP =  this.divData.form.tabData.tab1.form.ccfCD_SAUP;
+ 	this.edtCD_SAUP = this.divSearch.form.edtCD_SAUP;
+	this.edtDS_SAUP = this.divSearch.form.edtDS_SAUP;
+	
+ 	this.ccfCD_CLS_CONST.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";	//상품분류
+	this.ccfTY_ORD.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";			//발주방식
+	this.ccfDS_LOC.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";			//지역
+	this.ccfID_USER_EXPL.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";	//현설의뢰자
+	
+	//설계심의
+	this.dxGrid1 = this.divData.form.tabData.tab3.form.objGrdtab3;	
+	//투찰사 목록
+	this.dxGrid2 = this.divData.form.tabData.tab4.form.objGrdtab4_1;	
+	//낙찰 공동도급사 목록
+	this.dxGrid3 = this.divData.form.tabData.tab4.form.objGrdtab4_2;
+	
+	//공동도급사
+	this.dxGrid5 = this.divData.form.tabData.tab5.form.objGrdtab5;
+	//관계사
+	this.dxGrid6 = this.divData.form.tabData.tab6.form.objGrdtab6;
+	//담당자
+	this.dxGrid7 = this.divData.form.tabData.tab7.form.objGrdtab7;
+	//열람부서
+	this.dxGrid7_Auth = this.divData.form.tabData.tab7.form.objGrdtab7_Auth;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfID_USER_EXPL.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_SAUP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.gfnGridInit(this.dxGrid1, this.dsList1, "DO", "DOA_CIVL_PROJ_DSN_CONSOR");	
+	this.gfnGridInit(this.dxGrid2, this.dsList2, "DO", "DOA_CO_BID");
+	this.gfnGridInit(this.dxGrid3, this.dsList3, "DO", "DOA_CO_CONTRCT_BID");
+	
+	this.gfnGridInit(this.dxGrid5, this.dsList4, "DO", "DOA_ARCH_CO_CONTRCT");
+	this.gfnGridInit(this.dxGrid6, this.dsList5, "DO", "DOA_ARCH_CONCERN");
+	this.gfnGridInit(this.dxGrid7, this.dsList6, "DO", "DOA_ARCH_CHARGE");
+	
+	this.gfnGridInit(this.dxGrid7_Auth, this.dsList6_Auth, "DO", "DOZ_PROJ_AUTH");
+	
+	this.dxGrid2.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";	
+	this.dxGrid3.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+};
+
+
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) 
+ {
+	if(id == "ccfID_USER_EXPL"){
+		dsUserParam.setColumn(nrow, "CD_CORP", this.CD_CORP);
+	} else if(id == "ccfCD_CORP"){
+	 dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+	  
+	} else if(id == "ccfCD_SAUP"){
+	  dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	  dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+	  dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+	  dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	  dsUserParam.setColumn(nrow, "CD_PROJ", this.divSearch.form.ctxtCD_PROJ.value);
+	}
+	return true;
+ }
+ 
+ this.fnGrid_BeforeUserDataSetParam = function(id, dsUserParam, nrow) 
+ {
+	dsUserParam.setColumn(nrow, "CD_CORP", "");
+	dsUserParam.setColumn(nrow, "CD_SITE", "");
+	dsUserParam.setColumn(nrow, "TY_VENDOR", "CIVL");
+	return true;
+ }
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsBase.set_enableevent(false);
+	this.dsBase.setColumn(0, "ID_USER", this.objApp.gdsUserInfo.getColumn(0, "ID_USER"));
+	this.dsBase.set_enableevent(true);
+	
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_PROJ", "string");
+	
+	this.dsHqCreate = new Dataset();
+	this.dsHqCreate.addColumn("CD_PROJ", "string");
+	this.dsHqCreate.addColumn("DS_SAUP", "string");
+}
+
+/************************************************************************
+ * 콤보 이벤트 설정
+ ************************************************************************/
+this.fnSetCombo = function() {
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+		
+	this.dsCombo.addRow();	// 공공/민간
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DO");
+	this.dsCombo.setColumn(0, "CD_TYPE", "25");
+	
+	this.dsCombo.addRow();	// 공사분야
+	this.dsCombo.setColumn(1, "CD_SYSTEM", "DO");
+	this.dsCombo.setColumn(1, "CD_TYPE", "24");
+	
+	this.dsCombo.addRow();	// 입찰추진
+	this.dsCombo.setColumn(2, "CD_SYSTEM", "DO");
+	this.dsCombo.setColumn(2, "CD_TYPE", "26");
+	
+	this.dsCombo.addRow();	// 지역
+	this.dsCombo.setColumn(3, "CD_SYSTEM", "DO");
+	this.dsCombo.setColumn(3, "CD_TYPE", "02");
+	
+	this.dsCombo.addRow();	// 주요공사
+	this.dsCombo.setColumn(4, "CD_SYSTEM", "DO");
+	this.dsCombo.setColumn(4, "CD_TYPE", "46");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsDS_CD_CV_GO=combo0 dsDS_CD_CLS=combo1 dsDS_CD_PRC_BID=combo2 dsCD_LOC=combo3 dsTY_MJ_CONST=combo4";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc ); // 통신방법 정의 [생략가능]
+}
+
+this.fnCodeFinder_AfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+	
+	if(arr.length > 0)
+	{
+		switch(id)
+		{
+			//우편번호
+			case "ccfDS_LOC":
+				this.dsBase.setColumn(0, "CD_ZIP", arr[0].ZIPCODE);
+				this.dsBase.setColumn(0, "DS_ADDR1", arr[0].ADDRESS);
+			break;
+		}
+	}
+}
+
+/************************************************************************
+ * 트렌젝션 버튼 이벤트
+ ************************************************************************/
+this.fnSelect = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	var tIdx = this.divData.form.tabData.tabindex;
+	var strSvcId    = "select"+tIdx;
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "";
+	var outData     = "";
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_PROJ", this.dsSearch.getColumn(0, "CD_PROJ"));
+	
+	if(tIdx == 0){
+		inData      = "select0=dsSelect";
+		outData     = "dsBase=select00";
+	} else if (tIdx == 4){
+		inData      = "select1=dsSelect";
+		outData     = "dsDetail1=select10";
+	} else if (tIdx == 5){
+		inData      = "select10=dsSelect select2=dsSelect";
+		outData     = "dsDetail4=select100 dsList1=select20";
+	} else if (tIdx == 7){
+		this.dsSelect3 = new Dataset();
+		
+		this.dsSelect3.addColumn("CD_PROJ", "string");
+		this.dsSelect3.addColumn("YN_READ", "string");
+		
+		this.dsSelect3.addRow();
+		
+		this.dsSelect3.setColumn(0, "CD_PROJ", this.dsSearch.getColumn(0, "CD_PROJ"));
+		this.dsSelect3.setColumn(0, "YN_READ", "Y");
+		
+		inData      = "select3=dsSelect select7=dsSelect3 select8=dsSelect3";
+		outData     = "dsDetail2=select30 dsList2=select70 dsList3=select80";
+	} else if (tIdx == 1){
+		inData      = "select4=dsSelect";
+		outData     = "dsList4=select40";
+	} else if (tIdx == 2){
+		inData      = "select5=dsSelect";
+		outData     = "dsList5=select50";
+	} else if (tIdx == 3){
+		inData      = "select6=dsSelect";
+		outData     = "dsList6=select60";
+	} else if(tIdx == 6){
+		inData      = "select9=dsSelect";
+		outData     = "dsDetail3=select90";
+	}
+	
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+}
+
+this.fnSelect_Auth = function(){
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_PROJ", this.dsSearch.getColumn(0, "CD_PROJ"));
+	
+	var strSvcId    = "select11";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select11=dsSelect";
+	var outData     = "dsList6_Auth=select110";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+}
+
+this.fnSave = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){	
+
+	var tIdx = this.divData.form.tabData.tabindex==5?0:this.divData.form.tabData.tabindex;	
+	this.dsBase.setColumn(0, "DS_PROJ", this.dsSearch.getColumn(0, "DS_PROJ") );
+	this.dsBase.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	//this.dsBase.setColumn(0, "CD_DEPT", this.AuthClient.CD_DEPT);
+	
+	if(!this.gfnDataValidate(this.dsBase, this.dsRequired))return;	
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save" + tIdx + "=dsBase";
+	var outData     = "dsBaseRst=save" + tIdx;
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+}
+
+this.fnDel = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	
+	var tIdx = this.divData.form.tabData.tabindex;	
+	
+	this.gfnConfirm("삭제 하시겠습니까?", function(strId, val){
+		if(val == true) {
+			var strSvcId    = "delete";
+			var strSvcType  = "save";
+			var inProc		= "_dsProc";
+			var inData 		= "delete" + tIdx + "=dsBase";
+			var outData     = "";
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+			
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// transaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc,false); // 통신방법 정의 [생략가능]
+		}	
+	});	
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (errorCode == 0) {	
+		if (svcID == "combo") {
+		
+			this.dsDS_CD_PRC_BID.insertRow(0);		
+			this.dsDS_CD_PRC_BID.setColumn(0, "CD_CODE", "");
+			this.dsDS_CD_PRC_BID.setColumn(0, "DS_CODE", "");
+		
+			this.dsTY_MJ_CONST.insertRow(0);		
+			this.dsTY_MJ_CONST.setColumn(0, "CD_CODE", "");
+			this.dsTY_MJ_CONST.setColumn(0, "DS_CODE", "");
+		
+			if(this.gfnIsNull(this.getOwnerFrame().CD_PROJ)){
+				this.divData.form.tabData.tab1.form.ccboCD_CLS.set_index(0);
+			}
+			
+		} else if(svcID == "save") {	
+			this.dsSearch.setColumn(0, "CD_PROJ", this.dsBaseRst.getColumn(0, "OUT_DATA"))
+			this.FormBtns.Select.click();
+			
+		} else if(svcID == "select0") {
+			//TAB1 조회
+			this.dsSearch.setColumn(0, "DS_PROJ", this.dsBase.getColumn(0, "DS_PROJ"));				
+			this.divData.form.tabData.tab1.form.ccfDS_LOC.form.CDTextBox.set_value(this.dsBase.getColumn(0, "CD_ZIP"));
+			this.divData.form.tabData.tab1.form.ccfDS_LOC.form.DSTextBox.set_value(this.dsBase.getColumn(0, "DS_ADDR1"));
+			var HM_PQ = this.dsBase.getColumn(0, "HM_PQ");
+			var HM_AGREE = this.dsBase.getColumn(0, "HM_AGREE");
+			var HM_SITE_EXPL = this.dsBase.getColumn(0, "HM_SITE_EXPL");
+			var HM_BID_REG = this.dsBase.getColumn(0, "HM_BID_REG");
+			var HM_BID = this.dsBase.getColumn(0, "HM_BID");
+			var HM_BID_OPEN = this.dsBase.getColumn(0, "HM_BID_OPEN");
+			var HM_REVIEW = this.dsBase.getColumn(0, "HM_REVIEW");
+			var HM_BID_WIN = this.dsBase.getColumn(0, "HM_BID_WIN");
+			
+			/*결재 승인 상태일때 재결재요청 가능*/
+			if("05" === this.dsBase.getColumn(0, "ST_APPR")){
+				//this.divData.form.tabData.tab1.form.btnApp.set_text("재결재요청");
+			} else {
+				//this.divData.form.tabData.tab1.form.btnApp.set_text("결재요청");
+			}
+			
+			this.edtCD_SAUP.set_value(this.dsBase.getColumn(0, "CD_SAUP"));
+			this.edtDS_SAUP.set_value(this.dsBase.getColumn(0, "DS_SAUP"));
+			
+			if(!this.gfnIsNull(this.dsBase.getColumn(0, "CD_SAUP"))){
+				this.edtDS_SAUP.set_readonly(true);
+			}else{
+				this.edtDS_SAUP.set_readonly(false);
+			}
+			/*
+			this.dsBase.set_enableevent(false);
+			if(!this.gfnIsNull(HM_PQ)){
+				this.dsBase.setColumn(0, "H_PQ", HM_PQ.substring(0,2));
+				this.dsBase.setColumn(0, "M_PQ", HM_PQ.substring(2,4));
+			}		
+			if(!this.gfnIsNull(HM_AGREE)){
+				this.dsBase.setColumn(0, "H_AGREE", HM_AGREE.substring(0,2));
+				this.dsBase.setColumn(0, "M_AGREE", HM_AGREE.substring(2,4));
+			}		
+			if(!this.gfnIsNull(HM_SITE_EXPL)){
+				this.dsBase.setColumn(0, "H_SITE_EXPL", HM_SITE_EXPL.substring(0,2));
+				this.dsBase.setColumn(0, "M_SITE_EXPL", HM_SITE_EXPL.substring(2,4));
+			}	
+			if(!this.gfnIsNull(HM_BID_REG)){
+				this.dsBase.setColumn(0, "H_BID_REG", HM_BID_REG.substring(0,2));
+				this.dsBase.setColumn(0, "M_BID_REG", HM_BID_REG.substring(2,4));
+			}		
+			if(!this.gfnIsNull(HM_BID)){
+				this.dsBase.setColumn(0, "H_BID", HM_BID.substring(0,2));
+				this.dsBase.setColumn(0, "M_BID", HM_BID.substring(2,4));
+			}			
+			if(!this.gfnIsNull(HM_BID_OPEN)){
+				this.dsBase.setColumn(0, "H_BID_OPEN", HM_BID_OPEN.substring(0,2));
+				this.dsBase.setColumn(0, "M_BID_OPEN", HM_BID_OPEN.substring(2,4));
+			}		
+			if(!this.gfnIsNull(HM_REVIEW)){
+				this.dsBase.setColumn(0, "H_REVIEW", HM_REVIEW.substring(0,2));
+				this.dsBase.setColumn(0, "M_REVIEW", HM_REVIEW.substring(2,4));
+			}				
+			if(!this.gfnIsNull(HM_BID_WIN)){
+				this.dsBase.setColumn(0, "H_BID_WIN", HM_BID_WIN.substring(0,2));
+				this.dsBase.setColumn(0, "M_BID_WIN", HM_BID_WIN.substring(2,4));
+			}
+			this.dsBase.set_enableevent(true);
+			*/
+			this.divData.form.tabData.tab1.form.divFile.form.set_enable(true);
+			// 첨부파일
+			//var cd_site = this.ccfCD_SITE.form.CDTextBox.value;
+			if(!this.gfnIsNull(this.dsBase.getColumn(0, "CD_PROJ"))){
+				var fileManager = {};
+				fileManager.CD_GUBUN = "DOC1";
+				fileManager.CD_DIR = [ this.dsBase.getColumn(0, "CD_PROJ") ];
+				fileManager.CD_REF1 = this.dsBase.getColumn(0, "CD_PROJ");
+				if(this.FormInfo.TY_AUTH == "R") {
+					fileManager.IS_READONLY = true;
+				} else {
+					fileManager.IS_READONLY = false;
+				}
+				// div FileManager 셋팅
+				this.divData.form.tabData.tab1.form.divFile.form.setFileManager(fileManager);
+			}
+			this.gfnSetFormStatus(this, "");
+			this.fnSetButton();
+		} else if(svcID == "delete"){
+			this.getParentContext().close(true);
+		} else if(svcID == "select1"){
+		} else if(svcID == "select2"){
+		} else if(svcID == "delete2"){
+			this.gfnAlert("삭제 되었습니다.");
+			this.FormBtns.Select.click();
+		} else if(svcID == "select3"){
+			this.fnSelect_Auth();
+		} else if(svcID == "select4"){
+			if(this.dsDetail1.rowcount > 0){
+				this.divData.form.tabData.tab2.form.divFile.form.set_enable(true);
+				// 첨부파일
+				//var cd_site = this.ccfCD_SITE.form.CDTextBox.value;
+				if(!this.gfnIsNull(this.dsBase.getColumn(0, "CD_PROJ"))){
+					var fileManager = {};
+					fileManager.CD_GUBUN = "DOC2";
+					fileManager.CD_DIR = [ this.dsBase.getColumn(0, "CD_PROJ") ];
+					fileManager.CD_REF1 = this.dsBase.getColumn(0, "CD_PROJ");
+					fileManager.IS_READONLY = true;
+					// div FileManager 셋팅
+					this.divData.form.tabData.tab2.form.divFile.form.setFileManager(fileManager);
+				}
+				//this.divData.form.tabData.tab2.form.btnApp.set_enable(true);
+				
+				/*결재 승인 상태일때 재결재요청 가능*/
+				if("05" === this.dsDetail1.getColumn(0, "ST_APPR")){
+					//this.divData.form.tabData.tab2.form.btnApp.set_text("재결재요청");
+				} else {
+					//this.divData.form.tabData.tab2.form.btnApp.set_text("결재요청");
+				}
+				
+			} else {
+				//this.divData.form.tabData.tab2.form.btnApp.set_enable(false);
+			}
+		} else if(svcID == "select5"){
+			/*결재 승인 상태일때 재결재요청 가능*/
+			if("05" === this.dsDetail4.getColumn(0, "ST_APPR")){
+				//this.divData.form.tabData.tab3.form.btnApp.set_text("재결재요청");
+			} else {
+				//this.divData.form.tabData.tab3.form.btnApp.set_text("결재요청");
+			}
+		} else if(svcID == "select7"){
+			this.tab4Flag = "";
+			if(this.dsDetail2.rowcount > 0){
+				this.tab4Flag = "U";
+				
+				// 예정가격 계산.
+				var AM_ESTM_SUP = this.dsDetail2.getColumn(0, "AM_ESTM_SUP");
+				var AM_ESTM_VAT = this.dsDetail2.getColumn(0, "AM_ESTM_VAT");
+				// 낙찰가격 계산.
+				var AM_BID_SUP = this.dsDetail2.getColumn(0, "AM_BID_SUP");
+				var AM_BID_VAT = this.dsDetail2.getColumn(0, "AM_BID_VAT");
+				
+				this.dsDetail2.setColumn(0, "AM_ESTM_CAL", AM_ESTM_SUP + AM_ESTM_VAT);
+				this.dsDetail2.setColumn(0, "AM_BID_CAL", AM_BID_SUP + AM_BID_VAT);
+				
+				this.divData.form.tabData.tab4.form.divFile.form.set_enable(true);
+				// 첨부파일
+				//var cd_site = this.ccfCD_SITE.form.CDTextBox.value;
+				if(!this.gfnIsNull(this.dsBase.getColumn(0, "CD_PROJ"))){
+					var fileManager = {};
+					fileManager.CD_GUBUN = "DOC3";
+					fileManager.CD_DIR = [this.dsBase.getColumn(0, "CD_PROJ")];
+					fileManager.CD_REF1 = this.dsBase.getColumn(0, "CD_PROJ");
+					fileManager.IS_READONLY = true;
+					// div FileManager 셋팅
+					this.divData.form.tabData.tab4.form.divFile.form.setFileManager(fileManager);
+				}
+				//this.divData.form.tabData.tab4.form.btnApp.set_enable(true);
+				/*결재 승인 상태일때 재결재요청 가능*/
+				if("05" === this.dsDetail2.getColumn(0, "ST_APPR")){
+					//this.divData.form.tabData.tab4.form.btnApp.set_text("재결재요청");
+				} else {
+					//this.divData.form.tabData.tab4.form.btnApp.set_text("결재요청");
+				}
+			}else{
+				this.tab4Flag = "I"; 
+				//this.divData.form.tabData.tab4.form.btnApp.set_enable(false);
+			}
+		} else if(svcID == "select6"){
+			if(this.dsDetail3.getRowCount() == 0){
+				//this.divData.form.tabData.tab8.form.btnApp.set_enable(false);
+			} else {
+				//this.divData.form.tabData.tab8.form.btnApp.set_enable(true);
+				/*결재 승인 상태일때 재결재요청 가능*/
+				if("05" === this.dsDetail3.getColumn(0, "ST_APPR")){
+					//this.divData.form.tabData.tab8.form.btnApp.set_text("재결재요청");
+				} else {
+					//this.divData.form.tabData.tab8.form.btnApp.set_text("결재요청");
+				}
+			}
+		}
+		else if(svcID == "select6_Auth"){
+		} else if(svcID == "appChk") {
+			this.fnAppSelect();
+		} else if(svcID == "appSelect") {
+			this.fnAppOpen();
+		}else if(svcID =="hqCreate") {
+			this.FormBtns.Select.click();
+		}
+	} else {
+		this.gfnAlert(errorMsg);
+	}		
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsBase_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{	
+	var _vat=0;
+	if(e.oldvalue != e.newvalue) {
+		if(this.gfnGetFormStatus(this) == "I"){
+			this.gfnSetFormStatus(this, "I");
+		}else{
+			this.gfnSetFormStatus(this, "U");
+		}
+		this.fnSetButton();
+ 		if(e.columnid == "AM_ESTM") {
+			//2020.02.26  한대운 숫자변환 수정
+			this.dsBase.set_enableevent(false);
+			_vat = nexacro.toNumber(obj.getColumn(0, "AM_ESTM"),0)*0.1;
+			obj.setColumn(0, "AM_CONST", _vat);
+			this.dsBase.set_enableevent(true);
+		} else if(e.columnid == "NO_TERM" || e.columnid == "DT_BID"){
+			//2020.04.24 진상우 준공예정일 자동계산 (입찰일 + 공사일 - 1일)
+			var _noTerm = this.gfnIsNull(this.dsBase.getColumn(0, "NO_TERM")) ? -1 : nexacro.toNumber(this.dsBase.getColumn(0, "NO_TERM"));
+			var _bidDt = this.dsBase.getColumn(0, "DT_BID");
+			
+			var _rstDt = "";
+			if(!this.gfnIsNull(_bidDt) && _noTerm > 0){
+				_rstDt = this.gfnAddDate(this.gfnAddMonth(_bidDt, _noTerm), -1);
+				obj.setColumn(0, "DT_SC_COMPL", _rstDt);
+			} else {
+				obj.setColumn(0, "DT_SC_COMPL", "");
+			}
+		} 
+		else if(e.columnid.substr(0, 2) == "HM"){
+			obj.setColumn(0, e.columnid, this.fnHmStr(e.columnid, e.oldvalue));
+			//if(!this.fnHmValidate(e.columnid)){
+				//
+				//return false;
+			//}
+		} else if(e.columnid == "NO_DSN_SCO" || e.columnid == "NO_COST_SCO"){
+			obj.setColumn(0, "NO_DSN_COST_SCO", 
+												nexacro.toNumber(obj.getColumn(0, "NO_DSN_SCO"), 0.000) +
+												nexacro.toNumber(obj.getColumn(0, "NO_COST_SCO"), 0.000)
+			)
+		}
+	}
+};
+
+this.fnHmStr = function(colId, oVal){
+	//input value 0붙여서 처리시작
+	var rtn = nexacro.replaceAll(this.gfnIsNull(this.dsBase.getColumn(0, colId)) ? "    " : this.dsBase.getColumn(0, colId) , " ", "0");
+	
+	//oldvalue 0 붙여서 처리
+	var oVal1 = nexacro.replaceAll(this.gfnIsNull(oVal) ? "    " : oVal, " ", "0");
+
+	// 시간형식 체크 정규화 hh:mm
+	// /^([1-9]|[01][0-9]|2[0-3])([0-5][0-9])$/
+	var pVal = rtn.substr(0, 2)
+	  , sVal = rtn.substr(2, 2)
+	  , pVal1 = oVal1.substr(0, 2)
+	  , sVal1 = oVal1.substr(2, 2);
+	
+	var hhFormat = /^([1-9]|[01][0-9]|2[0-3])$/;
+	var mmFormat = /^([0-5][0-9])$/;
+	
+	if(!hhFormat.test(rtn.substr(0, 2))){
+		this.gfnAlert("00시부터 24시내로 입력해주세요.");
+		pVal = pVal1;
+	} 
+	
+	if(!mmFormat.test(rtn.substr(2, 2))){
+		this.gfnAlert("00분부터 59분내로 입력해주세요.");
+		sVal = sVal1;
+	}
+		
+	return pVal + sVal;
+}
+
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo){	
+	if(e.oldvalue != e.newvalue) {
+		if(this.gfnGetFormStatus(this) == "I"){
+			this.gfnSetFormStatus(this, "I");
+		}else{
+			this.gfnSetFormStatus(this, "U");
+		}
+		this.fnSetButton();
+	}
+};
+
+this.divData_tabData_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	switch(obj.tabindex) {
+		case 0:
+			this.fnSetButton();
+			break;
+		break;
+		case 5:
+			this.fnSelect();
+			this.fnSetButton();
+			break;
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 6:
+		case 7:
+			this.fnSelect();
+			this.FormBtns.Select.set_enable(false);
+			this.FormBtns.Save.set_enable(false);
+			this.FormBtns.Del.set_enable(false);
+		break;
+	}	
+};
+
+this.divData_tabData_btnReg_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var tIdx = this.divData.form.tabData.tabindex;
+	var popStr = "";
+	var _popType = "";
+	var _width = 0;
+	var _height = 0;
+	switch(tIdx) {
+		case 0:
+		case 1:
+			//수주 > 주택 > 공통 > 공동도급사 관리
+			popStr = "DOZ_PROJ_CO_CONTRCT";
+			_width = 770;
+			_height = 600;
+			_popType = "DOZ";
+	
+			var param = {
+				CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+			  , DS_PROJ : this.dsBase.getColumn(0, "DS_PROJ")
+			  , TY_VENDOR : "CIVL"
+			}
+			
+			this.gfnFormOpen(_popType, popStr, "fnDialogCallback", param, _width, _height); 
+		break;
+		case 2:
+			//수주 > 주택 > 공통 > 관계사 관리
+			popStr = "DOZ_PROJ_CONCERN";
+			_width = 850;
+			_height = 600;
+			_popType = "DOZ";
+	
+			var param = {
+				CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+			  , DS_PROJ : this.dsBase.getColumn(0, "DS_PROJ")
+			  , TY_VENDOR : "CIVLJNT"
+			}
+			
+			this.gfnFormOpen(_popType, popStr, "fnDialogCallback", param, _width, _height); 
+		break;
+		case 3:
+			//수주 > 주택 > 공통 > 담당자 관리
+			popStr = "DOZ_PROJ_CHARGE";
+			_width = 600;
+			_height = 600;
+			_popType = "DOZ";
+	
+			var param = {
+				CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+			  , DS_PROJ : this.dsBase.getColumn(0, "DS_PROJ")
+			  , TY_VENDOR : ""
+			}
+			
+			this.gfnFormOpen(_popType, popStr, "fnDialogCallback", param, _width, _height); 
+		break;
+		case 6:
+			//수주 > 도급 > 입찰금액결정
+			popStr = "DOB_BID_AM_DCID";
+			_width = 1150;
+			_height = 370;
+			_popType = "DOA";
+	
+			var param = {
+				CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+			  , DS_PROJ : this.dsBase.getColumn(0, "DS_PROJ")
+			  , TY_VENDOR : ""
+			}
+			
+			this.gfnFormOpen(_popType, popStr, "fnDialogCallback", param, _width, _height); 
+		break;
+		case 4:
+		case 5:
+	}
+};
+
+this.divData_tabData_btnReg_Auth_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	popStr = "DOZ_PROJ_AUTH";
+	_width = 600;
+	_height = 600;
+	_popType = "DOZ";
+	
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsBase.getColumn(0, "DS_PROJ")
+	  , TY_VENDOR : ""
+	  }
+	  
+	this.gfnFormOpen(_popType, popStr, "fnDialogCallback", param, _width, _height); 
+};
+
+this.fnDialogCallback = function(svcID, value) {
+	var tIdx = this.divData.form.tabData.tabindex;
+	switch(tIdx) {
+		case 0:
+			this.fnSetButton();
+			break;
+		break;
+		case 5:
+			this.fnSelect();
+			this.fnSetButton();
+			break;
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 6:
+		case 7:
+			this.fnSelect();
+			this.FormBtns.Select.set_enable(false);
+			this.FormBtns.Save.set_enable(false);
+			this.FormBtns.Del.set_enable(false);
+		break;
+	}	
+};
+
+this.fnContCreate = function(){
+		var param = {
+		CD_PROJ  : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ  : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , CD_FIELD : this.dsBase.getColumn(0, "CD_FIELD")
+	  , NO_CONT : this.dsBase.getColumn(0, "NO_CONT")
+	  , NO_CHG_CONT : this.dsBase.getColumn(0, "NO_CHG_CONT")
+	}
+	this.gfnFormOpen("DOD", "DOD_CIVL_CONT", "fnDialogCallback", param, 1320, 880); 
+}
+
+this.fnHqCreateValidate = function() {	
+	var validate = true;
+	
+	if (this.gfnIsNull(this.edtDS_SAUP.value)) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.edtDS_SAUP.setFocus();
+		}
+		this.gfnAlert("사업비프로젝트명을 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	};
+	
+	return validate;
+}
+
+this.fnHqCreate = function(){
+	this.gfnConfirm("사업비 프로젝트 코드생성을 하시겠습니까?", function(strId, val){
+		if(val == true) {
+			if (!this.fnHqCreateValidate()) return false;
+			
+			this.dsHqCreate.clearData();
+			this.dsHqCreate.addRow();
+	
+			this.dsHqCreate.setColumn(0, "CD_PROJ", this.dsSearch.getColumn(0, "CD_PROJ"));
+			this.dsHqCreate.setColumn(0, "DS_SAUP", this.edtDS_SAUP.value);
+			
+			var strSvcId    = "hqCreate";
+			var strSvcType  = "save";
+			var inProc		= "_dsProc";
+			var inData 		= "updateHqCreate=dsHqCreate";
+			var outData     = "";
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+			
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// transaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc); // 통신방법 정의 [생략가능]
+		}	
+	});	
+}
+
+// 현설결과 등록버튼 
+this.divData_tabData_tab2_btnRegFieldExpl_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var FIELD_EXPL_GUBUN = "I";
+	
+	if(this.dsDetail1.rowcount > 0){
+		FIELD_EXPL_GUBUN = "U";
+	}
+	
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , DT_SITE_EXPL : this.dsBase.getColumn(0, "DT_SITE_EXPL")
+	  , H_SITE_EXPL : this.dsBase.getColumn(0, "H_SITE_EXPL")
+	  , M_SITE_EXPL : this.dsBase.getColumn(0, "M_SITE_EXPL")
+	  , FIELD_EXPL_GUBUN : FIELD_EXPL_GUBUN
+	}
+	
+	this.gfnFormOpen("DOB", "DOB_CIVL_FIELD_EXPL", "fnDialogCallback", param, 1180, 800); 	
+};
+
+// 컨소시엄 등록 팝업 호출
+this.divData_tabData_tab3_btnRegConsor_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var DSN_CONSOR_GUBUN = "I";
+	
+	var param = {
+		CD_PROJ 	: this.dsSearch.getColumn(0, "CD_PROJ")
+	  , NO_CONSOR 	: ""
+	  , DSN_CONSOR_GUBUN : DSN_CONSOR_GUBUN
+	}
+	
+	this.gfnFormOpen("DOB", "DOB_CIVL_DSN_DEL_CO", "fnDialogCallback", param, 635, 740); 
+};
+
+// 컨소시엄 삭제 버튼 
+this.divData_tabData_tab3_btnDelConsor_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 선택된 row가 있을 경우에만 삭제
+	if (!this.gfnGridIsRow(this.dxGrid1)) { return false; }
+	
+	this.gfnConfirm("삭제 하시겠습니까?", function(strId, val){
+		if(val == true) {
+			
+			this.dsDelete.clearData();
+			this.dsDelete.addRow();
+			
+			this.dsDelete.setColumn(0, "TY_WRK", "D");
+			this.dsDelete.setColumn(0, "CD_PROJ", this.dsList1.getColumn(this.dsList1.rowposition, "CD_PROJ"));
+			this.dsDelete.setColumn(0, "NO_CONSOR", this.dsList1.getColumn(this.dsList1.rowposition, "NO_CONSOR"));
+		
+			var strSvcId    = "delete2";
+			var strSvcType  = "save";
+			var inProc		= "_dsProc";
+			var inData      = "delete2=dsDelete";
+			var outData     = "";
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+			
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// transaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc); // 통신방법 정의 [생략가능]
+		}	
+	});	
+	
+};
+
+this.divData_tabData_tab4_btnRegBidRlt_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var BID_RLT_GUBUN = "I";
+	
+	if(this.dsDetail2.rowcount > 0){
+		BID_RLT_GUBUN = "U";
+	}
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , BID_RLT_GUBUN : BID_RLT_GUBUN
+	}
+	
+	this.gfnFormOpen("DOB", "DOB_CIVL_BID_RLT", "fnDialogCallback", param, 1340, 800); 
+};
+
+
+this.divData_tabData_tab3_objGrdtab3_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid1)) { return false; }
+	
+	var DSN_CONSOR_GUBUN = "U";
+	
+	var param = {
+		CD_PROJ 	: this.dsSearch.getColumn(0, "CD_PROJ")
+	  , NO_CONSOR 	: this.dsList1.getColumn(this.dsList1.rowposition, "NO_CONSOR")	
+	  , DSN_CONSOR_GUBUN : DSN_CONSOR_GUBUN
+	}
+	
+	this.gfnFormOpen("DOB", "DOB_CIVL_DSN_DEL_CO", "fnDialogCallback", param, 635, 740); 
+};
+
+this.divData_tabData_btnApp_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var tIdx = this.divData.form.tabData.tabindex;
+	
+	var _docId = "";
+	var _docNm = "";
+	var _docNo = 0;
+	
+	if(tIdx == 0){
+		//기본정보
+		_docId = "DOB01";
+		_docNm = "발주예정";
+		_docNo = 1;
+	} else if(tIdx == 4){
+		//현설결과
+		_docId = "DOB02";
+		_docNm = "입찰공고";
+		_docNo = 2;
+	} else if(tIdx == 5){
+		//설계심의
+		_docId = "DOB03";
+		_docNm = "설계심의";
+		_docNo = 3;
+	} else if(tIdx == 6){
+		//입찰금액결정
+		_docId = "DOB04";
+		_docNm = "입찰금액결정";
+		_docNo = 4;
+	} else if(tIdx == 7){
+		if(this.dsBase.getColumn(0, "YN_ORD") == "Y"){
+			//입찰결과 TK
+			_docId = "DOB05";
+			_docNm = "입찰결과(TK)";
+			_docNo = 5;
+		} else {
+			//입찰결과
+			_docId = "DOB06";
+			_docNm = "입찰결과";
+			_docNo = 6;
+		}	
+	}
+	
+	this.fnApp(_docId, _docNm, _docNo);
+};
+
+
+this.fnApp = function( docId, docNm, docNo ){
+	this.dsAppParam.clearData();
+	var nrow = this.dsAppParam.addRow();
+	this.dsAppParam.setColumn(nrow, "CD_PROJ", this.dsSearch.getColumn(0, "CD_PROJ"));
+	this.dsAppParam.setColumn(nrow, "DOC_APP", docId); 
+	this.dsAppParam.setColumn(nrow, "DOC_NO", docNo);
+	//DOB01 : 발주예정 (프로젝트기본정보)
+	//DOB02 : 입찰공고 (현설결과)
+	//DOB03 :  설계심의
+	//DOB04 :  입찰금액결정
+	//DOB05 :  입찰결과(TK)
+	//DOB06 :  입찰결과 
+	
+	var msg = "프로젝트코드 : " + this.dsSearch.getColumn(0, "CD_PROJ") + " [" + this.dsSearch.getColumn(0, "DS_PROJ") + "]"
+			+ "\n " + "[" + docNm +  "]" + "결재상신 하시겠습니까?"
+			+ "\n " + " 주의) 재결재 시 이전 결제 정보는 삭제 됩니다!!!";
+	this.gfnConfirm(msg, "fnApp_callback", "");
+}
+
+this.fnApp_callback = function(strId, val){
+	if(val == true) 
+	{	
+		if (this.dsAppParam.rowcount == 0) return;
+		
+		var strSvcId    = "appChk";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "appChk"+this.dsAppParam.getColumn(0, "DOC_NO") +"=dsAppParam";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}
+
+this.fnAppSelect = function(){
+	var strSvcId    = "appSelect";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "appSelect"+this.dsAppParam.getColumn(0, "DOC_NO") +"=dsAppParam";
+	var outData     = "dsAppList=appSelect"+this.dsAppParam.getColumn(0, "DOC_NO") +"0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnAppOpen = function()
+{
+	if(this.dsAppList.rowcount > 0) 
+	{
+		var sApType = "";
+		var sTitle  = this.dsBase.getColumn(0, "DS_ORD") + "/"  + this.dsSearch.getColumn(0, "DS_PROJ") + "/";
+		sApType = this.dsAppParam.getColumn(0, "DOC_APP");
+		
+		this.serverTime = "";
+		this.gfnGetServerTime("serverTime");
+		
+		this.serverTimeStr = this.gfnGetDigit(this.serverTime.substring(0, 10));
+		
+		if(sApType == "DOB01"){
+			sTitle += "발주예정";
+		} else if(sApType == "DOB02"){
+			sTitle += "입찰의견";
+		} else if(sApType == "DOB03"){
+			sTitle += "설계심의";
+		} else if(sApType == "DOB04"){
+			sTitle += "입찰금액결정";
+		} else if(sApType == "DOB05"){
+			sTitle += "입찰결과(TK)";
+		} else if(sApType == "DOB06"){
+			sTitle += "입찰결과";
+		}
+		sTitle += "/" + this.serverTimeStr;
+				
+		var sRef01  = this.dsSearch.getColumn(0, "CD_PROJ");
+		var sRef02  = "";
+		var sRef03  = "";
+		var sRef04  = "";
+		var oParam  = this.gfnDataSetToJson(this.dsAppList, this.dsAppList.rowposition)
+
+		console.info("================ oParam");
+		console.info(sApType);
+		console.info(sTitle);
+		console.info(oParam);
+	
+		this.gfnApprove(sApType, sTitle, sRef01, sRef02, sRef03, sRef04, oParam, "fnAprvDialogCallback");
+	}
+}
+
+this.fnAprvDialogCallback = function(){
+	this.FormBtns.Select.click();
+}
+
+this.fnVendor = function(){
+    var param = {};
+    this.gfnFormOpen("DHZ", "DHZ_VENDORALL", "fnDialogCallback", param, 980, 720);
+}]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save0</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_MERGE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select0</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete0</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select1</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_FIELD_EXPL_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save2</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select2</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_DSN_CONSOR_MST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete2</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_DSN_CONSOR_MST_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DOAPR_CIVL_PROJ_BID_RLT_SELECT</Col>
+            <Col id="TARGET">select3</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select4</Col>
+            <Col id="SP">DOAPR_ARCH_CO_CONTRCT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select5</Col>
+            <Col id="SP">DOAPR_ARCH_CONCERN</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select6</Col>
+            <Col id="SP">DOAPR_ARCH_CHARGE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select7</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_CO_BID_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select8</Col>
+            <Col id="SP">DOAPR_CIVL_PROJ_CO_CONTRCT_BID_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select9</Col>
+            <Col id="SP">DOBPR_CIVL_PROJ_AM_DCID_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectCharge</Col>
+            <Col id="SP">DOAPR_PROJ_YNCHARGE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">updateHqCreate</Col>
+            <Col id="SP">DOZPR_HQ_CODE_CREATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appChk1</Col>
+            <Col id="SP">DOBPR_APP_DOB01_CHECK</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appSelect1</Col>
+            <Col id="SP">DOBPR_APP_DOB01_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appChk2</Col>
+            <Col id="SP">DOBPR_APP_DOB02_CHECK</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appSelect2</Col>
+            <Col id="SP">DOBPR_APP_DOB02_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select10</Col>
+            <Col id="SP">DOAPR_CIVL_DSGN_PROJ_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appChk3</Col>
+            <Col id="SP">DOBPR_APP_DOB03_CHECK</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appSelect3</Col>
+            <Col id="SP">DOBPR_APP_DOB03_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appChk4</Col>
+            <Col id="SP">DOBPR_APP_DOB04_CHECK</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appSelect4</Col>
+            <Col id="SP">DOBPR_APP_DOB04_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appChk5</Col>
+            <Col id="SP">DOBPR_APP_DOB05_CHECK</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appSelect5</Col>
+            <Col id="SP">DOBPR_APP_DOB05_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appChk6</Col>
+            <Col id="SP">DOBPR_APP_DOB06_CHECK</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">appSelect6</Col>
+            <Col id="SP">DOBPR_APP_DOB06_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select11</Col>
+            <Col id="SP">DOAPR_PROJ_AUTH</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_PROJ" type="STRING" size="256"/>
+          <Column id="DS_PROJ" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsBase" onvaluechanged="dsBase_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_PROJ" type="STRING" size="256"/>
+          <Column id="DS_PROJ" type="STRING" size="256"/>
+          <Column id="CD_CV_GO" type="STRING" size="256"/>
+          <Column id="CD_CLS" type="STRING" size="256"/>
+          <Column id="CD_CLS_CONST" type="STRING" size="256"/>
+          <Column id="DS_CLS_CONST" type="STRING" size="256"/>
+          <Column id="TY_ORD" type="STRING" size="256"/>
+          <Column id="DS_ORD" type="STRING" size="256"/>
+          <Column id="YN_ORD" type="STRING" size="256"/>
+          <Column id="CD_PRC_BID" type="STRING" size="256"/>
+          <Column id="NO_TERM" type="STRING" size="256"/>
+          <Column id="CD_LOC" type="STRING" size="256"/>
+          <Column id="CD_ZIP" type="STRING" size="256"/>
+          <Column id="DS_ADDR1" type="STRING" size="256"/>
+          <Column id="DS_ADDR2" type="STRING" size="256"/>
+          <Column id="AM_CONST" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_BIZ" type="BIGDECIMAL" size="256"/>
+          <Column id="DS_RM_CONST" type="STRING" size="256"/>
+          <Column id="DT_BID_PUB" type="STRING" size="256"/>
+          <Column id="DT_PQ" type="STRING" size="256"/>
+          <Column id="HM_PQ" type="STRING" size="256"/>
+          <Column id="H_PQ" type="STRING" size="256"/>
+          <Column id="M_PQ" type="STRING" size="256"/>
+          <Column id="DT_AGREE" type="STRING" size="256"/>
+          <Column id="HM_AGREE" type="STRING" size="256"/>
+          <Column id="H_AGREE" type="STRING" size="256"/>
+          <Column id="M_AGREE" type="STRING" size="256"/>
+          <Column id="DT_SITE_EXPL" type="STRING" size="256"/>
+          <Column id="HM_SITE_EXPL" type="STRING" size="256"/>
+          <Column id="H_SITE_EXPL" type="STRING" size="256"/>
+          <Column id="M_SITE_EXPL" type="STRING" size="256"/>
+          <Column id="DT_BID_REG" type="STRING" size="256"/>
+          <Column id="HM_BID_REG" type="STRING" size="256"/>
+          <Column id="H_BID_REG" type="STRING" size="256"/>
+          <Column id="M_BID_REG" type="STRING" size="256"/>
+          <Column id="DT_BID" type="STRING" size="256"/>
+          <Column id="HM_BID" type="STRING" size="256"/>
+          <Column id="H_BID" type="STRING" size="256"/>
+          <Column id="M_BID" type="STRING" size="256"/>
+          <Column id="DT_BID_OPEN" type="STRING" size="256"/>
+          <Column id="HM_BID_OPEN" type="STRING" size="256"/>
+          <Column id="H_BID_OPEN" type="STRING" size="256"/>
+          <Column id="M_BID_OPEN" type="STRING" size="256"/>
+          <Column id="DT_REVIEW" type="STRING" size="256"/>
+          <Column id="HM_REVIEW" type="STRING" size="256"/>
+          <Column id="H_REVIEW" type="STRING" size="256"/>
+          <Column id="M_REVIEW" type="STRING" size="256"/>
+          <Column id="DT_BID_WIN" type="STRING" size="256"/>
+          <Column id="HM_BID_WIN" type="STRING" size="256"/>
+          <Column id="H_BID_WIN" type="STRING" size="256"/>
+          <Column id="M_BID_WIN" type="STRING" size="256"/>
+          <Column id="DT_SC_COMPL" type="STRING" size="256"/>
+          <Column id="DS_BID_LIC" type="STRING" size="256"/>
+          <Column id="DS_BID_CONST" type="STRING" size="256"/>
+          <Column id="DS_BID_CO" type="STRING" size="256"/>
+          <Column id="DS_EXPL_AREA" type="STRING" size="256"/>
+          <Column id="DS_SITE_EXPL" type="STRING" size="256"/>
+          <Column id="AM_ESTM" type="BIGDECIMAL" size="256"/>
+          <Column id="ID_USER_EXPL" type="STRING" size="256"/>
+          <Column id="DS_USER_EXPL" type="STRING" size="256"/>
+          <Column id="ID_FILE_ATTCH" type="STRING" size="256"/>
+          <Column id="ID_USER" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="DS_RM_OP" type="STRING" size="256"/>
+          <Column id="OUT_DATA" type="STRING" size="256"/>
+          <Column id="ST_APPR" type="STRING" size="256"/>
+          <Column id="NM_ST_APPR" type="STRING" size="256"/>
+          <Column id="ST_APPR2" type="STRING" size="256"/>
+          <Column id="NM_ST_APPR2" type="STRING" size="256"/>
+          <Column id="TY_MJ_CONST" type="STRING" size="256"/>
+          <Column id="NO_BID_CO" type="INT" size="256"/>
+          <Column id="NO_DSN_SCO" type="BIGDECIMAL" size="256"/>
+          <Column id="NO_COST_SCO" type="BIGDECIMAL" size="256"/>
+          <Column id="NO_DSN_COST_SCO" type="BIGDECIMAL" size="256"/>
+          <Column id="YN_SAUP" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_SAUP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="DS_SAUP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsBaseRst"/>
+      <Dataset id="dsDetail1">
+        <ColumnInfo>
+          <Column id="CD_PROJ" type="STRING" size="256"/>
+          <Column id="DT_SITE_EXPL" type="STRING" size="256"/>
+          <Column id="ID_USER_EXPL" type="STRING" size="256"/>
+          <Column id="DS_USER_EXPL" type="STRING" size="256"/>
+          <Column id="DS_EXPL" type="STRING" size="256"/>
+          <Column id="DS_INCU_CONST" type="STRING" size="256"/>
+          <Column id="DS_EXCP_CONST" type="STRING" size="256"/>
+          <Column id="DS_MAT_PAY" type="STRING" size="256"/>
+          <Column id="DS_RM_SP" type="STRING" size="256"/>
+          <Column id="ID_FILE_ATTCH" type="STRING" size="256"/>
+          <Column id="ST_APPR" type="STRING" size="256"/>
+          <Column id="NM_ST_APPR" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDetail2">
+        <ColumnInfo>
+          <Column id="CD_PROJ" type="STRING" size="256"/>
+          <Column id="DT_BID_RECOG" type="STRING" size="256"/>
+          <Column id="AM_DESIGN" type="STRING" size="256"/>
+          <Column id="DT_FIX" type="STRING" size="256"/>
+          <Column id="AM_FIX_SUP" type="STRING" size="256"/>
+          <Column id="AM_FIX_VAT" type="STRING" size="256"/>
+          <Column id="AM_ESTM_CAL" type="STRING" size="256"/>
+          <Column id="AM_ESTM_SUP" type="STRING" size="256"/>
+          <Column id="AM_ESTM_VAT" type="STRING" size="256"/>
+          <Column id="AM_BID_CAL" type="STRING" size="256"/>
+          <Column id="AM_BID_SUP" type="STRING" size="256"/>
+          <Column id="AM_BID_VAT" type="STRING" size="256"/>
+          <Column id="NO_BID_CO" type="STRING" size="256"/>
+          <Column id="NO_FCT" type="STRING" size="256"/>
+          <Column id="AM_ESTM" type="STRING" size="256"/>
+          <Column id="AM_INIT" type="STRING" size="256"/>
+          <Column id="RT_INIT" type="STRING" size="256"/>
+          <Column id="RT_BID" type="STRING" size="256"/>
+          <Column id="RT_SC" type="STRING" size="256"/>
+          <Column id="AM_BID_OUR" type="STRING" size="256"/>
+          <Column id="RT_BID_OUR" type="STRING" size="256"/>
+          <Column id="DS_BID_RLT" type="STRING" size="256"/>
+          <Column id="TY_BID_RLT" type="STRING" size="256"/>
+          <Column id="DT_CONT_SCHD" type="STRING" size="256"/>
+          <Column id="DS_ENTY" type="STRING" size="256"/>
+          <Column id="TY_ENTY" type="STRING" size="256"/>
+          <Column id="DS_OPNI" type="STRING" size="256"/>
+          <Column id="ST_APPR" type="STRING" size="256"/>
+          <Column id="NM_ST_APPR" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList1"/>
+      <Dataset id="dsList2"/>
+      <Dataset id="dsList3"/>
+      <Dataset id="dsList4"/>
+      <Dataset id="dsList5"/>
+      <Dataset id="dsList6"/>
+      <Dataset id="dsMinutes">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">00</Col>
+            <Col id="DS_CODE">00</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">10</Col>
+            <Col id="DS_CODE">10</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">20</Col>
+            <Col id="DS_CODE">20</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">30</Col>
+            <Col id="DS_CODE">30</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">40</Col>
+            <Col id="DS_CODE">40</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">50</Col>
+            <Col id="DS_CODE">50</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dshours">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">00</Col>
+            <Col id="DS_CODE">00</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">01</Col>
+            <Col id="DS_CODE">01</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">02</Col>
+            <Col id="DS_CODE">02</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">03</Col>
+            <Col id="DS_CODE">03</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">04</Col>
+            <Col id="DS_CODE">04</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">05</Col>
+            <Col id="DS_CODE">05</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">06</Col>
+            <Col id="DS_CODE">06</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">07</Col>
+            <Col id="DS_CODE">07</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">08</Col>
+            <Col id="DS_CODE">08</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">09</Col>
+            <Col id="DS_CODE">09</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">10</Col>
+            <Col id="DS_CODE">10</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">11</Col>
+            <Col id="DS_CODE">11</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">12</Col>
+            <Col id="DS_CODE">12</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">13</Col>
+            <Col id="DS_CODE">13</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">14</Col>
+            <Col id="DS_CODE">14</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">15</Col>
+            <Col id="DS_CODE">15</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">16</Col>
+            <Col id="DS_CODE">16</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">17</Col>
+            <Col id="DS_CODE">17</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">18</Col>
+            <Col id="DS_CODE">18</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">19</Col>
+            <Col id="DS_CODE">19</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">20</Col>
+            <Col id="DS_CODE">20</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">21</Col>
+            <Col id="DS_CODE">21</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">22</Col>
+            <Col id="DS_CODE">22</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">23</Col>
+            <Col id="DS_CODE">23</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDS_CD_CV_GO"/>
+      <Dataset id="dsDS_CD_CLS"/>
+      <Dataset id="dsDS_CD_PRC_BID"/>
+      <Dataset id="dsCD_LOC"/>
+      <Dataset id="dsRequired">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="DS_FIELD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_FIELD">DS_PROJ</Col>
+            <Col id="DS_FIELD">프로젝트명</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_CV_GO</Col>
+            <Col id="DS_FIELD">공공/민간</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_CLS</Col>
+            <Col id="DS_FIELD">공사분야</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_CLS_CONST</Col>
+            <Col id="DS_FIELD">상품분류</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">TY_ORD</Col>
+            <Col id="DS_FIELD">발주방식</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_CORP</Col>
+            <Col id="DS_FIELD">법인코드</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_DEPT</Col>
+            <Col id="DS_FIELD">사업관리부서</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDetail3">
+        <ColumnInfo>
+          <Column id="CD_PROJ" type="STRING" size="256"/>
+          <Column id="DS_PROJ" type="STRING" size="256"/>
+          <Column id="AM_ESTM" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_CONST" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_ESTM_CONST" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_INIT" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_PROJ" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_ESTM" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_QUAL" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_PERPECT" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_RST" type="BIGDECIMAL" size="256"/>
+          <Column id="DS_RM" type="STRING" size="256"/>
+          <Column id="ST_APPR" type="STRING" size="256"/>
+          <Column id="NM_ST_APPR" type="STRING" size="256"/>
+          <Column id="RT_YBID" type="STRING" size="256"/>
+          <Column id="RT_GBID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRcvYNCharge">
+        <ColumnInfo>
+          <ConstColumn id="YN_EXISTS" type="STRING" size="30"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsAppList"/>
+      <Dataset id="dsDetail4">
+        <ColumnInfo>
+          <Column id="ST_APPR" type="STRING" size="256"/>
+          <Column id="NM_ST_APPR" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsTY_MJ_CONST"/>
+      <Dataset id="dsYN_SAUP">
+        <ColumnInfo>
+          <ConstColumn id="YN_EXISTS" type="STRING" size="30"/>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">관리</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">미관리</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList6_Auth"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctxtCD_PROJ" propid="value" datasetid="dsSearch" columnid="CD_PROJ"/>
+      <BindItem id="item1" compid="divSearch.form.ctxtDS_PROJ" propid="value" datasetid="dsSearch" columnid="DS_PROJ"/>
+      <BindItem id="item2" compid="divData.form.tabData.tab1.form.ccboCD_CV_GO" propid="value" datasetid="dsBase" columnid="CD_CV_GO"/>
+      <BindItem id="item3" compid="divData.form.tabData.tab1.form.ccboCD_CLS" propid="value" datasetid="dsBase" columnid="CD_CLS"/>
+      <BindItem id="item5" compid="divData.form.tabData.tab1.form.ccfTY_ORD.form.CDTextBox" propid="value" datasetid="dsBase" columnid="TY_ORD"/>
+      <BindItem id="item6" compid="divData.form.tabData.tab1.form.ccboCD_PRC_BID" propid="value" datasetid="dsBase" columnid="CD_PRC_BID"/>
+      <BindItem id="item7" compid="divData.form.tabData.tab1.form.ctxtNO_TERM" propid="value" datasetid="dsBase" columnid="NO_TERM"/>
+      <BindItem id="item8" compid="divData.form.tabData.tab1.form.ccboCD_LOC" propid="value" datasetid="dsBase" columnid="CD_LOC"/>
+      <BindItem id="item9" compid="divData.form.tabData.tab1.form.ctxtAM_CONST" propid="value" datasetid="dsBase" columnid="AM_CONST"/>
+      <BindItem id="item10" compid="divData.form.tabData.tab1.form.ctxtAM_BIZ" propid="value" datasetid="dsBase" columnid="AM_BIZ"/>
+      <BindItem id="item12" compid="divData.form.tabData.tab1.form.ctclDT_PQ" propid="value" datasetid="dsBase" columnid="DT_PQ"/>
+      <BindItem id="item15" compid="divData.form.tabData.tab1.form.ctclDT_AGREE" propid="value" datasetid="dsBase" columnid="DT_AGREE"/>
+      <BindItem id="item18" compid="divData.form.tabData.tab1.form.ctclDT_SITE_EXPL" propid="value" datasetid="dsBase" columnid="DT_SITE_EXPL"/>
+      <BindItem id="item27" compid="divData.form.tabData.tab1.form.ctclDT_SC_COMPL" propid="value" datasetid="dsBase" columnid="DT_SC_COMPL"/>
+      <BindItem id="item31" compid="divData.form.tabData.tab1.form.ctxtDS_BID_LIC" propid="value" datasetid="dsBase" columnid="DS_BID_LIC"/>
+      <BindItem id="item32" compid="divData.form.tabData.tab1.form.ctxtDS_BID_CONST" propid="value" datasetid="dsBase" columnid="DS_BID_CONST"/>
+      <BindItem id="item33" compid="divData.form.tabData.tab1.form.ctxtDS_BID_CO" propid="value" datasetid="dsBase" columnid="DS_BID_CO"/>
+      <BindItem id="item34" compid="divData.form.tabData.tab1.form.ctxtDS_EXPL_AREA" propid="value" datasetid="dsBase" columnid="DS_EXPL_AREA"/>
+      <BindItem id="item35" compid="divData.form.tabData.tab1.form.txtDS_SITE_EXPL" propid="value" datasetid="dsBase" columnid="DS_SITE_EXPL"/>
+      <BindItem id="item36" compid="divData.form.tabData.tab1.form.ctxtAM_ESTM" propid="value" datasetid="dsBase" columnid="AM_ESTM"/>
+      <BindItem id="item37" compid="divData.form.tabData.tab1.form.ccfID_USER_EXPL.form.CDTextBox" propid="value" datasetid="dsBase" columnid="ID_USER_EXPL"/>
+      <BindItem id="item38" compid="divData.form.tabData.tab1.form.ctxtDS_ADDR2" propid="value" datasetid="dsBase" columnid="DS_ADDR2"/>
+      <BindItem id="item40" compid="divData.form.tabData.tab1.form.ccfTY_ORD.form.DSTextBox" propid="value" datasetid="dsBase" columnid="DS_ORD"/>
+      <BindItem id="item41" compid="divData.form.tabData.tab1.form.ccfID_USER_EXPL.form.DSTextBox" propid="value" datasetid="dsBase" columnid="DS_USER_EXPL"/>
+      <BindItem id="item42" compid="divData.form.tabData.tab1.form.txtDS_RM_CONST" propid="value" datasetid="dsBase" columnid="DS_RM_CONST"/>
+      <BindItem id="item44" compid="divData.form.tabData.tab2.form.ctxtID_USER_EXPL" propid="value" datasetid="dsDetail1" columnid="ID_USER_EXPL"/>
+      <BindItem id="item45" compid="divData.form.tabData.tab2.form.ctxtDS_USER_EXPL" propid="value" datasetid="dsDetail1" columnid="DS_USER_EXPL"/>
+      <BindItem id="item46" compid="divData.form.tabData.tab2.form.txtDS_EXPL" propid="value" datasetid="dsDetail1" columnid="DS_EXPL"/>
+      <BindItem id="item47" compid="divData.form.tabData.tab2.form.ctxtDS_INCU_CONST" propid="value" datasetid="dsDetail1" columnid="DS_INCU_CONST"/>
+      <BindItem id="item48" compid="divData.form.tabData.tab2.form.ctxtDS_EXCP_CONST" propid="value" datasetid="dsDetail1" columnid="DS_EXCP_CONST"/>
+      <BindItem id="item49" compid="divData.form.tabData.tab2.form.ctxtDS_MAT_PAY" propid="value" datasetid="dsDetail1" columnid="DS_MAT_PAY"/>
+      <BindItem id="item50" compid="divData.form.tabData.tab2.form.txtDS_RM_SP" propid="value" datasetid="dsDetail1" columnid="DS_RM_SP"/>
+      <BindItem id="item51" compid="divData.form.tabData.tab3.form.txtDS_RM_OP" propid="value" datasetid="dsBase" columnid="DS_RM_OP"/>
+      <BindItem id="item53" compid="divData.form.tabData.tab4.form.ctxtAM_DESIGN" propid="value" datasetid="dsDetail2" columnid="AM_DESIGN"/>
+      <BindItem id="item55" compid="divData.form.tabData.tab4.form.ctxtAM_FIX_SUP" propid="value" datasetid="dsDetail2" columnid="AM_FIX_SUP"/>
+      <BindItem id="item56" compid="divData.form.tabData.tab4.form.ctxtAM_FIX_VAT" propid="value" datasetid="dsDetail2" columnid="AM_FIX_VAT"/>
+      <BindItem id="item57" compid="divData.form.tabData.tab4.form.ctxtAM_ESTM_SUP" propid="value" datasetid="dsDetail2" columnid="AM_ESTM_SUP"/>
+      <BindItem id="item58" compid="divData.form.tabData.tab4.form.ctxtAM_BID_SUP" propid="value" datasetid="dsDetail2" columnid="AM_BID_SUP"/>
+      <BindItem id="item61" compid="divData.form.tabData.tab4.form.ctxtAM_ESTM_VAT" propid="value" datasetid="dsDetail2" columnid="AM_ESTM_VAT"/>
+      <BindItem id="item63" compid="divData.form.tabData.tab4.form.ctxtAM_ESTM" propid="value" datasetid="dsDetail2" columnid="AM_ESTM"/>
+      <BindItem id="item66" compid="divData.form.tabData.tab4.form.ctxtNO_FCT" propid="value" datasetid="dsDetail2" columnid="NO_FCT"/>
+      <BindItem id="item72" compid="divData.form.tabData.tab4.form.ctxtNO_BID_CO" propid="value" datasetid="dsDetail2" columnid="NO_BID_CO"/>
+      <BindItem id="item62" compid="divData.form.tabData.tab4.form.ctxtAM_BID_OUR" propid="value" datasetid="dsDetail2" columnid="AM_BID_OUR"/>
+      <BindItem id="item64" compid="divData.form.tabData.tab4.form.ctxtAM_INIT" propid="value" datasetid="dsDetail2" columnid="AM_INIT"/>
+      <BindItem id="item65" compid="divData.form.tabData.tab4.form.ctxtRT_INIT" propid="value" datasetid="dsDetail2" columnid="RT_INIT"/>
+      <BindItem id="item67" compid="divData.form.tabData.tab4.form.ctxtRT_BID_OUR" propid="value" datasetid="dsDetail2" columnid="RT_BID_OUR"/>
+      <BindItem id="item68" compid="divData.form.tabData.tab4.form.ctxtRT_BID" propid="value" datasetid="dsDetail2" columnid="RT_BID"/>
+      <BindItem id="item69" compid="divData.form.tabData.tab4.form.ctxtTY_BID_RLT" propid="value" datasetid="dsDetail2" columnid="DS_BID_RLT"/>
+      <BindItem id="item70" compid="divData.form.tabData.tab4.form.ctxtAM_BID_VAT" propid="value" datasetid="dsDetail2" columnid="AM_BID_VAT"/>
+      <BindItem id="item71" compid="divData.form.tabData.tab4.form.ctxtTY_ENTY" propid="value" datasetid="dsDetail2" columnid="DS_ENTY"/>
+      <BindItem id="item73" compid="divData.form.tabData.tab4.form.ctxtRT_SC" propid="value" datasetid="dsDetail2" columnid="RT_SC"/>
+      <BindItem id="item74" compid="divData.form.tabData.tab4.form.txtDS_OPNI" propid="value" datasetid="dsDetail2" columnid="DS_OPNI"/>
+      <BindItem id="item59" compid="divData.form.tabData.tab4.form.ctxtAM_BID_CAL" propid="value" datasetid="dsDetail2" columnid="AM_BID_CAL"/>
+      <BindItem id="item60" compid="divData.form.tabData.tab4.form.ctxtAM_ESTM_CAL" propid="value" datasetid="dsDetail2" columnid="AM_ESTM_CAL"/>
+      <BindItem id="item77" compid="divData.form.tabData.tab1.form.ctclDT_REVIEW" propid="value" datasetid="dsBase" columnid="DT_REVIEW"/>
+      <BindItem id="item4" compid="divData.form.tabData.tab1.form.ccfCD_CLS_CONST.form.CDTextBox" propid="value" datasetid="dsBase" columnid="CD_CLS_CONST"/>
+      <BindItem id="item39" compid="divData.form.tabData.tab1.form.ccfCD_CLS_CONST.form.DSTextBox" propid="value" datasetid="dsBase" columnid="DS_CLS_CONST"/>
+      <BindItem id="item81" compid="divData.form.tabData.tab2.form.ctclDT_SITE_EXPL" propid="value" datasetid="dsBase" columnid="DT_SITE_EXPL"/>
+      <BindItem id="item82" compid="divData.form.tabData.tab2.form.ccboH_SITE_EXPL" propid="value" datasetid="dsBase" columnid="H_SITE_EXPL"/>
+      <BindItem id="item83" compid="divData.form.tabData.tab2.form.ccboM_SITE_EXPL" propid="value" datasetid="dsBase" columnid="M_SITE_EXPL"/>
+      <BindItem id="item43" compid="divData.form.tabData.tab4.form.ctclDT_BID_RECOG" propid="value" datasetid="dsDetail2" columnid="DT_BID_RECOG"/>
+      <BindItem id="item84" compid="divData.form.tabData.tab4.form.ctclDT_FIX" propid="value" datasetid="dsDetail2" columnid="DT_FIX"/>
+      <BindItem id="item52" compid="divData.form.tabData.tab8.form.ctxtAM_ESTM" propid="value" datasetid="dsDetail3" columnid="AM_ESTM_CONST"/>
+      <BindItem id="item54" compid="divData.form.tabData.tab8.form.ctxtAM_ESTM00" propid="value" datasetid="dsDetail3" columnid="AM_INIT"/>
+      <BindItem id="item85" compid="divData.form.tabData.tab8.form.ctxtAM_INIT" propid="value" datasetid="dsDetail3" columnid="AM_PROJ"/>
+      <BindItem id="item86" compid="divData.form.tabData.tab8.form.ctxtRT_INIT" propid="value" datasetid="dsDetail3" columnid="RT_ESTM"/>
+      <BindItem id="item87" compid="divData.form.tabData.tab8.form.ctxtRT_BID" propid="value" datasetid="dsDetail3" columnid="RT_QUAL"/>
+      <BindItem id="item88" compid="divData.form.tabData.tab8.form.ctxtRT_BID_OUR" propid="value" datasetid="dsDetail3" columnid="RT_PERPECT"/>
+      <BindItem id="item89" compid="divData.form.tabData.tab8.form.ctxtRT_SC" propid="value" datasetid="dsDetail3" columnid="AM_RST"/>
+      <BindItem id="item90" compid="divData.form.tabData.tab8.form.txtDS_OPNI" propid="value" datasetid="dsDetail3" columnid="DS_RM"/>
+      <BindItem id="item11" compid="divData.form.tabData.tab1.form.ctxtHM_PQ" propid="value" datasetid="dsBase" columnid="HM_PQ"/>
+      <BindItem id="item21" compid="divData.form.tabData.tab1.form.ctxtHM_PQ00" propid="value" datasetid="dsBase" columnid="HM_AGREE"/>
+      <BindItem id="item22" compid="divData.form.tabData.tab1.form.ctxtHM_PQ00_00" propid="value" datasetid="dsBase" columnid="HM_SITE_EXPL"/>
+      <BindItem id="item23" compid="divData.form.tabData.tab1.form.ctxtHM_PQ00_00_00" propid="value" datasetid="dsBase" columnid="HM_BID_REG"/>
+      <BindItem id="item24" compid="divData.form.tabData.tab1.form.ctxtHM_PQ00_00_00_00" propid="value" datasetid="dsBase" columnid="HM_BID"/>
+      <BindItem id="item25" compid="divData.form.tabData.tab1.form.ctclDT_BID00" propid="value" datasetid="dsBase" columnid="DT_BID"/>
+      <BindItem id="item26" compid="divData.form.tabData.tab1.form.ctclDT_BID_REG" propid="value" datasetid="dsBase" columnid="DT_BID_REG"/>
+      <BindItem id="item28" compid="divData.form.tabData.tab1.form.ctclDT_BID_OPEN00" propid="value" datasetid="dsBase" columnid="DT_BID_OPEN"/>
+      <BindItem id="item29" compid="divData.form.tabData.tab1.form.ctxtHM_PQ00_00_00_00_00" propid="value" datasetid="dsBase" columnid="HM_BID_OPEN"/>
+      <BindItem id="item30" compid="divData.form.tabData.tab1.form.ctxtHM_PQ00_00_00_00_00_00" propid="value" datasetid="dsBase" columnid="HM_REVIEW"/>
+      <BindItem id="item78" compid="divData.form.tabData.tab1.form.ctxtHM_PQ00_00_00_00_00_00_00" propid="value" datasetid="dsBase" columnid="HM_BID_WIN"/>
+      <BindItem id="item79" compid="divData.form.tabData.tab1.form.ctclDT_BID_WIN" propid="value" datasetid="dsBase" columnid="DT_BID_WIN"/>
+      <BindItem id="item13" compid="divData.form.staTab1Title01_00_01_00" propid="text" datasetid="dsBase" columnid="NM_ST_APPR"/>
+      <BindItem id="item14" compid="divData.form.tabData.tab1.form.staTab1Title01_00_01_00" propid="text" datasetid="dsBase" columnid="NM_ST_APPR"/>
+      <BindItem id="item16" compid="divData.form.tabData.tab2.form.staTab1Title01_00_01_00" propid="text" datasetid="dsDetail1" columnid="NM_ST_APPR"/>
+      <BindItem id="item17" compid="divData.form.tabData.tab3.form.staTab1Title01_00_01_00" propid="text" datasetid="dsDetail4" columnid="NM_ST_APPR"/>
+      <BindItem id="item19" compid="divData.form.tabData.tab8.form.staTab1Title01_00_01_00" propid="text" datasetid="dsDetail3" columnid="NM_ST_APPR"/>
+      <BindItem id="item20" compid="divData.form.tabData.tab4.form.staTab1Title01_00_01_00" propid="text" datasetid="dsDetail2" columnid="NM_ST_APPR"/>
+      <BindItem id="item75" compid="divData.form.tabData.tab1.form.ctclDT_BID_PUB" propid="value" datasetid="dsBase" columnid="DT_BID_PUB"/>
+      <BindItem id="item76" compid="divData.form.tabData.tab1.form.ccboCD_CLS00" propid="value" datasetid="dsBase" columnid="TY_MJ_CONST"/>
+      <BindItem id="item80" compid="divData.form.tabData.tab1.form.ctxtAM_CONST_VAT" propid="value" datasetid="dsBase" columnid="NO_BID_CO"/>
+      <BindItem id="item91" compid="divData.form.tabData.tab3.form.ctxtNO_DSN_SCO" propid="value" datasetid="dsBase" columnid="NO_DSN_SCO"/>
+      <BindItem id="item92" compid="divData.form.tabData.tab1.form.ctxtSZ_ARCH_M00" propid="value" datasetid="dsBase" columnid="SZ_AREA_M"/>
+      <BindItem id="item93" compid="divData.form.tabData.tab3.form.ctxtNO_COST_SCO" propid="value" datasetid="dsBase" columnid="NO_COST_SCO"/>
+      <BindItem id="item94" compid="divData.form.tabData.tab3.form.ctxtNO_COST_SCO_TT" propid="value" datasetid="dsBase" columnid="NO_DSN_COST_SCO"/>
+      <BindItem id="item95" compid="divData.form.tabData.tab1.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsBase" columnid="CD_CORP"/>
+      <BindItem id="item96" compid="divData.form.tabData.tab1.form.ccfCD_SAUP.form.CDTextBox" propid="value" datasetid="dsBase" columnid="CD_DEPT"/>
+      <BindItem id="item97" compid="divData.form.tabData.tab1.form.ccboYN_SAUP" propid="value" datasetid="dsBase" columnid="YN_SAUP"/>
+      <BindItem id="item98" compid="divData.form.tabData.tab1.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsBase" columnid="DS_CORP"/>
+      <BindItem id="item99" compid="divData.form.tabData.tab1.form.ccfCD_SAUP.form.DSTextBox" propid="value" datasetid="dsBase" columnid="DS_DEPT"/>
+      <BindItem id="item100" compid="divData.form.tabData.tab8.form.ctxtAM_ESTM00_00" propid="value" datasetid="dsDetail3" columnid="RT_YBID"/>
+      <BindItem id="item101" compid="divData.form.tabData.tab8.form.ctxtAM_ESTM00_00_00" propid="value" datasetid="dsDetail3" columnid="RT_GBID"/>
+    </Bind>
+  </Form>
+</FDL>

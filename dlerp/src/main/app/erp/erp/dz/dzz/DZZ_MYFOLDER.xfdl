@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="500" height="460" titletext="폴더관리" onload="form_onload" onclose="form_onclose">
+    <Layouts>
+      <Layout>
+        <Static id="sta01" taborder="0" text="폴더" left="20" top="10" width="120" height="35" cssclass="sta_TITLE_Bg"/>
+        <Div id="divButton" taborder="1" text="div00" top="10" height="37" right="20" width="190">
+          <Layouts>
+            <Layout>
+              <Button id="btnDel" taborder="0" text="폴더삭제" top="5" height="26" right="0" width="67" onclick="divButton_btnDel_onclick"/>
+              <Button id="btnAdd" taborder="1" text="폴더추가" top="5" height="26" right="btnDel:3" width="67" onclick="divButton_btnAdd_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="2" text="div00" left="20" top="sta01:0" right="20" bottom="42">
+          <Layouts>
+            <Layout>
+              <Static id="staBg1" taborder="1" left="0" top="0" height="30" cssclass="sta_WF_tablebgT" right="0"/>
+              <Static id="staLabel1_00" taborder="0" text="폴더명" left="0" top="0" width="80" height="30" cssclass="sta_WF_tablelabelTE"/>
+              <Grid id="grdTree" taborder="2" left="0" top="staBg1:10" autofittype="col" treeinitstatus="expand,null" treeuseimage="true" treeusebutton="use" treeusecheckbox="false" treeuseline="false" scrollbarsize="5" visible="true" right="0" bottom="0" binddataset="dsList">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="20" band="left"/>
+                      <Column size="422"/>
+                      <Column size="0"/>
+                      <Column size="0"/>
+                      <Column size="0"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="34"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell text="expr:dataset.getRowType(currow) == 2 ? &quot;I&quot; :  (dataset.getRowType(currow) == 4 ? &quot;U&quot;  : (dataset.getRowType(currow) == 8 ? &quot;D&quot; : &quot;&quot;))" cssclass="expr:dataset.getRowType(currow) == 2 ? &quot;insert&quot; :  (dataset.getRowType(currow) == 4 ? &quot;update&quot;  : (dataset.getRowType(currow) == 8 ? &quot;delete&quot; : &quot;&quot;))"/>
+                      <Cell col="1" edittype="tree" cssclass="expr:TY_MENU!=&quot;메뉴&quot; ? &quot;&quot; : NO_LEVEL==1 ? &quot;level0&quot; : NO_LEVEL==2 ? &quot;level1&quot; : NO_LEVEL==3 ?  &quot;level2&quot; : NO_LEVEL==4 ?  &quot;level3&quot; : &quot;&quot;" treestartlevel="0" treelevel="bind:NO_LEVEL" textAlign="left" displaytype="treeitemcontrol" text="bind:FOLDER_NAME" tooltiptext="bind:FOLDER_NAME"/>
+                      <Cell col="2" displaytype="none" text="bind:TY_MENU"/>
+                      <Cell col="3" displaytype="none" text="bind:CD_MODULE"/>
+                      <Cell col="4" displaytype="none" text="bind:ID_FORM"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Edit id="edtFOLDER_NAME" taborder="3" left="82" top="3" width="368" height="24" readonly="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divButton2" taborder="3" text="div00" height="37" left="20" right="20" bottom="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnCancle" taborder="1" text="닫기" top="5" height="26" right="0" width="67" onclick="divButton2_btnCancle_onclick"/>
+              <Button id="btnOk" taborder="0" text="저장" top="5" height="26" right="btnCancle:5" width="67" onclick="fnSave"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.fvIsRetrive = false;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	//this.gfnFormOnLoad(this);	
+	//this.gfnFormInfo(this);		
+	// ---------------------------//
+
+	this.fnSelect();
+};
+
+this.form_onclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	this.gfnClosePopup(this.fvIsRetrive);
+};
+
+
+this.fnSelect = function()
+{
+	var CD_CORP = this.objApp.gdsUserInfo.getColumn(this.objApp.gdsUserInfo.rowposition, 'CD_CORP');
+	var CD_DEPT = this.objApp.gdsUserInfo.getColumn(this.objApp.gdsUserInfo.rowposition, 'CD_DEPT');
+	var ID_USER = this.objApp.gdsUserInfo.getColumn(this.objApp.gdsUserInfo.rowposition, 'ID_USER');
+	
+	this.dsSearch.clearData();		
+	
+	var nRow = this.dsSearch.addRow();
+	this.dsSearch.setColumn(nRow, 'CD_CORP', CD_CORP);
+	this.dsSearch.setColumn(nRow, 'CD_DEPT', CD_DEPT);
+	this.dsSearch.setColumn(nRow, 'ID_USER', ID_USER);
+			
+	var strSvcId    = "search";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSearch";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+			
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+this.fnSave = function()
+{
+	var CD_CORP = this.objApp.gdsUserInfo.getColumn(this.objApp.gdsUserInfo.rowposition, 'CD_CORP');
+	var CD_DEPT = this.objApp.gdsUserInfo.getColumn(this.objApp.gdsUserInfo.rowposition, 'CD_DEPT');
+	var ID_USER = this.objApp.gdsUserInfo.getColumn(this.objApp.gdsUserInfo.rowposition, 'ID_USER');
+	
+	this.dsInsert.clearData();
+	this.dsUpdate.clearData();
+	this.dsDelete.clearData();
+	
+	for (var i=0; i<this.dsList.rowcount; i++)
+	{
+		var CD_FOLDER = this.dsList.getColumn(i, 'CD_FOLDER');
+		var CD_FOLDER_PARENTS = this.dsList.getColumn(i, 'CD_FOLDER_PARENTS');
+		var FOLDER_NAME = this.dsList.getColumn(i, 'FOLDER_NAME');
+		
+		if (this.dsList.getRowType(i) == Dataset.ROWTYPE_INSERT && this.dsList.getRowType(i) == Dataset.ROWTYPE_UPDATE)
+		{
+			if (this.gfnIsNull(FOLDER_NAME))
+			{
+				this.gfnAlert('폴더명은 필수입니다.');
+				return false;
+			}
+		}
+	
+		switch (this.dsList.getRowType(i))
+		{
+			case Dataset.ROWTYPE_INSERT : 
+				var nRow = this.dsInsert.addRow();
+				this.dsInsert.setColumn(nRow, 'CD_CORP', CD_CORP);
+				this.dsInsert.setColumn(nRow, 'CD_DEPT', CD_DEPT);
+				this.dsInsert.setColumn(nRow, 'ID_USER', ID_USER);
+				this.dsInsert.setColumn(nRow, 'CD_FOLDER', CD_FOLDER);
+				this.dsInsert.setColumn(nRow, 'CD_FOLDER_PARENTS', CD_FOLDER_PARENTS);
+				this.dsInsert.setColumn(nRow, 'FOLDER_NAME', FOLDER_NAME);
+				break;
+			case Dataset.ROWTYPE_UPDATE : 
+				var nRow = this.dsUpdate.addRow();
+				this.dsUpdate.setColumn(nRow, 'CD_CORP', CD_CORP);
+				this.dsUpdate.setColumn(nRow, 'CD_DEPT', CD_DEPT);
+				this.dsUpdate.setColumn(nRow, 'ID_USER', ID_USER);
+				this.dsUpdate.setColumn(nRow, 'CD_FOLDER', CD_FOLDER);
+				this.dsUpdate.setColumn(nRow, 'FOLDER_NAME', FOLDER_NAME);
+				break;
+			case Dataset.ROWTYPE_DELETE : 
+				var nRow = this.dsDelete.addRow();
+				this.dsDelete.setColumn(nRow, 'CD_CORP', CD_CORP);
+				this.dsDelete.setColumn(nRow, 'CD_DEPT', CD_DEPT);
+				this.dsDelete.setColumn(nRow, 'ID_USER', ID_USER);
+				this.dsDelete.setColumn(nRow, 'CD_FOLDER', CD_FOLDER);
+				break;
+		}
+	}
+	
+	var arrIndData = [];
+	if (this.dsInsert.rowcount > 0) arrIndData.push("insert=dsInsert");
+	if (this.dsUpdate.rowcount > 0) arrIndData.push("update=dsUpdate");
+	if (this.dsDelete.rowcount > 0) arrIndData.push("delete=dsDelete");
+	if (arrIndData.length == 0) return;
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = arrIndData.join(' ');
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+			
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (errorCode !== 0)
+	{
+		this.gfnAlert(errorMsg);
+		return false;
+	}
+		
+	if (svcID == "search") 
+	{
+		this.dsList.insertRow(0);
+		this.dsList.setColumn(0, 'NO_LEVEL', 0);
+		this.dsList.setColumn(0, 'CD_FOLDER', '');
+		this.dsList.setColumn(0, 'FOLDER_NAME', '기본');
+		this.dsList.applyChange();
+	}
+	else if (svcID == "save") 
+	{
+		this.fvIsRetrive = true;
+		this.fnSelect();
+	}
+};
+
+this.divButton_btnAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nParents = this.dsList.rowposition;
+	var CD_FOLDER = this.dsList.getColumn(nParents, 'CD_FOLDER');
+	var NO_LEVEL = this.dsList.getColumn(nParents, 'NO_LEVEL');
+	
+	if (this.divData.form.grdTree.isTreeRootRow(nParents) || (!this.gfnIsNull(CD_FOLDER) && NO_LEVEL < 3))
+	{
+		var nRow = this.dsList.insertRow(nParents + 1);
+		this.dsList.setColumn(nRow, 'CD_FOLDER_PARENTS', CD_FOLDER);
+		this.dsList.setColumn(nRow, 'NO_LEVEL', NO_LEVEL + 1);
+		this.divData.form.edtFOLDER_NAME.setFocus();
+	}	
+};
+
+this.divButton_btnDel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsList.set_updatecontrol(false);
+	
+	var nCurRow = this.dsList.rowposition;
+
+	if (!this.divData.form.grdTree.isTreeRootRow(nCurRow))
+	{
+		var nCnt = this.divData.form.grdTree.getTreeChildCount(nCurRow);
+
+		if (nCnt > 0)
+		{
+			var nOffset = this.divData.form.grdTree.getTreeSiblingRow( nCurRow );
+			
+			if (nOffset == -1)
+			{
+				var nParents = this.divData.form.grdTree.getTreeParentRow( nCurRow );
+				nOffset = this.divData.form.grdTree.getTreeSiblingRow( nParents );
+			}
+			
+			if (nOffset == -1)
+			{
+				nOffset = this.dsList.rowcount;
+			}
+			
+			for (var i = nCurRow; i < nOffset; i++)
+			{
+				this.dsList.setRowType(i, Dataset.ROWTYPE_DELETE);	
+			}
+		}
+		else 
+		{
+			this.dsList.setRowType(nCurRow, Dataset.ROWTYPE_DELETE);			
+		}
+	}
+	
+	this.dsList.set_updatecontrol(true);
+};
+
+
+
+this.divButton2_btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnClosePopup(this.fvIsRetrive );
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="ID_USER" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DZZPR_MYMENU_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DZZPR_MYMENU_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DZZPR_MYMENU_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DZZPR_MYMENU_DELETE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsInsert">
+        <ColumnInfo>
+          <Column id="ID_USER" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="CD_FOLDER" type="STRING" size="256"/>
+          <Column id="FOLDER_NAME" type="STRING" size="256"/>
+          <Column id="CD_FOLDER_PARENTS" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsUpdate">
+        <ColumnInfo>
+          <Column id="ID_USER" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="CD_FOLDER" type="STRING" size="256"/>
+          <Column id="FOLDER_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDelete">
+        <ColumnInfo>
+          <Column id="ID_USER" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="CD_FOLDER" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="nx_flag" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="CD_FOLDER" type="STRING" size="256"/>
+          <Column id="CD_FOLDER_PARENTS" type="STRING" size="256"/>
+          <Column id="FOLDER_NAME" type="STRING" size="256"/>
+          <Column id="NO_LEVEL" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.edtFOLDER_NAME" propid="value" datasetid="dsList" columnid="FOLDER_NAME"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,879 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="참여업체선정(HUB)" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SITE" taborder="0" text="현장코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFSITE" CDTextWidth="70" taborder="1" left="staCD_SITE:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" enable="false"/>
+              <Static id="staNO_BID" taborder="2" text="입찰번호" left="ccfCD_SITE:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfNO_BID" CodeFindName="DCX_CFORDERPLAN_01" CDTextWidth="70" taborder="3" left="staNO_BID:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" enable="false"/>
+              <Static id="staDS_VENDOR" taborder="4" text="업체명" left="0.0" top="staCD_SITE:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="txtDS_VENDOR" taborder="5" left="staDS_VENDOR:0.0" top="ccfCD_SITE:10.0" width="120" height="24.0"/>
+              <Static id="staDS_PRESIDENT" taborder="6" text="대표자명" left="txtDS_VENDOR:0.0" top="ccfCD_SITE:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="txtDS_PREGIDENT" taborder="7" left="staDS_PRESIDENT:0.0" top="staNO_BID:10.0" width="120" height="24.0"/>
+              <Static id="staNO_SJC" taborder="8" text="사업자번호" left="0.0" top="staDS_VENDOR:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="txtNO_SJC" taborder="9" left="staNO_SJC:0.0" top="txtDS_VENDOR:10.0" width="120" height="24.0"/>
+              <Static id="staCD_COSTCLASS" taborder="10" text="부문" left="txtNO_SJC:0.0" top="staDS_VENDOR:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboCD_COSTCLASS" taborder="11" left="staCD_COSTCLASS:0.0" top="txtDS_VENDOR:10.0" width="90" height="24.0" datacolumn="DS_CODE" codecolumn="CD_CODE" innerdataset="dsCD_COSTCLASS"/>
+              <Static id="staCD_LICCOST" taborder="12" text="공종코드" left="cboCD_COSTCLASS:0.0" top="staDS_VENDOR:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboCD_LICCOST" taborder="13" left="staCD_LICCOST:0.0" top="txtDS_VENDOR:10.0" width="90" height="24.0" datacolumn="DS_CODE" codecolumn="CD_CODE" innerdataset="dsCD_LICCOST"/>
+              <Static id="staCD_SYSTEM08" taborder="14" text="보유면허" left="0.0" top="staNO_SJC:10.0" width="92.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Static id="staCD_SYSTEM09" taborder="15" text="1." left="staCD_SYSTEM08:0.0" top="txtNO_SJC:10.0" width="92.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboCD_LICENSE1" taborder="16" left="staCD_SYSTEM09:0.0" top="txtNO_SJC:10.0" width="110" height="24.0" datacolumn="DS_CODE" codecolumn="CD_CODE" innerdataset="dsCD_LICENSE"/>
+              <Static id="staCD_SYSTEM10" taborder="17" text="2." left="cboCD_LICENSE1:0.0" top="staCD_LICCOST:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboCD_LICENSE2" taborder="18" left="staCD_SYSTEM10:0.0" top="cboCD_LICCOST:10.0" width="110" height="24.0" codecolumn="CD_CODE" datacolumn="DS_CODE" innerdataset="dsCD_LICENSE"/>
+              <Static id="staCD_SYSTEM11" taborder="19" text="3." left="cboCD_LICENSE2:0.0" top="cboCD_LICCOST:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboCD_LICENSE3" taborder="20" left="staCD_SYSTEM11:0.0" top="staCD_LICCOST:10.0" width="110" height="24.0" codecolumn="CD_CODE" datacolumn="DS_CODE" innerdataset="dsCD_LICENSE"/>
+              <Static id="staCD_REGIO" taborder="21" text="실적위치" left="0.0" top="staCD_SYSTEM08:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <CheckBox id="chkCD_REGIO_00" taborder="22" text="전체" left="staCD_REGIO:0.0" top="cboCD_LICENSE1:10.0" width="50" height="24.0" truevalue="00" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_01" taborder="23" text="서울" left="chkCD_REGIO_00:0.0" top="cboCD_LICENSE2:10.0" width="50" height="24.0" truevalue="01" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_02" taborder="24" text="부산" left="chkCD_REGIO_01:0.0" top="cboCD_LICENSE2:10.0" width="50" height="24.0" truevalue="02" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_03" taborder="25" text="인천" left="chkCD_REGIO_02:0.0" top="cboCD_LICENSE3:10.0" width="50" height="24.0" truevalue="03" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_04" taborder="26" text="광주" left="chkCD_REGIO_03:0.0" top="cboCD_LICENSE3:10.0" width="50" height="24.0" truevalue="04" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_05" taborder="27" text="대구" left="chkCD_REGIO_04:0.0" top="cboCD_LICENSE3:10.0" width="50" height="24.0" truevalue="05" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_06" taborder="28" text="대전" left="chkCD_REGIO_05:0.0" top="cboCD_LICENSE3:10.0" width="50" height="24.0" truevalue="06" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_07" taborder="29" text="울산" left="chkCD_REGIO_06:0.0" top="cboCD_LICENSE3:10.0" width="50" height="24.0" truevalue="07" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_08" taborder="30" text="강원" left="chkCD_REGIO_07:0.0" top="cboCD_LICENSE3:10.0" width="50" height="24.0" truevalue="08" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_09" taborder="31" text="경기" left="staCD_REGIO:0.0" top="chkCD_REGIO_00:10.0" width="50" height="24.0" truevalue="09" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_10" taborder="32" text="경남" left="chkCD_REGIO_09:0.0" top="chkCD_REGIO_01:10.0" width="50" height="24.0" truevalue="10" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_11" taborder="33" text="경북" left="chkCD_REGIO_10:0.0" top="chkCD_REGIO_02:10.0" width="50" height="24.0" truevalue="11" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_12" taborder="34" text="전남" left="chkCD_REGIO_11:0.0" top="chkCD_REGIO_03:10.0" width="50" height="24.0" truevalue="12" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_13" taborder="35" text="전북" left="chkCD_REGIO_12:0.0" top="chkCD_REGIO_04:10.0" width="50" height="24.0" truevalue="13" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_14" taborder="36" text="제주" left="chkCD_REGIO_13:0.0" top="chkCD_REGIO_05:10.0" width="50" height="24.0" truevalue="14" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_15" taborder="37" text="충남" left="chkCD_REGIO_14:0.0" top="chkCD_REGIO_06:10.0" width="50" height="24.0" truevalue="15" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_16" taborder="38" text="충북" left="chkCD_REGIO_15:0.0" top="chkCD_REGIO_07:10.0" width="50" height="24.0" truevalue="16" falsevalue=""/>
+              <CheckBox id="chkCD_REGIO_24" taborder="39" text="세종" left="chkCD_REGIO_16:0.0" top="chkCD_REGIO_08:10.0" width="50" height="24.0" truevalue="24" falsevalue=""/>
+              <Static id="staCREDIT_GRADE" taborder="40" text="신용등급" left="0.0" top="chkCD_REGIO_09:10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboCREDIT_GRADE" taborder="41" left="staCREDIT_GRADE:0.0" top="chkCD_REGIO_09:10.0" width="70" height="24.0" datacolumn="DS_CODE" codecolumn="CD_CODE" innerdataset="dsCREDIT_GRADE"/>
+              <Static id="staCD_SYSTEM15" taborder="42" text="이상" left="cboCREDIT_GRADE:0.0" top="chkCD_REGIO_10:10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <Static id="staCASH_FLOW_GRADE" taborder="43" text="현금흐름등급" left="staCD_SYSTEM15:0.0" top="staCD_SITE:10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboCASH_FLOW_GRADE" taborder="44" left="staCASH_FLOW_GRADE:0.0" top="chkCD_REGIO_11:10.0" width="70" height="24.0" datacolumn="DS_CODE" codecolumn="CD_CODE" innerdataset="dsCASH_FLOW_GRADE"/>
+              <Static id="staCD_SYSTEM17" taborder="45" text="이상" left="cboCASH_FLOW_GRADE:0.0" top="chkCD_REGIO_11:10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <Static id="staRM_GRADE" taborder="46" text="RM등급" left="staCD_SYSTEM17:0.0" top="staCD_SITE:10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboRM_GRADE" taborder="47" left="staRM_GRADE:0.0" top="staCD_SITE:10.0" width="100" height="24.0" datacolumn="DS_CODE" codecolumn="CD_CODE" innerdataset="dsRM_GRADE"/>
+
+<CheckBox id="chkYN_EXCPT" taborder="53" text="신평사 RM 6.7등급 제외" left="staCD_SYSTEM17:80" top="chkPART12:7" width="150" height="20" truevalue="Y" falsevalue="N"/>
+
+              <Static id="staCD_SYSTEM18" taborder="48" text="시공능력평가액" left="0.0" top="staCREDIT_GRADE:10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <MaskEdit id="txtAM_CON_ABILITY" taborder="49" left="staCD_SYSTEM18:0.0" top="cboCREDIT_GRADE:10.0" width="50" height="24.0"/>
+              <Static id="staCD_SYSTEM19" taborder="50" text="이상(백만원)" left="txtAM_CON_ABILITY:0.0" top="staCD_SYSTEM15:10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <Static id="staCD_SYSTEM20" taborder="51" text="시공능력순위" left="staCD_SYSTEM19:0.0" top="staCASH_FLOW_GRADE:10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <MaskEdit id="txtRK_CON_ABILITY" taborder="52" left="staCD_SYSTEM20:0.0" top="cboCASH_FLOW_GRADE:10.0" width="50" height="24.0"/>
+              <Static id="staCD_SYSTEM21" taborder="53" text="% 이내" left="txtRK_CON_ABILITY:0.0" top="cboCASH_FLOW_GRADE:10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <Static id="staYN_REGIST" taborder="54" text="등록회사" left="staCD_SYSTEM17:0.0" top="cboCASH_FLOW_GRADE:10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboYN_REGIST" taborder="55" left="staYN_REGIST:0.0" top="cboCASH_FLOW_GRADE:10.0" width="100" height="24.0" innerdataset="dsYN_REGIST" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+              <CheckBox id="chkYN_VENDOR_CODE" taborder="39" text="거래처코드 유무" left="cboYN_REGIST:0.0" top="cboCASH_FLOW_GRADE:10.0" width="110" height="24.0" truevalue="Y" visible="false"/>
+              <Static id="staCD_SYSTEM22" taborder="58" text="평가점수" left="0.0" top="staCD_SYSTEM18:10.0" height="24.0" width="92.0" visible="false" cssclass="sta_WF_SchLabel"/>
+              <MaskEdit id="txtSC_EVAL" taborder="59" left="staCD_SYSTEM22:0.0" top="txtAM_CON_ABILITY:10.0" width="100" height="24.0" visible="false"/>
+              <Static id="staCD_SYSTEM23" taborder="60" text="점이상 [가산점(최대10점)제외 점수]" left="txtSC_EVAL:0.0" top="staCD_SYSTEM19:10.0" height="24.0" width="92.0" visible="false" cssclass="sta_WF_SchLabel"/>
+              <Button id="btnSearch" taborder="61" text="조회" left="ccfNO_BID:0.0" top="10.0" width="60" height="24.0" onclick="fnSelect"/>
+              <Static id="staCD_SYSTEM00" taborder="61" text="이상" left="cboRM_GRADE:0.0" top="staCD_SITE:10.0" height="24.0" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <Button id="btnSave" taborder="62" text="추가" left="btnSearch:0.0" top="10.0" width="60" height="24.0" onclick="fnSave"/>
+              <Button id="btnClose" taborder="63" text="닫기" left="btnSave:0.0" top="10.0" width="60" height="24.0" onclick="divSearch_btnClose_onclick"/>
+              <CheckBox id="chkYN_CASH_RELEASE" taborder="64" text="현금흐름 D 이하 추천제한 해제" left="staCD_SYSTEM00:0.0" top="staCD_SITE:10.0" width="199" height="24.0" truevalue="Y" visible="true"/>
+              <CheckBox id="chkYN_RM_RELEASE" taborder="65" text="RM등급5 이하 추천제한 해제" left="chkYN_VENDOR_CODE:0.0" top="staCD_SITE:10.0" width="199" height="24.0" truevalue="Y" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+// 부문, 공종을 최초 조회할때를 체크를 위한 전역변수.
+this._FIRST = true;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.fnSetCombo();
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	if(!this.gfnIsNull(this.getOwnerFrame().NO_BID)) {
+		
+		this.dsSearch.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+		this.dsSearch.setColumn(0, "NO_BID", this.getOwnerFrame().NO_BID);
+		// 코드파인드의 명칭부분은 직접 접근해서 셋팅
+		this.ccfCD_SITE.form.DSTextBox.set_value(this.getOwnerFrame().DS_SITE);
+		if(!this.gfnIsNull(this.getOwnerFrame().DS_SUBCON)) {
+			this.ccfNO_BID.form.DSTextBox.set_value(this.getOwnerFrame().DS_SUBCON);
+		}
+		
+		this.ccfCD_SITE.form.fnFitToContents();
+		this.ccfNO_BID.form.fnFitToContents();
+		
+		this.fnSelectBidInfo();
+	}
+	else
+	{
+		this._FIRST = false;
+	}
+	//this.divSearch.form.chkCD_REGIO_00.set_truevalue("00");
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+// 	this.btn1 = this.gfnFormButtonAdd("btnHUBlLink", "fnHUBlLink");
+// 	this.btn2 = this.gfnFormButtonAdd("btnReq", "fnReq");
+// 	this.btn3 = this.gfnFormButtonAdd("btnReqCancel", "fnReqCancel");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ccfNO_BID = this.divSearch.form.ccfNO_BID;
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	//this.ccfCD_SITE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_SITE.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfNO_BID.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DC", "DCB_RECOMMEND_HDC_DC");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("NO_BID", "string");
+	this.dsSelect.addColumn("NO_SJC", "string");
+	this.dsSelect.addColumn("DS_VENDOR", "string");
+	this.dsSelect.addColumn("DS_PRESIDENT", "string");
+	this.dsSelect.addColumn("CD_COSTCLASS", "string");
+	this.dsSelect.addColumn("CD_LICCOST", "string");
+	this.dsSelect.addColumn("CD_LICENSE1", "string");
+	this.dsSelect.addColumn("CD_LICENSE2", "string");
+	this.dsSelect.addColumn("CD_LICENSE3", "string");
+	this.dsSelect.addColumn("CD_REGIO_00", "string");
+	this.dsSelect.addColumn("CD_REGIO_01", "string");
+	this.dsSelect.addColumn("CD_REGIO_02", "string");
+	this.dsSelect.addColumn("CD_REGIO_03", "string");
+	this.dsSelect.addColumn("CD_REGIO_04", "string");
+	this.dsSelect.addColumn("CD_REGIO_05", "string");
+	this.dsSelect.addColumn("CD_REGIO_06", "string");
+	this.dsSelect.addColumn("CD_REGIO_07", "string");
+	this.dsSelect.addColumn("CD_REGIO_08", "string");
+	this.dsSelect.addColumn("CD_REGIO_09", "string");
+	this.dsSelect.addColumn("CD_REGIO_10", "string");
+	this.dsSelect.addColumn("CD_REGIO_11", "string");
+	this.dsSelect.addColumn("CD_REGIO_12", "string");
+	this.dsSelect.addColumn("CD_REGIO_13", "string");
+	this.dsSelect.addColumn("CD_REGIO_14", "string");
+	this.dsSelect.addColumn("CD_REGIO_15", "string");
+	this.dsSelect.addColumn("CD_REGIO_16", "string");
+	this.dsSelect.addColumn("CD_REGIO_24", "string");
+	this.dsSelect.addColumn("CREDIT_GRADE", "string");
+	this.dsSelect.addColumn("CASH_FLOW_GRADE", "string");
+	this.dsSelect.addColumn("RM_GRADE", "string");
+	this.dsSelect.addColumn("CONS_ABL_AMT", "bigdecimal");
+	this.dsSelect.addColumn("WNTY_RANK_RATE", "bigdecimal");
+	this.dsSelect.addColumn("YN_REGIST", "string");
+	this.dsSelect.addColumn("YN_VENDOR_CODE", "string");
+	this.dsSelect.addColumn("SCORE", "int");
+
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("NO_SJC", "string");
+	this.dsInsert.addColumn("NO_BID", "string");
+	this.dsInsert.addColumn("ID_USER", "string");
+	this.dsInsert.addColumn("YN_CASH_RELEASE", "string");
+	this.dsInsert.addColumn("YN_RM_RELEASE", "string");
+	
+	this.dsSelectInfo = new Dataset();
+	this.dsSelectInfo.addColumn("NO_BID", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+	this.dsSelect.setColumn(0, "NO_SJC", this.dsSearch.getColumn(0, "NO_SJC"));
+	this.dsSelect.setColumn(0, "DS_VENDOR", this.dsSearch.getColumn(0, "DS_VENDOR"));
+	this.dsSelect.setColumn(0, "DS_PRESIDENT", this.dsSearch.getColumn(0, "DS_PRESIDENT"));
+	this.dsSelect.setColumn(0, "CD_COSTCLASS", this.dsSearch.getColumn(0, "CD_COSTCLASS"));
+	this.dsSelect.setColumn(0, "CD_LICCOST", this.dsSearch.getColumn(0, "CD_LICCOST"));
+	this.dsSelect.setColumn(0, "CD_LICENSE1", this.dsSearch.getColumn(0, "CD_LICENSE1"));
+	this.dsSelect.setColumn(0, "CD_LICENSE2", this.dsSearch.getColumn(0, "CD_LICENSE2"));
+	this.dsSelect.setColumn(0, "CD_LICENSE3", this.dsSearch.getColumn(0, "CD_LICENSE3"));
+	this.dsSelect.setColumn(0, "CD_REGIO_00", this.dsSearch.getColumn(0, "CD_REGIO_00"));
+	this.dsSelect.setColumn(0, "CD_REGIO_01", this.dsSearch.getColumn(0, "CD_REGIO_01"));
+	this.dsSelect.setColumn(0, "CD_REGIO_02", this.dsSearch.getColumn(0, "CD_REGIO_02"));
+	this.dsSelect.setColumn(0, "CD_REGIO_03", this.dsSearch.getColumn(0, "CD_REGIO_03"));
+	this.dsSelect.setColumn(0, "CD_REGIO_04", this.dsSearch.getColumn(0, "CD_REGIO_04"));
+	this.dsSelect.setColumn(0, "CD_REGIO_05", this.dsSearch.getColumn(0, "CD_REGIO_05"));
+	this.dsSelect.setColumn(0, "CD_REGIO_06", this.dsSearch.getColumn(0, "CD_REGIO_06"));
+	this.dsSelect.setColumn(0, "CD_REGIO_07", this.dsSearch.getColumn(0, "CD_REGIO_07"));
+	this.dsSelect.setColumn(0, "CD_REGIO_08", this.dsSearch.getColumn(0, "CD_REGIO_08"));
+	this.dsSelect.setColumn(0, "CD_REGIO_09", this.dsSearch.getColumn(0, "CD_REGIO_09"));
+	this.dsSelect.setColumn(0, "CD_REGIO_10", this.dsSearch.getColumn(0, "CD_REGIO_10"));
+	this.dsSelect.setColumn(0, "CD_REGIO_11", this.dsSearch.getColumn(0, "CD_REGIO_11"));
+	this.dsSelect.setColumn(0, "CD_REGIO_12", this.dsSearch.getColumn(0, "CD_REGIO_12"));
+	this.dsSelect.setColumn(0, "CD_REGIO_13", this.dsSearch.getColumn(0, "CD_REGIO_13"));
+	this.dsSelect.setColumn(0, "CD_REGIO_14", this.dsSearch.getColumn(0, "CD_REGIO_14"));
+	this.dsSelect.setColumn(0, "CD_REGIO_15", this.dsSearch.getColumn(0, "CD_REGIO_15"));
+	this.dsSelect.setColumn(0, "CD_REGIO_16", this.dsSearch.getColumn(0, "CD_REGIO_16"));
+	this.dsSelect.setColumn(0, "CD_REGIO_24", this.dsSearch.getColumn(0, "CD_REGIO_24"));
+	this.dsSelect.setColumn(0, "CREDIT_GRADE", this.dsSearch.getColumn(0, "CREDIT_GRADE"));
+	this.dsSelect.setColumn(0, "CASH_FLOW_GRADE", this.dsSearch.getColumn(0, "CASH_FLOW_GRADE"));
+	this.dsSelect.setColumn(0, "RM_GRADE", this.dsSearch.getColumn(0, "RM_GRADE"));
+	this.dsSelect.setColumn(0, "CONS_ABL_AMT", this.dsSearch.getColumn(0, "CONS_ABL_AMT"));
+	this.dsSelect.setColumn(0, "WNTY_RANK_RATE", this.dsSearch.getColumn(0, "WNTY_RANK_RATE"));
+	this.dsSelect.setColumn(0, "YN_REGIST", this.dsSearch.getColumn(0, "YN_REGIST"));
+	this.dsSelect.setColumn(0, "YN_VENDOR_CODE", this.dsSearch.getColumn(0, "YN_VENDOR_CODE"));
+	this.dsSelect.setColumn(0, "SCORE", this.dsSearch.getColumn(0, "SCORE"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	//var nrow = this.gfnGridAdd(this.dxGrid); // top (default), bottom, current
+};
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	//this.gfnGridDel(this.dxGrid);
+};
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	this.dsInsert.clearData();
+
+	var row = -1;
+
+	while(1)
+	{
+		row = this.dsList.findRow("YN_CHECK", "1", row+1);
+		
+		if(row < 0) break;
+		var nrow = this.dsInsert.addRow();
+		this.dsInsert.setColumn(nrow, "NO_SJC", this.dsList.getColumn(row, "NO_SJC"));
+		this.dsInsert.setColumn(nrow, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+		this.dsInsert.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+		this.dsInsert.setColumn(nrow, "YN_CASH_RELEASE", this.dsSearch.getColumn(0, "YN_CASH_RELEASE"));
+		this.dsInsert.setColumn(nrow, "YN_RM_RELEASE", this.dsSearch.getColumn(0, "YN_RM_RELEASE"));	
+	};
+	
+	if (this.dsInsert.rowcount == 0) return;
+
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsInsert";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	
+// 	if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_LICENSE1")))
+// 	{
+// 		validate = false;
+// 		
+// 		this.gfnAlert("보유면허 1. 은 반드시 입력하십시오.");
+// 	}
+	
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+	}
+	else if(svcID == "save") {
+		if(errorCode == 0)
+		{
+			// 저장버튼 명칭을 추가로 바꾸고 화면닫기 기능 제거
+			this._closeReturn = true;
+			//this.getParentContext().close(true);
+		}
+		else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "combo") {
+		if (errorCode == 0) {
+			// 초기 선택값은 아래 3가지 방법으로 가능
+			this.dsCD_COSTCLASS.insertRow(0);
+			this.dsCD_COSTCLASS.setColumn(0, "CD_CODE", "");
+			this.dsCD_COSTCLASS.setColumn(0, "DS_CODE", "전체");
+			
+			if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_COSTCLASS")))
+			{
+				this.divSearch.form.cboCD_COSTCLASS.set_index(0);
+			}
+			
+ 			this.divSearch.form.cboCD_LICENSE1.set_index(0);
+			this.divSearch.form.cboCD_LICENSE2.set_index(0);
+			this.divSearch.form.cboCD_LICENSE3.set_index(0);
+			
+ 			this.divSearch.form.cboCREDIT_GRADE.set_index(0);
+
+ 			this.divSearch.form.cboCASH_FLOW_GRADE.set_index(0);
+			
+			this.divSearch.form.cboRM_GRADE.set_index(0);	
+		}
+	}
+	else if(svcID == "combo1") {
+		if (errorCode == 0) {
+			this.dsCD_LICCOST.insertRow(0);
+			this.dsCD_LICCOST.setColumn(0, "CD_CODE", "");
+			this.dsCD_LICCOST.setColumn(0, "DS_CODE", "선택");
+			
+			if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_LICCOST")))
+			{
+				this.divSearch.form.cboCD_LICCOST.set_index(0);
+			}
+			else
+			{
+				// 가끔 bid_info 조회 후 콤보박스에 없는 값들이 존재.
+				if(this.dsCD_LICCOST.findRow("CD_CODE", this.dsSearch.getColumn(0, "CD_LICCOST")) < 0)
+				{
+					this.divSearch.form.cboCD_LICCOST.set_index(0);
+				}
+			}
+		}
+	}
+	else if(svcID == "bid_info")
+	{
+		if(this.dsBidInfo.rowcount > 0)
+		{
+			this.dsSearch.setColumn(0, "CD_COSTCLASS", this.dsBidInfo.getColumn(0, "CD_COSTCLASS"));
+			this.dsSearch.setColumn(0, "CD_LICCOST", this.dsBidInfo.getColumn(0, "CD_LICCOST"));
+			this._FIRST = false;
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+// 	if (id == "ccfCD_SITE") {
+// 		dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+// 	}else 
+	if(id == "ccfNO_BID"){
+		if(this.gfnIsNull(this.ccfCD_SITE.form.CDTextBox.value)){
+			this.gfnAlert("현장코드를 먼저 입력하세요.");
+			return false;
+		}else{
+			dsUserParam.setColumn(nrow, "CD_SITE", this.ccfCD_SITE.form.CDTextBox.value);
+		}
+	}
+	return true;
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	if(id == "ccfCD_SITE") {
+		// 현장코드 변경시 입찰번호 초기화
+		this.ccfNO_BID.form.fnCodeFindClear();
+	}
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.fnSetCombo = function() {
+	
+	this.dsCombo1 = new Dataset();
+	this.dsCombo1.addColumn("CD_SYSTEM", "string");
+	this.dsCombo1.addColumn("CD_TYPE", "string");
+
+	this.dsCombo1.addRow();
+	this.dsCombo1.setColumn(0, "CD_SYSTEM", "DC");
+	this.dsCombo1.setColumn(0, "CD_TYPE", "C01");
+	
+	this.dsCombo2 = new Dataset();
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo1=dsCombo1 combo3=dsCombo2 combo4=dsCombo2 combo5=dsCombo2 combo6=dsCombo2";
+	var outData     = "dsCD_COSTCLASS=combo10 dsCD_LICENSE=combo30 dsCREDIT_GRADE=combo40 dsCASH_FLOW_GRADE=combo50 dsRM_GRADE=combo60";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);
+		
+		if(e.columnid == "CD_LICENSE1" || e.columnid == "CD_LICENSE2"|| e.columnid == "CD_LICENSE3"){
+			if(e.newvalue != ""){
+				var delrow = this.dsCD_LICENSE.findRow("CD_CODE", e.oldvalue);
+
+				if(delrow > 0){
+					this.dsCD_LICENSE.deleteRow(delrow);
+				}		
+				var dsrow = this.dsCD_LICENSE.findRow("CD_CODE", e.newvalue);
+				var dsname = this.dsCD_LICENSE.getColumn(dsrow, "DS_CODE");
+				var nrow = this.dsCD_LICENSE.addRow();
+				this.dsCD_LICENSE.setColumn(nrow, "CD_CODE", e.newvalue);
+				this.dsCD_LICENSE.setColumn(nrow, "DS_CODE", dsname);
+			}
+		}
+		else if(e.columnid == "CD_REGIO_00")
+		{
+			if(e.oldvalue.padLeft(2,"0") == "00")
+			{
+				this.dsSearch.set_enableevent(false);
+				this.divSearch.form.chkCD_REGIO_00.set_value("00");
+				//this.dsSearch.setColumn(0, "CD_REGIO_00", "00");
+				this.dsSearch.set_enableevent(true);
+			}
+			else
+			{
+				this.dsSearch.set_enableevent(false);
+				this.fnAllRegioChkboxFalse();
+				this.dsSearch.set_enableevent(true);
+			}
+		}
+		else if(e.columnid == "CD_REGIO_01" || e.columnid == "CD_REGIO_02" || e.columnid == "CD_REGIO_03" || e.columnid == "CD_REGIO_04" 
+			 || e.columnid == "CD_REGIO_05" || e.columnid == "CD_REGIO_06" || e.columnid == "CD_REGIO_07" || e.columnid == "CD_REGIO_08" 
+			 || e.columnid == "CD_REGIO_09" || e.columnid == "CD_REGIO_10" || e.columnid == "CD_REGIO_11" || e.columnid == "CD_REGIO_12" 
+			 || e.columnid == "CD_REGIO_13" || e.columnid == "CD_REGIO_14" || e.columnid == "CD_REGIO_15" || e.columnid == "CD_REGIO_16" 
+			 || e.columnid == "CD_REGIO_24"
+			 )
+		{
+			if(this.dsSearch.getColumn(0, "CD_REGIO_00").padLeft(2,"0") == "00" && e.newvalue != "")
+			{
+				this.dsSearch.set_enableevent(false);
+				this.dsSearch.setColumn(0, "CD_REGIO_00", ""); 
+				this.dsSearch.set_enableevent(true);
+			}
+		}
+		else if(e.columnid == "CD_COSTCLASS")
+		{
+			this.fnSetCombo1();
+			
+			if(this._FIRST == false)
+			{
+				this.dsSearch.setColumn(0, "CD_LICCOST", "");
+			}
+		}
+	}
+};
+
+this.fnAllRegioChkboxFalse = function()
+{
+	this.dsSearch.setColumn(0, "CD_REGIO_01", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_02", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_03", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_04", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_05", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_06", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_07", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_08", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_09", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_10", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_11", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_12", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_13", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_14", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_15", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_16", "");
+	this.dsSearch.setColumn(0, "CD_REGIO_24", "");
+}
+
+this.fnSetCombo1 = function()
+{
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_BUMUN", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_BUMUN", this.dsSearch.getColumn(0, "CD_COSTCLASS"));
+
+	var strSvcId    = "combo1";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo2=dsCombo";
+	var outData     = "dsCD_LICCOST=combo20";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnSelectBidInfo = function()
+{
+	this.dsSelectInfo.clearData();
+	this.dsSelectInfo.addRow();
+	
+	this.dsSelectInfo.setColumn(0, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+
+	var strSvcId    = "bid_info";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "bid_info=dsSelectInfo";
+	var outData     = "dsBidInfo=bid_info0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.divSearch_btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this._closeReturn == true) {
+		this.getParentContext().close(true);
+	} else {
+		this.getParentContext().close();
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DCXPR_VENDOR_RECOMMEND_HDC_HUB</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DCBPR_RECOMMEND_ETC_REQ_LIST_HUB_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo1</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo2</Col>
+            <Col id="SP">DCXPR_LICCOST_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo3</Col>
+            <Col id="SP">DCXPR_LICENSE_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo4</Col>
+            <Col id="SP">DCXPR_CREDIT_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo5</Col>
+            <Col id="SP">DCXPR_CASH_FLOW_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo6</Col>
+            <Col id="SP">DCXPR_RM_GRADE_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">bid_info</Col>
+            <Col id="SP">DCBPR_BID_INFO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="string" size="256"/>
+          <Column id="NO_BID" type="string" size="256"/>
+          <Column id="NO_SJC" type="string" size="256"/>
+          <Column id="DS_VENDOR" type="string" size="256"/>
+          <Column id="DS_PRESIDENT" type="string" size="256"/>
+          <Column id="CD_COSTCLASS" type="string" size="256"/>
+          <Column id="CD_LICCOST" type="string" size="256"/>
+          <Column id="CD_LICENSE1" type="string" size="256"/>
+          <Column id="CD_LICENSE2" type="string" size="256"/>
+          <Column id="CD_LICENSE3" type="string" size="256"/>
+          <Column id="CD_REGIO_00" type="string" size="256"/>
+          <Column id="CD_REGIO_01" type="string" size="256"/>
+          <Column id="CD_REGIO_02" type="string" size="256"/>
+          <Column id="CD_REGIO_03" type="string" size="256"/>
+          <Column id="CD_REGIO_04" type="string" size="256"/>
+          <Column id="CD_REGIO_05" type="string" size="256"/>
+          <Column id="CD_REGIO_06" type="string" size="256"/>
+          <Column id="CD_REGIO_07" type="string" size="256"/>
+          <Column id="CD_REGIO_08" type="string" size="256"/>
+          <Column id="CD_REGIO_09" type="string" size="256"/>
+          <Column id="CD_REGIO_10" type="string" size="256"/>
+          <Column id="CD_REGIO_11" type="string" size="256"/>
+          <Column id="CD_REGIO_12" type="string" size="256"/>
+          <Column id="CD_REGIO_13" type="string" size="256"/>
+          <Column id="CD_REGIO_14" type="string" size="256"/>
+          <Column id="CD_REGIO_15" type="string" size="256"/>
+          <Column id="CD_REGIO_16" type="string" size="256"/>
+          <Column id="CD_REGIO_24" type="string" size="256"/>
+          <Column id="CREDIT_GRADE" type="string" size="256"/>
+          <Column id="CASH_FLOW_GRADE" type="string" size="256"/>
+          <Column id="RM_GRADE" type="string" size="256"/>
+          <Column id="CONS_ABL_AMT" type="bigdecimal" size="256"/>
+          <Column id="WNTY_RANK_RATE" type="bigdecimal" size="256"/>
+          <Column id="YN_REGIST" type="string" size="256"/>
+          <Column id="YN_VENDOR_CODE" type="string" size="256"/>
+          <Column id="SCORE" type="bigdecimal" size="256"/>
+          <Column id="YN_CASH_RELEASE" type="STRING" size="256"/>
+          <Column id="YN_RM_RELEASE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_REGIO_00">00</Col>
+            <Col id="WNTY_RANK_RATE">100</Col>
+            <Col id="YN_REGIST">Y</Col>
+            <Col id="CD_REGIO_01"/>
+            <Col id="CD_REGIO_02"/>
+            <Col id="CD_REGIO_03"/>
+            <Col id="CD_REGIO_04"/>
+            <Col id="CD_REGIO_05"/>
+            <Col id="CD_REGIO_06"/>
+            <Col id="CD_REGIO_07"/>
+            <Col id="CD_REGIO_08"/>
+            <Col id="CD_REGIO_09"/>
+            <Col id="CD_REGIO_10"/>
+            <Col id="CD_REGIO_11"/>
+            <Col id="CD_REGIO_12"/>
+            <Col id="CD_REGIO_13"/>
+            <Col id="CD_REGIO_14"/>
+            <Col id="CD_REGIO_15"/>
+            <Col id="CD_REGIO_16"/>
+            <Col id="CD_REGIO_24"/>
+            <Col id="YN_CASH_RELEASE"></Col>
+            <Col id="YN_RM_RELEASE"></Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCD_COSTCLASS">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCD_LICCOST">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCD_LICENSE">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCREDIT_GRADE">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCASH_FLOW_GRADE">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRM_GRADE">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsYN_REGIST">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">등록회사제외</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">등록회사만</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE"/>
+            <Col id="DS_CODE">전체</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsBidInfo">
+        <ColumnInfo>
+          <Column id="CD_COSTCLASS" type="STRING" size="256"/>
+          <Column id="CD_LICCOST" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divSearch.form.ccfNO_BID.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="NO_BID"/>
+      <BindItem id="item2" compid="divSearch.form.txtDS_VENDOR" propid="value" datasetid="dsSearch" columnid="DS_VENDOR"/>
+      <BindItem id="item3" compid="divSearch.form.txtDS_PREGIDENT" propid="value" datasetid="dsSearch" columnid="DS_PRESIDENT"/>
+      <BindItem id="item4" compid="divSearch.form.txtNO_SJC" propid="value" datasetid="dsSearch" columnid="NO_SJC"/>
+      <BindItem id="item5" compid="divSearch.form.cboCD_COSTCLASS" propid="value" datasetid="dsSearch" columnid="CD_COSTCLASS"/>
+      <BindItem id="item6" compid="divSearch.form.cboCD_LICCOST" propid="value" datasetid="dsSearch" columnid="CD_LICCOST"/>
+      <BindItem id="item7" compid="divSearch.form.cboCD_LICENSE1" propid="value" datasetid="dsSearch" columnid="CD_LICENSE1"/>
+      <BindItem id="item8" compid="divSearch.form.cboCD_LICENSE2" propid="value" datasetid="dsSearch" columnid="CD_LICENSE2"/>
+      <BindItem id="item9" compid="divSearch.form.cboCD_LICENSE3" propid="value" datasetid="dsSearch" columnid="CD_LICENSE3"/>
+      <BindItem id="item10" compid="divSearch.form.chkCD_REGIO_00" propid="value" datasetid="dsSearch" columnid="CD_REGIO_00"/>
+      <BindItem id="item11" compid="divSearch.form.chkCD_REGIO_01" propid="value" datasetid="dsSearch" columnid="CD_REGIO_01"/>
+      <BindItem id="item12" compid="divSearch.form.chkCD_REGIO_02" propid="value" datasetid="dsSearch" columnid="CD_REGIO_02"/>
+      <BindItem id="item13" compid="divSearch.form.chkCD_REGIO_03" propid="value" datasetid="dsSearch" columnid="CD_REGIO_03"/>
+      <BindItem id="item14" compid="divSearch.form.chkCD_REGIO_04" propid="value" datasetid="dsSearch" columnid="CD_REGIO_04"/>
+      <BindItem id="item15" compid="divSearch.form.chkCD_REGIO_05" propid="value" datasetid="dsSearch" columnid="CD_REGIO_05"/>
+      <BindItem id="item16" compid="divSearch.form.chkCD_REGIO_06" propid="value" datasetid="dsSearch" columnid="CD_REGIO_06"/>
+      <BindItem id="item17" compid="divSearch.form.chkCD_REGIO_07" propid="value" datasetid="dsSearch" columnid="CD_REGIO_07"/>
+      <BindItem id="item18" compid="divSearch.form.chkCD_REGIO_08" propid="value" datasetid="dsSearch" columnid="CD_REGIO_08"/>
+      <BindItem id="item19" compid="divSearch.form.chkCD_REGIO_09" propid="value" datasetid="dsSearch" columnid="CD_REGIO_09"/>
+      <BindItem id="item20" compid="divSearch.form.chkCD_REGIO_10" propid="value" datasetid="dsSearch" columnid="CD_REGIO_10"/>
+      <BindItem id="item21" compid="divSearch.form.chkCD_REGIO_11" propid="value" datasetid="dsSearch" columnid="CD_REGIO_11"/>
+      <BindItem id="item22" compid="divSearch.form.chkCD_REGIO_12" propid="value" datasetid="dsSearch" columnid="CD_REGIO_12"/>
+      <BindItem id="item23" compid="divSearch.form.chkCD_REGIO_13" propid="value" datasetid="dsSearch" columnid="CD_REGIO_13"/>
+      <BindItem id="item24" compid="divSearch.form.chkCD_REGIO_14" propid="value" datasetid="dsSearch" columnid="CD_REGIO_14"/>
+      <BindItem id="item25" compid="divSearch.form.chkCD_REGIO_15" propid="value" datasetid="dsSearch" columnid="CD_REGIO_15"/>
+      <BindItem id="item26" compid="divSearch.form.chkCD_REGIO_16" propid="value" datasetid="dsSearch" columnid="CD_REGIO_16"/>
+      <BindItem id="item27" compid="divSearch.form.chkCD_REGIO_24" propid="value" datasetid="dsSearch" columnid="CD_REGIO_24"/>
+      <BindItem id="item28" compid="divSearch.form.cboCREDIT_GRADE" propid="value" datasetid="dsSearch" columnid="CREDIT_GRADE"/>
+      <BindItem id="item29" compid="divSearch.form.cboCASH_FLOW_GRADE" propid="value" datasetid="dsSearch" columnid="CASH_FLOW_GRADE"/>
+      <BindItem id="item30" compid="divSearch.form.cboRM_GRADE" propid="value" datasetid="dsSearch" columnid="RM_GRADE"/>
+      <BindItem id="item31" compid="divSearch.form.txtAM_CON_ABILITY" propid="value" datasetid="dsSearch" columnid="CONS_ABL_AMT"/>
+      <BindItem id="item32" compid="divSearch.form.txtRK_CON_ABILITY" propid="value" datasetid="dsSearch" columnid="WNTY_RANK_RATE"/>
+      <BindItem id="item33" compid="divSearch.form.cboYN_REGIST" propid="value" datasetid="dsSearch" columnid="YN_REGIST"/>
+      <BindItem id="item34" compid="divSearch.form.chkYN_VENDOR_CODE" propid="value" datasetid="dsSearch" columnid="YN_VENDOR_CODE"/>
+      <BindItem id="item35" compid="divSearch.form.txtSC_EVAL" propid="value" datasetid="dsSearch" columnid="SCORE"/>
+      <BindItem id="item36" compid="divSearch.form.chkYN_CASH_RELEASE" propid="value" datasetid="dsSearch" columnid="YN_CASH_RELEASE"/>
+      <BindItem id="item37" compid="divSearch.form.chkYN_RM_RELEASE" propid="value" datasetid="dsSearch" columnid="YN_RM_RELEASE"/>
+    </Bind>
+  </Form>
+</FDL>

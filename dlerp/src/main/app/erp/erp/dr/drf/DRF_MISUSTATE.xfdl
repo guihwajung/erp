@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="미수금현황" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_ACNTUNIT" taborder="0" text="사업지코드" left="0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_ACNTUNIT" CodeFindName="DRX_CFACNTUNIT" CDTextWidth="100" taborder="1" left="staCD_ACNTUNIT:0.0" top="10.0" width="400" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staDT_RECEIPT" taborder="2" text="기준일자" left="ccfCD_ACNTUNIT:0.0" top="10.0" width="105.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Calendar id="ctclDT_RECEIPT" taborder="3" left="staDT_RECEIPT:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Static id="staNO_NAPCHA1" taborder="4" text="연체차수" left="ctclDT_RECEIPT:0.0" top="10.0" width="105.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Edit id="txtNO_NAPCHA1" taborder="5" left="staNO_NAPCHA1:0.0" top="10.0" width="30" height="24.0"/>
+              <Static id="staAM_MISU" taborder="6" text="미수금액" left="txtNO_NAPCHA1:0.0" top="10.0" width="105.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <MaskEdit id="txtAM_MISU" taborder="7" left="staAM_MISU:0.0" top="10.0" width="100" height="24.0" format="###,###,##0"/>
+              <Static id="staNO_CONTRACT" taborder="8" text="구분" left="txtAM_MISU:0.0" top="10.0" width="105.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Radio id="rdoNO_CONTRACT" taborder="9" left="staNO_CONTRACT:0.0" top="10.0" height="24.0" direction="vertical" width="228" codecolumn="CD_CODE" datacolumn="DS_CODE" innerdataset="dsNO_CONTRACT" fittocontents="width"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+
+	this.ccfCD_ACNTUNIT = this.divSearch.form.ccfCD_ACNTUNIT;	// 사업지코드
+
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_ACNTUNIT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DR", "DRF_MISUSTATE");
+	
+	// 기준일자
+	this.dsSearch.setColumn(0, "DT_RECEIPT", this.gfnGetDate());
+	
+	// 구분
+	this.dsSearch.setColumn(0, "NO_CONTRACT", "01");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_ACNTUNIT", "string");
+	this.dsSelect.addColumn("TY_GUBUN"   , "string");
+	this.dsSelect.addColumn("NO_CHASU"   , "string");
+	this.dsSelect.addColumn("DT_RECEIVED", "string");
+	this.dsSelect.addColumn("NO_NAPCHA1" , "string");
+	this.dsSelect.addColumn("AM_MISU"    , "bigdecimal");
+	this.dsSelect.addColumn("NO_CONTRACT", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+
+	if (!this.fnSelectValidate()) return false;
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0, 6));
+	this.dsSelect.setColumn(0, "TY_GUBUN"   , this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6, 1));
+	this.dsSelect.setColumn(0, "NO_CHASU"   , this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7, 2));
+	this.dsSelect.setColumn(0, "DT_RECEIVED", this.dsSearch.getColumn(0, "DT_RECEIPT"));
+	this.dsSelect.setColumn(0, "NO_NAPCHA1" , this.dsSearch.getColumn(0, "NO_NAPCHA1"));
+	this.dsSelect.setColumn(0, "AM_MISU"    , this.dsSearch.getColumn(0, "AM_MISU"));
+	this.dsSelect.setColumn(0, "NO_CONTRACT", this.dsSearch.getColumn(0, "NO_CONTRACT"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {};
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {};
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {};
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {	
+
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_ACNTUNIT"))) {
+		this.gfnAlert("사업지코드를 입력하지 않았습니다.");
+		return false;
+	}
+	
+	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+
+	if (svcID == "select") {}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+//코드파인드의 파라미터 값을 넘겨줄때 사용하는 함수
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	
+	// 사업지코드
+	if (id == "ccfCD_ACNTUNIT") {
+		dsUserParam.setColumn(nrow, "CD_DEPT"  , this.AuthClient.CD_DEPT);
+		dsUserParam.setColumn(nrow, "ID_USER"  , this.AuthClient.ID_USER);
+		dsUserParam.setColumn(nrow, "ID_GROUP" , this.FormInfo.ID_GROUP);
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	}
+	
+	return true;
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DRFPR_MISU_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_ACNTUNIT" type="STRING" size="256"/>
+          <Column id="DS_ACNTUNIT" type="STRING" size="256"/>
+          <Column id="DT_RECEIPT" type="STRING" size="256"/>
+          <Column id="NO_NAPCHA1" type="STRING" size="256"/>
+          <Column id="AM_MISU" type="bigdecimal" size="256"/>
+          <Column id="NO_CONTRACT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_ACNTUNIT"/>
+            <Col id="DS_ACNTUNIT"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsNO_CONTRACT">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">01</Col>
+            <Col id="DS_CODE">옵션1</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">02</Col>
+            <Col id="DS_CODE">옵션2</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_ACNTUNIT.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_ACNTUNIT"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_ACNTUNIT.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_ACNTUNIT"/>
+      <BindItem id="item2" compid="divSearch.form.ctclDT_RECEIPT" propid="value" datasetid="dsSearch" columnid="DT_RECEIPT"/>
+      <BindItem id="item3" compid="divSearch.form.txtNO_NAPCHA1" propid="value" datasetid="dsSearch" columnid="NO_NAPCHA1"/>
+      <BindItem id="item4" compid="divSearch.form.txtAM_MISU" propid="value" datasetid="dsSearch" columnid="AM_MISU"/>
+      <BindItem id="item5" compid="divSearch.form.rdoNO_CONTRACT" propid="value" datasetid="dsSearch" columnid="NO_CONTRACT"/>
+    </Bind>
+  </Form>
+</FDL>

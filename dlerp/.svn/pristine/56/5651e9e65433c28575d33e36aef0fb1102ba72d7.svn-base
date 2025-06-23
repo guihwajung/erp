@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="400" height="162" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="2" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="1" text="SAP 업체코드 추가" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="left" onclick="divData_staTITLE_onclick"/>
+              <Static id="staBg1" taborder="2" left="139" top="70" right="0.00%" height="30" cssclass="sta_WF_tablebg"/>
+              <Button id="btnOk" taborder="3" text="확인" left="32.50%" top="120" width="60" height="20" onclick="divData_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="4" text="취소" left="52.50%" top="120" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+              <Edit id="edtCD_VENDOR" taborder="0" left="144" top="75" right="6" height="20" readonly="false" maxlength="50"/>
+              <Static id="staDS_SITE00" taborder="5" text="SAP VENDOR CODE" left="0" top="70" width="140" height="30" textAlign="left" onclick="divData_staDS_SITE_onclick" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staTY_GUBUN" taborder="6" text="거래처구분" left="0" top="40" width="140" height="30" textAlign="center" onclick="divData_staDS_SITE_onclick" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg00" taborder="7" left="139" top="40" right="0.00%" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfTY_GUBUN" CodeFindName="CF_CODE_DQ_V0" CDTextWidth="80" taborder="8" left="145" top="45" width="268" url="cmm::cmmCodeFind.xfdl" height="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 이전 화면에서 데이터 받기.
+	//this.dsData.setColumn(0, "CD_VENDOR", this.getOwnerFrame().CD_VENDOR);	
+	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	//this.dxGrid = this.divData.form.objGrid;
+	this.edtCD_VENDOR = this.divData.form.edtCD_VENDOR;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {	
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("TY_GUBUN", "string");
+	this.dsSave.addColumn("CD_VENDOR", "string");
+	this.dsSave.addColumn("ID_USER", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {	
+	var validate = true;
+	
+	if (this.gfnIsNull(this.dsData.getColumn(0,"CD_VENDOR"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.edtCD_VENDOR.setFocus();
+		}
+		this.gfnAlert("SAP VENDOR CODE는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}
+	
+	return validate;
+	
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "save") {
+		if(errorCode == 0)
+		{			
+			this.fnSaveCallback = function() {
+				this.getParentContext().close(true);
+			}
+			this.gfnAlert("MDM에 업체정보가 업데이트 되었습니다.", "fnSaveCallback");
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+// 확인 버튼 클릭
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	if (!this.fnSelectValidate()) return false;
+	
+	this.dsSave.clearData();
+	
+	this.dsSave.addRow();
+	
+	this.dsSave.setColumn(0, "TY_GUBUN", this.dsData.getColumn(0, "TY_GUBUN"));
+	this.dsSave.setColumn(0, "CD_VENDOR", this.dsData.getColumn(0, "CD_VENDOR"));
+	this.dsSave.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	
+	if (this.dsSave.rowcount == 0) return;
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+	
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DQDPR_SAP_VENDOR_UPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="CD_VENDOR" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_VENDOR"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item2" compid="divData.form.edtCD_VENDOR" propid="value" datasetid="dsData" columnid="CD_VENDOR"/>
+      <BindItem id="item1" compid="divData.form.ccfTY_GUBUN.form.CDTextBox" propid="value" datasetid="dsData" columnid="TY_GUBUN"/>
+    </Bind>
+  </Form>
+</FDL>

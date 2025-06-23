@@ -1,0 +1,1069 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1400" height="720" titletext="결산기수" onload="form_onload">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" taborder="1" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none" text="">
+          <Layouts>
+            <Layout>
+              <Div id="ccfCD_SITE" CodeFindName="DBX_CFMAINSITE" CDTextWidth="70" taborder="3" left="0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" onclick="Common_onclick" text=""/>
+              <Static id="staTY_UMGB01" taborder="0" text="검증구분" left="ccfCD_SITE:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="ccboCD_VALIDATE" taborder="1" left="staTY_UMGB01:0.0" top="10.0" height="24.0" innerdataset="dsCD_VALIDATE" datacolumn="DS_CODE" codecolumn="CD_CODE" index="-1" value="" width="100"/>
+              <Static id="staCD_CORP" taborder="2" text="현장코드" left="ccboCD_VALIDATE:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="60" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="55" right="0" bottom="0"/>
+              <Static id="staTopTitle" taborder="1" text="하자접수 리스트" left="0" top="0" width="91.43%" height="22" cssclass="sta_TITLE_Bg"/>
+              <Combo id="cboTY_UMGB" taborder="2" left="0" top="26" width="50" height="20" innerdataset="dsTY_UMGB" datacolumn="DS_CODE" codecolumn="CD_CODE" index="0" text="전체" value="" type="filterlike"/>
+              <Button id="btnTY_UMGB" taborder="3" text="관리단계적용" left="cboTY_UMGB:3" width="80" uWord="popup.ok" height="20" top="26" onclick="divData_btnTY_UMGB_onclick"/>
+              <Button id="btnTY_JUBSU" taborder="15" text="접수구분" left="233" width="80" uWord="popup.ok" height="20" top="26" onclick="divData_btnTY_JUBSU_onclick"/>
+              <Combo id="cboCD_SIL" taborder="4" left="btnTY_JUBSU:5" top="26" width="100" height="20" innerdataset="dsCD_SIL" datacolumn="DS_CODE" codecolumn="CD_CODE" index="0" text="전체" value="" type="filterlike"/>
+              <Button id="btnCD_SIL" taborder="5" text="실적용" left="cboCD_SIL:3" width="50" uWord="popup.ok" height="20" top="26" onclick="divData_btnCD_SIL_onclick"/>
+              <Combo id="cboCD_PART" taborder="6" left="btnCD_SIL:5" top="26" width="60" height="20" innerdataset="dsCD_PART" datacolumn="DS_CODE" codecolumn="CD_CODE" index="0" text="전체" value="" type="filterlike"/>
+              <Button id="btnCD_PART" taborder="7" text="부위적용" left="cboCD_PART:3" width="60" uWord="popup.ok" height="20" top="26" onclick="divData_btnCD_PART_onclick"/>
+              <Combo id="cboCD_SUBPART" taborder="8" left="btnCD_PART:5" top="26" width="130" height="20" innerdataset="dsCD_SUBPART" datacolumn="DS_CODE" codecolumn="CD_CODE" index="0" text="전체" value="" type="filterlike"/>
+              <Button id="btnCD_SUBPART" taborder="9" text="상세부위적용" left="cboCD_SUBPART:3" width="80" uWord="popup.ok" height="20" top="26" onclick="divData_btnCD_SUBPART_onclick"/>
+              <Combo id="cboCD_CTM" taborder="10" left="btnCD_SUBPART:5" top="26" width="130" height="20" innerdataset="dsCD_CTM" datacolumn="DS_CTM" codecolumn="CD_CTM" index="0" text="전체" value="" type="filterlike"/>
+              <Button id="btnCD_CTM" taborder="11" text="협력업체적용" left="cboCD_CTM:3" width="80" uWord="popup.ok" height="20" top="26" onclick="divData_btnCD_CTM_onclick"/>
+              <Combo id="cboCD_ACT" taborder="12" left="btnCD_CTM:5" top="26" width="250" height="20" innerdataset="dsCD_ACT" datacolumn="DS_CODE" codecolumn="CD_CODE" index="0" text="전체" value="" type="filterlike"/>
+              <Button id="btnCD_ACT" taborder="13" text="공종적용" left="cboCD_ACT:3" width="60" uWord="popup.ok" height="20" top="26" onclick="divData_btnCD_ACT_onclick"/>
+              <Combo id="cboTY_JUBSU" taborder="14" left="btnTY_UMGB:5" top="26" width="90" height="20" innerdataset="dsTY_JUBSU" datacolumn="DS_CODE" codecolumn="CD_CODE" index="0" text="전체" value="" type="filterlike"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetVariable();
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetParameter();
+	this.fnSetEvent();  
+	
+	this.ccboCD_VALIDATE.set_index(0);
+	this.fnSetCombo();
+	this.fnSetCombo1();
+	
+	this.fnButtonEnable();
+	
+	if(this.FormInfo.GR_SEARCH >= 7){
+		this.dsSearch.setColumn(0, "CD_SITE", this.AuthClient.CD_DEPT);
+		this.ccfCD_SITE.form.fnCodeFindLoad();
+		this.ccfCD_SITE.set_enable(false);
+	}
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ccboCD_VALIDATE = this.divSearch.form.ccboCD_VALIDATE;
+	
+	this.cboTY_UMGB = this.divData.form.cboTY_UMGB;
+	this.cboCD_SIL = this.divData.form.cboCD_SIL;
+	this.cboCD_PART = this.divData.form.cboCD_PART;
+	this.cboCD_SUBPART = this.divData.form.cboCD_SUBPART;
+	this.cboCD_CTM = this.divData.form.cboCD_CTM;
+	this.cboCD_ACT = this.divData.form.cboCD_ACT;
+	this.cboCD_UI = this.divData.form.cboCD_UI;
+	this.cboTY_JUBSU = this.divData.form.cboTY_JUBSU;
+	
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+}
+
+this.fnSetExtendButton = function() {
+	this.btnExcel = this.gfnFormButtonAdd("btnExcel", "fnExcelSelect");  
+	this.btnInit = this.gfnFormButtonAdd("btnInit", "fnInit");  
+	this.btnVendorCreate = this.gfnFormButtonAdd("btnVendorCreate", "fnVendorCreate");  
+	this.btnSetCode = this.gfnFormButtonAdd("btnSetCode", "fnSetCode");  
+};
+
+
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("CD_VALIDATE", "string");
+
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("CD_SITE", "string");
+	this.dsInsert.addColumn("TY_UMGB", "string");
+	this.dsInsert.addColumn("TY_HAJAJS", "string");
+	this.dsInsert.addColumn("DS_DONG", "string");
+	this.dsInsert.addColumn("DS_CUNG", "string");
+	this.dsInsert.addColumn("DS_HO", "string");
+	this.dsInsert.addColumn("CD_SIL", "string");
+	this.dsInsert.addColumn("CD_PART", "string");
+	this.dsInsert.addColumn("CD_DETAIL_TYPE", "string");
+	this.dsInsert.addColumn("CD_CTM", "string");
+	this.dsInsert.addColumn("CD_ACT", "string");
+	this.dsInsert.addColumn("DT_JEOBSU", "string");
+	this.dsInsert.addColumn("RM_NY", "string");
+	this.dsInsert.addColumn("PN_JGNAME", "string");
+	this.dsInsert.addColumn("DT_JOBEND", "string");
+	this.dsInsert.addColumn("RM_JOBEND", "string");
+	this.dsInsert.addColumn("PN_SC", "string");
+	this.dsInsert.addColumn("NO_SCTEL", "string");
+	this.dsInsert.addColumn("NO_SCTELHOME", "string");
+	this.dsInsert.addColumn("ID_INSERT", "string");
+
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("SN_SEQ", "int");
+	this.dsUpdate.addColumn("CD_SITE", "string");
+	this.dsUpdate.addColumn("TY_UMGB", "string");
+	this.dsUpdate.addColumn("TY_HAJAJS", "string");
+	this.dsUpdate.addColumn("DS_DONG", "string");
+	this.dsUpdate.addColumn("DS_CUNG", "string");
+	this.dsUpdate.addColumn("DS_HO", "string");
+	this.dsUpdate.addColumn("CD_SIL", "string");
+	this.dsUpdate.addColumn("CD_PART", "string");
+	this.dsUpdate.addColumn("CD_DETAIL_TYPE", "string");
+	this.dsUpdate.addColumn("CD_CTM", "string");
+	this.dsUpdate.addColumn("CD_ACT", "string");
+	this.dsUpdate.addColumn("CD_WI", "string");
+	this.dsUpdate.addColumn("DT_JEOBSU", "string");
+	this.dsUpdate.addColumn("RM_NY", "string");
+	this.dsUpdate.addColumn("PN_JGNAME", "string");
+	this.dsUpdate.addColumn("DT_JOBEND", "string");
+	this.dsUpdate.addColumn("RM_JOBEND", "string");
+	this.dsUpdate.addColumn("PN_SC", "string");
+	this.dsUpdate.addColumn("NO_SCTEL", "string");
+	this.dsUpdate.addColumn("NO_SCTELHOME", "string");
+	this.dsUpdate.addColumn("ID_INSERT", "string");
+
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("SN_SEQ", "int");
+	
+	this.dsExecTrsf = new Dataset();
+	this.dsExecTrsf.addColumn("CD_SITE", "string");
+	this.dsExecTrsf.addColumn("ID_INSERT", "string");
+	
+	this.dsExecInit = new Dataset();
+	this.dsExecInit.addColumn("CD_SITE", "string");
+	this.dsExecInit.addColumn("ID_INSERT", "string");
+	
+	this.dsComboCtm = new Dataset();
+	this.dsComboCtm.addColumn("TY_GUBUN", "int");
+	this.dsComboCtm.addColumn("CN_ROW", "int");
+	this.dsComboCtm.addColumn("CD_SITE", "string");
+	this.dsComboCtm.addColumn("VALUE", "string");
+	this.dsComboCtm.addColumn("MIN_VALUE", "string");
+
+}
+
+this.fnSetEvent = function() {
+	this.ccfCD_SITE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_SITE.AfterCDTextChanged = "fnAfterCDTextChanged";	
+	
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DB", "DBZ_BASS_CONVERSION");
+
+	//this.dxGrid.set_selecttype("cell");	
+	this.dxGrid.set_selecttype("multirow");	
+	
+// 	this.dxGrid.addEventHandler("ondrag", this.dxGrid_ondrag, this);
+// 	this.dxGrid.addEventHandler("ondrop", this.dxGrid_ondrop, this);
+// 	this.dxGrid.addEventHandler("ondragleave", this.dxGrid_ondragleave, this);
+}
+
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if(svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);					
+		
+		this.fnButtonEnable();
+		
+	} else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if (svcID == "combo") {
+		this.cboTY_JUBSU.set_index(0);
+		this.cboCD_SIL.set_index(0);
+	} else if (svcID == "combo1") {
+		this.cboTY_UMGB.set_index(0);
+		this.cboCD_PART.set_index(0);
+		this.cboCD_SUBPART.set_index(0);
+		this.cboCD_ACT.set_index(0);
+	} else if (svcID == "comboCtm") {
+		this.cboCD_CTM.set_index(0);		
+	} else if(svcID == "execInit") {
+		if (errorCode == 0) {
+			this.fnExecInitMsg_callback = function()
+			{
+				this.FormBtns.Select.click();
+			}	
+			this.gfnAlert("하자자료 초기화가 완료되었습니다.", "fnExecInitMsg_callback");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if(svcID == "execTrsf") {
+		if (errorCode == 0) {
+			this.fnExecTrsfMsg_callback = function()
+			{
+				this.FormBtns.Select.click();
+			}	
+			this.gfnAlert("하자자료 이관이 완료되었습니다.", "fnExecTrsfMsg_callback");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	
+	
+	
+	
+}
+
+this.fnSelectValidation = function() {
+	
+	var validate = true;
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_SITE"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}
+	
+	return validate;
+}
+
+this.fnSelect = function() {
+
+	if (!this.fnSelectValidation()) return;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow(); 
+	
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "CD_VALIDATE", this.dsSearch.getColumn(0, "CD_VALIDATE"));
+		
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect"; 
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnAdd = function() {
+	var nrow = this.gfnGridAdd(this.dxGrid);		
+}
+
+this.fnDel = function() {	
+	this.gfnGridDel(this.dxGrid);
+
+}
+
+this.fnSave = function() {
+	if (!this.gfnGridValidate(this.dxGrid)) return;
+
+	this.dxGrid.updateToDataset();
+	
+	this.dsInsert.clearData();
+	this.dsUpdate.clearData();
+	this.dsDelete.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+			case "I":				
+				var dsCung = "";
+				var dsHo = "";
+				if(!this.gfnIsNull(this.dsList.getColumn(i, "DS_DONG")) && this.dsList.getColumn(i, "DS_DONG") != "공용"){
+					if(this.dsList.getColumn(i, "DS_HO").length == 3){
+						dsCung = "0" + this.dsList.getColumn(i, "DS_HO").substr(0, 1);
+						dsHo = "0" + this.dsList.getColumn(i, "DS_HO").substr(1, 2);
+					}else if(this.dsList.getColumn(i, "DS_HO").length == 4){
+						dsCung = this.dsList.getColumn(i, "DS_HO").substr(0, 2);
+						dsHo = "0" + this.dsList.getColumn(i, "DS_HO").substr(2, 2);
+					}
+				}else if(this.dsList.getColumn(i, "DS_DONG") == "공용"){
+					dsCung = "00";
+					dsHo = "000";
+				}
+				
+				var nrow = this.dsInsert.addRow();
+				this.dsInsert.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+				this.dsInsert.setColumn(nrow, "TY_UMGB", this.dsList.getColumn(i, "TY_UMGB"));
+				this.dsInsert.setColumn(nrow, "TY_HAJAJS", this.dsList.getColumn(i, "TY_HAJAJS"));
+				this.dsInsert.setColumn(nrow, "DS_DONG", this.dsList.getColumn(i, "DS_DONG"));
+				this.dsInsert.setColumn(nrow, "DS_CUNG", dsCung);
+				this.dsInsert.setColumn(nrow, "DS_HO", dsHo);
+				this.dsInsert.setColumn(nrow, "CD_SIL", this.dsList.getColumn(i, "CD_SIL"));
+				this.dsInsert.setColumn(nrow, "CD_PART", this.dsList.getColumn(i, "CD_PART"));
+				this.dsInsert.setColumn(nrow, "CD_DETAIL_TYPE", this.dsList.getColumn(i, "CD_DETAIL_TYPE"));
+				this.dsInsert.setColumn(nrow, "CD_CTM", this.dsList.getColumn(i, "CD_CTM"));
+				this.dsInsert.setColumn(nrow, "CD_ACT", this.dsList.getColumn(i, "CD_ACT"));
+				this.dsInsert.setColumn(nrow, "DT_JEOBSU", this.dsList.getColumn(i, "DT_JEOBSU"));
+				this.dsInsert.setColumn(nrow, "RM_NY", this.dsList.getColumn(i, "RM_NY"));
+				this.dsInsert.setColumn(nrow, "PN_JGNAME", this.dsList.getColumn(i, "PN_JGNAME"));
+				this.dsInsert.setColumn(nrow, "DT_JOBEND", this.dsList.getColumn(i, "DT_JOBEND"));
+				this.dsInsert.setColumn(nrow, "RM_JOBEND", this.dsList.getColumn(i, "RM_JOBEND"));
+				this.dsInsert.setColumn(nrow, "PN_SC", this.dsList.getColumn(i, "PN_SC"));
+				this.dsInsert.setColumn(nrow, "NO_SCTEL", this.dsList.getColumn(i, "NO_SCTEL"));
+				this.dsInsert.setColumn(nrow, "NO_SCTELHOME", this.dsList.getColumn(i, "NO_SCTELHOME"));
+				this.dsInsert.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+				break;
+				
+			case "U":
+				var dsCung = "";
+				var dsHo = "";
+				if(!this.gfnIsNull(this.dsList.getColumn(i, "DS_DONG")) && this.dsList.getColumn(i, "DS_DONG") != "공용"){
+					if(this.dsList.getColumn(i, "DS_HO").length == 3){
+						dsCung = "0" + this.dsList.getColumn(i, "DS_HO").substr(0, 1);
+						dsHo = "0" + this.dsList.getColumn(i, "DS_HO").substr(1, 2);
+					}else if(this.dsList.getColumn(i, "DS_HO").length == 4){
+						dsCung = this.dsList.getColumn(i, "DS_HO").substr(0, 2);
+						dsHo = "0" + this.dsList.getColumn(i, "DS_HO").substr(2, 2);
+					}
+				}else if(this.dsList.getColumn(i, "DS_DONG") == "공용"){
+					dsCung = "00";
+					dsHo = "000";
+				}
+				
+				var nrow = this.dsUpdate.addRow();
+				this.dsUpdate.setColumn(nrow, "SN_SEQ", this.dsList.getColumn(i, "SN_SEQ"));
+				this.dsUpdate.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+				this.dsUpdate.setColumn(nrow, "TY_UMGB", this.dsList.getColumn(i, "TY_UMGB"));
+				this.dsUpdate.setColumn(nrow, "TY_HAJAJS", this.dsList.getColumn(i, "TY_HAJAJS"));
+				this.dsUpdate.setColumn(nrow, "DS_DONG", this.dsList.getColumn(i, "DS_DONG"));
+				this.dsUpdate.setColumn(nrow, "DS_CUNG", dsCung);
+				this.dsUpdate.setColumn(nrow, "DS_HO", dsHo);
+				this.dsUpdate.setColumn(nrow, "CD_SIL", this.dsList.getColumn(i, "CD_SIL"));
+				this.dsUpdate.setColumn(nrow, "CD_PART", this.dsList.getColumn(i, "CD_PART"));
+				this.dsUpdate.setColumn(nrow, "CD_DETAIL_TYPE", this.dsList.getColumn(i, "CD_DETAIL_TYPE"));
+				this.dsUpdate.setColumn(nrow, "CD_CTM", this.dsList.getColumn(i, "CD_CTM"));
+				this.dsUpdate.setColumn(nrow, "CD_ACT", this.dsList.getColumn(i, "CD_ACT"));
+				this.dsUpdate.setColumn(nrow, "CD_WI", this.dsList.getColumn(i, "CD_WI"));
+				this.dsUpdate.setColumn(nrow, "DT_JEOBSU", this.dsList.getColumn(i, "DT_JEOBSU"));
+				this.dsUpdate.setColumn(nrow, "RM_NY", this.dsList.getColumn(i, "RM_NY"));
+				this.dsUpdate.setColumn(nrow, "PN_JGNAME", this.dsList.getColumn(i, "PN_JGNAME"));
+				this.dsUpdate.setColumn(nrow, "DT_JOBEND", this.dsList.getColumn(i, "DT_JOBEND"));
+				this.dsUpdate.setColumn(nrow, "RM_JOBEND", this.dsList.getColumn(i, "RM_JOBEND"));
+				this.dsUpdate.setColumn(nrow, "PN_SC", this.dsList.getColumn(i, "PN_SC"));
+				this.dsUpdate.setColumn(nrow, "NO_SCTEL", this.dsList.getColumn(i, "NO_SCTEL"));
+				this.dsUpdate.setColumn(nrow, "NO_SCTELHOME", this.dsList.getColumn(i, "NO_SCTELHOME"));
+				this.dsUpdate.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+				break;
+				
+			case "D":
+				var nrow = this.dsDelete.addRow();
+				this.dsDelete.setColumn(nrow, "SN_SEQ", this.dsList.getColumn(i, "SN_SEQ"));
+				break;
+		}
+	}
+	
+	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+						
+}
+
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+this.fnPrint = function() {
+
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	
+	if(id == "ccfCD_SITE") {
+		dsUserParam.setColumn(nrow, "CD_AUTHDEPT", this.AuthClient.CD_DEPT);
+	}
+	
+	return true;
+};
+
+
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		
+		this.fnButtonEnable();
+		
+		// 현장코드 변경시 협력업체적용콤보값 재조회
+		if(e.columnid == "CD_SITE"){
+			this.fnSetComboCtm();
+		}
+	}
+};
+
+this.fnExcelSelect = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	this.dsList.clearData();
+
+	// this.gfnExcelImport("적용할Dataset명","sheet명","데이터시작좌표","콜백함수명","구분ID",현재폼);
+	// sheet명 없으면 첫번째 sheet
+	this.gfnExcelImport("dsList","","A2","fnExcelCallback","import",this);
+	
+};
+
+this.fnExcelCallback = function(sImportId, dsOut, dsSheet) {
+ 	if (dsOut.rowcount == 0)  {
+		this.gfnAlert("엑셀파일에 내용이 없습니다."); 
+		return false;
+	}
+	/*
+	trace(dsOut.saveXML());
+	for (var i=0; i< this.dsList.getColCount(); i++)
+	{
+		sColumnId = "Column"+i;
+		
+		var sColumnNm = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, i);
+		if (sColumnNm != "" && sColumnId != sColumnNm)
+		{
+			dsOut.updateColID(sColumnId, sColumnNm);
+		}
+	}  
+	trace("==============111===============");
+	trace(dsOut.saveXML());
+	*/
+   
+	this.dsList.set_enableevent(false);
+	for (var i=0; i< dsOut.rowcount; i++) {
+		var nrow = this.dsList.addRow();
+		this.dsList.setColumn(nrow, this.ucFlag, "I");
+		//아래 copyRow가 컬럼변경 이벤트를 실행하지 않음. 코드파인더 실행때문에 이 위치로 이동
+		
+		// 일단 화면에서 보이는 컬럼과 키값이되는 컬럼만 받음(null값 처리된 컬럼은 따로 엑셀에서 입력을 받던지 SP에서 조회후 처리해야할듯)
+// 		this.dsList.setColumn(nrow, "SN_SEQ"			  , "");
+// 		this.dsList.setColumn(nrow, "TY_UMGB"             , dsOut.getColumn(i,"Column0"));
+// 		this.dsList.setColumn(nrow, "DS_UMGB"             , dsOut.getColumn(i,"Column1"));
+// 		this.dsList.setColumn(nrow, "DS_DONG"             , dsOut.getColumn(i,"Column2"));
+// 		this.dsList.setColumn(nrow, "DS_CUNG"             , "");
+// 		this.dsList.setColumn(nrow, "DS_HO"               , dsOut.getColumn(i,"Column3"));
+// 		this.dsList.setColumn(nrow, "CD_SIL"              , dsOut.getColumn(i,"Column4"));
+// 		this.dsList.setColumn(nrow, "DS_SIL"              , dsOut.getColumn(i,"Column5"));
+// 		this.dsList.setColumn(nrow, "CD_PART"             , dsOut.getColumn(i,"Column6"));
+// 		this.dsList.setColumn(nrow, "DS_PART"             , dsOut.getColumn(i,"Column7"));
+// 		this.dsList.setColumn(nrow, "CD_DETAIL_TYPE"      , dsOut.getColumn(i,"Column8"));
+// 		this.dsList.setColumn(nrow, "DS_DETAIL_TYPE"      , dsOut.getColumn(i,"Column9"));
+// 		this.dsList.setColumn(nrow, "CD_CTM"              , dsOut.getColumn(i,"Column10"));
+// 		this.dsList.setColumn(nrow, "DS_CTM"              , dsOut.getColumn(i,"Column11"));
+// 		this.dsList.setColumn(nrow, "CD_ACT"              , dsOut.getColumn(i,"Column12"));
+// 		this.dsList.setColumn(nrow, "DS_ACT"              , dsOut.getColumn(i,"Column13"));
+// 		this.dsList.setColumn(nrow, "CD_WI"               , dsOut.getColumn(i,"Column14"));
+// 		this.dsList.setColumn(nrow, "DS_WI"               , dsOut.getColumn(i,"Column15"));
+// 		this.dsList.setColumn(nrow, "DT_JEOBSU"           , dsOut.getColumn(i,"Column16"));
+// 		this.dsList.setColumn(nrow, "RM_NY"               , dsOut.getColumn(i,"Column17"));
+// 		this.dsList.setColumn(nrow, "PN_JGNAME"           , dsOut.getColumn(i,"Column18"));
+// 		this.dsList.setColumn(nrow, "DT_JOBEND"           , dsOut.getColumn(i,"Column19"));
+// 		this.dsList.setColumn(nrow, "RM_JOBEND"           , dsOut.getColumn(i,"Column20"));
+// 		this.dsList.setColumn(nrow, "PN_SC"               , dsOut.getColumn(i,"Column21"));
+// 		this.dsList.setColumn(nrow, "NO_SCTEL"            , dsOut.getColumn(i,"Column22"));
+// 		this.dsList.setColumn(nrow, "NO_SCTELHOME"        , dsOut.getColumn(i,"Column23"));
+// 		this.dsList.setColumn(nrow, "CD_VALIDATE"         , dsOut.getColumn(i,"Column24"));
+// 		this.dsList.setColumn(nrow, "DS_VALIDATE_ERROR"   , dsOut.getColumn(i,"Column25"));
+// 		this.dsList.setColumn(nrow, "ID_INSERT"           , dsOut.getColumn(i,"Column26"));
+// 		this.dsList.setColumn(nrow, "DT_INSERT"           , dsOut.getColumn(i,"Column27"));
+// 		this.dsList.setColumn(nrow, "DT_UPDATE"           , dsOut.getColumn(i,"Column28"));
+// 		this.dsList.setColumn(nrow, "ID_UPDATE"           , dsOut.getColumn(i,"Column29"));
+
+		this.dsList.setColumn(nrow, "SN_SEQ"			  , "");
+		this.dsList.setColumn(nrow, "TY_UMGB"             , dsOut.getColumn(i,"Column2")); //관리구분
+		this.dsList.setColumn(nrow, "DS_UMGB"             , dsOut.getColumn(i,"Column3")); //관리구분명
+		this.dsList.setColumn(nrow, "TY_HAJAJS"           , dsOut.getColumn(i,"Column4")); //접수구분
+		this.dsList.setColumn(nrow, "DS_HAJAJS"           , dsOut.getColumn(i,"Column5")); //접수구분명
+		this.dsList.setColumn(nrow, "DS_DONG"             , dsOut.getColumn(i,"Column6")); //동
+		this.dsList.setColumn(nrow, "DS_CUNG"             , "");
+		this.dsList.setColumn(nrow, "DS_HO"               , dsOut.getColumn(i,"Column8"));
+		this.dsList.setColumn(nrow, "CD_SIL"              , dsOut.getColumn(i,"Column9"));
+		this.dsList.setColumn(nrow, "DS_SIL"              , dsOut.getColumn(i,"Column10"));
+		this.dsList.setColumn(nrow, "CD_PART"             , dsOut.getColumn(i,"Column11"));
+		this.dsList.setColumn(nrow, "DS_PART"             , dsOut.getColumn(i,"Column12"));
+		this.dsList.setColumn(nrow, "CD_DETAIL_TYPE"      , dsOut.getColumn(i,"Column13"));
+		this.dsList.setColumn(nrow, "DS_DETAIL_TYPE"      , dsOut.getColumn(i,"Column14"));
+		this.dsList.setColumn(nrow, "CD_CTM"              , dsOut.getColumn(i,"Column15"));
+		this.dsList.setColumn(nrow, "DS_CTM"              , dsOut.getColumn(i,"Column16"));
+		this.dsList.setColumn(nrow, "CD_ACT"              , dsOut.getColumn(i,"Column17"));
+		this.dsList.setColumn(nrow, "DS_ACT"              , dsOut.getColumn(i,"Column18"));
+		this.dsList.setColumn(nrow, "DT_JEOBSU"           , this.gfnGetDigit(dsOut.getColumn(i,"Column19")));
+		this.dsList.setColumn(nrow, "RM_NY"               , dsOut.getColumn(i,"Column20"));
+		this.dsList.setColumn(nrow, "PN_JGNAME"           , dsOut.getColumn(i,"Column21"));
+		this.dsList.setColumn(nrow, "DT_JOBEND"           , dsOut.getColumn(i,"Column22"));
+		this.dsList.setColumn(nrow, "RM_JOBEND"           , dsOut.getColumn(i,"Column23"));
+		this.dsList.setColumn(nrow, "PN_SC"               , dsOut.getColumn(i,"Column24"));
+		this.dsList.setColumn(nrow, "NO_SCTEL"            , dsOut.getColumn(i,"Column25"));
+		this.dsList.setColumn(nrow, "NO_SCTELHOME"        , dsOut.getColumn(i,"Column26"));
+		this.dsList.setColumn(nrow, "CD_VALIDATE"         , dsOut.getColumn(i,"Column27"));
+		this.dsList.setColumn(nrow, "DS_VALIDATE_ERROR"   , dsOut.getColumn(i,"Column28"));
+		this.dsList.setColumn(nrow, "ID_INSERT"           , dsOut.getColumn(i,"Column29"));
+		this.dsList.setColumn(nrow, "DT_INSERT"           , dsOut.getColumn(i,"Column30"));
+		this.dsList.setColumn(nrow, "DT_UPDATE"           , dsOut.getColumn(i,"Column31"));
+		this.dsList.setColumn(nrow, "ID_UPDATE"           , dsOut.getColumn(i,"Column32"));
+		
+		// 양식이 일치하는 경우 copyRow
+		//this.dsList.copyRow(nrow, dsOut, i);
+	}	
+	this.dsList.set_enableevent(true); 
+	
+	this.gfnSetFormStatus(this, "I");
+};
+
+
+ // 하자자료초기화 버튼 클릭시 팝업화면 호출
+ this.fnInit = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	//if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_SITE"))) {
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드를 먼저 입력하세요.", "fnVaidateCallback");
+		return;
+	}
+	
+	this.gfnConfirm("해당현장의 기존 하자자료 컨버전자료를 삭제합니다. 진행하시겠습니까?", "fnInit_callback");
+}
+
+// 하자자료초기화 버튼 클릭 후 callback
+this.fnInit_callback = function(strId, val) 
+{
+	if(val == true) {
+		this.dsExecInit.clearData();
+	
+		this.dsExecInit.addRow();
+		
+		this.dsExecInit.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+		this.dsExecInit.setColumn(0, "ID_INSERT", this.AuthClient.ID_USER);
+
+		if (this.dsExecInit.rowcount == 0) return;
+		
+		var strSvcId    = "execInit";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "execInit=dsExecInit";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}
+
+
+ // 하자자료이관 버튼 클릭시 팝업화면 호출
+ this.fnVendorCreate = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	//if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_SITE"))) {
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드를 먼저 입력하세요.", "fnVaidateCallback");
+		return;
+	}
+	
+	this.dsExecTrsf.clearData();
+	
+	this.dsExecTrsf.addRow();
+	
+	this.dsExecTrsf.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsExecTrsf.setColumn(0, "ID_INSERT", this.AuthClient.ID_USER);
+
+	if (this.dsExecTrsf.rowcount == 0) return;
+	
+	var strSvcId    = "execTrsf";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "execTrsf=dsExecTrsf";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+
+ // 코드적용 버튼 클릭시 팝업화면 호출(그리드의 콤보성 데이터가 상단의 각 콤보리스트의 값에 존재하는 값이면 콤보리스트의 코드값을 셋팅하고 없으면 null 셋팅 )
+ this.fnSetCode = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var umgbRow = this.dsTY_UMGB.findRow("DS_CODE", this.dsList.getColumn(i, "DS_UMGB"));	
+		var	jubsuRow = this.dsTY_JUBSU.findRow("DS_CODE", this.dsList.getColumn(i, "DS_HAJAJS"));
+		var silRow = this.dsCD_SIL.findRow("DS_CODE", this.dsList.getColumn(i, "DS_SIL"));
+		var partRow = this.dsCD_PART.findRow("DS_CODE", this.dsList.getColumn(i, "DS_PART"));
+		var subpartRow = this.dsCD_SUBPART.findRow("DS_CODE", this.dsList.getColumn(i, "DS_DETAIL_TYPE"));
+		var ctmRow = this.dsCD_CTM.findRow("DS_CTM", this.dsList.getColumn(i, "DS_CTM"));
+		var actRow = this.dsCD_ACT.findRow("DS_CODE", this.dsList.getColumn(i, "DS_ACT"));
+		//var uiRow = this.dsCD_UI.findRow("DS_CODE", this.dsList.getColumn(i, "DS_WI"));
+		
+		if(umgbRow < 0){
+			this.dsList.setColumn(i, "TY_UMGB", "");
+		}else{
+			this.dsList.setColumn(i, "TY_UMGB", this.dsTY_UMGB.getColumn(umgbRow, "CD_CODE"));
+		}
+		if(jubsuRow < 0){
+			this.dsList.setColumn(i, "TY_HAJAJS", "");
+		}else{
+			this.dsList.setColumn(i, "TY_HAJAJS", this.dsTY_JUBSU.getColumn(jubsuRow, "CD_CODE"));
+		}
+		if(silRow < 0){
+			this.dsList.setColumn(i, "CD_SIL", "");
+		}else{
+			this.dsList.setColumn(i, "CD_SIL", this.dsCD_SIL.getColumn(silRow, "CD_CODE"));
+		}
+		if(partRow < 0){
+			this.dsList.setColumn(i, "CD_PART", "");
+		}else{
+			this.dsList.setColumn(i, "CD_PART", this.dsCD_PART.getColumn(partRow, "CD_CODE"));
+		}
+		if(subpartRow < 0){
+			this.dsList.setColumn(i, "CD_DETAIL_TYPE", "");
+		}else{
+			this.dsList.setColumn(i, "CD_DETAIL_TYPE", this.dsCD_SUBPART.getColumn(subpartRow, "CD_CODE"));
+		}
+		if(ctmRow < 0){
+			this.dsList.setColumn(i, "CD_CTM", "");
+		}else{
+			this.dsList.setColumn(i, "CD_CTM", this.dsCD_CTM.getColumn(ctmRow, "CD_CTM"));
+		}
+		if(actRow < 0){
+			this.dsList.setColumn(i, "CD_ACT", "");
+		}else{
+			this.dsList.setColumn(i, "CD_ACT", this.dsCD_ACT.getColumn(actRow, "CD_CODE"));
+		}
+// 		if(uiRow < 0){
+// 			this.dsList.setColumn(i, "CD_WI", "");
+// 		}else{
+// 			this.dsList.setColumn(i, "CD_WI", this.dsCD_UI.getColumn(uiRow, "CD_CODE"));
+// 		}
+	}
+	
+}
+
+
+
+/*
+ *	콤보박스 값 설정
+ */
+this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DB");
+	this.dsCombo.setColumn(0, "CD_TYPE", "K1");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(1, "CD_SYSTEM", "DB");
+	this.dsCombo.setColumn(1, "CD_TYPE", "S3");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(2, "CD_SYSTEM", "DB");
+	this.dsCombo.setColumn(2, "CD_TYPE", "S5");
+	
+
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_JUBSU=combo0 dsCD_SIL=combo1 dsCD_ACT=combo2";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+
+};
+
+this.fnSetCombo1 = function(cd_bumun)
+{
+   this.dsCombo1 = new Dataset();
+   this.dsCombo1.addColumn("CD_TYPE", "string");
+   this.dsCombo1.addColumn("YB_SYYB", "string");
+
+   // 관리단계적용
+   this.dsCombo1.addRow();
+   this.dsCombo1.setColumn(0, "CD_TYPE", "S2");
+   this.dsCombo1.setColumn(0, "YB_SYYB", "Y");
+   
+   // 부위적용
+   this.dsCombo1.addRow();
+   this.dsCombo1.setColumn(1, "CD_TYPE", "S8");
+   this.dsCombo1.setColumn(1, "YB_SYYB", "Y");
+   
+   // 상세부위적용
+   this.dsCombo1.addRow();
+   this.dsCombo1.setColumn(2, "CD_TYPE", "S9");
+   this.dsCombo1.setColumn(2, "YB_SYYB", "Y");
+   
+   // 공종
+   this.dsCombo1.addRow();
+   this.dsCombo1.setColumn(3, "CD_TYPE", "ACT");
+   this.dsCombo1.setColumn(3, "YB_SYYB", "Y");
+   
+   var strSvcId    = "combo1";
+   var strSvcType  = "select";
+   var inProc      = "_dsProc";
+   var inData      = "combo1=dsCombo1";
+   var outData     = "dsTY_UMGB=combo10 dsCD_PART=combo11 dsCD_SUBPART=combo12 dsCD_ACT=combo13";
+   var strArg      = "";
+   var callBackFnc = "fnCallback";
+
+   this.gfnTransaction( strSvcId ,    // transaction을 구분하기 위한 svc id값
+                  strSvcType ,    // transaction을 요청할 구분
+                  inProc,         // Procedure 정보 Dataset 이름
+                  inData ,       // 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+                  outData ,       // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+                  strArg,       // 입력값으로 보낼 arguments, strFormData="20120607"
+                  callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.fnSetComboCtm = function() {
+	this.dsComboCtm.addRow();
+	this.dsComboCtm.setColumn(0, "TY_GUBUN", 1);
+	this.dsComboCtm.setColumn(0, "CN_ROW", 0);
+	this.dsComboCtm.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsComboCtm.setColumn(0, "VALUE", "");
+	this.dsComboCtm.setColumn(0, "MIN_VALUE", "");
+	
+	var strSvcId    = "comboCtm";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "comboCtm=dsComboCtm";
+	var outData     = "dsCD_CTM=comboCtm0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+
+};
+
+// this.divData_btnTY_UMGB_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	for(var i = 0; i < this.dsList.rowcount; i++) {
+// 		var bExist1 = false;
+// 		var bExist2 = false;
+// 		bExist1 = this.dxGrid.isSelectedCell(this.dxGrid.currentcol,'body',i);
+// 		bExist2 = this.dxGrid.isSelectedCell(this.dxGrid.currentcol,'body',i);
+// 		
+// 		if(this.dsTY_UMGB.rowcount < 1) return;
+// 			if(bExist1 || bExist2){
+// 				this.dsList.setColumn(i, "TY_UMGB", this.cboTY_UMGB.value);
+// 				this.dsList.setColumn(i, "DS_UMGB", this.cboTY_UMGB.text);
+// 		}
+// 	}
+// };
+
+// 관리단계적용
+this.divData_btnTY_UMGB_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	for(var i = 0; i < this.dsList.rowcount; i++) {
+		var selected = this.dxGrid.isSelectedCell(this.dxGrid.currentcol,'body',i);
+		
+		if(this.dsTY_UMGB.rowcount < 1) return;
+			if(selected){
+				this.dsList.setColumn(i, "TY_UMGB", this.cboTY_UMGB.value);
+				this.dsList.setColumn(i, "DS_UMGB", this.cboTY_UMGB.text);
+		}
+	}
+};
+
+// 접수구분적용
+this.divData_btnTY_JUBSU_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	for(var i = 0; i < this.dsList.rowcount; i++) {
+		var selected = this.dxGrid.isSelectedCell(this.dxGrid.currentcol,'body',i);
+		
+		if(this.dsTY_JUBSU.rowcount < 1) return;
+			if(selected){
+				this.dsList.setColumn(i, "TY_HAJAJS", this.cboTY_JUBSU.value);
+				this.dsList.setColumn(i, "DS_HAJAJS", this.cboTY_JUBSU.text);
+		}
+	}
+};
+
+// 실적용
+this.divData_btnCD_SIL_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	for(var i = 0; i < this.dsList.rowcount; i++) {
+		var selected = this.dxGrid.isSelectedCell(this.dxGrid.currentcol,'body',i);
+		
+		if(this.dsCD_SIL.rowcount < 1) return;
+			if(selected){
+				this.dsList.setColumn(i, "CD_SIL", this.cboCD_SIL.value);
+				this.dsList.setColumn(i, "DS_SIL", this.cboCD_SIL.text);
+		}
+	}	
+};
+
+// 부위적용
+this.divData_btnCD_PART_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	for(var i = 0; i < this.dsList.rowcount; i++) {
+		var selected = this.dxGrid.isSelectedCell(this.dxGrid.currentcol,'body',i);
+		
+		if(this.dsCD_PART.rowcount < 1) return;
+			if(selected){
+				this.dsList.setColumn(i, "CD_PART", this.cboCD_PART.value);
+				this.dsList.setColumn(i, "DS_PART", this.cboCD_PART.text);
+		}
+	}	
+};
+
+// 상세부위적용
+this.divData_btnCD_SUBPART_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	for(var i = 0; i < this.dsList.rowcount; i++) {
+		var selected = this.dxGrid.isSelectedCell(this.dxGrid.currentcol,'body',i);
+		
+		if(this.dsCD_SUBPART.rowcount < 1) return;
+			if(selected){
+				this.dsList.setColumn(i, "CD_DETAIL_TYPE", this.cboCD_SUBPART.value);
+				this.dsList.setColumn(i, "DS_DETAIL_TYPE", this.cboCD_SUBPART.text);
+		}
+	}		
+};
+
+// 협력업체적용
+this.divData_btnCD_CTM_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	for(var i = 0; i < this.dsList.rowcount; i++) {
+		var selected = this.dxGrid.isSelectedCell(this.dxGrid.currentcol,'body',i);
+		
+		if(this.dsCD_CTM.rowcount < 1) return;
+			if(selected){
+				this.dsList.setColumn(i, "CD_CTM", this.cboCD_CTM.value);
+				this.dsList.setColumn(i, "DS_CTM", this.cboCD_CTM.text);
+		}		
+	}
+};
+
+// 공종적용
+this.divData_btnCD_ACT_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	for(var i = 0; i < this.dsList.rowcount; i++) {
+		var selected = this.dxGrid.isSelectedCell(this.dxGrid.currentcol,'body',i);
+		
+		if(this.dsCD_ACT.rowcount < 1) return;
+			if(selected){
+				this.dsList.setColumn(i, "CD_ACT", this.cboCD_ACT.value);
+				this.dsList.setColumn(i, "DS_ACT", this.cboCD_ACT.text);
+		}		
+	}
+};
+
+// // 하자유형적용
+// this.divData_btnCD_UI_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	if(this.dsCD_UI.rowcount < 1) return;
+// 	
+// 	this.dsList.setColumn(this.dsList.rowposition, "CD_WI", this.cboCD_UI.value);
+// 	this.dsList.setColumn(this.dsList.rowposition, "DS_WI", this.cboCD_UI.text);
+// 	
+// };
+
+
+// 확장버튼 활성화 or 비활성화 처리
+this.fnButtonEnable = function() {
+	this.btnExcel.set_enable(false);
+	this.btnInit.set_enable(true);
+	this.btnVendorCreate.set_enable(false);
+	this.btnSetCode.set_enable(false);
+		
+	if(this.gfnGetFormStatus(this) == "Q" || this.gfnGetFormStatus(this) == "X") {
+		this.btnExcel.set_enable(true);
+		this.btnSetCode.set_enable(true);
+		
+		if(this.dsList.rowcount > 0){
+			this.btnVendorCreate.set_enable(true);
+		}
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DBZPR_BASS_CONVERSION_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DBZPR_BASS_CONVERSION_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DBZPR_BASS_CONVERSION_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DBZPR_BASS_CONVERSION_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DBZPR_BASS_CONVERSION_CREATE</Col>
+            <Col id="TARGET">execTrsf</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">execInit</Col>
+            <Col id="SP">DBZPR_CONVERSION_CONVERSION_INIT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo1</Col>
+            <Col id="SP">DBXPR_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">comboCtm</Col>
+            <Col id="SP">DBXPR_SITECTM_CODEFIND</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="CD_VALIDATE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_SITE"/>
+            <Col id="CD_VALIDATE"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCD_VALIDATE">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">%</Col>
+            <Col id="DS_CODE">전체</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">미검증</Col>
+          </Row>
+          <Row>
+            <Col id="DS_CODE">검증완료</Col>
+            <Col id="CD_CODE">Y</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">E</Col>
+            <Col id="DS_CODE">검증오류</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">R</Col>
+            <Col id="DS_CODE">필수입력누락</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_UMGB"/>
+      <Dataset id="dsCD_SIL"/>
+      <Dataset id="dsCD_PART"/>
+      <Dataset id="dsCD_SUBPART"/>
+      <Dataset id="dsCD_CTM"/>
+      <Dataset id="dsCD_ACT"/>
+      <Dataset id="dsCD_UI"/>
+      <Dataset id="dsTY_JUBSU"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divSearch.form.ccboCD_VALIDATE" propid="value" datasetid="dsSearch" columnid="CD_VALIDATE"/>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item2" compid="divData.form.cboTY_UMGB" propid="value" datasetid="dsCombo" columnid="TY_UMGB"/>
+      <BindItem id="item3" compid="divData.form.cboCD_SIL" propid="value" datasetid="dsCombo" columnid="CD_SIL"/>
+      <BindItem id="item4" compid="divData.form.cboCD_PART" propid="value" datasetid="dsCombo" columnid="CD_PART"/>
+      <BindItem id="item5" compid="divData.form.cboCD_SUBPART" propid="value" datasetid="dsCombo" columnid="CD_SUBPART"/>
+      <BindItem id="item6" compid="divData.form.cboCD_CTM" propid="value" datasetid="dsCombo" columnid="CD_CTM"/>
+      <BindItem id="item7" compid="divData.form.cboCD_ACT" propid="value" datasetid="dsCombo" columnid="CD_ACT"/>
+      <BindItem id="item8" compid="divData.form.cboTY_JUBSU" propid="value" datasetid="dsCombo" columnid="TY_JUBSU"/>
+    </Bind>
+  </Form>
+</FDL>

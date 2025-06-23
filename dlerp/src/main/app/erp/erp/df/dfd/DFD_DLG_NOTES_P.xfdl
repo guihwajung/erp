@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="410" height="280" maxwidth="440" maxheight="350" ttitletext="지급어음반제" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="1" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staTitle" taborder="5" text="어음 기본정보(참조)" left="20" top="50" height="22" width="350" cssclass="sta_TITLE_Bg"/>
+              <Static id="staBar53" taborder="6" left="119" top="79" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Button id="btnOk" taborder="3" text="확인" left="143" width="45" height="21" onclick="btnOk_onclick" uWord="popup.ok" top="238"/>
+              <Button id="btnCancle" taborder="4" text="취소" left="193" width="45" height="21" onclick="btnCancle_onclick" uWord="popup.cancel" top="238"/>
+              <Static id="staBar03" taborder="7" left="119" top="108" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <MaskEdit id="mskAM_NOTES" taborder="1" left="125" top="113" width="155" height="20" format="#,###,###,###,###,###,##0" limitbymask="integer" enable="false"/>
+              <Static id="staItem55" taborder="8" text="총반제건수" left="20" top="79" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staItem03" taborder="9" text="총반제금액" left="20" top="108" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="sta01" taborder="10" text="원" left="286" top="113" width="20" height="20"/>
+              <MaskEdit id="mskCNT_BANJE" taborder="0" left="125" top="84" width="155" height="20" format="#,###,###,###,###,###,##0" limitbymask="integer" enable="false"/>
+              <Static id="sta00" taborder="11" text="건" left="286" top="84" width="20" height="20"/>
+              <Static id="staTitle01" taborder="12" text="지급어음반제전표발행" left="20" top="20" height="22" width="350" cssclass="sta_POP_Title"/>
+              <Static id="staBar00" taborder="13" left="119" top="175" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staItem00" taborder="14" text="회계일자" left="20" top="175" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staTitle00" taborder="15" text="회계정보" left="20" top="149" height="22" width="350" cssclass="sta_TITLE_Bg"/>
+              <Calendar id="ctclDT_EXPIRY" taborder="2" left="125" top="180" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmPopup.xfdl (공통 팝업페이지)
+*  @FileName 	cmmPopup.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.10.19
+*  @Desction         스크립트 표준 및 주석 표준 정의
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.pv_CNT_BANJE;
+this.pv_AM_NOTES;
+this.pv_DT_EXPIRY;
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this); //초기화[필수]
+	this.gfnFormInfo(this);
+	
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	var frame = this.getOwnerFrame();	
+	
+	this.pv_CNT_BANJE = frame.CNT_BANJE;	// 반제건수
+	this.pv_AM_NOTES = frame.AM_NOTES;		// 반제금액
+	this.pv_DT_EXPIRY = frame.DT_EXPIRY;	// 회계일자(만기일자)
+	
+	this.mskCNT_BANJE.set_value(this.pv_CNT_BANJE);		// 반제건수
+	this.mskAM_NOTES.set_value(this.pv_AM_NOTES);		// 반제금액
+	this.ctclDT_EXPIRY.set_value(this.pv_DT_EXPIRY);	// 회계일자(만기일자)		
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.mskCNT_BANJE = this.divData.form.mskCNT_BANJE;
+this.mskAM_NOTES = this.divData.form.mskAM_NOTES;
+this.ctclDT_EXPIRY = this.divData.form.ctclDT_EXPIRY;
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnValidation = function() {
+	return true;
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* @ OK버튼이벤트
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnValidation()) return false;
+
+	// 확인
+	var json = {};
+	
+	json.CNT_BANJE = this.mskCNT_BANJE.value;		// 반제건수
+	json.AM_NOTES = this.mskAM_NOTES.value;			// 반제금액
+	json.DT_SLIP = this.ctclDT_EXPIRY.value;		// 회계일자(만기일자)	
+	
+	this.getParentContext().close(JSON.stringify(json));
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="960" height="660" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" height="100" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="입찰정보" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg"/>
+              <Static id="staCD_SITE" taborder="1" text="현장코드" left="0" top="staTITLE:5" width="87" height="30" textAlign="center" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staNO_BID" taborder="2" text="입찰번호" left="459" top="35" width="87" height="30" textAlign="center" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staCD_COSTCLASS" taborder="3" text="대공종" left="0" top="64" width="87" height="30" textAlign="center" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg1" taborder="4" left="staCD_SITE:-1" top="staTITLE:5" width="374" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg2" taborder="5" left="staNO_BID:-1" top="35" width="399" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="staBg3" taborder="6" left="86" top="64" width="374" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="edtCD_SITE" taborder="7" left="staCD_SITE:5" top="staTITLE:10" width="100" height="20" readonly="true"/>
+              <Edit id="edtDS_SITE" taborder="8" left="197" top="staTITLE:10" width="258" height="20" readonly="true"/>
+              <Edit id="edtNO_BID" taborder="9" left="551" top="40" width="100" height="20" readonly="true"/>
+              <Edit id="edtDS_SUBCON" taborder="10" left="656" top="40" width="283" height="21" readonly="true"/>
+              <Edit id="edtCD_COSTCLASS" taborder="11" left="staCD_COSTCLASS:5" top="68" width="100" height="20" readonly="true"/>
+              <Edit id="edtDS_COSTCLASS" taborder="12" left="197" top="68" width="258" height="20" readonly="true" onchanged="divData_edtDS_COSTCLASS_onchanged"/>
+              <Static id="staCD_LICCOST" taborder="13" text="등록공종" left="459" top="64" width="87" height="30" textAlign="center" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg4" taborder="14" left="545" top="staBg2:-1" width="399" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="edtCD_LICCOST" taborder="15" left="551" top="69" width="100" height="20" readonly="true"/>
+              <Edit id="edtDS_LICCOST" taborder="16" left="656" top="69" width="283" height="20" readonly="true" onchanged="divData_edtDS_LICCOST_onchanged"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divDataBottom" taborder="0" left="0" top="divData:5" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="1" text="추천정보" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg"/>
+              <Static id="staID_USER" taborder="2" text="추천인" left="0" top="staTITLE:5" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="center" textDecoration="underline"/>
+              <Static id="staCD_VENDOR" taborder="3" text="추천업체" left="0" top="staID_USER:-1" width="87" height="240" cssclass="sta_WF_tablelabel" textAlign="center" textDecoration="underline"/>
+              <Static id="staSAYU" taborder="4" text="비고" left="0" top="staCD_VENDOR:-1" width="87" height="179" cssclass="sta_WF_tablelabel" textAlign="center"/>
+              <Static id="staBg5" taborder="5" left="staID_USER:-1" top="staTITLE:5" width="337" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg7" taborder="6" left="staCD_VENDOR:-1" top="staBg5:-1" width="858" height="240" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfID_USER" CodeFindName="DZX_CFUSER" CDTextWidth="80" taborder="0" left="staID_USER:5" top="staTITLE:10" width="205" height="20" url="cmm::cmmCodeFind.xfdl"/>
+              <Edit id="ctxtCD_VENDOR" taborder="7" left="staCD_VENDOR:5" top="ccfID_USER:9" width="320" height="20" value=""/>
+              <Button id="btnSearch" taborder="8" text="검색" left="ctxtCD_VENDOR:10" top="ccfID_USER:9" width="63" height="20" onclick="divDataBottom_btnSearch_onclick"/>
+              <CheckBox id="cchkYN_ALL" taborder="9" text="전체검색" left="btnSearch:10" top="ccfID_USER:9" width="96" height="20" falsevalue="N" truevalue="Y"/>
+              <Static id="staCD_DEPT" taborder="10" text="부서" left="staBg5:-1" top="staTITLE:5" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="center" textDecoration="underline"/>
+              <Static id="staBg6" taborder="11" left="staCD_DEPT:-1" top="staTITLE:5" width="436" height="30" cssclass="sta_WF_tablebg"/>
+              <Div id="ccfCD_DEPT" CodeFindName="DCX_CFDEPT_02" CDTextWidth="80" taborder="12" left="staCD_DEPT:5" top="staTITLE:10" width="205" height="20" url="cmm::cmmCodeFind.xfdl"/>
+              <Grid id="objGrid" taborder="13" left="staCD_VENDOR:6" top="ctxtCD_VENDOR:5" width="844" height="204"/>
+              <Button id="btnOk" taborder="15" text="저장" left="40.21%" top="517" width="60" height="20" onclick="divData_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="16" text="취소" left="48.96%" top="517" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+              <Static id="staBg00" taborder="17" left="86" top="303" width="858" height="179" cssclass="sta_WF_tablebg"/>
+              <TextArea id="edtBIGO" taborder="14" left="92" top="308" height="169" width="846"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+ 	// 이전 화면에서 데이터 받기.
+	//this.dsSearch.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+	//this.dsSearch.setColumn(0, "DS_SITE", this.getOwnerFrame().DS_SITE);
+	//this.dsSearch.setColumn(0, "NO_BID", this.getOwnerFrame().NO_BID);
+	this.fnSelectPrev(this.getOwnerFrame().NO_BID);
+	
+	//this.dsSearch.setColumn(0, "DS_SUBCON", this.getOwnerFrame().DS_SUBCON);
+	//this.dsSearch.setColumn(0, "CD_COSTCLASS", this.getOwnerFrame().CD_COSTCLASS);
+	//this.dsSearch.setColumn(0, "DS_COSTCLASS", this.getOwnerFrame().DS_COSTCLASS);
+	//this.dsSearch.setColumn(0, "CD_LICCOST", this.getOwnerFrame().CD_LICCOST);
+	//this.dsSearch.setColumn(0, "DS_LICCOST", this.getOwnerFrame().DS_LICCOST);
+	
+	this.divDataBottom.form.ccfID_USER.form.CDTextBox.set_value(this.AuthClient.ID_USER);
+	this.divDataBottom.form.ccfID_USER.form.DSTextBox.set_value(this.AuthClient.DS_HNAME);
+	this.divDataBottom.form.ccfCD_DEPT.form.CDTextBox.set_value(this.AuthClient.CD_DEPT);
+	this.divDataBottom.form.ccfCD_DEPT.form.DSTextBox.set_value(this.AuthClient.DS_DEPT);
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.dxGrid = this.divDataBottom.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.divDataBottom.form.ccfCD_DEPT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+
+	this.gfnGridInit(this.dxGrid, this.dsList, "DC", "DCB_RECOMMENDGRIDDLG");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("NO_BID", "string");
+	this.dsSelect.addColumn("CD_COSTCLASS", "string");
+	this.dsSelect.addColumn("CD_LICCOST", "string");
+	this.dsSelect.addColumn("YN_ALL", "string");
+	this.dsSelect.addColumn("VALUE", "string");
+	
+	this.dsSelectPrev = new Dataset();
+	this.dsSelectPrev.addColumn("NO_BID", "string");
+	
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("CD_SITE", "string");
+	this.dsInsert.addColumn("NO_BID", "string");
+	this.dsInsert.addColumn("ID_SABUN", "string");
+	this.dsInsert.addColumn("CD_VENDOR", "string");
+	this.dsInsert.addColumn("TY_RECOMMEND", "string");
+	this.dsInsert.addColumn("DS_REASON", "string");
+	this.dsInsert.addColumn("DS_HNAME", "string");
+	this.dsInsert.addColumn("CD_DEPT", "string");
+	this.dsInsert.addColumn("RM_REMARK", "string");
+	this.dsInsert.addColumn("TY_WHERE", "string");
+	this.dsInsert.addColumn("ID_USER", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ 
+ /************************************************************************
+ * 버튼 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	//this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+	this.dsSelect.setColumn(0, "CD_COSTCLASS", this.dsSearch.getColumn(0, "CD_COSTCLASS"));
+	this.dsSelect.setColumn(0, "CD_LICCOST", this.dsSearch.getColumn(0, "CD_LICCOST"));
+	this.dsSelect.setColumn(0, "YN_ALL", this.dsSearch.getColumn(0, "YN_ALL"));
+	this.dsSelect.setColumn(0, "VALUE", this.dsSearch.getColumn(0, "VALUE"));
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+
+}
+
+this.fnSelectPrev = function(no_bid) {
+	//this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelectPrev.clearData();
+	this.dsSelectPrev.addRow();
+	
+	this.dsSelectPrev.setColumn(0, "NO_BID", no_bid);
+
+	var strSvcId    = "select_prev";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select_prev=dsSelectPrev";
+	var outData     = "dsTemp=select_prev0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+						
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "insert") {
+		if(errorCode == 0)
+		{
+			// this.close()가 작동하지 않았고, 
+			// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+			this.getParentContext().close(true);
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "select_prev")
+	{
+		this.dsSearch.copyRow(0, this.dsTemp, 0);
+		this.FormBtns.Select.click();
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if (id == "ccfCD_DEPT") {
+		dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);	
+	}
+	return true;
+}
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+// 확인 버튼 클릭
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+ 	this.dsInsert.clearData();
+
+	var row = -1;
+
+	while(1)
+	{
+		row = this.dsList.findRow("YN_CHECK", "1", row+1);
+		
+		if(row < 0) break;
+		
+		var nrow = this.dsInsert.addRow();
+		this.dsInsert.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+		this.dsInsert.setColumn(nrow, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+		this.dsInsert.setColumn(nrow, "ID_SABUN", this.divDataBottom.form.ccfID_USER.form.CDTextBox.text);
+		this.dsInsert.setColumn(nrow, "CD_VENDOR", this.dsList.getColumn(row, "CD_VENDOR"));
+		this.dsInsert.setColumn(nrow, "TY_RECOMMEND", "입찰");
+		this.dsInsert.setColumn(nrow, "DS_REASON", "");
+		this.dsInsert.setColumn(nrow, "DS_HNAME", this.divDataBottom.form.ccfID_USER.form.DSTextBox.text);
+		this.dsInsert.setColumn(nrow, "CD_DEPT", this.divDataBottom.form.ccfCD_DEPT.form.CDTextBox.text);
+		this.dsInsert.setColumn(nrow, "RM_REMARK", this.divDataBottom.form.edtBIGO.text);
+		this.dsInsert.setColumn(nrow, "TY_WHERE", "2");
+		this.dsInsert.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	};
+	
+	if (this.dsInsert.rowcount == 0) return;
+
+	
+	var strSvcId    = "insert";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+
+this.divDataBottom_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.FormBtns.Select.click();
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DCXPR_VENDOR_RECOMMEND</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DCBPR_RECOMMEND_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select_prev</Col>
+            <Col id="SP">DCBPR_RECOMMENDGRIDDLG_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="NO_BID" type="STRING" size="256"/>
+          <Column id="DS_SUBCON" type="STRING" size="256"/>
+          <Column id="CD_COSTCLASS" type="STRING" size="256"/>
+          <Column id="DS_COSTCLASS" type="STRING" size="256"/>
+          <Column id="CD_LICCOST" type="STRING" size="256"/>
+          <Column id="DS_LICCOST" type="STRING" size="256"/>
+          <Column id="YN_ALL" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="YN_ALL">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList"/>
+      <Dataset id="dsTemp"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.edtCD_SITE" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divData.form.edtDS_SITE" propid="value" datasetid="dsSearch" columnid="DS_SITE"/>
+      <BindItem id="item2" compid="divData.form.edtNO_BID" propid="value" datasetid="dsSearch" columnid="NO_BID"/>
+      <BindItem id="item3" compid="divData.form.edtDS_SUBCON" propid="value" datasetid="dsSearch" columnid="DS_SUBCON"/>
+      <BindItem id="item4" compid="divData.form.edtCD_COSTCLASS" propid="value" datasetid="dsSearch" columnid="CD_COSTCLASS"/>
+      <BindItem id="item5" compid="divData.form.edtDS_COSTCLASS" propid="value" datasetid="dsSearch" columnid="DS_COSTCLASS"/>
+      <BindItem id="item6" compid="divData.form.edtCD_LICCOST" propid="value" datasetid="dsSearch" columnid="CD_LICCOST"/>
+      <BindItem id="item7" compid="divData.form.edtDS_LICCOST" propid="value" datasetid="dsSearch" columnid="DS_LICCOST"/>
+      <BindItem id="item9" compid="divDataBottom.form.ctxtCD_VENDOR" propid="value" datasetid="dsSearch" columnid="VALUE"/>
+      <BindItem id="item8" compid="divDataBottom.form.cchkYN_ALL" propid="value" datasetid="dsSearch" columnid="YN_ALL"/>
+    </Bind>
+  </Form>
+</FDL>

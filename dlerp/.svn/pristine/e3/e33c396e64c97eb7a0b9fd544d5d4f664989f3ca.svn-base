@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="총괄현황" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="78.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Div id="ccfCD_SITE" CodeFindName="DBX_CFMAINSITE" CDTextWidth="70" taborder="5" left="0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" onclick="Common_onclick" text=""/>
+              <Static id="staCD_CORP00" taborder="6" text="공종" left="0.0" top="ccfCD_SITE:10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_ACT" CodeFindName="DBX_CFACT_ALL" CDTextWidth="70" taborder="7" left="staCD_CORP00:0.0" top="ccfCD_SITE:10.0" width="465" height="24.0" url="cmm::cmmCodeFind.xfdl" onclick="Common_onclick" text=""/>
+              <Static id="staDT" taborder="2" text="접수일" left="0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Calendar id="ctclDT_FROM" taborder="0" left="staDT:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true"/>
+              <Static id="sta00" taborder="3" text="~" left="ctclDT_FROM:0.0" top="10.0" width="30.0" height="24.0" cssclass="sta_WF_AC"/>
+              <Calendar id="ctclDT_TO" taborder="1" left="sta00:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true"/>
+              <Static id="staCD_CORP" taborder="4" text="현장코드" left="ctclDT_TO:0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Static id="staTY_JAJIK" taborder="8" text="거래처" left="0.0" top="ccfCD_SITE:10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_CTM" CodeFindName="DBX_CFSITECTM" CDTextWidth="70" taborder="9" left="staTY_JAJIK:0.0" top="ccfCD_SITE:10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" onclick="Common_onclick" text=""/>
+              <Static id="staTY_JAJIK00" taborder="10" text="하자유형" left="ccfCD_CTM:0.0" top="ccfCD_SITE:10.0" width="105.0" height="24.0" visible="false" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_UH" CodeFindName="DBX_CFCOMM" CDTextWidth="70" taborder="11" left="staTY_JAJIK00:0.0" top="ccfCD_SITE:10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" onclick="Common_onclick" text="" visible="false"/>
+              <Static id="staCD_CORP01" taborder="12" text="동/층/호" left="ccfCD_SITE:0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtDS_DONG" taborder="13" left="staCD_CORP01:0.0" top="10.0" width="50" height="24.0" value="" readonly="false" maxlength="4"/>
+              <Edit id="ctxtDS_CUNG" taborder="14" left="ctxtDS_DONG:0.0" top="10.0" width="33" height="24.0" value="" readonly="false" maxlength="2"/>
+              <Edit id="ctxtDS_HO" taborder="15" left="ctxtDS_CUNG:0.0" top="10.0" width="50" height="24.0" value="" readonly="false" maxlength="3"/>
+              <Static id="staTY_UMGB" taborder="16" text="상태" left="ctclDT_TO:0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="ccboTY_GUBUN" taborder="17" left="staTY_UMGB:0.0" top="10.0" height="24.0" innerdataset="dsTY_GUBUN" datacolumn="DS_CODE" codecolumn="CD_CODE" index="-1" value="" width="100"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" top="90" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);
+	// ---------------------------//
+	//this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	var toDay = this.gfnGetDate();
+	this.dsSearch.setColumn(0, "DT_FROM", toDay);
+	this.dsSearch.setColumn(0, "DT_TO", toDay);
+	
+	this.dsSearch.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+	this.dsSearch.setColumn(0, "DS_SITE", this.getOwnerFrame().DS_SITE);
+	this.dsSearch.setColumn(0, "CD_ACT", this.getOwnerFrame().CD_ACT);
+	this.dsSearch.setColumn(0, "DS_ACT", this.getOwnerFrame().DS_ACT);
+	this.dsSearch.setColumn(0, "DT_FROM", this.getOwnerFrame().DT_FROM);
+	this.dsSearch.setColumn(0, "DT_TO", this.getOwnerFrame().DT_TO);
+	this.dsSearch.setColumn(0, "CD_CTM", this.getOwnerFrame().CD_CTM);
+	this.dsSearch.setColumn(0, "DS_CTM", this.getOwnerFrame().DS_CTM);
+	
+	this.ccboTY_GUBUN.set_index(0);
+	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {	
+	// 서브 버튼 사용
+	//this.gfnUseSubBtn(true, this.divData, this.divData.form.divSplitter); // divSplitter sync
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	//this.btnDongState = this.gfnFormButtonAdd("btnDongState", "fnDongState");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ccfCD_ACT = this.divSearch.form.ccfCD_ACT;
+	this.ccfCD_CTM = this.divSearch.form.ccfCD_CTM;	
+	this.ccfCD_UH = this.divSearch.form.ccfCD_UH;
+	this.ctclDT_FROM = this.divSearch.form.ctclDT_FROM;
+	this.ctclDT_TO = this.divSearch.form.ctclDT_TO;
+	this.ccboTY_GUBUN = this.divSearch.form.ccboTY_GUBUN;
+	this.ctxtDS_DONG = this.divSearch.form.ctxtDS_DONG;
+	this.ctxtDS_CUNG = this.divSearch.form.ctxtDS_CUNG;
+	this.ctxtDS_HO = this.divSearch.form.ctxtDS_HO;
+	
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_SITE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_SITE.AfterCDTextChanged = "fnAfterCDTextChanged";	
+	this.ccfCD_ACT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_CTM.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_UH.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DB", "DBS_KSBJ_HAJALIST");
+	this.dxGrid.set_selecttype("cell");	// IE경우만 multiarea모드에서 master선택후 마우스 이동 빠르게 할 경우 버그가 있어서 cell 모드로 변경
+	
+	this.dsSearch.addEventHandler("onvaluechanged", this.dsSearch_onvaluechanged, this);
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_PROGRAM", "string");
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("DS_SITE", "string");
+	this.dsSelect.addColumn("DS_DONG", "string");
+	this.dsSelect.addColumn("DS_CUNG", "string");
+	this.dsSelect.addColumn("DS_HO", "string");
+	this.dsSelect.addColumn("CD_CTM", "string");
+	this.dsSelect.addColumn("DS_CTM", "string");
+	this.dsSelect.addColumn("CD_ACT", "string");
+	this.dsSelect.addColumn("DS_ACT", "string");
+	this.dsSelect.addColumn("CD_UH", "string");
+	this.dsSelect.addColumn("DS_UH", "string");
+	this.dsSelect.addColumn("DT_FROM", "string");
+	this.dsSelect.addColumn("DT_TO", "string");
+	this.dsSelect.addColumn("TY_GUBUN", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsList.clearData();
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_PROGRAM", "");
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "DS_SITE", this.dsSearch.getColumn(0, "DS_SITE"));
+	this.dsSelect.setColumn(0, "DS_DONG", this.dsSearch.getColumn(0, "DS_DONG"));
+	this.dsSelect.setColumn(0, "DS_CUNG", this.dsSearch.getColumn(0, "DS_CUNG"));
+	this.dsSelect.setColumn(0, "DS_HO", this.dsSearch.getColumn(0, "DS_HO"));
+	this.dsSelect.setColumn(0, "CD_CTM", this.dsSearch.getColumn(0, "CD_CTM"));
+	this.dsSelect.setColumn(0, "DS_CTM", this.dsSearch.getColumn(0, "DS_CTM"));
+	this.dsSelect.setColumn(0, "CD_ACT", this.dsSearch.getColumn(0, "CD_ACT"));
+	this.dsSelect.setColumn(0, "DS_ACT", this.dsSearch.getColumn(0, "DS_ACT"));
+	this.dsSelect.setColumn(0, "CD_UH", this.dsSearch.getColumn(0, "CD_UH"));
+	this.dsSelect.setColumn(0, "DS_UH", this.dsSearch.getColumn(0, "DS_UH"));
+	this.dsSelect.setColumn(0, "DT_FROM", this.dsSearch.getColumn(0, "DT_FROM"));
+	this.dsSelect.setColumn(0, "DT_TO", this.dsSearch.getColumn(0, "DT_TO"));
+	this.dsSelect.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	/*
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_SITE"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}else if(this.gfnGetDiffDate(this.dsSearch.getColumn(0, "FROMDATE"), this.dsSearch.getColumn(0, "TODATE")) <= -1){
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.ctclDT_TO.setFocus();
+			return false;
+		}
+		this.gfnAlert("접수일의 범위가 올바르지 않습니다.", "fnVaidateCallback"); // gfnAlert = function (sMsgId, arrArg, sPopId, sCallback)
+	}
+	*/
+	return validate;
+}
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") { 
+		this.gfnGridAfterSelect(this.dxGrid);
+	} else if (svcID == "combo") {
+	
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+			
+	if(id == "ccfCD_SITE") {
+		dsUserParam.setColumn(nrow, "CD_AUTHDEPT", this.AuthClient.CD_DEPT);
+	}
+	
+	if(id == "ccfCD_CTM") { 
+		var CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+		if(this.gfnIsNull(CD_SITE)){
+			this.gfnAlert("현장코드를 먼저 선택하세요.");
+			return false;
+		}
+		
+		dsUserParam.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	}		
+	
+	if(id == "ccfCD_ACT") {
+		dsUserParam.setColumn(nrow, "CD_GUBUN", "S5");
+	}
+	if(id == "ccfCD_UH") {
+		dsUserParam.setColumn(nrow, "CD_GUBUN", "S1");
+	}
+	
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arrData = codeFindData;
+	if(id == "ccfCD_SITE") {
+		this.ccfCD_CTM.form.fnCodeFindClear();
+		
+	}
+}
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" enableevent="false"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DBSPR_KSBJ_HAJALIST_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_PROGRAM" type="STRING" size="256"/>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="DS_DONG" type="STRING" size="256"/>
+          <Column id="DS_CUNG" type="STRING" size="256"/>
+          <Column id="DS_HO" type="STRING" size="256"/>
+          <Column id="CD_CTM" type="STRING" size="256"/>
+          <Column id="DS_CTM" type="STRING" size="256"/>
+          <Column id="CD_ACT" type="STRING" size="256"/>
+          <Column id="DS_ACT" type="STRING" size="256"/>
+          <Column id="CD_UH" type="STRING" size="256"/>
+          <Column id="DS_UH" type="STRING" size="256"/>
+          <Column id="DT_FROM" type="STRING" size="256"/>
+          <Column id="DT_TO" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_PROGRAM"/>
+            <Col id="CD_SITE"/>
+            <Col id="DS_SITE"/>
+            <Col id="DS_DONG"/>
+            <Col id="DS_CUNG"/>
+            <Col id="DS_HO"/>
+            <Col id="CD_CTM"/>
+            <Col id="DS_CTM"/>
+            <Col id="CD_ACT"/>
+            <Col id="DS_ACT"/>
+            <Col id="CD_UH"/>
+            <Col id="DS_UH"/>
+            <Col id="DT_FROM"/>
+            <Col id="DT_TO"/>
+            <Col id="TY_GUBUN"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_GUBUN">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">접수</Col>
+            <Col id="DS_CODE">접수</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">처리</Col>
+            <Col id="DS_CODE">처리</Col>
+          </Row>
+          <Row>
+            <Col id="DS_CODE">미처리</Col>
+            <Col id="CD_CODE">미처리</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item2" compid="divSearch.form.ctclDT_FROM" propid="value" datasetid="dsSearch" columnid="DT_FROM"/>
+      <BindItem id="item1" compid="divSearch.form.ctclDT_TO" propid="value" datasetid="dsSearch" columnid="DT_TO"/>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item3" compid="divSearch.form.ccfCD_ACT.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_ACT"/>
+      <BindItem id="item4" compid="divSearch.form.ccfCD_CTM.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CTM"/>
+      <BindItem id="item5" compid="divSearch.form.ccfCD_UH.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_UH"/>
+      <BindItem id="item6" compid="divSearch.form.ctxtDS_DONG" propid="value" datasetid="dsSearch" columnid="DS_DONG"/>
+      <BindItem id="item7" compid="divSearch.form.ctxtDS_CUNG" propid="value" datasetid="dsSearch" columnid="DS_CUNG"/>
+      <BindItem id="item8" compid="divSearch.form.ctxtDS_HO" propid="value" datasetid="dsSearch" columnid="DS_HO"/>
+      <BindItem id="item9" compid="divSearch.form.ccboTY_GUBUN" propid="value" datasetid="dsSearch" columnid="TY_GUBUN"/>
+      <BindItem id="item10" compid="divSearch.form.ccfCD_SITE.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_SITE"/>
+      <BindItem id="item11" compid="divSearch.form.ccfCD_ACT.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_ACT"/>
+      <BindItem id="item12" compid="divSearch.form.ccfCD_CTM.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CTM"/>
+      <BindItem id="item13" compid="divSearch.form.ccfCD_UH.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_UH"/>
+    </Bind>
+  </Form>
+</FDL>

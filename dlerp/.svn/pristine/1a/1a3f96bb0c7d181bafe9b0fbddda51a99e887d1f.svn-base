@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="연간 차량비용명세서" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staYY_CARCOST" taborder="0" text="작업년도" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYY_CARCOST" taborder="1" left="staYY_CARCOST:0.0" top="10.0" width="80" height="24.0" enableevent="true" async="false" AfterCDTextChanged="fnAfterCDTextChanged" url="cmm::cmmCalYY.xfdl"/>
+              <Static id="staTY_CAR" taborder="2" text="차종" left="ctclYY_CARCOST:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtTY_CAR" taborder="3" left="staTY_CAR:0.0" top="10.0" width="100" height="24.0" onchanged="fnSearchInit"/>
+              <Static id="staCD_CAR" taborder="4" text="차량코드" left="edtTY_CAR:0.0" top="10.0" width="92.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_CAR" CDTextWidth="80" taborder="5" left="staCD_CAR:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DHX_CAR" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+              <Static id="staDS_HNAME" taborder="6" text="사용자" left="ccfCD_CAR:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtDS_HNAME" taborder="7" left="staDS_HNAME:0.0" top="10.0" width="135" height="24.0" onchanged="fnSearchInit"/>
+              <Static id="staDT_STD" taborder="8" text="기준일자" left="edtDS_HNAME:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Calendar id="ctclDT_STD" taborder="9" left="staDT_STD:0.0" top="10.0" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" width="105" onchanged="fnSearchInit"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0">
+                <Formats>
+                  <Format id="default"/>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList" cancolumnchange="dsList_cancolumnchange" onvaluechanged="dsList_onvaluechanged"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DHAPR_CAR_YEARSTATE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">report</Col>
+            <Col id="SP">DHAPR_CAR_YEARSTATE_RPT_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+		
+	this.fnSetButton();
+	//this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();	
+	
+	this.gdt_base = this.gfnGetDate().substring(0,4).toString();
+	this.divSearch.form.ctclYY_CARCOST.form.TextBox.set_value(this.gdt_base);	
+	
+	//this.FormBtns.Select.click();
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	this.FormBtns.Add.set_enable(false);
+	this.FormBtns.Del.set_enable(false);
+	this.FormBtns.Save.set_enable(false);
+	this.FormBtns.Reset.set_enable(true);
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+	this.ctclYY_CARCOST = this.divSearch.form.ctclYY_CARCOST;
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+	this.edtTY_CAR = this.divSearch.form.edtTY_CAR;
+	this.ccfCD_CAR = this.divSearch.form.ccfCD_CAR;
+	this.edtDS_HNAME = this.divSearch.form.edtDS_HNAME;
+	this.ctclDT_STD = this.divSearch.form.ctclDT_STD;
+	
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHA_CAR_YEARSTATE");
+	
+	//총계
+	//this.divData.form.objGrid.appendContentsRow("summary");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("YY_CARCOST", "string");
+	this.dsSelect.addColumn("TY_CAR", "string");
+	this.dsSelect.addColumn("CD_CAR", "string");
+	this.dsSelect.addColumn("DS_HNAME", "string");
+	this.dsSelect.addColumn("DT_STD", "string");
+	
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if(!this.fnValidate()) return;
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "YY_CARCOST", this.ctclYY_CARCOST.form.TextBox.value);
+	this.dsSelect.setColumn(0, "TY_CAR", this.edtTY_CAR.value);
+	this.dsSelect.setColumn(0, "CD_CAR", this.ccfCD_CAR.form.CDTextBox.value);
+	this.dsSelect.setColumn(0, "DS_HNAME", this.edtDS_HNAME.value);
+	this.dsSelect.setColumn(0, "DT_STD", this.ctclDT_STD.value);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	//this.gfnGridAdd(this.dxGrid);
+};
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	//this.gfnGridDel(this.dxGrid);
+};
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+
+};
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+};
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+	this.dsReport = new Dataset();
+	this.dsReport.addColumn("YY_CARCOST", "string");
+	this.dsReport.addColumn("TY_CAR", "string");
+	this.dsReport.addColumn("CD_CAR", "string");
+	this.dsReport.addColumn("DS_HNAME", "string");
+	this.dsReport.addColumn("DT_STD", "string");
+	
+	this.dsReport.clearData();
+	this.dsReport.addRow();
+	this.dsReport.setColumn(0, "YY_CARCOST", this.ctclYY_CARCOST.form.TextBox.value);
+	this.dsReport.setColumn(0, "TY_CAR", this.edtTY_CAR.value);
+	this.dsReport.setColumn(0, "CD_CAR", this.ccfCD_CAR.form.CDTextBox.value);
+	this.dsReport.setColumn(0, "DS_HNAME", this.edtDS_HNAME.value);
+	this.dsReport.setColumn(0, "DT_STD", this.ctclDT_STD.value);
+	
+ 	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "report=dsReport";
+	var outData     = "dsList=report0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+						
+	var inProc		= "_dsProc";
+	//var inParam 	= "params=dsReportParam";	// 조회SP이외 사용할 정보
+	var inParam 	= "";						// 필요없는 경우 생략
+	var inData      = "report=dsReport";
+	var reportpath  = "/dh/dha/DHA_CAR_YEARSTATE.ozr";
+
+	gfnOpenReport(this, reportpath, inProc, inParam, inData);
+};
+/*
+ *	리셋 버튼
+ */
+this.fnReset = function(){
+	this.ctclYY_CARCOST.form.TextBox.set_value("");
+	this.edtTY_CAR.set_value("");	
+	this.ccfCD_CAR.form.CDTextBox.set_value("");
+	this.ccfCD_CAR.form.DSTextBox.set_value("");
+	this.edtDS_HNAME.set_value("");
+	this.ctclDT_STD.set_value("")
+	this.fnSearchInit();
+};
+
+/************************************************************************
+ * 서브 버튼 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnValidate = function() {
+	if (this.gfnIsNull(this.ctclYY_CARCOST.form.TextBox.value)) {
+		this.fnVaidateCallback = function() {
+			this.ctclYY_CARCOST.form.TextBox.setFocus();
+		}
+		this.gfnAlert("작업년도를 입력하세요.","fnVaidateCallback");
+		return false;
+	}
+ 	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	//console.log(svcID);
+	this.fnSetButton();	
+	
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+		
+		var colCnt = this.dsList.getColCount();
+		var rowCnt = this.dsList.rowcount;
+		
+		//소계, 합계 css
+		this.dsList.set_enableevent(false);
+		for( var i = 0; i < rowCnt; i++){
+			for(var j = 4 ; j < this.dxGrid.getCellCount("body"); j++){
+				this.dxGrid.setCellProperty("body",j,"cssclass", "expr:DS_HNAME=='소계'?'BACK_SoKe':DS_HNAME=='합계'?'BACK_ChongKe':''");
+				if(this.dsList.getColumn(i, "DS_HNAME") =="합계"){
+					var cnt = "";
+					switch(this.dsList.getColumn(i, "GUBUN")){
+						case "보유차량":
+							cnt = this.dsList.getColumn(i, "CNT1");
+						break;
+						case "매각차량":
+							cnt = this.dsList.getColumn(i, "CNT2");
+						break;
+						case "렌트차량":
+							cnt = this.dsList.getColumn(i, "CNT3");
+						break;
+						case "반납차량":
+							cnt = this.dsList.getColumn(i, "CNT4");
+						break;
+						
+						default:
+					}
+					this.dsList.setColumn(i, "DT_COST", "( "+cnt+" 대 )");
+				}
+			}
+		}
+		this.dsList.set_enableevent(true);
+		
+		this.dsList.set_filterstr("NO_CAR != null");
+		
+		//총계
+		for( var i = 1; i < colCnt; i++){
+			if(i >9 && i < 18 ){
+				var sum = this.dsList.getSum(this.dsList.getColID(i+1));
+				this.dxGrid.setCellProperty("summary",i,"text", sum);
+				this.dxGrid.setCellProperty("summary",i,"textAlign", "right");
+				this.dxGrid.setCellProperty("summary",i,"displaytype", "number");
+			}
+		}
+		this.dsList.set_filterstr("");
+		
+		this.dsList.filter("");
+		this.fnSetButton();
+	} else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if(svcID == "report"){
+		console.log(this.dsList.saveXML());
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+ 	if (id == "ccfCD_CAR") {
+// 		var cd_corp = this.ccfCD_CORP.form.CDTextBox.text;
+// 		if(this.gfnIsNull(cd_corp)) {
+// 			this.gfnAlert("법인코드를 먼저 입력하세요.");
+// 			return false;
+// 		}
+
+		dsUserParam.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.text);
+	}
+	
+	return true;
+};
+
+this.codefind_AfterCDTextChanged = function(id) {
+	if (id == "ccfCD_CORP") {
+		this.ccfCD_CAR.form.CDTextBox.set_value("");
+		this.ccfCD_CAR.form.DSTextBox.set_value("");
+	}
+	
+	this.fnSearchInit();
+};
+
+this.fnGrid_BeforeUserDataSetParam = function(id, dsUserParam, nrow){
+	if(id == "DHX_CAR"){
+		var cd_corp = this.dsList.getColumn(this.dsList.rowposition, "CD_CORP");
+		
+		if(this.gfnIsNull(cd_corp)) cd_corp = "";
+				
+		dsUserParam.setColumn(nrow, "CD_CORP", cd_corp);
+
+	} else if(id == "DAX_CFBASEINFO"){
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "CD_DEPT", "%");
+		dsUserParam.setColumn(nrow, "TY_RETIRE", "%");	// 재직구분
+		
+	} else if(id == "DAX_CFDEPT") {
+		dsUserParam.setColumn(nrow, "GR_SEARCH", "");
+		dsUserParam.setColumn(nrow, "CD_DEPT", "");
+		dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+		dsUserParam.setColumn(nrow, "YN_CURRENT", "");	
+	}
+		
+	return true;
+};
+
+this.fnGrid_AfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+	if (id == "DZX_CFCORP"){
+		this.dsList.setColumn(this.dsList.rowposition, "CD_CAR", "");
+		this.dsList.setColumn(this.dsList.rowposition, "NO_CAR", "");
+		
+	}else if(id == "DHX_CAR"){
+		var nrow = arr[0]["rowInfo"];
+		this.dsList.setColumn(nrow, "CD_CORP", arr[0]["CD_CORP"]);
+		this.dsList.setColumn(nrow, "DS_CORP", arr[0]["DS_CORP"]);
+		this.fnGetKmBef(arr);
+	}
+};
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+	
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		// 폼상태 초기화
+		this.gfnSetFormStatus(this);	
+		this.gfnGridClear(this.dxGrid);
+	}
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+
+//주행거리 체크
+this.dsList_cancolumnchange = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.columnid == "KM_BEFORE" || e.columnid == "KM_AFTER") {
+		var kmBefore = this.dsList.getColumn(e.row, "KM_BEFORE");
+		var kmAfter = this.dsList.getColumn(e.row, "KM_AFTER");
+		var nDrvKm =  0;
+
+		if(e.columnid == "KM_BEFORE"){
+			kmBefore = e.newvalue;
+			
+		}else if (e.columnid == "KM_AFTER"){
+			kmAfter = e.newvalue;
+		}
+		nDrvKm =  kmAfter - kmBefore;
+			
+		if(nDrvKm < 0 ){			
+			this.gfnAlert("입력값이 잘못되었습니다.");
+			return false;
+		}
+	}else if(e.columnid == "KM_WORKING" || e.columnid == "KM_BUSINESS"){
+		var kmWorking = this.dsList.getColumn(e.row, "KM_WORKING");
+		var kmBusiness = this.dsList.getColumn(e.row, "KM_BUSINESS");
+		var nDrvKm =  0;
+
+		if(e.columnid == "KM_WORKING"){
+			kmWorking = e.newvalue;
+		}else if (e.columnid == "KM_BUSINESS"){
+			kmBusiness = e.newvalue;
+		}
+		nDrvKm =  kmWorking + kmBusiness;
+			
+		if(nDrvKm > this.dsList.getColumn(e.row, "KM_DRIVE")){			
+			this.gfnAlert("입력값이 잘못되었습니다.");
+			return false;
+		}
+	}else if(e.columnid == "KM_DRIVE"){
+		this.dsList.set_enableevent(false);
+		this.dsList.setColumn(e.row, "KM_WORKING", 0);
+		this.dsList.setColumn(e.row, "KM_BUSINESS", 0);
+		this.dsList.set_enableevent(true);
+	}
+	return true;
+};
+
+//주행거리 계산
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.columnid == "KM_BEFORE" || e.columnid == "KM_AFTER"){
+		var kmBefore = this.dsList.getColumn(e.row, "KM_BEFORE");
+		var kmAfter = this.dsList.getColumn(e.row, "KM_AFTER");
+		var nDrvKm =  kmAfter - kmBefore;
+		this.dsList.setColumn(e.row, "KM_DRIVE", nDrvKm);
+	}
+	this.fnSetButton();
+};
+
+//입력시 주행전 거리 조회
+this.fnGetKmBef = function(arr){
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_CORP", arr[0]["CD_CORP"]);
+	this.dsSelect.setColumn(0, "CD_CAR", arr[0]["CD_CAR"]);
+		
+	var strSvcId    = "selectCar";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "selectCar=dsSelect";
+	var outData     = "dsCar=selectCar0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,
+						false); // 통신방법 정의 [생략가능]
+							
+	this.dsList.setColumn(arr[0]["rowInfo"], "KM_BEFORE", this.dsCar.getColumn(0, "KM_AFTER"));
+};]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_CAR.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CAR"/>
+      <BindItem id="item0" compid="divSearch.form.ctclDT_STD" propid="value" datasetid="dsSearch" columnid="DT_FROM"/>
+    </Bind>
+  </Form>
+</FDL>

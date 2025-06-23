@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template match="/">
+<html> 
+<SCRIPT LANGUAGE="JavaScript" type="text/javascript">
+    function openAttachFilePopup(HOST, PARAM) {
+        var w = 580;
+        var h = 300;
+        var URL = HOST + '/api/approval/files.do?PARAM=' + PARAM;
+        var dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
+        var dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
+        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+        var systemZoom = width / window.screen.availWidth;
+        var left = (width - w) / 2 / systemZoom + dualScreenLeft;
+        var top = (height - h) / 2 / systemZoom + dualScreenTop;
+
+        window.open(
+            URL,
+            '첨부파일',
+            'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, ' +
+            'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left
+        );
+    }
+
+    function openTaxPopup(HOST, PARAM) {
+        var w = 850;
+        var h = 580;
+        var URL = HOST + '/api/approval/tax.do?PARAM=' + PARAM;
+        var dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
+        var dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
+        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+        var systemZoom = width / window.screen.availWidth;
+        var left = (width - w) / 2 / systemZoom + dualScreenLeft;
+        var top = (height - h) / 2 / systemZoom + dualScreenTop;
+
+        window.open(
+            URL,
+            '전자세금계산서',
+            'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, ' +
+            'width=' + (w / systemZoom) + ', height=' + (h / systemZoom) + ', top=' + top + ', left=' + left
+        );  
+    }
+</SCRIPT>
+<body>
+    <br/>
+    <br/>
+    하기와 같이 임직원 자녀학자금을 지급하오니 재가하여 주시기 바랍니다.
+    <br/>
+    <br/>
+    <h3>예상 지급 내역</h3>
+    <table class="table_10" style="width: 1200px;">
+        <thead style="text-align: center;">
+        <tr>
+            <th rowspan="2" style="width: 78px;">지급연월</th>
+            <th rowspan="2" style="width: 50px;">구분</th>
+            <th colspan="2" style="width: 122px;">유치원</th>
+            <th colspan="2" style="width: 122px;">초등학교</th>
+            <th colspan="2" style="width: 122px;">중학교</th>
+            <th colspan="2" style="width: 122px;">고등학교</th>
+            <th colspan="2" style="width: 122px;">대학교</th>
+        </tr>
+        <tr>
+            <th style="width: 40px;">인원</th>
+            <th style="width: 79px;">지급금액</th>
+            <th style="width: 40px;">인원</th>
+            <th style="width: 79px;">지급금액</th>
+            <th style="width: 40px;">인원</th>
+            <th style="width: 79px;">지급금액</th>
+            <th style="width: 40px;">인원</th>
+            <th style="width: 79px;">지급금액</th>
+            <th style="width: 40px;">인원</th>
+            <th style="width: 79px;">지급금액</th>
+        </tr>
+        </thead>
+        <tbody>
+        <xsl:for-each select="NewDataSet/table_1/item">
+            <tr>          
+                <xsl:choose>
+                    <xsl:when test="NO_SORT = 1">
+                        <td rowspan="3" style="text-align: center;"><xsl:value-of select="YM_TUITION"/></td>
+                    </xsl:when>
+                </xsl:choose>
+                <td style="text-align: center;"><xsl:value-of select="DS_EMPTYPE"/></td>
+                <td style="text-align: right;"><xsl:value-of select="CNT_PRESCHOOL"/></td>
+                <td style="text-align: right;"><xsl:value-of select="AM_PRESCHOOL"/></td>
+                <td style="text-align: right;"><xsl:value-of select="CNT_ELEMENTARY"/></td>
+                <td style="text-align: right;"><xsl:value-of select="AM_ELEMENTARY"/></td>
+                <td style="text-align: right;"><xsl:value-of select="CNT_MIDDLE"/></td>
+                <td style="text-align: right;"><xsl:value-of select="AM_MIDDLE"/></td>
+                <td style="text-align: right;"><xsl:value-of select="CNT_HIGH"/></td>
+                <td style="text-align: right;"><xsl:value-of select="AM_HIGH"/></td>
+                <td style="text-align: right;"><xsl:value-of select="CNT_UNIVERSITY"/></td>
+                <td style="text-align: right;"><xsl:value-of select="AM_UNIVERSITY"/></td>
+            </tr>
+        </xsl:for-each>
+        <tr>
+            <th colspan="2">지급총액</th>
+            <td colspan="10" style="text-align: center;"><xsl:value-of select="NewDataSet/table_2/item/AM_TUITION_TOTAL"/></td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+    <h3>전년동기 대비 증감현황</h3>
+    <table class="table_10" style="width: 1200px;">
+        <thead style="text-align: center;">
+        <tr>
+            <th rowspan="2" style="width: 78px;">지급연월</th>
+            <th rowspan="2" style="width: 50px;">구분</th>
+            <th colspan="2" style="width: 122px;">유치원</th>
+            <th colspan="2" style="width: 122px;">초등학교</th>
+            <th colspan="2" style="width: 122px;">중학교</th>
+            <th colspan="2" style="width: 122px;">고등학교</th>
+            <th colspan="2" style="width: 122px;">대학교</th>
+        </tr>
+        <tr>
+            <th style="width: 40px;">인원</th>
+            <th style="width: 79px;">지급금액</th>
+            <th style="width: 40px;">인원</th>
+            <th style="width: 79px;">지급금액</th>
+            <th style="width: 40px;">인원</th>
+            <th style="width: 79px;">지급금액</th>
+            <th style="width: 40px;">인원</th>
+            <th style="width: 79px;">지급금액</th>
+            <th style="width: 40px;">인원</th>
+            <th style="width: 79px;">지급금액</th>
+        </tr>
+        </thead>
+        <tbody>
+        <xsl:for-each select="NewDataSet/table_3/item">
+            <tr>
+                <xsl:choose>
+                    <xsl:when test="NO_SORT = 1">
+                        <td rowspan="2" style="text-align: center;"><xsl:value-of select="YM_TUITION"/></td>
+                    </xsl:when>
+                </xsl:choose>
+                <td style="text-align: center;"><xsl:value-of select="DS_EMPTYPE"/></td>
+                <td style="text-align: right;"><xsl:value-of select="CNT_PRESCHOOL"/></td>
+                <td style="text-align: right;"><xsl:value-of select="AM_PRESCHOOL"/></td>
+                <td style="text-align: right;"><xsl:value-of select="CNT_ELEMENTARY"/></td>
+                <td style="text-align: right;"><xsl:value-of select="AM_ELEMENTARY"/></td>
+                <td style="text-align: right;"><xsl:value-of select="CNT_MIDDLE"/></td>
+                <td style="text-align: right;"><xsl:value-of select="AM_MIDDLE"/></td>
+                <td style="text-align: right;"><xsl:value-of select="CNT_HIGH"/></td>
+                <td style="text-align: right;"><xsl:value-of select="AM_HIGH"/></td>
+                <td style="text-align: right;"><xsl:value-of select="CNT_UNIVERSITY"/></td>
+                <td style="text-align: right;"><xsl:value-of select="AM_UNIVERSITY"/></td>
+            </tr>
+        </xsl:for-each>
+        <tr>
+            <th colspan="2">지급총액</th>
+            <td colspan="10" style="text-align: center;"><xsl:value-of select="NewDataSet/table_4/item/AM_TUITION_TOTAL_PAST"/></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+</xsl:template>
+</xsl:stylesheet>

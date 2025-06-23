@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="410" height="360" titletext="거래정보 일괄변경" onload="form_onload">
+    <Layouts>
+      <Layout height="360" width="410">
+        <Static id="staTitle" taborder="10" text="거래정보 일괄변경" left="20" top="50" height="22" cssclass="sta_TITLE_Bg" width="350"/>
+        <Static id="staBar53" taborder="9" left="109" top="168" height="30" cssclass="sta_WF_tablebg" width="261"/>
+        <Button id="btnOk" taborder="7" text="확인" left="143" width="45" height="21" onclick="btnOk_onclick" uWord="popup.ok" top="305"/>
+        <Button id="btnCancle" taborder="8" text="취소" left="193" width="45" height="21" onclick="btnCancle_onclick" uWord="popup.cancel" top="305"/>
+        <Static id="staBar00" taborder="13" left="109" top="110" height="30" cssclass="sta_WF_tablebg" width="261"/>
+        <Static id="staBar01" taborder="15" left="109" top="226" height="30" cssclass="sta_WF_tablebg" width="261"/>
+        <Static id="staBar02" taborder="17" left="109" top="255" height="30" cssclass="sta_WF_tablebg" width="261"/>
+        <Calendar id="calDT_TRADE" taborder="1" left="115" top="115" width="135" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+        <MaskEdit id="mskRT_EZA" taborder="3" left="115" top="173" width="135" height="20" format="#,##0.####" limitbymask="integer"/>
+        <Static id="sta02" taborder="18" text="%" left="256" top="173" width="20" height="20"/>
+        <Static id="staBar03" taborder="20" left="109" top="197" height="30" cssclass="sta_WF_tablebg" width="261"/>
+        <MaskEdit id="mskAM_EZA" taborder="4" left="115" top="202" width="135" height="20" format="#,###,###,###,###,###,##0" limitbymask="integer"/>
+        <Static id="staItem55" taborder="11" text="이율" left="20" top="168" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staItem00" taborder="12" text="거래일자" left="20" top="110" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staItem01" taborder="14" text="이자기간(F)" left="20" top="226" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staItem02" taborder="16" text="이자기간(T)" left="20" top="255" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staItem03" taborder="19" text="이자금액" left="20" top="197" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="sta01" taborder="21" text="원" left="256" top="202" width="20" height="20"/>
+        <Calendar id="calFR_EZA" taborder="5" left="115" top="231" width="135" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+        <Calendar id="calTO_EZA" taborder="6" left="115" top="260" width="135" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+        <Static id="staTitle01" taborder="22" text="거래정보 일괄변경" left="20" top="20" height="22" width="350" cssclass="sta_POP_Title"/>
+        <Static id="staBar04" taborder="23" left="109" top="139" height="30" cssclass="sta_WF_tablebg" width="261"/>
+        <MaskEdit id="mskAM_WONGEUM" taborder="2" left="115" top="144" width="135" height="20" format="#,###,###,###,###,###,##0" limitbymask="integer"/>
+        <Static id="staItem04" taborder="24" text="원금" left="20" top="139" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="sta00" taborder="25" text="원" left="256" top="144" width="20" height="20"/>
+        <Static id="staItem05" taborder="26" text="거래구분" left="20" top="81" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="staBar05" taborder="27" left="109" top="81" height="30" cssclass="sta_WF_tablebg" width="261"/>
+        <Combo id="cboTY_TRADE" taborder="0" text="진행중" left="115" top="86" width="135" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" value="N" index="-1" innerdataset="dsTY_TRADE" onitemchanged="fnSearchInit"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmPopup.xfdl (공통 팝업페이지)
+*  @FileName 	cmmPopup.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.10.19
+*  @Desction         스크립트 표준 및 주석 표준 정의
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+//  this.pv_CD_CORP;
+//  this.pv_DS_CORP;
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this); //초기화[필수]
+	this.gfnFormInfo(this);
+	
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetCombo();	
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+// 	var frame = this.getOwnerFrame();	
+// 	if(!this.gfnIsNull(frame.CD_CORP) && !this.gfnIsNull(frame.DS_CORP)) {
+// 	    this.pv_CD_CORP = frame.CD_CORP;				
+//  		this.pv_DS_CORP = frame.DS_CORP; 
+// 	}
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+// 	this.cfCD_SideBank.CodeFindName = "DFX_CFCD_SIDEBANK";
+// 	this.cfCD_SideBank.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	
+// 	this.cfCD_SideBank.AfterCDTextChanged = "fnAfterCDTextChanged";
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnValidation = function() {
+// 	if (this.gfnIsNull(this.cboTY_TRADE.value)) {
+// 		this.gfnAlert("거래구분을 선택하십시오.");
+// 		this.cboTY_TRADE.setFocus();
+// 		return false;
+// 	}
+	
+	return true;
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {	
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* @ OK버튼이벤트
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnValidation()) return false;
+
+	// 확인
+	var json = {};
+	
+	json.TY_TRADE = this.cboTY_TRADE.value;		// 거래구분
+	json.DT_TRADE = this.calDT_TRADE.value;		// 거래일자
+	json.AM_WONGEUM = this.mskAM_WONGEUM.value;	// 원금
+	json.RT_EZA = this.mskRT_EZA.value;			// 이율
+	json.AM_EZA = this.mskAM_EZA.value;			// 이자금액
+	json.FR_EZA = this.calFR_EZA.value;			// 이자기간(from)
+	json.TO_EZA = this.calTO_EZA.value;			// 이자기간(to)
+	
+	this.getParentContext().close(JSON.stringify(json));
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+
+
+// 공통코드콤보
+this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DF");
+	this.dsCombo.setColumn(0, "CD_TYPE", "EB");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_TRADE=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+};
+
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "combo") {
+	
+		//  거래구분
+		var iRow = this.dsTY_TRADE.insertRow(0);
+		this.dsTY_TRADE.setColumn(iRow, "CD_CODE", "");
+		this.dsTY_TRADE.setColumn(iRow, "DS_CODE", "선택");
+		this.cboTY_TRADE.set_index(0);	
+		
+	}
+}]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_TRADE"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item2" compid="calDT_TRADE" propid="value" datasetid="dsList" columnid="DT_HAEJI"/>
+      <BindItem id="item0" compid="calFR_EZA" propid="value" datasetid="dsList" columnid="DT_HAEJI"/>
+      <BindItem id="item1" compid="calTO_EZA" propid="value" datasetid="dsList" columnid="DT_HAEJI"/>
+      <BindItem id="item3" compid="cboTY_TRADE" propid="value" datasetid="dsSearch" columnid="TY_TRADE"/>
+    </Bind>
+  </Form>
+</FDL>

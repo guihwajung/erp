@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="410" height="120" maxwidth="440" maxheight="200" titletext="처리부서변경(팝업)" onload="form_onload" onbeforeclose="form_onbeforeclose">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="42" right="0" cssclass="div_DATA_Bg" height="31">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_DEPT_BH" taborder="1" text="처리부서" left="10" top="0" width="95" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="sta12" taborder="2" left="104" top="0" height="30" cssclass="sta_WF_tablebg" right="5"/>
+              <Div id="ccfCD_DEPT_BH" CDTextWidth="90" taborder="0" left="110" top="5" width="284" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staTitle" taborder="3" text="처리부서변경" left="10" top="10" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+        <Button id="btnOk" taborder="1" text="확인" left="131" width="69" height="27" bottom="3" onclick="btnOk_onclick"/>
+        <Button id="btnCancel" taborder="2" text="취소" left="210" width="69" height="27" onclick="btnCancel_onclick" bottom="3"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+//alert(this.getOwnerFrame().P_CD_CORP + ", "  + this.getOwnerFrame().P_GR_SEARCH + ", " + this.getOwnerFrame().P_ID_USER + ", " + this.getOwnerFrame().P_CD_DEPT);
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.ccfCD_DEPT_BH   = this.divData.form.ccfCD_DEPT_BH;	
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_DEPT_BH.CodeFindName = "DFX_CFACNTUNIT_GROUP";
+	this.ccfCD_DEPT_BH.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+}
+
+ /*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+ /*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	//this.gfnGridDel(this.dxGrid);
+}
+
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	//this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+	var validate = true;
+
+	return validate;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+*/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	switch(id) {
+		case "ccfCD_DEPT_BH":	//처리부서
+			dsUserParam.setColumn(nrow, "CD_GROUP", "");	//this.cdGroup);
+			dsUserParam.setColumn(nrow, "CD_CORP", this.getOwnerFrame().P_CD_CORP);	
+			dsUserParam.setColumn(nrow, "GR_SEARCH", this.getOwnerFrame().P_GR_SEARCH);
+			dsUserParam.setColumn(nrow, "ID_USER", this.getOwnerFrame().P_ID_USER);
+			dsUserParam.setColumn(nrow, "CD_DEPT", this.getOwnerFrame().P_CD_DEPT);
+		break;
+	
+	}
+	
+	return true;
+};
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+//취소버튼 클릭
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close("");
+};
+
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(this.ccfCD_DEPT_BH.form.CDTextBox.value);
+};
+
+this.fnClose = function()
+{
+	this.getParentContext().close("");
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">eTaxBuy</Col>
+            <Col id="SP">DHVPR_ETAXBUYLIST_AR_INSERT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divData.form.ccfCD_DEPT_BH.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_DEPT_BH"/>
+    </Bind>
+  </Form>
+</FDL>

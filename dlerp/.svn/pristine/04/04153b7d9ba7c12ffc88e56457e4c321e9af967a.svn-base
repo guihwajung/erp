@@ -1,0 +1,1155 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("추정원가관리");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DWAPR_CPSILHENG_SELECT</Col></Row><Row><Col id=\"TARGET\">execute</Col><Col id=\"SP\">DWAPR_CPSILHENG_EXECUTE</Col></Row><Row><Col id=\"TARGET\">save</Col><Col id=\"SP\">DWAPR_CPSILHENG_SAVE</Col></Row><Row><Col id=\"TARGET\">print</Col><Col id=\"SP\">DWDSP_MAGAM_PRINT1</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_SITE\" type=\"STRING\" size=\"256\"/><Column id=\"YM_WORK\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsChangeColumn", this);
+            obj._setContents("<ColumnInfo><Column id=\"DOKUB\" type=\"STRING\" size=\"256\"/><Column id=\"EXSILHENG\" type=\"STRING\" size=\"256\"/><Column id=\"SILHENG\" type=\"STRING\" size=\"256\"/><Column id=\"PRV\" type=\"STRING\" size=\"256\"/><Column id=\"PL_SALE\" type=\"STRING\" size=\"256\"/><Column id=\"TUJA\" type=\"STRING\" size=\"256\"/><Column id=\"PRVYR\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"DOKUB\">QN_DOKUB|UP_DOKUB|AM_DOKUB</Col><Col id=\"EXSILHENG\">QN_EXSILHENG|UP_EXSILHENG|AM_EXSILHENG|QN_EXDOKUB|UP_EXDOKUB|AM_EXDOKUB</Col><Col id=\"SILHENG\">QN_SILHENG|UP_SILHENG|AM_SILHENG</Col><Col id=\"PRV\">AM_PRV_DOKUB|QN_PRV_SILHENG|UP_PRV_SILHENG|AM_PRV_SILHENG|QN_PRV_CPSILHENG|UP_PRV_CPSILHENG|AM_PRV_CPSILHENG</Col><Col id=\"PL_SALE\">AM_PL_SALE</Col><Col id=\"TUJA\">AM_PRV_TUJA|AM_TUJA|AM_TT_TUJA</Col><Col id=\"PRVYR\">QN_PRVYR_CPSILHENG|UP_PRVYR_CPSILHENG|AM_PRVYR_CPSILHENG</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0.0","10.0",null,"46.0","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_SEARCH_Bg");
+            obj.set_formscrolltype("none");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staCD_SITE","0.0","10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("현장코드");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_SITE","staCD_SITE:0.0","10.0","200","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CodeFindName").set("DZX_CFSITE");
+            obj.getSetter("CDTextWidth").set("80");
+            obj.set_taborder("0");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staYM_WORK","ccfCD_SITE:0.0","10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("6");
+            obj.set_text("작업년월");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ctclYM_WORK","staYM_WORK:0.0","10.0","80","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_url("cmm::cmmCalMM.xfdl");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staColumn","ctclYM_WORK:0.0","10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("6");
+            obj.set_text("컬럼보기");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new CheckBox("cchkDOKUB","staColumn:0.0","10.0","70","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("도급내역");
+            obj.set_value("true");
+            obj.set_visible("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new CheckBox("cchkEXSILHENG","staColumn:0.0","10.0","70","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("실행예산");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new CheckBox("cchkSILHENG","cchkEXSILHENG:0.0","10.0","70","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("실행내역");
+            obj.set_value("true");
+            obj.set_visible("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new CheckBox("cchkPRVYR","cchkEXSILHENG:0.0","10.0","70","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("전년실적");
+            obj.set_value("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new CheckBox("cchkPRV","cchkPRVYR:0.0","10.0","70","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("전월실적");
+            obj.set_value("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new CheckBox("cchkPL_SALE","cchkPRV:0.0","10.0","70","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("매출손익");
+            obj.set_visible("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new CheckBox("cchkTUJA","cchkPRV:0.0","10.0","70","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("투입원가");
+            obj.set_value("true");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:10",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.ccfCD_SITE.form.CDTextBox","value","dsSearch","CD_SITE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divSearch.form.ctclYM_WORK.form.TextBox","value","dsSearch","YM_WORK");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+            this._addPreloadList("fdl","cmm::cmmCalMM.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DWE_CPSILHENG.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+
+        	// checkbox 이벤트 강제 실행. (grid width 조절 onLoad시 적용하기 위해서)
+        	this.divSearch_cchkDOKUB_onchanged(this.divSearch.form.cchkDOKUB, {postvalue:this.divSearch.form.cchkDOKUB.value});
+        	this.divSearch_cchkEXSILHENG_onchanged(this.divSearch.form.cchkEXSILHENG, {postvalue:this.divSearch.form.cchkEXSILHENG.value});
+        	this.divSearch_cchkSILHENG_onchanged(this.divSearch.form.cchkSILHENG, {postvalue:this.divSearch.form.cchkSILHENG.value});
+        	this.divSearch_cchkPRVYR_onchanged(this.divSearch.form.cchkPRVYR, {postvalue:this.divSearch.form.cchkPRVYR.value})
+        	this.divSearch_cchkPRV_onchanged(this.divSearch.form.cchkPRV, {postvalue:this.divSearch.form.cchkPRV.value});
+        	this.divSearch_cchkPL_SALE_onchanged(this.divSearch.form.cchkPL_SALE, {postvalue:this.divSearch.form.cchkPL_SALE.value});
+        	this.divSearch_cchkTUJA_onchanged(this.divSearch.form.cchkTUJA, {postvalue:this.divSearch.form.cchkTUJA.value});
+
+        	if(!this.gfnIsNull(this.getOwnerFrame().CD_SITE) && !this.gfnIsNull(this.getOwnerFrame().YM_WORK))
+        	{
+        		this.dsSearch.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+        		this.divSearch.form.ccfCD_SITE.form.DSTextBox.set_value(this.getOwnerFrame().DS_SITE);
+        		this.dsSearch.setColumn(0, "YM_WORK", (this.getOwnerFrame().YM_WORK).substr(0,6));
+        		this.FormBtns.Select.click();
+        	}
+        	else
+        	{
+        		var today = this.gfnGetDate();
+        		this.dsSearch.setColumn(0, "YM_WORK", today.substr(0,6));
+        	}
+
+        	//this.fnGridSumSetting();
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        	this.btnDataAgg = this.gfnFormButtonAdd("btnDataAgg", "fnDataAgg");
+        	this.btnDataCpy = this.gfnFormButtonAdd("btnDataCpy", "fnDataCpy");
+        	this.btnDataDel = this.gfnFormButtonAdd("btnDataDel", "fnDataDel");
+        	this.btnCpSilhengRiskDtls = this.gfnFormButtonAdd("btnCpSilhengRiskDtls", "fnCpSilhengRiskDtls");
+        	this.btnEbgtCost = this.gfnFormButtonAdd("btnEbgtCost", "fnEbgtCost");
+        	this.btnMagamPrint1 = this.gfnFormButtonAdd("btnMagamPrint1", "fnMagamPrint1");
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.dxGrid = this.divData.form.objGrid;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	// 그리드 초기화
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DW", "DWE_CPSILHENG", "DS_ITEM", "GR_COST");
+
+        	this.dxGrid.EnterCell = "fnGrid_EnterCell";
+        };
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("YM_WORK", "string");
+        	this.dsSelect.addColumn("CD_SITE", "string");
+        	this.dsSelect.addColumn("TY_PART", "string");
+
+
+        	this.dsExecute = new Dataset();
+        	this.dsExecute.addColumn("TY_EXEC", "string");
+        	this.dsExecute.addColumn("ID_USER", "string");
+        	this.dsExecute.addColumn("YM_WORK", "string");
+        	this.dsExecute.addColumn("CD_SITE", "string");
+        	this.dsExecute.addColumn("YM_SOURCE", "string");
+
+        	this.dsSave = new Dataset();
+        	this.dsSave.addColumn("TY_SAVE", "string");
+        	this.dsSave.addColumn("ID_USER", "string");
+        	this.dsSave.addColumn("YM_WORK", "string");
+        	this.dsSave.addColumn("CD_SITE", "string");
+        	this.dsSave.addColumn("CD_COST", "string");
+        	this.dsSave.addColumn("DS_ITEM", "string");
+        	this.dsSave.addColumn("SZ_SIZE", "string");
+        	this.dsSave.addColumn("DS_UNIT", "string");
+        	this.dsSave.addColumn("QN_DOKUB", "bigdecimal");
+        	this.dsSave.addColumn("UP_DOKUB", "bigdecimal");
+        	this.dsSave.addColumn("AM_DOKUB", "bigdecimal");
+        	this.dsSave.addColumn("QN_SILHENG", "bigdecimal");
+        	this.dsSave.addColumn("UP_SILHENG", "bigdecimal");
+        	this.dsSave.addColumn("AM_SILHENG", "bigdecimal");
+        	this.dsSave.addColumn("QN_EXSILHENG", "bigdecimal");
+        	this.dsSave.addColumn("UP_EXSILHENG", "bigdecimal");
+        	this.dsSave.addColumn("AM_EXSILHENG", "bigdecimal");
+        	this.dsSave.addColumn("QN_CP_SILHENG", "bigdecimal");
+        	this.dsSave.addColumn("UP_CP_SILHENG", "bigdecimal");
+        	this.dsSave.addColumn("AM_CP_SILHENG", "bigdecimal");
+        	this.dsSave.addColumn("QN_CPSILHENG", "bigdecimal");
+        	this.dsSave.addColumn("UP_CPSILHENG", "bigdecimal");
+        	this.dsSave.addColumn("AM_CPSILHENG", "bigdecimal");
+        	this.dsSave.addColumn("QN_CPSILHENG_CHG_NORDVOL", "bigdecimal");
+        	this.dsSave.addColumn("UP_CPSILHENG_CHG_NORDVOL", "bigdecimal");
+        	this.dsSave.addColumn("AM_CPSILHENG_CHG_NORDVOL", "bigdecimal");
+        	this.dsSave.addColumn("QN_CPSILHENG_CHG", "bigdecimal");
+        	this.dsSave.addColumn("UP_CPSILHENG_CHG", "bigdecimal");
+        	this.dsSave.addColumn("AM_CPSILHENG_CHG", "bigdecimal");
+        	this.dsSave.addColumn("AM_PL_SILHENG", "bigdecimal");
+        	this.dsSave.addColumn("AM_PL_PRVYR_CPSILHENG", "bigdecimal");
+        	this.dsSave.addColumn("AM_PL_PRV_DOKUB", "bigdecimal");
+        	this.dsSave.addColumn("AM_PL_PRV_CPSILHENG", "bigdecimal");
+        	this.dsSave.addColumn("AM_EFCT_COST", "bigdecimal");
+        	this.dsSave.addColumn("CD_RP", "string");
+        	this.dsSave.addColumn("CD_STD", "string");
+        	this.dsSave.addColumn("CD_STDUPRC", "string");
+        	this.dsSave.addColumn("UP_STDUPRC", "bigdecimal");
+        	this.dsSave.addColumn("DS_REMARK", "string");
+        	this.dsSave.addColumn("YN_FROZEN", "int");
+        	this.dsSave.addColumn("CD_EBGTITEM", "string");
+        	this.dsSave.addColumn("CD_PLITEM", "string");
+
+        	this.dsReport = new Dataset();
+        	this.dsReport.addColumn("YM_WORK", "string");
+        	this.dsReport.addColumn("CD_SITE", "string");
+        	this.dsReport.addColumn("ID_USER", "string");
+
+        };
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+        	if (!this.fnSelectValidate()) return false;
+
+        	this.gfnGridBeforeSelect(this.dxGrid);
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+
+        	this.dsSelect.setColumn(0, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+        	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+        	this.dsSelect.setColumn(0, "TY_PART", "T");
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+        	//var nrow = this.gfnGridAdd(this.dxGrid); // top (default), bottom, current
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+        	//this.gfnGridDel(this.dxGrid);
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+        	// 그리드 필수항목 체크
+         	if (!this.gfnGridValidate(this.dxGrid)) return;
+
+        	this.dxGrid.updateToDataset();
+
+        	// save SP 한개로 사용하는 경우
+
+        	this.dsSave.clearData();
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var flag = this.gfnGetFlag(this.dsList, i);
+        		switch(flag) {
+        			case "I":
+        			case "U":
+        			case "D":
+        				var nrow = this.dsSave.addRow();
+        				this.dsSave.setColumn(nrow, "TY_SAVE", flag);
+        				this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        				this.dsSave.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK").substr(0,6));
+        				this.dsSave.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+        				this.dsSave.setColumn(nrow, "CD_COST", this.dsList.getColumn(i, "CD_COST"));
+        				this.dsSave.setColumn(nrow, "DS_ITEM", this.dsList.getColumn(i, "DS_ITEM"));
+        				this.dsSave.setColumn(nrow, "SZ_SIZE", this.dsList.getColumn(i, "SZ_SIZE"));
+        				this.dsSave.setColumn(nrow, "DS_UNIT", this.dsList.getColumn(i, "DS_UNIT"));
+        				this.dsSave.setColumn(nrow, "QN_DOKUB", this.dsList.getColumn(i, "QN_DOKUB"));
+        				this.dsSave.setColumn(nrow, "UP_DOKUB", this.dsList.getColumn(i, "UP_DOKUB"));
+        				this.dsSave.setColumn(nrow, "AM_DOKUB", this.dsList.getColumn(i, "AM_DOKUB"));
+        				this.dsSave.setColumn(nrow, "QN_SILHENG", this.dsList.getColumn(i, "QN_SILHENG"));
+        				this.dsSave.setColumn(nrow, "UP_SILHENG", this.dsList.getColumn(i, "UP_SILHENG"));
+        				this.dsSave.setColumn(nrow, "AM_SILHENG", this.dsList.getColumn(i, "AM_SILHENG"));
+        				this.dsSave.setColumn(nrow, "QN_EXSILHENG", this.dsList.getColumn(i, "QN_EXSILHENG"));
+        				this.dsSave.setColumn(nrow, "UP_EXSILHENG", this.dsList.getColumn(i, "UP_EXSILHENG"));
+        				this.dsSave.setColumn(nrow, "AM_EXSILHENG", this.dsList.getColumn(i, "AM_EXSILHENG"));
+        				this.dsSave.setColumn(nrow, "QN_CP_SILHENG", this.dsList.getColumn(i, "QN_CP_SILHENG"));
+        				this.dsSave.setColumn(nrow, "UP_CP_SILHENG", this.dsList.getColumn(i, "UP_CP_SILHENG"));
+        				this.dsSave.setColumn(nrow, "AM_CP_SILHENG", this.dsList.getColumn(i, "AM_CP_SILHENG"));
+        				this.dsSave.setColumn(nrow, "QN_CPSILHENG", this.dsList.getColumn(i, "QN_CPSILHENG"));
+        				this.dsSave.setColumn(nrow, "UP_CPSILHENG", this.dsList.getColumn(i, "UP_CPSILHENG"));
+        				this.dsSave.setColumn(nrow, "AM_CPSILHENG", this.dsList.getColumn(i, "AM_CPSILHENG"));
+        				this.dsSave.setColumn(nrow, "QN_CPSILHENG_CHG_NORDVOL", this.dsList.getColumn(i, "QN_CPSILHENG_CHG_NORDVOL"));
+        				this.dsSave.setColumn(nrow, "UP_CPSILHENG_CHG_NORDVOL", this.dsList.getColumn(i, "UP_CPSILHENG_CHG_NORDVOL"));
+        				this.dsSave.setColumn(nrow, "AM_CPSILHENG_CHG_NORDVOL", this.dsList.getColumn(i, "AM_CPSILHENG_CHG_NORDVOL"));
+        				this.dsSave.setColumn(nrow, "QN_CPSILHENG_CHG", this.dsList.getColumn(i, "QN_CPSILHENG_CHG"));
+        				this.dsSave.setColumn(nrow, "UP_CPSILHENG_CHG", this.dsList.getColumn(i, "UP_CPSILHENG_CHG"));
+        				this.dsSave.setColumn(nrow, "AM_CPSILHENG_CHG", this.dsList.getColumn(i, "AM_CPSILHENG_CHG"));
+        				this.dsSave.setColumn(nrow, "AM_PL_SILHENG", this.dsList.getColumn(i, "AM_PL_SILHENG"));
+        				this.dsSave.setColumn(nrow, "AM_PL_PRVYR_CPSILHENG", this.dsList.getColumn(i, "AM_PL_PRVYR_CPSILHENG"));
+        				this.dsSave.setColumn(nrow, "AM_PL_PRV_DOKUB", this.dsList.getColumn(i, "AM_PL_PRV_DOKUB"));
+        				this.dsSave.setColumn(nrow, "AM_PL_PRV_CPSILHENG", this.dsList.getColumn(i, "AM_PL_PRV_CPSILHENG"));
+        				this.dsSave.setColumn(nrow, "AM_EFCT_COST", this.dsList.getColumn(i, "AM_EFCT_COST"));
+        				this.dsSave.setColumn(nrow, "CD_RP", this.dsList.getColumn(i, "CD_RP"));
+        				this.dsSave.setColumn(nrow, "CD_STD", this.dsList.getColumn(i, "CD_STD"));
+        				this.dsSave.setColumn(nrow, "CD_STDUPRC", this.dsList.getColumn(i, "CD_STDUPRC"));
+        				this.dsSave.setColumn(nrow, "UP_STDUPRC", this.dsList.getColumn(i, "UP_STDUPRC"));
+        				this.dsSave.setColumn(nrow, "DS_REMARK", this.dsList.getColumn(i, "DS_REMARK"));
+        				this.dsSave.setColumn(nrow, "YN_FROZEN", this.dsList.getColumn(i, "YN_FROZEN"));
+        				this.dsSave.setColumn(nrow, "CD_EBGTITEM", this.dsList.getColumn(i, "CD_EBGTITEM"));
+        				this.dsSave.setColumn(nrow, "CD_PLITEM", this.dsList.getColumn(i, "CD_PLITEM"));
+        				break;
+        		}
+        	}
+
+        	if (this.dsSave.rowcount == 0) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save=dsSave";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+         */
+        this.fnSelectValidate = function() {
+        	var validate = true;
+
+        	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE"))) {
+        		validate = false;
+        		// Alert후 실행할 처리
+        		this.fnVaidateCallback = function() {
+        			this.divSearch.form.ccfCD_SITE.form.CDTextBox.setFocus();
+        		}
+        		this.gfnAlert("현장코드를 입력하세요.", "fnVaidateCallback");
+        	}
+
+        	if (this.gfnIsNull(this.dsSearch.getColumn(0, "YM_WORK"))) {
+        		validate = false;
+        		// Alert후 실행할 처리
+        		this.fnVaidateCallback = function() {
+        			this.divSearch.form.ctclYM_WORK.setFocus();
+        		}
+        		this.gfnAlert("작업년월를 입력하세요.", "fnVaidateCallback");
+        	}
+
+        	return validate;
+        };
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg, args)
+        {
+        	if (svcID == "select") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+
+        		//this.fnGridSum();
+        	}
+        	else if(svcID == "save") {
+        		if (errorCode == 0) {
+        			// 저장 후 Execute를 실행하는데, 별도 함수가 불필요하다고 판단하여 기존 callback에서 처리.
+        			this.fnExecute_callback("RECALC", true);
+        			// 저장 후 Execute보다 Select가 먼저 완료되는 현상 발생. execute의 후처리로 이동.
+        			//this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        	else if(svcID == "execute")
+        	{
+        		if (errorCode == 0) {
+        			var json = this.gfnArgsToJson(args);
+
+        			// 저장 후 실행되는 Execute의 경우 정상처리 메시지가 필요하지 않음.
+        			if(json.gubun == "RECALC")
+        			{
+        				// 저장 callback에서 재조회할 경우 execute가 더 늦게 도는 경우가 발생.
+        				this.FormBtns.Select.click();
+        				return;
+        			}
+
+        			var msg = "";
+        			switch(json.gubun)
+        			{
+        				case "AGG" :
+        					msg = "청산내역자료집계가 ";
+        					break;
+        				case "CPY" :
+        					msg = "청산내역전월복사가 ";
+        					break;
+        				case "DEL" :
+        					msg = "청산내역일괄삭제가 ";
+        					break;
+        				case "RECALC" :
+        					msg = "투입내역집계가";
+        					break;
+        			}
+
+        			msg += "정상 처리되었습니다.";
+
+        			this.gfnAlert(msg, "", "", "fnCallbackExecute_callback");
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        }
+
+        this.fnCallbackExecute_callback = function(strId, val){
+        	this.FormBtns.Select.click();
+        }
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+         this.fnGrid_EnterCell = function(obj, row, cell) {
+        	// 수정가능 true, false 처리하려는 컬럼에 대해서만 return 처리할것.
+        	var colnm = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, cell);	// 클릭한 cell의 컬럼명
+
+
+        	//클릭했을때 클릭한 cell을 수정 가능 or 불가능 상태로 만든다.
+        	//YN_EDIT 값이 Y일때만 수정가능상태
+        	if(this.dsList.getColumn(row, "YN_EDIT") == "N") {
+        		return;
+        	}
+        	else
+        	{
+        		//TODO : 임시조치. 로직 수정을 검토해보아야함.
+        		if(colnm == "DS_REMARK" || colnm == "CD_EBGTITEM" || colnm == "CD_PLITEM")
+        		{
+        			return true;
+        		}
+
+        		// 잔여/향후 투입분은 TY_EDIT=A일 때 수정 가능.
+        		if(colnm == "AM_CPSILHENG_CHG_NORDVOL" || colnm == "QN_CPSILHENG_CHG_NORDVOL" || colnm == "UP_CPSILHENG_CHG_NORDVOL")
+        		{
+        			if(this.dsList.getColumn(row, "TY_EDIT") == "A")
+        			{
+        				// YN_LSUNIT=Y일때는 금액만, 아니라면 단가,수량만 수정 가능.
+        				if(this.dsList.getColumn(row, "YN_LSUNIT") == "Y")
+        				{
+        					if(colnm == "AM_CPSILHENG_CHG_NORDVOL")
+        					{
+        						return true;
+        					}
+        				}
+        				else
+        				{
+        					if(colnm == "QN_CPSILHENG_CHG_NORDVOL" || colnm == "UP_CPSILHENG_CHG_NORDVOL")
+        					{
+        						return true;
+        					}
+        				}
+        			}
+        		}
+
+        		// 청산예상은 TY_EDIT=T일 때 수정 가능.
+        		if(colnm == "AM_CPSILHENG_CHG" || colnm == "QN_CPSILHENG_CHG" || colnm == "UP_CPSILHENG_CHG")
+        		{
+        			if(this.dsList.getColumn(row, "TY_EDIT") == "T")
+        			{
+        				// YN_LSUNIT=Y일때는 금액만, 아니라면 단가,수량만 수정 가능.
+        				if(this.dsList.getColumn(row, "YN_LSUNIT") == "Y")
+        				{
+        					if(colnm == "AM_CPSILHENG_CHG")
+        					{
+        						return true;
+        					}
+        				}
+        				else
+        				{
+        					if(colnm == "QN_CPSILHENG_CHG" || colnm == "UP_CPSILHENG_CHG")
+        					{
+        						return true;
+        					}
+        				}
+        			}
+        		}
+
+        		return false;
+        	}
+
+
+        }
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        this.dsSearch_onvaluechanged = function(obj,e)
+        {
+        	if(e.oldvalue != e.newvalue) {
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.gfnGridClear(this.dxGrid);
+        	}
+        };
+
+        // 아래부터는 확장버튼.
+        this.fnDataAgg = function(obj,e) {
+        	var msg = "현장코드 : [" + this.dsSearch.getColumn(0, "CD_SITE") + "]" + this.divSearch.form.ccfCD_SITE.form.DSTextBox.text
+        			+ "\n작업년월 : [" + this.dsSearch.getColumn(0, "YM_WORK").substr(0,6) + "]"
+        			+ "\n\n청산내역 자료집계 처리하시겠습니까?";
+
+        	this.gfnConfirm(msg, "fnExecute_callback", "AGG");
+
+        }
+
+        this.fnDataCpy = function(obj,e) {
+        	var msg = "현장코드 : [" + this.dsSearch.getColumn(0, "CD_SITE") + "]" + this.divSearch.form.ccfCD_SITE.form.DSTextBox.text
+        			+ "\n작업년월 : [" + this.dsSearch.getColumn(0, "YM_WORK").substr(0,6) + "]"
+        			+ "\n작업년월 이전 최근년월 자료를 복사합니다."
+        			+ "\n\n청산내역 자료복사 처리하시겠습니까?";
+
+        	this.gfnConfirm(msg, "fnExecute_callback", "RECALC");
+        }
+
+        this.fnDataDel = function(obj,e) {
+        	var msg = "현장코드 : [" + this.dsSearch.getColumn(0, "CD_SITE") + "]" + this.divSearch.form.ccfCD_SITE.form.DSTextBox.text
+        			+ "\n작업년월 : [" + this.dsSearch.getColumn(0, "YM_WORK").substr(0,6) + "]"
+        			+ "\n\n청산내역 일괄삭제 처리하시겠습니까?";
+
+        	this.gfnConfirm(msg, "fnExecute_callback", "DEL");
+        }
+
+        this.fnEbgtCost = function(obj,e) {
+        	if(!this.gfnGridIsRow(this.dxGrid))
+        	{
+        		this.gfnAlert("청산내역을 선택해주세요.");
+        		return false;
+        	}
+
+        	var param = {};
+        	param.CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+        	param.DS_SITE =  this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+        	param.CD_COST = this.dsList.getColumn(this.dsList.rowposition, "CD_COST");
+        	param.CD_DKCOST = this.dsList.getColumn(this.dsList.rowposition, "CD_DKCOST");
+        	param.DS_COST = this.dsList.getColumn(this.dsList.rowposition, "DS_ITEM");
+        	param.SZ_SIZE = this.dsList.getColumn(this.dsList.rowposition, "SZ_SIZE");
+        	param.DS_UNIT = this.dsList.getColumn(this.dsList.rowposition, "DS_UNIT");
+
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DWX_COSTTUJA", "", param);
+        }
+
+        this.fnExecute_callback = function(strId, val){
+        	if(val == true)
+        	{
+        		this.dsExecute.clearData();
+        		var nrow = this.dsExecute.addRow();
+
+        		this.dsExecute.setColumn(nrow, "TY_EXEC", strId);
+        		this.dsExecute.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        		this.dsExecute.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK").substr(0,6));
+        		this.dsExecute.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+        		this.dsExecute.setColumn(nrow, "YM_SOURCE", "");
+
+        		if(strId == "CPY")
+        		{
+        			this.dsExecute.setColumn(nrow, "YM_SOURCE", this.dsSearch.getColumn(0, "YM_WORK").substr(0,6));
+        		}
+
+        		var strSvcId    = "execute";
+        		var strSvcType  = "save";
+        		var inProc		= "_dsProc";
+        		var inData      = "execute=dsExecute";
+        		var outData     = "";
+        		var strArg      = "gubun=" + strId;
+        		var callBackFnc = "fnCallback";
+
+        		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        							strSvcType , 	// transaction을 요청할 구분
+        							inProc,			// Procedure 정보 Dataset 이름
+        							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+        							callBackFnc); // 통신방법 정의 [생략가능]
+        	}
+        };
+
+        this.fnCpSilhengRiskDtls = function(obj,e) {
+        	var param = {};
+
+        	param.CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+        	param.DS_SITE =  this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+        	param.YM_WORK = this.dsSearch.getColumn(0, "YM_WORK").substr(0,6);
+        	param.YN_NRFLT = "";
+
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DWE_CPSILHENG_RISKDTLS", "", param);
+        };
+
+        // 아래부터는 체크박스 이벤트에 따른 그리드 width 변경.
+        // 도급내역
+        this.divSearch_cchkDOKUB_onchanged = function(obj,e)
+        {
+        	if(e.prevalue != e.postvalue)
+        	{
+        		var temp = this.dsChangeColumn.getColumn(0, "DOKUB");
+        		var columnNames = temp.split('|');
+
+        		this.fnSetGridSize(e.postvalue, columnNames, 100);
+        	}
+        };
+
+        // 현장예산
+        this.divSearch_cchkEXSILHENG_onchanged = function(obj,e)
+        {
+        	if(e.prevalue != e.postvalue)
+        	{
+        		var temp = this.dsChangeColumn.getColumn(0, "EXSILHENG");
+        		var columnNames = temp.split('|');
+
+        		this.fnSetGridSize(e.postvalue, columnNames, 100);
+        	}
+        };
+
+        // 확정 예산
+        this.divSearch_cchkSILHENG_onchanged = function(obj,e)
+        {
+        	if(e.prevalue != e.postvalue)
+        	{
+        		var temp = this.dsChangeColumn.getColumn(0, "SILHENG");
+        		var columnNames = temp.split('|');
+
+        		this.fnSetGridSize(e.postvalue, columnNames, 100);
+        	}
+        };
+
+        this.divSearch_cchkPRVYR_onchanged = function(obj,e)
+        {
+        	if(e.prevalue != e.postvalue)
+        	{
+        		var temp = this.dsChangeColumn.getColumn(0, "PRVYR");
+        		var columnNames = temp.split('|');
+
+        		this.fnSetGridSize(e.postvalue, columnNames, 100);
+        	}
+        };
+
+        // 준공전망(전월)
+        this.divSearch_cchkPRV_onchanged = function(obj,e)
+        {
+        	if(e.prevalue != e.postvalue)
+        	{
+        		var temp = this.dsChangeColumn.getColumn(0, "PRV");
+        		var columnNames = temp.split('|');
+
+        		this.fnSetGridSize(e.postvalue, columnNames, 100);
+        	}
+        };
+        // 매출손익
+        this.divSearch_cchkPL_SALE_onchanged = function(obj,e)
+        {
+        	if(e.prevalue != e.postvalue)
+        	{
+        		var temp = this.dsChangeColumn.getColumn(0, "PL_SALE");
+        		var columnNames = temp.split('|');
+
+        		this.fnSetGridSize(e.postvalue, columnNames, 100);
+        	}
+        };
+        //투입원가
+        this.divSearch_cchkTUJA_onchanged = function(obj,e)
+        {
+        	if(e.prevalue != e.postvalue)
+        	{
+        		var temp = this.dsChangeColumn.getColumn(0, "TUJA");
+        		var columnNames = temp.split('|');
+
+        		this.fnSetGridSize(e.postvalue, columnNames, 100);
+        	}
+        };
+
+
+        this.fnSetGridSize = function(check, columnNames, width)
+        {
+        	for(var k=0; k<this.dxGrid.getFormatColCount(); k++){
+              var ds_field = this.dxGrid.getCellProperty("body", k, "text");
+              if(ds_field.indexOf("bind:") > -1) {
+                 ds_field = ds_field.replace("bind:", "");
+
+        		 for(var i=0; i < columnNames.length; i++)
+        		 {
+        			 if(ds_field == columnNames[i])
+        			 {
+        				if(check == true)
+        				{
+        					this.dxGrid.setFormatColProperty(k, "size", width);
+        				}
+        				else
+        				{
+        					this.dxGrid.setFormatColProperty(k, "size", 0);
+        				}
+        				break;
+        			 }
+        		 }
+              }
+           }
+        }
+
+        this.dsList_onvaluechanged = function(obj,e)
+        {
+        	if(e.oldvalue != e.newvalue)
+        	{
+        		// 잔여/향후 투입분 단가
+        		if(e.columnid == "UP_CPSILHENG_CHG_NORDVOL")
+        		{
+        			// 잔여/향후 투입분 관련 컬럼 수정.
+        			if(this.dsList.getColumn(e.row, "TY_EDIT") == "A")
+        			{
+        				if(this.dsList.getColumn(e.row, "YN_LSUNIT") != "Y")
+        				{
+        					var qn_cpsilheng_chg_nordvol = this.dsList.getColumn(e.row, "QN_CPSILHENG_CHG_NORDVOL");
+
+        					this.dsList.setColumn(e.row, "AM_CPSILHENG_CHG_NORDVOL", nexacro.toNumber(qn_cpsilheng_chg_nordvol) * nexacro.toNumber(e.newvalue));
+        				}
+        			}
+        		}
+        		// 잔여/향후 투입분 수량
+        		else if(e.columnid == "QN_CPSILHENG_CHG_NORDVOL")
+        		{
+        			// 잔여/향후 투입분 관련 컬럼 수정.
+        			if(this.dsList.getColumn(e.row, "TY_EDIT") == "A")
+        			{
+        				if(this.dsList.getColumn(e.row, "YN_LSUNIT") != "Y")
+        				{
+        					var up_cpsilheng_chg_nordvol = this.dsList.getColumn(e.row, "UP_CPSILHENG_CHG_NORDVOL");
+        					this.dsList.setColumn(e.row, "AM_CPSILHENG_CHG_NORDVOL", nexacro.toNumber(up_cpsilheng_chg_nordvol) * nexacro.toNumber(e.newvalue));
+
+        					var qn_cpsilheng_ordvol = this.dsList.getColumn(e.row, "QN_CPSILHENG_ORDVOL");
+        					this.dsList.setColumn(e.row, "QN_CPSILHENG_CHG", nexacro.toNumber(qn_cpsilheng_ordvol) + nexacro.toNumber(e.newvalue));
+        				}
+        			}
+        			// 청산예상 관련 컬럼 수정.
+        			else if(this.dsList.getColumn(e.row, "TY_EDIT") == "T")
+        			{
+        				var am_cpsilheng_chg_nordvol = this.dsList.getColumn(e.row, "AM_CPSILHENG_CHG_NORDVOL");
+        				this.dsList.setColumn(e.row, "UP_CPSILHENG_CHG_NORDVOL", nexacro.toNumber(am_cpsilheng_chg_nordvol) / nexacro.toNumber(e.newvalue));
+        			}
+
+        		}
+        		// 잔여/향후 투입분 금액
+        		else if(e.columnid == "AM_CPSILHENG_CHG_NORDVOL")
+        		{
+        			// 잔여/향후 투입분 관련 컬럼 수정.
+        			if(this.dsList.getColumn(e.row, "TY_EDIT") == "A")
+        			{
+        				if(this.dsList.getColumn(e.row, "YN_LSUNIT") == "Y")
+        				{
+        					this.dsList.setColumn(e.row, "UP_CPSILHENG_CHG_NORDVOL", nexacro.toNumber(e.newvalue));
+        				}
+
+        				var am_cpsilheng_ordvol = this.dsList.getColumn(e.row, "AM_CPSILHENG_ORDVOL");
+        				this.dsList.setColumn(e.row, "AM_CPSILHENG_CHG", nexacro.toNumber(am_cpsilheng_ordvol) + nexacro.toNumber(e.newvalue));
+        			}
+        			// 청산예상 관련 컬럼 수정.
+        			else if(this.dsList.getColumn(e.row, "TY_EDIT") == "T")
+        			{
+        				var qn_cpsilheng_chg_nordvol = this.dsList.getColumn(e.row, "QN_CPSILHENG_CHG_NORDVOL");
+        				this.dsList.setColumn(e.row, "UP_CPSILHENG_CHG_NORDVOL", nexacro.toNumber(e.newvalue) / nexacro.toNumber(qn_cpsilheng_chg_nordvol));
+        			}
+        		}
+        		// 청산예상 수량
+        		else if(e.columnid == "QN_CPSILHENG_CHG")
+        		{
+        			// 잔여/향후 투입분 관련 컬럼 수정.
+        			if(this.dsList.getColumn(e.row, "TY_EDIT") == "A")
+        			{
+        				var am_cpsilheng_chg = this.dsList.getColumn(e.row, "AM_CPSILHENG_CHG");
+        				this.dsList.setColumn(e.row, "UP_CPSILHENG_CHG", nexacro.toNumber(am_cpsilheng_chg) / nexacro.toNumber(e.newvalue));
+        			}
+        			// 청산예상 관련 컬럼 수정.
+        			else if(this.dsList.getColumn(e.row, "TY_EDIT") == "T")
+        			{
+        				if(this.dsList.getColumn(e.row, "YN_LSUNIT") != "Y")
+        				{
+        					var up_cpsilheng_chg = this.dsList.getColumn(e.row, "UP_CPSILHENG_CHG");
+        					this.dsList.setColumn(e.row, "AM_CPSILHENG_CHG", nexacro.toNumber(up_cpsilheng_chg) * nexacro.toNumber(e.newvalue));
+
+        					var qn_cpsilheng_ordvol = this.dsList.getColumn(e.row, "QN_CPSILHENG_ORDVOL");
+        					this.dsList.setColumn(e.row, "QN_CPSILHENG_CHG_NORDVOL", nexacro.toNumber(e.newvalue) - nexacro.toNumber(qn_cpsilheng_ordvol));
+        				}
+
+        			}
+        		}
+        		// 청산예상 단가
+        		else if(e.columnid == "UP_CPSILHENG_CHG")
+        		{
+        			// 청산예상 관련 컬럼 수정.
+        			if(this.dsList.getColumn(e.row, "TY_EDIT") == "T")
+        			{
+        				if(this.dsList.getColumn(e.row, "YN_LSUNIT") != "Y")
+        				{
+        					var qn_cpsilheng_chg = this.dsList.getColumn(e.row, "QN_CPSILHENG_CHG");
+        					this.dsList.setColumn(e.row, "AM_CPSILHENG_CHG", nexacro.toNumber(qn_cpsilheng_chg) * nexacro.toNumber(e.newvalue));
+        				}
+        			}
+        		}
+        		// 청산예상 금액
+        		else if(e.columnid == "AM_CPSILHENG_CHG")
+        		{
+        			// 잔여/향후 투입분 관련 컬럼 수정.
+        			if(this.dsList.getColumn(e.row, "TY_EDIT") == "A")
+        			{
+        				var qn_cpsilheng_chg = this.dsList.getColumn(e.row, "QN_CPSILHENG_CHG");
+        				this.dsList.setColumn(e.row, "UP_CPSILHENG_CHG", nexacro.toNumber(e.newvalue) / nexacro.toNumber(qn_cpsilheng_chg));
+        			}
+        			// 청산예상 관련 컬럼 수정.
+        			else if(this.dsList.getColumn(e.row, "TY_EDIT") == "T")
+        			{
+        				if(this.dsList.getColumn(e.row, "YN_LSUNIT") == "Y")
+        				{
+        					this.dsList.setColumn(e.row, "UP_CPSILHENG_CHG", nexacro.toNumber(e.newvalue));
+        				}
+
+        				var am_cpsilheng_ordvol = this.dsList.getColumn(e.row, "AM_CPSILHENG_ORDVOL");
+        				this.dsList.setColumn(e.row, "AM_CPSILHENG_CHG_NORDVOL", nexacro.toNumber(e.newvalue) - nexacro.toNumber(am_cpsilheng_ordvol));
+        			}
+        		}
+
+        	//	this.fnGridSum();
+        	}
+        };
+
+        // 하단 총계 함수.
+        this.fnGridSum = function()
+        {
+        	var colAM_DOKUB = this.dxGrid.getBindCellIndex("body", "AM_DOKUB");
+        	var colAM_EXSILHENG = this.dxGrid.getBindCellIndex("body", "AM_EXSILHENG");
+        	var colAM_SILHENG = this.dxGrid.getBindCellIndex("body", "AM_SILHENG");
+        	var colAM_PRVYR_CPSILHENG = this.dxGrid.getBindCellIndex("body", "AM_PRVYR_CPSILHENG");
+        	var colAM_PRV_DOKUB = this.dxGrid.getBindCellIndex("body", "AM_PRV_DOKUB");
+        	var colAM_PRV_SILHENG = this.dxGrid.getBindCellIndex("body", "AM_PRV_SILHENG");
+        	var colAM_PRV_CPSILHENG = this.dxGrid.getBindCellIndex("body", "AM_PRV_CPSILHENG");
+        	var colAM_CP_SILHENG = this.dxGrid.getBindCellIndex("body", "AM_CP_SILHENG");
+        	var colAM_CPSILHENG_ORDVOL= this.dxGrid.getBindCellIndex("body", "AM_CPSILHENG_ORDVOL");
+        	var colAM_CPSILHENG_NORDVOL= this.dxGrid.getBindCellIndex("body", "AM_CPSILHENG_NORDVOL");
+        	var colAM_CPSILHENG_CHG_NORDVOL= this.dxGrid.getBindCellIndex("body", "AM_CPSILHENG_CHG_NORDVOL");
+        	var colAM_CPSILHENG_CHG = this.dxGrid.getBindCellIndex("body", "AM_CPSILHENG_CHG");
+        	var colAM_CPSILHENG = this.dxGrid.getBindCellIndex("body", "AM_CPSILHENG");
+        	var colAM_CPSILHENG_CHG_ORDVOL= this.dxGrid.getBindCellIndex("body", "AM_CPSILHENG_CHG_ORDVOL");
+        	var colAM_PL_SILHENG = this.dxGrid.getBindCellIndex("body", "AM_PL_SILHENG");
+        	var colAM_PL_PRVYR_CPSILHENG= this.dxGrid.getBindCellIndex("body", "AM_PL_PRVYR_CPSILHENG");
+        	var colAM_PL_PRV_DOKUB = this.dxGrid.getBindCellIndex("body", "AM_PL_PRV_DOKUB");
+        	var colAM_PL_PRV_CPSILHENG= this.dxGrid.getBindCellIndex("body", "AM_PL_PRV_CPSILHENG");
+        	var colAM_PL_SALE = this.dxGrid.getBindCellIndex("body", "AM_PL_SALE");
+        	var colAM_EFCT_COST = this.dxGrid.getBindCellIndex("body", "AM_EFCT_COST");
+        	var colAM_PRV_TUJA = this.dxGrid.getBindCellIndex("body", "AM_PRV_TUJA");
+        	var colAM_TUJA = this.dxGrid.getBindCellIndex("body", "AM_TUJA");
+        	var colAM_TT_TUJA = this.dxGrid.getBindCellIndex("body", "AM_TT_TUJA");
+
+        	var sumAM_DOKUB = 0;
+        	var sumAM_EXSILHENG = 0;
+        	var sumAM_SILHENG = 0;
+        	var sumAM_PRVYR_CPSILHENG = 0;
+        	var sumAM_PRV_DOKUB = 0;
+        	var sumAM_PRV_SILHENG = 0;
+        	var sumAM_PRV_CPSILHENG = 0;
+        	var sumAM_CP_SILHENG = 0;
+        	var sumAM_CPSILHENG_ORDVOL = 0;
+        	var sumAM_CPSILHENG_NORDVOL = 0;
+        	var sumAM_CPSILHENG_CHG_NORDVOL=0;
+        	var sumAM_CPSILHENG_CHG = 0;
+        	var sumAM_CPSILHENG = 0;
+        	var sumAM_CPSILHENG_CHG_ORDVOL=0;
+        	var sumAM_PL_SILHENG = 0;
+        	var sumAM_PL_PRVYR_CPSILHENG=0;
+        	var sumAM_PL_PRV_DOKUB = 0;
+        	var sumAM_PL_PRV_CPSILHENG = 0;
+        	var sumAM_PL_SALE = 0;
+        	var sumAM_EFCT_COST = 0;
+        	var sumAM_PRV_TUJA = 0;
+        	var sumAM_TUJA = 0;
+        	var sumAM_TT_TUJA = 0;
+
+        	for(var i = 0; i < this.dsList.rowcount; i++)
+        	{
+        	  if(this.dsList.getColumn(i, "YN_COST") == "Y")
+        	  {
+        		sumAM_DOKUB+= this.dsList.getColumn(i, "AM_DOKUB");
+        		sumAM_EXSILHENG+= this.dsList.getColumn(i, "AM_EXSILHENG");
+        		sumAM_SILHENG+= this.dsList.getColumn(i, "AM_SILHENG");
+        		sumAM_PRVYR_CPSILHENG+= this.dsList.getColumn(i, "AM_PRVYR_CPSILHENG");
+        		sumAM_PRV_DOKUB+= this.dsList.getColumn(i, "AM_PRV_DOKUB");
+        		sumAM_PRV_SILHENG+= this.dsList.getColumn(i, "AM_PRV_SILHENG");
+        		sumAM_PRV_CPSILHENG+= this.dsList.getColumn(i, "AM_PRV_CPSILHENG");
+        		sumAM_CP_SILHENG+= this.dsList.getColumn(i, "AM_CP_SILHENG");
+        		sumAM_CPSILHENG_ORDVOL+= this.dsList.getColumn(i, "AM_CPSILHENG_ORDVOL");
+        		sumAM_CPSILHENG_NORDVOL+= this.dsList.getColumn(i, "AM_CPSILHENG_NORDVOL");
+        		sumAM_CPSILHENG_CHG_NORDVOL+= this.dsList.getColumn(i, "AM_CPSILHENG_CHG_NORDVOL");
+        		sumAM_CPSILHENG_CHG+= this.dsList.getColumn(i, "AM_CPSILHENG_CHG");
+        		sumAM_CPSILHENG+= this.dsList.getColumn(i, "AM_CPSILHENG");
+        		sumAM_CPSILHENG_CHG_ORDVOL+= this.dsList.getColumn(i, "AM_CPSILHENG_CHG_ORDVOL");
+        		sumAM_PL_SILHENG+= this.dsList.getColumn(i, "AM_PL_SILHENG");
+        		sumAM_PL_PRVYR_CPSILHENG+= this.dsList.getColumn(i, "AM_PL_PRVYR_CPSILHENG");
+        		sumAM_PL_PRV_DOKUB+= this.dsList.getColumn(i, "AM_PL_PRV_DOKUB");
+        		sumAM_PL_PRV_CPSILHENG+= this.dsList.getColumn(i, "AM_PL_PRV_CPSILHENG");
+        		sumAM_PL_SALE+= this.dsList.getColumn(i, "AM_PL_SALE");
+        		sumAM_EFCT_COST+= this.dsList.getColumn(i, "AM_EFCT_COST");
+        		sumAM_PRV_TUJA+= this.dsList.getColumn(i, "AM_PRV_TUJA");
+        		sumAM_TUJA+= this.dsList.getColumn(i, "AM_TUJA");
+        		sumAM_TT_TUJA+= this.dsList.getColumn(i, "AM_TT_TUJA");
+        	  }
+        	}
+
+        	this.dxGrid.setCellProperty("summ", colAM_DOKUB, "text", this.gfnAppendComma(sumAM_DOKUB));
+        	this.dxGrid.setCellProperty("summ", colAM_EXSILHENG, "text", this.gfnAppendComma(sumAM_EXSILHENG));
+        	this.dxGrid.setCellProperty("summ", colAM_SILHENG, "text", this.gfnAppendComma(sumAM_SILHENG));
+        	this.dxGrid.setCellProperty("summ", colAM_PRVYR_CPSILHENG, "text", this.gfnAppendComma(sumAM_PRVYR_CPSILHENG));
+        	this.dxGrid.setCellProperty("summ", colAM_PRV_DOKUB, "text", this.gfnAppendComma(sumAM_PRV_DOKUB));
+        	this.dxGrid.setCellProperty("summ", colAM_PRV_SILHENG, "text", this.gfnAppendComma(sumAM_PRV_SILHENG));
+        	this.dxGrid.setCellProperty("summ", colAM_PRV_CPSILHENG, "text", this.gfnAppendComma(sumAM_PRV_CPSILHENG));
+        	this.dxGrid.setCellProperty("summ", colAM_CP_SILHENG, "text", this.gfnAppendComma(sumAM_CP_SILHENG));
+        	this.dxGrid.setCellProperty("summ", colAM_CPSILHENG_ORDVOL, "text", this.gfnAppendComma(sumAM_CPSILHENG_ORDVOL));
+        	this.dxGrid.setCellProperty("summ", colAM_CPSILHENG_NORDVOL, "text", this.gfnAppendComma(sumAM_CPSILHENG_NORDVOL));
+        	this.dxGrid.setCellProperty("summ", colAM_CPSILHENG_CHG_NORDVOL, "text", this.gfnAppendComma(sumAM_CPSILHENG_CHG_NORDVOL));
+        	this.dxGrid.setCellProperty("summ", colAM_CPSILHENG_CHG, "text", this.gfnAppendComma(sumAM_CPSILHENG_CHG));
+        	this.dxGrid.setCellProperty("summ", colAM_CPSILHENG, "text", this.gfnAppendComma(sumAM_CPSILHENG));
+        	this.dxGrid.setCellProperty("summ", colAM_CPSILHENG_CHG_ORDVOL, "text", this.gfnAppendComma(sumAM_CPSILHENG_CHG_ORDVOL));
+        	this.dxGrid.setCellProperty("summ", colAM_PL_SILHENG, "text", this.gfnAppendComma(sumAM_PL_SILHENG));
+        	this.dxGrid.setCellProperty("summ", colAM_PL_PRVYR_CPSILHENG, "text", this.gfnAppendComma(sumAM_PL_PRVYR_CPSILHENG));
+        	this.dxGrid.setCellProperty("summ", colAM_PL_PRV_DOKUB, "text", this.gfnAppendComma(sumAM_PL_PRV_DOKUB));
+        	this.dxGrid.setCellProperty("summ", colAM_PL_PRV_CPSILHENG, "text", this.gfnAppendComma(sumAM_PL_PRV_CPSILHENG));
+        	this.dxGrid.setCellProperty("summ", colAM_PL_SALE, "text", this.gfnAppendComma(sumAM_PL_SALE));
+        	this.dxGrid.setCellProperty("summ", colAM_EFCT_COST, "text", this.gfnAppendComma(sumAM_EFCT_COST));
+        	this.dxGrid.setCellProperty("summ", colAM_PRV_TUJA, "text", this.gfnAppendComma(sumAM_PRV_TUJA));
+        	this.dxGrid.setCellProperty("summ", colAM_TUJA, "text", this.gfnAppendComma(sumAM_TUJA));
+        	this.dxGrid.setCellProperty("summ", colAM_TT_TUJA, "text", this.gfnAppendComma(sumAM_TT_TUJA));
+        }
+
+        this.fnGridSumSetting = function()
+        {
+        	var colAM_DOKUB = this.dxGrid.getBindCellIndex("body", "AM_DOKUB");
+        	var colAM_EXSILHENG = this.dxGrid.getBindCellIndex("body", "AM_EXSILHENG");
+        	var colAM_SILHENG = this.dxGrid.getBindCellIndex("body", "AM_SILHENG");
+        	var colAM_PRVYR_CPSILHENG = this.dxGrid.getBindCellIndex("body", "AM_PRVYR_CPSILHENG");
+        	var colAM_PRV_DOKUB = this.dxGrid.getBindCellIndex("body", "AM_PRV_DOKUB");
+        	var colAM_PRV_SILHENG = this.dxGrid.getBindCellIndex("body", "AM_PRV_SILHENG");
+        	var colAM_PRV_CPSILHENG = this.dxGrid.getBindCellIndex("body", "AM_PRV_CPSILHENG");
+        	var colAM_CP_SILHENG = this.dxGrid.getBindCellIndex("body", "AM_CP_SILHENG");
+        	var colAM_CPSILHENG_ORDVOL= this.dxGrid.getBindCellIndex("body", "AM_CPSILHENG_ORDVOL");
+        	var colAM_CPSILHENG_NORDVOL= this.dxGrid.getBindCellIndex("body", "AM_CPSILHENG_NORDVOL");
+        	var colAM_CPSILHENG_CHG_NORDVOL= this.dxGrid.getBindCellIndex("body", "AM_CPSILHENG_CHG_NORDVOL");
+        	var colAM_CPSILHENG_CHG = this.dxGrid.getBindCellIndex("body", "AM_CPSILHENG_CHG");
+        	var colAM_CPSILHENG = this.dxGrid.getBindCellIndex("body", "AM_CPSILHENG");
+        	var colAM_CPSILHENG_CHG_ORDVOL= this.dxGrid.getBindCellIndex("body", "AM_CPSILHENG_CHG_ORDVOL");
+        	var colAM_PL_SILHENG = this.dxGrid.getBindCellIndex("body", "AM_PL_SILHENG");
+        	var colAM_PL_PRVYR_CPSILHENG= this.dxGrid.getBindCellIndex("body", "AM_PL_PRVYR_CPSILHENG");
+        	var colAM_PL_PRV_DOKUB = this.dxGrid.getBindCellIndex("body", "AM_PL_PRV_DOKUB");
+        	var colAM_PL_PRV_CPSILHENG= this.dxGrid.getBindCellIndex("body", "AM_PL_PRV_CPSILHENG");
+        	var colAM_PL_SALE = this.dxGrid.getBindCellIndex("body", "AM_PL_SALE");
+        	var colAM_EFCT_COST = this.dxGrid.getBindCellIndex("body", "AM_EFCT_COST");
+        	var colAM_PRV_TUJA = this.dxGrid.getBindCellIndex("body", "AM_PRV_TUJA");
+        	var colAM_TUJA = this.dxGrid.getBindCellIndex("body", "AM_TUJA");
+        	var colAM_TT_TUJA = this.dxGrid.getBindCellIndex("body", "AM_TT_TUJA");
+
+        	this.dxGrid.setCellProperty("summ", colAM_DOKUB, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_EXSILHENG, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_SILHENG, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_PRVYR_CPSILHENG, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_PRV_DOKUB, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_PRV_SILHENG, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_PRV_CPSILHENG, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_CP_SILHENG, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_CPSILHENG_ORDVOL, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_CPSILHENG_NORDVOL, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_CPSILHENG_CHG_NORDVOL, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_CPSILHENG_CHG, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_CPSILHENG, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_CPSILHENG_CHG_ORDVOL, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_PL_SILHENG, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_PL_PRVYR_CPSILHENG, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_PL_PRV_DOKUB, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_PL_PRV_CPSILHENG, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_PL_SALE, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_EFCT_COST, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_PRV_TUJA, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_TUJA, "textAlign", "right");
+        	this.dxGrid.setCellProperty("summ", colAM_TT_TUJA, "textAlign", "right");
+
+        }
+
+        //공사종합현황(오즈리포트)
+        this.fnMagamPrint1 = function(obj,e) {
+
+        	if (!this.fnSelectValidate()) return false;
+
+        	this.dsReport.clearData();
+        	this.dsReport.addRow();
+        	this.dsReport.setColumn(0, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+        	this.dsReport.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+        	this.dsReport.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+
+        	var reportpath  = "/dw/dwe/DWE_CPSILHENG_REPORT.ozr";
+        	var inProc		= "_dsProc";
+        	//var inParam 	= "params=dsReportParam";
+        	var inParam 	= "";
+        	var inData   = "print=dsReport";
+
+        	//this.gfnGetReportData(this, reportpath, inProc, inParam, inData);
+        	gfnOpenReport(this, reportpath, inProc, inParam, inData);
+        }
+
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divSearch.form.cchkDOKUB.addEventHandler("onchanged",this.divSearch_cchkDOKUB_onchanged,this);
+            this.divSearch.form.cchkEXSILHENG.addEventHandler("onchanged",this.divSearch_cchkEXSILHENG_onchanged,this);
+            this.divSearch.form.cchkSILHENG.addEventHandler("onchanged",this.divSearch_cchkSILHENG_onchanged,this);
+            this.divSearch.form.cchkPRVYR.addEventHandler("onchanged",this.divSearch_cchkPRVYR_onchanged,this);
+            this.divSearch.form.cchkPRV.addEventHandler("onchanged",this.divSearch_cchkPRV_onchanged,this);
+            this.divSearch.form.cchkPL_SALE.addEventHandler("onchanged",this.divSearch_cchkPL_SALE_onchanged,this);
+            this.divSearch.form.cchkTUJA.addEventHandler("onchanged",this.divSearch_cchkTUJA_onchanged,this);
+            this.dsList.addEventHandler("onvaluechanged",this.dsList_onvaluechanged,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+        };
+        this.loadIncludeScript("DWE_CPSILHENG.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

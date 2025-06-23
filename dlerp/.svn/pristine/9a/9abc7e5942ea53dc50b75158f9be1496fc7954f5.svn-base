@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1400" height="720" titletext="자동전표분개정보" onload="form_onload">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" taborder="1" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_AUTOSLIP" taborder="1" text="자동전표코드" left="0.0" top="10.0" width="118.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_AUTOSLIP" CDTextWidth="70" taborder="0" left="staCD_AUTOSLIP:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" onclick="Common_onclick" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" text="" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Div id="divSplitter" taborder="1" top="31.49%" cssclass="div_Splitter" cursor="ns-resize" height="5" text="" ondrag="divData_divSplitter_ondrag" width="100%" left="0"/>
+              <Radio id="rdoYN_DEP" taborder="0" left="75" top="-34" width="200" height="20" onitemchanged="rdo00_onitemchanged" index="-1" text="" value="" innerdataset="dsYN_DEP" datacolumn="VALUE" codecolumn="CODE" fittocontents="width" direction="vertical"/>
+              <Div id="divDataTop" taborder="2" text="div00" left="0" top="0" bottom="divSplitter:5" right="0">
+                <Layouts>
+                  <Layout>
+                    <Grid id="objGrid" taborder="0" left="0" top="0" oncellclick="fnCellClick" right="0" bottom="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataBottom" taborder="3" text="div00" left="0" top="divSplitter:5" bottom="0" right="0">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta00" taborder="0" text="상세내역" left="0" cssclass="sta_TITLE_Bg" onclick="divData_sta00_onclick" height="22" top="0" width="900"/>
+                    <Grid id="objGridSub" sub="true" taborder="1" left="0" top="sta00:4" bottom="0" width="900"/>
+                    <Static id="sta01" taborder="3" text="Parameter 추가사항" left="sta00:10" cssclass="sta_TITLE_Bg" onclick="divData_sta00_onclick" height="22" top="1" right="0"/>
+                    <Static id="statxtYN_NATION" taborder="2" text="&#13;&#10;☆ 중복여부 ☆&#13;&#10;한 계정이 여러번 중복시 제일 처음 계정에 대한 중복여부는 'N'&#13;&#10;나머지의 경우는 'Y'로 설정&#13;&#10;&#13;&#10;☆ 부가세가 있을 경우 ☆&#13;&#10;거래구분(I/O) 증빙코드 증빙구분 투자유형 매입불공제코드 투자계정 거래처종류&#13;&#10;거래처코드  개인/법인구분  접대비여부 접대비지출코드 공급가 부가가치세 외화금액&#13;&#10;통화코드 봉사료 신용카드번호 과세특례구분 부가세적요&#13;&#10;&#13;&#10;☆ 예산이 있을 경우 ☆&#13;&#10;부서/임원코드 프로젝트코드 비목코드 세목코드 예산사용자 예산적요" top="sta01:3" cssclass="sta_WF_tablelabel" right="0" bottom="0" color="black" textAlign="left" verticalAlign="top" background="white" onclick="divData_statxtYN_NATION_onclick" font="normal 11pt/normal &quot;Arial&quot;" left="objGridSub:10"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetVariable();
+	this.fnSetButton();
+	//this.fnSetExtendButton();
+	this.fnSetParameter();
+	this.fnSetEvent();
+	
+	if (!this.gfnIsNull(this.getOwnerFrame().CD_AUTOSLIP) && !this.gfnIsNull(this.getOwnerFrame().DS_AUTOSLIP)) {
+		this.dsSearch.setColumn(0, "CD_AUTOSLIP", this.getOwnerFrame().CD_AUTOSLIP);
+		this.dsSearch.setColumn(0, "DS_AUTOSLIP", this.getOwnerFrame().DS_AUTOSLIP);
+		
+		this.FormBtns.Select.click();
+	}
+	
+	this.ccfCD_AUTOSLIP.form.CDTextBox.setFocus();
+};
+
+this.fnSetExtendButton = function() {
+
+};
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_AUTOSLIP = this.divSearch.form.ccfCD_AUTOSLIP;
+
+	this.dxGrid = this.divData.form.divDataTop.form.objGrid;
+	this.dxGridSub = this.divData.form.divDataBottom.form.objGridSub;
+};
+
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+}
+
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();	
+	this.dsSelect.addColumn("CD_AUTOSLIP", "string");
+}
+
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHZ_JOURNAL_INFO");
+	this.gfnGridInit(this.dxGridSub, this.dsListSub, "DH", "DHZ_JOURNAL_INFO2");
+
+	this.ccfCD_AUTOSLIP.CodeFindName = "DHX_CFAUTOSLIP";
+	this.ccfCD_AUTOSLIP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+}
+
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+this.fnSelect = function() {
+	if (!this.fnSelectValidation()) return;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_AUTOSLIP", this.gfnTrim(this.dsSearch.getColumn(0, "CD_AUTOSLIP")));
+		
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect detail=dsSelect"; 
+	var outData     = "dsList=select0 dsListSub=detail0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnAdd = function() {
+	
+}
+
+this.fnDel = function() {
+	
+}
+
+this.fnSave = function() {
+	
+}
+
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+this.fnPrint = function() {
+
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidation = function() {
+	
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_AUTOSLIP"))) {
+		this.ccfCD_AUTOSLIP.form.CDTextBox.setFocus();
+		this.gfnAlert("자동전표코드를 입력하세요.");
+		return false;
+	}
+	
+	return true;
+}
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+
+	if(svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+	}
+	
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+		
+	if(id == "ccfCD_AUTOSLIP") {
+        dsUserParam.setColumn(nrow, "TY_AUTOSLIP", this.dsSearch.getColumn(0, "CD_AUTOSLIP"));
+	}
+	
+	return true;
+};
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		this.gfnGridClear(this.dxGridSub);
+	}
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="dsListSub"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DHZPR_JOURNAL_INFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">detail</Col>
+            <Col id="SP">DHZPR_JOURNAL_T_TYPE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_AUTOSLIP" type="STRING" size="256"/>
+          <Column id="DS_AUTOSLIP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_AUTOSLIP"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_AUTOSLIP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_AUTOSLIP"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_AUTOSLIP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_AUTOSLIP"/>
+    </Bind>
+  </Form>
+</FDL>

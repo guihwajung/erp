@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DAV_INCOMETAXCERTIFICATE_DLG" width="370" height="400" maxwidth="400" maxheight="455" titletext="갑근세원천징수 확인서" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staTITLE" taborder="0" text="갑근세원천징수 확인서" left="4" top="10" width="361" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+        <Static id="staTY_TAX" taborder="6" text="구분" left="4" top="132" width="100" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta02" taborder="14" left="105" top="132" width="260" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+        <Static id="staCD_CORP" taborder="2" text="법인코드" left="4" top="45" width="100" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta06" taborder="3" left="105" top="45" width="260" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+        <Static id="staID_SABUN" taborder="4" text="사번" left="4" top="staCD_CORP:-1" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta08" taborder="5" left="105" top="74" width="260" height="30" cssclass="sta_WF_tablebg"/>
+        <Static id="staUSE_PURPOSE" taborder="7" text="사용목적" left="4" top="190" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta10" taborder="11" left="105" top="190" width="260" height="30" cssclass="sta_WF_tablebg" text=""/>
+        <Div id="ccfCD_CORP" CodeFindName="DAX_CFCORP_CODEFIND" CDTextWidth="70" taborder="1" left="staCD_CORP:5" top="50" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="true" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+        <Static id="staDT_SELECTION" taborder="9" text="대상기간" left="4" top="103" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta16" taborder="13" left="105" top="103" width="260" height="30" cssclass="sta_WF_tablebg"/>
+        <Edit id="edtUSE_PURPOSE" taborder="17" left="109" top="195" width="250" height="20" readonly="false"/>
+        <Combo id="cboTY_TAX" taborder="16" left="109" top="137" width="120" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="1" text="비과세 포함" index="0">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">I</Col>
+                <Col id="datacolumn">비과세포함</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">O</Col>
+                <Col id="datacolumn">비과세불포함</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Div id="calDT_FROM" taborder="33" left="109" top="108" width="80" height="20" url="cmm::cmmCalMM.xfdl"/>
+        <Static id="staCD_TILDE" taborder="21" text="~" left="calDT_FROM:5" top="109" width="10" height="20"/>
+        <Static id="sta11" taborder="8" text="신고구분" left="4" top="161" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta12" taborder="10" left="105" top="161" width="260" height="30" cssclass="sta_WF_tablebg"/>
+        <Radio id="rdoTY_SINGO" taborder="12" left="109" top="168" width="113" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" value="1" text="매월" index="0">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="datacolumn">매월</Col>
+                <Col id="codecolumn">M</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">반기</Col>
+                <Col id="codecolumn">H</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Static id="staOR_SUBMIT" taborder="15" text="제출처" left="4" top="219" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta13" taborder="18" left="105" top="219" width="260" height="30" cssclass="sta_WF_tablebg" text=""/>
+        <Edit id="edtOR_SUBMIT" taborder="19" left="109" top="224" width="250" height="20" readonly="false"/>
+        <Static id="staNO_LICENSE" taborder="20" text="발급번호" left="4" top="277" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="sta17" taborder="22" left="105" top="277" width="260" height="30" cssclass="sta_WF_tablebg" text=""/>
+        <Edit id="edtNO_LICENSE" taborder="23" left="109" top="282" width="250" height="20" readonly="false"/>
+        <Static id="staDT_INSERT" taborder="24" text="작성일자" left="4" top="248" width="100" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta19" taborder="25" left="105" top="248" width="260" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+        <Calendar id="calDT_INSERT" taborder="26" left="109" top="253" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+        <Div id="divBtns" left="85" top="344" width="200" height="40" taborder="27">
+          <Layouts>
+            <Layout>
+              <Button id="btnCANCLE" taborder="0" text="취소" left="120" top="10" width="60" height="27" onclick="btnCANCLE_onclick"/>
+              <Button id="btnOK" taborder="1" text="확인" left="30" top="10" width="60" height="27" onclick="btnOK_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="ccfID_SABUN" CDTextWidth="70" taborder="28" left="staID_SABUN:5" top="79" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DAX_CFBASEINFO_ALL" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+        <Edit id="edtID_PERSON" taborder="29" left="380" top="79" width="80" height="17" visible="false"/>
+        <Static id="sta00" taborder="30" left="105" top="306" width="260" height="30" cssclass="sta_WF_tablebg"/>
+        <Radio id="rdoYN_STAMP_IMG" taborder="31" left="109" top="313" width="113" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" value="Y" text="Y" index="0">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="datacolumn">Y</Col>
+                <Col id="codecolumn">Y</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">N</Col>
+                <Col id="codecolumn">N</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Static id="sta01" taborder="32" text="인감여부" left="4" top="306" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+        <Div id="calDT_TO" taborder="34" left="staCD_TILDE:5" top="108" width="80" height="20" url="cmm::cmmCalMM.xfdl"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+
+	this.fnSetButton();
+	//this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+
+	
+	// 법인코드 및 법인명 기본세팅
+	this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+    this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+	
+	//사번
+// 	this.ccfID_SABUN.form.CDTextBox.set_value(this.AuthClient.ID_SABUN);
+// 	this.ccfID_SABUN.form.DSTextBox.set_value(this.AuthClient.DS_HNAME); 
+	
+	//대상기간
+	this.calDT_FROM.form.TextBox.set_value(this.gfnAddMonth(this.gfnGetDate(),-11).substr(0,6));
+	this.calDT_TO.form.TextBox.set_value(this.gfnGetDate().substr(0,6));	
+	
+	//작성일자
+	this.calDT_INSERT.set_value(this.gfnGetDate());
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	// this.FormBtns.Add.set_enable(false);
+	// this.FormBtns.Del.set_enable(false);
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+
+	this.grSearch = this.FormInfo.GR_SEARCH;					          // 권한
+	this.cdGroup = this.AuthClient.CD_GROUP;					          // 그룹코드
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+// 	this.dsReport = new Dataset();
+// 	this.dsReport.addColumn("CD_CORP", "string");
+// 	this.dsReport.addColumn("ID_SABUN", "string");
+// 	this.dsReport.addColumn("FR_BASE", "string");
+// 	this.dsReport.addColumn("TO_BASE", "string");
+// 	this.dsReport.addColumn("TY_TAX", "string");
+// 	this.dsReport.addColumn("TY_SINGO", "string");
+// 	this.dsReport.addColumn("YN_STAMP_IMG", "string");
+
+	this.dsReport = new Dataset();
+	this.dsReport.addColumn("CD_CORP", "string");
+	this.dsReport.addColumn("ID_SABUN", "string");
+	this.dsReport.addColumn("FR_BASE", "string");
+	this.dsReport.addColumn("TO_BASE", "string");
+	this.dsReport.addColumn("TY_TAX", "string");
+	this.dsReport.addColumn("TY_SINGO", "string");
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+
+	//법인
+	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+		this.fnVaidateCallback = function() {
+			this.ccfCD_CORP.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("법인코드를 입력하세요.", "fnVaidateCallback");
+		return false;
+	}
+
+	//사번
+	if (this.gfnIsNull(this.ccfID_SABUN.form.CDTextBox.value)) {
+		this.fnVaidateCallback = function() {
+			this.ccfID_SABUN.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("사번코드를 입력하세요.", "fnVaidateCallback");
+		return false;		
+	}
+
+	//대상기간 FR
+	if (this.gfnIsNull(this.calDT_FROM.form.TextBox.value)) {
+		this.fnVaidateCallback = function() {
+			this.calDT_FROM.form.TextBox.setFocus();
+		}
+		this.gfnAlert("대상기간 시작일을 입력하세요.");
+		return false;
+	}
+	
+	//대상기간 TO
+	if (this.gfnIsNull(this.calDT_TO.form.TextBox.value)) {
+		this.fnVaidateCallback = function() {
+			this.calDT_TO.form.TextBox.setFocus();
+		}
+		this.gfnAlert("대상기간 종료일을 입력하세요.");
+		return false;
+	}
+	
+	if (this.calDT_FROM.form.TextBox.value > this.calDT_TO.form.TextBox.value )  {
+		this.fnDtVaidateCallback = function() {
+			this.calDT_TO.form.TextBox.setFocus();
+		}
+		this.gfnAlert("대상기간 시작일이 종료일보다 클 수 없습니다.", "fnDtVaidateCallback");
+		return false;
+	}
+	
+	//사용목적
+	if (this.gfnIsNull(this.edtUSE_PURPOSE.value))  {
+		this.fnDtVaidateCallback = function() {
+			this.edtUSE_PURPOSE.setFocus();
+		}
+		this.gfnAlert("사용목적을 입력하세요.", "fnDtVaidateCallback");
+		return false;
+	}
+	
+	//제출처
+	if (this.gfnIsNull(this.edtOR_SUBMIT.value))  {
+		this.fnDtVaidateCallback = function() {
+			this.edtOR_SUBMIT.setFocus();
+		}
+		this.gfnAlert("제출처를 입력하세요.", "fnDtVaidateCallback");
+		return false;
+	}
+	
+	//작성일자
+	if (this.gfnIsNull(this.calDT_INSERT.value))  {
+		this.fnDtVaidateCallback = function() {
+			this.calDT_INSERT.setFocus();
+		}
+		this.gfnAlert("작성일자를 입력하세요.", "fnDtVaidateCallback");
+		return false;
+	}
+
+ 	return true;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "report") {
+		//trace(this.dsList.saveXML());
+		
+		if(errorCode == 0){
+			if(this.dsList.rowcount >0){
+				this.fnPrintProc("P");
+			}else{
+				this.gfnAlert("조회된 내역이 없습니다.");
+			}
+		}else{
+			this.gfnAlert(errorMsg);
+		}
+		
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+ 	switch(id) {
+		case "ccfCD_CORP": // 법인코드
+			dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+			dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+			break;
+		
+		case "ccfID_SABUN": //사번
+			if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+				this.fnBeforeUserCallback = function() {
+						this.ccfCD_CORP.form.CDTextBox.setFocus();
+					}
+					this.gfnAlert("법인코드를 입력하세요.", "fnBeforeUserCallback");
+					return false;
+			}
+			dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+			dsUserParam.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+			dsUserParam.setColumn(nrow, "YN_CORP", "N");
+			dsUserParam.setColumn(nrow, "TY_RETIRE", "%");
+			break;
+			
+		default:
+ 	}
+ 	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+	
+	switch(id) {
+		case "ccfCD_CORP": // 법인코드
+			this.ccfID_SABUN.form.CDTextBox.set_value("");
+			this.ccfID_SABUN.form.DSTextBox.set_value("");
+			this.edtID_PERSON.set_value("");
+			break;
+		
+		case "ccfID_SABUN"://사번
+			if(arr.length > 0) {
+				this.edtID_PERSON.set_value(arr[0]["ID_PERSON"]);
+			}else{
+				this.edtID_PERSON.set_value("");
+			}
+			break;	
+			
+		default:
+	}
+};
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnPrintProc("S");
+	//this.getParentContext().close(true);
+};
+
+this.fnPrintProc = function(callType){
+
+	if(!this.fnSelectValidate()) return false;
+
+	
+	this.dsReport.clearData();
+	var nrow = this.dsReport.addRow();
+	
+	this.dsReport.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+	this.dsReport.setColumn(nrow, "ID_SABUN", this.ccfID_SABUN.form.CDTextBox.value);
+	this.dsReport.setColumn(nrow, "FR_BASE", this.calDT_FROM.form.TextBox.value);
+	this.dsReport.setColumn(nrow, "TO_BASE", this.calDT_TO.form.TextBox.value);
+	this.dsReport.setColumn(nrow, "TY_TAX", this.cboTY_TAX.value);
+	this.dsReport.setColumn(nrow, "TY_SINGO", this.rdoTY_SINGO.value);
+	//this.dsReport.setColumn(nrow, "YN_STAMP_IMG", this.rdoYN_STAMP_IMG.value);
+	
+				
+		
+	if(callType == "S"){
+		var strSvcId    = "report";
+		var strSvcType  = "select";
+		var inProc		= "_dsProc";
+		var inData      = "report=dsReport";
+		var outData     = "dsList=report0";
+		var strArg 		= "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// trabsaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}else{
+		var inProc		= "_dsProc";
+		var inParam 	= "";	//"params=dsReportParam"
+		var inData      = "report=dsReport";
+		var reportpath  = "/da/daa/DAA_CERTIFICATE_G.ozr";	
+		
+		gfnOpenReport(this, reportpath, inProc, inParam, inData);
+	}
+
+}
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+]]></Script>
+    <Dataset id="dsList"/>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">report</Col>
+            <Col id="SP">DAVPR_INCOMETAXCERTIFICATE_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="calDT_FROM.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_SALARY"/>
+      <BindItem id="item1" compid="calDT_TO.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_SALARY"/>
+    </Bind>
+  </Form>
+</FDL>

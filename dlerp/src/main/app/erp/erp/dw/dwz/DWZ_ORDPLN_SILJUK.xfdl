@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DWZ_ORDPLN_SILJUK" width="1280" height="720" titletext="발주계획작성" onload="DWZ_ORDPLN_SILJUK_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="현장코드" left="0.0" top="10.0" width="92.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFSITE" CDTextWidth="80" taborder="0" left="sta00:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="sta01" taborder="6" text="공종코드" left="ccfCD_SITE:0.0" top="10.0" width="92.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_LICCOST" CDTextWidth="80" taborder="7" left="sta01:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staDT_DATE" taborder="2" text="계획년월" top="10.0" width="92.0" height="24.0" textDecoration="none" left="ccfCD_LICCOST:0.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ctclFR_WORK" taborder="3" left="staDT_DATE:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalMM.xfdl"/>
+              <Static id="sta_range" taborder="4" text="~" top="10.0" width="30.0" height="24.0" left="ctclFR_WORK:0.0" cssclass="sta_WF_AC"/>
+              <Div id="ctclTO_WORK" taborder="5" left="sta_range:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalMM.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" top="40" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DWZPR_ORDPLN_SILJUK_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="CD_LICCOST" type="STRING" size="256"/>
+          <Column id="FR_WORK" type="STRING" size="256"/>
+          <Column id="TO_WORK" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_SITE"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.DWZ_ORDPLN_SILJUK_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);   
+	this.gfnFormInfo(this);      
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+
+
+	//타화면에서 오픈시 넘어오는 파라미터 처리
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_SITE) && !this.gfnIsNull(this.getOwnerFrame().DS_SITE)) 
+	{
+		this.dsSearch.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+		this.divSearch.form.ccfCD_SITE.form.DSTextBox.set_value(this.getOwnerFrame().DS_SITE);
+		this.dsSearch.setColumn(0, "CD_LICCOST", this.getOwnerFrame().CD_LICCOST);
+		this.divSearch.form.ccfCD_LICCOST.form.DSTextBox.set_value(this.getOwnerFrame().DS_LICCOST);
+		this.dsSearch.setColumn(0, "FR_WORK", this.getOwnerFrame().FR_WORK);
+		this.dsSearch.setColumn(0, "TO_WORK", this.getOwnerFrame().TO_WORK);
+		this.divSearch.form.ccfCD_SITE.form.CDTextBox.set_readonly(true);
+		this.divSearch.form.ccfCD_SITE.form.BtnSearch.set_enable(false);
+		this.divSearch.form.ccfCD_LICCOST.form.CDTextBox.set_readonly(true);
+		this.divSearch.form.ccfCD_LICCOST.form.BtnSearch.set_enable(false);
+		
+		this.FormBtns.Select.click();
+	}
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+//    var id_group = this.FormInfo.ID_GROUP;
+//    var gr_search = this.FormInfo.GR_SEARCH;
+//    var cd_role = this.FormInfo.CD_ROLE;
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+   // this.btnSilheng = this.gfnFormButtonAdd("btnSilheng", "fnSilheng");
+   // this.btnOrdPlnCrtDlg = this.gfnFormButtonAdd("btnOrdPlnCrtDlg", "fnOrdPlnCrtDlg");	//발주계획공종생성
+   // this.btnSiljukDlg = this.gfnFormButtonAdd("btnSiljukDlg", "fnbtnSiljukDlg");	// 발주실적조회
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+   this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+   this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+   this.ccfCD_SITE.CodeFindName = "DZX_CFSITE";
+   this.gfnGridInit(this.dxGrid, this.dsList, "DW", "DWZ_ORDPLN_SILJUK");
+   
+   	// 그리드 코드파인드 설정
+	this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+	this.dxGrid.AfterEdit = "fnGrid_AfterEdit";
+	
+	// 셀 수정가능 여부
+	//this.dxGrid.EnterCell = "fnGrid_EnterCell";
+   
+}
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+   this.dsSelect = new Dataset();
+   this.dsSelect.addColumn("TY_WRK", "string");
+   this.dsSelect.addColumn("CD_SITE", "string");
+   this.dsSelect.addColumn("CD_LICCOST", "string");
+   this.dsSelect.addColumn("FR_WORK", "string");
+   this.dsSelect.addColumn("TO_WORK", "string");
+
+   this.dsSave = new Dataset();
+   this.dsSave.addColumn("TY_WRK", "string");
+   this.dsSave.addColumn("ID_USER", "string");
+   this.dsSave.addColumn("CD_SITE", "string");
+   this.dsSave.addColumn("CD_ORD", "string");
+   this.dsSave.addColumn("CD_ORDCOST", "string");
+   this.dsSave.addColumn("NO_CSCT", "string");
+   this.dsSave.addColumn("DT_ORDSCH", "string");
+   this.dsSave.addColumn("DT_CNSTSTR", "string");
+   this.dsSave.addColumn("DT_CNSTEND", "string");
+   this.dsSave.addColumn("AM_UNTK", "bigdecimal");
+   this.dsSave.addColumn("AM_EBGT", "bigdecimal");
+   this.dsSave.addColumn("AM_ORD", "bigdecimal");
+   this.dsSave.addColumn("DS_RMKS", "string");
+   
+}
+
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *   조회 버튼
+  */
+this.fnSelect = function() {
+   if (!this.fnSelectValidate()) return false;
+   
+   this.gfnGridBeforeSelect(this.dxGrid);
+   
+   this.dsSelect.clearData();
+   this.dsSelect.addRow();
+   
+   this.dsSelect.setColumn(0, "TY_WRK", "Q");
+   this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+   this.dsSelect.setColumn(0, "CD_LICCOST", this.dsSearch.getColumn(0, "CD_LICCOST"));
+   this.dsSelect.setColumn(0, "FR_WORK", this.dsSearch.getColumn(0, "FR_WORK"));
+   this.dsSelect.setColumn(0, "TO_WORK", this.dsSearch.getColumn(0, "TO_WORK"));
+
+
+   var strSvcId    = "select";
+   var strSvcType  = "grid";
+   var inProc      = "_dsProc";
+   var inData      = "select=dsSelect";
+   var outData     = "dsList=select0";
+   var strArg      = "";
+   var callBackFnc = "fnCallback";
+   
+   this.gfnTransaction( strSvcId ,    // transaction을 구분하기 위한 svc id값
+                  strSvcType ,    // transaction을 요청할 구분
+                  inProc,         // Procedure 정보 Dataset 이름
+                  inData ,       // 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+                  outData ,       // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+                  strArg,          // 입력갑스로 보낼 arguments, strFormData="20120607"
+                  callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+
+
+/*
+ *   입력 버튼
+ */
+this.fnAdd = function() {
+	var nrow = this.gfnGridAdd(this.dxGrid,"bottom"); // top (default), bottom, current
+
+	this.dsList.set_enableevent(false);
+	this.dsList.setColumn(nrow, "CD_SITE", this.ccfCD_SITE.form.CDTextBox.value);
+	this.dsList.setColumn(nrow, "DS_SITE", this.ccfCD_SITE.form.DSTextBox.value);
+	this.dsList.setColumn(nrow, "YN_EDIT", "Y");
+	this.dsList.set_enableevent(true);
+}
+
+/*
+ *   삭제 버튼
+ */
+this.fnDel = function() {
+   this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *   저장 버튼
+ */
+this.fnSave = function() {
+   // 그리드 필수항목 체크
+   if (!this.gfnGridValidate(this.dxGrid)) return;   
+
+   this.dxGrid.updateToDataset();
+   
+   this.dsSave.clearData();
+   
+   for (var i = 0; i < this.dsList.rowcount; i++) {
+      var flag = this.gfnGetFlag(this.dsList, i);
+	 
+      switch(flag) {
+         case "I":
+         case "U":
+         case "D":
+			/*
+			if(this.dsList.getColumn(i, "NO_CSCT").length != 2){
+				this.gfnAlert("공구 항목은 2자리만 입력되어야합니다.");
+				return false;
+			}
+			*/
+            var nrow = this.dsSave.addRow();
+            this.dsSave.setColumn(nrow, "TY_WRK", flag);
+            this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+            this.dsSave.setColumn(nrow, "CD_SITE", this.dsList.getColumn(i, "CD_SITE"));
+            this.dsSave.setColumn(nrow, "CD_ORD", this.dsList.getColumn(i, "CD_ORD"));
+			this.dsSave.setColumn(nrow, "NO_CSCT", this.dsList.getColumn(i, "NO_CSCT"));
+            this.dsSave.setColumn(nrow, "CD_ORDCOST", this.dsList.getColumn(i, "CD_ORDCOST"));
+            this.dsSave.setColumn(nrow, "DT_ORDSCH", this.dsList.getColumn(i, "DT_ORDSCH"));
+            this.dsSave.setColumn(nrow, "DT_CNSTSTR", this.dsList.getColumn(i, "DT_CNSTSTR"));
+            this.dsSave.setColumn(nrow, "DT_CNSTEND", this.dsList.getColumn(i, "DT_CNSTEND"));
+            this.dsSave.setColumn(nrow, "AM_UNTK", this.dsList.getColumn(i, "AM_UNTK"));
+            this.dsSave.setColumn(nrow, "AM_EBGT", this.dsList.getColumn(i, "AM_EBGT"));
+            this.dsSave.setColumn(nrow, "AM_ORD", this.dsList.getColumn(i, "AM_ORD"));
+            this.dsSave.setColumn(nrow, "DS_RMKS", this.dsList.getColumn(i, "DS_RMKS"));
+            break;
+      }
+   }
+
+   if (this.dsSave.rowcount == 0) return;
+      
+   var strSvcId    = "save";
+   var strSvcType  = "save";
+   var inProc      = "_dsProc";
+   var inData      = "save=dsSave";
+   var outData     = "";
+   var strArg      = "";
+   var callBackFnc = "fnCallback";
+   
+   this.gfnTransaction( strSvcId ,    // transaction을 구분하기 위한 svc id값
+                  strSvcType ,    // transaction을 요청할 구분
+                  inProc,         // Procedure 정보 Dataset 이름
+                  inData ,       // 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+                  outData ,       // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+                  strArg,       // 입력값으로 보낼 arguments, strFormData="20120607"
+                  callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *   엑셀 버튼
+ */
+this.fnExcel = function() {
+   this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *   출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *   조회 Validate
+  */
+this.fnSelectValidate = function() {
+   var validate = true;
+   /*
+   if (this.gfnIsNull(this.ccfCD_SITE.form.CDTextBox.text)) {
+      validate = false;
+      // Alert후 실행할 처리
+      this.fnVaidateCallback = function() {
+         this.ccfCD_SITE.form.CDTextBox.setFocus();
+      }
+      this.gfnAlert("현장코드를 입력하세요.", "fnVaidateCallback");
+   }
+   */
+   
+   return validate;
+};
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *   콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+   if (svcID == "select") {
+      this.gfnGridAfterSelect(this.dxGrid);
+   }
+   else if(svcID == "save") {
+      if (errorCode == 0) {
+         this.FormBtns.Select.click();
+      } else {
+         this.gfnAlert(errorMsg);
+      }
+   }
+}
+ 
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGrid_BeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+	if (id == "DZX_CFSITE") 
+	{
+		dsUserParam.setColumn(nrow, "CD_CORP", "");
+ 		dsUserParam.setColumn(nrow, "CD_DEPT", "");
+ 		dsUserParam.setColumn(nrow, "ID_USER", "");
+ 		dsUserParam.setColumn(nrow, "GR_SEARCH", "");
+	}
+
+	if (id == "DCX_CFLICCOST_01") { 
+
+	var cd_ord = this.dsList.getColumn(this.dsList.rowposition, "CD_ORD");
+		if(this.gfnIsNull(cd_ord)) {
+			this.gfnAlert("구분 여부를 먼저 선택하세요.");
+			return false;
+		}			
+
+      dsUserParam.setColumn(nrow, "COSTCLASS", this.dsList.getColumn(this.dsList.rowposition, "CD_ORD"));
+   }
+   return true;
+}
+
+this.fnGrid_AfterEdit = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	if(e.columnid == "CD_ORD") {
+		// 구분 변경시 발주공종 초기화
+		if(e.oldvalue != e.newvalue) {
+			this.dsList.setColumn(this.dsList.rowposition, "CD_ORDCOST", "");
+			this.dsList.setColumn(this.dsList.rowposition, "DS_ORDCOST", "");
+		}
+	}
+}
+/*
+// cell 클릭했을때 이벤트(해당 cell에 대한 이벤트를 건다)
+this.fnGrid_EnterCell = function(obj:nexacro.Grid, row, cell) {
+	var colnm = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, cell);
+
+		if(this.dsList.getColumn(row, "YN_EDIT") == "N") {
+			return false;
+		}else{
+			if(colnm == "AM_UNTK" || colnm == "AM_EBGT" || colnm == "AM_EXEC"){
+				if(this.dsList.getColumn(row, "YN_DTLS") == "N") {
+					return false;
+				}else{
+					return true;
+				}
+			}			
+		}
+		
+	return true;
+}
+*/
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.fnSilheng = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+
+	var param ={};	
+	param.CD_SITE =  this.dsSearch.getColumn(0, "CD_SITE");
+	param.DS_SITE =  this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+	
+	this.gfnFormOpen("DWA", "DWA_SILHENG", "", param);
+}
+
+this.fnOrdPlnCrtDlg = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+
+	if (this.gfnIsNull(this.ccfCD_SITE.form.CDTextBox.text)) {
+      validate = false;
+      // Alert후 실행할 처리
+      this.fnVaidateCallback = function() {
+         this.ccfCD_SITE.form.CDTextBox.setFocus();
+      }
+      this.gfnAlert("현장코드를 입력하세요.", "fnVaidateCallback");
+   }
+   else
+   {
+		var param = {};	
+		param.CD_SITE =  this.dsSearch.getColumn(0, "CD_SITE");
+		param.DS_SITE =  this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+
+		this.gfnFormOpenNonAuth("DWZ", "DWZ_ORDPLNCRTDLG", "fnOrdPlnCrtDlgCallback", param, 490, 285);	
+	}
+}
+
+this.fnOrdPlnCrtDlgCallback = function(svcID, value) {	
+	// 리턴값	
+	this.FormBtns.Select.click();
+};
+
+this.fnbtnSiljukDlg = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+
+	var param = {};	
+	param.CD_SITE =  this.dsSearch.getColumn(0, "CD_SITE");
+	param.DS_SITE =  this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+
+	this.gfnFormOpenNonAuth("DWZ", "DWZ_ORDPLNCRTDLG", "", param, 490, 285);	
+}
+
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+   if(e.oldvalue != e.newvalue) {
+      this.gfnSetFormStatus(this);   // 폼상태 초기화
+      this.gfnGridClear(this.dxGrid);   
+   }
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divSearch.form.ctclFR_WORK.form.TextBox" propid="value" datasetid="dsSearch" columnid="FR_WORK"/>
+      <BindItem id="item2" compid="divSearch.form.ctclTO_WORK.form.TextBox" propid="value" datasetid="dsSearch" columnid="TO_WORK"/>
+      <BindItem id="item3" compid="divSearch.form.ccfCD_LICCOST.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_LICCOST"/>
+    </Bind>
+  </Form>
+</FDL>
