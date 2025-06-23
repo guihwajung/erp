@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="400" height="320" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="기본사항" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staDS_SITE" taborder="1" text="성명" left="0" top="40" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staDS_SILHENG" taborder="2" text="현장" left="0" top="staDS_SITE:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staTY_APPROVAL" taborder="3" text="입사일자" left="0" top="staDS_SILHENG:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staDT_CONFIRM" taborder="4" text="채용구분" left="0" top="staTY_APPROVAL:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staBg1" taborder="5" left="staDS_SITE:-1" top="40" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg2" taborder="6" left="staDS_SILHENG:-1" top="staBg1:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg3" taborder="7" left="staTY_APPROVAL:-1" top="staBg2:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg4" taborder="8" left="staDT_CONFIRM:-1" top="staBg3:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="edtCD_SITE" taborder="9" left="staDS_SILHENG:5" top="74" right="220" height="20" readonly="false" maxlength="50"/>
+              <Calendar id="tclDT_IPSA" taborder="10" left="staDT_CONFIRM:5" top="staTY_APPROVAL:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Button id="btnOk" taborder="11" text="확인" left="32.50%" top="286" width="60" height="20" onclick="divData_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="12" text="취소" left="52.50%" top="286" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+              <Edit id="edtDS_SITE" taborder="13" left="edtCD_SITE:5" top="74" right="6" height="20" readonly="false" maxlength="50"/>
+              <Edit id="edtDS_NAME" taborder="14" left="92" top="45" right="220" height="20" readonly="false" maxlength="50"/>
+              <Edit id="edtNO_ID" taborder="15" left="edtDS_NAME:5" top="45" right="6" height="20" readonly="false" maxlength="50"/>
+              <Edit id="edtTY_CHAIYONG" taborder="16" left="92" top="132" right="220" height="20" readonly="false" maxlength="50"/>
+              <Static id="staTITLE00" taborder="17" text="계약연장사항" left="0" top="170" width="100.00%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staDS_SITE00" taborder="18" text="계약시작일자" left="0" top="210" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staDS_SILHENG00" taborder="19" text="계약종료일자" left="0" top="239" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staBg00" taborder="20" left="86" top="239" right="0.00%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg01" taborder="21" left="86" top="210" right="0.00%" height="30" cssclass="sta_WF_tablebg"/>
+              <Calendar id="tclDT_START" taborder="22" left="92" top="215" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Calendar id="tclDT_END" taborder="23" left="92" top="244" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 이전 화면에서 데이터 받기.
+	this.dsData.setColumn(0, "DS_NAME", this.getOwnerFrame().DS_NAME);
+	this.dsData.setColumn(0, "NO_ID", this.getOwnerFrame().NO_ID);
+	this.dsData.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+	this.dsData.setColumn(0, "DS_SITE", this.getOwnerFrame().DS_SITE);
+	this.dsData.setColumn(0, "DT_IPSA", this.getOwnerFrame().DT_IPSA);
+	this.dsData.setColumn(0, "TY_CHAIYONG", this.getOwnerFrame().TY_CHAIYONG);
+	this.dsData.setColumn(0, "DT_START", this.getOwnerFrame().DT_START);
+	this.dsData.setColumn(0, "DT_END", this.getOwnerFrame().DT_END);
+	this.dsData.setColumn(0, "NO_ID_REAL", this.getOwnerFrame().NO_ID_REAL);
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	//this.dxGrid = this.divData.form.objGrid;
+	this.tclDT_TOIJIK = this.divData.form.tclDT_TOIJIK;
+	this.edtDS_TOIJIK = this.divData.form.edtDS_TOIJIK;	
+	this.cboGR_JIKMU = this.divData.form.cboGR_JIKMU;
+	this.cboGR_SUNGSIL = this.divData.form.cboGR_SUNGSIL;
+	this.cboGR_HEAPJO = this.divData.form.cboGR_HEAPJO;
+	this.edtRM_KOKWA = this.divData.form.edtRM_KOKWA;
+	this.cfCD_EMP = this.divData.form.cfCD_EMP;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	//this.cfCD_EMP.CodeFindName = "DZX_CFUSER";
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {	
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("NO_ID", "string");
+	this.dsSave.addColumn("DT_IPSA", "string");
+	this.dsSave.addColumn("CD_SITE", "string");
+	this.dsSave.addColumn("DT_START", "string");
+	this.dsSave.addColumn("DT_END", "string");
+	this.dsSave.addColumn("CD_CHAIYONG", "string");
+	this.dsSave.addColumn("YM_WORK", "string");
+	this.dsSave.addColumn("CD_EXTEND", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "save") {
+		if(errorCode == 0)
+		{
+			// this.close()가 작동하지 않았고, 
+			// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+			this.getParentContext().close(true);
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+// 확인 버튼 클릭
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsSave.clearData();
+	this.dsSave.addRow();	
+	
+	this.dsSave.setColumn(0, "NO_ID", this.dsData.getColumn(0, "NO_ID_REAL"));
+	this.dsSave.setColumn(0, "DT_IPSA", this.dsData.getColumn(0, "DT_IPSA"));
+	this.dsSave.setColumn(0, "CD_SITE", this.dsData.getColumn(0, "CD_SITE"));
+	this.dsSave.setColumn(0, "DT_START", this.dsData.getColumn(0, "DT_START"));
+	this.dsSave.setColumn(0, "DT_END", this.dsData.getColumn(0, "DT_END"));
+	this.dsSave.setColumn(0, "CD_CHAIYONG", "2");
+	this.dsSave.setColumn(0, "YM_WORK", "");
+	this.dsSave.setColumn(0, "CD_EXTEND", "1");
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+	
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DSAPR_EXTENSION_UPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="DS_NAME" type="STRING" size="256"/>
+          <Column id="NO_ID" type="STRING" size="256"/>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="DT_IPSA" type="STRING" size="256"/>
+          <Column id="TY_CHAIYONG" type="STRING" size="256"/>
+          <Column id="DT_START" type="STRING" size="256"/>
+          <Column id="DT_END" type="STRING" size="256"/>
+          <Column id="NO_ID_REAL" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DS_NAME"/>
+            <Col id="NO_ID"/>
+            <Col id="CD_SITE"/>
+            <Col id="DS_SITE"/>
+            <Col id="TY_CHAIYONG"/>
+            <Col id="DT_START"/>
+            <Col id="DT_IPSA"/>
+            <Col id="DT_END"/>
+            <Col id="NO_ID_REAL"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divData.form.tclDT_IPSA" propid="value" datasetid="dsData" columnid="DT_IPSA"/>
+      <BindItem id="item3" compid="divData.form.edtCD_SITE" propid="value" datasetid="dsData" columnid="CD_SITE"/>
+      <BindItem id="item0" compid="divData.form.edtDS_SITE" propid="value" datasetid="dsData" columnid="DS_SITE"/>
+      <BindItem id="item2" compid="divData.form.edtDS_NAME" propid="value" datasetid="dsData" columnid="DS_NAME"/>
+      <BindItem id="item10" compid="divData.form.edtNO_ID" propid="value" datasetid="dsData" columnid="NO_ID"/>
+      <BindItem id="item4" compid="divData.form.edtTY_CHAIYONG" propid="value" datasetid="dsData" columnid="TY_CHAIYONG"/>
+      <BindItem id="item7" compid="divData.form.tclDT_START" propid="value" datasetid="dsData" columnid="DT_START"/>
+      <BindItem id="item5" compid="divData.form.tclDT_END" propid="value" datasetid="dsData" columnid="DT_END"/>
+    </Bind>
+  </Form>
+</FDL>

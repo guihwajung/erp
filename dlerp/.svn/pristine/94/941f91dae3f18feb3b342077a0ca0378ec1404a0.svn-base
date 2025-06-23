@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="대출신청관리" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0" top="10.0" height="46" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staID_LOANSCH" taborder="0" text="대출신청회차" left="317" top="9" width="122" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfID_LOANSCH" CodeFindName="DAX_LAONSCH" CDTextWidth="70" FitToContents="true" taborder="2" left="433" top="9" width="272" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staCD_CORP" taborder="4" text="법인" left="7" top="10" width="72" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_CORP" CodeFindName="DAX_CFCORP" CDTextWidth="50" FitToContents="true" taborder="1" left="71" top="10" width="240" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staDT_BASE" taborder="5" text="기준일자" left="714" top="9" width="92" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Calendar id="ctclDT_BASE" taborder="3" left="805" top="9" width="115" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyy-MM-dd" autoselect="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Div id="divSplitter" taborder="1" left="0" top="60%" width="100.00%" height="5" cssclass="div_Splitter" cursor="ns-resize" ondrag="divData_divSplitter_ondrag"/>
+              <Div id="divDataBottom" taborder="0" left="0" top="divSplitter:5" bottom="0" right="0">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta02" taborder="0" text="신청자현황" left="0" top="0" right="0" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Grid id="objGridSub" sub="true" taborder="1" left="0" top="sta02:5" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataTop" taborder="2" left="0" top="0" bottom="divSplitter:5" right="0">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta01" taborder="0" text="대출지급액현황" left="0" top="0" width="100%" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Grid id="objGrid" taborder="0" left="0" top="sta01:5" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsSearch.clearData();
+	this.dsSearch.addRow();
+	
+	this.dsSearch.setColumn(0,"CD_CORP",this.AuthClient.CD_CORP);
+	this.dsSearch.setColumn(0,"DS_CORP",this.AuthClient.DS_CORP);
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {	
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	
+};
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.dxGrid = this.divData.form.divDataTop.form.objGrid;
+	this.dxGridSub = this.divData.form.divDataBottom.form.objGridSub;
+	
+	this.ccfCD_CORP 	= this.divSearch.form.ccfCD_CORP;
+	this.ctclDT_BASE    = this.divSearch.form.ctclDT_BASE;
+	this.ccfID_LOANSCH    = this.divSearch.form.ccfID_LOANSCH;
+	
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	
+	this.ccfID_LOANSCH.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfID_LOANSCH.AfterCDTextChanged = "fnAfterCDTextChanged";	
+	
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAB_LOAN_REQ_REPORT");
+	
+	this.gfnGridInit(this.dxGridSub, this.dsListSub, "DA", "DAB_LOAN_REQUEST_SELECT");
+
+	//검색조건 변경 이벤트
+	this.bSelect= false;
+	this.dsSearch.addEventHandler("onvaluechanged", this.dsSearch_onvaluechanged, this);
+	
+	this.bSave = true; 	
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP"  , "STRING");	
+	this.dsSelect.addColumn("ID_LOANSCH"   , "STRING");
+	this.dsSelect.addColumn("DT_BASE"   , "STRING");
+	
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if(!this.gfnSearchValidate(this.divSearch, this.dsSearch)) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+		
+	this.dsSelect.clearData();
+    this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_CORP"  , this.dsSearch.getColumn(0, "CD_CORP"));	
+	this.dsSelect.setColumn(0, "ID_LOANSCH" , this.dsSearch.getColumn(0, "ID_LOANSCH"));
+	this.dsSelect.setColumn(0, "DT_BASE" , this.dsSearch.getColumn(0, "DT_BASE"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0 dsListSub=select1";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	// 멀티시트 샘플
+	var arrGrid = [this.dxGrid, this.dxGridSub];
+	var arrSheetName = ["대출지급액현황", "신청자현황"];
+	var sFileName = "사내대출지급액현황";
+	
+	// 1 (시트명: sheet1,sheet2.. 사용, 파일명: 화면명_날짜)
+	this.gfnExcelExportMulti(arrGrid, arrSheetName, sFileName);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+
+	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+		this.gfnGridAfterSelect(this.dxGridSub);
+		this.dxGrid.set_enableredraw(false);
+		for (var i = 0; i < this.dsList.rowcount; i++) {
+			if(this.dsList.getColumn(i,"DS_GUBUN") == "기금잔액"){
+				this.dxGrid.mergeCell( 4, 5, i, i );
+				this.dxGrid.mergeCell( 6, 7, i, i );
+				this.dxGrid.mergeCell( 8, 9, i, i );
+			}
+			if(this.dsList.getColumn(i,"DS_CODE") == "합계"){
+				trace(" i=>" + i);
+				this.dxGrid.setCellProperty( "body", 8 , "cssclass","expr:dataset.getColumn(currow, 'DS_CODE')=='합계' ? 'BACK_SoKe':''");
+				this.dxGrid.setCellProperty( "body", 4 , "cssclass","expr:dataset.getColumn(currow, 'DS_CODE')=='합계' ? 'BACK_SoKe':''");
+				this.dxGrid.setCellProperty( "body", 6 , "cssclass","expr:dataset.getColumn(currow, 'DS_CODE')=='합계' ? 'BACK_SoKe':''");
+			}
+		}
+		//this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body","DS_CODE"), "cssclass", "expr:dataset.getColumn(currow, 'DS_CODE')=='합계' ? 'BACK_ChongKe':'')");	
+		this.dxGrid.set_enableredraw(true);
+		this.fnColor();
+	} 
+}
+
+this.fnMsgCallback = function(strId, val) 
+{
+	this.FormBtns.Select.click();
+};
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.divData_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	if(e.userdata == "splitter") {
+		this.divData.form.divSplitter.set_top(e.clienty);
+		this.divData.form.resetScroll();	
+	}
+};
+
+this.divData_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	e.set_userdata("splitter");
+	return true;
+};
+
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	trace("this.bSelect = " + this.bSelect)
+	if(e.oldvalue != e.newvalue) {	
+					
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		this.gfnGridClear(this.dxGridSub);	
+	}
+};
+
+this.fnColor = function() 
+{
+	this.dxGrid.set_enableredraw(false);
+
+	this.gfnGridColumnColor(this.dxGrid, "", "BACK_SoKe", "DS_CODE == '합계'", true);
+	this.dxGrid.set_enableredraw(true);	
+}
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	
+	if (id == "ccfID_LOANSCH")
+	{
+		dsUserParam.setColumn(nrow, "YY_BASE"  , "");
+	}
+	return true;
+};
+
+
+this.fnAfterCDTextChanged = function(id,codeFindData) {
+   	var arr = codeFindData;
+	
+	if (id == "ccfID_LOANSCH")
+	{
+		if(arr.length > 0) {
+			this.dsSearch.setColumn(0,"DT_BASE",arr[0]["DT_BASE"]);
+		}
+	}
+};
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/ 
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DABPR_LOAN_REQ_REPORT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListSub"/>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="ID_LOANSCH" type="STRING" size="256"/>
+          <Column id="DS_LOANSCH" type="STRING" size="256"/>
+          <Column id="DT_BASE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item3" compid="divSearch.form.ccfID_LOANSCH.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="ID_LOANSCH"/>
+      <BindItem id="item4" compid="divSearch.form.ccfID_LOANSCH.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_LOANSCH"/>
+      <BindItem id="item5" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item6" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+      <BindItem id="item0" compid="divSearch.form.ctclDT_BASE" propid="value" datasetid="dsSearch" columnid="DT_BASE"/>
+    </Bind>
+  </Form>
+</FDL>

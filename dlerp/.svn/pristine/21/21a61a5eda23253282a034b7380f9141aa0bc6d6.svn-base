@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="480" height="300" titletext="점검후 사진" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staTitle" taborder="0" text="완료확인사인" left="0" top="10" right="0" height="22" cssclass="sta_TITLE_Bg" textAlign="center"/>
+        <ImageViewer id="imgPicAfter1" taborder="1" left="5" top="40" stretch="fixaspectratio" right="5" bottom="40"/>
+        <Button id="btnUpload" taborder="2" text="업로드" left="20%" width="80" height="20" uWord="popup.cancel" onclick="fnUpload" top="imgPicAfter1:10"/>
+        <Button id="btnDownload" taborder="3" text="다운로드" left="btnUpload:20" width="80" height="20" uWord="popup.cancel" onclick="btnPicImgDown_onclick" top="imgPicAfter1:10"/>
+        <Button id="btnClose" taborder="4" text="닫기" left="btnDownload:20" width="80" height="20" onclick="btnCancle_onclick" uWord="popup.cancel" top="imgPicAfter1:10"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/************************************************************************************************
+ * FORM 변수 선언 영역
+ ***********************************************************************************************/
+ this.filepath = "/DB/WORK/SIGN/";
+ this.fileConfig = {};
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this); //초기화[필수]
+	
+	this.fnSetParameter();
+	
+	this.dsSearch.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+	this.dsSearch.setColumn(0, "CD_JOB", this.getOwnerFrame().CD_JOB);
+	
+	// 파일설정
+	this.fileConfig = this.gfnGetFileConfig();
+	this.fileConfig.allowTypes = ["jpg","jpeg","gif","png"]; // 넥사브라우저 전용, 웹은 적용불가
+	this.FileUpTransfer00.clearFileList();
+	
+	this.filepath = "/DB/WORK/SIGN/" + this.dsSearch.getColumn(0, "CD_SITE") + "/" + this.dsSearch.getColumn(0, "CD_JOB");
+	
+	this.imgPicAfter1.set_image(null);
+	if( !this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE")) && !this.gfnIsNull(this.dsSearch.getColumn(0, "CD_JOB"))) {
+		this.fnImgSelect();
+	}
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("TY_SEARCH", "int");
+	this.dsSelect.addColumn("CD_JOB", "string");
+	this.dsSelect.addColumn("TY_GBN", "int");
+	this.dsSelect.addColumn("TY_UMGB", "string");
+	
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("CD_SITE", "string");
+	this.dsUpdate.addColumn("CD_JOB", "string");
+	this.dsUpdate.addColumn("PIC_SIGNNM", "string");
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnImgSelect = function() {
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "TY_SEARCH", this.dsSearch.getColumn(0, "TY_SEARCH"));
+	this.dsSelect.setColumn(0, "CD_JOB", this.dsSearch.getColumn(0, "CD_JOB"));
+	this.dsSelect.setColumn(0, "TY_GBN", this.dsSearch.getColumn(0, "TY_GBN"));
+	this.dsSelect.setColumn(0, "TY_UMGB", this.dsSearch.getColumn(0, "TY_UMGB"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect"; 
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return;
+	}
+	
+	if (svcID == "select") {
+		trace(this.dsList.saveXML());
+		if(this.dsList.rowcount > 0){
+			this.fnImageView();
+		}
+	}
+	else if (svcID == "imagefile")
+	{
+		this.imgPicAfter1.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+	}
+	else if(svcID == "save")
+	{
+		this.fnImgSelect();
+	}
+}
+
+/*
+ * 이미지 파일 다운로드 버튼 클릭
+ */ 
+this.btnPicImgDown_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if( !this.gfnIsNull( this.dsList.getColumn(0,"PIC_SIGNNM") ) ){
+		this.fnDownload(this.filepath, this.dsList.getColumn(0,"PIC_SIGNNM"));
+	}	
+};
+
+/*
+ * 이미지 파일 다운로드
+ */
+this.fnDownload = function(strFilePath, strFileName) {
+	
+	this.fileConfig.downloadUrl = "/file/downloadFile.do";
+	var encodeFileName = encodeURIComponent(strFileName);
+		
+	var surl = this.fileConfig.host+ this.fileConfig.downloadUrl; // + encodeFileName;
+	
+	this.FileDownTransfer00.set_url(surl);
+	
+	this.FileDownTransfer00.setPostData("path", strFilePath);
+	this.FileDownTransfer00.setPostData("fileName", encodeFileName);
+	if( system.navigatorname =="nexacro"){
+		this.FileDownTransfer00.set_downloadfilename(strFileName);
+	}
+	this.FileDownTransfer00.download();
+};
+
+this.fnUpload = function()
+{
+	this.fdg00.open('FileOpen', FileDialog.LOAD);
+}
+
+this.fdg00_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
+{
+	this.addFileList(obj, e.virtualfiles);
+};
+
+this.addFileList = function(obj, filelist)
+{
+	this.FileList = filelist;
+	if(filelist.length > 0) {
+		var vFile;
+		for (var i = 0; i < filelist.length; i++)
+		{
+			vFile = filelist[i];
+			vFile.row = obj.row;
+			vFile.addEventHandler("onsuccess", this.FileList_onsuccess, this);
+			vFile.addEventHandler("onerror", this.FileList_onerror , this);
+			
+			vFile.open(null, 1);
+		}
+	}
+}
+
+this.FileList_onsuccess = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFileEventInfo)
+{
+	switch (e.reason)
+	{
+		case 1:
+			obj.getFileSize();
+			break;
+		case 9:
+			this.FileUpTransfer00.addFile(obj.filename, obj);
+			if(this.FileUpTransfer00.filelist.length > 0) {
+				this._waitCursor(true);
+				var sUploadUrl = this.fileConfig.host + this.fileConfig.uploadUrl;
+				this.FileUpTransfer00.setPostData("path", this.filepath);
+				this.FileUpTransfer00.upload(sUploadUrl);		
+			}
+			break;
+	}
+}
+
+this.FileList_onerror = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFileErrorEventInfo)
+{
+	trace("errortype: "+e.errortype);
+	trace("errormsg: "+e.errormsg);
+	trace("statuscode: "+e.statuscode);
+}
+
+this.FileUpTransfer00_onprogress = function(obj:nexacro.FileUploadTransfer,e:nexacro.FileUploadTransferProgressEventInfo)
+{
+	trace("FileUpTransfer00_onprogress: " + e.loaded+"/"+e.total);
+};
+
+this.FileUpTransfer00_onsuccess = function(obj:nexacro.FileUploadTransfer,e:nexacro.FileUploadTransferEventinfo)
+{
+	this._waitCursor(false);
+	trace("FileUpTransfer00_onsuccess: " + e.code + "/" + e.message);
+	if(e.code == 0) {
+		if(e.datasets.length > 0) {
+			for(var i = 0; i < e.datasets[0].rowcount; i++) {
+				if(this.dsList.rowcount == 0)
+				{
+					this.dsList.addRow();
+				}
+				this.dsList.setColumn(0, "PIC_SIGNNM", obj.filelist[i].filename);
+			}
+			obj.filelist.clear();
+			this.fnSaveProc();
+		}
+	}
+};
+
+this.FileUpTransfer00_onerror = function(obj:nexacro.FileUploadTransfer,e:nexacro.FileUploadTransferErrorEventInfo)
+{
+	this._waitCursor(false);
+	if(e.errormsg.indexOf("maxsize") > -1) {
+		this.gfnAlert("첨부파일 허용용량("+ this.gfnCutFileSize(nexacro.toNumber(e.errormsg.split(':')[1])) + ")을 초과할 수 없습니다.");
+	} else {
+		this.gfnAlert(e.errormsg);
+	}
+};
+
+this.fnSaveProc = function()
+{
+	this.dsUpdate.clearData();
+	var nrow = this.dsUpdate.addRow();
+
+	this.dsUpdate.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsUpdate.setColumn(nrow, "CD_JOB", this.dsSearch.getColumn(0, "CD_JOB"));
+	this.dsUpdate.setColumn(nrow, "PIC_SIGNNM", this.dsList.getColumn(0, "PIC_SIGNNM"));
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "update=dsUpdate";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+
+this.fnImageView = function() {
+
+	this.dsImageFile.clearData();
+	this.dsImageFile.addRow();
+	
+	this.dsImageFile.setColumn(0, "filepath", this.filepath);
+	this.dsImageFile.setColumn(0, "filename", this.dsList.getColumn(0, "PIC_SIGNNM"));
+	
+	// 서버 이미지파일 base64 로 받아오기
+	var strSvcId    = "imagefile";
+	var strSvcType  = "file/imageFile";
+	var inProc		= "";
+	var inData      = "input=dsImageFile";
+	var outData     = "dsImageFile=input";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,
+						false); 		// 통신방법 정의 [생략가능]
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DBSPR_WORKENDSIGN_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DBSPR_WORKENDSIGN_UPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="PIC_SIGNNM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsImageFile">
+        <ColumnInfo>
+          <Column id="filepath" type="STRING" size="256"/>
+          <Column id="filename" type="STRING" size="256"/>
+          <Column id="filereturn" type="STRING" size="10000"/>
+        </ColumnInfo>
+      </Dataset>
+      <FileDownTransfer id="FileDownTransfer00"/>
+      <FileUpTransfer id="FileUpTransfer00" onprogress="FileUpTransfer00_onprogress" onsuccess="FileUpTransfer00_onsuccess" onerror="FileUpTransfer00_onerror"/>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="TY_SEARCH" type="STRING" size="256"/>
+          <Column id="CD_JOB" type="STRING" size="256"/>
+          <Column id="TY_GBN" type="STRING" size="256"/>
+          <Column id="TY_UMGB" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <FileDialog id="fdg00" onclose="fdg00_onclose"/>
+    </Objects>
+  </Form>
+</FDL>

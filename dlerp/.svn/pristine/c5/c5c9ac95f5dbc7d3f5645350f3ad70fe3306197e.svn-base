@@ -1,0 +1,538 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="Data 조회" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="45" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SYSTEM" taborder="0" text="시스템" left="10" top="10" width="40" height="25"/>
+              <Div id="ccfCD_SYSTEM" CDTextWidth="50" taborder="1" left="60" top="10" width="150" height="25" url="cmm::cmmCodeFind.xfdl" CodeFindName="DZX_CFSYSTEM"/>
+              <Static id="staNM_DAM" taborder="2" text="조회기준" left="ccfCD_SYSTEM:20" top="10" width="70" height="25"/>
+              <Combo id="ccboTY_BAS" taborder="3" left="staNM_DAM:20" top="10" width="80" height="25" innerdataset="dsCode" codecolumn="CODE" datacolumn="NAME" index="0" text="선택" value="" onitemchanged="divSearch_ccboTY_BAS_onitemchanged"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" width="230"/>
+              <Tab id="tabData" taborder="1" tabindex="0" left="objGrid:5" top="0" bottom="0" right="0">
+                <Tabpages>
+                  <Tabpage id="Tabpage1" text="검색조건">
+                    <Layouts>
+                      <Layout>
+                        <Div id="divGrid1" taborder="0" text="divGrid1" left="20" top="20" bottom="20" width="450">
+                          <Layouts>
+                            <Layout>
+                              <GroupBox id="grb00" taborder="0" text="선택가능항목" left="0" top="0" right="0" bottom="0"/>
+                              <Grid id="objGrid01" taborder="1" left="10" top="20" bottom="10" right="230"/>
+                              <Grid id="objGrid02" taborder="2" left="objGrid01:10" top="20" bottom="10" right="10"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                        <Div id="divButton" taborder="1" text="divButton" left="divGrid1:10" top="20" width="50" bottom="20">
+                          <Layouts>
+                            <Layout>
+                              <Button id="btnAddR01" taborder="0" text="&gt;&gt;" left="11" top="107" width="28" height="27"/>
+                              <Button id="btnAddL01" taborder="1" text="&lt;&lt;" left="11" top="btnAddR01:10" width="28" height="27"/>
+                              <Button id="btnAddR02" taborder="2" text="&gt;&gt;" left="11" width="28" height="27" top="396"/>
+                              <Button id="btnAddL02" taborder="3" text="&lt;&lt;" left="11" width="28" height="27" top="btnAddR02:10"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                        <Div id="divGrid2" taborder="2" text="divGrid2" left="divButton:10" top="20" right="20" bottom="20">
+                          <Layouts>
+                            <Layout>
+                              <GroupBox id="grb00" taborder="0" text="조회항목" left="0" top="0" right="0" bottom="0"/>
+                              <Grid id="objGrid03" taborder="1" left="10" top="20" right="10" height="270"/>
+                              <Grid id="objGrid04" taborder="2" left="10" top="objGrid03:10" bottom="10" right="10"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="Tabpage2" text="검색결과">
+                    <Layouts>
+                      <Layout/>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+};
+
+/************************************************************************
+ * 버튼 설정 
+ * 서브버튼 사용 처리. 공통 및 확장버튼 버튼관리화면에서 셋팅.
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	//this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	//this.btnInit = this.gfnFormButtonAdd("btnInit", "fnInit");  
+	//this.btnMig = this.gfnFormButtonAdd("btnMig", "fnMig");  
+	//this.btnNGDATA = this.gfnFormButtonAdd("btnNGDATA", "fnNGDATA");  
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_SYSTEM = this.divSearch.form.ccfCD_SYSTEM;
+	
+	this.dxGrid = this.divData.form.objGrid;
+	this.dxGrid1 = this.divData.form.tabData.Tabpage1.form.divGrid1.form.objGrid01;
+	this.dxGrid2 = this.divData.form.tabData.Tabpage1.form.divGrid1.form.objGrid02;
+	this.dxGrid3 = this.divData.form.tabData.Tabpage1.form.divGrid2.form.objGrid03;
+	this.dxGrid4 = this.divData.form.tabData.Tabpage1.form.divGrid2.form.objGrid04;
+	
+	this.btnAddR01 = this.divData.form.tabData.Tabpage1.form.divButton.form.btnAddR01;
+	this.btnAddL01 = this.divData.form.tabData.Tabpage1.form.divButton.form.btnAddL01;
+	this.btnAddR02 = this.divData.form.tabData.Tabpage1.form.divButton.form.btnAddR02;
+	this.btnAddL02 = this.divData.form.tabData.Tabpage1.form.divButton.form.btnAddL02;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {	
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DZ", "DZZ_MYQUERY");
+	this.gfnGridInit(this.dxGrid1, this.dsEntity, "DZ", "DZZ_ENTITY");
+	this.gfnGridInit(this.dxGrid2, this.dsAttribute, "DZ", "DZZ_ATTRIBUTE");
+	this.gfnGridInit(this.dxGrid3, this.dsColumn, "DZ", "DZZ_MYCOLUMN01");
+	this.gfnGridInit(this.dxGrid4, this.dsCondition, "DZ", "DZZ_MYCOLUMN02");
+
+	// 셀 수정가능 여부
+	this.dxGrid1.addEventHandler('oncellclick', this.objGrid01_oncellclick, this);
+	
+	this.btnAddR01.addEventHandler('onclick', this.btnAddR01_onclick, this);
+	this.btnAddL01.addEventHandler('onclick', this.btnAddL01_onclick, this);
+	this.btnAddR02.addEventHandler('onclick', this.btnAddR02_onclick, this);
+	this.btnAddL02.addEventHandler('onclick', this.btnAddL02_onclick, this);
+	
+	this.ccfCD_SYSTEM.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	this.fnCodeInit('');
+
+	// 셀 변경 후 이벤트
+	//this.dxGrid.AfterEdit = "fnGrid_AfterEdit";
+	
+	// 그리드 코드파인드 설정
+	//this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+	
+	// 전체체크박스 체크/해제 이벤트
+	//this.dxGrid.AfterAllCheck = "fnGrid_AfterAllCheck";
+	
+	// BUTTON, BUTTON-IN 처리
+	//this.dxGrid.ExpandUp = "fnGrid_ExpandUp";
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	
+	this.dsSelectE = new Dataset();
+	this.dsSelectE.addColumn("CD_ENTITY", "string");
+
+	this.dsSelectA = new Dataset();
+	this.dsSelectA.addColumn("CD_ENTITY", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+/*
+ *	조회 버튼
+ */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.fnSetGrid();
+	
+	var strSvcId    = "select";
+	var strSvcType  = "db/executeQuery";
+	var inProc		= "";
+	var inData      = "dsColumn=dsColumn dsCondition=dsCondition";
+	var outData     = "dsListSub=dsList";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+}
+
+this.fnSelectEntity = function() {
+	this.gfnGridBeforeSelect(this.dxGrid1);
+	
+	var cd_entity = this.divSearch.form.ccboTY_BAS.value;
+	if (this.gfnIsNull(cd_entity)) return false;
+	
+	this.dsSelectE.clearData();
+	var nRow = this.dsSelectE.addRow();
+	this.dsSelectE.setColumn(nRow, "CD_ENTITY", cd_entity);
+	console.log(this.dsSelectE.saveXML())
+	var strSvcId    = "selectTable";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "entity=dsSelectE";
+	var outData     = "dsEntity=entity0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+}
+
+this.fnSelectAttribute = function(cd_entity) {
+	this.gfnGridBeforeSelect(this.dxGrid2);
+	
+	this.dsSelectA.clearData();
+	var nRow = this.dsSelectA.addRow();
+	this.dsSelectA.setColumn(nRow, "CD_ENTITY", cd_entity);
+	
+	var strSvcId    = "selectColumn";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "attribute=dsSelectA";
+	var outData     = "dsAttribute=attribute0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	var nrow = this.gfnGridAdd(this.dxGrid); // top (default), bottom, current
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {	
+	if (this.dsColumn.rowcount == 0)
+	{
+		this.gfnAlert("조회 항목이 없습니다.");
+		return false;
+	}
+	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select")
+	{
+		//this.gfnGridAfterSelect(this.dxGrid);	
+		
+		this.divData.form.tabData.set_tabindex(1);
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnAfterCDTextChanged = function (id, codeFindData) 
+{
+	if (id == "ccfCD_SYSTEM") 
+	{
+		this.fnSearchInit();
+		var cd_system = this.ccfCD_SYSTEM.form.CDTextBox.value;
+		this.fnCodeInit(cd_system);
+	}
+};
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.objGrid01_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var dataset = obj.getBindDataset();
+	var tableName = dataset.getColumn(dataset.rowposition, "CD_ENTITY")
+	this.fnSelectAttribute(tableName);
+};
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ this.fnCodeInit = function(cd_system)
+ {
+	this.dsCode.filter("CD_SYSTEM == 'D' ||CD_SYSTEM == '" + cd_system + "'");
+	this.divSearch.form.ccboTY_BAS.set_index(0);
+ };
+ 
+this.fnSearchInit = function(obj,e) 
+{
+	if(e == null || (e.pretext != e.posttext)) {
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+		this.gfnGridClear(this.dxGrid1);
+		this.gfnGridClear(this.dxGrid2);
+		this.gfnGridClear(this.dxGrid3);
+		this.gfnGridClear(this.dxGrid4);
+		//this.gfnGridClear(this.dxGrid5);
+	}
+};
+
+this.btnAddR01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var cd_entity = this.dsAttribute.getColumn(this.dsAttribute.rowposition, "CD_ENTITY");
+	var cd_attribute = this.dsAttribute.getColumn(this.dsAttribute.rowposition, "CD_ATTRIBUTE");
+	
+	if (this.dsColumn.getCaseCountNF( "CD_ENTITY == $0 && CD_ATTRIBUTE == $1", 0, -1, [cd_entity, cd_attribute] ) > 0) 
+	{
+			return false;
+	}
+	
+	var nm_attribute = this.dsAttribute.getColumn(this.dsAttribute.rowposition, "NM_ATTRIBUTE");
+	var nRow = this.dsColumn.addRow();
+	
+	if (this.dsColumn.getCaseCountNF( "CD_ATTRIBUTE == $0", 0, -1, [cd_attribute] ) > 0) 
+	{
+		this.dsColumn.setColumn(nRow, 'YN_DUPLICATION', 'Y');
+	}
+	else
+	{
+		this.dsColumn.setColumn(nRow, 'YN_DUPLICATION', 'N');
+	}
+	
+	this.dsColumn.setColumn(nRow, 'CD_ENTITY', cd_entity);
+	this.dsColumn.setColumn(nRow, 'CD_ATTRIBUTE', cd_attribute);
+	this.dsColumn.setColumn(nRow, 'NM_ATTRIBUTE', nm_attribute);
+	this.dsColumn.setColumn(nRow, 'NO_ORDER', this.dsColumn.rowcount);
+};
+
+this.btnAddL01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsColumn.deleteRow(this.dsColumn.rowposition);
+	for (var i=0; i<this.dsColumn.rowcount; i++) {
+ 		this.dsColumn.setColumn(i, 'NO_ORDER', i+1);
+ 	}
+};
+
+this.btnAddR02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var cd_entity = this.dsAttribute.getColumn(this.dsAttribute.rowposition, "CD_ENTITY");
+	var cd_attribute = this.dsAttribute.getColumn(this.dsAttribute.rowposition, "CD_ATTRIBUTE");
+	
+	if (this.dsCondition.getCaseCountNF( "CD_ENTITY == $0 && CD_ATTRIBUTE == $1", 0, -1, [cd_entity, cd_attribute] ) > 0) 
+	{
+			return false;
+	}
+
+	var nm_attribute = this.dsAttribute.getColumn(this.dsAttribute.rowposition, "NM_ATTRIBUTE");
+	var nRow = this.dsCondition.addRow();
+	this.dsCondition.setColumn(nRow, 'CD_ENTITY', cd_entity);
+	this.dsCondition.setColumn(nRow, 'CD_ATTRIBUTE', cd_attribute);
+	this.dsCondition.setColumn(nRow, 'NM_ATTRIBUTE', nm_attribute);
+	this.dsCondition.setColumn(nRow, 'TY_CONDITION', nm_attribute);
+	this.dsCondition.setColumn(nRow, 'TY_GUBUN', nm_attribute);
+};
+
+this.btnAddL02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsCondition.deleteRow(this.dsCondition.rowposition);
+};
+
+this.fnSetGrid = function() 
+{	
+	var gridName = 'objGrid05';
+	var tabPage2 = this.divData.form.tabData.Tabpage2.form;
+	if (this.dxGrid5 != null) 
+	{	
+		tabPage2.removeChild(gridName);
+		this.dxGrid5.destroy();
+	}
+	
+	this.dxGrid5 = new Grid(gridName, 20, 20, null, null, 20, 20);
+			
+	this.dxGrid5.set_cellsizingtype("col");
+	this.dxGrid5.set_cellmovingtype("none"); //col
+	this.dxGrid5.set_treeusecheckbox(false);
+	this.dxGrid5.set_binddataset(this.dsListSub);
+		
+	var nRow = this.dxGrid5.appendContentsRow("head");
+	this.dxGrid5.appendContentsRow("body");
+	
+	// 컬럼
+	var start_col = 0;
+	for (var i = 0; i < this.dsColumn.rowcount; i++) {
+		var cd_field = this.dsColumn.getColumn(i, "CD_ATTRIBUTE");
+		var ds_field = this.dsColumn.getColumn(i, "NM_ATTRIBUTE");
+		var yn_duplication = this.dsColumn.getColumn(i, "YN_DUPLICATION");
+		var yn_summary = this.dsColumn.getColumn(i, "YN_SUMMARY");
+		var no_order = this.dsColumn.getColumn(i, "NO_ORDER");
+		
+		if ('Y' == yn_duplication)
+		{
+			continue;
+		}
+		
+		var sz_width = 100;
+		var ty_align = "left"
+		
+		var nCol = 0;
+		if (i > 0) {
+			nCol = this.dxGrid5.appendContentsCol();
+		}
+		
+		var displaytype = "text";
+		var edittype = "none";
+		this.dxGrid5.setCellProperty("head", nCol, "displaytype", displaytype);
+		this.dxGrid5.setCellProperty("head", nCol, "edittype", edittype);
+		
+		this.dxGrid5.setCellProperty("head", nCol, "text", ds_field);
+		this.dxGrid5.setFormatColProperty(nCol, "size", sz_width);
+		this.dxGrid5.setCellProperty("body", nCol, "text", "bind:" + cd_field);
+		this.dxGrid5.setCellProperty("body", nCol, "textAlign", ty_align);
+			
+		this.dxGrid5.setCellProperty("body", nCol, "displaytype", displaytype);
+		this.dxGrid5.setCellProperty("body", nCol, "edittype", edittype);
+	}		
+	
+	tabPage2.addChild(gridName, this.dxGrid5);
+	
+	this.dxGrid5.show();
+};
+
+
+this.divSearch_ccboTY_BAS_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.fnSearchInit();
+	this.fnSelectEntity();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">entity</Col>
+            <Col id="SP">DZZPR_ENTITY_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">attribute</Col>
+            <Col id="SP">DZZPR_ATTRIBUTE_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListSub"/>
+      <Dataset id="dsEntity"/>
+      <Dataset id="dsAttribute"/>
+      <Dataset id="dsColumn" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="CD_ENTITY" type="STRING" size="256"/>
+          <Column id="CD_ATTRIBUTE" type="STRING" size="256"/>
+          <Column id="NM_ATTRIBUTE" type="STRING" size="256"/>
+          <Column id="NO_ORDER" type="STRING" size="256"/>
+          <Column id="YN_DUPLICATION" type="STRING" size="256"/>
+          <Column id="YN_SUMMARY" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCode">
+        <ColumnInfo>
+          <Column id="CD_SYSTEM" type="STRING" size="256"/>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="NAME">선택</Col>
+            <Col id="CD_SYSTEM">D</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">DAAT_BASEINFO</Col>
+            <Col id="NAME">사원정보</Col>
+            <Col id="CD_SYSTEM">DA</Col>
+          </Row>
+          <Row>
+            <Col id="CD_SYSTEM">DH</Col>
+            <Col id="CODE">DHAT_SLIPHEADER</Col>
+            <Col id="NAME">전표테이블</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCondition" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="CD_ENTITY" type="STRING" size="256"/>
+          <Column id="CD_ATTRIBUTE" type="STRING" size="256"/>
+          <Column id="NM_ATTRIBUTE" type="STRING" size="256"/>
+          <Column id="VAL_ATTRIBUTE" type="STRING" size="256"/>
+          <Column id="TY_CONDITION" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccboTY_BAS" propid="value" datasetid="dsSearch" columnid="NM_DAM"/>
+    </Bind>
+  </Form>
+</FDL>

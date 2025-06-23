@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="감가상각" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staYM" taborder="2" text="회계년도" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYY_WORK" taborder="1" left="staYM:0.0" top="10.0" width="69" height="24.0" url="cmm::cmmCalYY.xfdl"/>
+              <Static id="staCD_CORP" taborder="3" text="법인코드" left="ctclYY_WORK:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_CORP" CDTextWidth="70" taborder="0" left="staCD_CORP:0.0" top="10.0" width="327" height="24.0" url="cmm::cmmCodeFind.xfdl" onclick="Common_onclick" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0" oncelldblclick="gridCellDbClick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.ccfCD_CORP.form.CDTextBox.setFocus();
+	
+	// 타화면에서 호출 및 파라미터 존재시 자동 조회
+	if(!this.gfnIsNull(this.getOwnerFrame().NO_CAR)) {
+		this.pvNO_CAR = this.getOwnerFrame().NO_CAR;
+		this.dsSearch.set_enableevent(false);
+		this.dsSearch.setColumn(0, "NO_CAR", this.pvNO_CAR);
+		this.dsSearch.set_enableevent(true);
+		
+		this.FormBtns.Select.click();
+	} 
+	
+	trace("zzzzz:"+this.pvNO_CAR);
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Add.set_enable(false);
+ 	this.FormBtns.Save.set_enable(false);
+ 	this.FormBtns.Del.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	//this.btnAssetDep = this.gfnFormButtonAdd("AssetDep", "fnAssetDep", "감가상각");
+	this.btnDetail = this.gfnFormButtonAdd("Detail", "fnDetail", "자산정보"); 
+	
+	/*this.btnAssetDep.set_enable(false);*/
+	this.btnDetail.set_enable(false);
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+	//this.ccfCD_ASSET = this.divSearch.form.ccfCD_ASSET;
+	this.ctclYY_WORK = this.divSearch.form.ctclYY_WORK;
+	//this.ccfCD_ACASSET = this.divSearch.form.ccfCD_ACASSET;
+	//this.ccfCD_ASSETSEMOK = this.divSearch.form.ccfCD_ASSETSEMOK;
+
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	//법인코드
+	this.ccfCD_CORP.CodeFindName = "DHX_CFCORP";
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DG", "DHA_CARREG_DLG");
+	
+	this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+	this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+	
+	this.ctclYY_WORK.form.TextBox.set_value(this.gfnGetDate().substring(0, 4));
+};
+
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	var cdCorp = this.ccfCD_CORP.form.CDTextBox.value;
+	
+	//법인코드
+	if(id == "ccfCD_CORP") { 
+		dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+	}
+
+	
+
+	return true;
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arrData = codeFindData;
+	
+	switch(id) {
+		case "ccfCD_CORP":	//법인코드
+			//this.ccfCD_ACASSET.form.fnCodeFindClear();
+			//this.ccfCD_ASSETSEMOK.form.fnCodeFindClear();
+		//	this.ccfCD_ASSET.form.fnCodeFindClear();
+		break;
+	
+		break;
+	}
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("YEAR", "string");
+	this.dsSelect.addColumn("CD_ASSET", "string");
+	this.dsSelect.addColumn("CD_ASSETSEMOK", "string");
+	this.dsSelect.addColumn("CD_ACASSET", "string");
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("NO_CAR", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	//this.dsSelect.setColumn(0, "YEAR", this.ctclYY_WORK.form.TextBox.value);
+	//this.dsSelect.setColumn(0, "CD_ASSETSEMOK", this.ccfCD_ASSETSEMOK.form.CDTextBox.value);
+	//this.dsSelect.setColumn(0, "CD_ASSET", this.ccfCD_ASSET.form.CDTextBox.value.replace(/-/gi, ""));
+	//this.dsSelect.setColumn(0, "CD_ACASSET", this.ccfCD_ACASSET.form.CDTextBox.value);
+	//this.dsSelect.setColumn(0, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+	this.dsSelect.setColumn(0, "NO_CAR", this.pvNO_CAR);
+	
+	
+	trace("gggg:"+this.pvNO_CAR);
+	
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {	
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+
+	if (this.gfnIsNull(this.ctclYY_WORK.form.TextBox.value)) {
+		this.gfnAlert("감가상각년도는 반드시 입력 하셔야 합니다.");
+		this.ctclYY_WORK.form.TextBox.setFocus();
+		return false;
+	}	
+	
+	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+		this.gfnAlert("법인 코드는 반드시 입력 하셔야 합니다.");
+		this.ccfCD_CORP.form.CDTextBox.setFocus();
+		return false;
+	}	
+	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+		this.fnSetButton();
+		
+		var flag = this.dsList.rowcount == 0 ? false : true;
+		
+		/*this.btnAssetDep.set_enable(flag);*/
+		this.btnDetail.set_enable(flag);
+				
+// 		if(flag == true) {
+// 			var am_getbefor = this.dsList.getColumn(this.dsList.rowposition, "AM_GETBEFOR");
+// 			var am_getinc = this.dsList.getColumn(this.dsList.rowposition, "AM_GETINC");
+// 			var am_getdec = this.dsList.getColumn(this.dsList.rowposition, "AM_GETDEC");
+// 			var am_getsum = this.dsList.getColumn(this.dsList.rowposition, "AM_GETSUM");
+// 			var am_depremain = this.dsList.getColumn(this.dsList.rowposition, "AM_DEPREMAIN");
+// 			
+// 			var am_depbefor = this.dsList.getColumn(this.dsList.rowposition, "AM_DEPBEFOR");
+// 			var am_detinc = this.dsList.getColumn(this.dsList.rowposition, "AM_DEPINC");
+// 			var am_detdec = this.dsList.getColumn(this.dsList.rowposition, "AM_DEPDEC");
+// 			var am_detsum = this.dsList.getColumn(this.dsList.rowposition, "AM_DEPSUM");
+// 			
+// 			this.txtAM_GETBEFOR.set_value(am_getbefor);
+// 			this.txtAM_GETINC.set_value(am_getinc);
+// 			this.txtAM_GETDEC.set_value(am_getdec);
+// 			this.txtAM_GETSUM.set_value(am_getsum);
+// 			this.txtAM_DEPREMAIN.set_value(am_depremain);
+// 			
+// 			this.txtAM_DEPBEFOR.set_value(am_depbefor);
+// 			this.txtAM_DEPINC.set_value(am_detinc);
+// 			this.txtAM_DEPDEC.set_value(am_detdec);
+// 			this.txtAM_DEPSUM.set_value(am_detsum);
+// 		} 
+		
+		
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+
+	if(e.oldvalue != e.newvalue) {
+	
+		switch(e.columnid) {
+			case "CD_CORP" :
+				//this.ccfCD_ASSET.form.CDTextBox.set_value("");
+				//this.ccfCD_ASSET.form.DSTextBox.set_value("");
+				//this.ccfCD_ACASSET.form.CDTextBox.set_value("");
+				//this.ccfCD_ACASSET.form.DSTextBox.set_value("");
+				break;
+		}
+	
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);
+   }
+
+}
+
+
+//감가상각
+this.fnAssetDep = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	
+	var objDs = this.dxGrid.getBindDataset();
+	var selRows = this.dxGrid.getSelectedRows();
+	
+	
+			
+		trace("CD_CORP : " + objDs.getColumn(selRows[0], "CD_CORP"));
+		trace("DS_CORP : " + objDs.getColumn(selRows[0], "DS_CORP"));
+		
+		//DHN_ASSETDEPMAGAM 감가상각마감
+		/*if(!this.gfnGridIsRow(this.dxGrid)) {return false;}*/
+	
+		var param = {};
+		
+		param.CD_CORP = this.ccfCD_CORP.form.CDTextBox.value;
+		param.DS_CORP = this.ccfCD_CORP.form.DSTextBox.value;
+		
+		this.gfnFormOpen("DHN", "DHN_ASSETDEPMAGAM", "fnAssetDepCallback", param);
+
+
+}
+
+this.fnAssetDepCallback = function(strId, val) {
+
+	if(val == true){
+		this.FormBtns.Select.click(true);
+	}	
+};
+
+
+//자산정보
+this.fnDetail = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+
+	var objDs = this.dxGrid.getBindDataset();
+	var selRows = this.dxGrid.getSelectedRows();
+	
+	if(selRows.length > 0) {
+			
+		trace("CD_CORP : " + objDs.getColumn(selRows[0], "CD_CORP"));
+		trace("DS_CORP : " + objDs.getColumn(selRows[0], "DS_CORP"));
+		trace("CD_ACASSET : " +objDs.getColumn(selRows[0], "CD_ACASSET"));
+		trace("DS_ACASSET : " + objDs.getColumn(selRows[0], "DS_ACASSET"));
+		trace("CD_ASSET : " + objDs.getColumn(selRows[0], "CD_ASSET"));
+		trace("DS_ASSET : " + objDs.getColumn(selRows[0], "DS_ASSET"));
+		
+		//DHN_ASSETREG 자산취득
+		if(!this.gfnGridIsRow(this.dxGrid)) {return false;}
+	
+		var param = {};
+		
+		param.CD_CORP = objDs.getColumn(selRows[0], "CD_CORP");
+		param.DS_CORP = objDs.getColumn(selRows[0], "DS_CORP");
+		param.CD_ACASSET = objDs.getColumn(selRows[0], "CD_ACASSET");
+		param.DS_ACASSET = objDs.getColumn(selRows[0], "DS_ACASSET");
+		param.CD_ASSET = objDs.getColumn(selRows[0], "CD_ASSET");
+		param.DS_ASSET = objDs.getColumn(selRows[0], "DS_ASSET");
+		
+		this.gfnFormOpen("DGB", "DHN_ASSETREG", "", param);
+	}
+}
+
+//그리드 더블 클릭 이벤트 - 자산정보
+this.gridCellDbClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo) {
+	
+	var objDs = this.dxGrid.getBindDataset();
+	
+	trace("CD_CORP : " + objDs.getColumn(e.row, "CD_CORP"));
+	trace("DS_CORP : " + objDs.getColumn(e.row, "DS_CORP"));
+	trace("CD_ACASSET : " +objDs.getColumn(e.row, "CD_ACASSET"));
+	trace("DS_ACASSET : " + objDs.getColumn(e.row, "DS_ACASSET"));
+	trace("CD_ASSET : " + objDs.getColumn(e.row, "CD_ASSET"));
+	trace("DS_ASSET : " + objDs.getColumn(e.row, "DS_ASSET"));
+	
+	//DHN_ASSETREG 자산취득
+	if(!this.gfnGridIsRow(this.dxGrid)) {return false;}
+
+	var param = {};
+	
+	param.CD_CORP = objDs.getColumn(e.row, "CD_CORP");
+	param.DS_CORP = objDs.getColumn(e.row, "DS_CORP");
+	param.CD_ACASSET = objDs.getColumn(e.row, "CD_ACASSET");
+	param.DS_ACASSET = objDs.getColumn(e.row, "DS_ACASSET");
+	param.CD_ASSET = objDs.getColumn(e.row, "CD_ASSET");
+	param.DS_ASSET = objDs.getColumn(e.row, "DS_ASSET");
+	
+	this.gfnFormOpen("DGB", "DHN_ASSETREG", "", param);
+};]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DGBPR_ASSETDTL_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_ASSET" type="STRING" size="256"/>
+          <Column id="YY_WORK" type="STRING" size="256"/>
+          <Column id="CD_ACASSET" type="STRING" size="256"/>
+          <Column id="CD_ASSETSEMOK" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CORP"/>
+            <Col id="CD_ASSET"/>
+            <Col id="YY_WORK"/>
+            <Col id="CD_ACASSET"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item2" compid="divSearch.form.ctclYY_WORK.form.TextBox" propid="value" datasetid="dsSearch" columnid="YY_WORK"/>
+    </Bind>
+  </Form>
+</FDL>

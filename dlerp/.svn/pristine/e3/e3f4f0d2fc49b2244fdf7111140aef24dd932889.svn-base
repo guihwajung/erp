@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DAC_DAILY_TOTAL" width="1280" height="720" titletext="근태현황 조회(세부사항)" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="78.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staDT_REPORT" taborder="1" text="조회기간" left="0.0" top="10.0" width="92.0" height="24.0" textDecoration="none underline" cssclass="sta_WF_SchLabel"/>
+              <Calendar id="ctclFR_REPORT" taborder="0" left="staDT_REPORT:0.0" top="10.0" width="100" height="24.0" dateformat="yyyy-MM-dd" onchanged="fnSearchInit"/>
+              <Static id="sta00" taborder="2" text="~" left="ctclFR_REPORT:0.0" top="10.0" width="30.0" height="24.0" cssclass="sta_WF_AC"/>
+              <Static id="staID_SABUN" taborder="3" text="성명" left="0.0" top="staDT_REPORT:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfID_SABUN" CDTextWidth="50" taborder="4" left="staID_SABUN:0.0" top="staDT_REPORT:10.0" width="200" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DAX_CFBASEINFO" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged" enable="true"/>
+              <Calendar id="ctclTO_REPORT" taborder="5" left="sta00:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staTY_DEPT" taborder="6" text="조직분류" left="ctclTO_REPORT:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfTY_DEPT" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="80" taborder="7" left="staTY_DEPT:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+              <Static id="staCD_DEPT" taborder="8" text="부서" left="ccfTY_DEPT:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_DEPT" CodeFindName="DAX_CFDEPT_MST1" CDTextWidth="80" taborder="9" left="staCD_DEPT:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+              <Static id="staCD_WORK" taborder="10" text="근태유형" left="0.0" top="staDT_REPORT:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_WORK" CDTextWidth="50" taborder="11" left="staCD_WORK:0.0" top="staDT_REPORT:10.0" width="200" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DAX_WORK_TYPE" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged" enable="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0" binddataset="dsList" oncelldblclick="divData_objGrid_oncelldblclick">
+                <Formats>
+                  <Format id="default"/>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DACPR_DAILYTOTAL_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	//this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+
+	//조회일자
+	this.ctclFR_REPORT.set_value(this.gfnGetDate());
+	this.ctclTO_REPORT.set_value(this.gfnGetDate());
+	
+	//조회
+	//this.FormBtns.Select.click();
+};   
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	this.FormBtns.Add.set_enable(false);
+	this.FormBtns.Del.set_enable(false);
+	this.FormBtns.Save.set_enable(false);
+	this.FormBtns.Reset.set_enable(true);
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	//조회일자
+	this.ctclFR_REPORT = this.divSearch.form.ctclFR_REPORT;
+	this.ctclTO_REPORT = this.divSearch.form.ctclTO_REPORT;
+	//조직분류
+	this.ccfTY_DEPT = this.divSearch.form.ccfTY_DEPT;
+	//부서
+	this.ccfCD_DEPT = this.divSearch.form.ccfCD_DEPT;
+	//성명
+	this.ccfID_SABUN = this.divSearch.form.ccfID_SABUN;
+	//근태유형
+	this.ccfCD_WORK = this.divSearch.form.ccfCD_WORK;
+
+	//그리드
+	this.dxGrid = this.divData.form.objGrid;
+
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+	//그리드
+	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAC_DAILY_TOTAL");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("FR_REPORT", "string"); //일자
+	this.dsSelect.addColumn("TO_REPORT", "string"); //일자
+	this.dsSelect.addColumn("TY_DEPT", "string");  	//조직분류
+	this.dsSelect.addColumn("CD_DEPT", "string");  	//부서
+	this.dsSelect.addColumn("ID_SABUN", "string");  //사번
+	this.dsSelect.addColumn("CD_WORK", "string");  //근태유형
+	this.dsSelect.addColumn("GR_SEARCH", "string"); //로그인 권한
+	this.dsSelect.addColumn("GR_DEPT", "string");  	//로그인 부서
+	this.dsSelect.addColumn("ID_LOGIN", "string");  	//로그인 ID
+
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+
+	if(!this.fnValidate()) return;
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "FR_REPORT", this.ctclFR_REPORT.value); //일자
+	this.dsSelect.setColumn(0, "TO_REPORT", this.ctclTO_REPORT.value); //일자
+	this.dsSelect.setColumn(0, "TY_DEPT", this.ccfTY_DEPT.form.CDTextBox.value);  //조직분류
+	this.dsSelect.setColumn(0, "CD_DEPT", this.ccfCD_DEPT.form.CDTextBox.value);  //부서
+	this.dsSelect.setColumn(0, "ID_SABUN", this.ccfID_SABUN.form.CDTextBox.value);  //성명
+	this.dsSelect.setColumn(0, "CD_WORK", this.ccfCD_WORK.form.CDTextBox.value);  //근태유형
+	this.dsSelect.setColumn(0, "GR_SEARCH", this.FormInfo.GR_SEARCH); //로그인 권한
+	this.dsSelect.setColumn(0, "GR_DEPT", this.AuthClient.CD_DEPT);  	//로그인 부서
+	this.dsSelect.setColumn(0, "ID_LOGIN", this.AuthClient.ID_USER);  	//로그인 ID
+	
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+};
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+};
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+};
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+};
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+};
+
+/*
+ *	리셋 버튼
+ */
+this.fnReset = function() {
+	this.ctclFR_REPORT.set_value("");
+	this.ctclTO_REPORT.set_value("");
+	this.ccfTY_DEPT.form.CDTextBox.set_value("");
+	this.ccfTY_DEPT.form.DSTextBox.set_value("");
+	this.ccfCD_DEPT.form.CDTextBox.set_value("");
+	this.ccfCD_DEPT.form.DSTextBox.set_value("");
+	this.ccfID_SABUN.form.CDTextBox.set_value("");
+	this.ccfID_SABUN.form.DSTextBox.set_value("");
+	this.ccfCD_WORK.form.CDTextBox.set_value("");
+	this.ccfCD_WORK.form.DSTextBox.set_value("");
+	
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnValidate = function() {
+	var validate = true;
+	
+	if (this.gfnIsNull(this.ctclFR_REPORT.value)) {
+		validate = false;
+		this.ctclFR_REPORT.setFocus();
+		this.gfnAlert("조회 시작일자를 입력하세요.");
+		return validate;
+	}
+	
+	if (this.gfnIsNull(this.ctclTO_REPORT.value)) {
+		validate = false;
+		this.ctclTO_REPORT.setFocus();
+		this.gfnAlert("조회 종료일자를 입력하세요.");
+		return validate;
+	}
+	
+	if(this.ctclFR_REPORT.value > this.ctclTO_REPORT.value) {
+		validate = false;
+		this.ctclFR_REPORT.setFocus();
+		this.gfnAlert("조회 시작일자가 종료일 보다 클 수 없습니다.");
+		return validate;
+	}
+
+	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg, args) {
+	this.fnSetButton();	
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+		this.fnSetButton();
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	
+	switch(id) {	
+		case "ccfTY_DEPT":	//조직분류
+			dsUserParam.setColumn(nrow, "CD_PREFIX", "DA");
+			break;
+		
+		case "ccfCD_DEPT":	//부서
+			break;
+		
+		case "ccfID_SABUN":	//성명
+ 			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+ 			dsUserParam.setColumn(nrow, "CD_DEPT", "%");
+ 			dsUserParam.setColumn(nrow, "TY_RETIRE", "%");	// 재직구분
+			break;
+		
+
+			//dsUserParam.setColumn(nrow, "CD_PREFIX", "GT");
+			dsUserParam.setColumn(nrow, "TY_GUBUN", 'CODE');	 
+			dsUserParam.setColumn(nrow, "CD_PREFIX", 'GM');	 
+			dsUserParam.setColumn(nrow, "CD_UPPREFIX", '01'); 	 			
+			break;
+		
+		default:
+	}	
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id) {
+	this.fnSearchInit();
+};
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		// 폼상태 초기화
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+	}
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctclTO_REPORT" propid="value" datasetid="dsSearch" columnid="DT_WORKDAY_TO"/>
+    </Bind>
+  </Form>
+</FDL>

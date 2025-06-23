@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="361" height="140" maxwidth="410" maxheight="220" titletext="비밀번호 변경" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0" top="0" text="" width="361" height="141">
+          <Layouts>
+            <Layout>
+              <!-- 비밀번호 변경 -->
+              <Static id="staTITLE" taborder="0" text="비밀번호 변경" left="0" top="0" width="250" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <!-- 현재 비밀번호 -->
+              <Static id="staNO_CURRNETPWD" taborder="1" text="현재 비밀번호" left="0" top="staTITLE:0" width="100" height="30" cssclass="sta_WF_tablelabel" onclick="sta05_onclick"/>
+              <Static id="staNO_CURRNETPWD_bg" taborder="2" left="staNO_CURRNETPWD:-1" top="staNO_CURRNETPWD:-30" width="262" height="30" cssclass="sta_WF_tablebg" text="" onclick="sta23_onclick"/>
+              <Edit id="txtNO_CURRNETPWD" taborder="6" left="staNO_CURRNETPWD:5" top="staNO_CURRNETPWD:-25" height="20" password="true" width="250"/>
+              <!-- 변경 비밀번호 -->
+              <Static id="staID_PASSWORD" taborder="3" text="변경 비밀번호" left="0" top="staNO_CURRNETPWD:-1" width="100" height="30" cssclass="sta_WF_tablelabel" onclick="sta03_onclick"/>
+              <Static id="staID_PASSWORD_bg" taborder="4" left="staID_PASSWORD:-1" top="staID_PASSWORD:-30" width="262" height="30" cssclass="sta_WF_tablebg" text="" onclick="sta23_onclick"/>
+              <Edit id="txtID_PASSWORD" taborder="7" left="staID_PASSWORD:5" top="staID_PASSWORD:-25" height="20" password="true" width="250"/>
+              <Div id="divBtns" left="120" top="staID_PASSWORD:25" width="130" height="27" taborder="5">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnOK" taborder="0" text="확인" left="0" top="0" width="60" height="27" onclick="btnOK_onclick"/>
+                    <Button id="btnCANCLE" taborder="15" text="취소" left="btnOK:10" top="0" width="60" height="27" onclick="btnCANCLE_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="sta00" taborder="8" text="영문, 숫자, 특수문자 조합으로 8자 이상, 12자 이하 입니다." left="25" top="89" width="331" height="20" textAlign="right"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+this.gbDel = "";	// 시간과 분 구분자(:) 추가하기위함 변수
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();	
+};
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("ID_USER", "string");
+	this.dsSave.addColumn("CD_CORP", "string");
+	this.dsSave.addColumn("ID_PASSWORD", "string");
+	this.dsSave.addColumn("NO_CURRNETPWD", "string");
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+};
+
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	this.dlgfnSave();
+};
+
+this.dlgfnSave = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.dsSave.clearData();
+	this.dsSave.addRow();
+	
+	this.dsSave.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	this.dsSave.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+	this.dsSave.setColumn(0, "ID_PASSWORD", this.dsList.getColumn(0, "ID_PASSWORD"));
+	this.dsSave.setColumn(0, "NO_CURRNETPWD", this.dsList.getColumn(0, "NO_CURRNETPWD"));
+		
+	if (this.dsSave.rowcount == 0) return;
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+											
+}
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	this.getParentContext().close(false);
+};
+
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	
+	var password = this.dsList.getColumn(0, "ID_PASSWORD") || "";
+	const regAlphabets = /[A-Za-z]{1,}/g;
+	const regNumberics = /[0-9]{1,}/g;
+	const regSpecials = /[!@#$%^&*(),.<>\/?\\+\-]{1,}/g;
+	const alphabets = password.match(regAlphabets) || [];
+	const numberics = password.match(regNumberics) || [];
+	const specials = password.match(regSpecials) || [];
+	if (alphabets.length == 0 || numberics == 0 || specials == 0 || password.length < 8 || password.length > 12) {
+		this.gfnAlert("영문, 숫자, 특수문자 조합으로 8자 이상, 12자 이하 입니다.");
+		return false;
+	}
+	
+	if (this.gfnIsNull(this.dsList.getColumn(0, "NO_CURRNETPWD"))) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.divSearch.form.txtNO_CURRNETPWD.setFocus();
+		}
+		this.gfnAlert("현재 비밀번호를 입력하세요.", "fnVaidateCallback");
+	} else if(this.gfnIsNull(this.dsList.getColumn(0, "ID_PASSWORD"))) {
+		validate = false;
+	
+		this.fnVaidateCallback = function() {
+			this.divSearch.form.txtID_PASSWORD.setFocus();
+		}
+		this.gfnAlert("변경 비밀번호를 입력하세요.", "fnVaidateCallback");
+	}
+
+	return validate;
+};
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if(svcID == "save") {
+		if (errorCode == 0) {
+			this.fnClose = function() {
+				this.getParentContext().close(true);
+			}
+			this.gfnAlert("비밀번호 변경이 완료 되었습니다.", "fnClose");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="ID_PASSWORD" type="STRING" size="256"/>
+          <Column id="NO_CURRNETPWD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="ID_PASSWORD"/>
+            <Col id="NO_CURRNETPWD"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DZZPR_USERREGISTRATION_UPDATEPWDCHG</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divSearch.form.txtNO_CURRNETPWD" propid="value" datasetid="dsList" columnid="NO_CURRNETPWD"/>
+      <BindItem id="item3" compid="divSearch.form.txtID_PASSWORD" propid="value" datasetid="dsList" columnid="ID_PASSWORD"/>
+    </Bind>
+  </Form>
+</FDL>

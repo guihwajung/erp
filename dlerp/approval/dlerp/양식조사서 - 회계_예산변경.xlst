@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="/">
+        <html>
+ 
+        <SCRIPT LANGUAGE="JavaScript" type="text/javascript">
+            function openAttachFilePopup(HOST, PARAM) {
+                var w = 580;
+                var h = 300;
+                var URL = HOST + '/api/approval/files.do?PARAM=' + PARAM;
+                var dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
+                var dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
+                var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                var systemZoom = width / window.screen.availWidth;
+                var left = (width - w) / 2 / systemZoom + dualScreenLeft;
+                var top = (height - h) / 2 / systemZoom + dualScreenTop;
+
+                window.open(
+                    URL,
+                    '첨부파일',
+                    'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, ' +
+                    'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left
+                );
+            }
+            
+            function openDetailPopup(HOST, PARAM, YN_DIVERT) {
+                var w = 1200;
+                var h = (YN_DIVERT == "Y") ? 755 : 475;
+                var URL = HOST + '/api/approval/files.do?PARAM=' + PARAM;
+                var dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
+                var dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
+                var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                var systemZoom = width / window.screen.availWidth;
+                var left = (width - w) / 2 / systemZoom + dualScreenLeft;
+                var top = (height - h) / 2 / systemZoom + dualScreenTop;
+
+                window.open(
+                    URL,
+                    '예산',
+                    'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, ' +
+                    'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left
+                );
+            }
+
+            function openTaxPopup(HOST, PARAM) {
+                var w = 850;
+                var h = 580;
+
+                var URL = HOST + '/api/approval/tax.do?PARAM=' + PARAM;
+                var dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
+                var dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
+                var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                var systemZoom = width / window.screen.availWidth;
+                var left = (width - w) / 2 / systemZoom + dualScreenLeft;
+                var top = (height - h) / 2 / systemZoom + dualScreenTop;
+
+                window.open(
+                    URL,
+                    '전자세금계산서',
+                    'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, ' +
+                    'width=' + (w / systemZoom) + ', height=' + (h / systemZoom) + ', top=' + top + ', left=' + left
+                );  
+            }
+        </SCRIPT>
+        <body>
+             <h4>1. 예산변경</h4>
+            <table class="table_10">
+                <colgroup>
+                    <col style="width:12%" />
+                    <col style="width:38%" />
+                    <col style="width:12%" />
+                    <col style="width:38%" />
+                </colgroup>
+                <tr>
+                    <th>신청 번호</th>
+                    <td style="text-align: left;" title="예산변경 신청 번호">
+                        <xsl:value-of select="NewDataSet/table_1/item/SEQ_MST" />
+                    </td>
+                    <th>구분</th>
+                    <td style="text-align: left;" title="예산변경구분">
+                        <xsl:value-of select="NewDataSet/table_1/item/TY_DIVERT" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>귀속부서</th>
+                    <td style="text-align: left;" title="귀속부서명">
+                        <xsl:value-of select="NewDataSet/table_1/item/DS_DEPT" />
+                    </td>
+                    <th>귀속부서코드</th>
+                    <td style="text-align: left;" title="전귀속부서코드표유형">
+                        <xsl:value-of select="NewDataSet/table_1/item/CD_DEPT" />
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <h4>2. 내역</h4>
+            <xsl:choose>
+                <xsl:when test="NewDataSet/table_1/item/YN_DIVERT = 'Y'">
+                    <!-- YN_DIVERT : Y (예산변경) -->
+                    <table class="table_10">
+                        <colgroup>
+                            <col style="width:30px" />
+                            <col style="width:10%" />
+                            <col style="width:5%" />
+                            <col style="width:4%" />
+                            <col style="width:20%" />
+                            <col style="width:4%" />
+                            <col style="width:20%" />
+                            <col style="width:3%" />
+                            <col style="width:100px" />
+                            <col style="width:100px" />
+                            <col style="width:100px" />
+                        </colgroup>
+                        <tr>
+                            <th>번호</th>
+                            <th>부서명칭</th>
+                            <th>FROM<br/>/TO</th>
+                            <th>비목</th>
+                            <th>비목명</th>
+                            <th>세목</th>
+                            <th>세목코드명</th>
+                            <th>구분</th>
+                            <th>예산</th>
+                            <th>변경금액</th>
+                            <th>변경후예산</th>
+                        </tr>
+                        <xsl:for-each select="NewDataSet/table_1/item">
+                            <tr>
+                                <td rowspan="2" style="text-align: center;" title="일련번호">
+									<xsl:element name ="a">
+									    <xsl:attribute name="href">#</xsl:attribute>
+									    <xsl:attribute name="onclick">
+									       javascript:openDetailPopup('<xsl:value-of select="ATTACHED_FILE_HOST_URL"/>', '<xsl:value-of select="DETAIL_URL"/>', '<xsl:value-of select="YN_DIVERT"/>');
+									    </xsl:attribute>
+									    <xsl:value-of select="NO_NUM" />
+									</xsl:element>
+                                </td>
+                                <td rowspan="2" style="text-align: left;" title="부서명칭">
+                                    <xsl:value-of select="FROM_DS_DEPT" />
+                                </td>
+                                <td style="text-align: left;" title="from/to">
+                                    <xsl:text>FROM</xsl:text>
+                                </td>
+                                <td style="text-align: center;" title="비목코드">
+                                    <xsl:value-of select="FROM_CD_BIMOK" />
+                                </td>
+                                <td style="text-align: left;" title="비목명">
+                                    <xsl:value-of select="FROM_DS_BIMOK" />
+                                </td>
+                                <td style="text-align: center;" title="세목코드">
+                                    <xsl:value-of select="FROM_CD_SEMOK" />
+                                </td>
+                                <td style="text-align: left;" title="세목코드명">
+                                    <xsl:value-of select="FROM_DS_SEMOK" />
+                                </td>
+                                <td rowspan="2" style="text-align: center;" title="구분">
+                                    <xsl:value-of select="TY_GUBUN" />
+                                </td>
+                                <td style="text-align: right;" title="예산">
+                                    <xsl:value-of select="FROM_AM_BEFORE" />
+                                </td>
+                                <td style="text-align: right;" title="변경금액">
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:value-of select="AM_DIVERT_ABS" />
+                                </td>
+                                <td style="text-align: right;" title="변경후예산">
+                                    <xsl:value-of select="FROM_AM_AFTER" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;" title="from/to">
+                                    <xsl:text>TO</xsl:text>
+                                </td>
+                                <td style="text-align: center;" title="비목코드">
+                                    <xsl:value-of select="TO_CD_BIMOK" />
+                                </td>
+                                <td style="text-align: left;" title="비목명">
+                                    <xsl:value-of select="TO_DS_BIMOK" />
+                                </td>
+                                <td style="text-align: center;" title="세목코드">
+                                    <xsl:value-of select="TO_CD_SEMOK" />
+                                </td>
+                                <td style="text-align: left;" title="세목코드명">
+                                    <xsl:value-of select="TO_DS_SEMOK" />
+                                </td>
+                                <td style="text-align: right;" title="예산">
+                                    <xsl:value-of select="TO_AM_BEFORE" />
+                                </td>
+                                <td style="text-align: right;" title="변경금액">
+                                    <xsl:text>+</xsl:text>
+                                    <xsl:value-of select="AM_DIVERT_ABS" />
+                                </td>
+                                <td style="text-align: right;" title="변경후예산">
+                                    <xsl:value-of select="TO_AM_AFTER" />
+                                </td>
+                            </tr>
+                        </xsl:for-each>
+                    </table>
+                </xsl:when>
+                <xsl:otherwise>
+                    <!-- YN_DIVERT : N (예산추가) -->
+                    <table class="table_10">
+                        <colgroup>
+                            <col style="width:30px" />
+                            <col style="width:10%" />
+                            <col style="width:5%" />
+                            <col style="width:18%" />
+                            <col style="width:5%" />
+                            <col style="width:18%" />
+                            <col style="width:5%" />
+                            <col style="width:100px" />
+                            <col style="width:100px" />
+                            <col style="width:100px" />
+                        </colgroup>
+                        <tr>
+                            <th>번호</th>
+                            <th>부서명칭</th>
+                            <th>비목코드</th>
+                            <th>비목명</th>
+                            <th>세목코드</th>
+                            <th>세목코드명</th>
+                            <th>구분</th>
+                            <th>예산</th>
+                            <th>변경금액</th>
+                            <th>변경후예산</th>
+                        </tr>
+                        <xsl:for-each select="NewDataSet/table_1/item">
+                            <tr>
+                                <td style="text-align: center;" title="일련번호">
+                                    <!--
+                                    <xsl:element name ="a">
+                                        <xsl:attribute name="href">
+                                            <xsl:value-of select="DETAIL_URL"/>
+                                        </xsl:attribute>
+                                        <xsl:value-of select="NO_NUM" />
+                                    </xsl:element>
+                                    -->
+									<xsl:element name ="a">
+									    <xsl:attribute name="href">#</xsl:attribute>
+									    <xsl:attribute name="onclick">
+									       javascript:openDetailPopup('<xsl:value-of select="ATTACHED_FILE_HOST_URL"/>', '<xsl:value-of select="DETAIL_URL"/>', '<xsl:value-of select="YN_DIVERT"/>');
+									    </xsl:attribute>
+									    <xsl:value-of select="NO_NUM" />
+									</xsl:element>
+                                </td>
+                                <td style="text-align: left;" title="부서명칭">
+                                    <xsl:value-of select="FROM_DS_DEPT" />
+                                </td>
+                                <td style="text-align: center;" title="비목코드">
+                                    <xsl:value-of select="FROM_CD_BIMOK" />
+                                </td>
+                                <td style="text-align: left;" title="비목명">
+                                    <xsl:value-of select="FROM_DS_BIMOK" />
+                                </td>
+                                <td style="text-align: center;" title="세목코드">
+                                    <xsl:value-of select="FROM_CD_SEMOK" />
+                                </td>
+                                <td style="text-align: left;" title="세목코드명">
+                                    <xsl:value-of select="FROM_DS_SEMOK" />
+                                </td>
+                                <xsl:if test="position() = 1">
+                                    <td style="text-align: center;" title="구분">
+                                        <xsl:attribute name="rowspan">
+                                            <xsl:value-of select="CNT_ROW"/>
+                                        </xsl:attribute>
+                                        <xsl:value-of select="TY_GUBUN" />
+                                    </td>
+                                </xsl:if>
+                                <td style="text-align: right;" title="예산">
+                                    <xsl:value-of select="FROM_AM_BEFORE" />
+                                </td>
+                                <td style="text-align: right;" title="변경금액">
+                                      <xsl:value-of select="FROM_AM_DIVERT" />
+                                </td>
+                                <td style="text-align: right;" title="변경후예산">
+                                    <xsl:value-of select="FROM_AM_AFTER" />
+                                </td>
+                            </tr>
+                        </xsl:for-each>
+                    </table>
+                </xsl:otherwise>
+            </xsl:choose>
+            <br />
+            <h4>3. 사유</h4>
+            <xsl:text>- </xsl:text><xsl:value-of select="NewDataSet/table_1/item/DS_TITLE" />
+        </body>
+        </html>
+    </xsl:template>
+</xsl:stylesheet>

@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="400" height="310" titletext="퇴직처리" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="퇴직정보" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staDS_SITE" taborder="1" text="퇴직일자" left="0" top="40" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staDS_SILHENG" taborder="2" text="퇴직사유" left="0" top="staDS_SITE:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staTY_APPROVAL" taborder="3" text="직무능력" left="0" top="staDS_SILHENG:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staDT_CONFIRM" taborder="4" text="성실성" left="0" top="staTY_APPROVAL:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Static id="staBg1" taborder="5" left="staDS_SITE:-1" top="40" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg2" taborder="6" left="staDS_SILHENG:-1" top="staBg1:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg3" taborder="7" left="staTY_APPROVAL:-1" top="staBg2:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg4" taborder="8" left="staDT_CONFIRM:-1" top="staBg3:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="edtDS_TOIJIK" taborder="9" left="staDS_SILHENG:5" top="74" right="5" height="20" readonly="false" maxlength="50"/>
+              <Calendar id="tclDT_TOIJIK" taborder="10" left="staDT_CONFIRM:5" top="staTY_APPROVAL:-83" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Button id="btnOk" taborder="11" text="확인" left="32.50%" top="266" width="60" height="20" onclick="divData_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="12" text="취소" left="52.50%" top="266" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+              <Static id="staDS_SILHENG00" taborder="13" text="협조성" left="0" top="156" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Edit id="edtDS_SILHENG00" taborder="14" left="92" top="161" right="5" height="20" readonly="true"/>
+              <Static id="staBg00" taborder="15" left="86" top="156" right="0.00%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staDS_SILHENG01" taborder="16" text="참고사항" left="0" top="185" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Edit id="edtDS_SILHENG01" taborder="17" left="92" top="190" right="5" height="20" readonly="true"/>
+              <Static id="staBg01" taborder="18" left="86" top="185" right="0.00%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staDS_SILHENG02" taborder="19" text="평가자" left="0" top="214" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="left"/>
+              <Edit id="edtDS_SILHENG02" taborder="20" left="92" top="219" right="5" height="20" readonly="true"/>
+              <Static id="staBg02" taborder="21" left="86" top="214" right="0.00%" height="30" cssclass="sta_WF_tablebg"/>
+              <Combo id="cboGR_JIKMU" taborder="22" left="92" top="103" width="125" height="20" innerdataset="dsGR_JIKMU" codecolumn="CODE" datacolumn="VALUE"/>
+              <Combo id="cboGR_SUNGSIL" taborder="23" left="92" top="132" width="125" height="20" innerdataset="dsGR_SUNGSIL" codecolumn="CODE" datacolumn="VALUE"/>
+              <Combo id="cboGR_HEAPJO" taborder="24" left="92" top="161" width="125" height="20" innerdataset="dsGR_HEAPJO" codecolumn="CODE" datacolumn="VALUE"/>
+              <Edit id="edtRM_KOKWA" taborder="25" left="92" top="190" right="5" height="20" readonly="false" maxlength="30"/>
+              <Div id="cfCD_EMP" CDTextWidth="80" taborder="26" left="92" top="219" width="273" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 이전 화면에서 데이터 받기.
+	this.dsData.setColumn(0, "NO_ID", this.getOwnerFrame().NO_ID);
+	this.dsData.setColumn(0, "DT_TOIJIK",  this.gfnGetDate());	
+	
+	this.dsData.setColumn(0, "CD_EMP", this.AuthClient.ID_USER);
+	this.dsData.setColumn(0, "DS_EMP", this.AuthClient.DS_HNAME);
+	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	//this.dxGrid = this.divData.form.objGrid;
+	this.tclDT_TOIJIK = this.divData.form.tclDT_TOIJIK;
+	this.edtDS_TOIJIK = this.divData.form.edtDS_TOIJIK;	
+	this.cboGR_JIKMU = this.divData.form.cboGR_JIKMU;
+	this.cboGR_SUNGSIL = this.divData.form.cboGR_SUNGSIL;
+	this.cboGR_HEAPJO = this.divData.form.cboGR_HEAPJO;
+	this.edtRM_KOKWA = this.divData.form.edtRM_KOKWA;
+	this.cfCD_EMP = this.divData.form.cfCD_EMP;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.cfCD_EMP.CodeFindName = "DZX_CFUSER";
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {	
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("NO_ID", "string");
+	this.dsSave.addColumn("DT_TOIJIK", "string");
+	this.dsSave.addColumn("DS_TOIJIK", "string");
+	this.dsSave.addColumn("GR_JIKMU", "string");
+	this.dsSave.addColumn("GR_SUNGSIL", "string");
+	this.dsSave.addColumn("GR_HEAPJO", "string");
+	this.dsSave.addColumn("RM_KOKWA", "string");
+	this.dsSave.addColumn("CD_EMP", "string");
+	this.dsSave.addColumn("DS_EMP", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "save") {
+		if(errorCode == 0)
+		{
+			// this.close()가 작동하지 않았고, 
+			// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+			this.getParentContext().close(true);
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+// 확인 버튼 클릭
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsSave.clearData();
+	this.dsSave.addRow();	
+	
+	this.dsSave.setColumn(0, "NO_ID", this.dsData.getColumn(0, "NO_ID"));
+	this.dsSave.setColumn(0, "DT_TOIJIK", this.dsData.getColumn(0, "DT_TOIJIK"));
+	this.dsSave.setColumn(0, "DS_TOIJIK", this.dsData.getColumn(0, "DS_TOIJIK"));
+	this.dsSave.setColumn(0, "GR_JIKMU", this.dsData.getColumn(0, "GR_JIKMU"));
+	this.dsSave.setColumn(0, "GR_SUNGSIL", this.dsData.getColumn(0, "GR_SUNGSIL"));
+	this.dsSave.setColumn(0, "GR_HEAPJO", this.dsData.getColumn(0, "GR_HEAPJO"));
+	this.dsSave.setColumn(0, "RM_KOKWA", this.dsData.getColumn(0, "RM_KOKWA"));
+	this.dsSave.setColumn(0, "CD_EMP", this.dsData.getColumn(0, "CD_EMP"));
+	this.dsSave.setColumn(0, "DS_EMP", this.dsData.getColumn(0, "DS_EMP"));
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+	
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DSAPR_TOJIKUPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="NO_ID" type="STRING" size="256"/>
+          <Column id="DT_TOIJIK" type="STRING" size="256"/>
+          <Column id="DS_TOIJIK" type="STRING" size="256"/>
+          <Column id="GR_JIKMU" type="STRING" size="256"/>
+          <Column id="GR_SUNGSIL" type="STRING" size="256"/>
+          <Column id="GR_HEAPJO" type="STRING" size="256"/>
+          <Column id="RM_KOKWA" type="STRING" size="256"/>
+          <Column id="CD_EMP" type="STRING" size="256"/>
+          <Column id="DS_EMP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="NO_ID"/>
+            <Col id="DT_TOIJIK"/>
+            <Col id="DS_TOIJIK"/>
+            <Col id="GR_JIKMU"/>
+            <Col id="GR_HEAPJO"/>
+            <Col id="RM_KOKWA"/>
+            <Col id="GR_SUNGSIL"/>
+            <Col id="CD_EMP"/>
+            <Col id="DS_EMP"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsGR_JIKMU">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">A</Col>
+            <Col id="VALUE">A</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">B</Col>
+            <Col id="VALUE">B</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">C</Col>
+            <Col id="VALUE">C</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">D</Col>
+            <Col id="VALUE">D</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">E</Col>
+            <Col id="VALUE">E</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsGR_SUNGSIL">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">A</Col>
+            <Col id="VALUE">A</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">B</Col>
+            <Col id="VALUE">B</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">C</Col>
+            <Col id="VALUE">C</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">D</Col>
+            <Col id="VALUE">D</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">E</Col>
+            <Col id="VALUE">E</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsGR_HEAPJO">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">A</Col>
+            <Col id="VALUE">A</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">B</Col>
+            <Col id="VALUE">B</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">C</Col>
+            <Col id="VALUE">C</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">D</Col>
+            <Col id="VALUE">D</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">E</Col>
+            <Col id="VALUE">E</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divData.form.tclDT_TOIJIK" propid="value" datasetid="dsData" columnid="DT_TOIJIK"/>
+      <BindItem id="item3" compid="divData.form.edtDS_TOIJIK" propid="value" datasetid="dsData" columnid="DS_TOIJIK"/>
+      <BindItem id="item4" compid="divData.form.cboGR_JIKMU" propid="value" datasetid="dsData" columnid="GR_JIKMU"/>
+      <BindItem id="item5" compid="divData.form.cboGR_SUNGSIL" propid="value" datasetid="dsData" columnid="GR_SUNGSIL"/>
+      <BindItem id="item6" compid="divData.form.cboGR_HEAPJO" propid="value" datasetid="dsData" columnid="GR_HEAPJO"/>
+      <BindItem id="item7" compid="divData.form.edtRM_KOKWA" propid="value" datasetid="dsData" columnid="RM_KOKWA"/>
+      <BindItem id="item8" compid="divData.form.cfCD_EMP.form.CDTextBox" propid="value" datasetid="dsData" columnid="CD_EMP"/>
+      <BindItem id="item9" compid="divData.form.cfCD_EMP.form.DSTextBox" propid="value" datasetid="dsData" columnid="DS_EMP"/>
+    </Bind>
+  </Form>
+</FDL>

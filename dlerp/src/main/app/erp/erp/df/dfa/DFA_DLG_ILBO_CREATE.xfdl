@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="400" height="200" maxwidth="440" maxheight="240" titletext="자금일보 자료생성" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staBar00" taborder="5" left="119" top="50" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staItem00" taborder="4" text="일보일자(F)" left="20" top="50" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staTitle01" taborder="6" text="자금일보 자료생성" left="20" top="20" height="22" width="350" cssclass="sta_POP_Title"/>
+              <Static id="staBar01" taborder="7" left="119" top="79" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staItem01" taborder="8" text="일보일자(T)" left="20" top="79" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Calendar id="calDT_ILBO_FR" taborder="0" left="126" top="55" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Calendar id="calDT_ILBO_TO" taborder="1" left="126" top="84" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Button id="btnOk" taborder="2" text="확인" left="143" width="45" height="21" onclick="btnOk_onclick" uWord="popup.ok" top="staItem01:20"/>
+              <Button id="btnCancle" taborder="3" text="취소" left="193" width="45" height="21" onclick="btnCancle_onclick" uWord="popup.cancel" top="staBar01:20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmPopup.xfdl (공통 팝업페이지)
+*  @FileName 	cmmPopup.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.10.19
+*  @Desction         스크립트 표준 및 주석 표준 정의
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this); //초기화[필수]
+	this.gfnFormInfo(this);
+	
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	var frame = this.getOwnerFrame();	
+	if (!this.gfnIsNull(frame.DT_TO)) {
+		//this.calDT_ILBO_FR.set_value(frame.DT_FROM);
+		this.calDT_ILBO_FR.set_value(this.gfnAddDate(frame.DT_TO,-1)); // TO날짜 -1
+		this.calDT_ILBO_TO.set_value(frame.DT_TO); 
+	}
+};
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() { 
+
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnValidation = function() {
+	if (this.gfnIsNull(this.calDT_ILBO_FR.value)) {
+		this.gfnAlert("일보일자(F)를 입력하십시오.");
+		this.calDT_ILBO_FR.setFocus();
+		return false;
+	}
+	
+	if (this.gfnIsNull(this.calDT_ILBO_TO.value)) {
+		this.gfnAlert("일보일자(T)를 입력하십시오.");
+		this.calDT_ILBO_TO.setFocus();
+		return false;
+	}	
+	
+	return true;
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {	
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* @ OK버튼이벤트
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnValidation()) return false;
+
+	// 확인
+	var json = {};
+	
+	json.DT_ILBO_FR = this.calDT_ILBO_FR.value;	// 일보일자(F)
+	json.DT_ILBO_TO = this.calDT_ILBO_TO.value;	// 일보일자(T)
+	
+	this.getParentContext().close(JSON.stringify(json));
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

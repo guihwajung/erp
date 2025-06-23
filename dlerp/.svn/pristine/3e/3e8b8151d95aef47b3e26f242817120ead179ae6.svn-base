@@ -1,0 +1,2067 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("이행상황신고서");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1320,760);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_PLACE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_PLACE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_ADDRESS\" type=\"STRING\" size=\"256\"/><Column id=\"DS_STREET\" type=\"STRING\" size=\"256\"/><Column id=\"CD_PAYMENT\" type=\"STRING\" size=\"256\"/><Column id=\"CD_WORK\" type=\"STRING\" size=\"256\"/><Column id=\"YM_WORK\" type=\"STRING\" size=\"256\"/><Column id=\"YM_PAYMENT\" type=\"STRING\" size=\"256\"/><Column id=\"DT_NOTIFY\" type=\"STRING\" size=\"256\"/><Column id=\"DT_DELIVERY\" type=\"STRING\" size=\"256\"/><Column id=\"DT_PAY\" type=\"STRING\" size=\"256\"/><Column id=\"RT_TAX\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_TAXBASE\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_TAX\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"CD_PENALTY\" type=\"STRING\" size=\"256\"/><Column id=\"AM_PENALTY_DATE\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"DD_PENALTY\" type=\"INT\" size=\"256\"/><Column id=\"AM_PENALTY\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"DS_NOTE\" type=\"STRING\" size=\"256\"/><Column id=\"AM_ETC_REFUND\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_ADD_PAYMENT\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_YEAREND_REFUND\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_RETIRE_REFUND\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_YEAREND_PAYMENT\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_PENALTY_ADD_PAYMENT\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_PENALTY_DEFAULT\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_PENALTY_ADD_ADD\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"DD_PENALTY_ADD\" type=\"INT\" size=\"256\"/><Column id=\"AM_REFUND\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_PAYMENT\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_BALANCE\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_AMOUNT_PAY\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_LOCAL_PAY\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_ADD_PAY\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_REFUND_BALANCE\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"YN_CLOSE\" type=\"STRING\" size=\"256\"/><Column id=\"AM_REFUND_BEF\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_REFUND_MON\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_REFUND_JOJUNG\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"DT_PENALTY_ADD\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListDetail", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DHVPR_LOCALTAX_PAY_SELECT</Col></Row><Row><Col id=\"TARGET\">save</Col><Col id=\"SP\">DHVPR_LOCALTAX_PAY_UPDATE</Col></Row><Row><Col id=\"TARGET\">savedetail</Col><Col id=\"SP\">DHVPR_LOCALTAX_DETAIL_UPDATE</Col></Row><Row><Col id=\"TARGET\">saveadjust</Col><Col id=\"SP\">DHVPR_LOCALTAX_ADJUST_UPDATE</Col></Row><Row><Col id=\"TARGET\">close</Col><Col id=\"SP\">DHVPR_LOCALTAX_CLOSE</Col></Row><Row><Col id=\"TARGET\">ESingo</Col><Col id=\"SP\">DHVPR_LOCALTAX_FILE</Col></Row><Row><Col id=\"TARGET\">selectrate</Col><Col id=\"SP\">DHVPR_LOCALTAX_RATE_SELECT</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"NO_ID\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CORP\"/></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSINGO", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"VALUE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CODE\">1</Col><Col id=\"VALUE\">매월</Col></Row><Row><Col id=\"CODE\">2</Col><Col id=\"VALUE\">반기</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsWORK", this);
+            obj._setContents("<ColumnInfo><Column id=\"CODE\" type=\"STRING\" size=\"256\"/><Column id=\"VALUE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CODE\">1</Col><Col id=\"VALUE\">정기</Col></Row><Row><Col id=\"CODE\">2</Col><Col id=\"VALUE\">수시</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListAdjust", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsText", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsRate", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new FileDownTransfer("FileDownTransfer00", this);
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0","10.0",null,"46.0","0",null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_cssclass("div_SEARCH_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staCD_CORP","0.0","10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("법인코드");
+            obj.set_usedecorate("false");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_CORP","staCD_CORP:0.0","10.0","250","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("80");
+            obj.set_taborder("0");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staYM","ccfCD_CORP:0.0","10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("3");
+            obj.set_text("문서번호");
+            obj.set_usedecorate("false");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Edit("edtNO_ID","440","10","80","24",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("2");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:10",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staBgSINGO","109","0","1000","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("1");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staBgSINGO00","109","26","1000","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("22");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Tab("tabData","0","82",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj.set_tabindex("0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Tabpage("tab1",this.divData.form.tabData);
+            obj.set_text("납부서");
+            this.divData.form.tabData.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","163",null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("0");
+            obj.set_binddataset("dsList");
+            obj._setContents("<Formats><Format id=\"default\"/></Formats>");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staBg06","193","objGrid:68","398","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("23");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staBg08","193","objGrid:91","398","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("20");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staBg06_00_00","193","objGrid:45","398","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("50");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staBg04_00","743","objGrid:114","475","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("36");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta11_00","69","objGrid:22","125","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("31");
+            obj.set_text("정액가산세");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staBg06_00","sta11_00:-1","objGrid:22","398","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("32");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta02","918","objGrid:22","300","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("5");
+            obj.set_text("추가납부액");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staBg01","743","objGrid:68","475","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("12");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staBg04","743","objGrid:137","475","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("28");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staBg02","743","sta02:-1","475","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("13");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staBg03","743","objGrid:91","475","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("14");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta09_00","619","objGrid:114","155","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("35");
+            obj.set_text("전월 미환급액");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_REFUND_BEF","sta09_00:4","objGrid:116","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("48");
+            obj.set_format("###,###,###,###,###");
+            obj.set_limitbymask("both");
+            obj.set_enable("true");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta01","619","objGrid:22","300","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("4");
+            obj.set_text("환급액");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta05","619","sta01:22","155","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("7");
+            obj.set_text("연말정산환급액");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta07","619","objGrid:91","155","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("8");
+            obj.set_text("기타환급액(중도퇴사자등)");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("left");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta04","918","objGrid:45","155","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("9");
+            obj.set_text("당월추가납부액");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta06","918","objGrid:68","155","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("10");
+            obj.set_text("연말정산추가납부액");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta08","918","objGrid:91","155","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("11");
+            obj.set_text("가산세대상추가납부액");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ADD_PAYMENT","sta04:4","objGrid:47","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("49");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_YEAREND_PAYMENT","sta06:4","objGrid:70","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("51");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_PENALTY_ADD_PAYMENT","sta08:4","objGrid:93","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("3");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            obj.set_enable("false");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta11","69","objGrid:68","125","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("15");
+            obj.set_text("가산세 추가납부액");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta13","0","sta11:-25","70","72",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("16");
+            obj.set_text("추가대상\r\n가산세");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta14","69","sta11:-1","125","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("17");
+            obj.set_text("미납세액의 3%");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta15","319","objGrid:91","125","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("18");
+            obj.set_text("미납지연가산세");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta16","0","sta13:-2","203","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("19");
+            obj.set_text("가산세 총액");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staBg09","193","objGrid:114","398","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("21");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staBg10","193","objGrid:137","398","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("22");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_PENALTY_DEFAULT","sta11_00:4","objGrid:24","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("38");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_PENALTY_ADD_PAYMENT2","sta11:4","objGrid:70","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("40");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            obj.set_enable("true");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_PENALTY_ADD_DEFAULT","sta14:4","objGrid:93","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("42");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_PENALTY_ADD_ADD","sta15:3","objGrid:93","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("43");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_PENALTY","sta16:-5","objGrid:139","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("1");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            obj.set_enable("false");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta12","319","objGrid:68","125","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("24");
+            obj.set_text("납부기한");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staTITLE00","10","objGrid:-3","500","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("26");
+            obj.set_text("가산세 내역");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textAlign("left");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Calendar("tclDT_PENALTY_ADD","mskAM_PENALTY_ADD_PAYMENT2:134","objGrid:70","95","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("41");
+            obj.set_dateformat("yyyy-MM-dd");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staTITLE","630","objGrid:-3","500","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("25");
+            obj.set_text("가감조정내역");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textAlign("left");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta09","619","objGrid:137","155","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("27");
+            obj.set_text("환급합계금액");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta10","918","objGrid:137","155","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("29");
+            obj.set_text("추가납부합계금액");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_PAYMENT","sta10:4","objGrid:139","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("30");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            obj.set_enable("false");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta03","619","sta01:-1","155","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("6");
+            obj.set_text("당월기타환급액");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETC_REFUND","sta03:4","sta01:1","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("45");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_YEAREND_REFUND","sta05:4","mskAM_ETC_REFUND:3","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("46");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_RETIRE_REFUND","sta07:4","mskAM_YEAREND_REFUND:3","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("47");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_REFUND","sta09:4","mskAM_RETIRE_REFUND:26","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("2");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            obj.set_enable("false");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskDD_PENALTY_ADD","mskAM_PENALTY_ADD_ADD:-18","objGrid:70","39","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("44");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_AMOUNT_PAY","336","objGrid:139","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("33");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            obj.set_visible("false");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_BALANCE","460","objGrid:139","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("34");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            obj.set_visible("false");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta11_00_00","69","objGrid:45","125","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("37");
+            obj.set_text("당월 가산세 계");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_PENALTY_DATE","447","objGrid:24","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("39");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta13_00","0","objGrid:22","70","47",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("52");
+            obj.set_text("당월 \r\n가산세");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta11_00_01","319","objGrid:22","125","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("53");
+            obj.set_text("지연가산세");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_PENALTY_MON","198","objGrid:47","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("54");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            obj.set_enable("false");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta15_00","69","objGrid:114","125","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("55");
+            obj.set_text("추가대상가산세 계");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_PENALTY_ADD","198","objGrid:116","115","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("56");
+            obj.set_format("###,###,###,###");
+            obj.set_limitbymask("both");
+            obj.set_enable("false");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("sta09_00_00","918","objGrid:114","155","24",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("57");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Tabpage("tab2",this.divData.form.tabData);
+            obj.set_text("징수 및 조정명세서");
+            this.divData.form.tabData.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid2","0","0",null,null,"0","0",null,null,null,null,this.divData.form.tabData.tab2.form);
+            obj.set_taborder("0");
+            obj.set_binddataset("dsList2");
+            obj._setContents("<Formats><Format id=\"default\"/></Formats>");
+            this.divData.form.tabData.tab2.addChild(obj.name, obj);
+
+            obj = new Static("staSINGO","0","0","110","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("3");
+            obj.set_text("구분");
+            obj.set_textAlign("center");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staYM_IMPUTE","staBgSINGO:-271","staBgSINGO:-27","110","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("10");
+            obj.set_text("지급연월");
+            obj.set_textAlign("center");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staYM_IMPUTE00","staSINGO:236","0","110","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("20");
+            obj.set_text("신고구분");
+            obj.set_textAlign("center");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staYM_SUPPLY","staYM_IMPUTE00:145","0","110","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("11");
+            obj.set_text("귀속연월");
+            obj.set_textAlign("center");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staSINGO00","0","26","110","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("21");
+            obj.set_text("신고기한");
+            obj.set_textAlign("center");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDT_ENTER","staSINGO00:236","26","110","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("12");
+            obj.set_text("제출일자");
+            obj.set_textAlign("center");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staNM_SANGHO","0","staSINGO00:-1","110","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("13");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            obj.set_text("사업장명");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staBgNM_SANGHO","staNM_SANGHO:-1","staNM_SANGHO:-27","1000","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("14");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_ADDRESS","staNM_SANGHO:236","staDT_ENTER:-1","110","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("15");
+            obj.set_text("사업장주소");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("sta22","staDT_ENTER:145","26","110","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("23");
+            obj.set_text("지연일자");
+            obj.set_textAlign("center");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("sta23","sta22:127","staYM_IMPUTE:-1","110","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("18");
+            obj.set_text("마감여부");
+            obj.set_textAlign("center");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staADDR","staDS_ADDRESS:382","staDS_ADDRESS:-27","110","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("16");
+            obj.set_text("법정동명");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Radio("rdoSINGO","staSINGO:5","staSINGO:-23","119","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("9");
+            obj.set_innerdataset("dsSINGO");
+            obj.set_datacolumn("VALUE");
+            obj.set_codecolumn("CODE");
+            obj.set_fittocontents("width");
+            obj.set_direction("vertical");
+            obj.set_enable("false");
+            obj.set_text("매월");
+            obj.set_value("M");
+            obj.set_index("0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("ctclYM_WORK","staYM_SUPPLY:5","staYM_IMPUTE:-24","80","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("6");
+            obj.set_url("cmm::cmmCalMM.xfdl");
+            obj.set_enableevent("true");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("ctclYM_PAYMENT","staYM_IMPUTE:4","staYM_SUPPLY:-24","80","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("7");
+            obj.set_url("cmm::cmmCalMM.xfdl");
+            obj.set_enableevent("true");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Calendar("ccfDT_DELIVERY","staDT_ENTER:5","staDT_ENTER:-23","98","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("2");
+            obj.set_dateformat("yyyy-MM-dd");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_PLACE","staNM_SANGHO:5","staNM_SANGHO:-23","231","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("17");
+            obj.set_readonly("true");
+            obj.set_tabstop("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Radio("rdoYN_CLOSE","sta23:4","30","100","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("19");
+            obj.set_datacolumn("datacolumn");
+            obj.set_codecolumn("codecolumn");
+            obj.set_fittocontents("width");
+            obj.set_direction("vertical");
+            obj.set_enable("false");
+            obj.set_tabstop("false");
+            var divData_form_rdoYN_CLOSE_innerdataset = new nexacro.NormalDataset("divData_form_rdoYN_CLOSE_innerdataset", obj);
+            divData_form_rdoYN_CLOSE_innerdataset._setContents("<ColumnInfo><Column id=\"codecolumn\" size=\"256\"/><Column id=\"datacolumn\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"codecolumn\">Y</Col><Col id=\"datacolumn\">여</Col></Row><Row><Col id=\"codecolumn\">N</Col><Col id=\"datacolumn\">부</Col></Row></Rows>");
+            obj.set_innerdataset(divData_form_rdoYN_CLOSE_innerdataset);
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("-1");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Radio("rdoTY_WORK","staYM_IMPUTE00:9","4","121","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("5");
+            obj.set_innerdataset("dsWORK");
+            obj.set_datacolumn("VALUE");
+            obj.set_codecolumn("CODE");
+            obj.set_fittocontents("width");
+            obj.set_direction("vertical");
+            obj.set_text("정기");
+            obj.set_value("1");
+            obj.set_index("0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Calendar("ccfDT_NOTIFY","staSINGO00:6","30","115","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("8");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskDD_PENALTY","sta22:5","30","78","18",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("4");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_ADDRESS","459","56","373","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("24");
+            obj.set_readonly("true");
+            obj.set_tabstop("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Edit("edtDS_STREET","952","56","106","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("25");
+            obj.set_readonly("true");
+            obj.set_tabstop("false");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.ccfCD_CORP.form.CDTextBox","value","dsSearch","CD_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divData.form.rdoSINGO","value","dsList","CD_PAYMENT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divData.form.rdoTY_WORK","value","dsList","CD_WORK");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divData.form.ctclYM_WORK.form.TextBox","value","dsList","YM_WORK");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","divData.form.ctclYM_PAYMENT.form.TextBox","value","dsList","YM_PAYMENT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item5","divData.form.ccfDT_NOTIFY","value","dsList","DT_NOTIFY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item6","divData.form.ccfDT_DELIVERY","value","dsList","DT_DELIVERY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item7","divData.form.mskDD_PENALTY","value","dsList","DD_PENALTY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item8","divData.form.rdoYN_CLOSE","value","dsList","YN_CLOSE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item9","divData.form.edtDS_PLACE","value","dsList","DS_PLACE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item10","divData.form.edtDS_ADDRESS","value","dsList","DS_ADDRESS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item11","divData.form.edtDS_STREET","value","dsList","DS_STREET");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item12","divData.form.tabData.tab1.form.mskAM_ETC_REFUND","value","dsList","AM_ETC_REFUND");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item13","divData.form.tabData.tab1.form.mskAM_REFUND_BEF","value","dsList","AM_REFUND_BEF");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item15","divData.form.tabData.tab1.form.mskAM_YEAREND_PAYMENT","value","dsList","AM_YEAREND_PAYMENT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item19","divData.form.tabData.tab1.form.mskAM_ADD_PAYMENT","value","dsList","AM_ADD_PAYMENT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item20","divData.form.tabData.tab1.form.mskAM_YEAREND_REFUND","value","dsList","AM_YEAREND_REFUND");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item21","divData.form.tabData.tab1.form.mskAM_RETIRE_REFUND","value","dsList","AM_RETIRE_REFUND");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item22","divData.form.tabData.tab1.form.mskAM_PENALTY_ADD_PAYMENT","value","dsList","AM_PENALTY_ADD_PAYMENT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item23","divData.form.tabData.tab1.form.mskAM_PENALTY_ADD_DEFAULT","value","dsList","AM_PENALTY_ADD_DEFAULT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item24","divData.form.tabData.tab1.form.mskAM_PENALTY_ADD_ADD","value","dsList","AM_PENALTY_ADD_ADD");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item26","divData.form.tabData.tab1.form.mskDD_PENALTY_ADD","value","dsList","DD_PENALTY_ADD");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item27","divData.form.tabData.tab1.form.mskAM_REFUND","value","dsList","AM_REFUND");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item28","divData.form.tabData.tab1.form.mskAM_PAYMENT","value","dsList","AM_PAYMENT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item29","divData.form.tabData.tab1.form.mskAM_BALANCE","value","dsList","AM_BALANCE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item30","divData.form.tabData.tab1.form.mskAM_AMOUNT_PAY","value","dsList","AM_AMOUNT_PAY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item31","divData.form.tabData.tab1.form.mskAM_LOCAL_PAY","value","dsList","AM_LOCAL_PAY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item32","divSearch.form.edtNO_ID","value","dsSearch","NO_ID");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item33","divData.form.tabData.tab1.form.mskAM_PENALTY_DEFAULT","value","dsList","AM_PENALTY_DEFAULT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item34","divData.form.tabData.tab1.form.mskAM_PENALTY_ADD_PAYMENT2","value","dsList","AM_PENALTY_ADD_PAYMENT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item35","divData.form.tabData.tab1.form.mskAM_PENALTY","value","dsList","AM_PENALTY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item37","divSearch.form.ccfCD_CORP.form.DSTextBox","value","dsSearch","DS_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item25","divData.form.tabData.tab1.form.tclDT_PENALTY_ADD","value","dsList","DT_PENALTY_ADD");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item14","divData.form.tabData.tab1.form.mskAM_PENALTY_DATE","value","dsList","AM_PENALTY_DATE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item16","divData.form.tabData.tab1.form.mskAM_PENALTY_MON","value","dsList","AM_PENALTY_MON");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item17","divData.form.tabData.tab1.form.mskAM_PENALTY_ADD","value","dsList","AM_PENALTY_ADD");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+            this._addPreloadList("fdl","cmm::cmmCalMM.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DHV_LOCALTAX_DETAIL.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        var context = "/";
+        if (nexacro.getEnvironmentVariable("evContextPath") != undefined) {
+        	context = nexacro.getEnvironmentVariable("evContextPath");
+        }
+
+        this.fileConfig = {
+        	host : this.gfnGetServerUrl(),
+        	downloadUrl : context + "file/downloadText.do",
+        	allowTypes : ["txt"],
+        	maxCount : 1,
+        	maxSize : "200MB",
+        	maxTotalSize : "200MB"
+        };
+
+        this.sYnGridMerge = "N";
+        this.rows = [];
+        this.vYnSetVarA = false;
+        this.vYnSetVarB = false;
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetParameter();
+        	this.fnSetEvent();
+        	this.fnSetCombo();
+
+        	//법인코드 세션에 코드로 셋팅
+        // 	this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+        // 	this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+        	this.edtNO_ID.set_value(this.getOwnerFrame().NO_ID);
+        	this.dsSearch.setColumn(0, "CD_CORP", this.getOwnerFrame().CD_CORP);
+        	this.dsSearch.setColumn(0, "DS_CORP", this.getOwnerFrame().DS_CORP);
+        	if (!this.gfnIsNull(this.getOwnerFrame().NO_ID))
+        	{
+        		this.fnSelect();
+        	}
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+        };
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        	this.btnClose = this.gfnFormButtonAdd("btnClose", "fnTaxClose")//, "마감");
+        	this.btnCancle = this.gfnFormButtonAdd("btnCancle", "fnCancle")//, "마감취소");
+        	this.btnESingo = this.gfnFormButtonAdd("ESingo", "fnESingo")//, "전자신고");
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+
+        	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+        	this.edtNO_ID = this.divSearch.form.edtNO_ID;
+
+        	this.rdoSINGO = this.divData.form.rdoSINGO;
+        	this.rdoTY_WORK = this.divData.form.rdoTY_WORK;
+        	this.ctclYM_PAYMENT = this.divData.form.ctclYM_PAYMENT;
+        	this.ctclYM_WORK = this.divData.form.ctclYM_WORK;
+        	this.ccfDT_NOTIFY = this.divData.form.ccfDT_NOTIFY;
+        	this.ccfDT_DELIVERY = this.divData.form.ccfDT_DELIVERY;
+        	this.mskDD_PENALTY_DAY = this.divData.form.mskDD_PENALTY_DAY;
+        	this.rdoYN_CLOSE = this.divData.form.rdoYN_CLOSE;
+        	this.edtDS_PLACE = this.divData.form.edtDS_PLACE;
+        	this.edtDS_ADDRESS = this.divData.form.edtDS_ADDRESS;
+        	this.edtDS_STREET = this.divData.form.edtDS_STREET;
+        	this.mskDD_PENALTY = this.divData.form.mskDD_PENALTY;
+
+        	this.tabData = this.divData.form.tabData;
+
+        	this.mskAM_ETC_REFUND = this.tabData.tab1.form.mskAM_ETC_REFUND;
+        	this.mskAM_YEAREND_REFUND = this.tabData.tab1.form.mskAM_YEAREND_REFUND;
+        	this.mskAM_RETIRE_REFUND = this.tabData.tab1.form.mskAM_RETIRE_REFUND;
+        	this.mskAM_ILBANRETURN = this.tabData.tab1.form.mskAM_ILBANRETURN;
+        	this.mskAM_REFUND = this.tabData.tab1.form.mskAM_REFUND;
+        	this.mskAM_ADD_PAYMENT = this.tabData.tab1.form.mskAM_ADD_PAYMENT;
+        	this.mskAM_YEAREND_PAYMENT = this.tabData.tab1.form.mskAM_YEAREND_PAYMENT;
+        	this.mskAM_PENALTY_ADD_PAYMENT = this.tabData.tab1.form.mskAM_PENALTY_ADD_PAYMENT;
+        	this.mskAM_RETURNTAXSUM = this.tabData.tab1.form.mskAM_RETURNTAXSUM;
+        	this.mskAM_PAYMENT = this.tabData.tab1.form.mskAM_PAYMENT;
+        	this.mskAM_PENALTY_DEF = this.tabData.tab1.form.mskAM_PENALTY_DEF;
+
+
+        	this.mskAM_PENALTY_DATE = this.tabData.tab1.form.mskAM_PENALTY_DATE;
+        	this.mskAM_PENALTY_ADD_PAYMENT2 = this.tabData.tab1.form.mskAM_PENALTY_ADD_PAYMENT2;
+        	this.tclDT_PENALTY_ADD = this.tabData.tab1.form.tclDT_PENALTY_ADD;
+        	this.mskAM_PENALTY_DEFAULT = this.tabData.tab1.form.mskAM_PENALTY_DEFAULT;
+        	this.mskAM_PENALTY_ADD_DEFAULT = this.tabData.tab1.form.mskAM_PENALTY_ADD_DEFAULT;
+        	this.mskAM_PENALTY_ADD_ADD = this.tabData.tab1.form.mskAM_PENALTY_ADD_ADD;
+        	this.mskDD_PENALTY_ADD = this.tabData.tab1.form.mskDD_PENALTY_ADD;
+        	this.mskAM_PENALTY = this.tabData.tab1.form.mskAM_PENALTY;
+        	this.mskAM_PENALTY_MON = this.tabData.tab1.form.mskAM_PENALTY_MON;
+        	this.mskAM_PENALTY_ADD = this.tabData.tab1.form.mskAM_PENALTY_ADD;
+
+        	this.mskAM_REFUND_BEF = this.tabData.tab1.form.mskAM_REFUND_BEF;
+        	this.mskAM_REFUND_MON = this.tabData.tab1.form.mskAM_REFUND_MON;
+        	this.mskAM_REFUND_SUM = this.tabData.tab1.form.mskAM_REFUND_SUM;
+        	this.mskAM_REFUND_JOJUNG = this.tabData.tab1.form.mskAM_REFUND_JOJUNG;
+        	this.mskAM_REFUND_BALANCE = this.tabData.tab1.form.mskAM_REFUND_BALANCE;
+
+        	this.mskAM_AMOUNT_PAY = this.tabData.tab1.form.mskAM_AMOUNT_PAY;
+        	this.mskAM_BALANCE = this.tabData.tab1.form.mskAM_BALANCE;
+
+        	this.dxGrid = this.tabData.tab1.form.objGrid;
+        	this.dxGrid2 = this.tabData.tab2.form.objGrid2;
+
+        	this.getDataFlag = false;
+        	this.rowSum = 0;
+        	this.rowPenalty = 0;
+        	this.rowBalance = 0;
+        	this.rowAmountPay = 0;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+
+        	this.ccfCD_CORP.CodeFindName = "DHX_CFCORP";
+        	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+
+        	this.gfnGridInit(this.dxGrid, this.dsListDetail, "DH", "DHV_LOCALTAX_DETAIL");
+        	this.gfnGridInit(this.dxGrid2, this.dsListAdjust, "DH", "DHV_LOCALTAX_ADJUST");
+
+        	this.dxGrid.setFormatRowProperty(0, "size", 27);
+        	this.dxGrid.setFormatRowProperty(1, "size", 24);
+        	this.dxGrid2.setFormatRowProperty(0, "size", 27);
+        	this.dxGrid2.setFormatRowProperty(1, "size", 24);
+
+        	this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+        	this.dxGrid2.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+
+        	//헤더 클릭 이벤트 삭제(소팅 막기 위해 처리)
+        	this.dxGrid.removeEventHandlerLookup("onheadclick", "gfnGrid_onheadclick", this);
+        	//헤더 클릭 이벤트 삭제(소팅 막기 위해 처리)
+        	this.dxGrid2.removeEventHandlerLookup("onheadclick", "gfnGrid_onheadclick", this);
+
+        };
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+
+        	//
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("CD_CORP", "string");
+        	this.dsSelect.addColumn("NO_ID", "string");
+
+        	this.dsSaveDetail = new Dataset();
+        	this.dsSaveDetail.addColumn("CD_CORP", "string");
+        	this.dsSaveDetail.addColumn("NO_ID", "string");
+        	this.dsSaveDetail.addColumn("CD_INCOME", "string");
+        	this.dsSaveDetail.addColumn("NO_TAX", "int");
+        	this.dsSaveDetail.addColumn("AM_TAXBASE", "bigdecimal");
+        	this.dsSaveDetail.addColumn("AM_TAX", "bigdecimal");
+        	this.dsSaveDetail.addColumn("ID_USER", "string");
+
+        	this.dsSaveAdjust = new Dataset();
+        	this.dsSaveAdjust.addColumn("CD_CORP", "string");
+        	this.dsSaveAdjust.addColumn("NO_ID", "string");
+        	this.dsSaveAdjust.addColumn("CD_INCOME", "string");
+        	this.dsSaveAdjust.addColumn("DT_PAY", "string");
+        	this.dsSaveAdjust.addColumn("AM_TAXBASE", "bigdecimal");
+        	this.dsSaveAdjust.addColumn("AM_TAX", "bigdecimal");
+        	this.dsSaveAdjust.addColumn("AM_BALANCE", "bigdecimal");
+        	this.dsSaveAdjust.addColumn("AM_ADJUST_PAY", "bigdecimal");
+        	this.dsSaveAdjust.addColumn("DS_NOTE", "string");
+        	this.dsSaveAdjust.addColumn("ID_USER", "string");
+
+        	this.dsSave = new Dataset();
+        	this.dsSave.addColumn("CD_CORP", "string");
+        	this.dsSave.addColumn("NO_ID", "string");
+        	this.dsSave.addColumn("CD_PAYMENT", "string");
+        	this.dsSave.addColumn("CD_WORK", "string");
+        	this.dsSave.addColumn("YM_WORK", "string");
+        	this.dsSave.addColumn("YM_PAYMENT", "string");
+        	this.dsSave.addColumn("DT_NOTIFY", "string");
+        	this.dsSave.addColumn("DT_DELIVERY", "string");
+        	this.dsSave.addColumn("DT_PAY", "string");
+        	this.dsSave.addColumn("RT_TAX", "int");
+        	this.dsSave.addColumn("AM_TAXBASE", "bigdecimal");
+        	this.dsSave.addColumn("AM_TAX", "bigdecimal");
+        	this.dsSave.addColumn("CD_PENALTY", "string");
+        	this.dsSave.addColumn("AM_PENALTY_DATE", "bigdecimal");
+        	this.dsSave.addColumn("DD_PENALTY", "bigdecimal");
+        	this.dsSave.addColumn("AM_PENALTY", "bigdecimal");
+        	this.dsSave.addColumn("DS_NOTE", "string");
+        	this.dsSave.addColumn("AM_ETC_REFUND", "bigdecimal");
+        	this.dsSave.addColumn("AM_ADD_PAYMENT", "bigdecimal");
+        	this.dsSave.addColumn("AM_YEAREND_REFUND", "bigdecimal");
+        	this.dsSave.addColumn("AM_RETIRE_REFUND", "bigdecimal");
+        	this.dsSave.addColumn("AM_YEAREND_PAYMENT", "bigdecimal");
+        	this.dsSave.addColumn("AM_PENALTY_ADD_PAYMENT", "bigdecimal");
+        	this.dsSave.addColumn("AM_PENALTY_DEFAULT", "bigdecimal");
+        	this.dsSave.addColumn("AM_PENALTY_ADD_DEFAULT", "bigdecimal");
+        	this.dsSave.addColumn("AM_PENALTY_ADD_ADD", "bigdecimal");
+        	this.dsSave.addColumn("DT_PENALTY_ADD", "string");
+        	this.dsSave.addColumn("DD_PENALTY_ADD", "int");
+        	this.dsSave.addColumn("AM_REFUND", "bigdecimal");
+        	this.dsSave.addColumn("AM_PAYMENT", "bigdecimal");
+        	this.dsSave.addColumn("AM_BALANCE", "bigdecimal");
+        	this.dsSave.addColumn("AM_AMOUNT_PAY", "bigdecimal");
+        	this.dsSave.addColumn("AM_LOCAL_PAY", "bigdecimal");
+        	this.dsSave.addColumn("AM_ADD_PAY", "bigdecimal");
+        	this.dsSave.addColumn("AM_REFUND_BALANCE", "bigdecimal");
+        	this.dsSave.addColumn("AM_REFUND_BEF", "bigdecimal");
+        	this.dsSave.addColumn("AM_PENALTY_MON", "bigdecimal");
+        	this.dsSave.addColumn("AM_PENALTY_ADD", "bigdecimal");
+        	this.dsSave.addColumn("ID_USER", "string");
+
+        	// 마감처리
+        	this.dsClose = new Dataset();
+        	this.dsClose.addColumn("CD_CORP", "string");
+        	this.dsClose.addColumn("NO_ID", "string");
+        	this.dsClose.addColumn("YN_CLOSE", "string");
+        	this.dsClose.addColumn("ID_USER", "string");
+
+        	this.dsESingo = new Dataset();
+        	this.dsESingo.addColumn("CD_CORP", "string");
+        	this.dsESingo.addColumn("NO_ID", "string");
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+
+        	if (!this.fnSelectValidate()) return false;
+
+        	this.dsList.clearData();
+        	this.gfnGridBeforeSelect(this.dxGrid);
+        	this.gfnGridBeforeSelect(this.dxGrid2);
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+
+        	this.dsSelect.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+        	this.dsSelect.setColumn(0, "NO_ID", this.dsSearch.getColumn(0, "NO_ID"));
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0 dsListDetail=select1 dsListAdjust=select2";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+
+        }
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function(obj) {
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+
+        	if (!this.fnSaveValidate()) return false;
+
+        	this.dxGrid.updateToDataset();
+         	this.dxGrid2.updateToDataset();
+
+        	this.dsSave.clearData();
+         	this.dsSaveDetail.clearData();
+        	this.dsSaveAdjust.clearData();
+
+            if(this.gfnGetFormStatus(this) == "U") {
+
+        		nrow = this.dsSave.addRow();
+        		this.dsSave.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+        		this.dsSave.setColumn(nrow, "NO_ID", this.dsSearch.getColumn(0, "NO_ID"));
+        		this.dsSave.setColumn(nrow, "CD_PAYMENT", this.dsList.getColumn(0, "CD_PAYMENT"));
+        		this.dsSave.setColumn(nrow, "CD_WORK", this.dsList.getColumn(0, "CD_WORK"));
+        		this.dsSave.setColumn(nrow, "YM_WORK", this.dsList.getColumn(0, "YM_WORK"));
+        		this.dsSave.setColumn(nrow, "YM_PAYMENT", this.dsList.getColumn(0, "YM_PAYMENT"));
+        		this.dsSave.setColumn(nrow, "DT_NOTIFY", this.dsList.getColumn(0, "DT_NOTIFY"));
+        		this.dsSave.setColumn(nrow, "DT_DELIVERY", this.dsList.getColumn(0, "DT_DELIVERY"));
+        		this.dsSave.setColumn(nrow, "DT_PAY", this.dsList.getColumn(0, "DT_PAY"));
+        		this.dsSave.setColumn(nrow, "RT_TAX", this.dsList.getColumn(0, "RT_TAX"));
+        		this.dsSave.setColumn(nrow, "AM_TAXBASE", this.dsList.getColumn(0, "AM_TAXBASE"));
+        		this.dsSave.setColumn(nrow, "AM_TAX", this.dsList.getColumn(0, "AM_TAX"));
+        		this.dsSave.setColumn(nrow, "CD_PENALTY", this.dsList.getColumn(0, "CD_PENALTY"));
+        		this.dsSave.setColumn(nrow, "AM_PENALTY_DATE", this.dsList.getColumn(0, "AM_PENALTY_DATE"));
+        		this.dsSave.setColumn(nrow, "DD_PENALTY", this.dsList.getColumn(0, "DD_PENALTY"));
+        		this.dsSave.setColumn(nrow, "AM_PENALTY", this.dsList.getColumn(0, "AM_PENALTY"));
+        		this.dsSave.setColumn(nrow, "DS_NOTE", this.dsList.getColumn(0, "DS_NOTE"));
+        		this.dsSave.setColumn(nrow, "AM_ETC_REFUND", this.dsList.getColumn(0, "AM_ETC_REFUND"));
+        		this.dsSave.setColumn(nrow, "AM_ADD_PAYMENT", this.dsList.getColumn(0, "AM_ADD_PAYMENT"));
+        		this.dsSave.setColumn(nrow, "AM_YEAREND_REFUND", this.dsList.getColumn(0, "AM_YEAREND_REFUND"));
+        		this.dsSave.setColumn(nrow, "AM_RETIRE_REFUND", this.dsList.getColumn(0, "AM_RETIRE_REFUND"));
+        		this.dsSave.setColumn(nrow, "AM_YEAREND_PAYMENT", this.dsList.getColumn(0, "AM_YEAREND_PAYMENT"));
+        		this.dsSave.setColumn(nrow, "AM_PENALTY_ADD_PAYMENT", this.dsList.getColumn(0, "AM_PENALTY_ADD_PAYMENT"));
+        		this.dsSave.setColumn(nrow, "AM_PENALTY_DEFAULT", this.dsList.getColumn(0, "AM_PENALTY_DEFAULT"));
+        		this.dsSave.setColumn(nrow, "AM_PENALTY_ADD_DEFAULT", this.dsList.getColumn(0, "AM_PENALTY_ADD_DEFAULT"));
+        		this.dsSave.setColumn(nrow, "AM_PENALTY_ADD_ADD", this.dsList.getColumn(0, "AM_PENALTY_ADD_ADD"));
+        		this.dsSave.setColumn(nrow, "DT_PENALTY_ADD", this.dsList.getColumn(0, "DT_PENALTY_ADD"));
+        		this.dsSave.setColumn(nrow, "DD_PENALTY_ADD", this.dsList.getColumn(0, "DD_PENALTY_ADD"));
+        		this.dsSave.setColumn(nrow, "AM_REFUND", this.dsList.getColumn(0, "AM_REFUND"));
+        		this.dsSave.setColumn(nrow, "AM_PAYMENT", this.dsList.getColumn(0, "AM_PAYMENT"));
+        		this.dsSave.setColumn(nrow, "AM_BALANCE", this.dsList.getColumn(0, "AM_BALANCE"));
+        		this.dsSave.setColumn(nrow, "AM_AMOUNT_PAY", this.dsList.getColumn(0, "AM_AMOUNT_PAY"));
+        		this.dsSave.setColumn(nrow, "AM_LOCAL_PAY", this.dsList.getColumn(0, "AM_LOCAL_PAY"));
+        		this.dsSave.setColumn(nrow, "AM_ADD_PAY", this.dsList.getColumn(0, "AM_ADD_PAY"));
+        		this.dsSave.setColumn(nrow, "AM_REFUND_BALANCE", this.dsList.getColumn(0, "AM_REFUND_BALANCE"));
+        		this.dsSave.setColumn(nrow, "AM_REFUND_BEF", this.dsList.getColumn(0, "AM_REFUND_BEF"));
+        		this.dsSave.setColumn(nrow, "AM_PENALTY_MON", this.dsList.getColumn(0, "AM_PENALTY_MON"));
+        		this.dsSave.setColumn(nrow, "AM_PENALTY_ADD", this.dsList.getColumn(0, "AM_PENALTY_ADD"));
+        		this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+
+        	}
+
+        	for(var i = 0 ; i < this.dsListDetail.rowcount ; i ++) {
+
+        		if(this.gfnGetFlag(this.dsListDetail, i) == "U") {
+
+        			nrow = this.dsSaveDetail.addRow();
+
+        			this.dsSaveDetail.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+        			this.dsSaveDetail.setColumn(nrow, "NO_ID", this.dsSearch.getColumn(0, "NO_ID"));
+        			this.dsSaveDetail.setColumn(nrow, "CD_INCOME", this.dsListDetail.getColumn(i, "CD_CODE"));
+        			this.dsSaveDetail.setColumn(nrow, "NO_TAX", this.dsListDetail.getColumn(i, "NO_TAX"));
+        			this.dsSaveDetail.setColumn(nrow, "AM_TAXBASE", this.dsListDetail.getColumn(i, "AM_TAXBASE"));
+        			this.dsSaveDetail.setColumn(nrow, "AM_TAX", this.dsListDetail.getColumn(i, "AM_TAX"));
+        			this.dsSaveDetail.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        		}
+        	}
+
+
+        	for(var i = 0 ; i < this.dsListAdjust.rowcount ; i ++) {
+        		if(this.gfnGetFlag(this.dsListAdjust, i) == "U" || this.gfnGetFlag(this.dsListAdjust, i) == "I") {
+
+        			nrow = this.dsSaveAdjust.addRow();
+        			this.dsSaveAdjust.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+        			this.dsSaveAdjust.setColumn(nrow, "NO_ID", this.dsSearch.getColumn(0, "NO_ID"));
+        			this.dsSaveAdjust.setColumn(nrow, "CD_INCOME", this.dsListAdjust.getColumn(i, "CD_CODE"));
+        			this.dsSaveAdjust.setColumn(nrow, "DT_PAY", this.dsListAdjust.getColumn(i, "DT_PAY"));
+        			this.dsSaveAdjust.setColumn(nrow, "AM_TAXBASE", this.dsListAdjust.getColumn(i, "AM_TAXBASE"));
+        			this.dsSaveAdjust.setColumn(nrow, "AM_TAX", this.dsListAdjust.getColumn(i, "AM_TAX"));
+        			this.dsSaveAdjust.setColumn(nrow, "AM_BALANCE", this.dsListAdjust.getColumn(i, "AM_BALANCE"));
+        			this.dsSaveAdjust.setColumn(nrow, "AM_ADJUST_PAY", this.dsListAdjust.getColumn(i, "AM_ADJUST_PAY"));
+        			this.dsSaveAdjust.setColumn(nrow, "DS_NOTE", this.dsListAdjust.getColumn(i, "DS_NOTE"));
+        			this.dsSaveAdjust.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        		}
+        	}
+
+
+        	if(this.dsSave.rowcount == 0 && this.dsSaveDetail.rowcount == 0 && this.dsSaveAdjust.rowcount == 0 ) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "savedetail=dsSaveDetail saveadjust=dsSaveAdjust save=dsSave";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	switch(this.tabData.tabindex) {
+        		case 0:
+        			this.gfnExcelExport(this.dxGrid);
+        			break;
+        		case 1:
+        			this.gfnExcelExport(this.dxGrid2);
+        			break;
+        	}
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+         */
+        this.fnSelectValidate = function() {
+
+        	if(this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+        		this.gfnAlert("법인코드를 입력하세요!");
+        		return false;
+        	}
+
+        	if(this.gfnIsNull(this.edtNO_ID.value)) {
+        		this.gfnAlert("문서번호를 입력하세요!");
+        		return false;
+        	}
+
+        	return true;
+        };
+
+        this.fnSaveValidate = function() {
+        	var strMsg = "";
+        	var ret = true;
+
+        	if(this.rdoSINGO.index == -1) {
+        		strMsg += "구분을 선택해 주십시오.\n";
+        		ret = false;
+        	}
+
+        	if(this.rdoTY_WORK.index == -1) {
+        		strMsg += "신고구분을 선택해 주십시오.\n";
+        		ret = false;
+        	}
+
+        	if(this.gfnIsNull(this.ctclYM_PAYMENT.form.TextBox.value)) {
+        		strMsg += "지급연월을 입력하여 주십시오.\n";
+        		ret = false;
+        	}
+
+        	if(this.gfnIsNull(this.ctclYM_WORK.form.TextBox.value)) {
+        		strMsg += "귀속연월을 입력하여 주십시오.\n";
+        		ret = false;
+        	}
+
+        	if(this.gfnIsNull(this.ccfDT_NOTIFY.value)) {
+        		strMsg += "신고기한을 입력하여 주십시오.\n";
+        		ret = false;
+        	}
+
+        	if(this.gfnIsNull(this.ccfDT_DELIVERY.value)) {
+        		strMsg += "제출일자를 입력하여 주십시오.\n";
+        		ret = false;
+        	}
+
+        	if(ret == false) {
+        		this.gfnAlert(strMsg);
+        		return false;
+        	}
+
+        	return true;
+        }
+
+        this.dxGridValidate = function(row, colId) {
+
+        	//this.dxGrid.updateToDataset();
+
+        	//if(this.dsList.rowcount < row ) return true;
+
+        	this.sbAmSum(colId);
+        	return true;
+        }
+
+        this.dxGrid2Validate = function(row, colId) {
+
+        	this.dxGrid.updateToDataset();
+
+        	//if(this.dsListDetail.rowcount < row || this.gfnIsNull(this.dsListDetail.getColumn(row, colId))) return true;
+        	//if(this.dsListDetail.rowcount < row) return true;
+        	if(colId == "AM_TAXBASE" || colId == "AM_TAX" )
+        	{
+        		this.sbAmSumDetail(row, colId);
+        	}
+
+        	return true;
+        }
+
+        this.dxGrid3Validate = function(row, colId) {
+
+        	this.dxGrid2.updateToDataset();
+
+        	//if(this.dsListAdjust.rowcount < row || this.gfnIsNull(this.dsListAdjust.getColumn(row, colId))) return true;
+
+        	if(this.dsListAdjust.getColumn(row, colId).length >= 15) {
+        		this.dsListAdjust.setColumn(row, colId, "0");
+        		return false;
+        	}
+
+
+        	if(colId == "AM_TAX" || colId == "AM_BASETAX" || colId == "AM_BALANCE" || colId == "AM_ADJUST_PAY" )
+        	{
+        		this.sbAmSumAdjust(row, colId);
+        	}
+
+        	return true;
+        }
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        this.fnCallback = function(svcID, errorCode, errorMsg) {
+
+        	if (errorCode != 0) {
+        		this.gfnAlert(errorMsg);
+        		return;
+        	}
+
+        	if(svcID == "select") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+        		this.gfnGridAfterSelect(this.dxGrid2);
+
+        		if (this.dsListDetail.rowcount > 0 )
+        		{
+        			this.setGirdColor();
+        			this.rowSum = this.dsListDetail.findRow("CD_CODE", "95");
+        			this.rowPenalty = this.dsListDetail.findRow("CD_CODE", "96");
+        			this.rowBalance = this.dsListDetail.findRow("CD_CODE", "97");
+        			this.rowAmountPay = this.dsListDetail.findRow("CD_CODE", "99");
+        		}
+        		this.fnReadOnly();
+        	}
+
+        	if(svcID == "save") {
+        		if (errorCode == 0) {
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+
+        	if(svcID == "close") {
+        		if (errorCode == 0) {
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+
+        	if(svcID == "ESingo") {
+        		if(errorCode == 0) {
+        			this.fnFileDownload();
+        		}
+        		else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+
+        	if (svcID == "selectrate")
+        	{
+        		if (errorCode == 0) {
+
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        }
+
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+        	if (id == "ccfCD_CORP") {
+        		dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+        	}
+        	return true;
+        };
+
+        this.fnAfterCDTextChanged = function(id, codeFindData) {
+
+        }
+
+        this.dsSearch_onvaluechanged = function(obj,e) {
+
+        	if(e.oldvalue != e.newvalue) {
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.clearDivData();
+        	}
+        }
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+
+         this.fnSetCombo = function(){
+
+        	this.dsSelectRate = new Dataset();
+        	this.dsSelectRate.addColumn("DT_DATE", "string");
+        	this.dsSelectRate.addColumn("TY_GUBUN", "string");
+
+        	this.dsSelectRate.clearData();
+        	this.dsSelectRate.addRow();
+        	this.dsSelectRate.setColumn(0, "DT_DATE", this.gfnGetDate());
+        	this.dsSelectRate.setColumn(0, "TY_GUBUN", "LOCALTAX");
+
+        	var strSvcId    = "selectrate";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "selectrate=dsSelectRate";
+        	var outData     = "dsRate=selectrate0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+
+         }
+
+        this.clearDivData = function() {
+
+        	this.dsList.clearData();
+        	this.dsListDetail.clearData();
+        	this.dsListAdjust.clearData();
+
+        	//this.ccfDT_ENTER.set_value("");
+
+        }
+
+        // 납부서 금액 sum
+        this.sbAmSum = function(colId) {
+
+        	// 가산세 추가 대상액 입력시
+        	if(colId == "AM_PENALTY_ADD_PAYMENT" ) {
+        		var amPenaltyAdd = this.gfnNvl(this.dsList.getColumn(0, "AM_PENALTY_ADD_PAYMENT"), 0 );
+        		var amPenaltyDefault = Math.floor(Number(amPenaltyAdd) * this.dsRate.getColumn(0, "RT_PANELTY")/100/10) * 10; // 정액 가산세 3%
+
+        		this.dsList.setColumn(0, "AM_PENALTY_ADD_DEFAULT", amPenaltyDefault);
+
+        		if (!this.gfnIsNull(this.dsList.getColumn(0, "DT_PENALTY_ADD")))
+        		{
+
+        			var dayPenaltyAdd = this.gfnGetDiffDate(this.dsList.getColumn(0, "DT_PENALTY_ADD") , this.dsList.getColumn(0, "DT_NOTIFY")); // 정액 가산세
+        			if (dayPenaltyAdd >0 )
+        			{
+        				var amPenaltyDataAdd = Math.floor(amPenaltyAdd * dayPenaltyAdd * this.dsRate.getColumn(0, "RT_PANELTY_DAY")/10)*10 ;  // 추가납부금 기간지연 가산세 0.00022
+
+        				this.dsList.setColumn(0, "AM_PENALTY_ADD_ADD", amPenaltyDataAdd);
+        				this.dsList.setColumn(0, "DD_PENALTY_ADD" , dayPenaltyAdd);
+
+        				var amAddPenaltySum = amPenaltyDefault + amPenaltyDataAdd;
+        				var amAddPenaltyLimit = Math.floor(amPenaltyAdd * this.dsRate.getColumn(0, "RT_PANELTY_LIMIT")/100/10) * 10; // 추가가산세 한도액 10%
+
+        				this.dsList.setColumn(0, "AM_PENALTY_ADD" , amAddPenaltySum > amAddPenaltyLimit ? amAddPenaltyLimit : amAddPenaltySum);
+
+        			} else {
+        				this.dsList.setColumn(0, "AM_PENALTY_ADD_ADD", 0);
+        				this.dsList.setColumn(0, "DD_PENALTY_ADD" , 0);
+        				this.dsList.setColumn(0, "AM_PENALTY_ADD" , 0);
+        			}
+
+        		}
+        	}
+
+        	if(colId == "DT_PENALTY_ADD" ) {
+
+        		var dayPenaltyAdd = this.gfnGetDiffDate(this.dsList.getColumn(0, "DT_PENALTY_ADD") , this.dsList.getColumn(0, "DT_NOTIFY"));
+        		// trace(" sbAmSum : dayPenaltyAdd =>" + dayPenaltyAdd);
+        		this.dsList.setColumn(0, "DD_PENALTY_ADD" , dayPenaltyAdd > 0 ? dayPenaltyAdd : 0 );
+
+        		if (this.gfnNvl(this.dsList.getColumn(0, "AM_PENALTY_ADD_PAYMENT"),0) != 0 && dayPenaltyAdd > 0)
+        		{
+        			var amPenaltyAdd = this.gfnNvl(this.dsList.getColumn(0, "AM_PENALTY_ADD_PAYMENT"),0);
+
+        			var amAddPenaltyDefault = this.dsList.getColumn(0, "AM_PENALTY_ADD_DEFAULT");
+
+        			var amPenaltyDataAdd = Math.floor(amPenaltyAdd * dayPenaltyAdd * this.dsRate.getColumn(0, "RT_PANELTY_DAY")/10)*10 ;  // 추가납부금 기간지연 가산세
+
+        			this.dsList.setColumn(0, "AM_PENALTY_ADD_ADD", amPenaltyDataAdd);
+
+        			var amAddPenaltySum = amAddPenaltyDefault + amPenaltyDataAdd;
+        			var amAddPenaltyLimit = Math.floor(amPenaltyAdd * this.dsRate.getColumn(0, "RT_PANELTY_LIMIT")/100/10) * 10; // 추가가산세 한도액
+
+        			this.dsList.setColumn(0, "AM_PENALTY_ADD" , amAddPenaltySum > amAddPenaltyLimit ? amAddPenaltyLimit : amAddPenaltySum);
+
+        		} else {
+        			this.dsList.setColumn(0, "AM_PENALTY_ADD_ADD", 0);
+        			this.dsList.setColumn(0, "AM_PENALTY_ADD",0);
+        		}
+
+        	}
+
+        	// 당월 가산세 계산
+        	trace(" sbAmSum=>" + colId);
+        	if(colId == "DT_DELIVERY"|| colId == "DT_NOTIFY" || colId == "AM_TAX" || colId == "AM_ETC_REFUND" || colId == "AM_YEAREND_REFUND" ||
+        		colId == "AM_RETIRE_REFUND" || colId == "AM_ADD_PAYMENT" || colId == "AM_YEAREND_PAYMENT" || colId == "AM_REFUND_BEF") {
+        		if (!this.gfnIsNull(this.dsList.getColumn(0, "DT_DELIVERY")))
+        		{
+        			trace(" fnSetPenaltyNow=>" + colId);
+        			this.fnSetPenaltyNow();
+        		}
+        	}
+
+        	//가산세 합계액
+        	this.dsListDetail.set_enableevent(false);
+        	var amTemp 	= Number(this.gfnNvl(this.dsList.getColumn(0, "AM_PENALTY_MON"),0)) +
+        					Number(this.gfnNvl(this.dsList.getColumn(0, "AM_PENALTY_ADD"),0)) ;
+        	this.dsList.setColumn(0, "AM_PENALTY", amTemp);
+        	this.dsListDetail.setColumn(this.rowPenalty, "AM_TAX", amTemp);
+
+        	trace(" amTemp=>" + amTemp);
+
+        	//환급액 총계
+        	var amRefund =  Number(this.gfnNvl(this.dsList.getColumn(0, "AM_ETC_REFUND"),0)) +
+        					Number(this.gfnNvl(this.dsList.getColumn(0, "AM_YEAREND_REFUND"),0)) +
+        					Number(this.gfnNvl(this.dsList.getColumn(0, "AM_RETIRE_REFUND"),0)) +
+        					Number(this.gfnNvl(this.dsList.getColumn(0, "AM_REFUND_BEF"),0));
+        	this.dsList.setColumn(0, "AM_REFUND", amRefund);
+
+        	trace(" amRefund=>" + amRefund);
+
+        	//납부액 총계
+        	var	amPayment  = Number(this.gfnNvl(this.dsList.getColumn(0, "AM_ADD_PAYMENT"),0)) +
+        					Number(this.gfnNvl(this.dsList.getColumn(0, "AM_YEAREND_PAYMENT"),0)) +
+        					Number(this.gfnNvl(this.dsList.getColumn(0, "AM_PENALTY_ADD_PAYMENT"),0));
+        	this.dsList.setColumn(0, "AM_PAYMENT", amPayment);
+
+        	trace(" amPayment=>" + amPayment);
+
+        	//가감총계
+        	var amBalance = amPayment - amRefund;
+
+        	this.dsList.setColumn(0,"AM_BALANCE", amBalance);
+        	//this.dsListDetail.setColumn(this.rowAmountPay, "AM_TAX", amAmountPay);
+
+        	//납부총금액
+        	this.fnGetTotal();
+
+        	this.dsListDetail.set_enableevent(true);
+        }
+        //가산세 계산
+        this.fnSetPenaltyNow = function(){
+
+        	var dayPenalty = this.gfnGetDiffDate(this.dsList.getColumn(0, "DT_NOTIFY") ,this.dsList.getColumn(0, "DT_DELIVERY")); // 지연일수
+
+        	var amTaxSum = this.gfnNvl(this.dsList.getColumn(0, "AM_TAX"),0) -
+        					Number(this.gfnNvl(this.dsList.getColumn(0, "AM_ETC_REFUND"),0)) -
+        					Number(this.gfnNvl(this.dsList.getColumn(0, "AM_YEAREND_REFUND"),0)) -
+        					Number(this.gfnNvl(this.dsList.getColumn(0, "AM_REFUND_BEF"),0)) -
+        					Number(this.gfnNvl(this.dsList.getColumn(0, "AM_RETIRE_REFUND"),0)) +
+        					Number(this.gfnNvl(this.dsList.getColumn(0, "AM_ADD_PAYMENT"),0)) +
+        					Number(this.gfnNvl(this.dsList.getColumn(0, "AM_YEAREND_PAYMENT"),0));
+
+        	if (dayPenalty > 0 && amTaxSum > 0) {
+
+        		trace(" fnSetPenaltyNow : amTaxSum =>" + amTaxSum);
+        		trace(" fnSetPenaltyNow : AM_TAX =>" + this.gfnNvl(this.dsList.getColumn(0, "AM_TAX"),0));
+        		var amPenaltyDefault = Math.floor(Number(amTaxSum) * this.dsRate.getColumn(0, "RT_PANELTY")/100/10) * 10; 	// 정액 가산세 3%
+
+        		var amPenaltyData = Math.floor(amTaxSum * dayPenalty * this.dsRate.getColumn(0, "RT_PANELTY_DAY")/10)*10  ;  // 추가납부금 기간지연 가산세 0.00022
+
+        		var amPenaltySum = amPenaltyDefault + amPenaltyData;   // 당월 가산세 합계
+        		var amPenaltyLimit = Math.floor(Number(amTaxSum) * this.dsRate.getColumn(0, "RT_PANELTY_LIMIT")/100/10) * 10; // 가산세 한도액 = 지방세 * 10%
+
+        		this.dsList.setColumn(0, "AM_PENALTY_DEFAULT", amPenaltyDefault);
+        		this.dsList.setColumn(0, "AM_PENALTY_DATE", amPenaltyData);
+        		this.dsList.setColumn(0, "DD_PENALTY" , dayPenalty);
+        		this.dsList.setColumn(0, "AM_PENALTY_MON" , amPenaltySum > amPenaltyLimit ? amPenaltyLimit : amPenaltySum);
+
+        	} else {
+        		this.dsList.setColumn(0, "AM_PENALTY_DEFAULT", 0);
+        		this.dsList.setColumn(0, "AM_PENALTY_DATE", 0);
+        		this.dsList.setColumn(0, "DD_PENALTY" , 0);
+        		this.dsList.setColumn(0, "AM_PENALTY_MON" , 0);
+        	}
+        	this.sbAmSum();
+        }
+
+        this.fnGetTotal = function() {
+        	//this.dsListDetail.set_enableevent(false);
+        	//trace(" sumRow=>" + amSum);
+        	var amSum = this.gfnNvl(this.dsListDetail.getColumn(this.rowSum, "AM_TAX"),0);
+        	// 가산세액
+        	var amPenalty = this.gfnNvl(this.dsList.getColumn(0, "AM_PENALTY"),0);
+        	// 가감합계액
+        	var amBalance  = this.gfnNvl(this.dsList.getColumn(0, "AM_BALANCE"),0);
+        	// 총납부세액
+        	var amAmountPay  = amSum + amPenalty + amBalance;
+        	// 납부할 지방소득세
+        	var amLocalPay = amAmountPay - amPenalty ;
+        	// 차갑후 환급잔액
+        	var amRefundBalance = amAmountPay > 0 ? 0 : amAmountPay * -1 ;
+
+        	// 합계 값 입력
+        	this.dsList.setColumn(0, "AM_TAX", amSum);
+        	this.dsList.setColumn(0, "AM_PENALTY", amPenalty);
+        	this.dsList.setColumn(0, "AM_BALANCE", amBalance);
+        	this.dsList.setColumn(0, "AM_AMOUNT_PAY", amAmountPay);
+        	this.dsList.setColumn(0, "AM_LOCAL_PAY", amLocalPay);
+        	this.dsList.setColumn(0, "AM_ADD_PAY", amPenalty);
+        	this.dsList.setColumn(0, "AM_REFUND_BALANCE", amRefundBalance);
+
+        	this.dsListDetail.setColumn(this.rowPenalty, "AM_TAX", amPenalty);
+        	this.dsListDetail.setColumn(this.rowBalance, "AM_TAX", amBalance);
+        	this.dsListDetail.setColumn(this.rowAmountPay, "AM_TAX", amAmountPay);
+
+        	//this.dsListDetail.set_enableevent(true);
+        }
+
+        // detail 합산 처리
+        this.sbAmSumDetail = function(row, colId) {
+
+        	if(this.gfnIsNull(this.dsListDetail.getColumn(row, "CD_CODE"))) return;
+
+        	this.dsListDetail.set_enableevent(false);
+
+        	var amSum  = 0;
+        	for(var i = 0 ; i < this.rowSum -1 ; i++) {
+        		amSum += this.gfnNvl(this.dsListDetail.getColumn(i, colId),0);
+        	}
+        	this.dsListDetail.setColumn(this.rowSum, colId , amSum);
+        	this.dsList.setColumn(0, colId , amSum);
+
+        	this.fnGetTotal();
+
+        	this.dsListDetail.set_enableevent(true);
+        }
+
+
+        // detail 합산 처리
+        this.sbAmSumAdjust = function(row, colId) {
+
+        	if(this.gfnIsNull(this.dsListAdjust.getColumn(row, "CD_CODE"))) return;
+
+            //this.dsListAdjust.selectRow(sumRow, true);
+
+        	var sumAdjust = this.dsListAdjust.getSum(colId);
+        	this.dsListDetail.set_enableevent(false);
+        	//납부총금액
+        	this.fnGetTotal();
+
+        	this.dsListDetail.set_enableevent(true);
+        }
+
+
+        this.fnTaxClose = function(obj,e) { //마감처리
+
+        	if(!this.gfnGridIsRow(this.dxGrid)) return;
+
+        	if(this.gfnGetFormStatus(this) == "U" ) {
+        		this.gfnAlert("수정중인자료가 있습니다. 저장후 작업하세요.");
+        		return false;
+        	}
+
+        	if( this.dsList.getColumn(0,"YN_CLOSE") != "N" ) {
+        		this.gfnAlert("마감상태가  '미마감' 상태인 경우만 마감 가능합니다.");
+        		return false;
+        	}
+
+        	// 마감처리
+        	this.gfnConfirm("마감 처리후에는 수정 불가능합니다. \n마감을 진행하시겠습니까?", "fnCloseCallBack", "Y");
+        };
+
+        this.fnCancle = function(obj,e) { //마감취소 처리
+
+        	if(!this.gfnGridIsRow(this.dxGrid)) return;
+
+        	if(this.gfnGetFormStatus(this) == "U" ) {
+        		this.gfnAlert("수정중인자료가 있습니다. 저장후 작업하세요.");
+        		return false;
+        	}
+
+        	if( this.dsList.getColumn(0,"YN_CLOSE") != "Y" ) {
+        		this.gfnAlert("마감상태가  '마감' 상태인 경우만 마감취소 가능합니다.");
+        		return false;
+        	}
+
+        	// 마감처리
+        	this.gfnConfirm("마감취소를 진행하시겠습니까?", "fnCloseCallBack", "N");
+        };
+
+        this.fnCloseCallBack = function(strId, val) {
+
+        	if(val == false) return;
+
+        	this.dsClose.clearData();
+        	this.dsClose.addRow();
+
+        	this.dsClose.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+        	this.dsClose.setColumn(0, "NO_ID", this.dsSearch.getColumn(0, "NO_ID"));
+        	this.dsClose.setColumn(0, "YN_CLOSE", strId);
+        	this.dsClose.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+
+        	var strSvcId    = "close";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "close=dsClose";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        this.fnESingo = function() {
+        	if(!this.gfnGridIsRow(this.dxGrid)) return;
+
+        	if(this.gfnGetFormStatus(this) == "U" ) {
+        		this.gfnAlert("수정중인자료가 있습니다. 저장후 작업하세요.");
+        		return false;
+        	}
+        	param = {};
+        	param.CD_CORP = this.dsSearch.getColumn(0, "CD_CORP");
+        	param.NO_ID = this.dsSearch.getColumn(0, "NO_ID");
+
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DHV_LOCALTAX_FILE_DLG", "fnPopupCallback", param);
+        	//this.gfnConfirm("전자 신고 작업을 진행하시겠습니까?", "fnESingoCallBack");
+        };
+
+        this.fnPopupCallback = function(strId, val) {
+        	if (val)
+        	{
+        		this.FormBtns.Select.click();
+        	}
+        }
+
+        this.fnESingoCallBack = function(strId, val) {
+        	if(!val) return;
+
+        	//전자신고
+
+        	this.dsESingo.clearData();
+        	var nrow = this.dsESingo.addRow();
+
+        	this.dsESingo.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP")); //   IN      VARCHAR2,      -- 법인코드
+        	this.dsESingo.setColumn(nrow, "NO_ID", this.dsSearch.getColumn(0, "NO_ID")); 									//   IN      VARCHAR2,      -- 귀속년월
+
+        	//trace(this.dsESingo.saveXML());
+
+        	var strSvcId    = "ESingo";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "ESingo=dsESingo";
+        	var outData     = "dsText=ESingo0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        					strSvcType , 	// transaction을 요청할 구분
+        					inProc,			// Procedure 정보 Dataset 이름
+        					inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        					outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        					strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+        					callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        this.fnFileDownload = function () {
+
+        	if (this.dsText.rowcount <= 0) {
+        		return false;
+        	}
+
+        	var data="";
+        	for(var i=0;i<this.dsText.rowcount;i++){
+        		data = data + this.dsText.getColumn(i,"ROWDATA");
+        		if(i == this.dsText.rowcount -1){
+        			;
+        		}else{
+        			data = data + "\n";
+        		}
+        	}
+        	trace("data==>", data);
+        	//파일 명명규칙  : 작성일자 + 서식코드(7) + 자료구분(1)
+        	var sFilename = this.gfnGetDate()+"A103900.1"; //yyyyMMdd(오늘날짜)A103900.01
+        	var sFilecont = data;
+        	var encodeFileName = encodeURIComponent(sFilename);
+
+        	var surl = this.fileConfig.host+ this.fileConfig.downloadUrl; // + encodeFileName;
+        	this.FileDownTransfer00.set_url(surl);
+        	this.FileDownTransfer00.setPostData("fileCont", sFilecont);
+        	this.FileDownTransfer00.setPostData("fileName", encodeFileName);
+        	this.FileDownTransfer00.setPostData("fileEncoding", "EUC-KR");
+
+        	if( system.navigatorname =="nexacro"){
+        		this.FileDownTransfer00.set_downloadfilename(sFilename);
+        	}
+        	this.FileDownTransfer00.download();
+        }
+
+        this.fnReadOnly = function() {
+        	var ynClose = this.dsList.getColumn(0, "YN_CLOSE");
+
+        	if(ynClose == "Y") {
+
+        		this.FormBtns.Add.set_enable(false);
+        		this.FormBtns.Del.set_enable(false);
+        		this.FormBtns.Save.set_enable(false);
+        		this.btnClose.set_enable(false);
+        		this.btnCancle.set_enable(true);
+        		this.btnESingo.set_enable(true);
+
+        		this.rdoTY_WORK.set_enable(false);
+        		this.ctclYM_WORK.set_enable(false);
+        		this.ctclYM_PAYMENT.set_enable(false);
+        		this.ccfDT_NOTIFY.set_enable(false);
+        		this.ccfDT_DELIVERY.set_enable(false);
+        		this.mskDD_PENALTY.set_enable(false);
+
+        		this.mskAM_PENALTY_DATE.set_enable(false);
+        		this.mskAM_PENALTY_ADD_PAYMENT2.set_enable(false);
+        		this.mskAM_PENALTY_DEFAULT.set_enable(false);
+        		this.mskAM_PENALTY_ADD_DEFAULT.set_enable(false);
+        		this.mskAM_PENALTY_ADD_ADD.set_enable(false);
+        		this.mskDD_PENALTY_ADD.set_enable(false);
+        		this.mskAM_ETC_REFUND.set_enable(false);
+        		this.mskAM_YEAREND_REFUND.set_enable(false);
+        		this.mskAM_RETIRE_REFUND.set_enable(false);
+        		this.mskAM_REFUND_BEF.set_enable(false);
+        		this.mskAM_ADD_PAYMENT.set_enable(false);
+        		this.mskAM_YEAREND_PAYMENT.set_enable(false);
+        		this.tclDT_PENALTY_ADD.set_enable(false);
+
+        	} else {
+
+        		this.FormBtns.Add.set_enable(true);
+        		this.FormBtns.Del.set_enable(true);
+        		this.FormBtns.Save.set_enable(true);
+        		this.btnClose.set_enable(true);
+        		this.btnCancle.set_enable(false);
+        		this.btnESingo.set_enable(true);
+
+        		this.dsList.set_enableevent(true);
+
+        		this.rdoTY_WORK.set_enable(true);
+        		this.ctclYM_WORK.set_enable(true);
+        		this.ctclYM_PAYMENT.set_enable(true);
+        		this.ccfDT_NOTIFY.set_enable(true);
+        		this.ccfDT_DELIVERY.set_enable(true);
+        		this.mskDD_PENALTY.set_enable(true);
+
+        		this.mskAM_PENALTY_DATE.set_enable(true);
+        		this.mskAM_PENALTY_ADD_PAYMENT2.set_enable(true);
+        		this.mskAM_PENALTY_DEFAULT.set_enable(true);
+        		this.mskAM_PENALTY_ADD_DEFAULT.set_enable(true);
+        		this.mskAM_PENALTY_ADD_ADD.set_enable(true);
+        		this.mskDD_PENALTY_ADD.set_enable(true);
+        		this.mskAM_ETC_REFUND.set_enable(true);
+        		this.mskAM_YEAREND_REFUND.set_enable(true);
+        		this.mskAM_RETIRE_REFUND.set_enable(true);
+        		this.mskAM_REFUND_BEF.set_enable(true);
+        		this.mskAM_ADD_PAYMENT.set_enable(true);
+        		this.mskAM_YEAREND_PAYMENT.set_enable(true);
+        		this.tclDT_PENALTY_ADD.set_enable(true);
+
+        		this.dsListDetail.set_enableevent(true);
+        		this.dsListAdjust.set_enableevent(true);
+
+        	}
+        }
+        //****************************************************************************
+        //   그리드 셋팅
+        //********************************************************************************
+        this.setGirdColor = function() {
+        	this.dsListDetail.set_enableevent(false);
+
+        	var exprArray = [];
+        	exprArray.push('(currow >= ' + this.dsListDetail.findRow("CD_CODE", "95") + ' && currow <= ' + this.dsListDetail.findRow("CD_CODE", "99") + ' )');
+
+        	this.dxGrid.setCellProperty("body" , this.dxGrid.getBindCellIndex("body", "NO_TAX"), "cssclass", 'expr: ' + exprArray.join(' || ') + ' ? "BACK_ReadOnly" : ""');
+        	this.dxGrid.setCellProperty("body" , this.dxGrid.getBindCellIndex("body", "NO_TAX"), "edittype", 'expr: ' + exprArray.join(' || ') + ' ? "none" : "mask"');
+        	this.dxGrid.setCellProperty("body" , this.dxGrid.getBindCellIndex("body", "AM_TAXBASE"), "cssclass", 'expr: ' + exprArray.join(' || ') + ' ? "BACK_ReadOnly" : ""');
+        	this.dxGrid.setCellProperty("body" , this.dxGrid.getBindCellIndex("body", "AM_TAXBASE"), "edittype", 'expr: ' + exprArray.join(' || ') + ' ? "none" : "mask"');
+        	this.dxGrid.setCellProperty("body" , this.dxGrid.getBindCellIndex("body", "AM_TAX"), "cssclass", 'expr: ' + exprArray.join(' || ') + ' ? "BACK_ReadOnly" : ""');
+        	this.dxGrid.setCellProperty("body" , this.dxGrid.getBindCellIndex("body", "AM_TAX"), "edittype", 'expr: ' + exprArray.join(' || ') + ' ? "none" : "mask"');
+
+        	this.dsListDetail.set_enableevent(true);
+        }
+
+        this.divData_tabData_onchanged = function(obj,e) {
+
+        	this.fnReadOnly()
+        };
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+        this.dsList_oncolumnchanged = function(obj,e)
+        {
+
+        	//trace("dsList_oncolumnchanged");
+
+        	if(this.gfnDsIsUpdated(obj)){
+        		this.dsList.setColumn(e.row, "FLAG" , "U");
+        		this.gfnSetFormStatus(this, "U");
+        		this.dxGridValidate(e.row, e.columnid);
+        	}
+        };
+
+        this.dsListDetail_oncolumnchanged = function(obj,e)
+        {
+
+        	if(this.gfnDsIsUpdated(obj)){
+        		trace("dsListDetail_oncolumnchanged!!!!");
+        		this.dsListDetail.setColumn(e.row, "FLAG" , "U");
+        		this.gfnSetFormStatus(this, "U");
+        		this.dxGrid2Validate(e.row, e.columnid);
+        	}
+        };
+
+        this.dsListAdjust_oncolumnchanged = function(obj,e)
+        {
+
+        	if(e.oldvalue != e.newvalue) {
+        		this.dsListAdjust.setColumn(e.row, "FLAG" , "U");
+        		this.gfnSetFormStatus(this, "U");
+
+        		this.dxGrid3Validate(e.row, e.columnid);
+        	}
+        };
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        this.fn_OnChanged = function(obj,e)
+        {
+        	if(e.postvalue != e.prevalue){
+        		if(this.dsList.rowcount > 0){
+        			this.gfnSetFormStatus(this, "U");
+        		}
+        		//this.sbAmCal();
+        	}
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divData.form.tabData.addEventHandler("onchanged",this.divData_tabData_onchanged,this);
+            this.divData.form.tabData.tab1.form.objGrid.addEventHandler("onselectchanged",this.divData_tabData_tab1_objGrid_onselectchanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_REFUND_BEF.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_REFUND_BEF.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_ADD_PAYMENT.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_ADD_PAYMENT.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_YEAREND_PAYMENT.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_YEAREND_PAYMENT.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_ADD_PAYMENT.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_ADD_PAYMENT.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_DEFAULT.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_DEFAULT.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_ADD_PAYMENT2.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_ADD_PAYMENT2.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_ADD_DEFAULT.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_ADD_DEFAULT.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_ADD_ADD.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_ADD_ADD.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.staTITLE00.addEventHandler("onclick",this.divData_tabData_tab3_staTITLE_onclick,this);
+            this.divData.form.tabData.tab1.form.tclDT_PENALTY_ADD.addEventHandler("onchanged",this.divData_ccfDT_ENTER_onchanged,this);
+            this.divData.form.tabData.tab1.form.staTITLE.addEventHandler("onclick",this.divData_tabData_tab3_staTITLE_onclick,this);
+            this.divData.form.tabData.tab1.form.mskAM_PAYMENT.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_PAYMENT.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_ETC_REFUND.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_ETC_REFUND.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_YEAREND_REFUND.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_YEAREND_REFUND.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_RETIRE_REFUND.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_RETIRE_REFUND.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_REFUND.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_REFUND.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskDD_PENALTY_ADD.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskDD_PENALTY_ADD.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_AMOUNT_PAY.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_AMOUNT_PAY.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_BALANCE.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_BALANCE.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_DATE.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_DATE.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_MON.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_MON.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_ADD.addEventHandler("onkillfocus",this.mask_onkillfocus,this);
+            this.divData.form.tabData.tab1.form.mskAM_PENALTY_ADD.addEventHandler("onchanged",this.fn_OnChanged,this);
+            this.divData.form.rdoSINGO.addEventHandler("onitemchanged",this.divData_item_onchanged,this);
+            this.divData.form.ccfDT_DELIVERY.addEventHandler("onchanged",this.divData_ccfDT_ENTER_onchanged,this);
+            this.divData.form.rdoTY_WORK.addEventHandler("onitemchanged",this.divData_item_onchanged,this);
+            this.divData.form.ccfDT_NOTIFY.addEventHandler("onchanged",this.divData_ccfDT_ENTER_onchanged,this);
+            this.dsList.addEventHandler("onvaluechanged",this.dsList_oncolumnchanged,this);
+            this.dsListDetail.addEventHandler("onvaluechanged",this.dsListDetail_oncolumnchanged,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+            this.dsListAdjust.addEventHandler("oncolumnchanged",this.dsListAdjust_oncolumnchanged,this);
+        };
+        this.loadIncludeScript("DHV_LOCALTAX_DETAIL.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

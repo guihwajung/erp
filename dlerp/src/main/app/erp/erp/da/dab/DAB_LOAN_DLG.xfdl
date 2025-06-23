@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="372" height="460" maxwidth="412" maxheight="535" titletext="공조대출 신청" onload="form_onload" onbeforeclose="form_onbeforeclose">
+    <Layouts>
+      <Layout>
+        <Static id="staTitle1" taborder="1" text="신청자정보" left="0" top="-10" width="359" height="35" cssclass="sta_TITLE_Bg" textAlign="left"/>
+        <Div id="divData" taborder="0" left="0" top="staTitle1:0" height="133" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staIdSabun" taborder="2" left="0" top="0" width="80" height="34" cssclass="sta_WF_tablelabelTE" text="성명"/>
+              <Static id="staIdSabunBg" taborder="3" left="79" top="0" height="34" cssclass="sta_WF_tablebgT" textAlign="right" right="0"/>
+              <Static id="staCdCorp" taborder="4" text="법인" left="0" top="33" width="80" height="34" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staCdCorpBg" taborder="5" left="79" top="33" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Static id="staCdDept" taborder="6" text="부서" left="0" top="66" width="80" height="34" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staCdDeptBg" taborder="7" left="79" top="66" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Div id="cfID_SABUN" CodeFindName="DAX_CFBASEINFO_ALL" CDTextWidth="70" FitToContents="false" taborder="0" left="84" top="5" height="24" url="cmm::cmmCodeFind.xfdl" right="4" AutoSet="false"/>
+              <Static id="staCdAccount" taborder="8" text="계좌" left="0" top="99" width="80" height="34" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staCdAccountBg" taborder="9" left="79" top="99" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Edit id="txtCD_ACCOUNT" taborder="1" left="84" top="104" height="24" readonly="true" maxlength="10" right="4"/>
+              <Edit id="txtDS_CORP" taborder="10" left="84" top="38" height="24" maxlength="25" readonly="true" right="4"/>
+              <Edit id="txtDS_DEPT" taborder="11" left="84" top="71" height="24" maxlength="25" readonly="true" right="4"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staTitle2" taborder="2" text="신청정보" left="0" top="divData:10" width="359" height="35" cssclass="sta_TITLE_Bg" textAlign="left"/>
+        <Div id="divDataDetail" taborder="3" left="0" top="staTitle2:0" height="100" right="0" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCdLoan" taborder="0" left="0" top="0" width="80" height="34" cssclass="sta_WF_tablelabelTE" text="대출유형"/>
+              <Static id="staCdLoanBg" taborder="1" left="79" top="0" height="34" cssclass="sta_WF_tablebgT" textAlign="right" right="0"/>
+              <Div id="cfCD_LOAN" CodeFindName="DAX_CFCOMMONCODE" CDTextWidth="0" FitToContents="false" taborder="2" left="84" top="5" height="24" url="cmm::cmmCodeFind.xfdl" right="4"/>
+              <Static id="staAmRequest" taborder="3" text="대출금액" left="0" top="33" width="80" height="34" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staAmRequestBg" taborder="4" left="79" top="33" height="34" cssclass="sta_WF_tablebg" textAlign="right" width="122"/>
+              <MaskEdit id="txtAM_REQUEST" taborder="5" left="84" top="38" width="90" height="24" format="###,###,###" limitbymask="integer" textAlign="right"/>
+              <Static id="staNoRequest" taborder="6" text="상환기간" left="200" top="33" width="80" height="34" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staNoRequestBg" taborder="7" left="279" top="33" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Static id="staDesc1" taborder="8" text="원" left="178" top="38" width="20" height="24"/>
+              <MaskEdit id="txtNO_REQUEST" taborder="9" left="284" top="38" width="50" height="24" limitbymask="integer" format="#,###"/>
+              <Static id="staDesc2" taborder="10" text="개월" left="338" top="38" height="24" width="30"/>
+              <Static id="staDsRemark" taborder="11" text="대출사유" left="0" top="66" width="80" height="34" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staDsRemarkBg" taborder="12" left="79" top="66" height="34" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Edit id="txtDS_REMARK" taborder="13" top="71" height="24" readonly="false" right="4" left="84"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtns" width="200" height="26" taborder="4" right="0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnCANCLE" taborder="0" text="취소" top="0" width="52" height="26" onclick="btnCancle_onclick" right="0"/>
+              <Button id="btnOK" taborder="1" text="신청" left="92" top="0" width="52" height="26" onclick="btnOk_onclick" cssclass="btn_WF_action"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staTyGubun" taborder="5" text="상환기간은 500만원 이하 최대 24개월, &#13;&#10;500만원 초과 최대 48개월로 입력해주세요." left="0" top="323" height="50" right="0" cssclass="sta_WF_notice"/>
+        <Static id="staTyGubun00" taborder="6" text="대출사유에 주택자금(전세자금,주택구입 등)은 &#13;&#10;입력불가합니다." left="0" top="373" height="41" cssclass="sta_WF_notice" width="306"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+
+	this.fnSetButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+
+	this.fnSetInit();
+
+};
+
+/************************************************************************
+ * 버튼 설정 
+ * 서브버튼 사용 처리. 공통 및 확장버튼 버튼관리화면에서 셋팅.
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.cfID_SABUN    = this.divData.form.cfID_SABUN;
+	this.cfCD_LOAN     = this.divDataDetail.form.cfCD_LOAN;
+	this.txtAM_REQUEST = this.divDataDetail.form.txtAM_REQUEST;
+	this.txtNO_REQUEST = this.divDataDetail.form.txtNO_REQUEST;
+	this.txtDS_REMARK  = this.divDataDetail.form.txtDS_REMARK;
+	this.btnATTACH         = this.divDataDetail.form.btnATTACH;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	//코드파인드
+	this.cfID_SABUN.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfID_SABUN.AfterCDTextChanged     = "fnAfterCDTextChanged";
+	this.cfCD_LOAN.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+};
+
+// 부모창에서 받아온것 셋팅
+this.fnSetInit = function() {
+
+	var frame = this.getOwnerFrame();
+	
+	if( frame.TY_WRK == "U" ){
+		this.dsList.set_enableevent(false);
+		this.dsList.setColumn(0, "CD_CORP", frame.CD_CORP);
+		this.dsList.setColumn(0, "DS_CORP", frame.DS_CORP);
+		this.dsList.setColumn(0, "CD_DEPT", frame.CD_DEPT);
+		this.dsList.setColumn(0, "DS_DEPT", frame.DS_DEPT);
+		this.dsList.setColumn(0, "ID_SABUN", frame.ID_SABUN);
+		this.dsList.setColumn(0, "DS_HNAME", frame.DS_HNAME);
+		this.dsList.setColumn(0, "ID_PERSON", frame.ID_PERSON);
+		this.dsList.setColumn(0, "CD_ACCOUNT", frame.CD_ACCOUNT);
+		this.dsList.setColumn(0, "CD_LOAN", frame.CD_LOAN);
+		this.dsList.setColumn(0, "DS_LOAN", frame.DS_LOAN);
+		this.dsList.setColumn(0, "NO_SEQ", frame.NO_SEQ);
+		this.dsList.setColumn(0, "AM_REQUEST", frame.AM_REQUEST);
+		this.dsList.setColumn(0, "NO_REQUEST", frame.NO_REQUEST);
+		this.dsList.setColumn(0, "DS_REMARK", frame.DS_REMARK);
+		this.dsList.set_enableevent(true);
+	} else {
+		this.dsList.set_enableevent(false);
+		this.dsList.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+		this.dsList.setColumn(0, "DS_CORP", this.AuthClient.DS_CORP);
+		this.dsList.setColumn(0, "CD_DEPT", this.AuthClient.CD_DEPT);
+		this.dsList.setColumn(0, "DS_DEPT", this.AuthClient.DS_DEPT);
+		this.dsList.setColumn(0, "DS_HNAME", this.AuthClient.DS_HNAME);
+		this.dsList.setColumn(0, "AM_REQUEST", "");
+		this.dsList.setColumn(0, "NO_REQUEST","");
+		this.dsList.setColumn(0, "DS_REMARK", "");
+		this.dsList.set_enableevent(true);
+		this.dsList.setColumn(0, "ID_SABUN", this.AuthClient.ID_SABUN);
+		this.cfID_SABUN.form.fnCodeFindLoad();  //fnCodeFindLoad 시 0건이면 팝업창 안열리도록
+		this.dsList.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+		this.dsList.setColumn(0, "CD_LOAN", "01");
+		this.cfCD_LOAN.form.CDTextBox_onchanged();
+		
+		
+	}
+	
+	if( frame.TY_WRK == "U" || this.FormInfo.GR_SEARCH == "9" ) {
+		this.cfID_SABUN.form.set_readonly(true);
+		this.cfCD_LOAN.form.set_readonly(true);
+	}
+	
+	if( frame.TY_STATUS != "1" && !this.gfnIsNull(frame.TY_STATUS)){
+		this.txtAM_REQUEST.set_readonly(true);
+		this.txtNO_REQUEST.set_readonly(true);
+		this.txtDS_REMARK.set_readonly(true);
+	}
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("ID_PERSON", "INT");
+	this.dsSelect.addColumn("CD_CORP", "STRING");
+	this.dsSelect.addColumn("ID_SABUN", "STRING");
+	this.dsSelect.addColumn("CD_LOAN", "STRING");
+	
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("TY_WRK", "STRING");
+	this.dsSave.addColumn("ID_PERSON", "INT");
+	this.dsSave.addColumn("CD_CORP", "STRING");
+	this.dsSave.addColumn("ID_SABUN", "STRING");
+	this.dsSave.addColumn("CD_LOAN", "STRING");
+	this.dsSave.addColumn("NO_SEQ", "INT");
+	this.dsSave.addColumn("AM_REQUEST", "BIGDECIMAL");
+	this.dsSave.addColumn("NO_REQUEST", "INT");
+	this.dsSave.addColumn("DS_REMARK", "STRING");
+	this.dsSave.addColumn("ID_USER", "STRING");
+	this.dsSave.addColumn("GR_SEARCH" , "string");
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSaveValidate = function() {
+	
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return false;
+	}
+	
+	switch(svcID) {
+		case "createSeq" :
+			this.dsList.setColumn(0,"NO_SEQ",this.dsLoanSeq.getColumn(0,"NO_SEQ")); trace(this.dsLoanSeq.getColumn(0,"CD_CORP") + "||"+this.dsLoanSeq.getColumn(0,"ID_SABUN") + "||" + "||"+this.dsLoanSeq.getColumn(0,"CD_LOAN") + "||"+this.dsLoanSeq.getColumn(0,"NO_SEQ"));
+			break;
+		case "save":		// 저장
+			if (errorCode == 0) {				
+				this.fnVaidateCallback = function() {
+					this.getParentContext().close(true);
+				}
+				this.gfnAlert("신청이 완료되었습니다.", "fnVaidateCallback");
+			}
+
+		default:
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	
+	if (id == "cfID_SABUN") {
+		dsUserParam.setColumn(nrow, "CD_CORP", this.dsList.getColumn(0, "CD_CORP"));
+		dsUserParam.setColumn(nrow, "CD_DEPT", "");
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "YN_CORP", "Y");
+		dsUserParam.setColumn(nrow, "TY_RETIRE", "01");
+	}
+	if (id == "cfCD_LOAN") {
+		dsUserParam.setColumn(nrow, "CD_PREFIX", "LO");
+		dsUserParam.setColumn(nrow, "CD_CORP", this.dsList.getColumn(0, "CD_CORP"));
+	}
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id,codeFindData) {
+   	var arr = codeFindData;
+	if(id == "cfID_SABUN") {		
+		if(arr.length > 0) {
+			this.dsList.setColumn(0,"CD_CORP",arr[0]["CD_CORP"]);
+			this.dsList.setColumn(0,"DS_CORP",arr[0]["DS_CORP"]);
+			this.dsList.setColumn(0,"CD_DEPT",arr[0]["CD_DEPT"]);
+			this.dsList.setColumn(0,"DS_DEPT",arr[0]["DS_DEPT"]);
+			this.dsList.setColumn(0,"ID_PERSON",arr[0]["ID_PERSON"]); 
+			this.dsList.setColumn(0,"CD_ACCOUNT",arr[0]["CD_ACCOUNT"]);
+		}else{
+			this.dsList.setColumn(0,"CD_CORP","");
+			this.dsList.setColumn(0,"DS_CORP","");
+			this.dsList.setColumn(0,"CD_DEPT","");
+			this.dsList.setColumn(0,"DS_DEPT","");
+			this.dsList.setColumn(0,"ID_PERSON",""); 
+			this.dsList.setColumn(0,"CD_ACCOUNT","");
+		}
+	}
+	
+	
+	// 일련번호 생성
+	if((id == "cfCD_CORP" || id == "cfID_SABUN")  && this.getOwnerFrame().TY_WRK == "I"&& arr.length > 0  ) {
+		this.createSeq();
+	}
+	
+};
+
+
+// 일련번호 생성
+this.createSeq = function(){
+	this.dsSelect.clearData();
+			
+	var nrow = this.dsSelect.addRow();
+	this.dsSelect.setColumn(nrow, "ID_PERSON", this.dsList.getColumn(0, "ID_PERSON"));
+	this.dsSelect.setColumn(nrow, "CD_CORP", this.dsList.getColumn(0, "CD_CORP"));				
+	this.dsSelect.setColumn(nrow, "ID_SABUN", this.dsList.getColumn(0, "ID_SABUN"));
+	this.dsSelect.setColumn(nrow, "CD_LOAN", this.dsList.getColumn(0, "CD_LOAN"));
+	
+	var strSvcId    = "createSeq";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "createSeq=dsSelect";
+	var outData     = "dsLoanSeq=createSeq0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 	    // 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ // 확인 버튼
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+	if( this.getOwnerFrame().TY_WRK == "U"  && this.getOwnerFrame().TY_STATUS != "1") {
+		this.getParentContext().close(false);
+		return;
+	}
+	
+	if(!this.gfnDataValidate(this.dsList,this.dsRequired)) return;
+	
+	
+	this.dsSave.clearData();
+			
+	var nrow = this.dsSave.addRow();
+	this.dsSave.setColumn(nrow, "TY_WRK", this.getOwnerFrame().TY_WRK);
+	this.dsSave.setColumn(nrow, "ID_PERSON", this.dsList.getColumn(0, "ID_PERSON"));
+	this.dsSave.setColumn(nrow, "CD_CORP", this.dsList.getColumn(0, "CD_CORP"));				
+	this.dsSave.setColumn(nrow, "ID_SABUN", this.dsList.getColumn(0, "ID_SABUN"));
+	this.dsSave.setColumn(nrow, "CD_LOAN", this.dsList.getColumn(0, "CD_LOAN"));
+	this.dsSave.setColumn(nrow, "NO_SEQ", this.dsList.getColumn(0, "NO_SEQ"));
+	this.dsSave.setColumn(nrow, "AM_REQUEST", this.dsList.getColumn(0, "AM_REQUEST"));
+	this.dsSave.setColumn(nrow, "NO_REQUEST", this.dsList.getColumn(0, "NO_REQUEST"));
+	this.dsSave.setColumn(nrow, "DS_REMARK", this.dsList.getColumn(0, "DS_REMARK"));
+	this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	this.dsSave.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	
+	if (this.dsSave.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+// 취소버튼
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};]]></Script>
+    <Objects>
+      <Dataset id="dsLoanSeq">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="CD_LOAN" type="STRING" size="256"/>
+          <Column id="NO_SEQ" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256" description="법인코드"/>
+          <Column id="DS_CORP" type="STRING" size="256" description="회계일자"/>
+          <Column id="CD_DEPT" type="STRING" size="256" description="지급차수"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+          <Column id="ID_PERSON" type="INT" size="256"/>
+          <Column id="CD_ACCOUNT" type="STRING" size="256"/>
+          <Column id="CD_LOAN" type="STRING" size="256"/>
+          <Column id="DS_LOAN" type="STRING" size="256"/>
+          <Column id="NO_SEQ" type="INT" size="256"/>
+          <Column id="AM_REQUEST" type="BIGDECIMAL" size="256"/>
+          <Column id="NO_REQUEST" type="INT" size="256"/>
+          <Column id="DS_REMARK" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CORP"/>
+            <Col id="DS_CORP"/>
+            <Col id="CD_DEPT"/>
+            <Col id="DS_DEPT"/>
+            <Col id="ID_SABUN"/>
+            <Col id="DS_HNAME"/>
+            <Col id="CD_ACCOUNT"/>
+            <Col id="CD_LOAN"/>
+            <Col id="DS_LOAN"/>
+            <Col id="AM_REQUEST"/>
+            <Col id="NO_REQUEST"/>
+            <Col id="DS_REMARK"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">createSeq</Col>
+            <Col id="SP">DABPR_LOAN_SEQ</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DABPR_LOAN_SAVE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRequired">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="DS_FIELD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_FIELD">CD_CORP</Col>
+            <Col id="DS_FIELD">법인</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_DEPT</Col>
+            <Col id="DS_FIELD">부서</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">ID_SABUN</Col>
+            <Col id="DS_FIELD">사번</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_LOAN</Col>
+            <Col id="DS_FIELD">대출유형</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">AM_REQUEST</Col>
+            <Col id="DS_FIELD">대출금액</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">NO_REQUEST</Col>
+            <Col id="DS_FIELD">상환기간</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">DS_REMARK</Col>
+            <Col id="DS_FIELD">대출사유</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item4" compid="divData.form.cfID_SABUN.form.CDTextBox" propid="value" datasetid="dsList" columnid="ID_SABUN"/>
+      <BindItem id="item5" compid="divData.form.cfID_SABUN.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_HNAME"/>
+      <BindItem id="item6" compid="divData.form.txtCD_ACCOUNT" propid="value" datasetid="dsList" columnid="CD_ACCOUNT"/>
+      <BindItem id="item7" compid="divDataDetail.form.cfCD_LOAN.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_LOAN"/>
+      <BindItem id="item8" compid="divDataDetail.form.cfCD_LOAN.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_LOAN"/>
+      <BindItem id="item9" compid="divDataDetail.form.txtAM_REQUEST" propid="value" datasetid="dsList" columnid="AM_REQUEST"/>
+      <BindItem id="item10" compid="divDataDetail.form.txtNO_REQUEST" propid="value" datasetid="dsList" columnid="NO_REQUEST"/>
+      <BindItem id="item11" compid="divDataDetail.form.txtDS_REMARK" propid="value" datasetid="dsList" columnid="DS_REMARK"/>
+      <BindItem id="item0" compid="divData.form.txtDS_CORP" propid="value" datasetid="dsList" columnid="DS_CORP"/>
+      <BindItem id="item1" compid="divData.form.txtDS_DEPT" propid="value" datasetid="dsList" columnid="DS_DEPT"/>
+    </Bind>
+  </Form>
+</FDL>

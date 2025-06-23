@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goodcen.cenerp.mapper.common.CENLogMapper">
+
+<resultMap type="map" id="result1"></resultMap>
+
+<insert id="insert" statementType="PREPARED" parameterType="map">
+INSERT INTO DZZT_LOG (
+	 TY_SYSTEM
+	,ID_FORM
+	,DS_SERVICE
+	,DS_TARGET
+	,ID_USER
+	,CD_DEPT
+	,CD_CORP
+	,IP_USER
+	,DT_LOG
+) VALUES (
+	 #{TY_SYSTEM}
+	,#{ID_FORM}
+    ,#{DS_SERVICE}
+    ,#{DS_TARGET}
+    ,#{ID_USER}
+    ,#{CD_DEPT}
+    ,#{CD_CORP}
+    ,#{IP_USER}
+    ,getdate()
+)
+</insert>
+</mapper>

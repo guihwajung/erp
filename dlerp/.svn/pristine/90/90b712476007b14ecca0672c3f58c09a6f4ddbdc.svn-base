@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="400" height="400" maxwidth="450" maxheight="400" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divBtns" left="110" top="230" width="200" height="100">
+          <Layouts>
+            <Layout>
+              <Button id="btnOK" taborder="12" text="확인" left="30" top="20" width="60" height="27" onclick="btnOK_onclick"/>
+              <Button id="btnCANCLE" taborder="13" text="취소" left="btnOK:30" top="20" width="60" height="27" onclick="btnCANCLE_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staTITLE01" taborder="14" text="급여적용" left="0" top="10" width="100.00%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+        <Static id="staCD_CORP" taborder="0" text="법인" left="44" top="50" width="60" height="20" cssclass="sta_WF_tablelabelE"/>
+        <Div id="cfCD_CORP" CDTextWidth="70" taborder="2" left="90" top="50" width="200" height="20" url="cmm::cmmCodeFind.xfdl"/>
+        <Static id="staYM_DEDUCTION" taborder="14" text="공제년월" left="20" top="80" width="50" height="20" cssclass="sta_WF_tablelabelE"/>
+        <Div id="ctclYM_DEDUCTION" taborder="15" left="90" top="80" width="105" height="20" url="cmm::cmmCalMM.xfdl"/>
+        <Static id="staYM_SALARY" taborder="8" text="지급년월" left="20" top="110" width="50" height="20" cssclass="sta_WF_tablelabelE"/>
+        <Div id="ctclYM_SALARY" taborder="9" left="90" top="110" width="105" height="20" url="cmm::cmmCalMM.xfdl"/>
+        <Static id="staAM_DEDUCTION" taborder="1" text="지급구분" left="20" top="140" width="70" height="20" cssclass="sta_WF_tablelabelE"/>
+        <Combo id="cboTY_SALARY" taborder="2" left="90" top="141" width="100" height="20" innerdataset="dsTY_SALARY" datacolumn="VALUE" codecolumn="CODE" value="" onitemchanged="fnSearchInit" index="0"/>
+        <Combo id="cboSN_SALARY" taborder="3" left="195" top="141" width="70" height="20" innerdataset="dsSN_SALARY" datacolumn="VALUE" codecolumn="CODE" value="" onitemchanged="fnSearchInit" index="0"/>
+        <Static id="staCD_SUBST" taborder="10" text="공제코드" left="20" top="170" width="70" height="20" cssclass="sta_WF_tablelabelE"/>
+        <Div id="cfCD_SUBST" CDTextWidth="70" taborder="11" left="90" top="170" width="200" height="20" url="cmm::cmmCodeFind.xfdl"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 연월 셋팅
+	var today = this.gfnGetDate().substring(0, 6);
+	this.ctclYM_DEDUCTION.form.TextBox.set_value(today);
+	this.ctclYM_SALARY.form.TextBox.set_value(today);
+	
+	//법인 셋팅
+	this.cfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+	this.cfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+	
+	this.cboTY_SALARY.set_index(0);
+	this.cboSN_SALARY.set_index(0);
+};
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSave = new Dataset();
+	
+	this.dsSave.addColumn("CD_CORP", "string");
+	this.dsSave.addColumn("YM_DEDUCTION", "string");
+	this.dsSave.addColumn("YM_SALARY", "string");
+	this.dsSave.addColumn("TY_SALARY", "string");
+	this.dsSave.addColumn("SN_SALARY", "int");
+	this.dsSave.addColumn("CD_SUBST", "string");
+	this.dsSave.addColumn("ID_INSERT", "string");
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+ // 코드파인더
+this.fnSetEvent = function() {
+    //소속법인
+	this.cfCD_CORP.CodeFindName = "DAX_CFCORP";
+	this.cfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	
+	/*this.cfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";*/
+	
+	//직위코드
+	this.cfCD_SUBST.CodeFindName = "DAX_CFALLOWSUBST_CODE";
+	this.cfCD_SUBST.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	/*this.cfCD_POSITION.AfterCDTextChanged = "fnAfterCDTextChanged";	*/
+	
+};
+
+
+// 확인
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnDataValidate()) return;
+	
+	this.dsSave.clearData();
+
+	var nrow = this.dsSave.addRow();
+	
+	this.dsSave.setColumn(nrow, "CD_CORP", this.cfCD_CORP.form.CDTextBox.value);
+	this.dsSave.setColumn(nrow, "YM_DEDUCTION", this.ctclYM_DEDUCTION.form.TextBox.value);
+	this.dsSave.setColumn(nrow, "YM_SALARY", this.ctclYM_SALARY.form.TextBox.value);
+	this.dsSave.setColumn(nrow, "TY_SALARY", this.cboTY_SALARY.value);
+	this.dsSave.setColumn(nrow, "SN_SALARY", this.cboSN_SALARY.value);
+	this.dsSave.setColumn(nrow, "CD_SUBST", this.cfCD_SUBST.form.CDTextBox.valuee);
+	this.dsSave.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+	
+	if (this.dsSave.rowcount == 0) return;
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "dsOutput=save";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 취소
+	this.getParentContext().close(false);
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if (id == "cfCD_SUBST") {
+		/*dsUserParam.setColumn(nrow, "CD_PREFIX", "ED");*/
+	}
+			
+	return true;
+} 
+
+this.fnDataValidate = function(){
+	var msg = "은(는) 필수입력 입니다.";
+	
+	var cdCorp = this.cfCD_CORP.form.CDTextBox.value;
+	var ymDeduction = this.ctclYM_DEDUCTION.form.TextBox.value;
+	var ymSalary = this.ctclYM_SALARY.form.TextBox.value;
+	var cdSubst = this.cfCD_SUBST.form.CDTextBox.value;
+		
+	if(this.gfnIsNull(this.gfnTrim(cdCorp))){
+		this.gfnAlert("법인" + msg);
+		this.cfCD_CORP.form.CDTextBox.setFocus();
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.gfnTrim(ymDeduction))){
+		this.gfnAlert("공제년월" + msg);
+		this.ctclYM_DEDUCTION.form.TextBox.setFocus();
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.gfnTrim(ymSalary))){
+		this.gfnAlert("지급년월" + msg);
+		this.ctclYM_SALARY.form.TextBox.setFocus();
+		return false;
+	}
+			
+	if(this.gfnIsNull(this.gfnTrim(cdSubst))){
+		this.gfnAlert("공제코드" + msg);
+		this.cfCD_SUBST.form.CDTextBox.setFocus();
+		return false;
+	}
+	
+			
+	return true;
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "save") {
+// 		var json = {};
+// 		
+// 		json.CD_CORP = this.cfCD_CORP.form.CDTextBox.value;
+// 		json.YM_DEDUCTION = this.ctclYM_DEDUCTION.form.TextBox.value;
+// 
+// 		this.getParentContext().close(JSON.stringify(json));
+	}
+}
+]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="STATE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DAAPR_DEDUCTION_DETAIL_EXECUTE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_SALARY">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">S</Col>
+            <Col id="VALUE">급여</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">B</Col>
+            <Col id="VALUE">상여</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">X</Col>
+            <Col id="VALUE">성과급</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSN_SALARY">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">1</Col>
+            <Col id="VALUE">1</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2</Col>
+            <Col id="VALUE">2</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">3</Col>
+            <Col id="VALUE">3</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">4</Col>
+            <Col id="VALUE">4</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">5</Col>
+            <Col id="VALUE">5</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

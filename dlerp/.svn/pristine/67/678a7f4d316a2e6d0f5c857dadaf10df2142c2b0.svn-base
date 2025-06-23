@@ -1,0 +1,464 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="전자결재내역" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staDT_ACQ" taborder="0" text="조회기간" left="0" top="10" width="92" height="24" textDecoration="none" cssclass="sta_WF_SchLabelE"/>
+              <Calendar id="ccalDT_APRV_SCHF_FR" taborder="1" left="staDT_ACQ:0" top="9" width="110" height="24" dateformat="yyyy-MM-dd" editformat="yyyy-MM-dd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staNO_ID02" taborder="2" text="~" top="9" width="24" height="24" left="ccalDT_APRV_SCHF_FR:0" textAlign="center"/>
+              <Calendar id="ccalDT_APRV_SCHF_TO" taborder="3" left="staNO_ID02:0" top="9" width="110" height="24" dateformat="yyyy-MM-dd" editformat="yyyy-MM-dd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staST_APRV" taborder="4" text="결재상태" left="ccalDT_APRV_SCHF_TO:0" top="10" width="92" height="24" cssclass="sta_WF_SchLabel"/>
+              <Combo id="ccboST_APRV" taborder="5" left="staST_APRV:0" top="10" width="80" height="24" datacolumn="DS_CODE" codecolumn="CD_CODE" innerdataset="dsStAprv"/>
+              <Static id="staID_AP_TYPE" taborder="6" left="ccboST_APRV:0" top="10" width="92" height="24" cssclass="sta_WF_SchLabel" onclick="divSearch_staLabel3_01_00_onclick" text="결재유형"/>
+              <Edit id="ctxtID_AP_TYPE" taborder="7" left="staID_AP_TYPE:0" top="10" width="100" height="24" textAlign="right"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" right="0" cssclass="div_DATA_Bg" top="divSearch:0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="35" bottom="0" right="0"/>
+              <Static id="sta01" taborder="1" text="전자결재목록" left="0" top="0" height="35" cssclass="sta_TITLE_Bg" right="901"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetCombo();
+};
+
+this.fnInit = function()
+{	
+	var date = this.gfnGetDate('date');
+	//var firstDate = this.gfnGetFirstDate(date);
+	
+	this.ccalDT_APRV_SCHF_FR.set_value(date);
+	this.ccalDT_APRV_SCHF_TO.set_value(date);
+	this.ccboST_APRV.set_index(0);
+	
+	//this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() 
+{
+	this.btnApprovalLog = this.gfnFormButtonAdd("ApprovalLog", "fnApprovalLog"); //재실행
+	this.btnPreview2 = this.gfnFormButtonAdd("Preview2", "fnPreview2"); //재실행
+	this.btnPreview = this.gfnFormButtonAdd("Preview", "fnPreview"); //재실행
+	this.btnExecute = this.gfnFormButtonAdd("Execute", "fnExecute"); //재실행
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() 
+{	
+	this.ccalDT_APRV_SCHF_FR = this.divSearch.form.ccalDT_APRV_SCHF_FR;
+	this.ccalDT_APRV_SCHF_TO = this.divSearch.form.ccalDT_APRV_SCHF_TO;
+	this.ccboST_APRV = this.divSearch.form.ccboST_APRV;
+	this.ctxtID_AP_TYPE = this.divSearch.form.ctxtID_AP_TYPE;
+
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid, this.dsList, "DZ", "DZR_AR_HISTORY");
+};
+
+/************************************************************************
+ * 콤보리스트 이벤트
+ ************************************************************************/
+this.fnSetCombo = function() 
+{	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsStAprv=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsExecute = new Dataset();
+	this.dsExecute.addColumn("CD_CORP", "string");
+	this.dsExecute.addColumn("NO_APRV", "int");
+	this.dsExecute.addColumn("ST_APRV", "string");
+	this.dsExecute.addColumn("NO_DOC", "string");
+	this.dsExecute.addColumn("ID_APRV", "string");
+	this.dsExecute.addColumn("DEPT_APRV", "string");
+	
+	this.dsParam = new Dataset();
+	this.dsParam.addColumn("beginDraftedAt", "string");
+	this.dsParam.addColumn("endDraftedAt", "string");
+	this.dsParam.addColumn("size", "string");
+	this.dsParam.addColumn("page", "string");
+};
+
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+this.fnSelect = function()
+{
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSearch.setColumn(this.dsSearch.rowposition, 'CD_CORP', this.AuthClient.CD_CORP);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSearch";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+}
+
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() 
+{
+	var DT_APRV_SCHF_FR = this.ccalDT_APRV_SCHF_FR.value;
+	var DT_APRV_SCHF_TO = this.ccalDT_APRV_SCHF_TO.value;
+	
+ 	if (this.gfnIsNull(DT_APRV_SCHF_FR)) 
+	{
+ 		this.gfnAlert("조회 시작일을 입력 하세요.", function(){
+			this.ccalDT_APRV_SCHF_FR.setFocus();
+		});
+ 		return false;
+ 	}
+	
+	if (this.gfnIsNull(DT_APRV_SCHF_TO)) 
+	{
+ 		this.gfnAlert("조회 종료일을 입력 하세요.", function(){
+			this.ccalDT_APRV_SCHF_TO.setFocus();
+		});
+ 		return false;
+ 	}
+	
+	if (this.gfnGetDiffDate(DT_APRV_SCHF_FR, DT_APRV_SCHF_TO) < 0)
+	{
+		this.gfnAlert("조회 종료일이 시작일보다 클수없습니다.", function(){
+			this.ccalDT_APRV_SCHF_TO.setFocus();
+		});
+ 		return false;
+	}
+		
+	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "combo")
+	{
+		this.fnInit();
+	}
+	else if(svcID == "select")
+	{
+		this.gfnGridAfterSelect(this.dxGrid);
+	}
+	else if(svcID == "execute")
+	{
+		this.FormBtns.Select.click();
+	}
+	else if(svcID == "log")
+	{
+		this.FormBtns.Select.click();
+	}
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ * 실행
+ ************************************************************************/
+this.fnApprovalLog = function()
+{
+	if (!this.fnSelectValidate())	return false;
+
+	this.dsParam.clearData();
+	
+	var beginDraftedAt = this.ccalDT_APRV_SCHF_FR.text;
+	var endDraftedAt = this.ccalDT_APRV_SCHF_TO.text;
+	
+	var nRow = this.dsParam.addRow();	
+	this.dsParam.setColumn(nRow, 'beginDraftedAt', beginDraftedAt + 'T00:00:00+09:00');
+	this.dsParam.setColumn(nRow, 'endDraftedAt', endDraftedAt + 'T23:59:59+09:00');
+	this.dsParam.setColumn(nRow, "size", "1");
+	this.dsParam.setColumn(nRow, "page", "0");
+
+	var strSvcId    = "log";
+	var strSvcType  = "dooray/approvalLog";
+	var inProc		= "";
+	var inData      = "dsParam=dsParam";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+			
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+ 
+this.fnExecute = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	if (this.dsList.rowposition > -1 && this.gfnGetFlag(this.dsList, this.dsList.rowposition) != '#')
+	{
+		this.gfnConfirm("실행하시겠습니까?", function(strId, isOk)
+		{
+			if(!isOk) return false;
+			
+				var strSvcId    = "lines";
+				var strSvcType  = "dooray/approval-lines";
+				var inProc		= "";
+				var inData      = "";
+				var outData     = "dsAprvLines=result";
+				var strArg      = "NO_DOC=" + this.dsList.getColumn(this.dsList.rowposition, "NO_DOC");
+				var callBackFnc = "fnExecuteProc";
+						
+				this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+		});
+	}
+	else
+	{
+		this.gfnAlert("실행할 정보가 없습니다.");
+	}
+};
+
+this.fnExecuteProc = function()
+{
+	this.dsExecute.clearData();
+	
+	var idx = this.dsAprvLines.findRowNF('order', this.dsAprvLines.rowcount);
+	
+	var ST_DOORAY_APRV = this.dsList.getColumn(this.dsList.rowposition, "ST_DOORAY_APRV");
+	var ST_APRV = this.gfnDecode(ST_DOORAY_APRV, 'completion', '4', 'return', '5', 'disposal', '6', null);
+	
+	if (this.gfnIsNull(ST_APRV)) 
+	{
+		return false;
+	}
+	
+	var nRow = this.dsExecute.addRow();
+	this.dsExecute.setColumn(nRow, "CD_CORP", this.dsList.getColumn(this.dsList.rowposition, "CD_CORP"));
+	this.dsExecute.setColumn(nRow, "NO_APRV", this.dsList.getColumn(this.dsList.rowposition, "NO_APRV"));
+	this.dsExecute.setColumn(nRow, "NO_DOC", this.dsList.getColumn(this.dsList.rowposition, "NO_DOC"));
+	this.dsExecute.setColumn(nRow, "ID_APRV", this.dsAprvLines.getColumn(idx, 'organizationMember_id'));
+	this.dsExecute.setColumn(nRow, "DEPT_APRV", this.dsAprvLines.getColumn(idx, 'department_id'));
+	this.dsExecute.setColumn(nRow, "ST_APRV", ST_APRV);
+	
+	var strSvcId    = "execute";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "execute=dsExecute";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+				
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+}
+
+this.fnPreview = function()
+{	
+	if (this.dsList.getColumn(this.dsList.rowposition, this.ucFlag) == '#') return false;
+	
+	if (this.dsList.getColumn(this.dsList.rowposition, 'YN_DOC') == 'Y')
+	{
+		var oArg = {
+			//CD_CORP : this.dsList.getColumn(this.dsList.rowposition, 'CD_CORP'),
+			NO_APRV : this.dsList.getColumn(this.dsList.rowposition, 'NO_APRV'),
+			DOORAY_SVC_ID : 'AP_DOC_URL'
+		};
+		var oOption = {
+			width : 1280,
+			height : 768,
+			popuptype : 'modeless'
+		};
+		this.gfnOpenPopup('APRV_POP', 'dz::dzr/DZR_APPROVAL.xfdl', oArg, '', oOption);
+	}
+	else
+	{
+		this.gfnAlert('전자결재문서 생성 전입니다.');
+	}
+};
+
+this.fnPreview2 = function()
+{	
+	if (this.dsList.getColumn(this.dsList.rowposition, this.ucFlag) == '#') return false;
+
+
+	if (this.dsList.getColumn(this.dsList.rowposition, 'YN_DOC') == 'Y')
+	{
+		var oArg = {
+			CD_CORP : this.dsList.getColumn(this.dsList.rowposition, 'CD_CORP'),
+			NO_APRV : this.dsList.getColumn(this.dsList.rowposition, 'NO_APRV')
+		};
+		var oOption = {
+			width : 1280,
+			height : 768,
+			popuptype : 'modeless'
+		};
+		this.gfnOpenPopup('APRV_POP', 'dz::dzr/DZR_APPROVAL.xfdl', oArg, '', oOption);
+	}
+	else
+	{
+		this.gfnAlert('전자결재문서 생성 전입니다.');
+	}
+};
+
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+this.dsList_onrowposchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+{
+	var YN_DOC = obj.getColumn(e.newrow, 'YN_DOC');
+	var ST_APRV = obj.getColumn(e.newrow, 'ST_APRV');
+	var ST_DOORAY_APRV = obj.getColumn(e.newrow, 'ST_DOORAY_APRV');
+	
+	this.btnPreview2.set_enable((YN_DOC == 'Y'));
+	this.btnPreview.set_enable(!this.gfnIsNull(ST_DOORAY_APRV));
+	
+	if (ST_APRV == '4' && ST_DOORAY_APRV == 'completion')
+	{
+		this.btnExecute.set_enable(true);
+	}
+	else if (ST_APRV == '5' && ST_DOORAY_APRV == 'return')
+	{
+		this.btnExecute.set_enable(true);
+	}
+	else if (ST_APRV == '6' && ST_DOORAY_APRV == 'disposal')
+	{
+		this.btnExecute.set_enable(true);
+	}
+	else
+	{
+		this.btnExecute.set_enable(true);
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" onrowposchanged="dsList_onrowposchanged"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_COMMON_SELECT_01</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DZZPR_APRV_LIST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">execute</Col>
+            <Col id="SP">DZZPR_APRV_STAT_UPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DT_APRV_SCHF_FR" type="STRING" size="256"/>
+          <Column id="DT_APRV_SCHF_TO" type="STRING" size="256"/>
+          <Column id="ST_APRV" type="STRING" size="256"/>
+          <Column id="ID_AP_TYPE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsExecute">
+        <ColumnInfo>
+          <Column id="ID_AP" type="STRING" size="256"/>
+          <Column id="ID_AP_TYPE" type="STRING" size="256"/>
+          <Column id="ID_USER" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCombo">
+        <ColumnInfo>
+          <Column id="CD_SYSTEM" type="STRING" size="256"/>
+          <Column id="CD_TYPE" type="STRING" size="256"/>
+          <Column id="YN_USE" type="STRING" size="256"/>
+          <Column id="YN_ALL" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_SYSTEM">DZ</Col>
+            <Col id="CD_TYPE">DZ_APRV</Col>
+            <Col id="YN_USE">Y</Col>
+            <Col id="YN_ALL">Y</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsStAprv">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsAprvLines"/>
+      <Dataset id="dsAprv"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccalDT_APRV_SCHF_FR" propid="value" datasetid="dsSearch" columnid="DT_APRV_SCHF_FR"/>
+      <BindItem id="item1" compid="divSearch.form.ccalDT_APRV_SCHF_TO" propid="value" datasetid="dsSearch" columnid="DT_APRV_SCHF_TO"/>
+      <BindItem id="item2" compid="divSearch.form.ccboST_APRV" propid="value" datasetid="dsSearch" columnid="ST_APRV"/>
+      <BindItem id="item3" compid="divSearch.form.ctxtID_AP_TYPE" propid="value" datasetid="dsSearch" columnid="ID_AP_TYPE"/>
+    </Bind>
+  </Form>
+</FDL>

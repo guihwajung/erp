@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="348" height="127" titletext="학자금신청등록" onload="form_onload" maxwidth="388" maxheight="205">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0" top="0" right="0" text="" height="127">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="1" text="학자금신청 반려" left="0" top="0" width="200" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staDS_RETURN" taborder="22" text="반려사유" left="0" top="staTITLE:0" width="87" height="60" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staDS_RETURN_bg" taborder="23" left="staDS_RETURN:-1" top="staDS_RETURN:-60" width="262" height="60" cssclass="sta_WF_tablebg" visible="true"/>
+              <TextArea id="txtDS_RETURN" taborder="29" left="staDS_RETURN:5" top="staDS_RETURN:-55" width="250" height="50"/>
+              <Div id="divBtns" left="120" top="staDS_RETURN:10" width="130" height="27" text="">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnReject" taborder="1" text="반려" left="0" top="0" width="60" height="27" onclick="btnReject_onclick"/>
+                    <Button id="btnCancle" taborder="0" text="취소" left="btnReject:10" top="0" width="60" height="27" onclick="btnCancle_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------// 
+
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetCombo();
+	this.fnInit();
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	
+}
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	// 반려
+	this.dsReject = new Dataset();
+	this.dsReject.addColumn("TY_WORK", "string");
+	this.dsReject.addColumn("ID_SABUN", "string");
+	this.dsReject.addColumn("YY_TUITION", "string");
+	this.dsReject.addColumn("CD_TUITION", "string");
+	this.dsReject.addColumn("CD_CORP", "string");
+	this.dsReject.addColumn("NO_SEQ", "string");
+	this.dsReject.addColumn("DS_RETURN", "string");
+	this.dsReject.addColumn("ID_USER", "string");
+}
+
+/************************************************************************
+ * 콤보 데이터 조회 및 설정
+ ************************************************************************/
+this.fnSetCombo = function() {
+	
+}
+
+/************************************************************************
+ * 화면 및 검색영역 초기화
+ ************************************************************************/
+this.fnInit = function() {
+	var frame = this.getOwnerFrame();
+	
+	this.dsCommon.setColumn(0, "ID_SABUN"  , frame.ID_SABUN);
+	this.dsCommon.setColumn(0, "YY_TUITION", frame.YY_TUITION);
+	this.dsCommon.setColumn(0, "CD_TUITION", frame.CD_TUITION);
+	this.dsCommon.setColumn(0, "CD_CORP"   , frame.CD_CORP);
+	this.dsCommon.setColumn(0, "NO_SEQ"    , frame.NO_SEQ);
+	this.dsCommon.setColumn(0, "ID_USER"   , frame.ID_USER);
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+/*
+ * 조회 버튼
+ */
+this.fnSelect = function() {
+	
+}
+
+/*
+ * 추가 버튼
+ */
+this.fnAdd = function() {
+	
+}
+
+/*
+ * 삭제 버튼
+ */
+this.fnDel = function() {
+	
+}
+
+this.fnSave = function() {
+	
+}
+
+/*
+ * 엑셀 버튼
+ */
+this.fnExcel = function() {
+	
+}
+
+/*
+ * 출력 버튼
+ */
+this.fnPrint = function() {
+	return true;
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValid = function() {
+	return true;
+}
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+// 반려 버튼
+this.btnReject_onclick = function() {
+	this.dsReject.clearData();
+	
+	var ID_SABUNs = this.dsCommon.getColumn(0, "ID_SABUN").split(",");
+	var NO_SEQs = this.dsCommon.getColumn(0, "NO_SEQ").split(",");
+	for (var i = 0; i < ID_SABUNs.length; i++) {
+		var nrow = this.dsReject.addRow();
+		this.dsReject.setColumn(nrow, "TY_WORK"   , "R");
+		this.dsReject.setColumn(nrow, "ID_SABUN"  , ID_SABUNs[i]);
+		this.dsReject.setColumn(nrow, "YY_TUITION", this.dsCommon.getColumn(0, "YY_TUITION"));
+		this.dsReject.setColumn(nrow, "CD_TUITION", this.dsCommon.getColumn(0, "CD_TUITION"));
+		this.dsReject.setColumn(nrow, "CD_CORP"   , this.dsCommon.getColumn(0, "CD_CORP"));
+		this.dsReject.setColumn(nrow, "NO_SEQ"    , NO_SEQs[i]);
+		this.dsReject.setColumn(nrow, "DS_RETURN" , this.dsData.getColumn(0, "DS_RETURN"));
+		this.dsReject.setColumn(nrow, "ID_USER"   , this.dsCommon.getColumn(0, "ID_USER"));
+	}
+	
+	if (this.dsReject.rowcount == 0) return;
+	
+	var strSvcId    = "reject";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "reject=dsReject";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);	// 통신방법 정의 [생략가능]
+}
+
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	this.getParentContext().close(false);
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ * 기본 콜백
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if (svcID == "reject") {
+		this.getParentContext().close(false);
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {	
+	var arr = codeFindData;
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGridBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+}
+
+this.fnGridAfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 함수
+ ************************************************************************/
+]]></Script>
+    <Objects>
+      <Dataset id="dsCommon">
+        <ColumnInfo>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="YY_TUITION" type="STRING" size="256"/>
+          <Column id="CD_TUITION" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="NO_SEQ" type="STRING" size="256"/>
+          <Column id="ID_USER" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="DS_RETURN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DS_RETURN"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">reject</Col>
+            <Col id="SP">DABPR_TUITION_APP_UPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.txtDS_RETURN" propid="value" datasetid="dsData" columnid="DS_RETURN"/>
+    </Bind>
+  </Form>
+</FDL>

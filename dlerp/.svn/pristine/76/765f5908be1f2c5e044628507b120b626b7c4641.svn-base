@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="1년미만 연차 관리" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staFR_MONVACA" taborder="0" text="생성년월" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclFR_MONVACA" taborder="1" left="staFR_MONVACA:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalMM.xfdl" text=""/>
+              <Static id="staYM_MONVACA00" taborder="7" text="~" left="ctclFR_MONVACA:0.0" top="10.0" width="30.0" height="24.0" cssclass="sta_WF_AC"/>
+              <Div id="ctclTO_MONVACA" taborder="2" left="staYM_MONVACA00:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalMM.xfdl" text=""/>
+              <Static id="staCD_CORP" taborder="10" text="법인" left="ctclTO_MONVACA:10.0" top="10.0" width="66" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_CORP" CodeFindName="DAX_CFCORP_CODEFIND" CDTextWidth="50" taborder="4" left="staCD_CORP:0.0" top="10.0" width="200" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="staID_SABUN" taborder="8" text="성명" left="ccfCD_CORP:0.0" top="10.0" width="66" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfID_SABUN" CodeFindName="DAX_CFBASEINFO_ALL" CDTextWidth="90" taborder="3" left="staID_SABUN:0.0" top="10.0" width="200" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Edit id="edtID_PERSON" left="ccfID_SABUN:10" top="10.0" width="44" height="24.0" visible="false" taborder="6"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DACPR_MONTHLYVACATION_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DACPR_MONTHLYVACATION_SAVE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="FR_MONVACA" type="STRING" size="256"/>
+          <Column id="TO_MONVACA" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="ID_PERSON" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form, e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnInit();
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	
+}
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	// 그리드영역
+	this.dxGrid = this.divData.form.objGrid;
+	
+	// 검색영역
+	this.ctclFR_MONVACA = this.divSearch.form.ctclFR_MONVACA;	// 생년월일
+	this.ctclTO_MONVACA = this.divSearch.form.ctclTO_MONVACA;
+	this.ccfCD_CORP     = this.divSearch.form.ccfCD_CORP;		// 법인코드
+	this.ccfID_SABUN    = this.divSearch.form.ccfID_SABUN;		// 성명
+	this.edtID_PERSON   = this.divSearch.form.edtID_PERSON;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	// 그리드영역
+	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAC_MONTHLYVACATION");
+	this.dxGrid.BeforeUserDataSetParam = "fnGridBeforeUserDataSetParam";
+	
+	// 검색영역
+	this.ccfCD_CORP.BeforeUserDataSetParam  = "fnBeforeUserDataSetParam";	// 법인
+	this.ccfCD_CORP.AfterCDTextChanged      = "fnAfterCDTextChanged";
+	this.ccfID_SABUN.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	 // 성명
+	this.ccfID_SABUN.AfterCDTextChanged     = "fnAfterCDTextChanged";
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	// 조회
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("FR_MONVACA", "string");
+	this.dsSelect.addColumn("TO_MONVACA", "string");
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("ID_SABUN", "string");
+	this.dsSelect.addColumn("ID_PERSON", "string");
+	this.dsSelect.addColumn("GR_SEARCH", "string");
+	this.dsSelect.addColumn("GR_CORP", "string");
+	this.dsSelect.addColumn("ID_USER", "string");
+	
+	// 저장
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("TY_FLAG", "string");
+	this.dsSave.addColumn("CD_CORP", "string");
+	this.dsSave.addColumn("ID_SABUN", "string");
+	this.dsSave.addColumn("ID_PERSON", "bigdecimal");
+	this.dsSave.addColumn("YM_MONVACA", "string");
+	this.dsSave.addColumn("QN_MONTHLY", "string");
+	this.dsSave.addColumn("ID_USER", "string");
+}
+
+/************************************************************************
+ * 화면 및 검색영역 초기화
+ ************************************************************************/
+this.fnInit = function() {
+	// 생성년월
+	this.dsSearch.setColumn(0, "FR_MONVACA", this.getOwnerFrame().YY_YEAR + "01");
+	this.dsSearch.setColumn(0, "TO_MONVACA",this.getOwnerFrame().YY_YEAR + "12");
+	
+	// 법인코드
+	this.dsSearch.setColumn(0, "CD_CORP", this.getOwnerFrame().CD_CORP);
+	this.dsSearch.setColumn(0, "DS_CORP", this.getOwnerFrame().DS_CORP);
+	
+	this.FormBtns.Select.click();
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+/*
+ * 조회 버튼
+ */
+this.fnSelect = function() {
+	if (!this.gfnSearchValidate(this.divSearch, this.dsSearch)) return false;
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "FR_MONVACA", this.dsSearch.getColumn(0, "FR_MONVACA"));
+	this.dsSelect.setColumn(0, "TO_MONVACA", this.dsSearch.getColumn(0, "TO_MONVACA"));
+	this.dsSelect.setColumn(0, "CD_CORP"   , this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSelect.setColumn(0, "ID_SABUN"  , this.dsSearch.getColumn(0, "ID_SABUN"));
+	this.dsSelect.setColumn(0, "ID_PERSON" , this.dsSearch.getColumn(0, "ID_PERSON"));
+	this.dsSelect.setColumn(0, "GR_SEARCH" , this.FormInfo.GR_SEARCH);
+	this.dsSelect.setColumn(0, "GR_CORP"   , this.AuthClient.CD_CORP);
+	this.dsSelect.setColumn(0, "ID_USER"   , this.AuthClient.ID_USER);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect"; 
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);	// 통신방법 정의 [생략가능]
+}
+
+/*
+ * 입력 버튼
+ */
+this.fnAdd = function() {
+    var nrow = this.gfnGridAdd(this.dxGrid); // top (default), bottom, current
+}
+
+/*
+ * 삭제 버튼
+ */
+this.fnDel = function() {
+    this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ * 저장 버튼
+ */
+this.fnSave = function() {
+	// 그리드 필수항목 체크
+	if (!this.gfnGridValidate(this.dxGrid)) return;	
+
+	this.dxGrid.updateToDataset();
+
+	this.dsSave.clearData();	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+		case "I":
+		case "U":  
+		case "D":
+			var nrow = this.dsSave.addRow();
+			this.dsSave.setColumn(nrow, "TY_FLAG"   , flag);
+			this.dsSave.setColumn(nrow, "CD_CORP"   , this.dsList.getColumn(i, "CD_CORP"));
+			this.dsSave.setColumn(nrow, "ID_SABUN"  , this.dsList.getColumn(i, "ID_SABUN"));
+			this.dsSave.setColumn(nrow, "ID_PERSON" , this.dsList.getColumn(i, "ID_PERSON"));
+			this.dsSave.setColumn(nrow, "YM_MONVACA", this.dsList.getColumn(i, "YM_MONVACA"));
+			this.dsSave.setColumn(nrow, "QN_MONTHLY", this.dsList.getColumn(i, "QN_MONTHLY"));
+			this.dsSave.setColumn(nrow, "ID_USER"   , this.AuthClient.ID_USER);
+			break;
+		}
+	}
+	
+	if (this.dsSave.rowcount == 0) return;
+
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "dsOutput=save";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);	// 통신방법 정의 [생략가능]
+}
+
+/*
+ * 엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ * 출력 버튼
+ */
+this.fnPrint = function() {
+	return true;
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnValidate = function() {
+	var validate = true;
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"FR_MONVACA"))) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.ctclFR_MONVACA.form.TextBox.setFocus();
+		}
+		this.gfnAlert("생년월일은 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	} else if (this.gfnIsNull(this.dsSearch.getColumn(0,"TO_MONVACA"))) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.ctclTO_MONVACA.form.TextBox.setFocus();
+		}
+		this.gfnAlert("생년월일은 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	} else if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_CORP"))) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.ccfCD_CORP.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("법인은 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}
+	
+	return validate;
+}
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ * 기본 콜백
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+	} else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	switch (id) {
+	case "ccfCD_CORP":	// 법인코드
+		dsUserParam.setColumn(nrow, "CD_CORP"  , this.AuthClient.CD_CORP);
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "ID_USER"  , this.AuthClient.ID_USER);
+		break;
+		
+	case "ccfID_SABUN":	// 성명
+		if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+			this.fnBeforeUserCallback = function() { 
+				this.ccfCD_CORP.form.CDTextBox.setFocus();
+			}
+			this.gfnAlert("법인을 먼저 선택하시기 바랍니다.", "fnBeforeUserCallback");
+			return false;
+		}
+		dsUserParam.setColumn(nrow, "CD_CORP"  , this.dsSearch.getColumn(0, "CD_CORP"));
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "CD_DEPT"  , this.AuthClient.CD_DEPT);
+		dsUserParam.setColumn(nrow, "YN_CORP"  , "N");
+		dsUserParam.setColumn(nrow, "TY_RETIRE", "%");	// 재직구분	
+		break;
+	}
+	
+	return true;
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+	if (id == "ccfCD_CORP") {
+		this.dsSearch.setColumn(0, "ID_SABUN", "");
+		this.dsSearch.setColumn(0, "DS_HNAME", "");
+		this.dsSearch.setColumn(0, "ID_PERSON", "");
+	} else if (id == "ccfID_SABUN") {
+		if(arr.length > 0) {
+			this.dsSearch.setColumn(0, "ID_PERSON", arr[0]["ID_PERSON"]);
+		}else{
+			this.dsSearch.setColumn(0, "ID_PERSON", "");
+		}
+	}
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGridBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	switch (id) {
+	case "DAX_CFBASEINFO_ALL":	//사원번호		
+		dsUserParam.setColumn(nrow, "CD_CORP"  , this.gfnIsNull(this.gfnTrim(this.dsSearch.getColumn(0, "CD_CORP"))) ? "%" : this.gfnTrim(this.dsSearch.getColumn(0, "CD_CORP")));
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "CD_DEPT"  , "%");
+		dsUserParam.setColumn(nrow, "YN_CORP"  , "N");
+		dsUserParam.setColumn(nrow, "TY_RETIRE", "%");	// 재직구분			
+		break;
+	}
+	
+	return true;
+}
+
+this.fnGridAfterCDTextChanged = function(id, codeFindData) {
+	
+}
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset, e:nexacro.DSColChangeEventInfo) {
+	if (e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+	if (e.columnid == "ID_SABUN") {
+		this.dsSearch.setColumn(0, "ID_PERSON", "");
+	}
+}
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctclFR_MONVACA.form.TextBox" propid="value" datasetid="dsSearch" columnid="FR_MONVACA"/>
+      <BindItem id="item1" compid="divSearch.form.ctclTO_MONVACA.form.TextBox" propid="value" datasetid="dsSearch" columnid="TO_MONVACA"/>
+      <BindItem id="item2" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item3" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+      <BindItem id="item4" compid="divSearch.form.ccfID_SABUN.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="ID_SABUN"/>
+      <BindItem id="item5" compid="divSearch.form.ccfID_SABUN.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_HNAME"/>
+      <BindItem id="item6" compid="divSearch.form.edtID_PERSON" propid="value" datasetid="dsSearch" columnid="ID_PERSON"/>
+    </Bind>
+  </Form>
+</FDL>

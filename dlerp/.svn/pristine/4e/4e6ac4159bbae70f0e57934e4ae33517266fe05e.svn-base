@@ -1,0 +1,666 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="45" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static cssclass="sta_SearchY" id="staCD_FORM" taborder="6" text="FORM ID" left="10" top="10" width="60" height="25"/>
+              <Edit id="ctxtCD_FORM" taborder="1" left="staCD_FORM:10" top="10" width="200" height="25" value="" readonly="true"/>
+              <Static cssclass="sta_SearchY" id="staGR_SEARCH" taborder="6" text="GR_SEARCH" left="ctxtCD_FORM:20" top="10" width="80" height="25"/>
+              <Edit id="ctxtGR_SEARCH" taborder="1" left="staGR_SEARCH:10" top="10" width="100" height="25" value="" readonly="true"/>
+              <Static cssclass="sta_SearchY" id="staTY_AUTH" taborder="6" text="TY_AUTH" left="ctxtGR_SEARCH:20" top="10" width="60" height="25"/>
+              <Edit id="ctxtTY_AUTH" taborder="1" left="staTY_AUTH:10" top="10" width="100" height="25" value="" readonly="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Div id="divDataTop" taborder="0" left="0" top="0" bottom="70%" right="0" cssclass="div_DATA_Bg">
+                <Layouts>
+                  <Layout>
+                    <Div id="divDataTopLeft" taborder="0" left="0" top="0" bottom="0" width="600" cssclass="div_DATA_Bg">
+                      <Layouts>
+                        <Layout>
+                          <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+                        </Layout>
+                      </Layouts>
+                    </Div>
+                    <Div id="divDataTopRight" taborder="0" left="divDataTopLeft:5" top="0" bottom="0" right="0" cssclass="div_DATA_Bg">
+                      <Layouts>
+                        <Layout>
+                          <Grid id="objGrid2" taborder="0" left="0" top="0" bottom="0" right="0"/>
+                        </Layout>
+                      </Layouts>
+                    </Div>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataBottom" taborder="0" left="0" top="divDataTop:20" bottom="0" right="0" cssclass="div_DATA_Bg">
+                <Layouts>
+                  <Layout>
+                    <Div id="divDataBottomLeft" taborder="0" left="0" top="0" bottom="0" width="600" cssclass="div_DATA_Bg">
+                      <Layouts>
+                        <Layout>
+                          <Grid id="objGrid3" taborder="0" left="0" top="0" bottom="0" right="0"/>
+                        </Layout>
+                      </Layouts>
+                    </Div>
+                    <Div id="divDataBottomRight" taborder="0" left="divDataBottomLeft:5" top="0" bottom="0" right="0" cssclass="div_DATA_Bg">
+                      <Layouts>
+                        <Layout>
+                          <TextArea id="ctxtDS_DESCRIPTION" taborder="1" left="0" top="0" right="5" bottom="0" value=""/>
+                        </Layout>
+                      </Layouts>
+                    </Div>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().ID_FORM) && !this.gfnIsNull(this.getOwnerFrame().GR_SEARCH && !this.gfnIsNull(this.getOwnerFrame().TY_AUTH))) {
+		this.dsSearch.setColumn(0, "ID_FORM", this.getOwnerFrame().ID_FORM);
+		this.dsSearch.setColumn(0, "GR_SEARCH", this.getOwnerFrame().GR_SEARCH);
+		this.dsSearch.setColumn(0, "TY_AUTH", this.getOwnerFrame().TY_AUTH);
+		
+		this.FormBtns.Select.click();
+	}
+
+};
+
+/************************************************************************
+ * 버튼 설정 
+ * 서브버튼 사용 처리. 공통 및 확장버튼 버튼관리화면에서 셋팅.
+ ************************************************************************/
+this.fnSetButton = function() {
+	
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnDeploy = this.gfnFormButtonAdd("Deploy", "fnDeploy");
+	this.btnAddSp = this.gfnFormButtonAdd("AddSp", "fnAddSp");  
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.dxGrid = this.divData.form.divDataTop.form.divDataTopLeft.form.objGrid;
+	this.dxGrid2 = this.divData.form.divDataTop.form.divDataTopRight.form.objGrid2;
+	this.dxGrid3 = this.divData.form.divDataBottom.form.divDataBottomLeft.form.objGrid3;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DZ", "DZU_FORMINFO");
+	this.dxGrid.set_selecttype("cell");
+	this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+	this.dsList.addEventHandler("canrowposchange", this.dsList_canrowposchange, this);
+	
+	
+	this.gfnGridInit(this.dxGrid2, this.dsList2, "DZ", "DZZ_DEVWORK2");
+
+
+	this.dxGrid2.set_enableredraw(false);	
+	this.gfnGridColumnColor(this.dxGrid2, "ST_PROGRESS", "Red", "ST_PROGRESS == '개발의뢰'");
+	this.gfnGridColumnColor(this.dxGrid2, "ST_PROGRESS", "Blue", "ST_PROGRESS == '접수완료' || ST_PROGRESS == '개발중'");
+	this.gfnGridColumnColor(this.dxGrid2, "ST_PROGRESS", "HotPink", "ST_PROGRESS == '개발완료'");
+	this.dxGrid2.set_enableredraw(true);
+	
+	this.dxGrid2.ExpandUp = "fnGrid_ExpandUp";
+
+	this.gfnGridInit(this.dxGrid3, this.dsList3, "DZ", "DZZ_SPLOG");
+	this.dxGrid3.addEventHandler("onselectchanged", this.fnGrid3_RowCellChanged, this);
+	
+	//this.dsList3.addEventHandler("canrowposchange", this.dsList3_canrowposchange, this);
+
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("ID_FORM", "string");
+	
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("ID_FORM", "string");
+	this.dsInsert.addColumn("SN_SEQ", "string");	
+	this.dsInsert.addColumn("TY_KIND", "string");
+	this.dsInsert.addColumn("DS_NAME", "string");
+	this.dsInsert.addColumn("DS_DESCRIPTION", "string");
+	this.dsInsert.addColumn("DS_SPEC", "string");
+	this.dsInsert.addColumn("DS_WRITER", "string");
+	
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("ID_FORM", "string");
+	this.dsUpdate.addColumn("SN_SEQ", "string");	
+	this.dsUpdate.addColumn("TY_KIND", "string");
+	this.dsUpdate.addColumn("DS_NAME", "string");
+	this.dsUpdate.addColumn("DS_DESCRIPTION", "string");
+	this.dsUpdate.addColumn("DS_SPEC", "string");
+	this.dsUpdate.addColumn("DS_WRITER", "string");
+	
+	this.dsSelect2 = new Dataset();
+	this.dsSelect2.addColumn("DT_FROM", "string");
+	this.dsSelect2.addColumn("DT_TO", "string");
+	this.dsSelect2.addColumn("NM_DAM", "string");
+	this.dsSelect2.addColumn("NM_DEV", "string");
+	this.dsSelect2.addColumn("ID_FORM", "string");
+	
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("ID_FORM", "string");
+	this.dsDelete.addColumn("SN_SEQ", "string");
+	
+	this.dsSelect3 = new Dataset();
+	this.dsSelect3.addColumn("ID_FORM", "string");
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "ID_FORM", this.dsSearch.getColumn(0, "ID_FORM"));
+	
+	this.dsSelect2.clearData();
+	this.dsSelect2.addRow();
+	
+	this.dsSelect2.setColumn(0, "DT_FROM", "");
+	this.dsSelect2.setColumn(0, "DT_TO", "");
+	this.dsSelect2.setColumn(0, "NM_DAM", "");
+	this.dsSelect2.setColumn(0, "NM_DEV", "");
+	this.dsSelect2.setColumn(0, "ID_FORM", this.dsSearch.getColumn(0, "ID_FORM"));
+	
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect select2=dsSelect2";
+	var outData     = "dsList=select0 dsList2=select20";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnSelectSPLog = function()
+{
+	this.gfnGridBeforeSelect(this.dxGrid3);
+
+	this.dsSelect3.clearData();
+	this.dsSelect3.addRow();
+	this.dsSelect3.setColumn(0, "ID_FORM", this.dsList.getColumn(this.dsList.rowposition, "DS_NAME"));
+	
+	var strSvcId    = "select3";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select3=dsSelect3";
+	var outData     = "dsList3=select30";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+}
+
+// this.fnSelect2 = function() {
+// 	
+// 
+// 	var strSvcId    = "select2";
+// 	var strSvcType  = "grid";
+// 	var inProc		= "_dsProc";
+// 	var inData      = "select2=dsSelect2";
+// 	var outData     = "dsList2=select20";
+// 	var strArg      = "";
+// 	var callBackFnc = "fnCallback";
+// 	
+// 	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+// 						strSvcType , 	// transaction을 요청할 구분
+// 						inProc,			// Procedure 정보 Dataset 이름
+// 						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+// 						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+// 						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+// 						callBackFnc); // 통신방법 정의 [생략가능]
+// }
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	var nrow = this.gfnGridAdd(this.dxGrid); // top (default), bottom, current
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	// 그리드 필수항목 체크
+	
+	if (!this.gfnGridValidate(this.dxGrid)) return;	
+
+	this.dxGrid.updateToDataset();
+		
+	this.dsInsert.clearData();
+	this.dsUpdate.clearData();
+	this.dsDelete.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		var seq = this.dsList.getColumn(i, "SN_SEQ");
+		var type = this.dsList.getColumn(i, "TY_KIND");
+		
+		// 닷넷에서 seq와 type. 심지어 아무 내용을 안 적고 저장해도 저장이 됨.
+		if(this.gfnIsNull(seq)){
+			seq = "";
+		}
+		
+		if(this.gfnIsNull(type)){
+			type = "";
+		}
+		
+		switch(flag) {
+			case "I":
+				var nrow = this.dsInsert.addRow();
+				this.dsInsert.setColumn(nrow, "ID_FORM", this.dsSearch.getColumn(0, "ID_FORM"));
+				this.dsInsert.setColumn(nrow, "SN_SEQ", seq);
+				this.dsInsert.setColumn(nrow, "TY_KIND", type);
+				this.dsInsert.setColumn(nrow, "DS_NAME", this.dsList.getColumn(i, "DS_NAME"));
+				this.dsInsert.setColumn(nrow, "DS_DESCRIPTION", this.dsList.getColumn(i, "DS_DESCRIPTION"));
+				this.dsInsert.setColumn(nrow, "DS_SPEC", this.dsList.getColumn(i, "DS_SPEC"));
+				this.dsInsert.setColumn(nrow, "DS_WRITER", this.dsList.getColumn(i, "DS_WRITER"));
+				break;
+				
+			case "U":
+				var nrow = this.dsUpdate.addRow();
+				this.dsUpdate.setColumn(nrow, "ID_FORM", this.dsList.getColumn(i, "ID_FORM"));
+				this.dsUpdate.setColumn(nrow, "SN_SEQ", this.dsList.getColumn(i, "SN_SEQ"));	
+				this.dsUpdate.setColumn(nrow, "TY_KIND", this.dsList.getColumn(i, "TY_KIND"));
+				this.dsUpdate.setColumn(nrow, "DS_NAME", this.dsList.getColumn(i, "DS_NAME"));
+				this.dsUpdate.setColumn(nrow, "DS_DESCRIPTION", this.dsList.getColumn(i, "DS_DESCRIPTION"));
+				this.dsUpdate.setColumn(nrow, "DS_SPEC", this.dsList.getColumn(i, "DS_SPEC"));
+				this.dsUpdate.setColumn(nrow, "DS_WRITER", this.dsList.getColumn(i, "DS_WRITER"));
+				break;
+				
+			case "D":
+				var nrow = this.dsDelete.addRow();
+				this.dsDelete.setColumn(nrow, "ID_FORM", this.dsList.getColumn(i, "ID_FORM"));
+				this.dsDelete.setColumn(nrow, "SN_SEQ", this.dsList.getColumn(i, "SN_SEQ"));	
+				break;
+		}
+	}
+	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+this.fnDeploy = function()
+{	
+	this.dsDeploy.clearData();
+	
+	var CD_MODULE = this.getOwnerFrame().CD_MODULE;
+	var ID_FORM = this.getOwnerFrame().ID_FORM;
+	
+	if (!this.gfnIsNull(CD_MODULE) && !this.gfnIsNull(ID_FORM))
+	{
+		CD_MODULE = ID_FORM.substring(0, 3).toLowerCase();
+	
+		var FILE_PATH = '/erp/' + CD_MODULE.substring(0, 2) + '/' + CD_MODULE;
+		var FILE_NAME = ID_FORM + ".xfdl.js";
+		
+		var nRow = this.dsDeploy.addRow();
+		this.dsDeploy.setColumn(nRow, 'FILE_PATH', FILE_PATH);
+		this.dsDeploy.setColumn(nRow, 'FILE_NAME', FILE_NAME);
+
+		var strSvcId    = "deploy";
+		var strSvcType  = "deploy2";
+		var inProc		= "";
+		var inData      = "dsDeploy=dsDeploy";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+	}
+}
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"ID_FORM"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			//this.ccfCD_SYSTEM.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("ID_FORM을 입력하세요.", "fnVaidateCallback");
+	}
+
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+		
+		//this.fnSelect2();
+	}
+	else if (svcID == "select3") {
+		this.gfnGridAfterSelect(this.dxGrid3);	
+	}
+	else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "deploy") {
+		if (errorCode == 0) {
+			this.gfnAlert('배포 완료 되었습니다.');
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ this.fnGrid_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+    if ((obj.oldrow > -1 && obj.oldrow == e.row)
+		|| (obj.oldrow == -1 && e.oldrow != e.row)) {
+		this.fnSelectSPLog();
+		obj.oldrow = -1;
+	}
+};
+
+this.fnGrid3_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+	if ((obj.oldrow > -1 && obj.oldrow == e.row)
+		|| (obj.oldrow == -1 && e.oldrow != e.row)) {
+		this.dsDescription.setColumn(0, "DS_DESCRIPTION", this.dsList3.getColumn(e.row, "SQLCMD"));
+		obj.oldrow = -1;
+	}
+}
+
+// this.dsList_canrowposchange = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo) {
+// 	var can_rowchange = true;
+// 	for (var i = 0; i < this.dsList.rowcount; i++) {
+// 		var flag = this.gfnGetFlag(this.dsList, i);
+// 		if (flag == "I" || flag == "U" || flag == "D") {
+// 			can_rowchange = false;
+// 			break;
+// 		}
+// 	}
+// 	if(!can_rowchange) {
+// 		this._row = e.newrow;
+// 		this.gfnConfirm("변경된 데이터가 있습니다.\r\n계속 진행하시겠습니까?", "dsList_canrowposchange_callback");
+// 	}
+// 	return can_rowchange;
+// }
+
+
+ this.fnGrid_ExpandUp = function(obj:nexacro.Grid, e:nexacro.GridMouseEventInfo) {
+
+	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, e.cell);
+	
+	if(colnm == "FILE_ATTACH") {
+		// 최초 작성시엔 NO_SEQ가 없기 때문에 저장 후에 파일 첨부를 진행하여야 함.
+		// CD_DIR에 넣어줄 값이 없기에 저장 후 진행!
+		if(this.gfnGetFlag(this.dsList2, e.row) == "I"){
+			this.gfnAlert("저장 후 파일첨부 진행.");
+			return false;
+		}
+	
+		var fileManager = {};
+		fileManager.CD_GUBUN = "DZ30";
+		fileManager.CD_DIR = [this.dsList2.getColumn(e.row, "NO_SEQ")];
+		
+		if(this.FormInfo.TY_AUTH == "R") {
+			fileManager.IS_READONLY = true;
+		} else {
+			fileManager.IS_READONLY = false;
+		}
+		this.gfnFileManager(fileManager, "fnFileCallback");
+	}
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	 	if(e.oldvalue != e.newvalue) {
+ 		this.gfnSetFormStatus(this);	// 폼상태 초기화
+ 		this.gfnGridClear(this.dxGrid);	
+ 	}
+};
+
+this.fnAddSp = function()
+{
+	if(this.parent.parent.opener != null) {
+		var objs = this.parent.parent.opener.divWork.form.objects;
+		this.fnSetSpList(objs);
+	}
+}
+
+this.fnSetSpList = function(objs)
+{
+	var max = (this.gfnIsNull(this.dsList.getMax("SN_SEQ")) == true ? 0 : Number(this.dsList.getMax("SN_SEQ"))) + 1;
+	var check = max;
+	
+	var isProc = false;
+	for(var i = 0; i < objs.length; i++) {
+		if(objs[i].id.startsWith("_dsProc")) {
+			isProc = true;
+			var ds = objs[i];
+			for(var i = 0; i < ds.rowcount; i++)
+			{
+				var sp = ds.getColumn(i, "SP");
+				if(sp != "" && !this.gfnIsNull(sp))
+				{
+					if(this.dsList.findRow("DS_NAME", sp.toUpperCase()) < 0)
+					{
+						var nrow = this.gfnGridAdd(this.dxGrid); // top (default), bottom, current
+						this.dsList.setColumn(nrow, "SN_SEQ", max);
+						this.dsList.setColumn(nrow, "TY_KIND", "SP");
+						this.dsList.setColumn(nrow, "DS_NAME", sp.toUpperCase());
+						max++;
+					}
+				}
+			}
+		}
+	}
+
+	if(check == max)
+	{
+		this.gfnAlert("_dsProc 의 SP가 모두 등록이 되어있습니다.");
+		return false;
+	}
+	
+	if(!isProc)
+	{
+		this.gfnAlert("이전화면의 _dsProc 이 없거나 등록된 SP가 없습니다.");
+		return false;
+	}
+	
+	//this.fnSave();
+}]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DMZPR_FORMINFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DMZPR_FORMINFO_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DMZPR_FORMINFO_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DMZPR_FORMINFO_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select2</Col>
+            <Col id="SP">DZZPR_DEVWORK_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select3</Col>
+            <Col id="SP">DZZPR_SPLOG_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="ID_FORM" type="STRING" size="256"/>
+          <Column id="GR_SEARCH" type="STRING" size="256"/>
+          <Column id="TY_AUTH" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="GR_SEARCH"/>
+            <Col id="TY_AUTH"/>
+            <Col id="ID_FORM"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDescription">
+        <ColumnInfo>
+          <Column id="DS_DESCRIPTION" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DS_DESCRIPTION"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList2"/>
+      <Dataset id="dsList3"/>
+      <Dataset id="dsDeploy">
+        <ColumnInfo>
+          <Column id="FULL_PATH" type="STRING" size="256"/>
+          <Column id="FILE_PATH" type="STRING" size="256"/>
+          <Column id="FILE_NAME" type="STRING" size="256"/>
+          <Column id="FILE_SIZE" type="BIGDECIMAL" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctxtCD_FORM" propid="value" datasetid="dsSearch" columnid="ID_FORM"/>
+      <BindItem id="item1" compid="divSearch.form.ctxtGR_SEARCH" propid="value" datasetid="dsSearch" columnid="GR_SEARCH"/>
+      <BindItem id="item2" compid="divSearch.form.ctxtTY_AUTH" propid="value" datasetid="dsSearch" columnid="TY_AUTH"/>
+      <BindItem id="item3" compid="divData.form.divDataBottom.form.divDataBottomRight.form.ctxtDS_DESCRIPTION" propid="value" datasetid="dsDescription" columnid="DS_DESCRIPTION"/>
+    </Bind>
+  </Form>
+</FDL>

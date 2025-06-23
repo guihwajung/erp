@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="cmmCalMM" width="96" height="25" titletext="월 달력" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <MaskEdit id="TextBox" taborder="0" left="0" top="0" right="0" bottom="0" onchanged="TextBox_onchanged" autoselect="true" value="" text="" format="####-##" type="string" textAlign="left" maskchar=" " canchange="TextBox_canchange" clipmode="excludespace" padding="0px 0px 0px 5px"/>
+        <Button id="btnCal" taborder="1" left="TextBox:-18" top="5" width="15" height="15" onclick="btnCal_onclick" cssclass="CalendarWeekDropButton"/>
+        <PopupDiv id="pdvCal" text="PopupDiv00" visible="false" left="0" top="TextBox:0" width="189" height="206" cssclass="pdv_WF_MonthCalBg" url="cmm::cmmCalMM_Pop.xfdl"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmCalMM (공통 월달력)
+*  @FileName 	cmmCalMM.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.03.09
+*  @Desction    월달력
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	consulting 	                최초 생성 
+*  2017.10.17     	consulting       	        주석 정비
+*  2017.10.26     	consulting 	                주석 정비및 메세지팝업 공통으로 변경
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fvToday;
+
+this.set_readonly = function(ro) {
+	this.TextBox.set_readonly(ro);
+	this.btnCal.set_enable(!ro);
+};
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.OrgHeight = this.parent.form.height;
+	this.set_height(this.OrgHeight);
+	if(this.OrgHeight == 20) {
+		this.btnCal.set_top(2);
+	}
+	
+	//this.gfnFormOnLoad(this);//초기화[필수]
+	this.parent.value = "";
+	this.fvToday = this.gfnGetDate(); //오늘날자세팅
+	
+	if(!this.gfnIsNull(this.parent.readonly)) {
+		this.TextBox.set_readonly(this.parent.readonly);
+		this.btnCal.set_enable(!this.parent.readonly);
+	}
+	
+	this.fnInit();
+};
+
+/************************************************************************************************
+* TRANSACTION 서비스 호출 처리
+************************************************************************************************/
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+
+ /************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+* @description 달력초기화
+*/
+this.fnInit = function()
+{
+	this.set_width(this.parent.form.width);
+};
+
+ /************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* @description   Calendar_ondropdown 이벤트 시 popDiv컴포넌트 띄우기
+*/   
+
+this.TextBox_canchange = function(obj:nexacro.MaskEdit,e:nexacro.ChangeEventInfo)
+{
+	if(e.prevalue != e.postvalue) {
+		if(this.gfnIsNull(e.postvalue)) {
+			return true;
+		} else {
+			var rtn = this.gfnIsDate(e.postvalue);
+			if(e.postvalue.length < 6) {
+				rtn = false;
+			}
+			
+			this.gfnSetTimer(this, function() {			
+				if(!rtn) {
+					obj.set_value("");
+				}
+				obj.setSelect();
+			}, 1);
+			return rtn;
+		}
+	}
+};
+
+this.TextBox_onchanged = function(obj:nexacro.MaskEdit,e:nexacro.ChangeEventInfo)
+{
+	if(e.prevalue != e.postvalue) {
+		this.parent.value = e.postvalue;
+	}
+};
+
+this.btnCal_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	var sDate = this.TextBox.value;
+	if( this.gfnIsNull(sDate) ) sDate = this.fvToday;
+	
+	this.pdvCal.form.staYYYY.set_text(sDate.substr(0,4));
+	
+	var oForm = this.gfnGetWorkForm(this.getOwnerFrame()); //this.getOwnerFrame().form.divWork.form;
+	
+	var nTop = 0;
+	// 상단 팝업
+	if (oForm.getOffsetHeight() < (this.parent.getOffsetBottom() + this.pdvCal.getOffsetHeight())) {
+		nTop = -1 * (this.pdvCal.getOffsetHeight() + 1);
+	}
+	else {
+		nTop = this.parent.getOffsetHeight(); 
+	}
+	
+	var nLeft = 0;
+	// 우측 정렬
+	if (oForm.getOffsetWidth() < (this.parent.getOffsetRight() + this.pdvCal.getOffsetWidth()) ) {
+		nLeft = this.parent.getOffsetWidth() - this.pdvCal.getOffsetWidth();
+	}
+	else {
+		nLeft = 0; 
+	}
+	
+	this.pdvCal.trackPopupByComponent(this,nLeft,nTop, null, null, "call_back");
+};
+
+this.call_back = function(strId, val) {
+	if(!this.gfnIsNull(val) && val.length == 6) {
+		this.TextBox.set_value(val);
+		this.parent.value = val;
+	}
+};
+
+]]></Script>
+  </Form>
+</FDL>

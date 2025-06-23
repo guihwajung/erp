@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="공동연차 복직자 현황" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staYY_COMMON" text="공동연차 발생일" left="0" top="10" width="136" height="25" taborder="1" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYY_COMMON" taborder="0" left="staYY_COMMON:0" top="10" width="90" height="24" url="cmm::cmmCalYY.xfdl" enableevent="true" text="2019"/>
+              <Combo id="ccboDT_COMMON" taborder="2" text="전체" left="ctclYY_COMMON:5" top="10" width="100" height="24" innerdataset="dsDT_COMMON" codecolumn="CD_CODE" datacolumn="DS_CODE" index="0" value="%"/>
+              <Static id="staCD_CORP" taborder="3" text="법인" left="ccboDT_COMMON:0" top="10" width="66" height="24" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_CORP" CodeFindName="DZX_CFCORP_STD" CDTextWidth="50" FitToContents="true" taborder="4" left="staCD_CORP:0" top="10" width="250" height="24" url="cmm::cmmCodeFind.xfdl" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" top="divSearch:20" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="1" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetInit();
+};
+
+/************************************************************************
+ * 버튼 설정 
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnAddComonVacation = this.gfnFormButtonAdd("addComonVacation", "fnAddComonVacation"); 	// 공동연차 등록
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_CORP   = this.divSearch.form.ccfCD_CORP;
+	this.ccboDT_COMMON   = this.divSearch.form.ccboDT_COMMON;
+	
+	this.dxGrid       = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAC_COMMONVACATION_ADD");
+	
+	this.bSelect = false;
+	this.dsSearch.addEventHandler("cancolumnchange", this.dsSearch_cancolumnchange, this);
+	this.dsSearch.addEventHandler("onvaluechanged", this.dsSearch_onvaluechanged, this);
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("DT_COMMON" , "STRING");
+	this.dsSelect.addColumn("CD_CORP"   , "STRING");
+	
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("CD_CORP"   , "STRING");
+	this.dsInsert.addColumn("DT_COMMON" , "STRING");
+	this.dsInsert.addColumn("ID_SABUN"  , "STRING");
+	this.dsInsert.addColumn("ID_USER"   , "STRING");
+	
+	this.dsSelectDate = new Dataset();
+	this.dsSelectDate.addColumn("YY_COMMON", "STRING");
+	this.dsSelectDate.addColumn("CD_CORP"  , "STRING");
+};
+
+/************************************************************************
+ * 초기화 이벤트
+ ************************************************************************/
+this.fnSetInit = function ()
+{
+	var today = this.gfnGetDate();
+	this.dsSearch.setColumn(0,"YY_COMMON",today.substr(0,4));
+	this.dsSearch.setColumn(0,"DT_COMMON",this.getOwnerFrame().DT_COMMON);
+	this.dsSearch.setColumn(0,"CD_CORP",this.getOwnerFrame().CD_CORP);
+	this.dsSearch.setColumn(0,"DS_CORP",this.getOwnerFrame().DS_CORP);
+	
+	this.fnSetComboDate();
+	this.bSelect = true;
+};
+/************************************************************************
+ * 버튼 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if(!this.fnSelectValidate()) return;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "DT_COMMON", this.dsSearch.getColumn(0, "DT_COMMON"));
+	this.dsSelect.setColumn(0, "CD_CORP"  , this.dsSearch.getColumn(0, "CD_CORP"));	
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+
+};
+
+/*
+ *	삭제 버튼
+ */ 
+this.fnDel = function() {
+};
+
+/*
+ *	저장 버튼
+ */ 
+this.fnSave = function() {
+};
+
+/*
+ *	엑셀 버튼
+ */ 
+this.fnExcel = function() { 
+	this.gfnExcelExport(this.dxGrid);
+};
+
+ 
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+	// 공통에서 필수 빈값 체크 후 focus 이동. 필수CSS 선언.
+	
+	var validate = true;  
+	if (validate && this.gfnIsNull(this.dsSearch.getColumn(0, "DT_COMMON"))) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.ccboDT_COMMON.setFocus();
+		}
+		this.gfnAlert("공동연차 발생일을 입력하세요.", "fnVaidateCallback");
+	}
+	
+	if (validate && this.gfnIsNull(this.dsSearch.getColumn(0, "CD_CORP"))) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.ccfCD_CORP.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("법인을 입력하세요.", "fnVaidateCallback");
+	}
+	return validate;
+};
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/ 
+// 공동연차 등록
+this.fnAddComonVacation = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var nChkRow = this.dsList.findRow( "CHK", 1 );
+	if( nChkRow == -1 ) {
+		this.gfnAlert("공동연차 일자를 등록할 직원을 선택하세요.");
+		return false;
+	}
+	
+	this.gfnConfirm("선택한 직원의 공동연차 등록 하시겠습니까?", function (strId, val){
+		if(val){
+			this.dsInsert.clearData();
+			
+			for (var i = 0; i < this.dsList.rowcount; i++) {
+				if( this.dsList.getColumn(i, "CHK") == 1 ) {
+					var nrow = this.dsInsert.addRow();
+					this.dsInsert.setColumn(nrow, "CD_CORP"   , this.dsList.getColumn(i, "CD_CORP"));
+					this.dsInsert.setColumn(nrow, "DT_COMMON" , this.dsList.getColumn(i, "DT_COMMON"));
+					this.dsInsert.setColumn(nrow, "ID_SABUN"  , this.dsList.getColumn(i, "ID_SABUN"));
+					this.dsInsert.setColumn(nrow, "ID_USER"   , this.AuthClient.ID_USER);
+				}
+			}
+			if (this.dsInsert.rowcount == 0) return;
+			
+			var strSvcId    = "insert";
+			var strSvcType  = "save";
+			var inProc		= "_dsProc";
+			var inData      = "insert=dsInsert";
+			var outData     = "";
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+			
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// transaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc); // 통신방법 정의 [생략가능]
+		}
+	});
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	//trace("fnCallback svcID = " + svcID + " , errorCode = " + errorCode + ", errorMsg = " + errorMsg);
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+	} else if (svcID == "combo") {
+		if( this.dsDT_COMMON.rowcount > 0 ){
+			this.ccboDT_COMMON.set_index(0);
+			if(!this.gfnIsNull(this.dsSearch.getColumn(0,"CD_CORP"))){	
+				this.FormBtns.Select.click();
+			}
+		}
+	} else if (svcID == "insert") {		
+		this.fnInsertCallback = function() {
+			this.FormBtns.Select.click();
+		}
+		this.gfnAlert("공동연차 등록이 완료되었습니다.", "fnInsertCallback");
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ 
+ this.dsSearch_cancolumnchange = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(this.bSelect && e.newvalue != e.oldvalue) {
+		if( e.columnid == "YY_COMMON"){
+			if(this.gfnIsNull(obj.getColumn(0,"CD_CORP"))){	
+				this.gfnAlert("법인코드를 입력하세요","fnCallback");				
+				this.ccfCD_CORP.form.CDTextBox.setFocus();
+				return false;
+			} else {
+				return true;
+			}
+		}
+	}
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	
+	if(this.bSelect && e.newvalue != e.oldvalue) {
+		if( e.columnid == "YY_COMMON"){
+			if ( !this.gfnIsNull(e.newvalue) ){ 
+				
+				this.fnSetComboDate();
+			} else {
+				this.dsSearch.set_enableevent(false);
+				this.dsDT_COMMON.clearData();
+				this.dsSearch.setColumn(0,"DT_COMMON","");
+				this.dsSearch.set_enableevent(true);
+			}
+		}
+		
+		if( e.columnid == "CD_CORP"){
+			if ( this.gfnIsNull(e.newvalue) ){
+				this.dsSearch.set_enableevent(false);
+				this.dsDT_COMMON.clearData();
+				this.dsSearch.setColumn(0,"YY_COMMON","");
+				this.dsSearch.setColumn(0,"DT_COMMON","");
+				this.dsSearch.set_enableevent(true);
+			}
+		}
+		
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+	}
+	
+};
+
+// 공통코드 조회
+this.fnSetComboDate = function() {
+	this.dsSelectDate.clearData();
+	this.dsSelectDate.addRow();
+	this.dsSelectDate.setColumn(0, "YY_COMMON", this.dsSearch.getColumn(0, "YY_COMMON"));	
+	this.dsSelectDate.setColumn(0, "CD_CORP"  , this.dsSearch.getColumn(0, "CD_CORP"));	
+	
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsSelectDate";
+	var outData     = "dsDT_COMMON=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};]]></Script>
+    <Objects>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="YY_COMMON" type="STRING" size="256"/>
+          <Column id="DT_COMMON" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CORP"/>
+            <Col id="DS_CORP"/>
+            <Col id="DT_COMMON"/>
+            <Col id="YY_COMMON"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList"/>
+      <Dataset id="dsListSub"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DACPR_COMMONVACATION_ADD_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DACPR_COMMONVACATION_ADD_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DACPR_COMMON_DATE_SELECT</Col>
+            <Col id="TARGET">combo</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDT_COMMON">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item3" compid="divSearch.form.ctclYY_COMMON.form.TextBox" propid="value" datasetid="dsSearch" columnid="YY_COMMON"/>
+      <BindItem id="item0" compid="divSearch.form.ccboDT_COMMON" propid="value" datasetid="dsSearch" columnid="DT_COMMON"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item2" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+    </Bind>
+  </Form>
+</FDL>

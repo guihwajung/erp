@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="임원보수한도조회" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staYY_WORK" taborder="0" text="기준년도" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYY_WORK" taborder="1" left="staYY_WORK:0.0" top="10.0" width="90" height="24.0" url="cmm::cmmCalYY.xfdl"/>
+              <Static id="staDT_WORK" taborder="2" text="기준일자" left="ctclYY_WORK:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Calendar id="calDT_WORK" taborder="3" left="staDT_WORK:0.0" top="10.0" width="100" height="24.0" dateformat="yyyy-MM-dd"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" top="40" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);
+	// ---------------------------//
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetCombo();
+
+	//기준년월 셋팅
+	var today = this.gfnGetDate();
+	var todayYear = today.substring(0,4);
+	this.divSearch.form.ctclYY_WORK.form.TextBox.set_value(todayYear);
+	this.divSearch.form.calDT_WORK.set_value(today);  
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {	
+	// 서브 버튼 사용
+	//this.gfnUseSubBtn(true, this.divData, this.divData.form.divSplitter); // divSplitter sync
+	this.FormBtns.Reset.set_enable(true);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnFormButton = this.gfnFormButtonAdd("ExecutiveBtn", "fnExecutiveBtn", "임원보수한도등록");
+	this.btnFormButton.set_enable(true);
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+	this.ctclYY_WORK = this.divSearch.form.ctclYY_WORK;
+	this.calDT_WORK = this.divSearch.form.calDT_WORK;
+
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAU_EXECUTIVE_SALARY");  // pForm.gfnGridInit = function(objGrid, objDs, cd_system, id_grid, tree_column, level_column, is_manual) 
+	this.dxGrid.set_selecttype("cell");	// IE경우만 multiarea모드에서 master선택후 마우스 이동 빠르게 할 경우 버그가 있어서 cell 모드로 변경
+	
+	var colDS_CODE = this.dxGrid.getBindCellIndex("body", "DS_CODE");
+	this.dxGrid.setCellProperty("summary", 2, "textAlign", "center");
+	this.dxGrid.setCellProperty("summary", 2, "text", "합계");
+	
+	var nRow = this.dxGrid.appendContentsRow("summary");
+	this.dxGrid.setCellProperty("summary", 5, "textAlign", "center");
+	this.dxGrid.setCellProperty("summary", 5, "text", "보수한도");
+
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("YY_WORK", "string");
+	this.dsSelect.addColumn("DT_WORK", "string");
+	
+	// 한도 Summary
+	this.dsListSub = new Dataset();
+	this.dsListSub.set_name("dsListSub");
+	this.dsListSub.set_enableevent(false);
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	
+	if (!this.fnSelectValidate()) return false;
+	
+	this.fnSetGridColunm(this.dsCD_CORP);
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	//this.dsList.clearData();
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "YY_WORK", this.dsSearch.getColumn(0, "YY_WORK"));
+	this.dsSelect.setColumn(0, "DT_WORK", this.dsSearch.getColumn(0, "DT_WORK"));
+	//trace("dsList:"+this.dsList.saveXML());
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0 dsListSub=select1";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	//trace("dsList::::"+this.dsList.saveXML());
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/*
+ *	초기화 버튼
+ */
+this.fnReset  = function() {
+	this.dsSearch.clearData();
+	this.dsSearch.addRow();
+
+	//기준년월 셋팅
+	var today = this.gfnGetDate();
+	var todayYear = today.substring(0,4);
+	this.divSearch.form.ctclYY_WORK.form.TextBox.set_value(todayYear);
+	this.divSearch.form.calDT_WORK.set_value(today);  
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "YY_WORK"))){
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.divSearch.form.calDT_WORK.setFocus();
+		}
+		this.gfnAlert("기준년도를 입력하십시오.", "fnVaidateCallback"); // gfnAlert = function (sMsgId, arrArg, sPopId, sCallback)
+		return false;
+	}
+
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "DT_WORK"))){
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.divSearch.form.calDT_WORK.setFocus();
+		}
+		this.gfnAlert("기준일자를 입력하십시오.", "fnVaidateCallback"); // gfnAlert = function (sMsgId, arrArg, sPopId, sCallback)
+		return false;
+	}
+
+	return validate;
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") { 
+		this.gfnGridAfterSelect(this.dxGrid);
+			trace("갯수"+this.dsList.rowscount);
+			trace("합계"+this.dsList.saveXML());		
+
+//		if (this.dsList.rowscount > 0)
+		{
+			trace("합계"+this.dsList.saveXML());
+			for ( var i =0; i < this.dsList.colcount; i++){
+				if( this.dsList.getColID(i).search("_IC") > -1 || this.dsList.getColID(i).search("_AM_INCOMESUM") > -1){
+					this.dsList.colinfos[i].set_type("INT");
+					
+					//합계
+					this.dxGrid.setCellProperty("summ",this.dxGrid.getBindCellIndex( "body", this.dsList.getColID(i)) , "text", "expr:dataset.getSum('" + this.dsList.getColID(i) + "')");
+
+					// 보수한도					
+					//Sub Row 를 갖는 밴드의 Cell 인덱스는 "Sub Row 인덱스 * Column 갯수 + Cell 의 col 속성값" 이 됩니다.
+					var subRowIndex = this.dxGrid.getBindCellIndex( "body", this.dsList.getColID(i));
+					var subRowValue = pForm.gfnNvl(this.dsListSub.getColumn(0, this.dsList.getColID(i)),0);
+					this.dxGrid.setCellProperty("summary", subRowIndex-1 + this.dsList.colcount, "displaytype", "number");
+					this.dxGrid.setCellProperty("summary", subRowIndex-1 + this.dsList.colcount, "text", subRowValue);
+
+				}
+			}			
+		}
+	} else if (svcID == "combo") {
+	}
+
+	this.fnSetButton();
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+  this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+}
+
+this.fnAfterCDTextChanged = function(id) {
+	this.fnSearchInit();
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+ this.fnExecutiveBtn = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var param = {};
+	//param.CF_CD_SITE = this.dsList.getColumn(this.dsList.rowposition,"CD_SITE");
+	//param.CF_DS_SITE = this.dsList.getColumn(this.dsList.rowposition,"DS_SITE");
+	//param.CF_CD_CTM = this.dsList.getColumn(this.dsList.rowposition,"CD_CTM");
+	//param.CF_DS_CTM = this.dsList.getColumn(this.dsList.rowposition,"DS_CTM");
+	//param.CF_CD_ACT = this.dsList.getColumn(this.dsList.rowposition,"CD_ACT");
+	//param.CF_DS_ACT = this.dsList.getColumn(this.dsList.rowposition,"DS_ACT");
+	//this.gfnFormOpen(this.FormInfo.CD_MODULE, "DHA_ISSUESLIP", "fnPopupCallBack", param, this.getOffsetWidth(), this.getOffsetHeight());
+	//this.gfnFormOpenNonAuth(this.FormInfo.CD_MODULE, "DAU_EXECUTIVE", "fnPopupCallBack", param, this.getOffsetWidth(), this.getOffsetHeight());
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DAU_EXECUTIVE", "fnPopupCallBack", param, this.getOffsetWidth(), this.getOffsetHeight());
+};
+
+this.fnPopupCallBack = function(svcID, value) {
+	if(value == true) {
+		this.FormBtns.Select.click();
+	}
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+
+		for ( var i =0; i < this.dsList.colcount; i++){
+			if( this.dsList.getColID(i).search("_IC") > -1 || this.dsList.getColID(i).search("_AM_INCOMESUM") > -1){
+				this.dsList.colinfos[i].set_type("INT");
+				var subRowIndex = this.dxGrid.getBindCellIndex( "body", this.dsList.getColID(i));
+				this.dxGrid.setCellProperty("summary", subRowIndex-1 + this.dsList.colcount, "displaytype", "number");
+				this.dxGrid.setCellProperty("summary", subRowIndex-1 + this.dsList.colcount, "text", 0);
+			}
+		}
+	}
+};
+
+/*
+ *	콤보박스 값 설정
+ */
+this.fnSetCombo = function() {
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_CORP", "string");
+
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_CORP", "");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsCD_CORP=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+
+};
+
+this.fnSetGridColunm = function ( objDataSet ){
+	var ncol1 = 0;
+	var ncol2 = 0;
+	var ncol3 = 1;
+	var cols = 0; // merge 되면서 cell index가 조정된다.
+	this.dxGrid.set_enableredraw(false);
+	this.dsList.set_enableevent(false);
+	for ( var i =this.dxGrid.getCellCount("body")-1; -1 < i ; i--){
+		if( this.gfnGridGetBindColumnNameByIndex( this.dxGrid, i).search("_IC") > -1 ||this.gfnGridGetBindColumnNameByIndex( this.dxGrid, i).search("_AM_INCOMESUM") > -1){
+			this.dxGrid.deleteContentsCol("body",i);
+		}		
+	}
+	
+	for ( var i =this.dsList.colcount-1; -1 < i ; i--){
+		//trace(i+"=" + this.dsList.getColID(i));
+		if( this.dsList.getColID(i).search("_IC") > -1 || this.dsList.getColID(i).search("_AM_INCOMESUM") > -1){
+			this.dsList.deleteColumn(i);
+		}
+	}
+
+	for( var i = 0; i < objDataSet.rowcount; i++ ){
+		var objColinfo = new ColumnInfo() ;
+		objColinfo.set_type( "INT" );
+		objColinfo.set_size( 256 );
+
+		this.dsList.addColumn("CD_"+objDataSet.getColumn(i,"CD_CORP")+"_IC",objColinfo);
+		this.dsList.addColumn("CD_"+objDataSet.getColumn(i,"CD_CORP")+"_AM_INCOMESUM",objColinfo);
+
+		ncol1 = this.dxGrid.appendContentsCol();		
+		this.dxGrid.setFormatColProperty(ncol1, "size", 90);
+		this.dxGrid.setCellProperty("head", (ncol1+ncol3), "text", "인원");		
+		this.dxGrid.setCellProperty("body", ncol1, "displaytype", "number");
+		this.dxGrid.setCellProperty("body", ncol1, "text", "bind:" + "CD_"+objDataSet.getColumn(i,"CD_CORP")+"_IC");
+		this.dxGrid.setCellProperty("summ", ncol1, "displaytype", "number");
+		//var subIdx1 = 3 + (objDataSet.rowcount * 2) + ncol1;
+		//this.dxGrid.setCellProperty("summ", subIdx1, "displaytype", "number");
+	
+		ncol2 = this.dxGrid.appendContentsCol();
+		this.dxGrid.setFormatColProperty(ncol2, "size", 90);
+		ncol3++;
+		this.dxGrid.setCellProperty("head", ncol2+ncol3, "text", "금액");
+		this.dxGrid.setCellProperty("body", ncol2, "text", "bind:" + "CD_"+objDataSet.getColumn(i,"CD_CORP")+"_AM_INCOMESUM");
+		this.dxGrid.setCellProperty("body", ncol2, "textAlign", "right");
+		this.dxGrid.setCellProperty("body", ncol2, "displaytype", "number");
+		this.dxGrid.setCellProperty("summ", ncol2, "displaytype", "number");
+		//var subIdx2 = 3 + (objDataSet.rowcount * 2) + ncol2;
+		//this.dxGrid.setCellProperty("summ", subIdx2, "displaytype", "number");
+
+		var rtn = this.dxGrid.mergeContentsCell("head", 0, ncol1, 0, ncol1+1, ncol1 - cols, false);
+		if(rtn > -1) {
+			this.dxGrid.setCellProperty("head", rtn, "text", objDataSet.getColumn(i,"DS_CORP"));
+			cols = cols + 1;
+		}		
+	}
+	this.dxGrid.set_enableredraw(true);
+	this.dsList.set_enableevent(true);
+	//trace(this.dsList.saveXML());
+}]]></Script>
+    <Objects>
+      <Dataset id="dsList" enableevent="false"/>
+      <Dataset id="dsListSub" enableevent="false"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DAUPR_EXECUTIVE_SALARY_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DAZPR_CORP_NAME_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="YY_WORK" type="STRING" size="256"/>
+          <Column id="DT_WORK" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCD_CORP" enableevent="false">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctclYY_WORK.form.TextBox" propid="value" datasetid="dsSearch" columnid="YY_WORK"/>
+      <BindItem id="item1" compid="divSearch.form.calDT_WORK" propid="value" datasetid="dsSearch" columnid="DT_WORK"/>
+    </Bind>
+  </Form>
+</FDL>

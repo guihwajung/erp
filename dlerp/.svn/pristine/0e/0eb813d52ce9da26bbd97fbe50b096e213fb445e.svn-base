@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="600" height="400" titletext="자재업체검색" onload="form_onload" onkeydown="form_onkeydown">
+    <Layouts>
+      <Layout>
+        <Static id="staTITLE" taborder="0" text="자재업체검색" left="0" top="0" width="100%" height="22" cssclass="sta_TITLE_Bg" textAlign="left" onclick="divData_staTITLE_onclick"/>
+        <Div id="divSearch" taborder="0" left="0.0" top="staTITLE:10.0" height="46.0" right="0" cssclass="" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_COSTCLASS" taborder="1" text="품목" left="0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staBgCD_COSTCLASS" taborder="2" left="staCD_COSTCLASS:0.0" top="10.0" right="50.00%" height="24.0" cssclass="sta_WF_tablebg"/>
+              <Static id="staYN_REGIST" taborder="3" text="등록구분" left="staBgCD_COSTCLASS:0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staBgYN_REGIST" taborder="4" left="staYN_REGIST:0.0" top="10.0" right="0.00%" height="24.0" cssclass="sta_WF_tablebg"/>
+              <Static id="staCD_VENDOR" taborder="5" text="업체코드" left="0.0" top="staCD_COSTCLASS:10.0" width="105.0" height="24.0" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staBgCD_VENDOR" taborder="6" left="staCD_VENDOR:0.0" top="staCD_COSTCLASS:10.0" right="50.00%" height="24.0" cssclass="sta_WF_tablebg"/>
+              <Static id="staDS_VENDOR" taborder="7" text="업체명" left="staBgCD_VENDOR:0.0" top="staCD_COSTCLASS:10.0" width="105.0" height="24.0" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staBgDS_VENDOR" taborder="8" left="staDS_VENDOR:0.0" top="staCD_COSTCLASS:10.0" right="0.00%" height="24.0" cssclass="sta_WF_tablebg"/>
+              <Static id="staNO_SJC" taborder="9" text="사업자번호" left="0.0" top="staCD_VENDOR:10.0" width="105.0" height="24.0" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staBgNO_SJC" taborder="10" left="staNO_SJC:0.0" top="staCD_VENDOR:10.0" right="50.00%" height="24.0" cssclass="sta_WF_tablebg"/>
+              <Static id="staDS_LICCOST" taborder="11" text="품목명" left="staBgNO_SJC:0.0" top="staCD_VENDOR:10.0" width="105.0" height="24.0" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staBgDS_LICCOST" taborder="12" left="staDS_LICCOST:0.0" top="staCD_VENDOR:10.0" right="0.00%" height="24.0" cssclass="sta_WF_tablebg"/>
+              <Combo id="ccboCD_COSTCLASS" taborder="13" left="staCD_COSTCLASS:0.0" top="10.0" width="95" height="24.0" datacolumn="DS_CODE" codecolumn="CD_CODE" innerdataset="dsCD_COSTCLASS"/>
+              <Combo id="ccboCD_LICCOST" taborder="14" left="ccboCD_COSTCLASS:0.0" top="10.0" right="staYN_REGIST:5" height="24.0" datacolumn="DS_CODE" codecolumn="CD_CODE" innerdataset="dsCD_LICCOST"/>
+              <Combo id="ccboYN_REGIST" taborder="15" left="staYN_REGIST:0.0" top="10.0" right="5" innerdataset="dsYN_REGIST" height="24.0" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+              <Edit id="ctxtCD_VENDOR" taborder="16" left="staCD_VENDOR:0.0" top="ccboCD_COSTCLASS:10.0" right="staYN_REGIST:5" height="24.0" value=""/>
+              <Edit id="ctxtDS_VENDOR" taborder="17" left="staDS_VENDOR:0.0" top="ccboCD_COSTCLASS:10.0" right="5" height="24.0" value=""/>
+              <Edit id="ctxtNO_SJC" taborder="18" left="staNO_SJC:0.0" right="staDS_LICCOST:5" top="ctxtCD_VENDOR:10.0" height="24.0" value=""/>
+              <Edit id="ctxtDS_LICCOST" taborder="19" left="staDS_LICCOST:0.0" top="ctxtCD_VENDOR:10.0" right="5" height="24.0" value=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:0" bottom="30" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0" oncelldblclick="divData_objGrid_oncelldblclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnSearch" taborder="1" text="검색" left="25%" top="divData:5" width="60" height="20" onclick="fnSelect"/>
+        <Button id="btnOk" taborder="2" text="선택" left="45.08%" top="divData:5" width="60" height="20" onclick="divData_btnOk_onclick"/>
+        <Button id="btnCancel" taborder="3" text="취소" left="65%" top="divData:5" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+// 부문, 품목 코드 최초 세팅 관련되어 만든 해당화면 전역변수.
+this._FIRST = true;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.fnSetCombo();
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_COSTCLASS) && !this.gfnIsNull(this.getOwnerFrame().CD_LICCOST))
+	{
+		this.dsSearch.setColumn(0, "CD_COSTCLASS", this.getOwnerFrame().CD_COSTCLASS);
+		this.dsSearch.setColumn(0, "CD_LICCOST", this.getOwnerFrame().CD_LICCOST);
+	}
+	
+	this.fnSelect();
+	
+	this._FIRST = false;
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	//this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid, this.dsList, "DM", "DMA_VENDOR_SEARCHDLG");
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {	
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_COSTCLASS", "string");
+	this.dsSelect.addColumn("CD_LICCOST", "string");
+	this.dsSelect.addColumn("YN_REGIST", "string");
+	this.dsSelect.addColumn("CD_VENDOR", "string");
+	this.dsSelect.addColumn("DS_VENDOR", "string");
+	this.dsSelect.addColumn("NO_SJC", "string");
+	this.dsSelect.addColumn("DS_LICCOST", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.fnSetDsSearch();
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_COSTCLASS", this.dsSearch.getColumn(0, "CD_COSTCLASS"));
+	this.dsSelect.setColumn(0, "CD_LICCOST", this.dsSearch.getColumn(0, "CD_LICCOST"));
+	this.dsSelect.setColumn(0, "YN_REGIST", this.dsSearch.getColumn(0, "YN_REGIST"));
+	this.dsSelect.setColumn(0, "CD_VENDOR", this.dsSearch.getColumn(0, "CD_VENDOR"));
+	this.dsSelect.setColumn(0, "DS_VENDOR", this.dsSearch.getColumn(0, "DS_VENDOR"));
+	this.dsSelect.setColumn(0, "NO_SJC", this.dsSearch.getColumn(0, "NO_SJC"));
+	this.dsSelect.setColumn(0, "DS_LICCOST", this.dsSearch.getColumn(0, "DS_LICCOST"));
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {	
+	var validate = true;
+	/*
+	if (this.gfnIsNull(this.dsData.getColumn(0,"RM_RECOMMEND"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.txtRM_RECOMMEND.setFocus();
+		}
+		this.gfnAlert("추천사유는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}else if (this.gfnIsNull(this.dsData.getColumn(0,"RM_BIGO"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.txtRM_BIGO.setFocus();
+		}
+		this.gfnAlert("비고는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}
+	*/
+	return validate;
+	
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		if(errorCode == 0)
+		{
+			this.gfnGridAfterSelect(this.dxGrid);	
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if (svcID == "combo") {
+		if(errorCode == 0)
+		{
+			this.dsCD_COSTCLASS.insertRow(0);		
+			this.dsCD_COSTCLASS.setColumn(0, "CD_CODE", "");
+			this.dsCD_COSTCLASS.setColumn(0, "DS_CODE", "전체");
+			
+			if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_COSTCLASS")))
+			{
+				this.divSearch.form.ccboCD_COSTCLASS.set_index(0);
+			}
+			this.fnSetCombo1();
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if (svcID == "combo1") {
+		if(errorCode == 0)
+		{
+			this.dsCD_LICCOST.insertRow(0);		
+			this.dsCD_LICCOST.setColumn(0, "CD_CODE", "");
+			this.dsCD_LICCOST.setColumn(0, "DS_CODE", "전체");
+			
+			if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_LICCOST")))
+			{
+				this.divSearch.form.ccboCD_LICCOST.set_index(0);
+			}
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+// 저장 버튼 클릭
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	if (!this.fnSelectValidate()) return false;
+	
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.			
+	
+	var nrow = this.dsList.rowposition;
+	
+	if(nrow < 0) 
+	{
+		this.gfnAlert("선택된 업체가 없습니다.");
+		return;
+	}
+	var rtnMsg = this.dsList.getColumn(nrow, "CD_VENDOR") + "," + this.dsList.getColumn(nrow, "DS_VENDOR");
+	
+	this.getParentContext().close(rtnMsg);
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+
+
+this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DM");
+	this.dsCombo.setColumn(0, "CD_TYPE", "H01");
+
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsCD_COSTCLASS=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+
+this.fnSetCombo1 = function()
+{
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_BUMUN", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_BUMUN", this.dsSearch.getColumn(0, "CD_COSTCLASS"));
+
+	var strSvcId    = "combo1";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo1=dsCombo";
+	var outData     = "dsCD_LICCOST=combo10";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.newvalue != e.oldvalue)
+	{
+		if(e.columnid == "CD_COSTCLASS")
+		{
+			this.fnSetCombo1();
+			
+			if(this._FIRST == false)
+			{
+				this.dsSearch.setColumn(0, "CD_LICCOST", "");
+			}
+		}
+	}
+	
+};
+
+this.form_onkeydown = function(obj:nexacro.Form,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == "13")
+	{
+		this.fnSelect();
+	}
+};
+
+this.divData_objGrid_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.divData_btnOk_onclick();
+};
+
+this.fnSetDsSearch = function()
+{
+	// Textbox의 경우 Focus를 벗어나지 않으면 Dataset에 들어가지 않아서 조치함.
+	this.dsSearch.setColumn(0, "CD_VENDOR", this.divSearch.form.ctxtCD_VENDOR.text);
+	this.dsSearch.setColumn(0, "DS_VENDOR", this.divSearch.form.ctxtDS_VENDOR.text);
+	this.dsSearch.setColumn(0, "NO_SJC", this.divSearch.form.ctxtNO_SJC.text);
+	this.dsSearch.setColumn(0, "DS_LICCOST", this.divSearch.form.ctxtDS_LICCOST.text);
+}]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DMXPR_VENDOR_SEARCH_DM</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo1</Col>
+            <Col id="SP">DMXPR_LICCOST_COMBO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="RM_RECOMMEND" type="STRING" size="256"/>
+          <Column id="RM_BIGO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="RM_RECOMMEND"/>
+            <Col id="RM_BIGO"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_COSTCLASS" type="STRING" size="256"/>
+          <Column id="CD_LICCOST" type="STRING" size="256"/>
+          <Column id="YN_REGIST" type="STRING" size="256"/>
+          <Column id="CD_VENDOR" type="STRING" size="256"/>
+          <Column id="DS_VENDOR" type="STRING" size="256"/>
+          <Column id="NO_SJC" type="STRING" size="256"/>
+          <Column id="DS_LICCOST" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_REGIST">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">미등록사만</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">등록사만</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE"/>
+            <Col id="DS_CODE">전체</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCD_COSTCLASS">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCD_LICCOST">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccboCD_COSTCLASS" propid="value" datasetid="dsSearch" columnid="CD_COSTCLASS"/>
+      <BindItem id="item1" compid="divSearch.form.ccboCD_LICCOST" propid="value" datasetid="dsSearch" columnid="CD_LICCOST"/>
+      <BindItem id="item2" compid="divSearch.form.ccboYN_REGIST" propid="value" datasetid="dsSearch" columnid="YN_REGIST"/>
+      <BindItem id="item3" compid="divSearch.form.ctxtCD_VENDOR" propid="value" datasetid="dsSearch" columnid="CD_VENDOR"/>
+      <BindItem id="item4" compid="divSearch.form.ctxtDS_VENDOR" propid="value" datasetid="dsSearch" columnid="DS_VENDOR"/>
+      <BindItem id="item5" compid="divSearch.form.ctxtNO_SJC" propid="value" datasetid="dsSearch" columnid="NO_SJC"/>
+      <BindItem id="item6" compid="divSearch.form.ctxtDS_LICCOST" propid="value" datasetid="dsSearch" columnid="DS_LICCOST"/>
+    </Bind>
+  </Form>
+</FDL>

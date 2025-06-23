@@ -1,0 +1,1052 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("평가진행현황");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select_status</Col><Col id=\"SP\">DAJPR_RTNG_RTNGPRSN_ADMN_LIST_SELECT</Col></Row><Row><Col id=\"TARGET\">save</Col><Col id=\"SP\">DAJPR_RTNG_GOAL_SAVE</Col></Row><Row><Col id=\"TARGET\">save_bgvdprsn</Col><Col id=\"SP\">DAJPR_RTNG_BGVDPRSN_ADMN_SAVE</Col></Row><Row><Col id=\"TARGET\">save_rtngprsn</Col><Col id=\"SP\">DAJPR_RTNG_RTNGPRSN_ADMN_SAVE</Col></Row><Row><Col id=\"TARGET\">save_pool</Col><Col id=\"SP\">DAJPR_RTNG_MTSD_CLGE_POOL_SAVE</Col></Row><Row><Col id=\"TARGET\">selection_pool</Col><Col id=\"SP\">DAJPR_RTNG_MTSD_CLGE_POOL_SELECTION</Col></Row><Row><Col id=\"TARGET\">submit_pool</Col><Col id=\"SP\">DAJPR_RTNG_MTSD_CLGE_POOL_SUBMIT</Col></Row><Row><Col id=\"TARGET\">confirm_pool</Col><Col id=\"SP\">DAJPR_RTNG_MTSD_CLGE_POOL_CONFIRM</Col></Row><Row><Col id=\"TARGET\">save_ldsh_rtngprsn</Col><Col id=\"SP\">DAJPR_RTNG_LDSH_RTNGPRSN_ADMN_SAVE</Col></Row><Row><Col id=\"TARGET\">save_goal_itvwprsn</Col><Col id=\"SP\">DAJPR_RTNG_GOAL_ITVW_PRSN_SAVE</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"YR_RTNG\" type=\"STRING\" size=\"256\"/><Column id=\"ID_RTNG\" type=\"STRING\" size=\"256\"/><Column id=\"DS_RTNG\" type=\"STRING\" size=\"256\"/><Column id=\"TY_PTCP\" type=\"STRING\" size=\"256\"/><Column id=\"ID_SABUN\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HNAME\" type=\"STRING\" size=\"256\"/><Column id=\"ID_PERSON\" type=\"STRING\" size=\"256\"/><Column id=\"CD_RTNG_ASBLNEXT\" type=\"STRING\" size=\"256\"/><Column id=\"DS_RTNG_ASBLNEXT\" type=\"STRING\" size=\"256\"/><Column id=\"CNTN_RTNG_ID\" type=\"STRING\" size=\"256\"/><Column id=\"CD_RTNG_TYPE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_RTNG_TYPE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CORP\"/></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListStatus", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0","0",null,"46.0","0",null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_cssclass("div_SEARCH_Bg");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staCD_CORP","0","10.0","66","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("2");
+            obj.set_text("법인");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_CORP","staCD_CORP:0.0","10.0","250","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("3");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.getSetter("CodeFindName").set("DAX_CFCORP_CODEFIND");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staYR_RTNG","ccfCD_CORP:0.0","10.0","66","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("0");
+            obj.set_text("년도");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ctclYR_RTNG","staYR_RTNG:0.0","10.0","60","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("70");
+            obj.set_taborder("4");
+            obj.set_url("cmm::cmmCalYY.xfdl");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staID_RTNG","ctclYR_RTNG:0.0","10.0","92","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("평가회차");
+            obj.set_rtl("false");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfID_RTNG","staID_RTNG:0.0","10.0","350","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("100");
+            obj.set_taborder("3");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.getSetter("CodeFindName").set("DAX_CFRTNG_STD");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:10",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","5",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj.set_readonly("true");
+            obj._setContents("");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.ccfCD_CORP.form.CDTextBox","value","dsSearch","CD_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divSearch.form.ccfCD_CORP.form.DSTextBox","value","dsSearch","DS_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divSearch.form.ctclYR_RTNG.form.TextBox","value","dsSearch","YR_RTNG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divSearch.form.ccfID_RTNG.form.CDTextBox","value","dsSearch","ID_RTNG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","divSearch.form.ccfID_RTNG.form.DSTextBox","value","dsSearch","DS_RTNG");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+            this._addPreloadList("fdl","cmm::cmmCalYY.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DAJ_RTNG_BGVDPRSN_ADMN_LIST.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e) {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+        	this.fnSetCombo();
+        	this.fnInit();
+        }
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        	this.btnUploadExcel    = this.gfnFormButtonAdd("btnUploadExcel"   , "fnUploadExcel");		// 엑셀업로드
+        }
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	// 그리드영역
+        	this.dxGrid    = this.divData.form.objGrid;
+
+        	// 검색영역
+        	this.ccfCD_CORP   = this.divSearch.form.ccfCD_CORP;
+        	this.ctclYR_RTNG = this.divSearch.form.ctclYR_RTNG;
+        	this.ccfID_RTNG   = this.divSearch.form.ccfID_RTNG;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	// 그리드 초기화
+        	this.gfnGridInit(this.dxGrid, this.dsListStatus, "DA", "DAJ_RTNG_RTNGPRSN_ADMN_LIST");
+
+        	// 검색영역
+        	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	// 법인
+        	this.ccfCD_CORP.AfterCDTextChanged     = "fnAfterCDTextChanged";
+        	this.ccfID_RTNG.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	// 평가기준
+        	this.ccfID_RTNG.AfterCDTextChanged     = "fnAfterCDTextChanged";
+        }
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+        	// 조회
+        	this.dsSelectStatus = new Dataset();
+        	this.dsSelectStatus.addColumn("CD_CORP", "string");
+        	this.dsSelectStatus.addColumn("ID_RTNG", "string");
+        	this.dsSelectStatus.addColumn("SEQ_BGVDPRSN", "int");
+
+        	// 저장
+        	this.dsSave = new Dataset();
+        	this.dsSave.addColumn("TY_WRK", "string");
+        	this.dsSave.addColumn("CD_CORP", "string");
+        	this.dsSave.addColumn("ID_RTNG", "string");
+        	this.dsSave.addColumn("SEQ_BGVDPRSN", "int");
+        	this.dsSave.addColumn("ID_CPNYDUTY", "string");
+        	this.dsSave.addColumn("RMK", "string");
+        	this.dsSave.addColumn("SEQ_ITVWPRSN", "int");
+        	this.dsSave.addColumn("ID_ITVWPRSN", "string");
+        	this.dsSave.addColumn("RMK_ITVWPRSN", "string");
+        	this.dsSave.addColumn("ID_USER", "string");
+
+        	// 피평가자 저장
+        	this.dsSaveBgcdprsn = new Dataset();
+        	this.dsSaveBgcdprsn.addColumn("TY_WRK", "string");
+        	this.dsSaveBgcdprsn.addColumn("CD_CORP", "string");
+        	this.dsSaveBgcdprsn.addColumn("ID_RTNG", "string");
+        	this.dsSaveBgcdprsn.addColumn("SEQ_BGVDPRSN", "int");
+        	this.dsSaveBgcdprsn.addColumn("ID_CPNYDUTY", "string");
+        	this.dsSaveBgcdprsn.addColumn("YN_RTNGTGT", "string");
+        	this.dsSaveBgcdprsn.addColumn("CD_DEPT_RTNG", "string");
+        	this.dsSaveBgcdprsn.addColumn("STAT_RTNG", "string");
+        	this.dsSaveBgcdprsn.addColumn("RMK", "string");
+        	this.dsSaveBgcdprsn.addColumn("ID_USER", "string");
+        	this.dsSaveBgcdprsn.addColumn("ID_SCREEN", "string");
+
+        	// 동료다면평가 검토자 저장
+        	this.dsSaveRtngprsn = new Dataset();
+        	this.dsSaveRtngprsn.addColumn("TY_WRK", "string");
+        	this.dsSaveRtngprsn.addColumn("CD_CORP", "string");
+        	this.dsSaveRtngprsn.addColumn("ID_RTNG", "string");
+        	this.dsSaveRtngprsn.addColumn("SEQ_BGVDPRSN", "int");
+        	this.dsSaveRtngprsn.addColumn("SEQ_RTNGPRSN", "int");
+        	this.dsSaveRtngprsn.addColumn("CL_RTNGPRSN", "string");
+        	this.dsSaveRtngprsn.addColumn("ID_CPNYDUTY", "string");
+        	this.dsSaveRtngprsn.addColumn("STAT_RTNG", "string");
+        	this.dsSaveRtngprsn.addColumn("ID_USER", "string");
+        	this.dsSaveRtngprsn.addColumn("ID_SCREEN", "string");
+
+        	// 리더십 평가자 저장
+        	this.dsSaveLdshRtngprsn = new Dataset();
+        	this.dsSaveLdshRtngprsn.addColumn("TY_WRK", "string");
+        	this.dsSaveLdshRtngprsn.addColumn("CD_CORP", "string");
+        	this.dsSaveLdshRtngprsn.addColumn("ID_RTNG", "string");
+        	this.dsSaveLdshRtngprsn.addColumn("SEQ_BGVDPRSN", "int");
+        	this.dsSaveLdshRtngprsn.addColumn("SEQ_RTNGPRSN", "int");
+        	this.dsSaveLdshRtngprsn.addColumn("CL_RTNGPRSN", "string");
+        	this.dsSaveLdshRtngprsn.addColumn("ID_CPNYDUTY", "string");
+        	this.dsSaveLdshRtngprsn.addColumn("STAT_RTNG", "string");
+        	this.dsSaveLdshRtngprsn.addColumn("ID_USER", "string");
+        	this.dsSaveLdshRtngprsn.addColumn("RMK", "string");
+
+        	// 업무목표 면담자 저장
+        	this.dsSaveGoalItvwprsn = new Dataset();
+        	this.dsSaveGoalItvwprsn.addColumn("TY_WRK", "string");
+        	this.dsSaveGoalItvwprsn.addColumn("CD_CORP", "string");
+        	this.dsSaveGoalItvwprsn.addColumn("ID_RTNG", "string");
+        	this.dsSaveGoalItvwprsn.addColumn("SEQ_BGVDPRSN", "int");
+        	this.dsSaveGoalItvwprsn.addColumn("ID_CPNYDUTY", "string");
+        	this.dsSaveGoalItvwprsn.addColumn("SEQ_ITVWPRSN", "int");
+        	this.dsSaveGoalItvwprsn.addColumn("CL_ITVWPRSN", "string");
+        	this.dsSaveGoalItvwprsn.addColumn("ID_ITVWPRSN", "string");
+        	this.dsSaveGoalItvwprsn.addColumn("STAT_RTNG", "string");
+        	this.dsSaveGoalItvwprsn.addColumn("DS_FDBK", "string");
+        	this.dsSaveGoalItvwprsn.addColumn("ID_USER", "string");
+        	this.dsSaveGoalItvwprsn.addColumn("TY_GUBUN", "string");
+        	this.dsSaveGoalItvwprsn.addColumn("RMK", "string");
+        	this.dsSaveGoalItvwprsn.addColumn("ID_SCREEN", "string");
+
+        	// 다면평가 동료 POOL 저장
+        	this.dsSavePool = new Dataset();
+        	this.dsSavePool.addColumn("TY_WRK", "string");
+        	this.dsSavePool.addColumn("CD_CORP", "string");
+        	this.dsSavePool.addColumn("ID_RTNG", "string");
+        	this.dsSavePool.addColumn("SEQ_BGVDPRSN", "int");
+        	this.dsSavePool.addColumn("SEQ_CLGE_POOL", "int");
+        	this.dsSavePool.addColumn("SEQ_RTNGPRSN", "int");
+        	this.dsSavePool.addColumn("CL_RTNGPRSN", "string");
+        	this.dsSavePool.addColumn("ID_CLGE", "string");
+        	this.dsSavePool.addColumn("ID_USER", "string");
+        	this.dsSavePool.addColumn("RMK", "string");
+
+        	// 다면평가 동료 POOL 제출
+        	this.dsPoolSubmit = new Dataset();
+        	this.dsPoolSubmit.addColumn("CD_CORP", "string");
+        	this.dsPoolSubmit.addColumn("ID_RTNG", "string");
+        	this.dsPoolSubmit.addColumn("SEQ_BGVDPRSN", "int");
+        	this.dsPoolSubmit.addColumn("ID_USER", "string");
+
+        	// 다면평가 동료 POOL 선정
+        	this.dsPoolSelection = new Dataset();
+        	this.dsPoolSelection.addColumn("CD_CORP", "string");
+        	this.dsPoolSelection.addColumn("ID_RTNG", "string");
+        	this.dsPoolSelection.addColumn("SEQ_BGVDPRSN", "int");
+        	this.dsPoolSelection.addColumn("ID_USER", "string");
+
+        	// 다면평가 동료 POOL 검토
+        	this.dsPoolConfirm = new Dataset();
+        	this.dsPoolConfirm.addColumn("CD_CORP", "string");
+        	this.dsPoolConfirm.addColumn("ID_RTNG", "string");
+        	this.dsPoolConfirm.addColumn("SEQ_BGVDPRSN", "int");
+        	this.dsPoolConfirm.addColumn("SEQ_CLGE_POOL", "int");
+        	this.dsPoolConfirm.addColumn("ID_USER", "string");
+        	this.dsPoolConfirm.addColumn("ID_SCREEN", "string");
+        }
+
+        /************************************************************************
+         * 콤보 데이터 조회 및 설정
+         ************************************************************************/
+        this.fnSetCombo = function() {
+
+        }
+
+        /************************************************************************
+         * 화면 및 검색영역 초기화
+         ************************************************************************/
+        this.fnInit = function() {
+        	// 법인
+        	this.dsSearch.setColumn(0, "CD_CORP",  this.AuthClient.CD_CORP);
+        	this.dsSearch.setColumn(0, "DS_CORP",  this.AuthClient.DS_CORP);
+
+        	var today = this.gfnGetDate();
+        	this.dsSearch.setColumn(0, "YR_RTNG", today.substr(0, 4));
+
+        	// 성명
+        	this.dsSearch.setColumn(0, "ID_SABUN", this.AuthClient.ID_SABUN);
+        	this.dsSearch.setColumn(0, "DS_HNAME", this.AuthClient.DS_HNAME);
+        }
+
+        /************************************************************************
+         * 버튼 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+        	if (!this.gfnSearchValidate(this.divSearch, this.dsSearch)) return false;
+
+        	this.gfnGridBeforeSelect(this.dxGrid);
+
+        	this.dsSelectStatus.clearData();
+        	this.dsSelectStatus.addRow();
+        	this.dsSelectStatus.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+        	this.dsSelectStatus.setColumn(0, "ID_RTNG", this.dsSearch.getColumn(0, "ID_RTNG"));
+        	this.dsSelectStatus.setColumn(0, "SEQ_BGVDPRSN", 0);
+
+        	var strSvcId    = "select_status";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "select_status=dsSelectStatus";
+        	var outData     = "dsListStatus=select_status0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        /*
+         * 입력 버튼
+         */
+        this.fnAdd = function() {
+
+        }
+
+        /*
+         * 삭제 버튼
+         */
+        this.fnDel = function() {
+
+        }
+
+        /*
+         * 저장 버튼
+         */
+        this.fnSave = function() {
+
+        	// 그리드 필수항목 체크
+        	if (!this.gfnGridValidate(this.dxGrid)) return;
+
+        	this.dxGrid.updateToDataset();
+        	this.dsSave.clearData();
+        	for (var i = 0; i < this.dsListStatus.rowcount; i++) {
+        		var flag = this.gfnGetFlag(this.dsListStatus, i);
+        		switch(flag) {
+        		case "I":
+        		case "U":
+        		case "D":
+        			var nrow = this.dsSave.addRow();
+        			this.dsSave.setColumn(nrow, "TY_WRK"          , flag);
+        			this.dsSave.setColumn(nrow, "CD_CORP"         , this.dsListStatus.getColumn(i, "CD_CORP"));
+        			this.dsSave.setColumn(nrow, "ID_RTNG"         , this.dsListStatus.getColumn(i, "ID_RTNG"));
+        			this.dsSave.setColumn(nrow, "SEQ_BGVDPRSN"    , this.dsListStatus.getColumn(i, "SEQ_BGVDPRSN"));
+        			this.dsSave.setColumn(nrow, "ID_CPNYDUTY"     , this.dsListStatus.getColumn(i, "BGVD_ID_CPNYDUTY"));
+        			this.dsSave.setColumn(nrow, "RMK"			  , this.dsListStatus.getColumn(i, "BGVD_RMK"));
+        			this.dsSave.setColumn(nrow, "SEQ_ITVWPRSN"    , this.dsListStatus.getColumn(i, "SEQ_RTNGPRSN"));
+        			this.dsSave.setColumn(nrow, "ID_ITVWPRSN"     , this.dsListStatus.getColumn(i, "RTNG_ID_CPNYDUTY"));
+        			this.dsSave.setColumn(nrow, "RMK_ITVWPRSN"    , this.dsListStatus.getColumn(i, "RTNG_RMK"));
+        			this.dsSave.setColumn(nrow, "ID_USER"         , this.AuthClient.ID_USER);
+        			break;
+        		}
+        	}
+
+        	if (this.dsSave.rowcount == 0) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save=dsSave";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+
+        }
+
+        /*
+         * 엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         * 출력 버튼
+         */
+        this.fnPrint = function() {
+
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        this.fnSelectValidate = function() {
+        	return true;
+        }
+
+        /************************************************************************
+         * 확장버튼 이벤트
+         ************************************************************************/
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         * 기본 콜백
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg, strArg) {
+        	if (errorCode != 0) {
+        		this.gfnAlert(errorMsg);
+        		return;
+        	}
+
+        	if (svcID == "select_status") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+        		this.dxGrid.selectRow(0, true);
+        	}
+        	else if (svcID == "save") {
+        		this.FormBtns.Select.click();
+        	}
+
+        	if (svcID == "save_mtsd_bgvdprsn_import") {
+        		// 검토자 임포트
+        		this.fnImportRTNG_RTNGPRSN_ADMN();
+        	} else if (svcID == "save_rtngprsn_import") {
+        		// 동료평가 POOL 임포트
+        		this.fnImportMTSD_CLGE_POOL();
+        	} else if (svcID == "save_pool_import") {
+        		// 동료평가 POOL 임포트 후 상태를 제출완료로 변경
+        		this.fnImportMTSD_CLGE_POOL_Submit();
+        	} else if (svcID == "submit_pool_import") {
+        		// 동료평가 POOL 임포트 후 상태를 선정완료로 변경
+        		this.fnImportMTSD_CLGE_POOL_Selection();
+        	} else if (svcID == "selection_pool_import") {
+        		// 동료평가 POOL 임포트 후 상태를 검토완료로 변경
+        		this.fnImportMTSD_CLGE_POOL_Confirm();
+        	} else if (svcID == "confirm_pool_import") {
+        		this.gfnAlert("동료다면평가 POOL 데이터의 임포트가 완료되었습니다.");
+        		this.ImpotDsOut = null;
+        		this.FormBtns.Select.click();
+        	}
+
+        	if (svcID == "save_ldsh_bgvdprsn_import") {
+        		// 평가자 임포트
+        		this.fnImportRTNG_LDSH_RTNGPRSN_ADMN();
+        	} else if (svcID == "save_ldsh_rtngprsn_import") {
+        		this.gfnAlert("리더십평가 데이터의 임포트가 완료되었습니다.");
+        		this.ImpotDsOut = null;
+        		this.FormBtns.Select.click();
+        	}
+
+        	if (svcID == "save_goal_bgvdprsn_import") {
+        		// 인사평가(업무목표수립) 평가자 임포트
+        		this.fnImportRTNG_GOAL_ITVWPRSN_ADMN();
+        	} else if (svcID == "save_goal_itvwprsn_import") {
+        		this.gfnAlert("인사평가 데이터의 임포트가 완료되었습니다.");
+        		this.ImpotDsOut = null;
+        		this.FormBtns.Select.click();
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+        	if (id == "ccfCD_CORP") {
+        		dsUserParam.setColumn(nrow, "CD_CORP"  , this.AuthClient.CD_CORP);
+        		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+        		dsUserParam.setColumn(nrow, "ID_USER"  , this.AuthClient.ID_USER);
+        	} else if (id == "ccfID_RTNG") {
+        		dsUserParam.setColumn(nrow, "CD_CORP"     , this.dsSearch.getColumn(0, "CD_CORP"));
+        		dsUserParam.setColumn(nrow, "YR_RTNG"     , this.dsSearch.getColumn(0, "YR_RTNG"));	//"");
+        		dsUserParam.setColumn(nrow, "ID_SABUN"    , this.dsSearch.getColumn(0, "ID_SABUN"));
+        		dsUserParam.setColumn(nrow, "CD_RTNG_TYPE", "JA");	//"JA10");
+        		dsUserParam.setColumn(nrow, "ID_SCREEN"   , "");	//"DAJ_RTNG_GOAL_ESTT_LIST");
+        		dsUserParam.setColumn(nrow, "CD_ROLE"     , this.AuthClient.CD_ROLE);
+        	}
+
+        	return true;
+        }
+
+        this.fnAfterCDTextChanged = function(id, codeFindData) {
+        	if (codeFindData[0] == undefined) {
+        		return;
+        	}
+
+        	if (id == "ccfID_RTNG") {
+        		this.dsSearch.setColumn(0, "CD_RTNG_TYPE"    , codeFindData[0]["CD_RTNG_TYPE"]);
+        		this.dsSearch.setColumn(0, "DS_RTNG_TYPE"    , codeFindData[0]["DS_RTNG_TYPE"]);
+        		this.dsSearch.setColumn(0, "TY_PTCP"		 , codeFindData[0]["TY_PTCP"]);
+        		this.dsSearch.setColumn(0, "CD_RTNG_ASBLNEXT", codeFindData[0]["CD_RTNG_ASBLNEXT"]);
+        		this.dsSearch.setColumn(0, "DS_RTNG_ASBLNEXT", codeFindData[0]["DS_RTNG_ASBLNEXT"]);
+        		this.dsSearch.setColumn(0, "CNTN_RTNG_ID"	 , codeFindData[0]["CNTN_RTNG_ID"]);
+        		//this.FormBtns.Select.click();
+        	}
+        }
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+        this.fnGridBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+        	return true;
+        }
+
+        this.fnGridAfterCDTextChanged = function(id, codeFindData) {
+
+        }
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        this.dsSearch_onvaluechanged = function(obj,e) {
+        	if (e.oldvalue != e.newvalue) {
+        		if( e.columnid == "YR_RTNG" ){
+        			this.dsSearch.setColumn(0,"ID_RTNG","");
+        			this.dsSearch.setColumn(0,"DS_RTNG","");
+        			this.dsSearch.setColumn(0,"CD_RTNG_TYPE","");
+        			this.dsSearch.setColumn(0,"DS_RTNG_TYPE","");
+        			this.dsSearch.setColumn(0,"DT_RTNG_BEGN","");
+        			this.dsSearch.setColumn(0,"DT_RTNG_END","");
+        			this.dsSearch.setColumn(0,"DT_RTNG_STD","");
+        			this.dsSearch.setColumn(0,"CD_RTNG_ASBLNEXT","");
+        			this.dsSearch.setColumn(0,"DS_RTNG_ASBLNEXT","");
+        		}
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.gfnGridClear(this.dxGrid);
+        	}
+        }
+
+        // 엑셀업로드
+        this.fnUploadExcel = function() {
+        	this.gfnConfirm("피평가자/평가자 매핑 데이터를 업로드하시겠습니까?", function(strId, val) {
+        		if (val == false) {
+        			return;
+        		}
+
+        		// 동료다면평가
+        		if (this.dsSearch.getColumn(0, "CD_RTNG_TYPE") == "JA01") {
+        			this.gfnExcelImport("dsList", "sheet1", "A3", "fnExcelImportMTSD_Callback", "import", this);
+        		}
+
+        		// 리더십평가
+        		if (this.dsSearch.getColumn(0, "CD_RTNG_TYPE") == "JA02") {
+        			this.gfnExcelImport("dsList", "sheet1", "A3", "fnExcelImportLDSH_Callback", "import", this);
+        		}
+
+        		// 인사평가
+        		if (this.dsSearch.getColumn(0, "CD_RTNG_TYPE") == "JA10" || this.dsSearch.getColumn(0, "CD_RTNG_TYPE") == "JA11" || this.dsSearch.getColumn(0, "CD_RTNG_TYPE") == "JA12" || this.dsSearch.getColumn(0, "CD_RTNG_TYPE") == "JA13") {
+        			this.gfnExcelImport("dsList", "sheet1", "A3", "fnExcelImportGOAL_Callback", "import", this);
+        		}
+        		//this.gfnExcelImport("dsList", "sheet1", "A3", "fnExcelImportGOAL_Callback", "import", this);
+        	})
+        }
+        var ImpotDsOut = null;
+        // 동료다면평가
+        this.fnExcelImportMTSD_Callback = function(sImportId, dsOut, dsSheet) {
+        	this.ImpotDsOut = dsOut;
+
+        	// 피평가자 임포트
+        	this.fnImportMTSD_RTNG_BGVDPRSN_ADMN();
+        }
+
+        // 피평가자 임포트
+        this.fnImportMTSD_RTNG_BGVDPRSN_ADMN = function() {
+        	this.dsSaveBgcdprsn.clearData();
+
+        	for (var i = 0; i < this.ImpotDsOut.rowcount; i++) {
+        		// 피평가자
+        		if (this.ImpotDsOut.getColumn(i, "Column0") != undefined) {
+        			var nrow = this.dsSaveBgcdprsn.addRow();
+        			this.dsSaveBgcdprsn.setColumn(nrow, "TY_WRK"      , (i == 0 ? "E" : "I"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "CD_CORP"     , this.dsSearch.getColumn(0, "CD_CORP"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "ID_RTNG"     , this.dsSearch.getColumn(0, "ID_RTNG"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "SEQ_BGVDPRSN", this.ImpotDsOut.getColumn(i, "Column0"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "ID_CPNYDUTY" , this.ImpotDsOut.getColumn(i, "Column1"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "YN_RTNGTGT"  , "");
+        			this.dsSaveBgcdprsn.setColumn(nrow, "CD_DEPT_RTNG", "");
+        			this.dsSaveBgcdprsn.setColumn(nrow, "STAT_RTNG"   , "");
+        			this.dsSaveBgcdprsn.setColumn(nrow, "RMK"         , this.ImpotDsOut.getColumn(i, "Column7"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "ID_USER"     , this.AuthClient.ID_USER);
+        			this.dsSaveBgcdprsn.setColumn(nrow, "ID_SCREEN"   , "DAJ_RTNG_BGVDPRSN_ADMN_LIST");
+        		}
+        	}
+
+        	var strSvcId    = "save_mtsd_bgvdprsn_import";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save_bgvdprsn=dsSaveBgcdprsn";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        // 검토자 임포트
+        this.fnImportRTNG_RTNGPRSN_ADMN = function() {
+        	this.dsSaveRtngprsn.clearData();
+
+        	var SEQ_BGVDPRSN = -1;
+        	for (var i = 0; i < this.ImpotDsOut.rowcount; i++) {
+        		if (this.ImpotDsOut.getColumn(i, "Column0") != undefined) {
+        			SEQ_BGVDPRSN = this.ImpotDsOut.getColumn(i, "Column0");
+        		}
+
+        		if (this.ImpotDsOut.getColumn(i, "Column10") != undefined) {
+        			if (this.ImpotDsOut.getColumn(i, "Column9") == "상사") {
+        				var nrow = this.dsSaveRtngprsn.addRow();
+        				this.dsSaveRtngprsn.setColumn(nrow, "TY_WRK"      , "I");
+        				this.dsSaveRtngprsn.setColumn(nrow, "CD_CORP"     , this.dsSearch.getColumn(0, "CD_CORP"));
+        				this.dsSaveRtngprsn.setColumn(nrow, "ID_RTNG"     , this.dsSearch.getColumn(0, "ID_RTNG"));
+        				this.dsSaveRtngprsn.setColumn(nrow, "SEQ_BGVDPRSN", SEQ_BGVDPRSN);
+        				this.dsSaveRtngprsn.setColumn(nrow, "SEQ_RTNGPRSN", this.ImpotDsOut.getColumn(i, "Column8"));
+        				this.dsSaveRtngprsn.setColumn(nrow, "CL_RTNGPRSN" , this.ImpotDsOut.getColumn(i, "Column9"));
+        				this.dsSaveRtngprsn.setColumn(nrow, "ID_CPNYDUTY" , this.ImpotDsOut.getColumn(i, "Column10"));
+        				this.dsSaveRtngprsn.setColumn(nrow, "STAT_RTNG"   , this.ImpotDsOut.getColumn(i, "Column9"));
+        				this.dsSaveRtngprsn.setColumn(nrow, "ID_USER"     , this.AuthClient.ID_USER);
+        				this.dsSaveRtngprsn.setColumn(nrow, "ID_SCREEN"   , "DAJ_RTNG_BGVDPRSN_ADMN_LIST");
+        			}
+        		}
+        	}
+
+        	var strSvcId    = "save_rtngprsn_import";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save_rtngprsn=dsSaveRtngprsn";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        // 동료다면평가 POOL
+        this.fnImportMTSD_CLGE_POOL = function() {
+        	this.dsSavePool.clearData();
+
+        	var SEQ_BGVDPRSN = -1;
+        	for (var i = 0; i < this.ImpotDsOut.rowcount; i++) {
+        		if (this.ImpotDsOut.getColumn(i, "Column0") != undefined) {
+        			SEQ_BGVDPRSN = this.ImpotDsOut.getColumn(i, "Column0");
+        		}
+
+        		if (this.ImpotDsOut.getColumn(i, "Column10") != undefined) {
+        			var nrow = this.dsSavePool.addRow();
+        			this.dsSavePool.setColumn(nrow, "TY_WRK"       , "I");
+        			this.dsSavePool.setColumn(nrow, "CD_CORP"      , this.dsSearch.getColumn(0, "CD_CORP"));
+        			this.dsSavePool.setColumn(nrow, "ID_RTNG"      , this.dsSearch.getColumn(0, "ID_RTNG"));
+        			this.dsSavePool.setColumn(nrow, "SEQ_BGVDPRSN" , SEQ_BGVDPRSN);
+        			this.dsSavePool.setColumn(nrow, "SEQ_CLGE_POOL", this.ImpotDsOut.getColumn(i, "Column8"));
+        			this.dsSavePool.setColumn(nrow, "SEQ_RTNGPRSN" , 1);
+        			this.dsSavePool.setColumn(nrow, "CL_RTNGPRSN"  , this.ImpotDsOut.getColumn(i, "Column9"));
+        			this.dsSavePool.setColumn(nrow, "ID_CLGE"      , this.ImpotDsOut.getColumn(i, "Column10"));
+        			this.dsSavePool.setColumn(nrow, "ID_USER"      , this.AuthClient.ID_USER);
+        			this.dsSavePool.setColumn(nrow, "RMK"         , this.ImpotDsOut.getColumn(i, "Column16"));
+        		}
+        	}
+
+        	var strSvcId    = "save_pool_import";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save_pool=dsSavePool";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        // 동료다면평가 POOL 제출
+        this.fnImportMTSD_CLGE_POOL_Submit = function() {
+        	this.dsPoolSubmit.clearData();
+
+        	var SEQ_BGVDPRSN = -1;
+        	for (var i = 0; i < this.ImpotDsOut.rowcount; i++) {
+        		if (this.ImpotDsOut.getColumn(i, "Column0") != undefined) {
+        			SEQ_BGVDPRSN = this.ImpotDsOut.getColumn(i, "Column0");
+        		}
+
+        		if (this.ImpotDsOut.getColumn(i, "Column10") != undefined) {
+        			var nrow = this.dsPoolSubmit.addRow();
+        			this.dsPoolSubmit.setColumn(nrow, "CD_CORP"      , this.dsSearch.getColumn(0, "CD_CORP"));
+        			this.dsPoolSubmit.setColumn(nrow, "ID_RTNG"      , this.dsSearch.getColumn(0, "ID_RTNG"));
+        			this.dsPoolSubmit.setColumn(nrow, "SEQ_BGVDPRSN" , SEQ_BGVDPRSN);
+        			this.dsPoolSubmit.setColumn(nrow, "SEQ_RTNGPRSN" , this.ImpotDsOut.getColumn(i, "Column8"));
+        			this.dsPoolSubmit.setColumn(nrow, "ID_USER"      , this.AuthClient.ID_USER);
+        		}
+        	}
+
+        	var strSvcId    = "submit_pool_import";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "submit_pool=dsPoolSubmit";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        // 동료다면평가 POOL 선정
+        this.fnImportMTSD_CLGE_POOL_Selection = function() {
+        	this.dsPoolSelection.clearData();
+
+        	var SEQ_BGVDPRSN = -1;
+        	for (var i = 0; i < this.ImpotDsOut.rowcount; i++) {
+        		if (this.ImpotDsOut.getColumn(i, "Column0") != undefined) {
+        			SEQ_BGVDPRSN = this.ImpotDsOut.getColumn(i, "Column0");
+        		}
+
+        		if (this.ImpotDsOut.getColumn(i, "Column9") != undefined) {
+        			var nrow = this.dsPoolSelection.addRow();
+        			this.dsPoolSelection.setColumn(nrow, "CD_CORP"      , this.dsSearch.getColumn(0, "CD_CORP"));
+        			this.dsPoolSelection.setColumn(nrow, "ID_RTNG"      , this.dsSearch.getColumn(0, "ID_RTNG"));
+        			this.dsPoolSelection.setColumn(nrow, "SEQ_BGVDPRSN" , SEQ_BGVDPRSN);
+        			this.dsPoolSelection.setColumn(nrow, "ID_USER"      , this.AuthClient.ID_USER);
+        		}
+        	}
+
+        	var strSvcId    = "selection_pool_import";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "selection_pool=dsPoolSelection";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        // 동료다면평가 POOL 검토
+        this.fnImportMTSD_CLGE_POOL_Confirm = function() {
+        	this.dsPoolConfirm.clearData();
+
+        	var SEQ_BGVDPRSN = -1;
+        	for (var i = 0; i < this.ImpotDsOut.rowcount; i++) {
+        		if (this.ImpotDsOut.getColumn(i, "Column0") != undefined) {
+        			SEQ_BGVDPRSN = this.ImpotDsOut.getColumn(i, "Column0");
+        		}
+
+        		if (this.ImpotDsOut.getColumn(i, "Column10") != undefined) {
+        		var nrow = this.dsPoolConfirm.addRow();
+        		this.dsPoolConfirm.setColumn(nrow, "CD_CORP"      , this.dsSearch.getColumn(0, "CD_CORP"));
+        		this.dsPoolConfirm.setColumn(nrow, "ID_RTNG"      , this.dsSearch.getColumn(0, "ID_RTNG"));
+        		this.dsPoolConfirm.setColumn(nrow, "SEQ_BGVDPRSN" , SEQ_BGVDPRSN);
+        		this.dsPoolConfirm.setColumn(nrow, "SEQ_CLGE_POOL", this.ImpotDsOut.getColumn(i, "Column8"));
+        		this.dsPoolConfirm.setColumn(nrow, "ID_USER"      , this.AuthClient.ID_USER);
+        		this.dsPoolConfirm.setColumn(nrow, "ID_SCREEN"   , "DAJ_RTNG_BGVDPRSN_ADMN_LIST");
+        		}
+        	}
+
+        	var strSvcId    = "confirm_pool_import";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "confirm_pool=dsPoolConfirm";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        // 리더십평가 콜백
+        this.fnExcelImportLDSH_Callback = function(sImportId, dsOut, dsSheet) {
+        	this.ImpotDsOut = dsOut;
+
+        	// 피평가자 임포트
+        	this.fnImportLDSH_RTNG_BGVDPRSN_ADMN();
+        }
+
+        // 리더십평가 피평가자 임포트
+        this.fnImportLDSH_RTNG_BGVDPRSN_ADMN = function() {
+        	this.dsSaveBgcdprsn.clearData();
+
+        	for (var i = 0; i < this.ImpotDsOut.rowcount; i++) {
+        		// 피평가자
+        		//if (this.ImpotDsOut.getColumn(i, "Column0") != undefined) {
+        		if (this.ImpotDsOut.getColumn(i, "Column8") == "1") {
+        			var nrow = this.dsSaveBgcdprsn.addRow();
+        			this.dsSaveBgcdprsn.setColumn(nrow, "TY_WRK"      , (i == 0 ? "E" : "I"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "CD_CORP"     , this.dsSearch.getColumn(0, "CD_CORP"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "ID_RTNG"     , this.dsSearch.getColumn(0, "ID_RTNG"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "SEQ_BGVDPRSN", this.ImpotDsOut.getColumn(i, "Column0"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "ID_CPNYDUTY" , this.ImpotDsOut.getColumn(i, "Column1"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "YN_RTNGTGT"  , "");
+        			this.dsSaveBgcdprsn.setColumn(nrow, "CD_DEPT_RTNG", "");
+        			this.dsSaveBgcdprsn.setColumn(nrow, "STAT_RTNG"   , this.ImpotDsOut.getColumn(i, "Column9"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "RMK"         , this.ImpotDsOut.getColumn(i, "Column7"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "ID_USER"     , this.AuthClient.ID_USER);
+        			this.dsSaveBgcdprsn.setColumn(nrow, "ID_SCREEN"   , "DAJ_RTNG_BGVDPRSN_ADMN_LIST");
+        		}
+        	}
+
+        	var strSvcId    = "save_ldsh_bgvdprsn_import";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save_bgvdprsn=dsSaveBgcdprsn";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        // 리더십평가 평가자 임포트
+        this.fnImportRTNG_LDSH_RTNGPRSN_ADMN = function() {
+        	this.dsSaveLdshRtngprsn.clearData();
+
+        	var SEQ_BGVDPRSN = -1;
+        	for (var i = 0; i < this.ImpotDsOut.rowcount; i++) {
+        		if (this.ImpotDsOut.getColumn(i, "Column0") != undefined) {
+        			SEQ_BGVDPRSN = this.ImpotDsOut.getColumn(i, "Column0");
+        		}
+
+        		if (this.ImpotDsOut.getColumn(i, "Column10") != undefined) {
+        			var nrow = this.dsSaveLdshRtngprsn.addRow();
+        			this.dsSaveLdshRtngprsn.setColumn(nrow, "TY_WRK"      , "I");
+        			this.dsSaveLdshRtngprsn.setColumn(nrow, "CD_CORP"     , this.dsSearch.getColumn(0, "CD_CORP"));
+        			this.dsSaveLdshRtngprsn.setColumn(nrow, "ID_RTNG"     , this.dsSearch.getColumn(0, "ID_RTNG"));
+        			this.dsSaveLdshRtngprsn.setColumn(nrow, "SEQ_BGVDPRSN", SEQ_BGVDPRSN);
+        			this.dsSaveLdshRtngprsn.setColumn(nrow, "SEQ_RTNGPRSN", this.ImpotDsOut.getColumn(i, "Column8"));
+        			this.dsSaveLdshRtngprsn.setColumn(nrow, "CL_RTNGPRSN" , this.ImpotDsOut.getColumn(i, "Column9"));
+        			this.dsSaveLdshRtngprsn.setColumn(nrow, "ID_CPNYDUTY" , this.ImpotDsOut.getColumn(i, "Column10"));
+        			this.dsSaveLdshRtngprsn.setColumn(nrow, "STAT_RTNG"   , "");
+        			this.dsSaveLdshRtngprsn.setColumn(nrow, "ID_USER"     , this.AuthClient.ID_USER);
+        			this.dsSaveLdshRtngprsn.setColumn(nrow, "RMK"         , this.ImpotDsOut.getColumn(i, "Column16"));
+        		}
+        	}
+
+        	var strSvcId    = "save_ldsh_rtngprsn_import";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save_ldsh_rtngprsn=dsSaveLdshRtngprsn";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        // 인사평가(업무목표수립) 콜백
+        this.fnExcelImportGOAL_Callback = function(sImportId, dsOut, dsSheet) {
+        	this.ImpotDsOut = dsOut;
+
+        	// 피평가자 임포트
+        	this.fnImportGOAL_RTNG_BGVDPRSN_ADMN();
+        }
+
+        // 인사평가(업무목표수립) 피평가자 임포트
+        this.fnImportGOAL_RTNG_BGVDPRSN_ADMN = function() {
+        	this.dsSaveBgcdprsn.clearData();
+
+        	for (var i = 0; i < this.ImpotDsOut.rowcount; i++) {
+        		// 피평가자
+        		//if (this.ImpotDsOut.getColumn(i, "Column0") != undefined) {
+        		if (this.ImpotDsOut.getColumn(i, "Column8") == "1") {
+        			var nrow = this.dsSaveBgcdprsn.addRow();
+        			this.dsSaveBgcdprsn.setColumn(nrow, "TY_WRK"      , (i == 0 ? "E" : "I"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "CD_CORP"     , this.dsSearch.getColumn(0, "CD_CORP"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "ID_RTNG"     , this.dsSearch.getColumn(0, "ID_RTNG"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "SEQ_BGVDPRSN", this.ImpotDsOut.getColumn(i, "Column0"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "ID_CPNYDUTY" , this.ImpotDsOut.getColumn(i, "Column1"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "YN_RTNGTGT"  , "");
+        			this.dsSaveBgcdprsn.setColumn(nrow, "CD_DEPT_RTNG", "");
+        			this.dsSaveBgcdprsn.setColumn(nrow, "STAT_RTNG"   , "");
+        			this.dsSaveBgcdprsn.setColumn(nrow, "RMK"         , this.ImpotDsOut.getColumn(i, "Column7"));
+        			this.dsSaveBgcdprsn.setColumn(nrow, "ID_USER"     , this.AuthClient.ID_USER);
+        			this.dsSaveBgcdprsn.setColumn(nrow, "ID_SCREEN"   , "DAJ_RTNG_BGVDPRSN_ADMN_LIST");
+        		}
+        	}
+
+        	var strSvcId    = "save_goal_bgvdprsn_import";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save_bgvdprsn=dsSaveBgcdprsn";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        // 인사평가(업무목표수립) 평가자 임포트
+        this.fnImportRTNG_GOAL_ITVWPRSN_ADMN = function() {
+        	this.dsSaveGoalItvwprsn.clearData();
+
+        	var SEQ_BGVDPRSN = -1;
+        	for (var i = 0; i < this.ImpotDsOut.rowcount; i++) {
+        		if (this.ImpotDsOut.getColumn(i, "Column0") != undefined) {
+        			SEQ_BGVDPRSN = this.ImpotDsOut.getColumn(i, "Column0");
+        		}
+
+        		if (this.ImpotDsOut.getColumn(i, "Column10") != undefined) {
+        			var nrow = this.dsSaveGoalItvwprsn.addRow();
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "TY_WRK"      , "I");
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "CD_CORP"     , this.dsSearch.getColumn(0, "CD_CORP"));
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "ID_RTNG"     , this.dsSearch.getColumn(0, "ID_RTNG"));
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "SEQ_BGVDPRSN", SEQ_BGVDPRSN);
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "ID_CPNYDUTY" , this.ImpotDsOut.getColumn(i, "Column1"));
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "SEQ_ITVWPRSN", this.ImpotDsOut.getColumn(i, "Column8"));
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "CL_ITVWPRSN" , (this.ImpotDsOut.getColumn(i, "Column9") == "평가자A" ? "00" : "01"));	//this.ImpotDsOut.getColumn(i, "Column8"));
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "ID_ITVWPRSN" , this.ImpotDsOut.getColumn(i, "Column10"));
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "STAT_RTNG"   , "");
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "DS_FDBK"     , "");
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "ID_USER"     , this.AuthClient.ID_USER);
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "TY_GUBUN"    , "C");
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "RMK"         , this.ImpotDsOut.getColumn(i, "Column16"));
+        			this.dsSaveGoalItvwprsn.setColumn(nrow, "ID_SCREEN"   , "DAJ_RTNG_BGVDPRSN_ADMN_LIST");
+        		}
+        	}
+
+        	var strSvcId    = "save_goal_itvwprsn_import";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save_goal_itvwprsn=dsSaveGoalItvwprsn";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divData.addEventHandler("ondragmove",this.divData_ondragmove,this);
+            this.divData.form.objGrid.addEventHandler("oncellposchanged",this.fnGridCellPosChanged,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+            this.dsListStatus.addEventHandler("onvaluechanged",this.dsList_onvaluechanged,this);
+        };
+        this.loadIncludeScript("DAJ_RTNG_BGVDPRSN_ADMN_LIST.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

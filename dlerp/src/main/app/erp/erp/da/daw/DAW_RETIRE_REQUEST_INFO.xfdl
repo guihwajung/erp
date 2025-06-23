@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="퇴직자현황" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static cssclass="sta_WF_SchLabelE" id="staCD_CORP" taborder="1" text="법인코드" left="10" top="10" width="92" height="24"/>
+              <Div id="ccfCD_CORP" FitToContents="true" CDTextWidth="50" taborder="0" left="staCD_CORP:0" top="10" width="200" height="24" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DZX_CFCORP_STD"/>
+              <Static id="staDT_WORK" taborder="2" text="조회기간" left="ccfCD_CORP:0" top="10" width="92" height="24" cssclass="sta_WF_SchLabelE"/>
+              <Calendar id="ctclDT_START" taborder="3" left="staDT_WORK:0" top="10" width="110" height="24" dateformat="yyyy-MM-dd" editformat="yyyy-MM-dd" autoselect="true" onchanged="divSearch_ctclDT_START_onchanged"/>
+              <Static id="staCdCorp01" taborder="4" text="~" left="ctclDT_START:0" top="10" width="20" height="24" textAlign="center"/>
+              <Calendar id="ctclDT_END" taborder="5" left="staCdCorp01:0" top="10" width="110" height="24" dateformat="yyyy-MM-dd" editformat="yyyy-MM-dd" autoselect="true" onchanged="divSearch_ctclDT_END_onchanged"/>
+              <Static id="staID_SABUN" taborder="6" text="사번" left="ctclDT_END:0" top="10" width="66" height="24" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfID_SABUN" FitToContents="true" CDTextWidth="90" taborder="7" left="staID_SABUN:0" top="10" width="200" height="24" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DAX_CFBASEINFO_ALL"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:20" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0" autofittype="none" oncellposchanged="fnGridCellPosChanged" oncelldblclick="divData_objGrid_oncelldblclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.objApp = this.gfnGetApplication();
+this.paramSeq = 0;	//사직서 SEQ 전역변수
+//사직서 안내 권한설정 ( true = readonly )
+this.access = true;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{	
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	this.fnSetButton();			//버튼 공통 설정
+	this.fnSetExtendButton();	//화면별 버튼 id 설정
+	this.fnSetVariable();		//변수선언
+	this.fnSetEvent();			//이벤트 설정
+	this.fnSetParameter();		//파라미터 설정
+	
+	this.fnSelect();
+};
+
+/************************************************************************
+ * 버튼 설정 
+ * 서브버튼 사용 처리. 공통 및 확장버튼 버튼관리화면에서 셋팅.
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언 
+ ************************************************************************/
+this.fnSetVariable = function() {
+	/**********  검색조건  **********/
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;			//소속법인
+	this.ctclDT_START =  this.divSearch.form.ctclDT_START;		//조회기간_시작일자
+	this.ctclDT_END = this.divSearch.form.ctclDT_END;			//조회기간_종료일자
+	this.ccfID_SABUN = this.divSearch.form.ccfID_SABUN;			//사번
+	
+	/**********  그리드  **********/
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	/******** 초기셋팅 ****************/
+	this.dsSearch.setColumn(0,"CD_CORP", this.AuthClient.CD_CORP);
+	this.dsSearch.setColumn(0,"DS_CORP", this.AuthClient.DS_CORP);
+	this.dsSearch.setColumn(0,"DT_START", this.gfnAddMonth(this.gfnGetDate(), -36).substr(0, 8));
+	this.dsSearch.setColumn(0,"DT_END", this.gfnGetLastDate(this.gfnGetDate("date")));
+	//this.dsSearch.setColumn(0,"DT_END", this.gfnGetLastDate(this.gfnAddMonth(this.gfnGetDate("date"), 1)));
+	//this.dsSearch.setColumn(0,"ID_SABUN", this.AuthClient.ID_SABUN);
+	//this.dsSearch.setColumn(0,"DS_HNAME", this.AuthClient.DS_HNAME);
+	
+	/******* Before 이벤트 **********/
+	//사번_조회조건
+	this.ccfID_SABUN.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfID_SABUN.AfterCDTextChanged = "codefind_AfterCDTextChanged";	
+
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAW_RETIRE_REQUEST_INFO");	
+	//그리드 초기화 위한 구분자
+	this.searchReset = true;
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	//조회조건 Dataset
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("DT_START", "string");
+	this.dsSelect.addColumn("DT_END", "string");
+	this.dsSelect.addColumn("ID_SABUN", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+
+	if (!this.fnSelectValidate()) return false;
+
+	this.gfnGridBeforeSelect(this.dxGrid);	
+	
+	this.dsList.clearData();
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+
+	this.dsSelect.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSelect.setColumn(0, "DT_START", this.dsSearch.getColumn(0, "DT_START"));
+	this.dsSelect.setColumn(0, "DT_END", this.dsSearch.getColumn(0, "DT_END"));
+	this.dsSelect.setColumn(0, "ID_SABUN", this.dsSearch.getColumn(0, "ID_SABUN"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	//사직서 작성 버튼 클릭
+	this.fnRetireRequest();
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_CORP"))) {
+		this.ccfCD_CORP.form.CDTextBox.setFocus();
+		this.gfnAlert("법인코드를 입력하세요.");
+		return false;
+	}else if (this.gfnIsNull(this.dsSearch.getColumn(0, "DT_START"))) {
+		this.ctclDT_START.setFocus();
+		this.gfnAlert("시작일자를 입력하세요.");
+		return false;
+	}else if (this.gfnIsNull(this.dsSearch.getColumn(0, "DT_END"))) {
+		this.ctclDT_END.setFocus();
+		this.gfnAlert("종료일자를 입력하세요.");
+		return false;
+	}
+	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if( svcID == "select" ){
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ /**************** 조회조건 *****************/
+ //변경 전 이벤트
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+//부서코드
+	if (id == "ccfCD_DEPT") {			
+		dsUserParam.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));		
+		dsUserParam.setColumn(nrow, "DT_YEAR", this.dsSearch.getColumn(0, "DT_END").substr(0, 4));		
+	}
+	else if( id == "ccfID_SABUN") {			
+		dsUserParam.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0,"CD_CORP"));
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "CD_DEPT", this.FormInfo.GR_SEARCH==1? "":this.gfnNvl(this.AuthClient.CD_DEPT,""));		
+		dsUserParam.setColumn(nrow, "YN_CORP", "N");
+		dsUserParam.setColumn(nrow, "TY_RETIRE", "01");
+	}
+	return true;
+}
+//변경 후 이벤트
+this.codefind_AfterCDTextChanged = function(id,codeFindData) {
+
+   	if( id == "ccfID_SABUN" ) {
+		//ID_PERSON 값 바인딩
+		var arr = codeFindData;
+		if(arr.length > 0) {
+			this.dsSearch.setColumn(0,"ID_SABUN",arr[0]["ID_SABUN"]);
+			this.dsSearch.setColumn(0,"DS_HNAME",arr[0]["DS_HNAME"]);
+		}else{
+			this.dsSearch.setColumn(0,"ID_SABUN","");
+			this.dsSearch.setColumn(0,"DS_HNAME","");
+		}
+	}
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+//조회조건 변경 시 이벤트 발생
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if( this.searchReset == true ){
+		if(e.oldvalue != e.newvalue){
+			this.gfnSetFormStatus(this);
+			this.gfnGridClear(this.dxGrid);
+		}
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DAWPR_RETIRE_REQUEST_INFO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="DT_START" type="STRING" size="256"/>
+          <Column id="DT_END" type="STRING" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+      <BindItem id="item2" compid="divSearch.form.ctclDT_START" propid="value" datasetid="dsSearch" columnid="DT_START"/>
+      <BindItem id="item3" compid="divSearch.form.ctclDT_END" propid="value" datasetid="dsSearch" columnid="DT_END"/>
+      <BindItem id="item4" compid="divSearch.form.ccfID_SABUN.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="ID_SABUN"/>
+      <BindItem id="item5" compid="divSearch.form.ccfID_SABUN.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_HNAME"/>
+    </Bind>
+  </Form>
+</FDL>

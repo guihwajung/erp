@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="신용정보조회" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="110.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_VENDOR" taborder="1" text="업체코드" left="0.0" top="10.0" width="118.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_VENDOR" CodeFindName="DCX_CFVENDOR_COMMON" CDTextWidth="80" taborder="1" left="staCD_VENDOR:0.0" top="10.0" width="329" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staNO_SJC" taborder="1" text="사업자번호" left="0.0" top="staCD_VENDOR:10.0" width="118.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtNO_SJC" taborder="1" left="staNO_SJC:0.0" top="ccfCD_VENDOR:10.0" width="100" height="24.0" value="" readonly="true"/>
+              <Static id="staCDLT_CMP_CD" taborder="1" text="신용정보회사" left="ctxtNO_SJC:0.0" top="staCD_VENDOR:10.0" width="118.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="ccboCDLT_CMP_CD" taborder="1" left="staCDLT_CMP_CD:0.0" top="ccfCD_VENDOR:10.0" width="100" height="24.0" innerdataset="dsCDLT_CMP_CD" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Tab id="tabData" taborder="0" tabindex="0" left="0" top="0" bottom="0" right="0" onchanged="divData_tabData_onchanged">
+                <Tabpages>
+                  <Tabpage id="tab1" text="신용등급(최근)">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid1" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab2" text="신용등급(기본)">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid2" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab3" text="시공실적">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid3" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab4" text="공사실적">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid4" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab5" text="매출처">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid5" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab6" text="특허및재산권">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid6" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab7" text="재무현황">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid7" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab8" text="인증현황">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid8" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.fnSetCombo();
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_VENDOR) && !this.gfnIsNull(this.getOwnerFrame().NO_SJC))
+	{
+		this.dsSearch.setColumn(0, "CD_VENDOR", this.getOwnerFrame().CD_VENDOR);
+		this.divSearch.form.ccfCD_VENDOR.form.DSTextBox.set_value(this.getOwnerFrame().DS_VENDOR);
+		this.dsSearch.setColumn(0, "CDLT_CMP_CD", this.getOwnerFrame().NO_SJC);
+		
+		this.FormBtns.Select.click();
+	}
+	
+	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	//this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.dxGrid1 = this.divData.form.tabData.tab1.form.objGrid1;
+	this.dxGrid2 = this.divData.form.tabData.tab2.form.objGrid2;
+	this.dxGrid3 = this.divData.form.tabData.tab3.form.objGrid3;
+	this.dxGrid4 = this.divData.form.tabData.tab4.form.objGrid4;
+	this.dxGrid5 = this.divData.form.tabData.tab5.form.objGrid5;
+	this.dxGrid6 = this.divData.form.tabData.tab6.form.objGrid6;
+	this.dxGrid7 = this.divData.form.tabData.tab7.form.objGrid7;
+	this.dxGrid8 = this.divData.form.tabData.tab8.form.objGrid8;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid1, this.dsList1, "DC", "DCZ_CREDIT_INFO_1");
+	this.gfnGridInit(this.dxGrid2, this.dsList2, "DC", "DCZ_CREDIT_INFO_2");
+	this.gfnGridInit(this.dxGrid3, this.dsList3, "DC", "DCZ_CREDIT_INFO_3");
+	this.gfnGridInit(this.dxGrid4, this.dsList4, "DC", "DCZ_CREDIT_INFO_4");
+	this.gfnGridInit(this.dxGrid5, this.dsList5, "DC", "DCZ_CREDIT_INFO_5");
+	this.gfnGridInit(this.dxGrid6, this.dsList6, "DC", "DCZ_CREDIT_INFO_6");
+	this.gfnGridInit(this.dxGrid7, this.dsList7, "DC", "DCZ_CREDIT_INFO_7");
+	this.gfnGridInit(this.dxGrid8, this.dsList8, "DC", "DCZ_CREDIT_INFO_8");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_VENDOR", "string");
+	this.dsSelect.addColumn("CDLT_CMP_CD", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid1);
+	this.gfnGridBeforeSelect(this.dxGrid2);
+	this.gfnGridBeforeSelect(this.dxGrid3);
+	this.gfnGridBeforeSelect(this.dxGrid4);
+	this.gfnGridBeforeSelect(this.dxGrid5);
+	this.gfnGridBeforeSelect(this.dxGrid6);
+	this.gfnGridBeforeSelect(this.dxGrid7);
+	this.gfnGridBeforeSelect(this.dxGrid8);
+	
+	var index = this.divData.form.tabData.tabindex + 1;
+	
+	var strSvcId    = "select"+ index;
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select"+ index +"=dsSelect";
+	var outData     = "dsList"+ index+ "=select" + index + "0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+			
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();	
+	this.dsSelect.setColumn(0, "CD_VENDOR", this.dsSearch.getColumn(0, "CD_VENDOR"));
+	this.dsSelect.setColumn(0, "CDLT_CMP_CD", this.dsSearch.getColumn(0, "CDLT_CMP_CD"));
+
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+// 	switch(this.divData.form.tabData.tabindex) {
+// 		case 0:
+// 			var nrow = this.gfnGridAdd(this.dxGrid); // top (default), bottom, current
+// 			break;
+// 		case 1:
+// 			var nrow = this.gfnGridAdd(this.dxGrid2); // top (default), bottom, current
+// 			break;
+// 	}
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	
+	switch(this.divData.form.tabData.tabindex) {
+		case 0:
+			this.gfnGridDel(this.dxGrid1);
+			break;
+		case 1:
+			this.gfnGridDel(this.dxGrid2);
+			break;
+	}
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+// 	switch(this.divData.form.tabData.tabindex) {
+// 		case 0:
+// 			this.gfnExcelExport(this.dxGrid);
+// 			break;
+// 		case 1:
+// 			this.gfnExcelExport(this.dxGrid2);
+// 			break;
+// 	}
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid1);	
+		this.gfnGridAfterSelect(this.dxGrid2);	
+		this.gfnGridAfterSelect(this.dxGrid3);	
+		this.gfnGridAfterSelect(this.dxGrid4);
+		this.gfnGridAfterSelect(this.dxGrid5);	
+		this.gfnGridAfterSelect(this.dxGrid6);
+		this.gfnGridAfterSelect(this.dxGrid7);	
+		this.gfnGridAfterSelect(this.dxGrid8);
+	}
+// 	else if (svcID == "select2") {
+// 		this.gfnGridAfterSelect(this.dxGrid2);	
+// 	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid1);	
+		this.gfnGridClear(this.dxGrid2);	
+		this.gfnGridClear(this.dxGrid3);	
+		this.gfnGridClear(this.dxGrid4);
+		this.gfnGridClear(this.dxGrid5);	
+		this.gfnGridClear(this.dxGrid6);
+		this.gfnGridClear(this.dxGrid7);	
+		this.gfnGridClear(this.dxGrid8);
+	}
+};
+
+this.divData_tabData_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	// 탭 변경시 조회처리시
+	if(e.preindex != e.postindex) {
+		this.FormBtns.Select.click();
+	}
+};
+
+this.fnSetCombo = function()
+{
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DC");
+	this.dsCombo.setColumn(0, "CD_TYPE", "66");
+
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsCDLT_CMP_CD=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallbackCombo";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}]]></Script>
+    <Objects>
+      <Dataset id="dsList1"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select1</Col>
+            <Col id="SP">DCZPR_CREDIT_INFO1_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select2</Col>
+            <Col id="SP">DCZPR_CREDIT_INFO2_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select3</Col>
+            <Col id="SP">DCZPR_CREDIT_INFO3_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select4</Col>
+            <Col id="SP">DCZPR_CREDIT_INFO4_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select5</Col>
+            <Col id="SP">DCZPR_CREDIT_INFO5_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select6</Col>
+            <Col id="SP">DCZPR_CREDIT_INFO6_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select7</Col>
+            <Col id="SP">DCZPR_CREDIT_INFO7_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select8</Col>
+            <Col id="SP">DCZPR_CREDIT_INFO8_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_VENDOR" type="STRING" size="256"/>
+          <Column id="CDLT_CMP_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList2"/>
+      <Dataset id="dsList3"/>
+      <Dataset id="dsList4"/>
+      <Dataset id="dsList5"/>
+      <Dataset id="dsList6"/>
+      <Dataset id="dsList7"/>
+      <Dataset id="dsList8"/>
+      <Dataset id="dsCDLT_CMP_CD">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_VENDOR.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_VENDOR"/>
+      <BindItem id="item1" compid="divSearch.form.ctxtNO_SJC" propid="value" datasetid="dsSearch" columnid="CDLT_CMP_CD"/>
+    </Bind>
+  </Form>
+</FDL>

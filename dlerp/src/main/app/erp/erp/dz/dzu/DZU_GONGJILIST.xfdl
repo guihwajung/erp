@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Radio id="rdoTY_GUBUN" taborder="1" left="30" top="10" height="24" innerdataset="dsTY_GUBUN" datacolumn="VALUE" codecolumn="CODE" direction="vertical" fittocontents="width" width="114" index="0" text="제목" value="1"/>
+              <Edit id="txtNO_SAUP" taborder="1" left="rdoTY_GUBUN:0" top="10" width="140" height="24" onchanged="fnSearchInit"/>
+              <Static id="staCD_SYSTEM" taborder="2" text="시스템" left="txtNO_SAUP:0" top="10" width="79" height="24" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboTY_SYSTEM" taborder="3" text="ERP" left="staCD_SYSTEM:0" top="10" width="90" height="24" innerdataset="dsTY_SYSTEM" codecolumn="CODE" datacolumn="VALUE" index="0" value=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:20" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0" oncelldblclick="divData_objGrid_oncelldblclick" autofittype="col"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DZZPR_DOTNET_NOTICELIST_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_GUBUN">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">1</Col>
+            <Col id="VALUE">제목</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2</Col>
+            <Col id="VALUE">내용</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="TY_SEARCH" type="STRING" size="256"/>
+          <Column id="DS_SEARCH" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TY_SEARCH">1</Col>
+            <Col id="DS_SEARCH"/>
+            <Col id="TY_GUBUN"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_SYSTEM">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE"/>
+            <Col id="VALUE">ERP</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+
+	this.FormBtns.Select.click();
+	
+};
+
+/************************************************************************
+ * 버튼 설정 
+ ************************************************************************/
+this.fnSetButton = function() {
+
+	  this.FormBtns.Select.set_enable(true);
+      this.FormBtns.Add.set_enable(true);
+      this.FormBtns.Del.set_enable(false);
+	  this.FormBtns.Save.set_enable(false);
+	  this.FormBtns.Excel.set_enable(true);
+	  this.FormBtns.Print.set_enable(true);
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	//this.btn1 = this.gfnFormButtonAdd("Detail", "fnDetail1");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+
+	this.rdoTY_GUBUN = this.divSearch.form.rdoTY_GUBUN;
+	this.txtNO_SAUP = this.divSearch.form.txtNO_SAUP;
+	this.dxGrid = this.divData.form.objGrid;
+	
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {	
+
+	this.gfnGridInit(this.dxGrid, this.dsList, "DZ", "DZU_GONGJILIST");	
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("TY_SEARCH", "string");
+	this.dsSelect.addColumn("DS_SEARCH", "string");
+	this.dsSelect.addColumn("TY_GUBUN", "string");
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("TY_ACTIVE", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+
+	this.dsSelect.setColumn(0, "TY_SEARCH", this.divSearch.form.rdoTY_GUBUN.value);	//제목검색
+	this.dsSelect.setColumn(0, "DS_SEARCH",  this.divSearch.form.txtNO_SAUP.value);	//내용검색
+	this.dsSelect.setColumn(0, "TY_GUBUN",  this.divSearch.form.cboTY_SYSTEM.value);//시스템검색
+	this.dsSelect.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+	this.dsSelect.setColumn(0, "TY_ACTIVE", 'L');
+
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo){
+
+	//if(!this.gfnGridIsRow(this.dxGrid)){return false;}
+	var param = {}; 
+	param.TY_GUBUN = this.divSearch.form.cboTY_SYSTEM.value;
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DZU_GONGJI", "fnAdd_callback",  param, 650, 530);
+
+}
+
+this.fnAdd_callback = function(id, val) {
+	this.FormBtns.Select.click();
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	//this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+ /*
+ *	조회 Validate
+ */
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+	}
+}
+ */
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+this.divData_objGrid_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(!this.gfnGridIsRow(this.dxGrid)){return false;}
+
+	var param = {};
+		
+// 	param.NM_TITLE = this.dsList.getColumn(this.dsList.rowposition, "NM_TITLE");	//제목
+// 	param.Column1 =  this.dsList.getColumn(this.dsList.rowposition, "Column1");		//내용
+// 	param.DS_HNAME = this.dsList.getColumn(this.dsList.rowposition, "DS_HNAME");	//작성자	
+	param.SN_SEQ = this.dsList.getColumn(this.dsList.rowposition, "SN_SEQ");	//작성일
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DZU_GONGJI", "fnDialogCallback",  param, 650, 530);
+
+
+};
+
+
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+	}
+}
+
+this.fnDialogCallback = function(svcID, value) {
+	this.FormBtns.Select.click();
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.dsList.clearData();	
+	}
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.rdoTY_GUBUN" propid="value" datasetid="dsSearch" columnid="TY_SEARCH"/>
+      <BindItem id="item1" compid="divSearch.form.txtNO_SAUP" propid="value" datasetid="dsSearch" columnid="DS_SEARCH"/>
+      <BindItem id="item2" compid="divSearch.form.cboTY_SYSTEM" propid="value" datasetid="dsSearch" columnid="TY_GUBUN"/>
+    </Bind>
+  </Form>
+</FDL>

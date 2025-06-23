@@ -1,0 +1,3475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1377" height="750" titletext="근로자조회및등록" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta02_DSX_CFCORP" taborder="1" text="법인" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="cfCD_CORP" CodeFindName="DSX_CFCORP" CDTextWidth="80" taborder="0" left="sta02_DSX_CFCORP:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="staDSX_CFSITE" taborder="7" text="현장코드" left="cfCD_CORP:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="cfCD_SITE" CDTextWidth="80" taborder="6" left="staDSX_CFSITE:0.0" top="10.0" width="253" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DSX_CFSITE"/>
+              <Static id="staTY_CHAIYONG" taborder="3" text="채용구분" left="cfCD_SITE:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboTY_CHAIYONG" taborder="2" left="staTY_CHAIYONG:0.0" top="10.0" width="100" height="24.0" innerdataset="dsTY_CHAIYONG" datacolumn="DS_CODE" codecolumn="CD_CODE" value="" index="0" text="전체"/>
+              <Static id="staTY_CHAIYONG00" taborder="4" text="재직구분" left="cboTY_CHAIYONG:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboTY_JAJIK" taborder="5" left="staTY_CHAIYONG00:0.0" top="10.0" width="70" height="24.0" innerdataset="dsTY_JAJIK" datacolumn="DS_CODE" codecolumn="CD_CODE" value="" index="0" text="전체"/>
+              <Static id="sta01" taborder="8" text="성명" left="cboTY_JAJIK:0.0" top="10.0" width="92.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfNO_ID" CDTextWidth="80" taborder="9" left="sta01:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DSX_CFEMPLOYEE"/>
+              <Edit id="edtNO_ID" taborder="10" left="ccfNO_ID:0.0" top="10.0" width="70" height="24.0" readonly="true" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Div id="divSplitter" taborder="0" left="30%" top="0" width="5" height="100%" background="skyblue" cursor="ew-resize" ondrag="divData_divSplitter_ondrag"/>
+              <Div id="divDataLeft" taborder="0" left="0" top="0" bottom="0" right="divSplitter:5">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta01" taborder="0" text="근로자 목록" left="0" top="0" width="100.00%" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Grid id="objGrid" taborder="0" left="0" top="sta01:5" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataRight" taborder="0" left="divSplitter:5" top="0" bottom="0" right="0" text="">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta09_00_00" taborder="63" left="119" top="261" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta47_00_00_00_00" taborder="71" left="430" top="290" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta56" taborder="70" left="313" top="290" width="118" height="30" cssclass="sta_WF_tablelabel" text="거래처코드"/>
+                    <Static id="sta02_00_00_00_00" taborder="101" text="첨부파일" left="1" top="472" width="936" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Static id="sta09_00_00_00" taborder="69" left="119" top="290" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta45_00_00_00" taborder="73" left="743" top="290" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta28" taborder="61" left="119" top="232" width="819" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta20" taborder="55" left="119" top="203" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta43" taborder="57" left="430" top="203" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta58" taborder="59" left="743" top="203" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta55" taborder="53" left="743" top="174" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta46_00" taborder="51" left="430" top="174" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta45_00" taborder="48" left="743" top="145" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta02" taborder="21" text="인적사항" left="1" top="0" width="936" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Static id="sta53_00" taborder="35" text="주민등록번호" left="313" top="26" width="118" height="30" onclick="divData_divDataRight_sta01_onclick" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta47_00" taborder="37" left="430" top="26" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta09" taborder="22" left="119" top="26" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta10" taborder="23" left="119" top="174" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta19" taborder="24" left="119" top="55" width="819" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="txtDS_NAME" taborder="25" left="125" top="31" height="20" width="183" maxlength="30"/>
+                    <Static id="sta29" taborder="26" text="성명" left="0" top="26" width="120" height="30" onclick="divData_divDataRight_sta01_onclick" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta30" taborder="27" text="채용구분" left="0" top="174" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta39" taborder="28" text="주소" left="0" top="55" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta45" taborder="29" left="743" top="26" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta51" taborder="30" text="전화번호" left="624" top="26" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta54" taborder="31" left="119" top="84" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta65" taborder="32" text="내/외국인 구분" left="0" top="84" width="120" height="30" onclick="divData_divDataRight_sta01_onclick" cssclass="sta_WF_tablelabelE"/>
+                    <Edit id="txtNO_TEL1" taborder="0" left="749" top="31" height="20" width="183"/>
+                    <Combo id="cboTY_CHAIYONG" taborder="7" left="125" top="179" width="125" height="20" innerdataset="dsTY_CHAIYONGDA" codecolumn="CD_CODE" datacolumn="DS_CODE" canitemchange="divData_divDataRight_cboTY_CHAIYONG_canitemchange"/>
+                    <Combo id="cboTY_WOIGUG" taborder="2" left="125" top="89" width="125" height="20" innerdataset="dsTY_WOIGUG" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+                    <Div id="cfDS_ADDR" CDTextWidth="80" taborder="1" left="125" top="60" width="807" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DZX_CFZIP_STREET"/>
+                    <Combo id="cboTY_PAY" taborder="6" left="124" top="266" width="125" height="20" innerdataset="dsTY_SALY" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+                    <Static id="sta77" taborder="34" text="자사경력 관리" left="1" top="534" height="22" cssclass="sta_TITLE_Bg" width="936" visible="false"/>
+                    <Grid id="objGridSub2" taborder="33" left="1" width="936" top="560" height="117" oncellclick="divData_divDataRight_objGridSub2_oncellclick" visible="false"/>
+                    <MaskEdit id="txtNO_JUMIN" taborder="36" left="436" top="31" height="20" width="183" format="######-#######" type="string" textAlign="left"/>
+                    <Static id="sta65_00" taborder="38" text="국적" left="313" top="84" width="118" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                    <Static id="sta54_00" taborder="39" left="430" top="84" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta65_00_00" taborder="40" left="624" top="84" width="120" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                    <Static id="sta54_00_00" taborder="41" left="743" top="84" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta02_00" taborder="42" text="근로사항" left="1" top="119" width="936" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Static id="sta29_00" taborder="43" text="개인번호" left="0" top="145" width="120" height="30" cssclass="sta_WF_tablelabel" onclick="divData_divDataRight_sta01_onclick"/>
+                    <Static id="sta09_00" taborder="44" left="119" top="145" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta53_00_00" taborder="45" text="직종(퇴직공제부금)" left="313" top="145" width="118" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta47_00_00" taborder="46" left="430" top="145" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta51_00" taborder="47" left="624" top="145" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Div id="cfCD_JIKJONG" CDTextWidth="80" taborder="5" left="436" top="150" width="183" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DSX_CFJIKJONG_RET"/>
+                    <Edit id="txtID_SABUN" taborder="49" left="125" top="150" height="20" width="183" readonly="true"/>
+                    <Static id="staDT_START" taborder="50" text="계약시작일자" left="313" top="174" width="118" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Div id="cfCD_VENDOR_ACCOUNT" CDTextWidth="80" taborder="8" left="748" top="295" width="183" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DFX_CFACCOUNTMATCH"/>
+                    <Static id="staDT_END" taborder="52" text="계약종료일자" left="624" top="174" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta40" taborder="54" text="입사일자" left="0" top="203" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Calendar id="tclDT_IPSA" taborder="10" left="125" top="208" width="105" height="20" dateformat="yyyy-MM-dd" autoselect="true" value="" onchanged="divData_divDataRight_tclDT_IPSA_onchanged"/>
+                    <Static id="sta49" taborder="56" text="퇴사일자" left="313" top="203" width="118" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Calendar id="tclDT_TOIJIK" taborder="11" left="436" top="208" width="105" height="20" dateformat="yyyy-MM-dd" autoselect="true" value="" readonly="false" enable="true" usesoftkeyboard="true"/>
+                    <Static id="sta61" taborder="58" left="624" top="203" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta41" taborder="60" text="특기사항" left="0" top="232" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <TextArea id="txtDS_REMARK" taborder="13" left="125" top="237" width="805" height="20"/>
+                    <Static id="staTY_PAY" taborder="62" text="급여구분" left="0" top="261" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Calendar id="tclDT_START" taborder="12" left="437" top="179" width="105" height="20" dateformat="yyyy-MM-dd" autoselect="true" value="" readonly="false" enable="true" usesoftkeyboard="true"/>
+                    <Static id="staAM_ILGUB" taborder="64" text="일급" left="313" top="261" width="118" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta47_00_00_00" taborder="65" left="430" top="261" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staAM_WOLGUB" taborder="66" text="월급" left="624" top="261" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta45_00_00" taborder="67" left="743" top="261" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staTY_JIGUB" taborder="68" text="지급처구분" left="0" top="290" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta57" taborder="72" text="거래처계좌" left="624" top="290" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta02_00_00_00" taborder="74" text="보험사항" left="1" top="354" width="840" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Static id="sta04_00" taborder="75" text="고용보험" left="313" top="380" width="118" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta09_00_00_00_00_00" taborder="76" left="430" top="380" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta05_00" taborder="77" text="국민연금" left="624" top="380" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta47_00_00_00_00_00_00" taborder="78" left="743" top="380" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta06_00" taborder="79" text="퇴직공제" left="0" top="438" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta45_00_00_00_00_00" taborder="80" left="119" top="438" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <CheckBox id="chkYN_GOYONG" taborder="81" left="436" top="385" width="23" height="20" truevalue="Y" falsevalue="N" onchanged="divData_divDataRight_chkYN_GOYONG_onchanged"/>
+                    <CheckBox id="chkYN_KOOKMIN" taborder="82" left="749" top="385" width="23" height="20" truevalue="Y" falsevalue="N"/>
+                    <CheckBox id="chkYN_RETIRE" taborder="83" left="125" top="443" width="150" height="20" truevalue="Y" falsevalue="N"/>
+                    <Static id="sta45_00_00_00_00_00_00" taborder="84" left="119" top="409" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta06_00_00" taborder="85" text="건강보험증번호" left="0" top="409" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta47_00_00_00_00_00_00_00" taborder="86" left="743" top="409" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta05_00_00" taborder="87" left="624" top="409" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta09_00_00_00_00_00_00" taborder="88" left="430" top="409" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <CheckBox id="chkYN_MEDICARE" taborder="89" left="436" top="414" width="23" height="20" truevalue="Y" falsevalue="N"/>
+                    <Static id="sta04_00_00" taborder="90" text="건강보험" left="313" top="409" width="118" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Edit id="txtNO_MEDICARE" taborder="20" left="125" top="414" height="20" width="183" maxlength="13"/>
+                    <Static id="sta04_00_00_00" taborder="91" text="근로내역확인&#13;&#10;신고여부" left="313" top="438" width="118" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta09_00_00_00_00_00_00_00" taborder="92" left="430" top="438" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="sta05_00_00_00" taborder="93" text="근로내역신고용&#13;&#10;직종코드" left="624" top="438" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta47_00_00_00_00_00_00_00_00" taborder="94" left="743" top="438" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <CheckBox id="chkRT_GUNRO" taborder="15" left="436" top="443" width="150" height="20" truevalue="Y" falsevalue="N"/>
+                    <Div id="cfCD_SINGO_JIKJONG" CDTextWidth="45" taborder="16" left="749" top="443" width="184" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DSX_CFJIKJONG"/>
+                    <Static id="staGUNRO_ATTCHFILE" taborder="95" text="근로계약서" left="0" top="499" width="120" height="30" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="sta09_00_00_00_00_00_01" taborder="96" left="119" top="499" width="195" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staRETIRE_ATTCHFILE" taborder="97" text="사직서" left="313" top="499" width="118" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta47_00_00_00_00_00_00_01" taborder="98" left="430" top="499" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staFOR_ATTCHFILE" taborder="99" text="외국인등록증" left="624" top="499" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta45_00_00_00_00_00_01" taborder="100" left="743" top="499" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Button id="btnGUNRO_ATTCHFILE" taborder="17" text="첨부" left="125" top="504" width="47" height="20" cssclass="btnExt2" onclick="divData_divDataRight_btnGUNRO_ATTCHFILE_onclick"/>
+                    <Button id="btnRETIRE_ATTCHFILE" taborder="18" text="첨부" left="436" top="504" width="47" height="20" cssclass="btnExt2" onclick="divData_divDataRight_btnRETIRE_ATTCHFILE_onclick"/>
+                    <Button id="btnFOR_ATTCHFILE" taborder="19" text="첨부" left="749" top="504" width="47" height="20" cssclass="btnExt2" onclick="divData_divDataRight_btnFOR_ATTCHFILE_onclick"/>
+                    <Div id="cfCD_COUNTRY" CDTextWidth="80" taborder="3" left="436" top="89" width="183" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DSX_CFCOUNTRY"/>
+                    <Div id="cfCD_VENDOR" CDTextWidth="80" taborder="4" left="436" top="295" width="183" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DHX_CFALLVENDOR_CODEFIND"/>
+                    <Button id="btnGOYONG" taborder="102" text="이력" left="456" top="385" width="47" height="20" cssclass="btnExt2" onclick="Button_onclick" initvalueid="GO" enable="true" visible="false"/>
+                    <MaskEdit id="txtAM_ILGUB" taborder="14" left="436" top="266" width="183" height="20" format="#,###" onchanged="divData_divDataRight_txtAM_ILGUB_onchanged"/>
+                    <MaskEdit id="txtAM_MEDICARE" taborder="103" left="456" top="414" width="164" height="20" format="#,###"/>
+                    <MaskEdit id="txtAM_KOOKMIN" taborder="104" left="769" top="385" width="164" height="20" format="#,###"/>
+                    <Static id="sta06_00_02" taborder="105" text="보수월액사용여부" left="0" top="380" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta45_00_00_00_00_00_02" taborder="106" left="119" top="380" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <CheckBox id="chkYN_BOSUWOLAK" taborder="107" left="125" top="385" width="150" height="20" truevalue="Y" falsevalue="N"/>
+                    <Static id="staGUNRO_ATTCHFILE_NM" taborder="108" text="file_nm" left="175" top="504" width="120" height="20" onclick="divData_divDataRight_staGUNRO_ATTCHFILE_NM_onclick" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staRETIRE_ATTCHFILE_NM" taborder="109" text="file_nm" left="486" top="504" width="120" height="20" onclick="divData_divDataRight_staRETIRE_ATTCHFILE_NM_onclick" cssclass="sta_WF_tablelabelE"/>
+                    <Static id="staFOR_ATTCHFILE_NM" taborder="110" text="file_nm" left="799" top="504" width="120" height="20" onclick="divData_divDataRight_staFOR_ATTCHFILE_NM_onclick" cssclass="sta_WF_tablelabelE"/>
+                    <Button id="btnInsuUser" taborder="111" text="보험이력" left="867" top="355" width="70" height="22" cssclass="btnExt2" onclick="Button_onclick" initvalueid="KO" visible="false"/>
+                    <MaskEdit id="txtAM_WOLGUB" taborder="112" left="748" top="266" width="183" height="20" format="#,###"/>
+                    <Static id="sta52_01" taborder="113" text="은행" left="0" top="319" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta09_00_00_00_00" taborder="114" left="119" top="319" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staNO_ACCOUNT" taborder="115" left="313" top="319" width="118" height="30" cssclass="sta_WF_tablelabel" text="계좌번호"/>
+                    <Static id="sta47_00_00_00_00_00" taborder="116" left="430" top="319" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staNM_OPENER" taborder="117" text="예금주" left="624" top="319" width="120" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="sta45_00_00_00_00" taborder="118" left="743" top="319" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Combo id="cboTY_JIGUB" taborder="119" left="125" top="294" width="184" height="20" innerdataset="dsTY_SALY_ISSUE" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+                    <Div id="cfCD_BANK" CDTextWidth="80" taborder="9" left="124" top="324" width="183" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DFX_CFBANKCODE"/>
+                    <Edit id="txtNM_OPENER" taborder="120" left="748" top="324" height="20" width="183"/>
+                    <Edit id="txtNO_ACCOUNT" taborder="121" left="437" top="323" height="20" width="183"/>
+                    <Calendar id="tclDT_END" taborder="122" left="748" top="178" width="105" height="20" dateformat="yyyy-MM-dd" autoselect="true" value="" readonly="false" enable="true" usesoftkeyboard="true"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+this.popupVal = "";
+this.popupDataYn = "";
+this.insertAddSelYn = "";	// 저장시 insert일 경우 구분하기위한 변수
+this.subSelYn = "";	// 신규등록자 디테일 조회인지 기존 데이터 디테일 조회인지 구분
+this.updateGubun = "";	// 수정방식이 복사인지 기본인지 [ "C" : 복사 ]
+this.saveSchGubun = "";	// 저장 후 저장데이터 선택 조회를 위한 변수
+this.fileConfig = {
+	host : this.gfnGetServerUrl(),
+	uploadUrl : this.gfnGetServerUrl() + "/file/saveFile.do",
+	downloadUrl : this.gfnGetServerUrl() + "/file/downloadFile.do",
+	deleteUrl : this.gfnGetServerUrl() + "/file/deleteFile.do",
+	downImage : "theme://img_file.png",
+	delImage : "theme://btn_del.png",
+	allowTypes : ["html", "txt"],
+	maxCount : 1,
+	maxSize : "200MB",
+	maxTotalSize : "200MB"
+};
+
+this.fileConfig = this.gfnGetFileConfig();
+this.fileCount = 0;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------// 
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.fnSetCombo();
+		
+	this.fnSearchFileInfo("DS04");
+	this.fnSearchFileInfo("DS07");
+	this.fnSearchFileInfo("DS05");
+	
+	this.dsSearch.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);	
+	this.divSearch.form.cfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);	
+ 	this.dsSearch.setColumn(0, "CD_SITE", this.AuthClient.CD_SITE);	
+ 	this.divSearch.form.cfCD_SITE.form.DSTextBox.set_value(this.AuthClient.DS_SITE);	
+
+	if(!this.gfnIsNull(this.getOwnerFrame().NO_ID)){
+		this.dsSearch.setColumn(0, "CD_CORP", this.getOwnerFrame().CD_CORP);
+		this.dsSearch.setColumn(0, "DS_CORP", this.getOwnerFrame().DS_CORP);
+		this.dsSearch.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+		this.divSearch.form.cfCD_SITE.form.DSTextBox.set_value(this.getOwnerFrame().DS_SITE);
+		this.dsSearch.setColumn(0, "NO_ID", this.getOwnerFrame().NO_ID);
+		this.dsSearch.setColumn(0, "DS_NAME", this.getOwnerFrame().DS_NAME);
+		this.dsSearch.setColumn(0, "NO_SABUN", this.getOwnerFrame().NO_SABUN);
+	}
+	
+	// GR_SEARCH가 2보다 크면.. 법인코드 disable
+	// GR_SEARCH가 7또는 9 인경우 부서코드 disable	
+	//trace("GR_SEARCH", this.FormInfo.GR_SEARCH);
+	if( this.FormInfo.GR_SEARCH  >= "2"){
+		this.divSearch.form.cfCD_CORP.set_enable(false);
+	}
+	
+	if(this.FormInfo.GR_SEARCH == "7" || this.FormInfo.GR_SEARCH == "9"){
+		this.divSearch.form.cfCD_SITE.set_enable(false);
+	} 	
+	
+	//this.fnSelect();
+	this.FormBtns.Select.click();
+	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Save.set_enable(true);
+	// 서브 버튼 사용(2개 그리드 중간에 있는 파란선) 상단에 공통 셋트가 하나더 생긴다
+	//this.gfnUseSubBtn(true, this.divData, this.divData.form.divSplitter); // divSplitter sync
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	//this.btn2 = this.gfnFormButtonAdd("BTN_OTHERCOMPANY", "fnOthercompany");
+	//this.btn3 = this.gfnFormButtonAdd("BTN_FERP", "fnEmployeeTransfer");
+	//this.btn4 = this.gfnFormButtonAdd("BTN_COPY", "fnEmployeeCopy"); //복사버튼 막기
+	//this.btn5 = this.gfnFormButtonAdd("BTN_ENTDOC", "fnEntdoc");
+	
+	this.btnPayChange = this.gfnFormButtonAdd("btnPayChange", "fnPayChange"); //임금변동관리
+	this.btnExtension = this.gfnFormButtonAdd("btnExtension", "fnExtension"); //계약연장관리
+	this.btnCareer = this.gfnFormButtonAdd("btnCareer", "fnCareer"); //자사경력관리
+	
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+	//조회조건 코드파인드
+	this.cfCD_CORP = this.divSearch.form.cfCD_CORP;
+	this.cfCD_SITE = this.divSearch.form.cfCD_SITE;
+	this.cboTY_CHAIYONG = this.divSearch.form.cboTY_CHAIYONG;
+	this.cboTY_JAJIK = this.divSearch.form.cboTY_JAJIK;
+	this.ccfNO_ID = this.divSearch.form.ccfNO_ID;
+	
+	//싱글폼 코드파인드
+	this.cfDS_ADDR = this.divData.form.divDataRight.form.cfDS_ADDR; //주소
+	this.cfCD_COUNTRY = this.divData.form.divDataRight.form.cfCD_COUNTRY;// 국적
+	this.cfCD_JIKJONG = this.divData.form.divDataRight.form.cfCD_JIKJONG;//직종
+	this.cfCD_VENDOR = this.divData.form.divDataRight.form.cfCD_VENDOR;//거래처코드
+	this.cfCD_VENDOR_ACCOUNT = this.divData.form.divDataRight.form.cfCD_VENDOR_ACCOUNT;//거래처계좌
+	this.cfCD_BANK = this.divData.form.divDataRight.form.cfCD_BANK;//은행
+	
+	this.dxGrid = this.divData.form.divDataLeft.form.objGrid;
+
+	this.dateValue = new Date();	
+	this.timeValue = this.dateValue.getTime();
+	
+	trace("this.dateValue", this.dateValue);
+	trace("this.timeValue", this.timeValue);
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	//조회조건 코드파인드
+	this.cfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.cfCD_SITE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfCD_SITE.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfNO_ID.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfNO_ID.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	
+	//싱글폼 코드파인드
+	this.cfDS_ADDR.BeforeUserDataSetParam = "fnBeforeUserDataSetParam"; //주소
+	this.cfDS_ADDR.AfterCDTextChanged = "fnAfterCDTextChanged"; //주소
+	this.cfCD_COUNTRY.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";// 국적
+	this.cfCD_COUNTRY.AfterCDTextChanged = "fnAfterCDTextChanged";// 국적
+	this.cfCD_JIKJONG.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";//직종
+	this.cfCD_JIKJONG.AfterCDTextChanged = "fnAfterCDTextChanged";//직종
+	this.cfCD_VENDOR.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";//거래처코드
+	this.cfCD_VENDOR.AfterCDTextChanged = "fnAfterCDTextChanged";//거래처코드
+	this.cfCD_VENDOR_ACCOUNT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";//거래처계좌
+	this.cfCD_VENDOR_ACCOUNT.AfterCDTextChanged = "fnAfterCDTextChanged";//거래처계좌
+	this.cfCD_BANK.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";//은행	
+	this.cfCD_BANK.AfterCDTextChanged = "fnAfterCDTextChanged";//은행	
+
+	
+	// 주소 코드파인드 주소명 수정가능상태로 셋팅
+	this.cfDS_ADDR.form.DSTextBox.set_readonly(false);
+
+	this.gfnGridInit(this.dxGrid, this.dsList, "DS", "DSA_EMPLOYEE_LIST2");	
+	this.dxGrid.set_selecttype("cell");	
+	this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+	this.dsList.addEventHandler("canrowposchange", this.dsList_canrowposchange, this);
+	
+
+	//this.gfnGridInit(this.dxGridSub, this.dsListSub, "DQ", "DQZ_MDM_AUTHORITY");
+	//this.dxGridSub.BeforeUserDataSetParam = "fnGridSub_BeforeUserDataSetParam";
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	//목록조회
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");		// 법인
+	this.dsSelect.addColumn("CD_SITE", "string");		// 현장코드
+	this.dsSelect.addColumn("TY_CHAIYONG", "string");	// 채용구분
+	this.dsSelect.addColumn("TY_JAJIK", "string");		// 재직구분
+	this.dsSelect.addColumn("NO_ID", "string");			// 성명-주민번호
+	this.dsSelect.addColumn("TY_WOIGUG", "string");
+	this.dsSelect.addColumn("TY_WOIGUBUN", "string");
+	this.dsSelect.addColumn("CD_HADO", "string");
+	
+
+	//상세 상단 조회
+	this.dsSelectSub = new Dataset();
+	this.dsSelectSub.addColumn("NO_ID", "string");
+	this.dsSelectSub.addColumn("CD_SITE", "string");
+
+	
+	//삭제
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("CD_SITE", "string");
+	this.dsDelete.addColumn("NO_ID", "string");
+	this.dsDelete.addColumn("NO_JUMIN", "string");		
+	
+	//신규 저장
+	this.dsInsertSub = new Dataset();
+	this.dsInsertSub.addColumn("REG_GUBUN", "string");
+	this.dsInsertSub.addColumn("NO_ID", "string");
+	this.dsInsertSub.addColumn("CD_SITE", "string");
+	this.dsInsertSub.addColumn("DS_NAME", "string");
+	this.dsInsertSub.addColumn("ID_SABUN", "string");
+	this.dsInsertSub.addColumn("TY_WOIGUG", "string");
+	this.dsInsertSub.addColumn("TY_CHAIYONG", "string");
+	this.dsInsertSub.addColumn("CD_JIKJONG", "string");
+	this.dsInsertSub.addColumn("YN_PYEONSUNG", "string");
+	this.dsInsertSub.addColumn("NO_TEL1", "string");
+	this.dsInsertSub.addColumn("NO_TEL2", "string");
+	this.dsInsertSub.addColumn("CD_COST", "string");
+	this.dsInsertSub.addColumn("TY_PYEONSUNG", "string");
+	this.dsInsertSub.addColumn("CD_ZIP", "string");
+	this.dsInsertSub.addColumn("DS_ADDR", "string");
+	this.dsInsertSub.addColumn("DT_IPSA", "string");
+	this.dsInsertSub.addColumn("DT_TOIJIK", "string");
+	this.dsInsertSub.addColumn("DT_START", "string");
+	this.dsInsertSub.addColumn("DT_END", "string");
+	this.dsInsertSub.addColumn("DS_REMARK", "string");
+	this.dsInsertSub.addColumn("TY_PAY", "string");
+	this.dsInsertSub.addColumn("AM_ILGUB", "bigdecimal");
+	this.dsInsertSub.addColumn("AM_WOLGUB", "bigdecimal");
+	this.dsInsertSub.addColumn("TY_JIGUB", "string");
+	this.dsInsertSub.addColumn("CD_VENDOR", "string");
+	this.dsInsertSub.addColumn("NO_ACCOUNT_V", "string");
+	this.dsInsertSub.addColumn("CD_BANK", "string");
+	this.dsInsertSub.addColumn("NO_ACCOUNT", "string");
+	this.dsInsertSub.addColumn("NM_OPENER", "string");
+	this.dsInsertSub.addColumn("CD_BIMOK", "string");
+	this.dsInsertSub.addColumn("CD_SEMOK", "string");
+	this.dsInsertSub.addColumn("DS_SEMOK", "string");
+	this.dsInsertSub.addColumn("YN_GOYONG", "string");
+	this.dsInsertSub.addColumn("YN_RETIRE", "string");
+	this.dsInsertSub.addColumn("GOYONG_MIGAIP", "string");
+	this.dsInsertSub.addColumn("RETIRE_MIGAIP", "string");
+	this.dsInsertSub.addColumn("NO_RETIRE", "string");
+	this.dsInsertSub.addColumn("YN_MEDICARE", "string");
+	this.dsInsertSub.addColumn("YN_KOOKMIN", "string");
+	this.dsInsertSub.addColumn("TY_MEDICARE", "string");
+	this.dsInsertSub.addColumn("TY_KOOKMIN", "string");
+	this.dsInsertSub.addColumn("DT_MEDICHIDUK", "string");
+	this.dsInsertSub.addColumn("DT_KMCHIDUK", "string");
+	this.dsInsertSub.addColumn("DT_MEDISANGSIL", "string");
+	this.dsInsertSub.addColumn("DT_KMSANGSIL", "string");
+	this.dsInsertSub.addColumn("AM_MONAVG_ANNUITY", "int");
+	this.dsInsertSub.addColumn("AM_MONAVG_HEALTH", "int");
+	this.dsInsertSub.addColumn("YN_SILVER", "string");
+	this.dsInsertSub.addColumn("ID_UPDATE", "string");
+	this.dsInsertSub.addColumn("NO_SEQ", "int");
+	this.dsInsertSub.addColumn("NO_MEDICARE", "string");
+	this.dsInsertSub.addColumn("RT_GUNRO", "string");
+	this.dsInsertSub.addColumn("CD_COUNTRY", "string");
+	this.dsInsertSub.addColumn("DS_COUNTRY", "string");
+	this.dsInsertSub.addColumn("CD_STAY", "string");
+	this.dsInsertSub.addColumn("DS_STAY", "string");
+	this.dsInsertSub.addColumn("CD_SINGO_JIKJONG", "string");
+	this.dsInsertSub.addColumn("DS_SINGO_JIKJONG", "string");
+	this.dsInsertSub.addColumn("CD_HADO", "string");
+	this.dsInsertSub.addColumn("DT_CHECKUP", "string");
+	this.dsInsertSub.addColumn("DS_INTERVIEW", "string");
+	this.dsInsertSub.addColumn("AM_SIGUB", "int");
+	this.dsInsertSub.addColumn("CT_PROJECT_DAY", "int");
+	this.dsInsertSub.addColumn("AM_PROJECT_PAY", "bigdecimal");
+	this.dsInsertSub.addColumn("YN_BOSUWOLAK", "string");
+	this.dsInsertSub.addColumn("RTN_NO_ID", "string");
+	
+	//수정 저장
+	this.dsSaveSub = new Dataset();
+	this.dsSaveSub.addColumn("NO_ID", "string");
+	this.dsSaveSub.addColumn("CD_SITE", "string");
+	this.dsSaveSub.addColumn("DS_NAME", "string");
+	this.dsSaveSub.addColumn("NO_SABUN", "string");
+	this.dsSaveSub.addColumn("TY_WOIGUG", "string");
+	this.dsSaveSub.addColumn("TY_CHAIYONG", "string");
+	this.dsSaveSub.addColumn("CD_JIKJONG", "string");
+	this.dsSaveSub.addColumn("CD_COST", "string");
+	this.dsSaveSub.addColumn("NO_TEL1", "string");
+	this.dsSaveSub.addColumn("NO_TEL2", "string");
+	this.dsSaveSub.addColumn("TY_PYEONSUNG", "string");
+	this.dsSaveSub.addColumn("CD_ZIP", "string");
+	this.dsSaveSub.addColumn("DS_ADDR", "string");
+	this.dsSaveSub.addColumn("DT_IPSA", "string");
+	this.dsSaveSub.addColumn("DT_TOIJIK", "string");
+	this.dsSaveSub.addColumn("DT_START", "string");
+	this.dsSaveSub.addColumn("DT_END", "string");
+	this.dsSaveSub.addColumn("DS_REMARK", "string");
+	this.dsSaveSub.addColumn("CD_BIMOK", "string");
+	this.dsSaveSub.addColumn("CD_SEMOK", "string");
+	this.dsSaveSub.addColumn("DS_SEMOK", "string");
+	this.dsSaveSub.addColumn("YN_GOYONG", "string");
+	this.dsSaveSub.addColumn("YN_RETIRE", "string");
+	this.dsSaveSub.addColumn("GOYONG_MIGAIP", "string");
+	this.dsSaveSub.addColumn("RETIRE_MIGAIP", "string");
+	this.dsSaveSub.addColumn("NO_RETIRE", "string");
+	this.dsSaveSub.addColumn("YN_MEDICARE", "string");
+	this.dsSaveSub.addColumn("YN_KOOKMIN", "string");
+	this.dsSaveSub.addColumn("TY_MEDICARE", "string");
+	this.dsSaveSub.addColumn("TY_KOOKMIN", "string");
+	this.dsSaveSub.addColumn("DT_MEDICHIDUK", "string");
+	this.dsSaveSub.addColumn("DT_KMCHIDUK", "string");
+	this.dsSaveSub.addColumn("DT_MEDISANGSIL", "string");
+	this.dsSaveSub.addColumn("DT_KMSANGSIL", "string");
+	this.dsSaveSub.addColumn("AM_MONAVG_ANNUITY", "int");
+	this.dsSaveSub.addColumn("AM_MONAVG_HEALTH", "int");
+	this.dsSaveSub.addColumn("YN_SILVER", "string");
+	this.dsSaveSub.addColumn("ID_UPDATE", "string");
+	this.dsSaveSub.addColumn("TY_PAY", "string");
+	this.dsSaveSub.addColumn("AM_ILGUB", "bigdecimal");
+	this.dsSaveSub.addColumn("AM_WOLGUB", "bigdecimal");
+	this.dsSaveSub.addColumn("TY_JIGUB", "string");
+	this.dsSaveSub.addColumn("CD_VENDOR", "string");
+	this.dsSaveSub.addColumn("NO_ACCOUNT_V", "string");
+	this.dsSaveSub.addColumn("CD_BANK", "string");
+	this.dsSaveSub.addColumn("NO_ACCOUNT", "string");
+	this.dsSaveSub.addColumn("NM_OPENER", "string");
+	this.dsSaveSub.addColumn("NO_SEQ", "int");
+	this.dsSaveSub.addColumn("NO_MEDICARE", "string");
+	this.dsSaveSub.addColumn("RT_GUNRO", "string");
+	this.dsSaveSub.addColumn("CD_COUNTRY", "string");
+	this.dsSaveSub.addColumn("DS_COUNTRY", "string");
+	this.dsSaveSub.addColumn("CD_STAY", "string");
+	this.dsSaveSub.addColumn("DS_STAY", "string");
+	this.dsSaveSub.addColumn("CD_SINGO_JIKJONG", "string");
+	this.dsSaveSub.addColumn("DS_SINGO_JIKJONG", "string");
+	this.dsSaveSub.addColumn("CD_HADO", "string");
+	this.dsSaveSub.addColumn("DT_CHECKUP", "string");
+	this.dsSaveSub.addColumn("DS_INTERVIEW", "string");
+	this.dsSaveSub.addColumn("CT_PROJECT_DAY", "int");
+	this.dsSaveSub.addColumn("AM_PROJECT_PAY", "bigdecimal");
+	this.dsSaveSub.addColumn("TY_UPDATE", "string");
+	this.dsSaveSub.addColumn("YN_BOSUWOLAK", "string");
+	this.dsSaveSub.addColumn("AM_SIGUB", "int");
+	
+	//
+	this.dsSelectInsuUser = new Dataset();
+	this.dsSelectInsuUser.addColumn("CD_SITE", "string");
+	this.dsSelectInsuUser.addColumn("ORG_NO_JUMIN", "string");
+	
+	//공통코드성 조회
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");	
+	
+}
+
+/************************************************************************
+ * 버튼 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {	
+	if (!this.fnSelectValidate()) return false;
+	
+	//this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsList.clearData();
+	this.dsListSub.clearData();
+	this.dsListSub2.clearData();
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();	
+	
+	this.dsSelect.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "TY_CHAIYONG", this.dsSearch.getColumn(0, "TY_CHAIYONG"));
+	this.dsSelect.setColumn(0, "TY_JAJIK", this.dsSearch.getColumn(0, "TY_JAJIK"));
+	this.dsSelect.setColumn(0, "NO_ID", this.dsSearch.getColumn(0, "NO_ID"));
+	this.dsSelect.setColumn(0, "TY_WOIGUG", "");
+	this.dsSelect.setColumn(0, "TY_WOIGUBUN", "");
+	this.dsSelect.setColumn(0, "CD_HADO", this.dsSearch.getColumn(0, "CD_HADO"));
+	
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_CORP"))) {
+		this.fnVaidateCallback = function() {
+			this.cfCD_CORP.form.CDTextBox.setFocus();			
+		}
+		this.gfnAlert("법인코드를 먼저 입력 하셔야 등록 가능합니다.", "fnVaidateCallback");
+		return;
+	}
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_SITE"))) {
+		this.fnVaidateCallback = function() {
+			this.cfCD_SITE.form.CDTextBox.setFocus();			
+		}
+		this.gfnAlert("현장코드를 먼저 입력 하셔야 등록 가능합니다.", "fnVaidateCallback");
+		return;
+	}
+	
+	// 신규 등록건이 이미 있을경우 추가 신규등록 못함(신규 row가 여러건있을경우 삭제시 row 체인지 이벤트에서 변경건 있다고 나오기때문에 처리)
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		if(this.gfnGetFlag(this.dsList, i) == "I"){
+			this.gfnAlert("기존 신규 등록건을 먼저 저장해주세요.");
+			return;
+		}
+	}
+	var nrow = this.gfnGridAdd(this.dxGrid);
+	
+	var param = {CD_CORP:this.dsSearch.getColumn(0,"CD_CORP"), CD_SITE:this.dsSearch.getColumn(0,"CD_SITE")};
+	
+	this.gfnFormOpenNonAuth("DSA", "DSA_EMPLOYEE_LIST_NEW", "fnAddDialogCallback", param, 430, 200);
+}
+
+this.fnAddDialogCallback = function(svcID, value) {	
+	// 리턴값	
+	if(value == "Y" || value == "N"){	
+		this.popupDataYn = value;	// 팝업에서 조회한 데이터가 존재하는지 유무
+
+		this.dsList.set_enableevent(false);
+		this.dsList.setColumn(this.dsList.rowposition, "NO_JUMIN", this.popupVal.noId1 + "-" + this.popupVal.noId2);
+		this.dsList.setColumn(this.dsList.rowposition, "DS_NAME", this.popupVal.dsName);
+		this.dsList.setColumn(this.dsList.rowposition, "NO_ID", this.popupVal.noId1 + this.popupVal.noId2); 
+		this.dsList.setColumn(this.dsList.rowposition, "CD_SITE", this.dsSearch.getColumn(0,"CD_SITE"));
+
+		this.dsList.set_enableevent(true);		
+		this.saveSchGubun = this.popupVal.noId1 + this.popupVal.noId2; //주민번호 : ORG_NO_JUMIN
+
+		this.subSelYn = "Y";
+	}else{
+		this.dsList.deleteRow(0);		
+	}
+
+	this.FormBtns.SubSelect.click();
+};
+
+
+/*
+ *	삭제 버튼
+ */ 
+this.fnDel = function() {
+	//this.gfnGridDel(this.dxGrid);
+	
+	this.fnDelProc();
+
+}
+
+this.fnDelProc = function(){
+	if(this.dsList.rowcount < 1) return;	// 저장 버튼 항상 활성화 시켰기때문에 조회결과 없을때는 실행 안되게함
+	
+	if(this.dsListSub.getRowType(0) == Dataset.ROWTYPE_INSERT){
+		this.gfnGridDel(this.dxGrid);
+		return;
+	}
+
+	
+	//삭제
+	if(this.dsListSub.getRowType(0) == Dataset.ROWTYPE_UPDATE){
+		this.gfnAlert("저장 후 삭제해 주세요.");
+		return;
+	}
+
+	this.gfnConfirm("삭제시 해당 입퇴사 기간의 출역 데이터는 삭제 처리 됩니다. 정말로 삭제할까요?", function(sSvcId, oRtn) {
+			if (!oRtn){
+				return false;
+			}
+		
+			this.dsDelete.clearData();
+			var nrow = this.dsDelete.addRow();	
+			this.dsDelete.setColumn(nrow, "CD_SITE", this.dsListSub.getColumn(0, "CD_SITE"));
+			this.dsDelete.setColumn(nrow, "NO_ID", this.dsListSub.getColumn(0, "NO_ID"));
+			this.dsDelete.setColumn(nrow, "NO_JUMIN", this.dsListSub.getColumn(0, "NO_JUMIN"));
+			
+			var strSvcId    = "delete";
+			var strSvcType  = "save";
+			var inProc		= "_dsProc";
+			var inData      = "delete=dsDelete";
+			var outData     = "";
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+			
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// transaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc); // 통신방법 정의 [생략가능]
+		}
+	)
+}
+
+/*
+ *	저장 버튼
+ */ 
+this.fnSave = function() {
+	
+	if(this.dsList.rowcount < 1) return;	// 저장 버튼 항상 활성화 시켰기때문에 조회결과 없을때는 실행 안되게함
+
+	var sDT_TOIJIK = this.gfnTrim(this.dsListSub.getColumn(0, "DT_TOIJIK"),"");
+	var sDT_IPSA = this.gfnTrim(this.dsListSub.getColumn(0, "DT_IPSA"),"");
+	
+// 	if(!this.gfnIsNull(sDT_TOIJIK) || !this.gfnIsNull(sDT_IPSA)){
+// 		if(sDT_TOIJIK < sDT_IPSA){
+// 			this.gfnAlert("퇴사일자는 입사일자 이후로 입력 가능합니다.");
+// 			return;
+// 		}
+// 	}
+	
+	if(this.dsListSub.getColumn(0, "AM_WOLGUB") < this.dsListSub.getColumn(0, "AM_PROJECT_PAY")){
+		this.gfnAlert("예상급여는 예상월급보다 높을 수 없습니다.");
+		return;
+	}
+	
+	if(this.dsListSub.getColumn(0, "RT_GUNRO") == 1){
+		if(this.gfnIsNull(this.dsListSub.getColumn(0, "CD_SINGO_JIKJONG"))){
+			this.gfnAlert("근로내역신고용 직종코드를 입력하세요.");
+			return;		
+		}
+		if(this.dsListSub.getColumn(0, "TY_WOIGUG") == "Y"){
+			if(this.gfnIsNull(this.dsListSub.getColumn(0, "CD_COUNTRY")) || this.gfnIsNull(this.dsListSub.getColumn(0, "CD_STAY"))){
+				this.gfnAlert("외국인일경우 국적 및 체류자격은 필수 입니다.");
+				return;		
+			}
+		}
+	}	
+	
+// 	if(this.gfnIsNull(this.dsListSub.getColumn(0, "GF_NM_FILE"))){
+// 		this.gfnAlert("근로계약서 파일을 업로드하세요.");
+// 		return;
+// 	}
+	
+	//필수 체크 테스트 때문에 일단 뺌
+	if(!this.gfnDataValidate(this.dsListSub, this.dsRequired))return;	
+	
+	this.dsInsertSub.clearData();	
+	this.dsSaveSub.clearData();	
+	
+	var inData      = "";
+
+	if(this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I"){	
+	
+		inData      = "d_insert=dsInsertSub";
+		
+		var nrow = this.dsInsertSub.addRow();	
+		this.dsInsertSub.setColumn(nrow, "REG_GUBUN", this.gfnGetFlag(this.dsList, this.dsList.rowposition));
+		this.dsInsertSub.setColumn(nrow, "NO_ID", this.dsListSub.getColumn(0, "NO_ID"));
+		this.dsInsertSub.setColumn(nrow, "CD_SITE", this.dsList.getColumn(this.dsList.rowposition, "CD_SITE"));
+		this.dsInsertSub.setColumn(nrow, "DS_NAME", this.dsListSub.getColumn(0, "DS_NAME"));
+		this.dsInsertSub.setColumn(nrow, "ID_SABUN", this.dsListSub.getColumn(0, "ID_SABUN"));
+		this.dsInsertSub.setColumn(nrow, "TY_WOIGUG", this.dsListSub.getColumn(0, "TY_WOIGUG"));
+		this.dsInsertSub.setColumn(nrow, "TY_CHAIYONG", this.dsListSub.getColumn(0, "TY_CHAIYONG"));
+		this.dsInsertSub.setColumn(nrow, "CD_JIKJONG", this.dsListSub.getColumn(0, "CD_JIKJONG"));
+		this.dsInsertSub.setColumn(nrow, "YN_PYEONSUNG", this.dsListSub.getColumn(0, "YN_PYEONSUNG"));
+		this.dsInsertSub.setColumn(nrow, "NO_TEL1", this.dsListSub.getColumn(0, "NO_TEL1"));
+		this.dsInsertSub.setColumn(nrow, "NO_TEL2", this.dsListSub.getColumn(0, "NO_TEL2"));
+		this.dsInsertSub.setColumn(nrow, "CD_COST", this.dsListSub.getColumn(0, "CD_COST"));
+		this.dsInsertSub.setColumn(nrow, "TY_PYEONSUNG", this.dsListSub.getColumn(0, "TY_PYEONSUNG"));
+		this.dsInsertSub.setColumn(nrow, "CD_ZIP", this.dsListSub.getColumn(0, "CD_ZIP"));
+		this.dsInsertSub.setColumn(nrow, "DS_ADDR", this.dsListSub.getColumn(0, "DS_ADDR"));
+		this.dsInsertSub.setColumn(nrow, "DT_IPSA", this.dsListSub.getColumn(0, "DT_IPSA"));
+		this.dsInsertSub.setColumn(nrow, "DT_TOIJIK", this.dsListSub.getColumn(0, "DT_TOIJIK"));
+		this.dsInsertSub.setColumn(nrow, "DT_START", this.dsListSub.getColumn(0, "DT_START"));
+		this.dsInsertSub.setColumn(nrow, "DT_END", this.dsListSub.getColumn(0, "DT_END"));
+		this.dsInsertSub.setColumn(nrow, "DS_REMARK", this.dsListSub.getColumn(0, "DS_REMARK"));
+		this.dsInsertSub.setColumn(nrow, "TY_PAY", this.dsListSub.getColumn(0, "TY_PAY"));
+		this.dsInsertSub.setColumn(nrow, "AM_ILGUB", this.dsListSub.getColumn(0, "AM_ILGUB"));
+		this.dsInsertSub.setColumn(nrow, "AM_WOLGUB", this.dsListSub.getColumn(0, "AM_WOLGUB"));
+		this.dsInsertSub.setColumn(nrow, "TY_JIGUB", this.dsListSub.getColumn(0, "TY_JIGUB"));
+		this.dsInsertSub.setColumn(nrow, "CD_VENDOR", this.dsListSub.getColumn(0, "CD_VENDOR"));
+		this.dsInsertSub.setColumn(nrow, "NO_ACCOUNT_V", this.dsListSub.getColumn(0, "NO_ACCOUNT_V"));
+		this.dsInsertSub.setColumn(nrow, "CD_BANK", this.dsListSub.getColumn(0, "CD_BANK"));
+		this.dsInsertSub.setColumn(nrow, "NO_ACCOUNT", this.dsListSub.getColumn(0, "NO_ACCOUNT"));
+		this.dsInsertSub.setColumn(nrow, "NM_OPENER", this.dsListSub.getColumn(0, "NM_OPENER"));
+		this.dsInsertSub.setColumn(nrow, "CD_BIMOK", this.dsListSub.getColumn(0, "CD_BIMOK"));
+		this.dsInsertSub.setColumn(nrow, "CD_SEMOK", this.dsListSub.getColumn(0, "CD_SEMOK"));
+		this.dsInsertSub.setColumn(nrow, "DS_SEMOK", this.dsListSub.getColumn(0, "DS_SEMOK"));
+		this.dsInsertSub.setColumn(nrow, "YN_GOYONG", this.dsListSub.getColumn(0, "YN_GOYONG"));
+		this.dsInsertSub.setColumn(nrow, "YN_RETIRE", this.dsListSub.getColumn(0, "YN_RETIRE"));
+		this.dsInsertSub.setColumn(nrow, "GOYONG_MIGAIP", this.dsListSub.getColumn(0, "GOYONG_MIGAIP"));
+		this.dsInsertSub.setColumn(nrow, "RETIRE_MIGAIP", this.dsListSub.getColumn(0, "RETIRE_MIGAIP"));
+		this.dsInsertSub.setColumn(nrow, "NO_RETIRE", this.dsListSub.getColumn(0, "NO_RETIRE"));
+		this.dsInsertSub.setColumn(nrow, "YN_MEDICARE", this.dsListSub.getColumn(0, "YN_MEDICARE"));
+		this.dsInsertSub.setColumn(nrow, "YN_KOOKMIN", this.dsListSub.getColumn(0, "YN_KOOKMIN"));
+		this.dsInsertSub.setColumn(nrow, "TY_MEDICARE", this.dsListSub.getColumn(0, "TY_MEDICARE"));
+		this.dsInsertSub.setColumn(nrow, "TY_KOOKMIN", this.dsListSub.getColumn(0, "TY_KOOKMIN"));
+		this.dsInsertSub.setColumn(nrow, "DT_MEDICHIDUK", this.dsListSub.getColumn(0, "DT_MEDICHIDUK"));
+		this.dsInsertSub.setColumn(nrow, "DT_KMCHIDUK", this.dsListSub.getColumn(0, "DT_KMCHIDUK"));
+		this.dsInsertSub.setColumn(nrow, "DT_MEDISANGSIL", this.dsListSub.getColumn(0, "DT_MEDISANGSIL"));
+		this.dsInsertSub.setColumn(nrow, "DT_KMSANGSIL", this.dsListSub.getColumn(0, "DT_KMSANGSIL"));
+		this.dsInsertSub.setColumn(nrow, "AM_MONAVG_ANNUITY", this.dsListSub.getColumn(0, "AM_MONAVG_ANNUITY"));
+		this.dsInsertSub.setColumn(nrow, "AM_MONAVG_HEALTH", this.dsListSub.getColumn(0, "AM_MONAVG_HEALTH"));
+		this.dsInsertSub.setColumn(nrow, "YN_SILVER", this.dsListSub.getColumn(0, "YN_SILVER"));
+		this.dsInsertSub.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+		this.dsInsertSub.setColumn(nrow, "NO_SEQ", this.dsListSub.getColumn(0, "NO_SEQ"));
+		this.dsInsertSub.setColumn(nrow, "NO_MEDICARE", this.dsListSub.getColumn(0, "NO_MEDICARE"));
+		this.dsInsertSub.setColumn(nrow, "RT_GUNRO", this.dsListSub.getColumn(0, "RT_GUNRO"));
+		this.dsInsertSub.setColumn(nrow, "CD_COUNTRY", this.dsListSub.getColumn(0, "CD_COUNTRY"));
+		this.dsInsertSub.setColumn(nrow, "DS_COUNTRY", this.dsListSub.getColumn(0, "DS_COUNTRY"));
+		this.dsInsertSub.setColumn(nrow, "CD_STAY", this.dsListSub.getColumn(0, "CD_STAY"));
+		this.dsInsertSub.setColumn(nrow, "DS_STAY", this.dsListSub.getColumn(0, "DS_STAY"));
+		this.dsInsertSub.setColumn(nrow, "CD_SINGO_JIKJONG", this.dsListSub.getColumn(0, "CD_SINGO_JIKJONG"));
+		this.dsInsertSub.setColumn(nrow, "DS_SINGO_JIKJONG", this.dsListSub.getColumn(0, "DS_SINGO_JIKJONG"));
+		this.dsInsertSub.setColumn(nrow, "CD_HADO", this.dsListSub.getColumn(0, "CD_HADO"));
+		this.dsInsertSub.setColumn(nrow, "DT_CHECKUP", this.dsListSub.getColumn(0, "DT_CHECKUP"));
+		this.dsInsertSub.setColumn(nrow, "DS_INTERVIEW", this.dsListSub.getColumn(0, "DS_INTERVIEW"));
+		this.dsInsertSub.setColumn(nrow, "AM_SIGUB", this.dsListSub.getColumn(0, "AM_SIGUB"));
+		this.dsInsertSub.setColumn(nrow, "CT_PROJECT_DAY", this.dsListSub.getColumn(0, "CT_PROJECT_DAY"));
+		this.dsInsertSub.setColumn(nrow, "AM_PROJECT_PAY", this.dsListSub.getColumn(0, "AM_PROJECT_PAY"));
+		this.dsInsertSub.setColumn(nrow, "YN_BOSUWOLAK", this.dsListSub.getColumn(0, "YN_BOSUWOLAK"));
+		this.dsInsertSub.setColumn(nrow, "RTN_NO_ID", this.dsListSub.getColumn(0, "RTN_NO_ID"));		
+
+		this.insertAddSelYn = "Y";	// 저장시 insert일 경우 구분하기위한 변수
+		
+	}else{
+	
+		inData      = "d_save=dsSaveSub";
+	
+		var flag = this.dsListSub.getRowType(0);
+		
+		switch(flag) {		
+			case Dataset.ROWTYPE_UPDATE	:	
+				var nrow = this.dsSaveSub.addRow();	
+
+				this.dsSaveSub.setColumn(nrow, "NO_ID", this.dsListSub.getColumn(0, "NO_ID"));
+				this.dsSaveSub.setColumn(nrow, "CD_SITE", this.dsListSub.getColumn(0, "CD_SITE"));
+				this.dsSaveSub.setColumn(nrow, "DS_NAME", this.dsListSub.getColumn(0, "DS_NAME"));
+				this.dsSaveSub.setColumn(nrow, "NO_SABUN", this.dsListSub.getColumn(0, "NO_SABUN"));
+				this.dsSaveSub.setColumn(nrow, "TY_WOIGUG", this.dsListSub.getColumn(0, "TY_WOIGUG"));
+				this.dsSaveSub.setColumn(nrow, "TY_CHAIYONG", this.dsListSub.getColumn(0, "TY_CHAIYONG"));
+				this.dsSaveSub.setColumn(nrow, "CD_JIKJONG", this.dsListSub.getColumn(0, "CD_JIKJONG"));
+				this.dsSaveSub.setColumn(nrow, "CD_COST", this.dsListSub.getColumn(0, "CD_COST"));
+				this.dsSaveSub.setColumn(nrow, "NO_TEL1", this.dsListSub.getColumn(0, "NO_TEL1"));
+				this.dsSaveSub.setColumn(nrow, "NO_TEL2", this.dsListSub.getColumn(0, "NO_TEL2"));
+				this.dsSaveSub.setColumn(nrow, "TY_PYEONSUNG", this.dsListSub.getColumn(0, "TY_PYEONSUNG"));
+				this.dsSaveSub.setColumn(nrow, "CD_ZIP", this.dsListSub.getColumn(0, "CD_ZIP"));
+				this.dsSaveSub.setColumn(nrow, "DS_ADDR", this.dsListSub.getColumn(0, "DS_ADDR"));
+				this.dsSaveSub.setColumn(nrow, "DT_IPSA", this.dsListSub.getColumn(0, "DT_IPSA"));
+				this.dsSaveSub.setColumn(nrow, "DT_TOIJIK", this.dsListSub.getColumn(0, "DT_TOIJIK"));
+				this.dsSaveSub.setColumn(nrow, "DT_START", this.dsListSub.getColumn(0, "DT_START"));
+				this.dsSaveSub.setColumn(nrow, "DT_END", this.dsListSub.getColumn(0, "DT_END"));
+				this.dsSaveSub.setColumn(nrow, "DS_REMARK", this.dsListSub.getColumn(0, "DS_REMARK"));
+				this.dsSaveSub.setColumn(nrow, "CD_BIMOK", this.dsListSub.getColumn(0, "CD_BIMOK"));
+				this.dsSaveSub.setColumn(nrow, "CD_SEMOK", this.dsListSub.getColumn(0, "CD_SEMOK"));
+				this.dsSaveSub.setColumn(nrow, "DS_SEMOK", this.dsListSub.getColumn(0, "DS_SEMOK"));
+				this.dsSaveSub.setColumn(nrow, "YN_GOYONG", this.dsListSub.getColumn(0, "YN_GOYONG"));
+				this.dsSaveSub.setColumn(nrow, "YN_RETIRE", this.dsListSub.getColumn(0, "YN_RETIRE"));
+				this.dsSaveSub.setColumn(nrow, "GOYONG_MIGAIP", this.dsListSub.getColumn(0, "GOYONG_MIGAIP"));
+				this.dsSaveSub.setColumn(nrow, "RETIRE_MIGAIP", this.dsListSub.getColumn(0, "RETIRE_MIGAIP"));
+				this.dsSaveSub.setColumn(nrow, "NO_RETIRE", this.dsListSub.getColumn(0, "NO_RETIRE"));
+				this.dsSaveSub.setColumn(nrow, "YN_MEDICARE", this.dsListSub.getColumn(0, "YN_MEDICARE"));
+				this.dsSaveSub.setColumn(nrow, "YN_KOOKMIN", this.dsListSub.getColumn(0, "YN_KOOKMIN"));
+				this.dsSaveSub.setColumn(nrow, "TY_MEDICARE", this.dsListSub.getColumn(0, "TY_MEDICARE"));
+				this.dsSaveSub.setColumn(nrow, "TY_KOOKMIN", this.dsListSub.getColumn(0, "TY_KOOKMIN"));
+				this.dsSaveSub.setColumn(nrow, "DT_MEDICHIDUK", this.dsListSub.getColumn(0, "DT_MEDICHIDUK"));
+				this.dsSaveSub.setColumn(nrow, "DT_KMCHIDUK", this.dsListSub.getColumn(0, "DT_KMCHIDUK"));
+				this.dsSaveSub.setColumn(nrow, "DT_MEDISANGSIL", this.dsListSub.getColumn(0, "DT_MEDISANGSIL"));
+				this.dsSaveSub.setColumn(nrow, "DT_KMSANGSIL", this.dsListSub.getColumn(0, "DT_KMSANGSIL"));
+				this.dsSaveSub.setColumn(nrow, "AM_MONAVG_ANNUITY", this.dsListSub.getColumn(0, "AM_MONAVG_ANNUITY"));
+				this.dsSaveSub.setColumn(nrow, "AM_MONAVG_HEALTH", this.dsListSub.getColumn(0, "AM_MONAVG_HEALTH"));
+				this.dsSaveSub.setColumn(nrow, "YN_SILVER", this.dsListSub.getColumn(0, "YN_SILVER"));
+				this.dsSaveSub.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+				this.dsSaveSub.setColumn(nrow, "TY_PAY", this.dsListSub.getColumn(0, "TY_PAY"));
+				this.dsSaveSub.setColumn(nrow, "AM_ILGUB", this.dsListSub.getColumn(0, "AM_ILGUB"));
+				this.dsSaveSub.setColumn(nrow, "AM_WOLGUB", this.dsListSub.getColumn(0, "AM_WOLGUB"));
+				this.dsSaveSub.setColumn(nrow, "TY_JIGUB", this.dsListSub.getColumn(0, "TY_JIGUB"));
+				this.dsSaveSub.setColumn(nrow, "CD_VENDOR", this.dsListSub.getColumn(0, "CD_VENDOR"));
+				this.dsSaveSub.setColumn(nrow, "NO_ACCOUNT_V", this.dsListSub.getColumn(0, "NO_ACCOUNT_V"));
+				this.dsSaveSub.setColumn(nrow, "CD_BANK", this.dsListSub.getColumn(0, "CD_BANK"));
+				this.dsSaveSub.setColumn(nrow, "NO_ACCOUNT", this.dsListSub.getColumn(0, "NO_ACCOUNT"));
+				this.dsSaveSub.setColumn(nrow, "NM_OPENER", this.dsListSub.getColumn(0, "NM_OPENER"));
+				this.dsSaveSub.setColumn(nrow, "NO_SEQ", this.dsListSub.getColumn(0, "NO_SEQ"));
+				this.dsSaveSub.setColumn(nrow, "NO_MEDICARE", this.dsListSub.getColumn(0, "NO_MEDICARE"));
+				this.dsSaveSub.setColumn(nrow, "RT_GUNRO", this.dsListSub.getColumn(0, "RT_GUNRO"));
+				this.dsSaveSub.setColumn(nrow, "CD_COUNTRY", this.dsListSub.getColumn(0, "CD_COUNTRY"));
+				this.dsSaveSub.setColumn(nrow, "DS_COUNTRY", this.dsListSub.getColumn(0, "DS_COUNTRY"));
+				this.dsSaveSub.setColumn(nrow, "CD_STAY", this.dsListSub.getColumn(0, "CD_STAY"));
+				this.dsSaveSub.setColumn(nrow, "DS_STAY", this.dsListSub.getColumn(0, "DS_STAY"));
+				this.dsSaveSub.setColumn(nrow, "CD_SINGO_JIKJONG", this.dsListSub.getColumn(0, "CD_SINGO_JIKJONG"));
+				this.dsSaveSub.setColumn(nrow, "DS_SINGO_JIKJONG", this.dsListSub.getColumn(0, "DS_SINGO_JIKJONG"));
+				this.dsSaveSub.setColumn(nrow, "CD_HADO", this.dsListSub.getColumn(0, "CD_HADO"));
+				this.dsSaveSub.setColumn(nrow, "DT_CHECKUP", this.dsListSub.getColumn(0, "DT_CHECKUP"));
+				this.dsSaveSub.setColumn(nrow, "DS_INTERVIEW", this.dsListSub.getColumn(0, "DS_INTERVIEW"));
+				this.dsSaveSub.setColumn(nrow, "CT_PROJECT_DAY", this.dsListSub.getColumn(0, "CT_PROJECT_DAY"));
+				this.dsSaveSub.setColumn(nrow, "AM_PROJECT_PAY", this.dsListSub.getColumn(0, "AM_PROJECT_PAY"));
+				this.dsSaveSub.setColumn(nrow, "TY_UPDATE", this.updateGubun);	// 수정방식
+				this.dsSaveSub.setColumn(nrow, "YN_BOSUWOLAK", this.dsListSub.getColumn(0, "YN_BOSUWOLAK"));
+				this.dsSaveSub.setColumn(nrow, "AM_SIGUB", this.dsListSub.getColumn(0, "AM_SIGUB"));
+				break;
+		}
+	}
+	
+	if (this.dsInsertSub.rowcount == 0 && this.dsSaveSub.rowcount == 0) return;
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var outData     = "dsRtnData=d_insert";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+}
+
+/*
+ *	엑셀 버튼
+ */ 
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+ 
+
+/************************************************************************
+ * 서브 버튼 이벤트
+ ************************************************************************/
+// 디테일 싱글폼 데이터 조회 및 자사경력관리 그리드 조회(같이 조회해서 가져온다)
+this.fnSelectSub = function() {
+	if (this.dxGrid.rowcount == 0 || this.dxGrid.currentrow < 0) return false;
+		
+	// 디테일 데이터셋 데이터 삭제
+	//this.dsListSub.clearData();
+	
+	trace("this.saveSchGubun", this.saveSchGubun);
+
+	var NO_ID = "";
+	if(this.gfnIsNull(this.saveSchGubun)){
+		NO_ID = this.dsList.getColumn(this.dsList.rowposition, "NO_ID");
+	}else{
+		//NO_ID = this.saveSchGubun;
+		for (var i = 0; i < this.dsList.rowcount; i++) {
+			if(this.dsList.getColumn(i, "NO_ID")==this.saveSchGubun)
+			{
+				NO_ID = this.dsList.getColumn(i, "NO_ID");
+				this.dsList.set_rowposition(i);
+				break;
+			}
+		}		
+	}
+	// 파라미터 셋팅후 초기화.
+	this.saveSchGubun = "";
+	
+	// 디테일 싱글폼 파마리터 데이터셋 셋팅
+	this.dsSelectSub.clearData();
+	this.dsSelectSub.addRow();
+	this.dsSelectSub.setColumn(0, "NO_ID", NO_ID);
+	this.dsSelectSub.setColumn(0, "CD_SITE", this.dsList.getColumn(this.dsList.rowposition, "CD_SITE"));	
+	
+// 	// 신규등록일경우 TY_CHAIYONG 값을 Y 로 조회, 기존등록건은 1 로 조회
+// 	if(this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I"){
+// 	//if(this.subSelYn == "Y"){
+// 		this.dsSelectSub.setColumn(0, "TY_CHAIYONG", "Y");
+// 	}else{
+// 		this.dsSelectSub.setColumn(0, "TY_CHAIYONG", "1");
+// 	}
+
+	this.dsListSub.clearData();
+	this.dsSave.clearData();
+	this.dsSave2.clearData();
+	this.dsSave3.clearData();
+			
+	
+	var strSvcId    = "detail";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "d_select=dsSelectSub";
+	var outData     = "dsListSub=d_select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+
+//FERP근로자등록
+this.fnEmployeeTransfer = function()
+{
+// 	this.gfnConfirm("FERP근로자등록을 하시겠습니까?", function(sSvcId, oRtn) {
+// 		if (!oRtn) return false;
+// 	
+// 		this.dsTransfer.clearData();
+// 		
+// 		var sCdSite =this.dsSearch.getColumn(this.dsSearch.rowposition, "CD_SITE");
+// 		if (!this.gfnIsNull(sCdSite))
+// 		{
+// 			var nRow = this.dsTransfer.addRow();
+// 			this.dsTransfer.setColumn(nRow, "CD_SITE", sCdSite);
+// 			this.dsTransfer.setColumn(nRow, "ID_INSERT", this.objApp.gdsUserInfo.getColumn(this.objApp.gdsUserInfo.rowposition, "ID_USER"));
+// 			
+// 			var strSvcId    = "f_insert";
+// 			var strSvcType  = "save";
+// 			var inProc		= "_dsProc";
+// 			var inData      = "f_insert=dsTransfer";
+// 			var outData     = "";
+// 			var strArg      = "";
+// 			var callBackFnc = "fnCallback";	
+// 			this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+// 		}
+// 	}, "fnEmployeeTransfer_alert");
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {	
+	var validate = true;
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_CORP"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.cfCD_CORP.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("법인코드는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}	
+	else if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_SITE"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.cfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}
+	
+	return validate;
+	
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {	//목록조회
+		this.gfnGridAfterSelect(this.dxGrid);		
+		//this.gfnSetFormStatus(this, "I");
+		//this.gfnSetFormStatus(this, "U");	// 폼상태 업데이트
+		if(this.saveSchGubun!="" || !this.gfnIsNull(this.saveSchGubun))
+		{
+		}
+		this.fnSelectSub();
+	}
+	else if (svcID == "delete") {
+		this.fnDelAfter = function() {
+			this.FormBtns.Select.click();
+		}
+		this.gfnAlert("삭제되었습니다.", "fnDelAfter");			
+	}
+	else if (svcID == "detail") {	//상세조회
+		/*
+		if(this.dsList.rowcount > 0) {						
+			this.gfnSetFormStatus(this, "U");	// 저장 버튼을 활성화 시킴(화면 폼상태를 수정상태로 변경)
+		}
+		*/		
+		this.updateGubun = "";	// 입력방식			
+		
+		// 변경된 데이터가 있다는 메시지가 나오지 않도록 폼상태를 초기화시킨다
+		this.gfnSetFormStatus(this, "Q");	// 이부분 처리하지 않으면 저장후에 바로 화면 닫을때 변경된 데이터있다고 메시지 나옴
+	
+		
+// 		// 신규등록 버튼 클릭후 오른쪽 재조회시 신규등록자가 기존에 등록된자가 아니라면 신규 등록 상태로셋팅(기존 등록자면 기존 자료 조회된다)		
+// 		if(this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I" && this.popupDataYn == "Y"){
+// 			trace("popupDataYn1", this.popupDataYn);
+// 		
+// 			//신규사용자가 기존사용자라면 기존 사용자 재 조회 및 복사 처리
+// 			if(!this.gfnIsNull(this.saveSchGubun) || (this.dsListSub.getColumn(0, "NO_ID") != "undefined" && !this.gfnIsNull(this.dsListSub.getColumn(0, "NO_ID")) && this.dsListSub.getColumn(0, "NO_ID") != ""))
+// 			{
+// 				trace("NO_ID>>>"+this.dsListSub.getColumn(0, "NO_ID"));
+// 				trace("CD_SITE>>>"+this.dsListSub.getColumn(0, "CD_SITE"));
+// 				
+// 				trace("- indexOf111>>>"+this.dsListSub.getColumn(0, "NO_ID").indexOf("-"));
+// 				trace("- indexOf2222>>>"+this.dsListSub.getColumn(0, "NO_ID").substring(0,this.dsListSub.getColumn(0, "NO_ID").indexOf("-")));
+// 			
+// 				if(this.dsListSub.getColumn(0, "NO_ID").indexOf("-")>0 && this.dsSelect.getColumn(0, "CD_SITE") == this.dsListSub.getColumn(0, "NO_ID").substring(0,this.dsListSub.getColumn(0, "NO_ID").indexOf("-"))){
+// 				
+// 					this.gfnGridDel(this.dxGrid);
+// 					//this.fnSelectSub();
+// 					this.gfnAlert("주민등록번호가 동일한 사용자가 있습니다. 해당 사용자 복사하여 진행하시기 바랍니다.", "fnVaidateCallback");
+// 					for (var i = 0; i < this.dsList.rowcount; i++) {
+// 						if(this.dsList.getColumn(i, "NO_ID")==this.dsListSub.getColumn(0, "NO_ID"))
+// 						{
+// 							//NO_ID = this.dsList.getColumn(i, "NO_ID");
+// 							this.dsList.set_rowposition(i);
+// 							break;
+// 						}
+// 					}
+// 					this.fnEmployeeCopy();
+// 				}else{
+// 
+// 					this.dsListSubTemp = new Dataset();
+// 					if(this.dsListSub.rowcount > 0){
+// 						this.dsListSubTemp.copyData(this.dsListSub);
+// 						this.dsListSub.clearData();
+// 						this.dsListSub.addRow();
+// 						this.dsListSub.setColumn(0, "DS_NAME", this.popupVal.dsName);			
+// 						this.dsListSub.setColumn(0, "NO_JUMIN", this.popupVal.noId1 + "-" + this.popupVal.noId2);
+// 						this.dsListSub.setColumn(0, "NO_TEL1", this.dsListSubTemp.getColumn(0, "NO_TEL1"));
+// 						this.dsListSub.setColumn(0, "CD_ZIP", this.dsListSubTemp.getColumn(0, "CD_ZIP"));
+// 						this.dsListSub.setColumn(0, "DS_ADDR", this.dsListSubTemp.getColumn(0, "DS_ADDR"));
+// 						this.dsListSub.setColumn(0, "TY_WOIGUG", this.dsListSubTemp.getColumn(0, "TY_WOIGUG"));
+// 						this.dsListSub.setColumn(0, "CD_COUNTRY", this.dsListSubTemp.getColumn(0, "CD_COUNTRY"));
+// 						this.dsListSub.setColumn(0, "DS_COUNTRY", this.dsListSubTemp.getColumn(0, "DS_COUNTRY"));
+// 						this.dsListSub.setColumn(0, "CD_STAY", this.dsListSubTemp.getColumn(0, "CD_STAY"));
+// 						this.dsListSub.setColumn(0, "DS_STAY", this.dsListSubTemp.getColumn(0, "DS_STAY"));		
+// 						this.dsListSub.setColumn(0, "NO_ID", this.dsListSubTemp.getColumn(0, "NO_ID"));		
+// 					}else{
+// 						this.dsListSub.clearData();
+// 						this.dsListSub.addRow();
+// 						
+// 						this.dsListSub.setColumn(0, "DS_NAME", this.popupVal.dsName);			
+// 						this.dsListSub.setColumn(0, "NO_JUMIN", this.popupVal.noId1 + "-" + this.popupVal.noId2);
+// 					}
+// 					this.gfnSetFormStatus(this, "I");
+// 				}
+// 			}else{
+// 				this.dsListSubTemp = new Dataset();
+// 				if(this.dsListSub.rowcount > 0){
+// 					this.dsListSubTemp.copyData(this.dsListSub);
+// 					this.dsListSub.clearData();
+// 					this.dsListSub.addRow();
+// 					this.dsListSub.setColumn(0, "DS_NAME", this.popupVal.dsName);			
+// 					this.dsListSub.setColumn(0, "NO_JUMIN", this.popupVal.noId1 + "-" + this.popupVal.noId2);
+// 					this.dsListSub.setColumn(0, "NO_TEL1", this.dsListSubTemp.getColumn(0, "NO_TEL1"));
+// 					this.dsListSub.setColumn(0, "CD_ZIP", this.dsListSubTemp.getColumn(0, "CD_ZIP"));
+// 					this.dsListSub.setColumn(0, "DS_ADDR", this.dsListSubTemp.getColumn(0, "DS_ADDR"));
+// 					this.dsListSub.setColumn(0, "TY_WOIGUG", this.dsListSubTemp.getColumn(0, "TY_WOIGUG"));
+// 					this.dsListSub.setColumn(0, "CD_COUNTRY", this.dsListSubTemp.getColumn(0, "CD_COUNTRY"));
+// 					this.dsListSub.setColumn(0, "DS_COUNTRY", this.dsListSubTemp.getColumn(0, "DS_COUNTRY"));
+// 					this.dsListSub.setColumn(0, "CD_STAY", this.dsListSubTemp.getColumn(0, "CD_STAY"));
+// 					this.dsListSub.setColumn(0, "DS_STAY", this.dsListSubTemp.getColumn(0, "DS_STAY"));		
+// 					this.dsListSub.setColumn(0, "NO_ID", this.dsListSubTemp.getColumn(0, "NO_ID"));		
+// 				}else{
+// 					this.dsListSub.clearData();
+// 					this.dsListSub.addRow();
+// 					
+// 					this.dsListSub.setColumn(0, "DS_NAME", this.popupVal.dsName);			
+// 					this.dsListSub.setColumn(0, "NO_JUMIN", this.popupVal.noId1 + "-" + this.popupVal.noId2);
+// 				}
+// 				this.gfnSetFormStatus(this, "I");
+// 			}
+// 		}else 
+		if(this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I"){
+			trace("popupDataYn2", this.popupDataYn);
+		
+			this.dsListSubTemp = new Dataset();
+			if(this.dsListSub.rowcount > 0){
+				this.dsListSubTemp.copyData(this.dsListSub);
+				this.dsListSub.clearData();
+				this.dsListSub.addRow();
+				this.dsListSub.setColumn(0, "DS_NAME", this.popupVal.dsName);			
+				this.dsListSub.setColumn(0, "NO_JUMIN", this.popupVal.noId1 + "-" + this.popupVal.noId2);
+				this.dsListSub.setColumn(0, "NO_TEL1", this.dsListSubTemp.getColumn(0, "NO_TEL1"));
+				this.dsListSub.setColumn(0, "CD_ZIP", this.dsListSubTemp.getColumn(0, "CD_ZIP"));
+				this.dsListSub.setColumn(0, "DS_ADDR", this.dsListSubTemp.getColumn(0, "DS_ADDR"));
+				this.dsListSub.setColumn(0, "TY_WOIGUG", this.dsListSubTemp.getColumn(0, "TY_WOIGUG"));
+				this.dsListSub.setColumn(0, "CD_COUNTRY", this.dsListSubTemp.getColumn(0, "CD_COUNTRY"));
+				this.dsListSub.setColumn(0, "DS_COUNTRY", this.dsListSubTemp.getColumn(0, "DS_COUNTRY"));
+				this.dsListSub.setColumn(0, "CD_STAY", this.dsListSubTemp.getColumn(0, "CD_STAY"));
+				this.dsListSub.setColumn(0, "DS_STAY", this.dsListSubTemp.getColumn(0, "DS_STAY"));		
+				this.dsListSub.setColumn(0, "NO_ID", this.dsListSubTemp.getColumn(0, "NO_ID"));		
+			}else{
+				trace("행추가");
+			
+				this.dsListSub.clearData();
+				this.dsListSub.addRow();
+				
+				this.dsListSub.setColumn(0, "DS_NAME", this.popupVal.dsName);			
+				this.dsListSub.setColumn(0, "NO_ID", this.popupVal.noId1 + this.popupVal.noId2);
+			}
+			this.gfnSetFormStatus(this, "I");		
+		}
+
+		if(this.subSelYn == "Y"){		
+			trace("신규추가 조회");
+			this.dsListSub.setColumn(0, "NO_ID", this.popupVal.noId1 + this.popupVal.noId2);
+			this.divData.form.divDataRight.form.cboTY_CHAIYONG.set_readonly(false);
+		}else{		
+			if(this.gfnGetFlag(this.dsList, this.dsList.rowposition) != "I"){
+				this.divData.form.divDataRight.form.cboTY_CHAIYONG.set_readonly(true);
+			}	
+		} 
+		// 초기화
+		this.subSelYn = "";
+		this.fnEnableGuBun();
+	
+	}else if(svcID == "save") {
+		this.fileCount = 0;
+		
+		//저장
+		if (errorCode == 0) {
+			if(this.dsInsertSub.rowcount > 0){
+				this.dsListSub.setColumn(0, "NO_ID", this.dsRtnData.getColumn(0, "RTN_NO_ID"));
+			};
+			
+			//파일업로드 개수 얻기
+			if(this.fileUpTransfer.filelist.length > 0 && !this.gfnIsNull(this.dsListSub.getColumn(0, "GF_NM_FILE"))){
+				this.fileCount = this.fileCount + 1;
+			}
+			if(this.fileUpTransfer2.filelist.length > 0 && !this.gfnIsNull(this.dsListSub.getColumn(0, "RF_NM_FILE"))){
+				this.fileCount = this.fileCount + 1;
+			}
+			if(this.fileUpTransfer3.filelist.length > 0 && !this.gfnIsNull(this.dsListSub.getColumn(0, "FF_NM_FILE"))){
+				this.fileCount = this.fileCount + 1;
+			}
+			
+			trace("파일업로드 개수 얻기 >> this.fileCount", this.fileCount);
+			
+			
+			if(this.fileUpTransfer.filelist.length > 0 && !this.gfnIsNull(this.dsListSub.getColumn(0, "GF_NM_FILE"))){
+				this.fileUpTransfer.setPostData("path", this.dsFile.getColumn(this.dsFile.rowposition, "DS_PATH") + this.dsListSub.getColumn(0, "NO_ID") + "/1");
+				this.fileUpTransfer.upload(this.fileConfig.uploadUrl);
+			};
+			
+			if(this.fileUpTransfer2.filelist.length > 0 && !this.gfnIsNull(this.dsListSub.getColumn(0, "RF_NM_FILE"))){
+				this.fileUpTransfer2.setPostData("path", this.dsFile2.getColumn(this.dsFile2.rowposition, "DS_PATH") + this.dsListSub.getColumn(0, "NO_ID") + "/1");
+				this.fileUpTransfer2.upload(this.fileConfig.uploadUrl);
+			};
+			
+			if(this.fileUpTransfer3.filelist.length > 0 && !this.gfnIsNull(this.dsListSub.getColumn(0, "FF_NM_FILE"))){
+				this.fileUpTransfer3.setPostData("path", this.dsFile3.getColumn(this.dsFile3.rowposition, "DS_PATH") + this.dsListSub.getColumn(0, "NO_ID") + "/1");
+				this.fileUpTransfer3.upload(this.fileConfig.uploadUrl);
+			};
+				
+			//this.saveSchGubun = this.dsListSub.getColumn(0, "NO_ID");		
+			this.saveSchGubun = this.dsList.getColumn(this.dsList.rowposition, "NO_ID");
+		
+			this.fnSaveAfter = function() {
+				if(this.insertAddSelYn == "Y"){
+					this.insertAddSelYn = "";	// 초기화시킨다
+					// 왼쪽 그리드 재조회
+					this.FormBtns.Select.click();
+				}else{
+					this.FormBtns.SubSelect.click();
+				}
+			}
+			this.gfnAlert("저장되었습니다", "fnSaveAfter");	
+
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "f_insert") {
+		if (errorCode == 0) {
+			this.gfnAlert("정상 처리되었습니다.", [], "f_insert_alert", this.fnSelect);
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+//	}
+// 	else if(svcID == "selectInsuUser") {
+// 		this.dsListSub.setColumn(0, "YN_KOOKMIN", this.dsInsuUserRst.getColumn("0", "YN_KOOKMIN")); 
+// 		this.dsListSub.setColumn(0, "YN_MEDICARE", this.dsInsuUserRst.getColumn("0", "YN_MEDICARE")); 
+// 		this.dsListSub.setColumn(0, "YN_SILVER", this.dsInsuUserRst.getColumn("0", "YN_SILVER")); 
+// 		this.dsListSub.setColumn(0, "AM_KOOKMIN", this.dsInsuUserRst.getColumn("0", "AM_KOOKMIN")); 
+// 		this.dsListSub.setColumn(0, "AM_MEDICARE", this.dsInsuUserRst.getColumn("0", "AM_MEDICARE")); 
+// 		this.dsListSub.setColumn(0, "AM_SILVER", this.dsInsuUserRst.getColumn("0", "AM_SILVER")); 
+	} else if(svcID == "fileInfo") {
+		if (errorCode == 0) {
+			//this.fnSelect();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if(svcID == "saveFile") {
+		if (errorCode == 0) {
+			this.saveSchGubun = this.dsList.getColumn(this.dsList.rowposition, "NO_ID");
+			this.fnSelectSub();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if(svcID == "removeFile") {
+		if (errorCode == 0) {
+			//this.fileUpTransfer.upload(this.fileConfig.uploadUrl,"fileUploadCallBack");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if(svcID == "removeFile2") {
+		if (errorCode == 0) {
+			//this.fileUpTransfer2.upload(this.fileConfig.uploadUrl,"fileUploadCallBack");	
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if(svcID == "removeFile3") {
+		if (errorCode == 0) {
+			//this.fileUpTransfer3.upload(this.fileConfig.uploadUrl,"fileUploadCallBack");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+this.fileUploadCallBack = function()
+{
+	this.gfnAlert("파일 업로드가 완료 되었습니다.");
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+//코드파인드의 파라미터 값을 넘겨줄때 사용하는 함수
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+	//조회조건 코드파인드
+	if (id == "cfCD_CORP") {
+ 		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "GR_CORP", this.AuthClient.CD_CORP);
+ 		dsUserParam.setColumn(nrow, "GR_DEPT", this.AuthClient.CD_DEPT);
+	}
+	else if (id == "cfCD_SITE"){
+		if (this.gfnIsNull(this.cfCD_CORP.form.CDTextBox.value)) {
+			this.gfnAlert("법인을 먼저 입력하세요.");
+			return false;
+		}
+		dsUserParam.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));	// 법인코드
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "GR_CORP", this.AuthClient.CD_CORP);
+ 		dsUserParam.setColumn(nrow, "GR_DEPT", this.AuthClient.CD_DEPT);
+	}
+	else if (id == "ccfNO_ID"){
+ 		if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE"))) {
+ 			this.gfnAlert("현장코드를 먼저 입력하세요.");
+ 			return false;
+ 		}
+		dsUserParam.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	}
+	
+	
+	//싱글폼 코드파인드
+	if (id == "cfDS_ADDR") {
+		;//
+	}
+	else if (id == "cfCD_COUNTRY"){
+		;//
+	}
+	else if (id == "cfCD_JIKJONG"){
+		//dsUserParam.setColumn(nrow, "CD_SITE", this.dsSelect.getColumn(0, "CD_SITE"));
+	}
+	else if (id == "cfCD_VENDOR"){ //거래처코드
+		dsUserParam.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));	// 법인코드
+	}
+	else if (id == "cfCD_VENDOR_ACCOUNT"){ //거래처계좌
+		dsUserParam.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));	
+		dsUserParam.setColumn(nrow, "CD_PAY", this.dsListSub.getColumn(0, "CD_VENDOR"));	
+	}
+	else if (id == "cfCD_BANK"){
+	}
+
+	return true;
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData; 
+	
+	if(id == "cfCD_CORP") {
+		this.cfCD_SITE.form.fnCodeFindClear();
+		this.ccfNO_ID.form.fnCodeFindClear();
+		this.divSearch.form.edtNO_ID.set_value("");
+	}	
+	
+	if(id == "cfCD_SITE") {
+		this.ccfNO_ID.form.fnCodeFindClear();
+		this.divSearch.form.edtNO_ID.set_value("");
+	}		
+
+	if(id == "ccfNO_ID") {
+		var sNO_ID = arr[0]["NO_ID"];
+		this.divSearch.form.edtNO_ID.set_value(sNO_ID);
+	}
+}
+
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGrid_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+
+    if ((obj.oldrow > -1 && obj.oldrow == e.row)
+		|| (obj.oldrow == -1 && e.oldrow != e.row)) {		
+		
+		
+		// 마스터 그리드 클릭 이벤트(디테일 그리드 조회)		
+		this.FormBtns.SubSelect.click();
+		obj.oldrow = -1;
+		
+		/*
+		// 신규등록 버튼 클릭후 		
+		if(this.gfnGetFlag(this.dsList, this.dsList.rowposition) != "I"){
+			// 마스터 그리드 클릭 이벤트(디테일 그리드 조회)		
+			this.FormBtns.SubSelect.click();
+			obj.oldrow = -1;
+		}else{
+			// 신규등록시 오른쪽 부분 초기화
+			this.dsListSub.clearData();
+			this.dsListSub2.clearData();
+			this.divData.form.divDataRight.form.txtAM_ILDANG.set_value("");
+			this.dsListSub.addRow();
+			this.gfnSetFormStatus(this, "I");
+		}
+		*/
+	}
+};
+
+this.dsList_canrowposchange = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo) {
+	var can_rowchange = true;
+	for (var i = 0; i < this.dsListSub.rowcount; i++) {
+		//var flag = this.gfnGetFlag(this.dsListSub, i);
+		var flag = this.dsListSub.getRowType(i);
+		//if (flag == "I" || flag == "U" || flag == "D") {
+		// 신규등록 row에서 저장 하지 않고 row 이동시 변경된 데이터가 있다고 메시지뿌리고 이동하면 삭제 처리한다
+		//if (flag == 2 || flag == 4 || flag == 8 || this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I") {
+		if (flag == 4 || this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I") {
+			can_rowchange = false;
+			break;
+		}
+	}
+
+	if(!can_rowchange) {
+		this.oldRow = e.oldrow;
+		this._row = e.newrow;
+		
+		if(this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I"){
+			this.gfnConfirm("변경된 데이터가 있습니다.\r\n계속 진행하시면 신규등록건은 삭제됩니다.\r\n계속 진행하시겠습니까?", "dsList_canrowposchange_callback");
+		}else{
+			this.gfnConfirm("변경된 데이터가 있습니다.\r\n계속 진행하시겠습니까?", "dsList_canrowposchange_callback");
+		}
+	}	
+	return can_rowchange;
+}
+
+this.dsList_canrowposchange_callback = function(strId, val) 
+{
+	if(val == true) {
+		this.dsList.set_enableevent(false);
+		this.dsList.set_rowposition(this._row);
+		this.dsList.set_enableevent(true);
+		
+		// 변경된 row가 insert row일경우 해당 row를 삭제한다(왼쪽 그리드)
+		if(this.gfnGetFlag(this.dsList, this.oldRow) == "I"){			
+			this.dsList.deleteRow(this.oldRow);
+		}
+	}	
+}
+
+// 자사경력관리 그리드 첨부파일 버튼
+this.fnGrid_ExpandUp = function(obj:nexacro.Grid, e:nexacro.GridMouseEventInfo) {
+// 	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, e.cell);
+// 	if(colnm == "FILE_ATTACH") {
+// 		// 최초 작성시엔 NO_SEQ가 없기 때문에 저장 후에 파일 첨부를 진행하여야 함.
+// 		// CD_DIR에 넣어줄 값이 없기에 저장 후 진행!		
+// 		//if(this.gfnGetFlag(this.dsList, e.row) == "I"){
+// 		if(this.dsListSub.getRowType(e.row) == 2){
+// 			this.gfnAlert("저장 후 파일첨부 진행.");
+// 			return false;
+// 		}
+// 	
+// 		var fileManager = {};
+// 		fileManager.CD_GUBUN = "DS01";
+// 		fileManager.CD_DIR = [this.dsListSub2.getColumn(e.row, "NO_ID")];
+// 		
+// 		if(this.FormInfo.TY_AUTH == "R") {
+// 			fileManager.IS_READONLY = true;
+// 		} else {
+// 			fileManager.IS_READONLY = false;
+// 		}
+// 		this.gfnFileManager(fileManager, "fnFileCallback");
+// 	}
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+		this.dsListSub.clearData();
+	}
+};
+
+this.divData_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+   if(e.userdata == "splitter") {
+      this.divData.form.divSplitter.set_left(e.clientx);
+      this.divData.form.resetScroll();
+   }
+};
+
+this.divData_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+   e.set_userdata("splitter");
+   return true;
+};
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue){
+		this.gfnGridClear(this.dxGrid);
+		this.dsListSub.clearData();
+	}
+};
+
+
+this.fnSetCombo = function() {
+	this.dsCombo.clearData();
+	
+// 	this.dsCombo.addRow();	// 채용구분(검색조건)
+// 	this.dsCombo.setColumn(0, "CD_SYSTEM", "DS");
+// 	this.dsCombo.setColumn(0, "CD_TYPE", "25");
+	
+	// 같은 SP 다중건 조회는 row 추가해서
+	this.dsCombo.addRow();	// 재직구분(검색조건)
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DS");
+	this.dsCombo.setColumn(0, "CD_TYPE", "26");
+	
+	
+	this.dsCombo.addRow();	// 급여구분(데이터)
+	this.dsCombo.setColumn(1, "CD_SYSTEM", "DS");
+	this.dsCombo.setColumn(1, "CD_TYPE", "24");
+	
+	this.dsCombo.addRow();	// 내/외국인구분(데이터)
+	this.dsCombo.setColumn(2, "CD_SYSTEM", "DS");
+	this.dsCombo.setColumn(2, "CD_TYPE", "93");
+	/*
+	this.dsCombo.addRow();	// 편성여부(데이터)
+	this.dsCombo.setColumn(4, "CD_SYSTEM", "DS");
+	this.dsCombo.setColumn(4, "CD_TYPE", "94");
+	
+	this.dsCombo.addRow();	// 편성구분(데이터)
+	this.dsCombo.setColumn(5, "CD_SYSTEM", "DS");
+	this.dsCombo.setColumn(5, "CD_TYPE", "95");
+	*/
+	this.dsCombo.addRow();	// 고용보험 제외사유(데이터)
+	this.dsCombo.setColumn(3, "CD_SYSTEM", "DS");
+	this.dsCombo.setColumn(3, "CD_TYPE", "20");
+	
+	this.dsCombo.addRow();	// 퇴직공제 제외사유(데이터)
+	this.dsCombo.setColumn(4, "CD_SYSTEM", "DS");
+	this.dsCombo.setColumn(4, "CD_TYPE", "21");
+	
+// 	this.dsCombo.addRow();	// 채용구분(데이터_'전체'가 없는 버젼)
+// 	this.dsCombo.setColumn(5, "CD_SYSTEM", "DS");
+// 	this.dsCombo.setColumn(5, "CD_TYPE", "25");
+		
+		
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	//var outData     = "dsTY_CHAIYONG=combo0 dsTY_JAJIK=combo1 dsTY_PAY=combo2 dsTY_WOIGUG=combo3 dsGOYONG_MIGAIP=combo4 dsRETIRE_MIGAIP=combo5 dsTY_CHAIYONGDA=combo6";
+	var outData     = "dsTY_JAJIK=combo0 dsTY_PAY=combo1 dsTY_WOIGUG=combo2 dsGOYONG_MIGAIP=combo3 dsRETIRE_MIGAIP=combo4";
+	var strArg      = "";
+	var callBackFnc = "fnCallbackCombo";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.fnCallbackCombo = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "combo") {		
+		this.dsTY_CHAIYONG.insertRow(0);		
+		this.dsTY_CHAIYONG.setColumn(0, "CD_CODE", "%");
+		this.dsTY_CHAIYONG.setColumn(0, "DS_CODE", "전체");
+		this.cboTY_CHAIYONG.set_index(0);
+		
+		this.dsTY_JAJIK.insertRow(0);		
+		this.dsTY_JAJIK.setColumn(0, "CD_CODE", "%");
+		this.dsTY_JAJIK.setColumn(0, "DS_CODE", "전체");
+ 		this.cboTY_JAJIK.set_index(0);
+		
+		if(!this.gfnIsNull(this.getOwnerFrame().NO_ID)){
+			this.fnSelect();
+		}		
+	}
+};
+
+// 퇴사일자 달력 버튼 클릭시 달력창이 아니라 팝업 화면을 띄움
+this.divData_divDataRight_tclDT_TOIJIK_onlbuttonup = function(obj:nexacro.Calendar,e:nexacro.MouseEventInfo)
+{
+// 	// 선택된 row가 있을 경우에만 팝업을 띄움
+// 	//if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+// 	
+// 	var flag = this.dsListSub.getRowType(0);
+// 	if (flag == 2 || flag == 4) {
+// 		this.gfnAlert("변경 사항이 있습니다. 저장 후 선택하세요.");
+//  		return false;
+// 	}
+// 	
+// 	
+// 	var param = {};
+// 	param.NO_ID = this.dsList.getColumn(this.dsList.rowposition, "NO_ID");
+// 
+// 	// 화면 오픈. 
+// 	// CD_MODULE은 보통 같은 모듈에서 호출하는 경우가 많으니 this.FormInfo.CD_MODULE 사용
+// 	// 타 모듈 화면 호출시 지정할것.
+// 	
+// 	//this.gfnFormOpen("DSA", "DSA_EMPLOYEE_LIST_TOJIK", "", param);
+// 	//this.gfnFormOpenNonAuth("DSA", "DSA_EMPLOYEE_LIST_TOJIK", "fnDialogCallback", param, 500, 400);
+// 	this.gfnFormOpenNonAuth("DSA", "DSA_EMPLOYEE_LIST_TOJIK", "fnDialogCallback", param, 430, 340);
+};
+
+// this.fnHistoryDialogCallback = function(svcID, value) {
+// 	if(this.gfnGetFlag(this.dsList, this.dsList.rowposition) != "I"){
+// 		this.FormBtns.SubSelect.click();
+// 	}else{
+// 		this.SearchInsuUser();
+// 	}
+// };
+
+this.fnDialogCallback = function(svcID, value) {
+// 	// 리턴값
+// 	if(value == true){
+// 		// 확인 클릭하면 디테일 재조회
+// 		this.FormBtns.Select.click();
+// 		//this.FormBtns.SubSelect.click();
+// 	}
+// 	
+// 	// 팝업창 닫힌 다음에 포커스가 남아있으면 입력을 할수 있기때문에 포커스를 다른데로 옮김.
+// 	this.divData.form.divDataRight.form.tclDT_IPSA.setFocus();
+};
+
+
+// 임금변동관리 버튼 클릭시 팝업화면 호출
+ this.fnPayChange = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+	
+	var param = {};
+	param.CD_CORP = this.dsSearch.getColumn(0,"CD_CORP");
+	param.DS_CORP = this.cfCD_CORP.form.DSTextBox.value;
+	param.CD_SITE = this.dsSearch.getColumn(0,"CD_SITE");
+	param.DS_SITE = this.cfCD_SITE.form.DSTextBox.value;
+	param.NO_SABUN = this.dsList.getColumn(this.dsList.rowposition, "NO_SABUN");
+	param.DS_NAME = this.dsList.getColumn(this.dsList.rowposition, "DS_NAME");
+    param.NO_ID = this.dsList.getColumn(this.dsList.rowposition, "NO_ID");
+
+	// 화면 오픈. 
+	// CD_MODULE은 보통 같은 모듈에서 호출하는 경우가 많으니 this.FormInfo.CD_MODULE 사용
+	// 타 모듈 화면 호출시 지정할것.
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DSA_PAYCHANGE", "", param, 900, 750);
+}
+
+// 현장겸직관리 버튼 클릭시 팝업화면 호출
+ this.fnOthercompany = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+// 	// 선택된 row가 있을 경우에만 팝업을 띄움
+// 	if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+// 	
+// 	var param = {};
+// 	param.NO_ID = this.dsList.getColumn(this.dsList.rowposition, "NO_JUMIN");
+// 	param.DS_NAME = this.dsList.getColumn(this.dsList.rowposition, "DS_NAME");
+//     param.NO_ID_REAL = this.dsList.getColumn(this.dsList.rowposition, "NO_ID");
+// 
+// 	// 화면 오픈. 
+// 	// CD_MODULE은 보통 같은 모듈에서 호출하는 경우가 많으니 this.FormInfo.CD_MODULE 사용
+// 	// 타 모듈 화면 호출시 지정할것.
+// 	
+// 	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DSA_OTHERCOMPANY", "", param, 400, 480);
+}
+
+// 계약연장관리 버튼 클릭시 팝업화면 호출
+ this.fnExtension = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+	
+	var param = {};
+
+	param.CD_CORP = this.dsSearch.getColumn(0,"CD_CORP");
+	param.DS_CORP = this.cfCD_CORP.form.DSTextBox.value;
+	param.CD_SITE = this.dsSearch.getColumn(0,"CD_SITE");
+	param.DS_SITE = this.cfCD_SITE.form.DSTextBox.value;
+	param.NO_SABUN = this.dsList.getColumn(this.dsList.rowposition, "NO_SABUN");
+	param.DS_NAME = this.dsList.getColumn(this.dsList.rowposition, "DS_NAME");
+    param.NO_ID = this.dsList.getColumn(this.dsList.rowposition, "NO_ID");
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DSA_EXTENSION", "", param, 1220, 750);
+}
+
+// 자사경력관리
+this.fnCareer = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+	
+	var param = {};
+	param.NO_SABUN = this.dsList.getColumn(this.dsList.rowposition, "NO_SABUN");
+	param.DS_NAME = this.dsList.getColumn(this.dsList.rowposition, "DS_NAME");
+    param.NO_ID = this.dsList.getColumn(this.dsList.rowposition, "NO_ID");
+
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DSA_CAREER", "", param, 1220, 750);
+}
+
+this.dsListSub_cancolumnchange = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo){
+	if(e.columnid == "YN_GOYONG"){
+		var ORG_NO_JUMIN = this.dsList.getColumn(this.dsList.rowposition, "NO_ID") + ""; // 주민번호
+		var DT_IPSA = this.dsListSub.getColumn(0, "DT_IPSA");	// 입사일자
+		
+		if(!this.gfnIsNull(ORG_NO_JUMIN) && !this.gfnIsNull(DT_IPSA)){
+			var JUMIN_SEX = ORG_NO_JUMIN.substring(6,7);
+			var nPayYear = "";
+			
+			if(JUMIN_SEX == "1" || JUMIN_SEX == "2" || JUMIN_SEX == "5" || JUMIN_SEX == "6") {
+				nPayYear = "19" + ORG_NO_JUMIN.substring(0,2);
+			}else{
+				nPayYear = "20" + ORG_NO_JUMIN.substring(0,2);
+			}
+
+			nPayYear = (parseInt(nPayYear) + 65) + ORG_NO_JUMIN.substring(2,4) + "31"  //만 65세 생일 다음
+			
+			if(nPayYear < DT_IPSA){
+				this.gfnAlert("만 65세 이후 고용된 근로자는 고용보험 공제대상이 아닙니다.");
+				return false;
+			}
+		
+		}
+	}
+	
+	return true;
+};
+
+// 싱글 폼 데이터 변경시 코드파인더나 콤보박스 값을 변경해도 저장 버튼이 활성화처리 되도록함
+this.dsListSub_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	this.gfnSetFormStatus(this, "U");
+};
+
+this.dsListSub_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+
+	if(e.newvalue != e.oldvalue){
+	
+		if(e.columnid == "YN_GOYONG"){
+			// 고용보험
+			var sYN_GOYONG = this.gfnNvl(this.dsListSub.getColumn(0, "YN_GOYONG"),"N");
+			if(sYN_GOYONG == "Y"){
+				;
+			}else{
+				;
+			}	
+		}
+		else if(e.columnid == "YN_RETIRE"){
+			// 퇴직공제
+			var sYN_RETIRE = this.gfnNvl(this.dsListSub.getColumn(0, "YN_RETIRE"),"N");
+			if(sYN_RETIRE == "Y"){
+				;
+			}else if(sYN_RETIRE == "N"){
+				if(!this.gfnIsNull(this.dsListSub.getColumn(0, "RETIRE_MIGAIP"))){
+					this.dsListSub.setColumn(0, "RETIRE_MIGAIP", "");
+					//this.gfnSetFormStatus(this, "U");
+				}		
+				if(!this.gfnIsNull(this.dsListSub.getColumn(0, "NO_RETIRE"))){
+					this.dsListSub.setColumn(0, "NO_RETIRE", "");
+					//this.gfnSetFormStatus(this, "U");
+				}
+			}
+		}
+		else if(e.columnid == "YN_MEDICARE"){
+			// 건강보험
+			var sYN_MEDICARE = this.gfnNvl(this.dsListSub.getColumn(0, "YN_MEDICARE"),"N");
+			if(sYN_MEDICARE == "N"){
+				this.divData.form.divDataRight.form.txtAM_MEDICARE.set_value("");
+			}
+			this.fnSetControl("YN_MEDICARE");
+		}
+		else if(e.columnid == "YN_KOOKMIN"){
+			// 국민연금
+			var sYN_KOOKMIN = this.gfnNvl(this.dsListSub.getColumn(0, "YN_KOOKMIN"),"N");
+			
+			if(sYN_KOOKMIN == "Y"){
+				var sTY_PAY = this.gfnNvl(this.dsListSub.getColumn(0, "TY_PAY"),"");
+				if(sTY_PAY == "M"){ //월급
+					var nAM_WOLGUB = this.gfnNvl(this.dsListSub.getColumn(0, "AM_WOLGUB"), 0);
+					this.dsListSub.setColumn(0, "AM_MONAVG_ANNUITY", nAM_WOLGUB); 
+				}
+			}else{
+				this.divData.form.divDataRight.form.txtAM_KOOKMIN.set_value("");
+			}
+			this.fnSetControl("YN_KOOKMIN");
+		}
+		else if(e.columnid == "TY_PAY"){
+			//급여구분
+			// D	일당제
+			// M	월급제	
+			var sTY_PAY = this.gfnNvl(this.dsListSub.getColumn(0, "TY_PAY"),"");
+			if(sTY_PAY == "D"){
+				this.divData.form.divDataRight.form.txtAM_WOLGUB.set_value("");
+			}
+			else if(sTY_PAY == "M"){
+				this.divData.form.divDataRight.form.txtAM_ILGUB.set_value("");
+			}			
+			this.fnSetControl("TY_PAY");
+		}
+		else if(e.columnid == "TY_JIGUB"){
+			//지급처구분
+			// P	개인
+			// Y	거래처
+			var sTY_JIGUB = this.gfnNvl(this.dsListSub.getColumn(0, "TY_JIGUB"),"");
+			if(sTY_JIGUB == "P"){ //개인
+				this.divData.form.divDataRight.form.cfCD_VENDOR.form.fnCodeFindClear();
+				this.divData.form.divDataRight.form.cfCD_VENDOR_ACCOUNT.form.fnCodeFindClear();		
+			}
+			else if(sTY_JIGUB == "V"){ //거래처
+				this.divData.form.divDataRight.form.cfCD_BANK.form.fnCodeFindClear();
+				this.divData.form.divDataRight.form.txtNO_ACCOUNT.set_value("");
+				this.divData.form.divDataRight.form.txtNM_OPENER.set_value("");
+			}
+			this.fnSetControl("TY_JIGUB");
+		}
+		else if(e.columnid == "TY_WOIGUG"){
+			//내/외국인구분
+			var sTY_WOIGUG = this.gfnNvl(this.dsListSub.getColumn(0, "TY_WOIGUG"),"");
+			if(sTY_WOIGUG == "Y"){ //외국인
+				;
+			}else{ //내국인
+				this.divData.form.divDataRight.form.cfCD_COUNTRY.form.fnCodeFindClear();
+			}
+			this.fnSetControl("TY_WOIGUG");
+		}
+		else if(e.columnid == "RT_GUNRO"){
+			//근로내역확인 신고여부
+			var sRT_GUNRO = this.gfnNvl(this.dsListSub.getColumn(0, "RT_GUNRO"),"N");
+			this.divData.form.divDataRight.form.cfCD_SINGO_JIKJONG.form.fnCodeFindClear();
+			if(sRT_GUNRO == "Y"){
+				//체크
+				this.divData.form.divDataRight.form.cfCD_SINGO_JIKJONG.set_enable(true);
+			}else if(sRT_GUNRO == "N"){
+				//체크해제
+				this.divData.form.divDataRight.form.cfCD_SINGO_JIKJONG.set_enable(false);
+			}
+			this.fnSetControl("RT_GUNRO");
+		}
+	}	
+};
+
+this.fnSetControl = function(columnid){
+	if(columnid == "YN_MEDICARE"){
+		var sYN_MEDICARE = this.dsListSub.getColumn(0, "YN_MEDICARE");
+		if(sYN_MEDICARE == "Y"){
+			this.divData.form.divDataRight.form.txtAM_MEDICARE.set_enable(true);
+		}else{
+			this.divData.form.divDataRight.form.txtAM_MEDICARE.set_enable(false);
+		}	
+	}
+	if(columnid == "YN_KOOKMIN"){
+		var sYN_KOOKMIN = this.dsListSub.getColumn(0, "YN_KOOKMIN");	
+		if(sYN_KOOKMIN == "Y"){
+			this.divData.form.divDataRight.form.txtAM_KOOKMIN.set_enable(true);
+		}else{
+			this.divData.form.divDataRight.form.txtAM_KOOKMIN.set_enable(false);
+		}	
+	}
+	if(columnid == "TY_PAY"){
+		var sTY_PAY = this.gfnNvl(this.dsListSub.getColumn(0, "TY_PAY"),"");
+		this.divData.form.divDataRight.form.txtAM_ILGUB.set_enable(false);
+		this.divData.form.divDataRight.form.txtAM_WOLGUB.set_enable(false);	
+		if(sTY_PAY == "D"){
+			this.divData.form.divDataRight.form.txtAM_ILGUB.set_enable(true);
+		}
+		else{
+			this.divData.form.divDataRight.form.txtAM_WOLGUB.set_enable(true);
+		}
+	}
+	if(columnid == "TY_JIGUB"){
+		var sTY_JIGUB = this.gfnNvl(this.dsListSub.getColumn(0, "TY_JIGUB"),"");
+		this.divData.form.divDataRight.form.cfCD_BANK.set_enable(false);
+		this.divData.form.divDataRight.form.txtNO_ACCOUNT.set_enable(false);
+		this.divData.form.divDataRight.form.txtNM_OPENER.set_enable(false);
+		this.divData.form.divDataRight.form.cfCD_VENDOR.set_enable(false);
+		this.divData.form.divDataRight.form.cfCD_VENDOR_ACCOUNT.set_enable(false);	
+		if(sTY_JIGUB == "P"){ //개인
+			this.divData.form.divDataRight.form.cfCD_BANK.set_enable(true);
+			this.divData.form.divDataRight.form.txtNO_ACCOUNT.set_enable(true);
+			this.divData.form.divDataRight.form.txtNM_OPENER.set_enable(true);
+		}
+		else{ //거래처
+			this.divData.form.divDataRight.form.cfCD_VENDOR.set_enable(true);
+			this.divData.form.divDataRight.form.cfCD_VENDOR_ACCOUNT.set_enable(true);
+		}
+	}	
+	if(columnid == "TY_WOIGUG"){
+		var sTY_WOIGUG = this.gfnNvl(this.dsListSub.getColumn(0, "TY_WOIGUG"),"");
+		if(sTY_WOIGUG == "Y"){ //외국인
+			this.divData.form.divDataRight.form.cfCD_COUNTRY.set_enable(true);
+		}else{ //내국인
+			this.divData.form.divDataRight.form.cfCD_COUNTRY.set_enable(false);
+		}
+	}
+	if(columnid == "RT_GUNRO"){
+		//근로내역확인 신고여부
+		var sRT_GUNRO = this.gfnNvl(this.dsListSub.getColumn(0, "RT_GUNRO"),"N");
+		if(sRT_GUNRO == "Y"){
+			this.divData.form.divDataRight.form.cfCD_SINGO_JIKJONG.set_enable(true);
+		}else{
+			this.divData.form.divDataRight.form.cfCD_SINGO_JIKJONG.set_enable(false);
+		}
+	}
+}
+
+// 컴포넌트 활성 or 비활성화 처리(값 직접 변경시 실행)
+this.fnEnableGuBun = function()
+{
+	var arr = new Array();
+	arr.push("YN_MEDICARE");
+	arr.push("YN_KOOKMIN");
+	arr.push("TY_PAY");
+	arr.push("TY_JIGUB");
+	arr.push("TY_WOIGUG");
+	arr.push("RT_GUNRO");
+	
+	for(var i=0;i<arr.length;i++){
+		var columnid = arr[i];
+		this.fnSetControl(columnid);
+	}
+	
+//trace("11111==>", this.gfnGetFlag(this.dsList, this.dsList.rowposition));	
+	
+	if(this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I"){
+		this.divData.form.divDataRight.form.tclDT_START.set_enable(true);
+		this.divData.form.divDataRight.form.tclDT_END.set_enable(true);
+		this.divData.form.divDataRight.form.tclDT_IPSA.set_enable(true);
+		
+		this.divData.form.divDataRight.form.txtDS_NAME.set_enable(true);
+		this.divData.form.divDataRight.form.txtNO_JUMIN.set_enable(true);
+	}else{
+		this.divData.form.divDataRight.form.tclDT_START.set_enable(false);
+		this.divData.form.divDataRight.form.tclDT_END.set_enable(false);
+		this.divData.form.divDataRight.form.tclDT_IPSA.set_enable(false);
+		
+		this.divData.form.divDataRight.form.txtDS_NAME.set_enable(false);
+		this.divData.form.divDataRight.form.txtNO_JUMIN.set_enable(false);		
+	}
+};
+
+// 이력 버튼
+this.Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+// 
+// var param = {};
+// 	param.CD_SITE = this.dsSearch.getColumn(0,"CD_SITE");
+// 	param.DS_SITE = this.ccfCD_SITE.form.DSTextBox.value; 
+// 	param.NO_ID = this.dsList.getColumn(this.dsList.rowposition, "NO_JUMIN");
+// 	param.ORG_NO_JUMIN = this.dsList.getColumn(this.dsList.rowposition, "ORG_NO_JUMIN");
+// 	param.DS_NAME = this.dsList.getColumn(this.dsList.rowposition, "DS_NAME");
+//     param.NO_ID_REAL = this.dsList.getColumn(this.dsList.rowposition, "NO_ID");
+// 	param.DT_IPSA = this.dsListSub.getColumn(0, "DT_IPSA");
+// 	param.REG_GUBUN = this.gfnGetFlag(this.dsList, this.dsList.rowposition);	
+// //	param.TY_GUBUN = obj.initvalueid;
+// 	
+// 	this.gfnFormOpen("DSA", "DSA_INSU_USER", "fnHistoryDialogCallback", param, 880, 630); 
+};
+
+// 일급변경이벤트.
+this.divData_divDataRight_txtAM_ILGUB_onchanged = function(obj:nexacro.MaskEdit,e:nexacro.ChangeEventInfo)
+{
+// 	trace("## divData_divDataRight_txtAM_ILGUB_onchanged ##");
+// 	var TY_CHAIYONG = this.dsListSub.getColumn(0, "TY_CHAIYONG");	
+// 	var CT_PROJECT_DAY = this.dsListSub.getColumn(0, "CT_PROJECT_DAY");
+// 	var AM_SIGUB = this.dsListSub.getColumn(0, "AM_SIGUB");
+// 	var AM_PROJECT_PAY = 0;
+// 	
+// 	//단시간:CM005002001, 5일이상:CM005002003, 5일미만:CM005002002
+// 	if(this.gfnTrim(TY_CHAIYONG) == "CM005002001")
+// 	{
+// 		if(24 < e.postvalue)
+// 		{
+// 			this.gfnAlert("근무시간은 24시간을 넘을 수 없습니다.");
+// 			obj.set_value(0);
+// 			
+// 		}
+// 		else
+// 		{
+// 			var hoaddtime   = 0;//휴일할증시간.
+// 			var addWorktime = 0;
+// 			var fulltimeday = 24;//만근기준
+// 			var exphour = 0;
+// 			
+// 			if(CT_PROJECT_DAY >= fulltimeday){//예상출역일수가 만근기준시간보다 클때.
+// 				addWorktime = e.postvalue;
+// 			}
+// 			exphour= (CT_PROJECT_DAY + Math.floor(CT_PROJECT_DAY / 7) * hoaddtime + Math.floor( (CT_PROJECT_DAY - Math.floor(CT_PROJECT_DAY / 7))/ 6 ) * hoaddtime + Math.floor(CT_PROJECT_DAY / 7)) * e.postvalue + addWorktime;
+// 			if ( ( exphour==0 ) || (AM_SIGUB == 0 )  ){
+// 			   AM_PROJECT_PAY = 0;
+// 			}else{
+// 			   AM_PROJECT_PAY = exphour * AM_SIGUB;
+// 			}
+// 			
+// 			this.dsListSub.setColumn(0, "AM_WOLGUB", Math.floor(AM_PROJECT_PAY / 10) * 10);					      
+// 		}
+// 		
+// 	}
+// 	else
+// 	{
+// 		// 시급계산 로직
+// 		if(CT_PROJECT_DAY < 5)
+// 		{
+// 			//AM_SIGUB = Math.floor((e.postvalue / 9.5) / 10) * 10;
+// 			AM_SIGUB = Math.floor((e.postvalue / 8) / 10) * 10;
+// 		}
+// 		else if(CT_PROJECT_DAY >= 5)
+// 		{
+// 			//AM_SIGUB = Math.round((e.postvalue * 28 / 340) / 10) * 10 ;
+// 			AM_SIGUB = Math.floor((e.postvalue / 8) / 10) * 10;
+// 		}
+// 		
+// 		AM_PROJECT_PAY = (AM_SIGUB * 8) * CT_PROJECT_DAY;
+// 		this.dsListSub.setColumn(0, "AM_SIGUB", AM_SIGUB); 			
+// 		this.dsListSub.setColumn(0, "AM_WOLGUB", e.postvalue * CT_PROJECT_DAY);	
+// 	}
+// 	this.dsListSub.setColumn(0, "AM_PROJECT_PAY", AM_PROJECT_PAY); 	
+};
+
+// // 시급변경 이벤트.
+// this.divData_divDataRight_txtAM_SIGUB_onchanged = function(obj:nexacro.MaskEdit,e:nexacro.ChangeEventInfo)
+// {	
+// 	trace("## divData_divDataRight_txtAM_SIGUB_onchanged ##");
+// 	var TY_CHAIYONG = this.dsListSub.getColumn(0, "TY_CHAIYONG");
+// 	var CT_PROJECT_DAY = this.dsListSub.getColumn(0, "CT_PROJECT_DAY");
+// 	var AM_ILGUB = this.dsListSub.getColumn(0, "AM_ILGUB");	
+// 	var AM_SIGUB = e.postvalue
+// 	
+// 	// 단시간이 아닐때.
+// 	if(this.gfnTrim(TY_CHAIYONG) != "CM005002001")
+// 	{	
+// 		var CT_PROJECT_DAY = this.dsListSub.getColumn(0, "CT_PROJECT_DAY");
+// 		this.dsListSub.setColumn(0, "AM_PROJECT_PAY", (e.postvalue * 8) * CT_PROJECT_DAY); 	
+// 	}
+// 	else
+// 	{
+// 		var hoaddtime   = 0;//휴일할증시간.
+// 		var addWorktime = 0;
+// 		var fulltimeday = 24;//만근기준
+// 		var exphour = 0;
+// 		
+// 		if(CT_PROJECT_DAY >= fulltimeday){//예상출역일수가 만근기준시간보다 클때.
+// 			addWorktime = AM_ILGUB;
+// 		}
+// 		exphour= (CT_PROJECT_DAY + Math.floor(CT_PROJECT_DAY / 7) * hoaddtime + Math.floor( (CT_PROJECT_DAY - Math.floor(CT_PROJECT_DAY / 7))/ 6 ) * hoaddtime + Math.floor(CT_PROJECT_DAY / 7)) * nexacro.toNumber(AM_ILGUB)  + nexacro.toNumber(addWorktime);
+// 		if ( ( exphour==0 ) || (AM_SIGUB == 0 )  ){
+// 		   AM_PROJECT_PAY = 0;
+// 		}else{
+// 		   AM_PROJECT_PAY = exphour * AM_SIGUB;
+// 		}
+// 		
+// 		this.dsListSub.setColumn(0, "AM_WOLGUB", Math.floor(AM_PROJECT_PAY / 10) * 10);	
+// 		this.dsListSub.setColumn(0, "AM_PROJECT_PAY", Math.floor(AM_PROJECT_PAY / 10) * 10); 	
+// 	}
+// 	
+// };
+
+// 예상출역일수 변경이벤트.
+// this.divData_divDataRight_txtCT_PROJECT_DAY_onchanged = function(obj:nexacro.MaskEdit,e:nexacro.ChangeEventInfo)
+// {
+// 	trace("## divData_divDataRight_txtCT_PROJECT_DAY_onchanged ##");
+// 	var TY_CHAIYONG = this.dsListSub.getColumn(0, "TY_CHAIYONG");
+// 	var CT_PROJECT_DAY = nexacro.toNumber(e.postvalue);
+// 	
+// 	var AM_ILGUB = this.dsListSub.getColumn(0, "AM_ILGUB");	
+// 	//var AM_SIGUB = 0;
+// 	var AM_SIGUB = this.dsListSub.getColumn(0, "AM_SIGUB");
+// 	
+// 	//단시간:CM005002001, 5일이상:CM005002003, 5일미만:CM005002002
+// 	if(this.gfnTrim(TY_CHAIYONG) == "CM005002003")
+// 	{
+// 		if(5 > e.postvalue)
+// 		{
+// 			CT_PROJECT_DAY = 5; 
+// 		}
+// 		else if(31 < e.postvalue)
+// 		{
+// 			CT_PROJECT_DAY = 31; 
+// 		}
+// 	}
+// 	else if(this.gfnTrim(TY_CHAIYONG) == "CM005002002")
+// 	{
+// 		if(4 < e.postvalue)
+// 		{
+// 			CT_PROJECT_DAY = 4; 
+// 		}
+// 	}
+// 	
+// 	// 처리된 예상출역일수 세팅.
+// 	obj.set_value(CT_PROJECT_DAY);
+// 	
+// 	// 단시간이 아닐때.
+// 	if(this.gfnTrim(TY_CHAIYONG) != "CM005002001")
+// 	{	
+// 		// 시급계산 로직
+// 		if(CT_PROJECT_DAY < 5)
+// 		{
+// 			//AM_SIGUB = Math.floor((e.postvalue / 9.5) / 10) * 10;
+// 			AM_SIGUB = Math.floor((AM_ILGUB / 8) / 10) * 10;
+// 		}
+// 		else if(CT_PROJECT_DAY >= 5)
+// 		{
+// 			//AM_SIGUB = Math.round((e.postvalue * 28 / 340) / 10) * 10 ;
+// 			AM_SIGUB = Math.floor((AM_ILGUB / 8) / 10) * 10;
+// 		}
+// 		
+// 		this.dsListSub.setColumn(0, "AM_SIGUB", AM_SIGUB); 	
+// 		this.dsListSub.setColumn(0, "AM_WOLGUB", CT_PROJECT_DAY * AM_ILGUB); 	
+// 		this.dsListSub.setColumn(0, "AM_PROJECT_PAY", (AM_SIGUB * 8) * CT_PROJECT_DAY); 
+// 	}else{
+// 	
+// 		var hoaddtime   = 0;//휴일할증시간.
+// 		var addWorktime = 0;
+// 		var fulltimeday = 24;//만근기준
+// 		var exphour = 0;
+// 		
+// 		if(CT_PROJECT_DAY >= fulltimeday){//예상출역일수가 만근기준시간보다 클때.
+// 			addWorktime = AM_ILGUB;
+// 		}
+// 		exphour= (CT_PROJECT_DAY + Math.floor(CT_PROJECT_DAY / 7) * hoaddtime + Math.floor( (CT_PROJECT_DAY - Math.floor(CT_PROJECT_DAY / 7))/ 6 ) * hoaddtime + Math.floor(CT_PROJECT_DAY / 7)) * nexacro.toNumber(AM_ILGUB)  + nexacro.toNumber(addWorktime);
+// 		if ( ( exphour==0 ) || (AM_SIGUB == 0 )  ){
+// 		   AM_PROJECT_PAY = 0;
+// 		}else{
+// 		   AM_PROJECT_PAY = exphour * AM_SIGUB;
+// 		}
+// 		
+// 		this.dsListSub.setColumn(0, "AM_WOLGUB", Math.floor(AM_PROJECT_PAY / 10) * 10);	
+// 		this.dsListSub.setColumn(0, "AM_PROJECT_PAY", Math.floor(AM_PROJECT_PAY / 10) * 10); 	
+// 	}
+//};
+
+
+this.fnEmployeeCopy = function(){
+// 
+// 	// 입력방식 설정.
+// 	this.updateGubun = "C"; 
+// 	
+// 	// 복사 후 초기화 데이터 가공.
+// 	this.dsListSub.setColumn(0, "DT_IPSA", "");	// 입사일자
+// 	this.dsListSub.setColumn(0, "DT_TOIJIK", "");	// 퇴사일자
+// 	this.dsListSub.setColumn(0, "YN_GOYONG", 0);	// 고용보험
+// 	// 국민연금
+// 	this.dsListSub.setColumn(0, "YN_KOOKMIN", 0);
+// 	this.dsListSub.setColumn(0, "AM_KOOKMIN", 0);
+// 	// 건강보험
+// 	this.dsListSub.setColumn(0, "YN_MEDICARE", 0);
+// 	this.dsListSub.setColumn(0, "AM_MEDICARE", 0);
+// 	// 장기요양보험	
+// 	this.dsListSub.setColumn(0, "YN_SILVER", "0");
+// 	this.dsListSub.setColumn(0, "AM_SILVER", "0");
+// 	
+// 	// 파일정보 초기화.
+// 	this.dsListSub.setColumn(0, "GF_NM_FILE", "");
+// 	this.dsListSub.setColumn(0, "GF_NO_SEQ", "");
+// 	this.dsListSub.setColumn(0, "GF_DS_ETC", "");	
+// 	this.dsListSub.setColumn(0, "RF_NM_FILE", "");
+// 	this.dsListSub.setColumn(0, "RF_NO_SEQ", "");
+// 	this.dsListSub.setColumn(0, "RF_DS_ETC", "");
+// 	this.dsListSub.setColumn(0, "FF_NM_FILE", "");
+// 	this.dsListSub.setColumn(0, "FF_NO_SEQ", "");
+// 	this.dsListSub.setColumn(0, "FF_DS_ETC", "");
+// 	
+// // 	this.fileUpTransfer.clearFileList();	
+// // 	this.fileUpTransfer2.clearFileList();
+// // 	this.fileUpTransfer3.clearFileList();
+// // 	this.fileUpTransfer.clearPostDataList();
+// // 	this.fileUpTransfer2.clearPostDataList();
+// // 	this.fileUpTransfer3.clearPostDataList();
+// 	
+// 	this.dsListSub.setColumn(0, "NO_SEQ", nexacro.toNumber(this.dsListSub.getColumn(0, "NO_SEQ")) + 1);
+// 	
+// 	this.divData.form.divDataRight.form.cboTY_CHAIYONG.set_readonly(false);
+// 	this.divData.form.divDataRight.form.txtAM_ILGUB.set_readonly(false);
+// 	//this.divData.form.divDataRight.form.txtAM_SIGUB.set_readonly(false);
+// 	this.divData.form.divDataRight.form.txtCT_PROJECT_DAY.set_readonly(false);		
+	
+}
+
+// 입사일자 변경시 건강검진일자 동일하게 세팅.
+this.divData_divDataRight_tclDT_IPSA_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	//this.divData.form.divDataRight.form.tclDT_CHECKUP.set_value(e.postvalue);
+};
+
+this.divData_divDataRight_cboTY_CHAIYONG_canitemchange = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+// 	// 채용구분변경시 급여관련 초기화.
+// 	this.dsListSub.setColumn(0, "AM_ILGUB", 0); 	
+// 	this.dsListSub.setColumn(0, "AM_SIGUB", 0); 		
+// 	this.dsListSub.setColumn(0, "AM_WOLGUB", 0); 	
+// 	this.dsListSub.setColumn(0, "AM_PROJECT_PAY", 0); 		
+// 	
+// 	//단시간:CM005002001, 5일이상:CM005002003, 5일미만:CM005002002
+// 	if(this.gfnTrim(e.postvalue) == "CM005002001")
+// 	{
+// 		this.divData.form.divDataRight.form.staAM_ILGUB.set_text("근무시간");
+// 	}
+// 	else
+// 	{
+// 		this.divData.form.divDataRight.form.staAM_ILGUB.set_text("일급");
+// 		if(this.gfnTrim(e.postvalue) == "CM005002003"){
+// 			this.dsListSub.setColumn(0, "CT_PROJECT_DAY", 5); 
+// 		}else if(this.gfnTrim(e.postvalue) == "CM005002002"){
+// 			this.dsListSub.setColumn(0, "CT_PROJECT_DAY", 0); 
+// 		}
+// 	}
+};
+
+// this.SearchInsuUser = function() {
+// 	
+// 	this.dsSelectInsuUser.addRow();	
+// 	this.dsSelectInsuUser.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+// 	this.dsSelectInsuUser.setColumn(0, "ORG_NO_JUMIN", this.dsList.getColumn(this.dsList.rowposition, "ORG_NO_JUMIN"));
+// 
+// 	var strSvcId    = "selectInsuUser";
+// 	var strSvcType  = "grid";
+// 	var inProc		= "_dsProc";
+// 	var inData      = "insuUserTempSelect=dsSelectInsuUser";
+// 	var outData     = "dsInsuUserRst=insuUserTempSelect0";
+// 	var strArg      = "";
+// 	var callBackFnc = "fnCallback";
+// 	
+// 	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+// 						strSvcType , 	// transaction을 요청할 구분
+// 						inProc,			// Procedure 정보 Dataset 이름
+// 						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+// 						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+// 						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+// 						callBackFnc); // 통신방법 정의 [생략가능]
+// }
+
+ /*
+  *	파일경로 조회 버튼
+  */
+this.fnSearchFileInfo = function(flag) {	
+	var inData      = "";
+	var outData     = "";
+	if(flag == "DS04"){	// 근로계약서
+		this.dsFile.clearData();
+		var nRow = this.dsFile.addRow();	
+		this.dsFile.setColumn(nRow, "CD_GUBUN", flag);	// 근로계약서			
+		inData      = "info=dsFile";
+		outData     = "dsFile=info0";		
+	}
+	if(flag == "DS07"){	// 사직서
+		this.dsFile2.clearData();
+		var nRow = this.dsFile2.addRow();	
+		this.dsFile2.setColumn(nRow, "CD_GUBUN", flag);
+		inData      = "info=dsFile2";
+		outData     = "dsFile2=info0";
+	}
+	if(flag == "DS05"){	// 외국인등록증
+		this.dsFile3.clearData();
+		var nRow = this.dsFile3.addRow();	
+		this.dsFile3.setColumn(nRow, "CD_GUBUN", flag);
+		inData      = "info=dsFile3";
+		outData     = "dsFile3=info0";
+	}
+	
+	var strSvcId    = "fileInfo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc, false);
+};
+
+// 근로계약서 첨부 버튼 이벤트.
+this.divData_divDataRight_btnGUNRO_ATTCHFILE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSetFileDialog("GF");
+};
+
+// 사직서 첨부 버튼 이벤트
+this.divData_divDataRight_btnRETIRE_ATTCHFILE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	this.fnSetFileDialog("RF");
+};
+
+// 외국인등록증 첨부 버튼 이벤트
+this.divData_divDataRight_btnFOR_ATTCHFILE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSetFileDialog("FF");
+};
+
+this.fnSetFileDialog = function(fileFlag){
+	if(fileFlag == "GF"){
+		this.fileDialog.set_filter("Text Files(*.html)|*.html|" );
+		this.fileDialog.open( "FileSave", FileDialog.SAVE, "%UserApp%" );	
+	}else if(fileFlag == "RF"){
+		this.fileDialog2.set_filter("Text Files(*.html)|*.html|" );
+		this.fileDialog2.open( "FileSave", FileDialog.SAVE, "%UserApp%" );
+	}else if(fileFlag == "FF"){
+		this.fileDialog3.set_filter("Text Files(*.html)|*.html|" );
+		this.fileDialog3.open( "FileSave", FileDialog.SAVE, "%UserApp%" );
+	}
+};
+
+this.fileDialog_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
+{
+	var file = e.virtualfiles[0];
+	
+	var NEW_NM_FILE = file.filename;
+
+	this.fileUpTransfer.clearFileList();
+	this.fileUpTransfer.clearPostDataList();
+	
+	this.dsRemove.clearData();
+	
+	var extnIdx = NEW_NM_FILE.lastIndexOf(".");
+	
+	var extn = this.gfnRight(NEW_NM_FILE, NEW_NM_FILE.length - extnIdx).replace(".", "").toLowerCase();
+	
+	
+	var allowTypes = this.fileConfig.allowTypes;
+	
+	
+	if (allowTypes != null && allowTypes.indexOf(extn) > -1)
+	{
+		this.fileUpTransfer.addFile("file", file);
+		this.fileUpTransfer.setPostData("path", NEW_DS_PATH);
+		this.fileUpTransfer.setPostData("fileName", NEW_NM_FILE);		
+		
+		if (this.gfnGetFlag(this.dsList, this.dsList.rowposition) != "I")
+		{
+			var NEW_DS_PATH = this.dsFile.getColumn(this.dsFile.rowposition, "DS_PATH") + this.dsListSub.getColumn(0, "NO_ID") + "/" + this.dsListSub.getColumn(0, "NO_SEQ");
+			this.fileUpTransfer.setPostData("path", NEW_DS_PATH);
+			
+			var OLD_NM_FILE = this.dsListSub.getColumn(this.dsListSub.rowposition, "GF_NM_FILE");
+			var OLD_DS_PATH = this.dsListSub.getColumn(this.dsListSub.rowposition, "GF_DS_PATH");
+			
+			if(!this.gfnIsNull(OLD_NM_FILE) && !this.gfnIsNull(OLD_DS_PATH))
+			{
+				this.dsRemove.addRow();
+				this.dsRemove.setColumn(0, "filename", OLD_NM_FILE);
+				this.dsRemove.setColumn(0, "filepath", OLD_DS_PATH);
+				this.fnRemoveFile();
+			}
+		}
+		else
+		{
+			//this.fileUpTransfer.upload(this.fileConfig.uploadUrl);
+		}
+		
+		this.dsListSub.setColumn(0, "GF_NM_FILE", NEW_NM_FILE);
+		this.dsListSub.setColumn(0, "GF_DS_ETC", NEW_NM_FILE);
+	}
+	else
+	{
+		this.gfnAlert("결재 양식파일은 html 파일 이어야 합니다.");
+	}
+};
+
+
+this.fileDialog2_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
+{
+	var file = e.virtualfiles[0];
+	var NEW_NM_FILE = file.filename;
+
+	this.fileUpTransfer2.clearFileList();
+	this.fileUpTransfer2.clearPostDataList();
+	
+	this.dsRemove2.clearData();
+	
+	var extnIdx = NEW_NM_FILE.lastIndexOf(".");
+	
+	var extn = this.gfnRight(NEW_NM_FILE, NEW_NM_FILE.length - extnIdx).replace(".", "").toLowerCase();
+	
+	var allowTypes = this.fileConfig.allowTypes;
+	if (allowTypes != null && allowTypes.indexOf(extn) > -1)
+	{
+		this.fileUpTransfer2.addFile("file", file);
+		this.fileUpTransfer2.setPostData("fileName", NEW_NM_FILE);
+				
+		if (this.gfnGetFlag(this.dsList, this.dsList.rowposition) != "I")
+		{
+			var NEW_DS_PATH = this.dsFile2.getColumn(this.dsFile2.rowposition, "DS_PATH") + this.dsListSub.getColumn(0, "NO_ID") + "/" + this.dsListSub.getColumn(0, "NO_SEQ");
+			this.fileUpTransfer2.setPostData("path", NEW_DS_PATH);
+			
+			var OLD_NM_FILE = this.dsListSub.getColumn(this.dsListSub.rowposition, "RF_NM_FILE");
+			var OLD_DS_PATH = this.dsListSub.getColumn(this.dsListSub.rowposition, "RF_DS_PATH");
+		
+// 			this.dsRemove2.setColumn(0, "filename", OLD_NM_FILE);
+// 			this.dsRemove2.setColumn(0, "filepath", OLD_DS_PATH);
+// 			this.fnRemoveFile2();
+
+			if(!this.gfnIsNull(OLD_NM_FILE) && !this.gfnIsNull(OLD_DS_PATH))
+			{
+				this.dsRemove2.addRow();
+				this.dsRemove2.setColumn(0, "filename", OLD_NM_FILE);
+				this.dsRemove2.setColumn(0, "filepath", OLD_DS_PATH);
+				this.fnRemoveFile2();
+			}
+		}
+		else
+		{
+			//this.fileUpTransfer2.upload(this.fileConfig.uploadUrl);
+		}
+		
+		this.dsListSub.setColumn(0, "RF_NM_FILE", NEW_NM_FILE);
+		this.dsListSub.setColumn(0, "RF_DS_ETC", NEW_NM_FILE);
+	}
+	else
+	{
+		this.gfnAlert("결재 양식파일은 html 파일 이어야 합니다.");
+	}
+};
+
+this.fileDialog3_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
+{
+	var file = e.virtualfiles[0];
+	var NEW_NM_FILE = file.filename;
+
+	this.fileUpTransfer3.clearFileList();
+	this.fileUpTransfer3.clearPostDataList();
+	
+	this.dsRemove3.clearData();
+	
+	var extnIdx = NEW_NM_FILE.lastIndexOf(".");
+	
+	var extn = this.gfnRight(NEW_NM_FILE, NEW_NM_FILE.length - extnIdx).replace(".", "").toLowerCase();
+	
+	var allowTypes = this.fileConfig.allowTypes;
+	if (allowTypes != null && allowTypes.indexOf(extn) > -1)
+	{
+		this.fileUpTransfer3.addFile("file", file);
+		this.fileUpTransfer3.setPostData("fileName", NEW_NM_FILE);
+		
+		if (this.gfnGetFlag(this.dsList, this.dsList.rowposition) != "I")
+		{
+			var NEW_DS_PATH = this.dsFile3.getColumn(this.dsFile3.rowposition, "DS_PATH") + this.dsListSub.getColumn(0, "NO_ID") + "/" + this.dsListSub.getColumn(0, "NO_SEQ");
+			this.fileUpTransfer3.setPostData("path", NEW_DS_PATH);
+			
+			var OLD_NM_FILE = this.dsListSub.getColumn(this.dsListSub.rowposition, "FF_NM_FILE");
+			var OLD_DS_PATH = this.dsListSub.getColumn(this.dsListSub.rowposition, "FF_DS_PATH");
+		
+// 			this.dsRemove3.setColumn(0, "filename", OLD_NM_FILE);
+// 			this.dsRemove3.setColumn(0, "filepath", OLD_DS_PATH);
+// 			this.fnRemoveFile3();
+			
+			if(!this.gfnIsNull(OLD_NM_FILE) && !this.gfnIsNull(OLD_DS_PATH))
+			{
+				this.dsRemove3.addRow();
+				this.dsRemove3.setColumn(0, "filename", OLD_NM_FILE);
+				this.dsRemove3.setColumn(0, "filepath", OLD_DS_PATH);
+				this.fnRemoveFile3();
+			}
+		}
+		else
+		{
+			//this.fileUpTransfer3.upload(this.fileConfig.uploadUrl);
+		}
+		
+		this.dsListSub.setColumn(0, "FF_NM_FILE", NEW_NM_FILE);
+		this.dsListSub.setColumn(0, "FF_DS_ETC", NEW_NM_FILE);
+	}
+	else
+	{
+		this.gfnAlert("결재 양식파일은 html 파일 이어야 합니다.");
+	}
+};
+
+this.fileUpTransfer_onsuccess = function(obj:nexacro.FileUpTransfer,e:nexacro.FileUpTransferEventInfo)
+{
+	if(e.code == 0) 
+	{
+		if(e.datasets.length > 0) 
+		{
+			this.dsSave.clearData();
+			
+			var gdsUserInfo = this.gfnGetApplication().gdsUserInfo;		
+			var GF_NO_SEQ = this.dsListSub.getColumn(this.dsListSub.rowposition, "GF_NO_SEQ");
+			
+//			var NO_ID = this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I" ? (this.gfnIsNull(this.dsRtnData.getColumn(0, "RTN_NO_ID")) ? this.timeValue : this.dsRtnData.getColumn(0, "RTN_NO_ID")) : this.dsListSub.getColumn(this.dsListSub.rowposition, "NO_ID");
+//			var NO_SEQ = this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I" ? 1 : this.dsListSub.getColumn(this.dsListSub.rowposition, "NO_SEQ");
+			var NO_ID = this.gfnIsNull(this.dsListSub.getColumn(0, "NO_ID")) ? this.dsRtnData.getColumn(0, "RTN_NO_ID") : this.dsListSub.getColumn(0, "NO_ID");
+			var NO_SEQ = this.gfnIsNull(this.dsListSub.getColumn(0, "NO_SEQ")) ? 1 : this.dsListSub.getColumn(0, "NO_SEQ");
+			var CD_GUBUN = this.dsFile.getColumn(0, "CD_GUBUN");
+			var DS_PATH = this.dsFile.getColumn(0, "DS_PATH");
+			var DS_ETC = this.dsFile.getColumn(0, "DS_ETC");
+		
+			var nRow = this.dsSave.addRow();
+			this.dsSave.setColumn(nRow, "TY_SAVE", "D");
+			this.dsSave.setColumn(nRow, "NO_SEQ", GF_NO_SEQ);
+
+			for(var i = 0; i < e.datasets[0].rowcount; i++) {
+				var sFileName = e.datasets[0].getColumn(i, "filename");
+				var iFileSize = e.datasets[0].getColumn(i, "filesize");
+				var dirExptType = sFileName.lastIndexOf(".")+1;
+				var sFileType = sFileName.substr(dirExptType);
+				//var sIconImage = this.getFileIcon(sFileName);
+								
+				var nRow = this.dsSave.addRow();	
+				this.dsSave.setColumn(nRow, "TY_SAVE", "I");
+				this.dsSave.setColumn(nRow, "NO_SEQ", 0);
+				this.dsSave.setColumn(nRow, "CD_GUBUN", CD_GUBUN);
+				this.dsSave.setColumn(nRow, "DS_PATH", DS_PATH + NO_ID + "/" + NO_SEQ);
+				this.dsSave.setColumn(nRow, "NM_FILE", sFileName);
+				this.dsSave.setColumn(nRow, "SZ_FILE", iFileSize);
+				//this.dsSave.setColumn(nRow, "DS_ETC", DS_ETC);
+				this.dsSave.setColumn(nRow, "DS_ETC", sFileName);
+				this.dsSave.setColumn(nRow, "CD_REF1", NO_ID);
+				this.dsSave.setColumn(nRow, "CD_REF2", NO_SEQ);
+				this.dsSave.setColumn(nRow, "CD_REF3", "");
+				this.dsSave.setColumn(nRow, "ID_INSERT", gdsUserInfo.getColumn(gdsUserInfo.rowposition, "ID_USER"));
+			}			
+			this.fnSaveFile();
+		}
+	}	
+};
+
+
+this.fileUpTransfer2_onsuccess = function(obj:nexacro.FileUpTransfer,e:nexacro.FileUpTransferEventInfo)
+{
+	if(e.code == 0) 
+	{
+		if(e.datasets.length > 0) 
+		{
+			this.dsSave2.clearData();
+			
+			var gdsUserInfo = this.gfnGetApplication().gdsUserInfo;		
+			var RF_NO_SEQ = this.dsListSub.getColumn(this.dsListSub.rowposition, "RF_NO_SEQ");
+			
+			var NO_ID = this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I" ? (this.gfnIsNull(this.dsRtnData.getColumn(0, "RTN_NO_ID")) ? this.timeValue : this.dsRtnData.getColumn(0, "RTN_NO_ID")) : this.dsListSub.getColumn(this.dsListSub.rowposition, "NO_ID");
+			var NO_SEQ = this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I" ? 1 : this.dsListSub.getColumn(this.dsListSub.rowposition, "NO_SEQ");
+			var CD_GUBUN = this.dsFile2.getColumn(0, "CD_GUBUN");
+			var DS_PATH = this.dsFile2.getColumn(0, "DS_PATH");
+			var DS_ETC = this.dsFile2.getColumn(0, "DS_ETC");
+		
+			var nRow = this.dsSave2.addRow();
+			this.dsSave2.setColumn(nRow, "TY_SAVE", "D");
+			this.dsSave2.setColumn(nRow, "NO_SEQ", RF_NO_SEQ);
+
+			for(var i = 0; i < e.datasets[0].rowcount; i++) {
+				var sFileName = e.datasets[0].getColumn(i, "filename");
+				var iFileSize = e.datasets[0].getColumn(i, "filesize");
+				var dirExptType = sFileName.lastIndexOf(".")+1;
+				var sFileType = sFileName.substr(dirExptType);
+				//var sIconImage = this.getFileIcon(sFileName);
+				
+				var nRow = this.dsSave2.addRow();	
+				this.dsSave2.setColumn(nRow, "TY_SAVE", "I");
+				this.dsSave2.setColumn(nRow, "NO_SEQ", 0);
+				this.dsSave2.setColumn(nRow, "CD_GUBUN", CD_GUBUN);
+				this.dsSave2.setColumn(nRow, "DS_PATH", DS_PATH + NO_ID + "/" + NO_SEQ);
+				this.dsSave2.setColumn(nRow, "NM_FILE", sFileName);
+				this.dsSave2.setColumn(nRow, "SZ_FILE", iFileSize);
+				//this.dsSave2.setColumn(nRow, "DS_ETC", DS_ETC);
+				this.dsSave2.setColumn(nRow, "DS_ETC", sFileName);
+				this.dsSave2.setColumn(nRow, "CD_REF1", NO_ID);
+				this.dsSave2.setColumn(nRow, "CD_REF2", NO_SEQ);
+				this.dsSave2.setColumn(nRow, "CD_REF3", "");
+				this.dsSave2.setColumn(nRow, "ID_INSERT", gdsUserInfo.getColumn(gdsUserInfo.rowposition, "ID_USER"));
+			}			
+			this.fnSaveFile2();
+		}
+	}	
+	
+};
+
+this.fileUpTransfer3_onsuccess = function(obj:nexacro.FileUpTransfer,e:nexacro.FileUpTransferEventInfo)
+{
+
+	if(e.code == 0) 
+	{
+		if(e.datasets.length > 0) 
+		{
+			this.dsSave3.clearData();
+			
+			var gdsUserInfo = this.gfnGetApplication().gdsUserInfo;		
+			var FF_NO_SEQ = this.dsListSub.getColumn(this.dsListSub.rowposition, "FF_NO_SEQ");
+			
+			var NO_ID = this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I" ? (this.gfnIsNull(this.dsRtnData.getColumn(0, "RTN_NO_ID")) ? this.timeValue : this.dsRtnData.getColumn(0, "RTN_NO_ID")) : this.dsListSub.getColumn(this.dsListSub.rowposition, "NO_ID");
+			var NO_SEQ = this.gfnGetFlag(this.dsList, this.dsList.rowposition) == "I" ? 1 : this.dsListSub.getColumn(this.dsListSub.rowposition, "NO_SEQ");
+			var CD_GUBUN = this.dsFile3.getColumn(0, "CD_GUBUN");
+			var DS_PATH = this.dsFile3.getColumn(0, "DS_PATH");
+			var DS_ETC = this.dsFile3.getColumn(0, "DS_ETC");
+		
+			var nRow = this.dsSave3.addRow();
+			this.dsSave3.setColumn(nRow, "TY_SAVE", "D");
+			this.dsSave3.setColumn(nRow, "NO_SEQ", FF_NO_SEQ);
+
+			for(var i = 0; i < e.datasets[0].rowcount; i++) {
+				var sFileName = e.datasets[0].getColumn(i, "filename");
+				var iFileSize = e.datasets[0].getColumn(i, "filesize");
+				var dirExptType = sFileName.lastIndexOf(".")+1;
+				var sFileType = sFileName.substr(dirExptType);
+				//var sIconImage = this.getFileIcon(sFileName);
+				
+				var nRow = this.dsSave3.addRow();	
+				this.dsSave3.setColumn(nRow, "TY_SAVE", "I");
+				this.dsSave3.setColumn(nRow, "NO_SEQ", 0);
+				this.dsSave3.setColumn(nRow, "CD_GUBUN", CD_GUBUN);
+				this.dsSave3.setColumn(nRow, "DS_PATH", DS_PATH + NO_ID + "/" + NO_SEQ);
+				this.dsSave3.setColumn(nRow, "NM_FILE", sFileName);
+				this.dsSave3.setColumn(nRow, "SZ_FILE", iFileSize);
+				//this.dsSave3.setColumn(nRow, "DS_ETC", DS_ETC);
+				this.dsSave3.setColumn(nRow, "DS_ETC", sFileName);
+				this.dsSave3.setColumn(nRow, "CD_REF1", NO_ID);
+				this.dsSave3.setColumn(nRow, "CD_REF2", NO_SEQ);
+				this.dsSave3.setColumn(nRow, "CD_REF3", "");
+				this.dsSave3.setColumn(nRow, "ID_INSERT", gdsUserInfo.getColumn(gdsUserInfo.rowposition, "ID_USER"));
+			}			
+			this.fnSaveFile3();
+		}
+	}	
+	
+};
+
+//2021.05.28 add
+//DZZT_FILEMANAGER.NO_SEQ 구할때 dup 에러 나서 한꺼번에 보내는걸로 수정함
+this.fnSaveFileAll = function()
+{
+	if (this.dsSave.rowcount == 0 && this.dsSave2.rowcount == 0 && this.dsSave3.rowcount == 0) return;
+		
+	var strSvcId    = "saveFile";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "upload=dsSave:A upload2=dsSave2:A upload3=dsSave3:A";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+this.fnSaveFile = function()
+{
+	this.fileCount = this.fileCount - 1;
+	
+	trace("fnSaveFile", this.fileCount);
+	
+	if(this.fileCount == 0){
+		trace("fnSaveFile", "CALL >> fnSaveFileAll");
+		
+		this.fnSaveFileAll();
+	}
+
+
+// 	if (this.dsSave.rowcount == 0) return;
+// 		
+// 	var strSvcId    = "saveFile";
+// 	var strSvcType  = "save";
+// 	var inProc		= "_dsProc";
+// 	var inData      = "upload=dsSave:A";
+// 	var outData     = "";
+// 	var strArg      = "";
+// 	var callBackFnc = "fnCallback";	
+// 	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+this.fnSaveFile2 = function()
+{
+	this.fileCount = this.fileCount - 1;
+	
+	trace("fnSaveFile2", this.fileCount);
+	
+	if(this.fileCount == 0){
+		trace("fnSaveFile2", "CALL >> fnSaveFileAll");
+		
+		this.fnSaveFileAll();
+	}
+	
+// 	if (this.dsSave2.rowcount == 0) return;
+// 		
+// 	var strSvcId    = "saveFile";
+// 	var strSvcType  = "save";
+// 	var inProc		= "_dsProc";
+// 	var inData      = "upload=dsSave2:A";
+// 	var outData     = "";
+// 	var strArg      = "";
+// 	var callBackFnc = "fnCallback";	
+// 	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+this.fnSaveFile3 = function()
+{
+	this.fileCount = this.fileCount - 1;
+	
+	trace("fnSaveFile3", this.fileCount);
+	
+	if(this.fileCount == 0){
+		trace("fnSaveFile3", "CALL >> fnSaveFileAll");
+		
+		this.fnSaveFileAll();
+	}
+	
+// 	if (this.dsSave3.rowcount == 0) return;
+// 	
+// 	var strSvcId    = "saveFile";
+// 	var strSvcType  = "save";
+// 	var inProc		= "_dsProc";
+// 	var inData      = "upload=dsSave3:A";
+// 	var outData     = "";
+// 	var strArg      = "";
+// 	var callBackFnc = "fnCallback";	
+// 	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+this.fnRemoveFile = function()
+{
+	if (this.dsRemove.rowcount == 0) return;
+		
+	var strSvcId    = "removeFile";
+	var strSvcType  = "file/deleteFile";
+	var inProc		= "";
+	var inData      = "input=dsRemove:A";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+this.fnRemoveFile2 = function()
+{
+	if (this.dsRemove2.rowcount == 0) return;
+		
+	var strSvcId    = "removeFile2";
+	var strSvcType  = "file/deleteFile";
+	var inProc		= "";
+	var inData      = "input=dsRemove2:A";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+this.fnRemoveFile3 = function()
+{
+	if (this.dsRemove3.rowcount == 0) return;
+		
+	var strSvcId    = "removeFile3";
+	var strSvcType  = "file/deleteFile";
+	var inProc		= "";
+	var inData      = "input=dsRemove3:A";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+this.fnfileUploadCallback = function(){
+	//alert(this.popupVal.tempFilePath);
+	//alert(this.popupVal.timeValue);
+}
+
+this.fnDownload = function(downFlag) {
+	var sFilename = this.dsListSub.getColumn(0, downFlag + "_NM_FILE");
+	var sFilepath = this.dsListSub.getColumn(0, downFlag + "_DS_PATH")+"/";			
+	
+	var encodeFileName = encodeURIComponent(sFilename);
+			
+	var surl = this.fileConfig.host+ this.fileConfig.downloadUrl; // + encodeFileName;	
+	this.FileDownTransfer.set_url(surl);
+	
+	this.FileDownTransfer.setPostData("path", sFilepath);	
+	this.FileDownTransfer.setPostData("fileName", encodeFileName);
+	
+	if( system.navigatorname =="nexacro"){
+		this.FileDownTransfer.set_downloadfilename(sFilename);
+	}
+	this.FileDownTransfer.download();
+};
+
+
+this.divData_divDataRight_staGUNRO_ATTCHFILE_NM_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	if(this.gfnIsNull(this.dsListSub.getColumn(0, "GF_NM_FILE"))) return;	
+	this.fnDownload("GF");	
+};
+
+this.divData_divDataRight_staRETIRE_ATTCHFILE_NM_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	if(this.gfnIsNull(this.dsListSub.getColumn(0, "GF_NM_FILE"))) return;	
+	this.fnDownload("RF");		
+};
+
+this.divData_divDataRight_staFOR_ATTCHFILE_NM_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	if(this.gfnIsNull(this.dsListSub.getColumn(0, "GF_NM_FILE"))) return;	
+	this.fnDownload("FF");		
+};
+
+//그리드 파일 다운로드.
+this.divData_divDataRight_objGridSub2_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{	
+// 	if(e.col == 6 || e.col == 7){
+// 	
+// 		var downFlag = "";
+// 		if(e.col == 6){
+// 			if(this.gfnIsNull(this.dsListSub2.getColumn(0, "GF_NM_FILE"))) return;
+// 			downFlag = "GF";
+// 		}
+// 		
+// 		if(e.col == 7){
+// 			if(this.gfnIsNull(this.dsListSub2.getColumn(0, "RF_NM_FILE"))) return;
+// 			downFlag = "RF";
+// 		}
+// 		
+// 		var sFilename = sFilename = this.dsListSub2.getColumn(e.row, downFlag + "_NM_FILE");
+// 		var sFilepath = this.dsListSub2.getColumn(e.row, downFlag + "_DS_PATH")+"/";			
+// 		
+// 		var encodeFileName = encodeURIComponent(sFilename);
+// 				
+// 		var surl = this.fileConfig.host+ this.fileConfig.downloadUrl; // + encodeFileName;	
+// 		this.FileDownTransfer.set_url(surl);
+// 		
+// 		this.FileDownTransfer.setPostData("path", sFilepath);	
+// 		this.FileDownTransfer.setPostData("fileName", encodeFileName);
+// 		
+// 		if( system.navigatorname =="nexacro"){
+// 			this.FileDownTransfer.set_downloadfilename(sFilename);
+// 		}
+// 		this.FileDownTransfer.download();
+// 	}
+};
+
+this.fnEntdoc = function(){
+	
+// 	if(this.dsList.rowcount < 1) { return; }
+// 	
+// 	if(this.gfnGetFormStatus(this) == "U")
+// 	{
+// 		this.gfnAlert("저장 후 진행해주세요.");
+// 		return false;
+// 	}
+// 
+// 	var param = {};
+// 	
+// 	var tyChaiyong = this.dsListSub.getColumn(0, "TY_CHAIYONG");
+// 	var sitecd = this.dsList.getColumn(this.dsList.rowposition, "CD_SITE");
+// 	var sitenm = this.ccfCD_SITE.form.DSTextBox.value ;
+// 	var resno = this.dsList.getColumn(this.dsList.rowposition, "NO_ID_REAL");
+// 	var strReportName = "";
+// 	
+// 	if(tyChaiyong == "CM005002001"){
+// 		strReportName = "/ds/cmbd0040jm.ozr";
+// 	}else{
+// 		strReportName = "/ds/cmbd0041jm.ozr";
+// 	} 
+// 	
+// 	param.REPORT_NAME = strReportName;	
+// 	param.JSONPARAM = "{\"sitecd\":\""+ sitecd + "\", \"resno\":\"" + resno + "\", \"sitenm\":\"" + sitenm + "\"}";
+// 	console.log(param);
+// 	this.gfnFormOpenNonAuth("DZU", "DZU_OZ", "", param, 900, 650);
+
+}
+
+
+
+
+
+
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="DS_NAME" type="STRING" size="256"/>
+          <Column id="NO_ID" type="STRING" size="256"/>
+          <Column id="NO_SABUN" type="STRING" size="256"/>
+          <Column id="DT_IPSA" type="STRING" size="256"/>
+          <Column id="DT_START" type="STRING" size="256"/>
+          <Column id="DT_END" type="STRING" size="256"/>
+          <Column id="DT_TOIJIK" type="STRING" size="256"/>
+          <Column id="TY_PAY" type="STRING" size="256"/>
+          <Column id="AM_WOLGUB" type="INT" size="256"/>
+          <Column id="CD_BANK" type="STRING" size="256"/>
+          <Column id="BANK_ALAS" type="STRING" size="256"/>
+          <Column id="NO_ACCOUNT" type="STRING" size="256"/>
+          <Column id="NM_OPENER" type="STRING" size="256"/>
+          <Column id="YN_GOYONG" type="STRING" size="256"/>
+          <Column id="YN_MEDICARE" type="STRING" size="256"/>
+          <Column id="YN_KOOKMIN" type="STRING" size="256"/>
+          <Column id="NO_ID_REAL" type="STRING" size="256"/>
+          <Column id="DS_ADDR" type="STRING" size="256"/>
+          <Column id="YN_EDU" type="STRING" size="256"/>
+          <Column id="NO_RETIRE" type="STRING" size="256"/>
+          <Column id="TY_FOREIGNER" type="STRING" size="256"/>
+          <Column id="DS_JIKJONG" type="STRING" size="256"/>
+          <Column id="AM_SIGUB" type="INT" size="256"/>
+          <Column id="DS_ORG_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DSAPR_EMPLOYEE_LIST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DSAPR_PERSON_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">d_select</Col>
+            <Col id="SP">DSAPR_EMPLOYEE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DSAPR_EMPLOYEE_INSERT</Col>
+            <Col id="TARGET">d_insert</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">d_save</Col>
+            <Col id="SP">DSAPR_EMPLOYEE_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_CODE_LIST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">f_insert</Col>
+            <Col id="SP">DSAPR_EMPLOYEE_TRANSFER</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DSAPR_INSU_USER_TEMP_SELECT</Col>
+            <Col id="TARGET">insuUserTempSelect</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">info</Col>
+            <Col id="SP">DZUPR_FILEMANAGER_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DZZPR_FILEMANAGER_SAVE</Col>
+            <Col id="TARGET">upload</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">upload2</Col>
+            <Col id="SP">DZZPR_FILEMANAGER_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">upload3</Col>
+            <Col id="SP">DZZPR_FILEMANAGER_SAVE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListSub" oncolumnchanged="dsListSub_oncolumnchanged" cancolumnchange="dsListSub_cancolumnchange" onvaluechanged="dsListSub_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="NO_ID" type="STRING" size="256"/>
+          <Column id="NO_SABUN" type="STRING" size="256"/>
+          <Column id="TY_VISA" type="STRING" size="256"/>
+          <Column id="DT_VISA" type="STRING" size="256"/>
+          <Column id="NO_PASSPORT" type="STRING" size="256"/>
+          <Column id="DT_IPGUK" type="STRING" size="256"/>
+          <Column id="DT_PASSPORT" type="STRING" size="256"/>
+          <Column id="DT_IPSA" type="STRING" size="256"/>
+          <Column id="DS_NAME" type="STRING" size="256"/>
+          <Column id="DS_ENAME" type="STRING" size="256"/>
+          <Column id="TY_SEX" type="STRING" size="256"/>
+          <Column id="TY_COMPANY" type="STRING" size="256"/>
+          <Column id="TY_YUNSU" type="STRING" size="256"/>
+          <Column id="TY_HAKRYUK" type="STRING" size="256"/>
+          <Column id="CD_COUNTRY" type="STRING" size="256"/>
+          <Column id="DS_COUNTRY" type="STRING" size="256"/>
+          <Column id="CD_ZIP" type="STRING" size="256"/>
+          <Column id="DS_ADDR" type="STRING" size="256"/>
+          <Column id="CD_JIKJONG" type="STRING" size="256"/>
+          <Column id="YN_HANDICAP" type="STRING" size="256"/>
+          <Column id="TY_HANDICAP" type="STRING" size="256"/>
+          <Column id="NO_HANDICAP" type="STRING" size="256"/>
+          <Column id="YN_SEVERE" type="STRING" size="256"/>
+          <Column id="NO_TEL1" type="STRING" size="256"/>
+          <Column id="NO_TEL2" type="STRING" size="256"/>
+          <Column id="NO_TEL3" type="STRING" size="256"/>
+          <Column id="DS_EMAIL" type="STRING" size="256"/>
+          <Column id="CD_INSUAGENCY" type="STRING" size="256"/>
+          <Column id="DS_INSUAGENCY" type="STRING" size="256"/>
+          <Column id="YN_TAXFREE" type="STRING" size="256"/>
+          <Column id="CD_BANK" type="STRING" size="256"/>
+          <Column id="DS_BANK" type="STRING" size="256"/>
+          <Column id="NO_ACCOUNT" type="STRING" size="256"/>
+          <Column id="NM_OPENER" type="STRING" size="256"/>
+          <Column id="YN_DELEGATE" type="STRING" size="256"/>
+          <Column id="PN_CHILD" type="INT" size="256"/>
+          <Column id="PN_PARENT" type="INT" size="256"/>
+          <Column id="PN_HANDICAP" type="INT" size="256"/>
+          <Column id="PN_OLD" type="INT" size="256"/>
+          <Column id="PN_BABY" type="INT" size="256"/>
+          <Column id="YN_WIFE" type="STRING" size="256"/>
+          <Column id="YN_WOMAN" type="STRING" size="256"/>
+          <Column id="DS_LASTSCHOOL" type="STRING" size="256"/>
+          <Column id="TY_PAY_GOYONG" type="STRING" size="256"/>
+          <Column id="TG_GOYONG" type="STRING" size="256"/>
+          <Column id="YN_GOYONG" type="STRING" size="256"/>
+          <Column id="TY_GY" type="STRING" size="256"/>
+          <Column id="GOYONG_MIGAIP" type="STRING" size="256"/>
+          <Column id="TY_PAY_SILVER" type="STRING" size="256"/>
+          <Column id="TG_SILVER" type="STRING" size="256"/>
+          <Column id="YN_SILVER" type="STRING" size="256"/>
+          <Column id="SILVER_MIGAIP" type="STRING" size="256"/>
+          <Column id="TY_PAY_RETIRE" type="STRING" size="256"/>
+          <Column id="TG_RETIRE" type="STRING" size="256"/>
+          <Column id="YN_RETIRE" type="STRING" size="256"/>
+          <Column id="RETIRE_MIGAIP" type="STRING" size="256"/>
+          <Column id="DT_SANJAEFR" type="STRING" size="256"/>
+          <Column id="DT_SANJAETO" type="STRING" size="256"/>
+          <Column id="TY_PAY_MEDICARE" type="STRING" size="256"/>
+          <Column id="TG_MEDICARE" type="STRING" size="256"/>
+          <Column id="YN_MEDICARE" type="STRING" size="256"/>
+          <Column id="TY_MEDICARE" type="STRING" size="256"/>
+          <Column id="MEDICARE_MIGAIP" type="STRING" size="256"/>
+          <Column id="NO_MEDICARE" type="STRING" size="256"/>
+          <Column id="DT_MEDICHIDUK" type="STRING" size="256"/>
+          <Column id="DT_MEDISANGSIL" type="STRING" size="256"/>
+          <Column id="GR_MEDICARE" type="STRING" size="256"/>
+          <Column id="AM_MONAVG_ANNUITY" type="INT" size="256"/>
+          <Column id="AM_MONAVG_HEALTH" type="INT" size="256"/>
+          <Column id="TY_PAY_KOOKMIN" type="STRING" size="256"/>
+          <Column id="TG_KOOKMIN" type="STRING" size="256"/>
+          <Column id="YN_KOOKMIN" type="STRING" size="256"/>
+          <Column id="TY_KOOKMIN" type="STRING" size="256"/>
+          <Column id="KOOKMIN_MIGAIP" type="STRING" size="256"/>
+          <Column id="YN_KOOKMINCHK" type="STRING" size="256"/>
+          <Column id="YN_BOSUWOLAK" type="STRING" size="256"/>
+          <Column id="GR_KOOKMIN" type="STRING" size="256"/>
+          <Column id="DT_KMCHIDUK" type="STRING" size="256"/>
+          <Column id="DT_KMSANGSIL" type="STRING" size="256"/>
+          <Column id="NOID_CHK" type="STRING" size="256"/>
+          <Column id="RT_GUNRO" type="STRING" size="256"/>
+          <Column id="TY_BLOOD" type="STRING" size="256"/>
+          <Column id="TY_WOIGUG" type="STRING" size="256"/>
+          <Column id="TY_WOIGUBUN" type="STRING" size="256"/>
+          <Column id="TY_GOYONG" type="STRING" size="256"/>
+          <Column id="CD_APPSITE" type="STRING" size="256"/>
+          <Column id="DS_REMARK" type="STRING" size="256"/>
+          <Column id="CD_ACCOUNT" type="STRING" size="256"/>
+          <Column id="CD_SEMOK" type="STRING" size="256"/>
+          <Column id="DS_SEMOK" type="STRING" size="256"/>
+          <Column id="YN_EDU" type="STRING" size="256"/>
+          <Column id="NO_RETIRE" type="STRING" size="256"/>
+          <Column id="CD_SINGO_JIKJONG" type="STRING" size="256"/>
+          <Column id="DS_SINGO_JIKJONG" type="STRING" size="256"/>
+          <Column id="CD_STAY" type="STRING" size="256"/>
+          <Column id="DS_STAY" type="STRING" size="256"/>
+          <Column id="TY_JIGUB" type="STRING" size="256"/>
+          <Column id="CD_VENDOR" type="STRING" size="256"/>
+          <Column id="DS_VENDOR" type="STRING" size="256"/>
+          <Column id="NO_ACCOUNT_V" type="STRING" size="256"/>
+          <Column id="DS_ACCOUNT_V" type="STRING" size="256"/>
+          <Column id="TY_CHAIYONG" type="STRING" size="256"/>
+          <Column id="NO_SEQ" type="INT" size="256"/>
+          <Column id="DT_IPSA1" type="STRING" size="256"/>
+          <Column id="DT_TOIJIK" type="STRING" size="256"/>
+          <Column id="TY_PAY" type="STRING" size="256"/>
+          <Column id="AM_WOLGUB" type="INT" size="256"/>
+          <Column id="AM_SIGUB" type="INT" size="256"/>
+          <Column id="AM_RWPAY" type="INT" size="256"/>
+          <Column id="AM_OTPAY" type="INT" size="256"/>
+          <Column id="AM_NWPAY" type="INT" size="256"/>
+          <Column id="AM_HWPAY" type="INT" size="256"/>
+          <Column id="AM_WWPAY" type="INT" size="256"/>
+          <Column id="AM_MWPAY" type="INT" size="256"/>
+          <Column id="AM_WOLPAY" type="INT" size="256"/>
+          <Column id="AM_BONPAY" type="INT" size="256"/>
+          <Column id="DS_ETC1" type="STRING" size="256"/>
+          <Column id="AM_ETC1" type="INT" size="256"/>
+          <Column id="DS_ETC2" type="STRING" size="256"/>
+          <Column id="AM_ETC2" type="INT" size="256"/>
+          <Column id="AM_TOTAL" type="INT" size="256"/>
+          <Column id="CD_COST" type="STRING" size="256"/>
+          <Column id="CD_DKCOST" type="STRING" size="256"/>
+          <Column id="DS_COST" type="STRING" size="256"/>
+          <Column id="DT_START" type="STRING" size="256"/>
+          <Column id="DT_END" type="STRING" size="256"/>
+          <Column id="TY_ILPAYGUBUN" type="STRING" size="256"/>
+          <Column id="TY_SELECT" type="STRING" size="256"/>
+          <Column id="AM_ANNUITY" type="INT" size="256"/>
+          <Column id="YN_GUNROPRINT" type="STRING" size="256"/>
+          <Column id="DS_JIKJONG" type="STRING" size="256"/>
+          <Column id="DS_ACCOUNT" type="STRING" size="256"/>
+          <Column id="NO_ID1" type="STRING" size="256"/>
+          <Column id="CD_HADO" type="STRING" size="256"/>
+          <Column id="DS_HADO" type="STRING" size="256"/>
+          <Column id="DT_CHECKUP" type="STRING" size="256"/>
+          <Column id="DS_INTERVIEW" type="STRING" size="256"/>
+          <Column id="AT_ENTDOC" type="STRING" size="256"/>
+          <Column id="AT_RETIREDOC" type="STRING" size="256"/>
+          <Column id="AT_ACCOUNTDOC" type="STRING" size="256"/>
+          <Column id="AM_ILGUB" type="BIGDECIMAL" size="256"/>
+          <Column id="CT_PROJECT_DAY" type="INT" size="256"/>
+          <Column id="AM_PROJECT_PAY" type="BIGDECIMAL" size="256"/>
+          <Column id="GF_NO_SEQ" type="BIGDECIMAL" size="256"/>
+          <Column id="GF_DS_PATH" type="STRING" size="256"/>
+          <Column id="GF_NM_FILE" type="STRING" size="256"/>
+          <Column id="GF_DS_ETC" type="STRING" size="256"/>
+          <Column id="RF_NO_SEQ" type="BIGDECIMAL" size="256"/>
+          <Column id="RF_DS_PATH" type="STRING" size="256"/>
+          <Column id="RF_NM_FILE" type="STRING" size="256"/>
+          <Column id="RF_DS_ETC" type="STRING" size="256"/>
+          <Column id="FF_NO_SEQ" type="BIGDECIMAL" size="256"/>
+          <Column id="FF_DS_PATH" type="STRING" size="256"/>
+          <Column id="FF_NM_FILE" type="STRING" size="256"/>
+          <Column id="FF_DS_ETC" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="TY_CHAIYONG" type="STRING" size="256"/>
+          <Column id="TY_JAJIK" type="STRING" size="256"/>
+          <Column id="NO_ID" type="STRING" size="256"/>
+          <Column id="TY_WOIGUG" type="STRING" size="256"/>
+          <Column id="TY_WOIGUBUN" type="STRING" size="256"/>
+          <Column id="CD_HADO" type="STRING" size="256"/>
+          <Column id="DS_HADO" type="STRING" size="256"/>
+          <Column id="NO_SABUN" type="STRING" size="256"/>
+          <Column id="DS_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CORP"/>
+            <Col id="CD_SITE"/>
+            <Col id="TY_CHAIYONG"/>
+            <Col id="TY_JAJIK"/>
+            <Col id="NO_ID"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_CHAIYONG">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">1</Col>
+            <Col id="DS_CODE">상용직</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">2</Col>
+            <Col id="DS_CODE">일용직</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_JAJIK"/>
+      <Dataset id="dsTY_JEOKYONG">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="VALUE">예</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="VALUE">아니오</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_JAGYEOK">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="VALUE">취득</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="VALUE">상실</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_YOYANG">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="VALUE">경감</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="VALUE">비경감</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_PAY"/>
+      <Dataset id="dsTY_WOIGUG">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsGOYONG_MIGAIP"/>
+      <Dataset id="dsRETIRE_MIGAIP"/>
+      <Dataset id="dsTY_CHAIYONGDA">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">1</Col>
+            <Col id="DS_CODE">상용직</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">2</Col>
+            <Col id="DS_CODE">일용직</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListSub2"/>
+      <Dataset id="dsTY_MEDICARE">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="VALUE">가입</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="VALUE">미가입</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTransfer">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256" description="현장코드"/>
+          <Column id="YM_WORK" type="STRING" size="256" description="출역년월"/>
+          <Column id="ID_INSERT" type="STRING" size="256" description="작업자ID"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRequired">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="DS_FIELD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_FIELD">DS_NAME</Col>
+            <Col id="DS_FIELD">성명</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">NO_JUMIN</Col>
+            <Col id="DS_FIELD">주민등록번호</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">NO_TEL1</Col>
+            <Col id="DS_FIELD">전화번호</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_ZIP</Col>
+            <Col id="DS_FIELD">주소</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">DS_ADDR2</Col>
+            <Col id="DS_FIELD">상세주소</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">TY_WOIGUG</Col>
+            <Col id="DS_FIELD">내/외국인 구분</Col>
+          </Row>
+          <Row>
+            <Col id="DS_FIELD">급여구분</Col>
+            <Col id="CD_FIELD">TY_PAY</Col>
+          </Row>
+          <Row>
+            <Col id="DS_FIELD">채용구분</Col>
+            <Col id="CD_FIELD">TY_CHAIYONG</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">TY_JIGUB</Col>
+            <Col id="DS_FIELD">지급처구분</Col>
+          </Row>
+          <Row>
+            <Col id="DS_FIELD">계약시작일자</Col>
+            <Col id="CD_FIELD">DT_START</Col>
+          </Row>
+          <Row>
+            <Col id="DS_FIELD">계약종료일자</Col>
+            <Col id="CD_FIELD">DT_END</Col>
+          </Row>
+          <Row>
+            <Col id="DS_FIELD">입사일자</Col>
+            <Col id="CD_FIELD">DT_IPSA</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsInsuUserRst"/>
+      <Dataset id="dsRtnData"/>
+      <FileDialog id="fileDialog" onclose="fileDialog_onclose"/>
+      <Dataset id="dsFile">
+        <ColumnInfo>
+          <Column id="CD_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <FileUpTransfer id="fileUpTransfer" onsuccess="fileUpTransfer_onsuccess"/>
+      <Dataset id="dsRemove">
+        <ColumnInfo>
+          <Column id="filename" type="STRING" size="256"/>
+          <Column id="filepath" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSave">
+        <ColumnInfo>
+          <Column id="TY_SAVE" type="STRING" size="256"/>
+          <Column id="NO_SEQ" type="INT" size="256"/>
+          <Column id="CD_GUBUN" type="STRING" size="256"/>
+          <Column id="DS_PATH" type="STRING" size="256"/>
+          <Column id="NM_FILE" type="STRING" size="256"/>
+          <Column id="SZ_FILE" type="BIGDECIMAL" size="256"/>
+          <Column id="DS_ETC" type="STRING" size="256"/>
+          <Column id="CD_REF1" type="STRING" size="256"/>
+          <Column id="CD_REF2" type="STRING" size="256"/>
+          <Column id="CD_REF3" type="STRING" size="256"/>
+          <Column id="ID_INSERT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <FileUpTransfer id="fileUpTransfer2" onsuccess="fileUpTransfer2_onsuccess"/>
+      <FileUpTransfer id="fileUpTransfer3" onsuccess="fileUpTransfer3_onsuccess"/>
+      <FileDialog id="fileDialog2" onclose="fileDialog2_onclose"/>
+      <FileDialog id="fileDialog3" onclose="fileDialog3_onclose"/>
+      <Dataset id="dsSave2">
+        <ColumnInfo>
+          <Column id="TY_SAVE" type="STRING" size="256"/>
+          <Column id="NO_SEQ" type="INT" size="256"/>
+          <Column id="CD_GUBUN" type="STRING" size="256"/>
+          <Column id="DS_PATH" type="STRING" size="256"/>
+          <Column id="NM_FILE" type="STRING" size="256"/>
+          <Column id="SZ_FILE" type="BIGDECIMAL" size="256"/>
+          <Column id="DS_ETC" type="STRING" size="256"/>
+          <Column id="CD_REF1" type="STRING" size="256"/>
+          <Column id="CD_REF2" type="STRING" size="256"/>
+          <Column id="CD_REF3" type="STRING" size="256"/>
+          <Column id="ID_INSERT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSave3">
+        <ColumnInfo>
+          <Column id="TY_SAVE" type="STRING" size="256"/>
+          <Column id="NO_SEQ" type="INT" size="256"/>
+          <Column id="CD_GUBUN" type="STRING" size="256"/>
+          <Column id="DS_PATH" type="STRING" size="256"/>
+          <Column id="NM_FILE" type="STRING" size="256"/>
+          <Column id="SZ_FILE" type="BIGDECIMAL" size="256"/>
+          <Column id="DS_ETC" type="STRING" size="256"/>
+          <Column id="CD_REF1" type="STRING" size="256"/>
+          <Column id="CD_REF2" type="STRING" size="256"/>
+          <Column id="CD_REF3" type="STRING" size="256"/>
+          <Column id="ID_INSERT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRemove2">
+        <ColumnInfo>
+          <Column id="filename" type="STRING" size="256"/>
+          <Column id="filepath" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRemove3">
+        <ColumnInfo>
+          <Column id="filename" type="STRING" size="256"/>
+          <Column id="filepath" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsFile2">
+        <ColumnInfo>
+          <Column id="CD_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsFile3">
+        <ColumnInfo>
+          <Column id="CD_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <FileDownTransfer id="FileDownTransfer"/>
+      <FileDownTransfer id="FileDownTransfer2"/>
+      <FileDownTransfer id="FileDownTransfer3"/>
+      <Dataset id="dsTY_SALY">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DS_CODE">일당제</Col>
+            <Col id="CD_CODE">D</Col>
+          </Row>
+          <Row>
+            <Col id="DS_CODE">월급제</Col>
+            <Col id="CD_CODE">M</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_SALY_ISSUE">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DS_CODE">개인</Col>
+            <Col id="CD_CODE">P</Col>
+          </Row>
+          <Row>
+            <Col id="DS_CODE">거래처</Col>
+            <Col id="CD_CODE">V</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item1" compid="divSearch.form.cfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item2" compid="divSearch.form.cboTY_CHAIYONG" propid="value" datasetid="dsSearch" columnid="TY_CHAIYONG"/>
+      <BindItem id="item3" compid="divSearch.form.cboTY_JAJIK" propid="value" datasetid="dsSearch" columnid="TY_JAJIK"/>
+      <BindItem id="item4" compid="divData.form.divDataRight.form.cboTY_CHAIYONG" propid="value" datasetid="dsListSub" columnid="TY_CHAIYONG"/>
+      <BindItem id="item5" compid="divData.form.divDataRight.form.cboTY_WOIGUG" propid="value" datasetid="dsListSub" columnid="TY_WOIGUG"/>
+      <BindItem id="item6" compid="divData.form.divDataRight.form.cfDS_ADDR.form.CDTextBox" propid="value" datasetid="dsListSub" columnid="CD_ZIP"/>
+      <BindItem id="item7" compid="divData.form.divDataRight.form.cfDS_ADDR.form.DSTextBox" propid="value" datasetid="dsListSub" columnid="DS_ADDR"/>
+      <BindItem id="item8" compid="divData.form.divDataRight.form.cboTY_PAY" propid="value" datasetid="dsListSub" columnid="TY_PAY"/>
+      <BindItem id="item9" compid="divData.form.divDataRight.form.txtDS_NAME" propid="value" datasetid="dsListSub" columnid="DS_NAME"/>
+      <BindItem id="item10" compid="divData.form.divDataRight.form.txtNO_TEL1" propid="value" datasetid="dsListSub" columnid="NO_TEL1"/>
+      <BindItem id="item11" compid="divData.form.divDataRight.form.txtNO_JUMIN" propid="value" datasetid="dsListSub" columnid="NO_ID"/>
+      <BindItem id="item12" compid="divData.form.divDataRight.form.cfCD_JIKJONG.form.CDTextBox" propid="value" datasetid="dsListSub" columnid="CD_JIKJONG"/>
+      <BindItem id="item13" compid="divData.form.divDataRight.form.cfCD_JIKJONG.form.DSTextBox" propid="value" datasetid="dsListSub" columnid="DS_JIKJONG"/>
+      <BindItem id="item14" compid="divData.form.divDataRight.form.cfCD_VENDOR_ACCOUNT.form.CDTextBox" propid="value" datasetid="dsListSub" columnid="NO_ACCOUNT_V"/>
+      <BindItem id="item48" compid="divData.form.divDataRight.form.cfCD_VENDOR_ACCOUNT.form.DSTextBox" propid="value" datasetid="dsListSub" columnid="DS_ACCOUNT_V"/>
+      <BindItem id="item15" compid="divData.form.divDataRight.form.cfCD_BANK.form.CDTextBox" propid="value" datasetid="dsListSub" columnid="CD_BANK"/>
+      <BindItem id="item16" compid="divData.form.divDataRight.form.cfCD_BANK.form.DSTextBox" propid="value" datasetid="dsListSub" columnid="DS_BANK"/>
+      <BindItem id="item17" compid="divData.form.divDataRight.form.tclDT_IPSA" propid="value" datasetid="dsListSub" columnid="DT_IPSA"/>
+      <BindItem id="item18" compid="divData.form.divDataRight.form.tclDT_TOIJIK" propid="value" datasetid="dsListSub" columnid="DT_TOIJIK"/>
+      <BindItem id="item19" compid="divData.form.divDataRight.form.txtDS_REMARK" propid="value" datasetid="dsListSub" columnid="DS_REMARK"/>
+      <BindItem id="item20" compid="divData.form.divDataRight.form.tclDT_START" propid="value" datasetid="dsListSub" columnid="DT_START"/>
+      <BindItem id="item21" compid="divData.form.divDataRight.form.cfCD_SINGO_JIKJONG.form.CDTextBox" propid="value" datasetid="dsListSub" columnid="CD_SINGO_JIKJONG"/>
+      <BindItem id="item22" compid="divData.form.divDataRight.form.cfCD_SINGO_JIKJONG.form.DSTextBox" propid="value" datasetid="dsListSub" columnid="DS_SINGO_JIKJONG"/>
+      <BindItem id="item23" compid="divData.form.divDataRight.form.chkYN_GOYONG" propid="value" datasetid="dsListSub" columnid="YN_GOYONG"/>
+      <BindItem id="item24" compid="divData.form.divDataRight.form.chkYN_MEDICARE" propid="value" datasetid="dsListSub" columnid="YN_MEDICARE"/>
+      <BindItem id="item25" compid="divData.form.divDataRight.form.chkRT_GUNRO" propid="value" datasetid="dsListSub" columnid="RT_GUNRO"/>
+      <BindItem id="item26" compid="divData.form.divDataRight.form.chkYN_KOOKMIN" propid="value" datasetid="dsListSub" columnid="YN_KOOKMIN"/>
+      <BindItem id="item28" compid="divData.form.divDataRight.form.chkYN_RETIRE" propid="value" datasetid="dsListSub" columnid="YN_RETIRE"/>
+      <BindItem id="item29" compid="divData.form.divDataRight.form.txtNO_MEDICARE" propid="value" datasetid="dsListSub" columnid="NO_MEDICARE"/>
+      <BindItem id="item30" compid="divData.form.divDataRight.form.txtID_SABUN" propid="value" datasetid="dsListSub" columnid="NO_SABUN"/>
+      <BindItem id="item31" compid="divData.form.divDataRight.form.cfCD_COUNTRY.form.CDTextBox" propid="value" datasetid="dsListSub" columnid="CD_COUNTRY"/>
+      <BindItem id="item32" compid="divData.form.divDataRight.form.cfCD_COUNTRY.form.DSTextBox" propid="value" datasetid="dsListSub" columnid="DS_COUNTRY"/>
+      <BindItem id="item33" compid="divData.form.divDataRight.form.cfCD_VENDOR.form.CDTextBox" propid="value" datasetid="dsListSub" columnid="CD_VENDOR"/>
+      <BindItem id="item34" compid="divData.form.divDataRight.form.cfCD_VENDOR.form.DSTextBox" propid="value" datasetid="dsListSub" columnid="DS_VENDOR"/>
+      <BindItem id="item35" compid="divData.form.divDataRight.form.txtAM_MEDICARE" propid="value" datasetid="dsListSub" columnid="AM_MONAVG_HEALTH"/>
+      <BindItem id="item36" compid="divData.form.divDataRight.form.txtAM_KOOKMIN" propid="value" datasetid="dsListSub" columnid="AM_MONAVG_ANNUITY"/>
+      <BindItem id="item38" compid="divData.form.divDataRight.form.chkYN_BOSUWOLAK" propid="value" datasetid="dsListSub" columnid="YN_BOSUWOLAK"/>
+      <BindItem id="item39" compid="divData.form.divDataRight.form.staGUNRO_ATTCHFILE_NM" propid="text" datasetid="dsListSub" columnid="GF_DS_ETC"/>
+      <BindItem id="item40" compid="divData.form.divDataRight.form.staRETIRE_ATTCHFILE_NM" propid="text" datasetid="dsListSub" columnid="RF_DS_ETC"/>
+      <BindItem id="item41" compid="divData.form.divDataRight.form.staFOR_ATTCHFILE_NM" propid="text" datasetid="dsListSub" columnid="FF_DS_ETC"/>
+      <BindItem id="item42" compid="divData.form.divDataRight.form.txtNM_OPENER" propid="value" datasetid="dsListSub" columnid="NM_OPENER"/>
+      <BindItem id="item43" compid="divData.form.divDataRight.form.txtNO_ACCOUNT" propid="value" datasetid="dsListSub" columnid="NO_ACCOUNT"/>
+      <BindItem id="item44" compid="divData.form.divDataRight.form.tclDT_END" propid="value" datasetid="dsListSub" columnid="DT_END"/>
+      <BindItem id="item45" compid="divData.form.divDataRight.form.txtAM_WOLGUB" propid="value" datasetid="dsListSub" columnid="AM_WOLGUB"/>
+      <BindItem id="item46" compid="divData.form.divDataRight.form.txtAM_ILGUB" propid="value" datasetid="dsListSub" columnid="AM_ILGUB"/>
+      <BindItem id="item47" compid="divData.form.divDataRight.form.cboTY_JIGUB" propid="value" datasetid="dsListSub" columnid="TY_JIGUB"/>
+      <BindItem id="item51" compid="divSearch.form.ccfNO_ID.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="NO_SABUN"/>
+      <BindItem id="item49" compid="divSearch.form.ccfNO_ID.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_NAME"/>
+      <BindItem id="item50" compid="divSearch.form.edtNO_ID" propid="value" datasetid="dsSearch" columnid="NO_ID"/>
+    </Bind>
+  </Form>
+</FDL>

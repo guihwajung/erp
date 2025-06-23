@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="450" height="300" maxwidth="480" maxheight="330" titletext="과세표준명세, 면세수입금액(팝업)" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staTitle" taborder="2" text="영세율상호주의 대상 입력" left="0" top="10" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+        <Div id="divData" taborder="1" left="0" top="40" bottom="60" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="7" right="0" height="124"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnConf" taborder="3" text="수정" left="137" width="69" height="27" bottom="30" onclick="btnConf_onclick"/>
+        <Button id="btnCancel" taborder="0" text="닫기" left="217" width="69" height="27" onclick="btnCancel_onclick" bottom="30"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	//조회처리
+	this.fnSelect();
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.dxGrid = this.divData.form.objGrid;
+	this.dxGrid2 = this.divData.form.objGrid2;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHV_VATMANAGEZERODLG");
+	
+	this.dxGrid.AfterEdit = "fnGrid_AfterEdit";
+// 	
+// 	this.dxGrid.setCellProperty("body", this.dxGrid.getBindCellIndex("body", "AM_SUPPLY"), "edittype", "expr:CD_CODE =='30'? 'none':'text'");
+// 	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SELFACNT", "string");
+	this.dsSelect.addColumn("YR_TAX", "string");
+	this.dsSelect.addColumn("NO_TAX", "string");
+	
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("CD_SELFACNT", "string");
+	this.dsUpdate.addColumn("YR_TAX", "string");
+	this.dsUpdate.addColumn("NO_TAX", "string");
+	this.dsUpdate.addColumn("NO_SEQ", "bigdecimal");
+	this.dsUpdate.addColumn("CD_CODE", "string");
+	this.dsUpdate.addColumn("CD_UPJONG", "string");
+	this.dsUpdate.addColumn("CD_NATION", "string");
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsList.clearData();
+		
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_SELFACNT", this.getOwnerFrame().CD_SELFACNT);
+	this.dsSelect.setColumn(0, "YR_TAX", this.getOwnerFrame().YR_TAX); 
+	this.dsSelect.setColumn(0, "NO_TAX", this.getOwnerFrame().NO_TAX); 
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsResult=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+}
+
+ /*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	if (!this.gfnGridValidate(this.dxGrid)) return;	
+	trace(" YN_CLOSE =>" + this.getOwnerFrame().YN_CLOSE);
+	if (this.getOwnerFrame().YN_CLOSE == "Y") {
+		this.gfnAlert("마감자료는 수정할 수 없습니다. 마감취소 후 작업하세요.", "");	
+	}
+	
+	this.dxGrid.updateToDataset();
+		
+	this.dsUpdate.clearData();
+	
+	//과세표준명세
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		
+		switch(flag) {
+			case "U":
+				var nrow = this.dsUpdate.addRow();
+				this.dsUpdate.setColumn(nrow, "CD_SELFACNT", this.getOwnerFrame().CD_SELFACNT);
+				this.dsUpdate.setColumn(nrow, "YR_TAX", this.getOwnerFrame().YR_TAX);
+				this.dsUpdate.setColumn(nrow, "NO_TAX", this.getOwnerFrame().NO_TAX);
+				this.dsUpdate.setColumn(nrow, "NO_SEQ", this.dsList.getColumn(i, "NO_SEQ"));
+				this.dsUpdate.setColumn(nrow, "CD_CODE", this.dsList.getColumn(i, "CD_CODE"));
+				this.dsUpdate.setColumn(nrow, "CD_UPJONG", this.dsList.getColumn(i, "CD_UPJONG"));
+				this.dsUpdate.setColumn(nrow, "CD_NATION", this.dsList.getColumn(i, "CD_NATION"));
+			
+				break;
+		}
+	}
+	if (this.dsUpdate.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "update=dsUpdate";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+*/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+
+		this.dsResult.addColumn(this.ucFlag, "string");
+		this.dsList.copyData(this.dsResult);
+		
+		for (var i=this.dsList.rowcount-1; i>=0; i--) {
+			if (i > 3)
+				this.dsList.deleteRow(i);
+		}
+		
+		if (this.getOwnerFrame().YN_CLOSE == "Y") {
+			this.btnConf.set_enable(false);
+		}
+		
+	}
+	
+	if (svcID == "save"){
+		if (errorCode == 0) {
+			this.fnExecute_callback = function() {
+				this.fnSelect();
+			}
+			this.gfnAlert("영세율 상호주의 정보가 수정되었습니다.", "fnExecute_callback");			
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}	
+	
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGrid_AfterEdit = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+// 	if (e.columnid == "AM_SUPPLY") {
+// 		if (e.oldvalue != e.newvalue) {
+// 			var amSum = this.dsList.getSum("AM_SUPPLY", 0, this.dsList.rowcount-1);
+// 			this.dsList.setColumn(this.dsList.rowcount-1, "AM_SUPPLY", amSum);
+// 			
+// 			this.dsList.setColumn(e.row, this.ucFlag, "U");
+// 			this.dsList.setColumn(this.dsList.rowcount-1, this.ucFlag, "U");
+// 			this.gfnSetFormStatus(this, "U");
+// 			
+// 		}
+// 	}
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+//취소버튼 클릭
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+
+this.btnConf_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.dsList.rowcount == 0 && this.dsList2.rowcount == 0)
+		return;
+
+	this.fnSave();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsResult"/>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DHVPR_VATMANAGEZERO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DHVPR_VATMANAGEZERO_UPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

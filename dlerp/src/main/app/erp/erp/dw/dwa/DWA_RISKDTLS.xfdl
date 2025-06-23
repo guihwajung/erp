@@ -1,0 +1,1170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SITE" taborder="1" text="현장코드" left="0.0" top="10.0" width="105.0" height="24.0" textAlign="center" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFSITE" CDTextWidth="80" taborder="2" left="staCD_SITE:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staNO_RISK" taborder="3" text="리스크번호" left="ccfCD_SITE:0.0" top="10.0" width="105.0" height="24.0" textAlign="center" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfNO_RISK" CodeFindName="DWX_CFRISK_01" CDTextWidth="90" taborder="4" left="staNO_RISK:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staNO_HADOCONT" taborder="5" text="계약번호" left="ccfNO_RISK:0.0" top="10.0" width="105.0" height="24.0" textDecoration="none" textAlign="center" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfNO_HADOCONT" CodeFindName="DWX_CFRISKHADO_01" CDTextWidth="90" taborder="6" left="staNO_HADOCONT:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" enable="false"/>
+              <CheckBox id="cchkYN_Pre" taborder="7" text="변경전" left="ccfNO_HADOCONT:0.0" top="10.0" width="60" height="24.0" onchanged="divSearch_cchkYN_Pre_onchanged"/>
+              <CheckBox id="cchkYN_DOKUB" taborder="8" text="도급" left="cchkYN_Pre:0.0" top="10.0" width="50" height="24.0" truevalue="Y" falsevalue="N" onchanged="divSearch_cchkYN_DOKUB_onchanged"/>
+              <Edit id="ctxtNO_SILHENG" taborder="9" right="5" top="10.0" width="200" height="24.0" enable="false" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Div id="divSplitter" taborder="1" left="30%" top="0" width="5" height="100%" background="skyblue" cursor="ew-resize" ondrag="divData_divSplitter_ondrag"/>
+              <Button id="btnRight" taborder="3" text="▶" left="divSplitter:5" top="35%" width="30" height="30" onclick="divData_btnRight_onclick"/>
+              <Button id="btnLeft" taborder="3" text="◀" left="divSplitter:5" top="55%" width="30" height="30" onclick="divData_btnLeft_onclick"/>
+              <Div id="divDataLeft" taborder="0" left="0" top="0" bottom="0" right="divSplitter:5">
+                <Layouts>
+                  <Layout>
+                    <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataRight" taborder="0" left="btnRight:5" top="0" bottom="0" right="0">
+                <Layouts>
+                  <Layout>
+                    <Grid id="objGridSub" taborder="0" left="0" top="0" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{ 
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 이전 화면에서 데이터 받기.
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_SITE) && !this.gfnIsNull(this.getOwnerFrame().NO_SILHENG) 
+		&& !this.gfnIsNull(this.getOwnerFrame().NO_RISK)) 
+	{
+		this.dsSearch.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+		this.ccfCD_SITE.form.DSTextBox.set_value(this.getOwnerFrame().DS_SITE);
+		this.dsSearch.setColumn(0, "NO_RISK", this.getOwnerFrame().NO_RISK);
+		this.ccfNO_RISK.form.DSTextBox.set_value(this.getOwnerFrame().NM_RISK);
+		this.dsSearch.setColumn(0, "NO_SILHENG", this.getOwnerFrame().NO_SILHENG);
+		
+		this.dsSearch.setColumn(0, "NO_HADOCONT", this.getOwnerFrame().NO_HADOCONT);
+		this.divSearch.form.ccfNO_HADOCONT.form.DSTextBox.set_value(this.getOwnerFrame().DS_HADOCONT);
+		this.dsSearch.setColumn(0, "NO_SEQCONT", this.getOwnerFrame().NO_SEQCONT);
+		
+		this.FormBtns.Select.click();
+	}
+	
+	this.divSearch_cchkYN_Pre_onchanged(this.divSearch.form.cchkYN_Pre, {postvalue:this.divSearch.form.cchkYN_Pre.value});
+	this.divSearch_cchkYN_DOKUB_onchanged(this.divSearch.form.cchkYN_DOKUB, {postvalue:this.divSearch.form.cchkYN_DOKUB.value});
+
+	this._AM_CALC = this.gfnGetConfig("DW", "AM_CALC");
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+	// 서브 버튼 사용
+	//this.gfnUseSubBtn(true, this.divData, this.divData.form.divSplitter); // divSplitter sync
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btn1 = this.gfnFormButtonAdd("btnExcelUpload", "fnExcelUpload");
+	this.btn2 = this.gfnFormButtonAdd("btnExcelDownload", "fnExcelDownload");
+	this.btnCostTuja = this.gfnFormButtonAdd("btnCostTuja", "fnCostTuja");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ccfNO_RISK = this.divSearch.form.ccfNO_RISK;
+	this.ccfNO_HADOCONT = this.divSearch.form.ccfNO_HADOCONT;
+
+	this.dxGrid = this.divData.form.divDataLeft.form.objGrid;
+	this.dxGridSub = this.divData.form.divDataRight.form.objGridSub;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {	
+	//this.ccfCD_SITE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	
+	this.ccfCD_SITE.AfterCDTextChanged = "AfterCDTextChanged";
+	this.ccfNO_RISK.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfNO_RISK.AfterCDTextChanged = "AfterCDTextChanged";
+	this.ccfNO_HADOCONT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfNO_HADOCONT.AfterCDTextChanged = "AfterCDTextChanged";
+
+	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DW", "DWA_RISKDTLSTREE","DS_ITEM","GR_COST");
+
+	this.gfnGridInit(this.dxGridSub, this.dsListSub, "DW", "DWA_RISKDTLS");
+	// 셀 변경 후 이벤트
+	this.dxGridSub.BeforeUserDataSetParam = "fnGridSub_BeforeUserDataSetParam";
+	this.dxGridSub.AfterEdit = "fnGridSub_AfterEdit";
+//	this.dsListSub.addEventHandler("canrowposchange", this.dsListSub_canrowposchange, this);
+
+	//this.dxGridSub.set_selecttype("cell");
+	this.dxGridSub.EnterCell = "fnGrid_EnterCell";
+	
+	// 트리 전체 접는 로직.
+	//this.dxGrid.set_treeinitstatus("collapse,all");
+	
+	// 서브그리드 수정불가 컬럼 배경색 주기(단가부분)
+	//this.gfnGridColumnColor(this.dxGridSub, "UP_DOKUB", "BACK_ReadOnly", "YN_CHG == 'Y'");
+	//this.gfnGridColumnColor(this.dxGridSub, "UP_SILHENG", "BACK_ReadOnly", "YN_CHG == 'Y'");
+	//this.gfnGridColumnColor(this.dxGridSub, "UP_HADO", "BACK_ReadOnly", "YN_CHG == 'Y'");
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("TY_WRK", "string");
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("NO_SILHENG", "string");
+	this.dsSelect.addColumn("NO_RISK", "string");
+	this.dsSelect.addColumn("NO_HADOCONT", "string");
+	this.dsSelect.addColumn("NO_SEQCONT", "string");
+	
+	this.dsSelectSub = new Dataset();
+	this.dsSelectSub.addColumn("TY_WRK", "string");
+	this.dsSelectSub.addColumn("CD_SITE", "string");
+	this.dsSelectSub.addColumn("NO_RISK", "string");
+	this.dsSelectSub.addColumn("NO_HADOCONT", "string");
+	this.dsSelectSub.addColumn("NO_SEQCONT", "string");
+	
+	this.dsSaveSub = new Dataset();
+	this.dsSaveSub.addColumn("TY_WRK", "string");
+	this.dsSaveSub.addColumn("ID_USER", "string");
+	this.dsSaveSub.addColumn("CD_SITE", "string");
+	this.dsSaveSub.addColumn("NO_RISK", "string");
+	this.dsSaveSub.addColumn("NO_SILHENG", "string");
+	this.dsSaveSub.addColumn("CD_COST", "string");
+	this.dsSaveSub.addColumn("CD_DKCOST", "string");
+	this.dsSaveSub.addColumn("CD_UPPER", "string");
+	this.dsSaveSub.addColumn("CD_PREVIOUS", "string");
+	this.dsSaveSub.addColumn("CD_ITEM", "string");
+	this.dsSaveSub.addColumn("DS_ITEM", "string");
+	this.dsSaveSub.addColumn("SZ_SIZE", "string");
+	this.dsSaveSub.addColumn("DS_UNIT", "string");
+	this.dsSaveSub.addColumn("QN_DOKUB_PRE", "bigdecimal");
+	this.dsSaveSub.addColumn("UP_DOKUB_PRE", "bigdecimal");
+	this.dsSaveSub.addColumn("AM_DOKUB_PRE", "bigdecimal");
+	this.dsSaveSub.addColumn("QN_DOKUB", "bigdecimal");
+	this.dsSaveSub.addColumn("UP_DOKUB", "bigdecimal");
+	this.dsSaveSub.addColumn("AM_DOKUB", "bigdecimal");
+	this.dsSaveSub.addColumn("QN_EXSILHENG", "bigdecimal");
+	this.dsSaveSub.addColumn("UP_EXSILHENG", "bigdecimal");
+	this.dsSaveSub.addColumn("AM_EXSILHENG", "bigdecimal");
+	this.dsSaveSub.addColumn("QN_SILHENG_PRE", "bigdecimal");
+	this.dsSaveSub.addColumn("UP_SILHENG_PRE", "bigdecimal");
+	this.dsSaveSub.addColumn("AM_SILHENG_PRE", "bigdecimal");
+
+	
+	
+	this.dsSaveSub.addColumn("QN_SILHENG", "bigdecimal");
+	this.dsSaveSub.addColumn("UP_MATERIAL", "bigdecimal");
+	this.dsSaveSub.addColumn("UP_LABOR", "bigdecimal");
+	this.dsSaveSub.addColumn("UP_OUTSOURCING", "bigdecimal");
+	this.dsSaveSub.addColumn("UP_EQUIPMENT", "bigdecimal");
+	this.dsSaveSub.addColumn("UP_COST", "bigdecimal");
+	this.dsSaveSub.addColumn("UP_SILHENG", "bigdecimal");
+	this.dsSaveSub.addColumn("AM_SILHENG", "bigdecimal");
+	this.dsSaveSub.addColumn("CD_CBS", "string");
+	this.dsSaveSub.addColumn("YN_NEW", "string");
+	this.dsSaveSub.addColumn("YN_CHG", "string");
+	this.dsSaveSub.addColumn("CD_RBS_LV1", "string");
+	this.dsSaveSub.addColumn("CD_RBS_LV2", "string");
+	this.dsSaveSub.addColumn("CD_RBS_LV3", "string");
+	this.dsSaveSub.addColumn("CD_RBS_LV4", "string");
+	this.dsSaveSub.addColumn("CD_RBS_LV5", "string");
+	this.dsSaveSub.addColumn("DS_RMKS", "string");
+	this.dsSaveSub.addColumn("GR_COST", "int");
+	this.dsSaveSub.addColumn("NO_HADOCONT", "string");
+	this.dsSaveSub.addColumn("NO_SEQCONT", "string");
+	this.dsSaveSub.addColumn("QN_HADO_PRE", "bigdecimal");
+	this.dsSaveSub.addColumn("UP_HADO_PRE", "bigdecimal");
+	this.dsSaveSub.addColumn("AM_HADO_PRE", "bigdecimal");
+	
+	this.dsSaveSub.addColumn("QN_HADO", "bigdecimal");
+	this.dsSaveSub.addColumn("UP_HADO", "bigdecimal");
+	this.dsSaveSub.addColumn("AM_HADO", "bigdecimal");
+
+	this.dsExecute = new Dataset();
+	this.dsExecute.addColumn("TY_WRK", "string");
+	this.dsExecute.addColumn("ID_USER", "string");
+	this.dsExecute.addColumn("CD_SITE", "string");
+	this.dsExecute.addColumn("NO_RISK", "string");
+	this.dsExecute.addColumn("NO_SILHENG", "string");
+}
+
+/************************************************************************
+ * 버튼 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "TY_WRK", "Q");
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "NO_SILHENG", this.dsSearch.getColumn(0, "NO_SILHENG"));
+	this.dsSelect.setColumn(0, "NO_RISK", this.dsSearch.getColumn(0, "NO_RISK"));
+	this.dsSelect.setColumn(0, "NO_HADOCONT", this.dsSearch.getColumn(0, "NO_HADOCONT"));
+	this.dsSelect.setColumn(0, "NO_SEQCONT", this.dsSearch.getColumn(0, "NO_SEQCONT"));
+		
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	var nrow = this.gfnGridAdd(this.dxGridSub, "bottom");
+	var rowpos = this.dsList.rowposition;
+	
+	this.dsListSub.set_enableevent(false);
+	
+	if(this.dsList.getColumn(rowpos, "YN_COST") == "Y")
+	{
+		this.dsListSub.setColumn(nrow, "CD_PREVIOUS", this.dsList.getColumn(rowpos,"CD_PREVIOUS"));
+		this.dsListSub.setColumn(nrow, "CD_UPPER", this.dsList.getColumn(rowpos,"CD_UPPER"));
+	}
+	else if(this.dsList.getColumn(rowpos, "YN_COST") == "N")
+	{
+		this.dsListSub.setColumn(nrow, "CD_PREVIOUS", this.dsList.getColumn(rowpos,"CD_DKCOST"));
+		this.dsListSub.setColumn(nrow, "CD_UPPER", this.dsList.getColumn(rowpos,"CD_COST"));
+	}
+	
+	this.dsListSub.setColumn(nrow, "CD_RBS_LV1", this.dsList.getColumn(rowpos,"CD_RBS_LV1"));
+	this.dsListSub.setColumn(nrow, "CD_RBS_LV2", this.dsList.getColumn(rowpos,"CD_RBS_LV2"));
+	this.dsListSub.setColumn(nrow, "CD_RBS_LV3", this.dsList.getColumn(rowpos,"CD_RBS_LV3"));
+	this.dsListSub.setColumn(nrow, "CD_RBS_LV4", this.dsList.getColumn(rowpos,"CD_RBS_LV4"));
+	this.dsListSub.setColumn(nrow, "CD_RBS_LV5", this.dsList.getColumn(rowpos,"CD_RBS_LV5"));
+	this.dsListSub.setColumn(nrow, "YN_EDIT", "Y");
+	this.dsListSub.setColumn(nrow, "YN_COST", "Y");
+	this.dsListSub.setColumn(nrow, "CD_ITEM", "");
+	this.dsListSub.setColumn(nrow, "YN_NEW", "Y");
+	this.dsListSub.setColumn(nrow, "YN_CHG", "N");
+	this.dsListSub.setColumn(nrow, "YN_DELETE", "Y");
+
+	this.dsListSub.set_enableevent(true);
+}
+
+/*
+ *	삭제 버튼
+ */ 
+this.fnDel = function() {
+	//this.gfnGridDel(this.dxGridSub);
+	this.fnReverseDelete();
+}
+
+/*
+ *	저장 버튼
+ */ 
+this.fnSave = function() {
+	if (!this.fnSaveValidate()) return;
+	if (!this.gfnGridValidate(this.dxGridSub)) return;
+
+	this.dxGridSub.updateToDataset();
+	
+	this.dsSaveSub.clearData();
+	
+	for (var i = 0; i < this.dsListSub.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsListSub, i);
+		switch(flag) {
+			case "I":
+			case "U":
+			case "D":
+				var nrow = this.dsSaveSub.addRow();
+				this.dsSaveSub.setColumn(nrow, "TY_WRK", flag);
+				this.dsSaveSub.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+				this.dsSaveSub.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+				this.dsSaveSub.setColumn(nrow, "NO_RISK", this.dsSearch.getColumn(0, "NO_RISK"));
+				this.dsSaveSub.setColumn(nrow, "NO_SILHENG", this.dsSearch.getColumn(0, "NO_SILHENG"));
+				this.dsSaveSub.setColumn(nrow, "CD_COST", this.dsListSub.getColumn(i, "CD_COST"));
+				this.dsSaveSub.setColumn(nrow, "CD_DKCOST", this.dsListSub.getColumn(i, "CD_DKCOST"));
+				this.dsSaveSub.setColumn(nrow, "CD_UPPER", this.dsListSub.getColumn(i, "CD_UPPER"));
+				this.dsSaveSub.setColumn(nrow, "CD_PREVIOUS", this.dsListSub.getColumn(i, "CD_PREVIOUS"));
+				this.dsSaveSub.setColumn(nrow, "CD_ITEM", this.dsListSub.getColumn(i, "CD_ITEM"));
+				this.dsSaveSub.setColumn(nrow, "DS_ITEM", this.dsListSub.getColumn(i, "DS_ITEM"));
+				this.dsSaveSub.setColumn(nrow, "SZ_SIZE", this.dsListSub.getColumn(i, "SZ_SIZE"));
+				this.dsSaveSub.setColumn(nrow, "DS_UNIT", this.dsListSub.getColumn(i, "DS_UNIT"));
+				this.dsSaveSub.setColumn(nrow, "QN_DOKUB", this.dsListSub.getColumn(i, "QN_DOKUB"));
+				this.dsSaveSub.setColumn(nrow, "UP_DOKUB", this.dsListSub.getColumn(i, "UP_DOKUB"));
+				this.dsSaveSub.setColumn(nrow, "AM_DOKUB", this.dsListSub.getColumn(i, "AM_DOKUB"));
+				this.dsSaveSub.setColumn(nrow, "QN_EXSILHENG", this.dsListSub.getColumn(i, "QN_EXSILHENG"));
+				this.dsSaveSub.setColumn(nrow, "UP_EXSILHENG", this.dsListSub.getColumn(i, "UP_EXSILHENG"));
+				this.dsSaveSub.setColumn(nrow, "AM_EXSILHENG", this.dsListSub.getColumn(i, "AM_EXSILHENG"));
+				this.dsSaveSub.setColumn(nrow, "QN_SILHENG", this.dsListSub.getColumn(i, "QN_SILHENG"));
+				this.dsSaveSub.setColumn(nrow, "UP_MATERIAL", this.dsListSub.getColumn(i, "UP_MATERIAL"));
+				this.dsSaveSub.setColumn(nrow, "UP_LABOR", this.dsListSub.getColumn(i, "UP_LABOR"));
+				this.dsSaveSub.setColumn(nrow, "UP_OUTSOURCING", this.dsListSub.getColumn(i, "UP_OUTSOURCING"));
+				this.dsSaveSub.setColumn(nrow, "UP_EQUIPMENT", this.dsListSub.getColumn(i, "UP_EQUIPMENT"));
+				this.dsSaveSub.setColumn(nrow, "UP_COST", this.dsListSub.getColumn(i, "UP_COST"));
+				this.dsSaveSub.setColumn(nrow, "UP_SILHENG", this.dsListSub.getColumn(i, "UP_SILHENG"));
+				this.dsSaveSub.setColumn(nrow, "AM_SILHENG", this.dsListSub.getColumn(i, "AM_SILHENG"));
+				this.dsSaveSub.setColumn(nrow, "CD_CBS", this.dsListSub.getColumn(i, "CD_CBS"));
+				this.dsSaveSub.setColumn(nrow, "YN_NEW", this.dsListSub.getColumn(i, "YN_NEW"));
+				this.dsSaveSub.setColumn(nrow, "YN_CHG", this.dsListSub.getColumn(i, "YN_CHG"));
+				this.dsSaveSub.setColumn(nrow, "CD_RBS_LV1", this.dsListSub.getColumn(i, "CD_RBS_LV1"));
+				this.dsSaveSub.setColumn(nrow, "CD_RBS_LV2", this.dsListSub.getColumn(i, "CD_RBS_LV2"));
+				this.dsSaveSub.setColumn(nrow, "CD_RBS_LV3", this.dsListSub.getColumn(i, "CD_RBS_LV3"));
+				this.dsSaveSub.setColumn(nrow, "CD_RBS_LV4", this.dsListSub.getColumn(i, "CD_RBS_LV4"));
+				this.dsSaveSub.setColumn(nrow, "CD_RBS_LV5", this.dsListSub.getColumn(i, "CD_RBS_LV5"));
+				this.dsSaveSub.setColumn(nrow, "DS_RMKS", this.dsListSub.getColumn(i, "DS_RMKS"));
+				this.dsSaveSub.setColumn(nrow, "GR_COST", this.dsListSub.getColumn(i, "GR_COST"));
+				this.dsSaveSub.setColumn(nrow, "NO_HADOCONT", this.dsSearch.getColumn(0, "NO_HADOCONT"));
+				this.dsSaveSub.setColumn(nrow, "NO_SEQCONT", this.dsSearch.getColumn(0, "NO_SEQCONT"));
+				this.dsSaveSub.setColumn(nrow, "QN_HADO", this.dsListSub.getColumn(i, "QN_HADO"));
+				this.dsSaveSub.setColumn(nrow, "UP_HADO", this.dsListSub.getColumn(i, "UP_HADO"));
+				this.dsSaveSub.setColumn(nrow, "AM_HADO", this.dsListSub.getColumn(i, "AM_HADO"));
+
+				this.dsSaveSub.setColumn(nrow, "QN_DOKUB_PRE", this.dsListSub.getColumn(i, "QN_DOKUB_PRE"));
+				this.dsSaveSub.setColumn(nrow, "UP_DOKUB_PRE", this.dsListSub.getColumn(i, "UP_DOKUB_PRE"));
+				this.dsSaveSub.setColumn(nrow, "AM_DOKUB_PRE", this.dsListSub.getColumn(i, "AM_DOKUB_PRE"));
+				this.dsSaveSub.setColumn(nrow, "QN_SILHENG_PRE", this.dsListSub.getColumn(i, "QN_SILHENG_PRE"));
+				this.dsSaveSub.setColumn(nrow, "UP_SILHENG_PRE", this.dsListSub.getColumn(i, "UP_SILHENG_PRE"));
+				this.dsSaveSub.setColumn(nrow, "AM_SILHENG_PRE", this.dsListSub.getColumn(i, "AM_SILHENG_PRE"));
+				this.dsSaveSub.setColumn(nrow, "QN_HADO_PRE", this.dsListSub.getColumn(i, "QN_HADO_PRE"));
+				this.dsSaveSub.setColumn(nrow, "UP_HADO_PRE", this.dsListSub.getColumn(i, "UP_HADO_PRE"));
+				this.dsSaveSub.setColumn(nrow, "AM_HADO_PRE", this.dsListSub.getColumn(i, "AM_HADO_PRE"));
+
+				break;
+		}
+	}
+	
+	if (this.dsSaveSub.rowcount == 0) return;
+
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSaveSub";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	엑셀 버튼
+ */ 
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+ 
+/************************************************************************
+ * 서브 버튼 이벤트
+ ************************************************************************/
+this.fnSelectSub = function() {
+	if (this.dxGrid.rowcount == 0/* || this.dxGrid.currentrow < 0*/) return false;
+	
+	this.dsListSub.clearData();
+	
+	this.gfnGridBeforeSelect(this.dxGridSub);
+	
+	this.dsSelectSub.clearData();
+	this.dsSelectSub.addRow();
+	
+	this.dsSelectSub.setColumn(0, "TY_WRK", "Q");
+	this.dsSelectSub.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelectSub.setColumn(0, "NO_RISK", this.dsSearch.getColumn(0, "NO_RISK"));
+	this.dsSelectSub.setColumn(0, "NO_HADOCONT", this.dsSearch.getColumn(0, "NO_HADOCONT"));
+	this.dsSelectSub.setColumn(0, "NO_SEQCONT", this.dsSearch.getColumn(0, "NO_SEQCONT"));
+				
+	var strSvcId    = "detail";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "selectSub=dsSelectSub";
+	var outData     = "dsListSub=selectSub0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc);   // 통신방법 정의 [생략가능]
+
+}
+
+this.fnExecute = function() {
+
+	this.dsExecute.clearData();
+	
+	var nrow = this.dsExecute.addRow();
+	this.dsExecute.setColumn(nrow, "TY_WRK", "AGG");
+	this.dsExecute.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	this.dsExecute.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsExecute.setColumn(nrow, "NO_RISK", this.dsSearch.getColumn(0, "NO_RISK"));
+	this.dsExecute.setColumn(nrow, "NO_SILHENG", this.dsSearch.getColumn(0, "NO_SILHENG"));
+		
+	
+	if (this.dsExecute.rowcount == 0) return;
+		
+	var strSvcId    = "execute";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "execute=dsExecute";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE"))) {
+		validate = false;
+		//Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드를 입력하세요.", "fnVaidateCallback");
+	}
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "NO_RISK"))) {
+		validate = false;
+		//Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ccfNO_RISK.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("리스크 번호를 입력하세요.", "fnVaidateCallback");
+	}
+	
+	return validate;
+};
+
+this.fnSaveValidate = function()
+{
+	validate = true;
+
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE"))) {
+		validate = false;
+		//Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드를 입력하세요.", "fnVaidateCallback");
+	}
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "NO_RISK"))) {
+		validate = false;
+		//Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ccfNO_RISK.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("리스크 번호를 입력하세요.", "fnVaidateCallback");
+	}
+	
+	return validate;
+}
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+		
+		this._gfnGridTreeOpen(this.dxGrid, 1);
+		
+		// 트리의 레벨2까지만 펼침
+		/*
+		if(this.dsList.rowcount > 0){
+			this.dxGrid.setTreeStatus(1, true);			
+		}	
+		*/
+		
+		this.fnSelectSub();
+		//this.FormBtns.SubSelect.click();
+	}
+	else if (svcID == "detail") {
+		this.gfnGridAfterSelect(this.dxGridSub);	
+	}
+	else if (svcID == "save") {
+		this.fnExecute();
+	}
+	else if (svcID == "execute") {
+		this.FormBtns.Select.click();
+	}
+	
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+// 	if (id == "ccfCD_SITE") {	
+// 		dsUserParam.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));	// 현장코드
+// 	}
+	if (id == "ccfNO_RISK") {
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE")))
+		{
+			this.gfnAlert("현장코드를 먼저 입력해주세요.");
+			return false;
+		}
+		
+		dsUserParam.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));	// 현장코드
+	}
+	else if(id == "ccfNO_HADOCONT")
+	{
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE")))
+		{
+			this.gfnAlert("현장코드를 먼저 입력해주세요.");
+			return false;
+		}else if(this.gfnIsNull(this.dsSearch.getColumn(0, "NO_RISK")))
+		{
+			this.gfnAlert("리스크번호를 먼저 입력해주세요.");
+			return false;
+		}
+		
+		dsUserParam.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));	// 현장코드
+		dsUserParam.setColumn(nrow, "NO_RISK", this.dsSearch.getColumn(0, "NO_RISK"));	// 현장코드
+
+	}
+	
+	return true;
+}
+
+this.AfterCDTextChanged = function(id, codeFindData) {
+	
+	if(id == "ccfCD_SITE")
+	{
+		this.dsSearch.setColumn(0, "NO_RISK", "");
+		this.divSearch.form.ccfNO_RISK.form.DSTextBox.set_value("");
+		this.dsSearch.setColumn(0, "NO_SILHENG", "");
+		this.dsSearch.setColumn(0, "NO_HADOCONT", "");
+		this.ccfNO_HADOCONT.form.DSTextBox.set_value("");
+		this.dsSearch.setColumn(0, "NO_SEQCONT", "");
+		
+		this.fnSearchInit();
+	}
+	else if(id == "ccfNO_RISK")
+	{
+		var arr = codeFindData; 
+		if(arr.length > 0)
+		{
+			this.dsSearch.setColumn(0, "NO_SILHENG", arr[0]["NO_SILHENG"]);
+			this.dsSearch.setColumn(0, "NO_HADOCONT", arr[0]["NO_HADOCONT"]);
+			this.divSearch.form.ccfNO_HADOCONT.form.DSTextBox.set_value(arr[0]["DS_HADOCONT"]);
+			this.dsSearch.setColumn(0, "NO_SEQCONT", arr[0]["NO_SEQCONT"]);
+		}
+		else
+		{
+			this.dsSearch.setColumn(0, "NO_SILHENG", "");
+			this.dsSearch.setColumn(0, "NO_HADOCONT", "");
+			this.divSearch.form.ccfNO_HADOCONT.form.DSTextBox.set_value("");
+			this.dsSearch.setColumn(0, "NO_SEQCONT", "");
+		}
+		
+		this.fnSearchInit();
+	}
+	else if(id == "ccfNO_HADOCONT")
+	{
+		var arr = codeFindData; 
+		if(arr.length > 0)
+		{
+			this.dsSearch.setColumn(0, "NO_SEQCONT", arr[0]["NO_SEQCONT"]);
+		}
+		else
+		{
+			this.dsSearch.setColumn(0, "NO_SEQCONT", "");
+		}
+	}
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+// cell 클릭했을때 이벤트(해당 cell에 대한 이벤트를 건다)
+this.fnGrid_EnterCell = function(obj:nexacro.Grid, row, cell) {
+	// 수정가능 true, false 처리하려는 컬럼에 대해서만 return 처리할것. 
+	var colnm = this.gfnGridGetBindColumnNameByIndex(this.dxGridSub, cell);	// 클릭한 cell의 컬럼명
+	
+	// YN_CHG 값이 Y일때 수정 불가(도급/확정/발주 단가)
+	/*
+	if(colnm == "UP_DOKUB" || colnm == "UP_SILHENG" || colnm == "UP_HADO"){
+		if(this.dsListSub.getColumn(row, "YN_CHG") == "Y") {
+		
+			return false;
+		}else{
+			return true;
+		}
+	}	
+	*/
+	
+	if(this.dsListSub.getColumn(row, "YN_EDIT") != "Y")
+	{
+		return;
+	}
+	else
+	{
+		if(this.dsListSub.getColumn(row, "YN_NEW") == "Y")
+		{
+			switch(colnm)
+			{
+				case "DS_ITEM" : case "SZ_SIZE" :
+				case "DS_UNIT" : case "QN_DOKUB" :
+				case "UP_DOKUB" : case "QN_SILHENG" :
+				case "UP_SILHENG" : 
+					return true;
+				break;
+			}	
+		}
+		else
+		{
+			if(this.dsListSub.getColumn(row, "YN_LSUNIT") == "Y")
+			{
+				switch(colnm)
+				{
+					case "UP_DOKUB" : case "UP_SILHENG" : 
+					case "QN_DOKUB" : case "QN_SILHENG" : 
+						return true;
+					break;
+				}
+			}
+			else
+			{
+				switch(colnm)
+				{
+					case "QN_DOKUB" : case "QN_SILHENG" : 
+						return true;
+					break;
+				}
+			}
+		}
+	}
+	
+	
+	return;
+}
+
+this.fnGridSub_BeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+ 	if (id == "DQX_CBSITEMALL") {
+ 		dsUserParam.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+ 	}
+	return true;
+}
+
+this.fnGridSub_AfterEdit = function(obj:nexacro.NormalDataset, e:nexacro.DSColChangeEventInfo)
+ {
+	if(e.columnid == "QN_DOKUB" || e.columnid == "UP_DOKUB")
+	{
+		if(e.oldvalue != e.newvalue)
+		{
+			var QN_DOKUB = nexacro.toNumber(this.dsListSub.getColumn(e.row, "QN_DOKUB"),0);
+			var UP_DOKUB = nexacro.toNumber(this.dsListSub.getColumn(e.row, "UP_DOKUB"),0);
+			
+			var am_dokub = nexacro.toNumber((QN_DOKUB * UP_DOKUB),0);
+			
+			this.dsListSub.setColumn(e.row, "AM_DOKUB", this.fnRoundOrFloor(am_dokub));
+			//this.dsListSub.setColumn(e.row, "AM_DOKUB", QN_DOKUB * UP_DOKUB);
+		}
+	}
+	else if(e.columnid == "QN_EXSILHENG" || e.columnid == "UP_EXSILHENG")
+	{
+		if(e.oldvalue != e.newvalue)
+		{
+			var QN_EXSILHENG = nexacro.toNumber(this.dsListSub.getColumn(e.row, "QN_EXSILHENG"),0);
+			var UP_EXSILHENG = nexacro.toNumber(this.dsListSub.getColumn(e.row, "UP_EXSILHENG"),0);
+			
+			var am_exsilheng = nexacro.toNumber((QN_EXSILHENG * UP_EXSILHENG),0);
+			
+			this.dsListSub.setColumn(e.row, "AM_EXSILHENG", this.fnRoundOrFloor(am_exsilheng));
+			
+		//	this.dsListSub.setColumn(e.row, "AM_EXSILHENG", QN_EXSILHENG * UP_EXSILHENG);
+		}
+	}
+	else if(e.columnid == "QN_SILHENG" || e.columnid == "UP_SILHENG")
+	{
+		if(e.oldvalue != e.newvalue)
+		{
+			var QN_SILHENG = nexacro.toNumber(this.dsListSub.getColumn(e.row, "QN_SILHENG"),0);
+			var UP_SILHENG = nexacro.toNumber(this.dsListSub.getColumn(e.row, "UP_SILHENG"),0);
+			
+			var am_silheng = nexacro.toNumber((QN_SILHENG * UP_SILHENG),0);
+			
+			this.dsListSub.setColumn(e.row, "AM_SILHENG", this.fnRoundOrFloor(am_silheng));
+		//	this.dsListSub.setColumn(e.row, "AM_SILHENG", QN_SILHENG * UP_SILHENG);
+		}
+	}
+ }
+ 
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+		this.gfnGridClear(this.dxGridSub);
+	}
+}
+
+this.divData_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	if(e.userdata == "splitter") {
+		this.divData.form.divSplitter.set_left(e.clientx);
+		this.divData.form.resetScroll();
+	}
+};
+
+this.divData_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	e.set_userdata("splitter");
+	return true;
+};
+
+// 변경전 체크박스
+this.divSearch_cchkYN_Pre_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	var QN_DOKUB_PRE_Index = this.dxGridSub.getBindCellIndex("body", "QN_DOKUB_PRE");
+	var UP_DOKUB_PRE_Index = this.dxGridSub.getBindCellIndex("body", "UP_DOKUB_PRE");
+	var AM_DOKUB_PRE_Index = this.dxGridSub.getBindCellIndex("body", "AM_DOKUB_PRE");
+	var QN_SILHENG_PRE_Index = this.dxGridSub.getBindCellIndex("body", "QN_SILHENG_PRE");
+	var UP_SILHENG_PRE_Index = this.dxGridSub.getBindCellIndex("body", "UP_SILHENG_PRE");
+	var AM_SILHENG_PRE_Index = this.dxGridSub.getBindCellIndex("body", "AM_SILHENG_PRE");
+	var QN_HADO_PRE_Index  = this.dxGridSub.getBindCellIndex("body", "QN_HADO_PRE");
+	var UP_HADO_PRE_Index  = this.dxGridSub.getBindCellIndex("body", "UP_HADO_PRE");
+	var AM_HADO_PRE_Index  = this.dxGridSub.getBindCellIndex("body", "AM_HADO_PRE");
+
+	if(obj.isChecked()) {
+		if(this.divSearch.form.cchkYN_DOKUB.isChecked())
+		{
+			this.dxGridSub.setRealColSize("body", QN_DOKUB_PRE_Index, 70);
+			this.dxGridSub.setRealColSize("body", UP_DOKUB_PRE_Index, 80);
+			this.dxGridSub.setRealColSize("body", AM_DOKUB_PRE_Index, 100);
+		}
+		this.dxGridSub.setRealColSize("body", QN_SILHENG_PRE_Index, 70);
+		this.dxGridSub.setRealColSize("body", UP_SILHENG_PRE_Index, 80);
+		this.dxGridSub.setRealColSize("body", AM_SILHENG_PRE_Index, 100);
+		this.dxGridSub.setRealColSize("body", QN_HADO_PRE_Index, 70);
+		this.dxGridSub.setRealColSize("body", UP_HADO_PRE_Index, 80);
+		this.dxGridSub.setRealColSize("body", AM_HADO_PRE_Index, 100);
+	}
+	else
+	{
+		this.dxGridSub.setRealColSize("body", QN_DOKUB_PRE_Index, 0);
+		this.dxGridSub.setRealColSize("body", UP_DOKUB_PRE_Index, 0);
+		this.dxGridSub.setRealColSize("body", AM_DOKUB_PRE_Index, 0);
+		this.dxGridSub.setRealColSize("body", QN_SILHENG_PRE_Index, 0);
+		this.dxGridSub.setRealColSize("body", UP_SILHENG_PRE_Index, 0);
+		this.dxGridSub.setRealColSize("body", AM_SILHENG_PRE_Index, 0);
+		this.dxGridSub.setRealColSize("body", QN_HADO_PRE_Index, 0);
+		this.dxGridSub.setRealColSize("body", UP_HADO_PRE_Index, 0);
+		this.dxGridSub.setRealColSize("body", AM_HADO_PRE_Index, 0);
+	}
+};
+
+// 도급 체크박스
+this.divSearch_cchkYN_DOKUB_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	var QN_DOKUB_PRE_Index = this.dxGridSub.getBindCellIndex("body", "QN_DOKUB_PRE");
+	var UP_DOKUB_PRE_Index = this.dxGridSub.getBindCellIndex("body", "UP_DOKUB_PRE");
+	var AM_DOKUB_PRE_Index = this.dxGridSub.getBindCellIndex("body", "AM_DOKUB_PRE");
+	var QN_DOKUB_Index = this.dxGridSub.getBindCellIndex("body", "QN_DOKUB");
+	var UP_DOKUB_Index = this.dxGridSub.getBindCellIndex("body", "UP_DOKUB");
+	var AM_DOKUB_Index = this.dxGridSub.getBindCellIndex("body", "AM_DOKUB");
+	var AM_DOKUB_CHG_Index = this.dxGridSub.getBindCellIndex("body", "AM_DOKUB_CHG");
+	
+	if(obj.isChecked()) {
+		if(this.divSearch.form.cchkYN_Pre.isChecked())
+		{
+			this.dxGridSub.setRealColSize("body", QN_DOKUB_PRE_Index, 70);
+			this.dxGridSub.setRealColSize("body", UP_DOKUB_PRE_Index, 80);
+			this.dxGridSub.setRealColSize("body", AM_DOKUB_PRE_Index, 100);
+		}
+		this.dxGridSub.setRealColSize("body", QN_DOKUB_Index, 70);
+		this.dxGridSub.setRealColSize("body", UP_DOKUB_Index, 80);
+		this.dxGridSub.setRealColSize("body", AM_DOKUB_Index, 100);
+		this.dxGridSub.setRealColSize("body", AM_DOKUB_CHG_Index, 100);
+	}
+	else
+	{
+		this.dxGridSub.setRealColSize("body", QN_DOKUB_PRE_Index, 0);
+		this.dxGridSub.setRealColSize("body", UP_DOKUB_PRE_Index, 0);
+		this.dxGridSub.setRealColSize("body", AM_DOKUB_PRE_Index, 0);
+		this.dxGridSub.setRealColSize("body", QN_DOKUB_Index, 0);
+		this.dxGridSub.setRealColSize("body", UP_DOKUB_Index, 0);
+		this.dxGridSub.setRealColSize("body", AM_DOKUB_Index, 0);
+		this.dxGridSub.setRealColSize("body", AM_DOKUB_CHG_Index, 0);
+	}
+	
+};
+
+
+// ▶ 버튼 클릭시.
+this.divData_btnRight_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var rows = this.dxGrid.getSelectedDatasetRows();
+	
+	for(var i = 0; i < rows.length; i++)
+	{
+		var nrow = rows[i];
+		
+		// 내역에 있는지 확인.
+		for(var j = 0; j < this.dsListSub.getRowCount(); j++)
+		{
+			if(this.dsList.getColumn(nrow, "CD_COST") == this.dsListSub.getColumn(j, "CD_COST"))
+			{
+				this.gfnAlert("공종코드 " + this.dsList.getColumn(nrow, "CD_COST") + "이 존재합니다.");
+				return false;
+			}
+		}
+	}
+	
+	this.dsListSub.set_enableevent(false);
+	
+	for(var i = 0; i < rows.length; i++)
+	{
+		var nrow = rows[i];
+		
+		// YN_COST가 N이라면 최하위 노드가 아님.
+		if(this.dsList.getColumn(nrow,"YN_COST") == "N") continue;
+		
+		var listRow = this.dsListSub.addRow();
+
+		this.dsListSub.copyRow(listRow, this.dsList, nrow);
+		this.dsListSub.copyRow(listRow, this.dsList, nrow, "QN_DOKUP_PRE=QN_DOKUP,QN_DOKUB_PRE=QN_DOKUB,UP_DOKUB_PRE=UP_DOKUB,AM_DOKUB_PRE=AM_DOKUB,QN_EXSILHENG_PRE=QN_EXSILHENG,UP_EXSILHENG_PRE=UP_EXSILHENG,AM_EXSILHENG_PRE=AM_EXSILHENG,QN_SILHENG_PRE=QN_SILHENG,UP_SILHENG_PRE=UP_SILHENG,AM_SILHENG_PRE=AM_SILHENG");
+		this.dsListSub.setColumn(listRow, this.ucFlag, "I");
+		this.dsListSub.setColumn(listRow, "YN_EDIT", "Y");
+		this.dsListSub.setColumn(listRow, "YN_NEW", "N");
+		this.dsListSub.setColumn(listRow, "YN_CHG", "Y");
+		this.dsListSub.setColumn(listRow, "YN_DELETE", "Y");
+		this.dsListSub.setColumn(listRow, "QN_HADO_PRE", this.dsList.getColumn(nrow, "QN_HADO"));
+		this.dsListSub.setColumn(listRow, "UP_HADO_PRE", this.dsList.getColumn(nrow, "UP_HADO"));
+		this.dsListSub.setColumn(listRow, "AM_HADO_PRE", this.dsList.getColumn(nrow, "AM_HADO"));
+		this.dsListSub.setColumn(listRow, "QN_HADO", this.dsList.getColumn(nrow, "QN_HADO"));
+		this.dsListSub.setColumn(listRow, "UP_HADO", this.dsList.getColumn(nrow, "UP_HADO"));
+		this.dsListSub.setColumn(listRow, "AM_HADO", this.dsList.getColumn(nrow, "AM_HADO"));
+		this.dsListSub.setColumn(listRow, "YN_LSUNIT", this.dsList.getColumn(nrow, "YN_LSUNIT"));
+
+		this.gfnSetFormStatus(this, "I");
+	}
+
+	this.dsListSub.set_enableevent(true);
+};
+
+// ◀ 버튼 클릭시.
+this.divData_btnLeft_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnReverseDelete();
+};
+
+// 기존 공통함수의 삭제로는 여러건이 Insert로 등록되어있으면 전체 삭제가 안되서 함수로 생성.
+this.fnReverseDelete = function() {
+	var rows = this.dxGridSub.getSelectedDatasetRows();
+	if(rows.length < 1) return;
+	
+	this.dsListSub.set_enableevent(false);
+
+	for(var i = rows.length - 1; i >= 0; i--)
+	{
+		var nrow = rows[i];
+		if(this.dsListSub.getColumn(nrow, "YN_DELETE") == "Y")
+		{
+			var flag = this.dsListSub.getColumn(nrow, this.ucFlag);
+			
+			if (flag == "I") {
+				this.dsListSub.deleteRow(nrow);
+			} 
+			else if (flag == "D") {
+				this.dsListSub.setColumn(nrow, this.ucFlag, "");
+			}
+			else if (flag == "DU") {
+				this.dsListSub.setColumn(nrow, this.ucFlag, "U");
+			}
+			else {
+				if (flag == "U") {
+					this.dsListSub.setColumn(nrow, this.ucFlag, "DU");
+				}
+				else if (flag != "#") {
+					this.dsListSub.setColumn(nrow, this.ucFlag, "D");
+				}
+			}
+		}
+	}
+	this.gfnSetFormStatus(this, "D");
+	this.dsListSub.set_enableevent(true);
+	
+	this._grd_entercell(this.dxGridSub, this.dxGridSub.currentrow, this.dxGridSub.currentcell);	
+	
+}
+
+// 아래부터는 확장버튼 이벤트.
+this.fnExcelUpload = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	
+	var param = {};
+	
+	param.CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+	param.DS_SITE = this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+	param.NO_RISK = this.dsSearch.getColumn(0, "NO_RISK");
+	param.NM_RISK = this.divSearch.form.ccfNO_RISK.form.DSTextBox.text;
+	param.NO_SILHENG = this.dsSearch.getColumn(0, "NO_SILHENG");
+
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DWA_RISKDTLSEXCEL", "", param);
+
+}
+
+this.fnExcelDownload = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var param = {};
+	
+	param.CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+	param.DS_SITE = this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+	param.NO_RISK = this.dsSearch.getColumn(0, "NO_RISK");
+	param.NM_RISK = this.divSearch.form.ccfNO_RISK.form.DSTextBox.text;
+	param.NO_SILHENG = this.dsSearch.getColumn(0, "NO_SILHENG");
+
+	this.gfnAlert("ExcelDownload 미구현");
+}
+
+
+this.fnCostTuja = function(obj:nexacro.Button, e:nexacro.ClickEventInfo){
+
+	if(!this.gfnGridIsRow(this.dxGrid)){return false;}
+	var param = {};
+	param.CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+	param.DS_SITE = this.ccfCD_SITE.form.DSTextBox.value;
+	param.CD_COST = this.dsListSub.getColumn(this.dsListSub.rowposition, "CD_COST");
+	param.CD_DKCOST = this.dsListSub.getColumn(this.dsListSub.rowposition, "CD_PREVIOUS");
+	param.DS_COST = this.dsListSub.getColumn(this.dsListSub.rowposition, "DS_ITEM");
+	param.SZ_SIZE = this.dsListSub.getColumn(this.dsListSub.rowposition, "SZ_SIZE");
+	param.DS_UNIT = this.dsListSub.getColumn(this.dsListSub.rowposition, "DS_UNIT");
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DWX_COSTTUJA", "", param);
+};
+
+this.dsListSub_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue)
+	{
+		// 수량
+		if(e.columnid == "QN_HADO")
+		{
+			var qn_hado = nexacro.toNumber(e.newvalue,0);
+			var up_hado = nexacro.toNumber(this.dsListSub.getColumn(e.row, "UP_HADO"),0);
+	
+			var am_hado = nexacro.toNumber((qn_hado * up_hado),0);
+			
+			this.dsListSub.setColumn(e.row, "AM_HADO", this.fnRoundOrFloor(am_hado));
+		}
+		// 단가
+		else if(e.columnid == "UP_HADO")
+		{	
+			var up_hado = nexacro.toNumber(e.newvalue,0);
+			var qn_hado = nexacro.toNumber(this.dsListSub.getColumn(e.row, "QN_HADO"),0);
+			
+			var am_hado = nexacro.toNumber((qn_hado * up_hado),0);
+			
+			this.dsListSub.setColumn(e.row, "AM_HADO", this.fnRoundOrFloor(am_hado));
+		}
+		// 변경후 수량
+		else if(e.columnid == "QN_SILHENG")
+		{
+			this.dsListSub.setColumn(e.row, "QN_HADO", nexacro.toNumber(e.newvalue, 0));
+		}
+		// 도급 변경후 금액
+		else if(e.columnid == "AM_DOKUB")
+		{
+			var am_dokub_pre = this.dsListSub.getColumn(e.row, "AM_DOKUB_PRE");
+			
+			this.dsListSub.setColumn(e.row, "AM_DOKUB_CHG", nexacro.toNumber(e.newvalue, 0) - nexacro.toNumber(am_dokub_pre,0));
+		}
+		// 도급 변경전 금액
+		else if(e.columnid == "AM_DOKUB_PRE")
+		{
+			var am_dokub = this.dsListSub.getColumn(e.row, "AM_DOKUB");
+			
+			this.dsListSub.setColumn(e.row, "AM_DOKUB_CHG", nexacro.toNumber(am_dokub, 0) - nexacro.toNumber(e.newvalue,0));
+		}
+		// 확정 변경후 금액
+		else if(e.columnid == "AM_SILHENG")
+		{
+			var am_silheng_pre = this.dsListSub.getColumn(e.row, "AM_SILHENG_PRE");
+			
+			this.dsListSub.setColumn(e.row, "AM_SILHENG_CHG", nexacro.toNumber(e.newvalue, 0) - nexacro.toNumber(am_silheng_pre,0));
+		}
+		// 확정 변경전 금액
+		else if(e.columnid == "AM_SILHENG_PRE")
+		{
+			var am_silheng = this.dsListSub.getColumn(e.row, "AM_SILHENG");
+			
+			this.dsListSub.setColumn(e.row, "AM_SILHENG_CHG", nexacro.toNumber(am_silheng, 0) - nexacro.toNumber(e.newvalue,0));
+		}
+		// 발주 변경후 금액
+		else if(e.columnid == "AM_HADO")
+		{
+			var am_hado_pre = this.dsListSub.getColumn(e.row, "AM_HADO_PRE");
+			
+			this.dsListSub.setColumn(e.row, "AM_HADO_CHG", nexacro.toNumber(e.newvalue, 0) - nexacro.toNumber(am_hado_pre,0));
+		}
+		// 발주 변경전 금액
+		else if(e.columnid == "AM_HADO_PRE")
+		{
+			var am_hado = this.dsListSub.getColumn(e.row, "AM_HADO");
+			
+			this.dsListSub.setColumn(e.row, "AM_HADO_CHG", nexacro.toNumber(am_hado, 0) - nexacro.toNumber(e.newvalue,0));
+		}
+	}
+};
+
+this.fnRoundOrFloor = function(val)
+{
+	var result = val;
+	
+	if(this._AM_CALC == "ROUND")
+	{
+		result = nexacro.round(nexacro.toNumber(result.toFixed(0),0));
+	}
+	else if(this._AM_CALC == "TRUNC")
+	{
+		result = nexacro.floor(result);
+	}
+	
+	return result;
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		this.gfnGridClear(this.dxGridSub);	
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DWAPR_RISKDTLSTREE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectSub</Col>
+            <Col id="SP">DWAPR_RISKDTLS_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DWAPR_RISKDTLS_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">execute</Col>
+            <Col id="SP">DWAPR_RISKDTLS_EXECUTE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListSub" onvaluechanged="dsListSub_onvaluechanged"/>
+      <Dataset id="dsTY_GUBUN"/>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="NO_SILHENG" type="STRING" size="256"/>
+          <Column id="NO_RISK" type="STRING" size="256"/>
+          <Column id="NO_HADOCONT" type="STRING" size="256"/>
+          <Column id="NO_SEQCONT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divSearch.form.ccfNO_RISK.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="NO_RISK"/>
+      <BindItem id="item2" compid="divSearch.form.ctxtNO_SILHENG" propid="value" datasetid="dsSearch" columnid="NO_SILHENG"/>
+      <BindItem id="item3" compid="divSearch.form.ccfNO_HADOCONT.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="NO_HADOCONT"/>
+    </Bind>
+  </Form>
+</FDL>

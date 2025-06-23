@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameQuickView" width="800" height="40" titletext="New Form" background="lightblue" onload="frameQuickView_onload" visible="false">
+    <Layouts>
+      <Layout height="40" width="800">
+        <Static id="sta00" taborder="0" text="ID_USER" left="10" top="8" width="70" height="25" font="normal bold 10pt/normal &quot;Arial&quot;"/>
+        <Edit id="edt00" taborder="3" left="sta00:0" top="8" width="100" height="25" autoselect="true"/>
+        <Static id="sta00_00" taborder="1" text="CD_CORP" left="edt00:20" top="8" width="75" height="25" font="normal bold 10pt/normal &quot;Arial&quot;"/>
+        <Edit id="edt00_00" taborder="4" left="sta00_00:0" top="8" width="80" height="25" autoselect="true"/>
+        <Static id="sta00_01" taborder="2" text="CD_DEPT" left="edt00_00:20" top="8" width="70" height="25" font="normal bold 10pt/normal &quot;Arial&quot;"/>
+        <Edit id="edt00_01" taborder="5" left="sta00_01:0" top="8" width="100" height="25" autoselect="true"/>
+        <Button id="btnSet" taborder="6" text="CHANGE" left="edt00_01:30" top="8" width="70" height="25" onclick="btnSet_onclick"/>
+        <Static id="staDS_HNAME" taborder="7" left="685" top="8" width="95" height="25"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+this.gcToken = "";
+
+this.frameQuickView_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) {
+	this.dsUser.setColumn(0, "ID_USER", "ERP1");
+	this.dsUser.setColumn(0, "CD_CORP", "01");
+	this.dsUser.setColumn(0, "CD_DEPT", "HQ0005");
+};
+
+this.SetQuickViewUser = function(url) {
+	if (url==null) url = "";
+	
+	if (url.indexOf("tk=") > -1) {
+		this.dsUser.clearData();
+		
+		var strSvcId    = "loginInfo";
+		var strSvcType  = "loginInfo";
+
+		var inProc		= "";
+		var inData      = "dsLogin=dsUser";
+		var outData     = "dsUserInfo=output0 dsDeptList=output1";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+// 		if (system.navigatorname != "nexacro") {
+// 			var param = this.gfnGetUrlParam(location.href);
+// 			if (param.tk != null) {
+// 				strArg = "tk=" + param.tk;
+// 			}
+// 		}
+		
+		this.gfnTransaction(strSvcId,				// transaction을 구분하기 위한 svc id값
+							strSvcType, 			// trabsaction을 요청할 구분
+							inProc,					// Procedure 정보 Dataset 이름
+							inData, 				// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData, 				// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 				// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc, false); 	// 통신방법 정의 [생략가능]
+							
+	//} else if (url.indexOf("localhost") > -1) {
+	} else {
+		nexacro.setEnvironmentVariable("evQuikViewLocal", "Y");
+		
+		var strSvcId    = "loginInfo";
+		var strSvcType  = "select";
+
+		var inProc		= "_dsProc";
+		var inData      = "login=dsUser";
+		var outData     = "dsUserInfo=login0 dsDeptList=login1";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+			
+		this.gfnTransaction(strSvcId,				// transaction을 구분하기 위한 svc id값
+							strSvcType, 			// trabsaction을 요청할 구분
+							inProc,					// Procedure 정보 Dataset 이름
+							inData, 				// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData, 				// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 				// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc, false); 	// 통신방법 정의 [생략가능]
+	}
+}
+
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	switch (svcID) {
+	case "loginInfo":
+		if (this.dsUserInfo.rowcount > 0 ) {
+			nexacro.setHTTPHeaderVariable("X-AUTH-TOKEN", this.gcToken);
+			nexacro.setEnvironmentVariable("LAST-DATE-TOKEN", new Date());
+			
+			// 사용자 정보 글로벌데이타셋에 저장
+			this.objApp.gdsUserInfo.copyData(this.dsUserInfo);
+			this.objApp.gdsDeptInfo.copyData(this.dsDeptList);
+			
+			var userInfo = this.objApp.gvUserInfo;
+			for(var i = 0; i < this.dsUserInfo.colinfos.length; i++) {
+				var col = this.dsUserInfo.colinfos[i].name;
+				userInfo[col] = this.dsUserInfo.getColumn(0, col);
+			}
+			
+			this.dsUserInfo.clearData();
+			this.dsDeptList.clearData();
+			
+			//gloval variable 세팅
+			var id_user = this.objApp.gdsUserInfo.getColumn(0,"ID_USER");
+			nexacro.setEnvironmentVariable("evUserId", id_user);
+			nexacro.setEnvironmentVariable("evUserNm", this.objApp.gdsUserInfo.getColumn(0,"DS_HNAME"));
+			
+			var dec_key = nexacro.getEnvironmentVariable("evKey");
+			var key = CryptoJS.enc.Hex.parse(dec_key.toString());
+			//var encId = nexacro.base64Encode(CryptoJS.AES.encrypt(id_user, key, {iv:key}).toString());
+			//nexacro.setCookieVariable("tk-"+encId, CryptoJS.AES.encrypt(this.gcToken, key, {iv:key}).toString());
+			sessionStorage.setItem("tk", CryptoJS.AES.encrypt(this.gcToken, key, {iv:key}).toString());
+			
+			window.history.pushState("erp","", "?v=1");
+			
+			return;				
+		} else {
+			this.gfnAlert("해당하는 사용자가 없습니다.");
+		}
+		break;
+	}
+};
+
+this.btnSet_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var url;
+	if(system.navigatorname == "nexacro") { 
+		url = nexacro.getApplication().xadl;
+	} else {
+		url = window.location.href;
+	}
+	this.SetQuickViewUser(url);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsUser">
+        <ColumnInfo>
+          <Column id="ID_USER" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsUserInfo"/>
+      <Dataset id="dsDeptList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">login</Col>
+            <Col id="SP">DZZPR_USERID_LOGIN_NEW</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="edt00" propid="value" datasetid="dsUser" columnid="ID_USER"/>
+      <BindItem id="item1" compid="edt00_00" propid="value" datasetid="dsUser" columnid="CD_CORP"/>
+      <BindItem id="item2" compid="edt00_01" propid="value" datasetid="dsUser" columnid="CD_DEPT"/>
+    </Bind>
+  </Form>
+</FDL>

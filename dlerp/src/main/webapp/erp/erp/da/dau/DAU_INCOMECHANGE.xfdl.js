@@ -1,0 +1,497 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("DAU_INCOMECHANGE");
+            this.set_titletext("소득증감내역(전월대비)");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DAUPR_INCOMECHANGE_SELECT</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY\" type=\"STRING\" size=\"256\"/><Column id=\"TY_SALARY\" type=\"STRING\" size=\"256\"/><Column id=\"SN_SALARY\" type=\"STRING\" size=\"256\"/><Column id=\"YN_SALARY\" type=\"STRING\" size=\"256\"/><Column id=\"CD_ALLOW01\" type=\"STRING\" size=\"256\"/><Column id=\"CD_ALLOW02\" type=\"STRING\" size=\"256\"/><Column id=\"TY_GUBUN\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0","0",null,"46.0","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_SEARCH_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staCD_SYSTEM","0","10.0","66","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("0");
+            obj.set_text("법인");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_CORP","staCD_SYSTEM:0.0","10.0","250","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCORP");
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("1");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.getSetter("onchanged").set("fnSearchInit");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_SYSTEM00","ccfCD_CORP:0.0","10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("2");
+            obj.set_text("지급년월");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("calYM_SALARY","staCD_SYSTEM00:0.0","10.0","80","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("3");
+            obj.set_url("cmm::cmmCalMM.xfdl");
+            obj.getSetter("onchanged").set("fnSearchInit");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_SYSTEM01","calYM_SALARY:0.0","10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("4");
+            obj.set_text("지급구분");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("cboTY_SALARY","staCD_SYSTEM01:0.0","10.0","70","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("5");
+            obj.set_codecolumn("codecolumn");
+            obj.set_datacolumn("datacolumn");
+            var divSearch_form_cboTY_SALARY_innerdataset = new nexacro.NormalDataset("divSearch_form_cboTY_SALARY_innerdataset", obj);
+            divSearch_form_cboTY_SALARY_innerdataset._setContents("<ColumnInfo><Column id=\"codecolumn\" size=\"256\"/><Column id=\"datacolumn\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"codecolumn\">S</Col><Col id=\"datacolumn\">급여</Col></Row><Row><Col id=\"codecolumn\">X</Col><Col id=\"datacolumn\">성과급</Col></Row><Row><Col id=\"codecolumn\">R</Col><Col id=\"datacolumn\">퇴직급여</Col></Row></Rows>");
+            obj.set_innerdataset(divSearch_form_cboTY_SALARY_innerdataset);
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("cboSN_SALARY","cboTY_SALARY:5","10.0","50","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("6");
+            obj.set_codecolumn("codecolumn");
+            obj.set_datacolumn("datacolumn");
+            var divSearch_form_cboSN_SALARY_innerdataset = new nexacro.NormalDataset("divSearch_form_cboSN_SALARY_innerdataset", obj);
+            divSearch_form_cboSN_SALARY_innerdataset._setContents("<ColumnInfo><Column id=\"codecolumn\" size=\"256\"/><Column id=\"datacolumn\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"codecolumn\">1</Col><Col id=\"datacolumn\">1</Col></Row><Row><Col id=\"codecolumn\">2</Col><Col id=\"datacolumn\">2</Col></Row><Row><Col id=\"codecolumn\">3</Col><Col id=\"datacolumn\">3</Col></Row><Row><Col id=\"codecolumn\">4</Col><Col id=\"datacolumn\">4</Col></Row><Row><Col id=\"codecolumn\">5</Col><Col id=\"datacolumn\">5</Col></Row><Row><Col id=\"codecolumn\">6</Col><Col id=\"datacolumn\">6</Col></Row><Row><Col id=\"codecolumn\">7</Col><Col id=\"datacolumn\">7</Col></Row><Row><Col id=\"codecolumn\">8</Col><Col id=\"datacolumn\">8</Col></Row><Row><Col id=\"codecolumn\">9</Col><Col id=\"datacolumn\">9</Col></Row><Row><Col id=\"codecolumn\">10</Col><Col id=\"datacolumn\">10</Col></Row></Rows>");
+            obj.set_innerdataset(divSearch_form_cboSN_SALARY_innerdataset);
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_SYSTEM03","0.0","staCD_SYSTEM:10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("9");
+            obj.set_text("소득항목");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_ALLOW01","staCD_SYSTEM03:0.0","ccfCD_CORP:10.0","240","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CodeFindName").set("DAX_CFALLOW_CODE");
+            obj.getSetter("CDTextWidth").set("80");
+            obj.set_taborder("10");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_SYSTEM04","ccfCD_ALLOW01:0.0","staCD_SYSTEM00:10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("11");
+            obj.set_text("공제항목");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_ALLOW02","staCD_SYSTEM04:0.0","staCD_SYSTEM01:10.0","240","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CodeFindName").set("DAX_CFSUBSTRACTION");
+            obj.getSetter("CDTextWidth").set("80");
+            obj.set_taborder("12");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_SYSTEM07","cboSN_SALARY:0.0","staCD_SYSTEM:10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("7");
+            obj.set_text("소득공제구분");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("cboTY_GUBUN","staCD_SYSTEM07:0.0","staCD_SYSTEM:10.0","60","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("8");
+            obj.set_codecolumn("codecolumn");
+            obj.set_datacolumn("datacolumn");
+            var divSearch_form_cboTY_GUBUN_innerdataset = new nexacro.NormalDataset("divSearch_form_cboTY_GUBUN_innerdataset", obj);
+            divSearch_form_cboTY_GUBUN_innerdataset._setContents("<ColumnInfo><Column id=\"codecolumn\" size=\"256\"/><Column id=\"datacolumn\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"datacolumn\">전체</Col><Col id=\"codecolumn\">%</Col></Row><Row><Col id=\"datacolumn\">소득</Col><Col id=\"codecolumn\">01</Col></Row><Row><Col id=\"datacolumn\">공제</Col><Col id=\"codecolumn\">02</Col></Row></Rows>");
+            obj.set_innerdataset(divSearch_form_cboTY_GUBUN_innerdataset);
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_SYSTEM06","ccfCD_ALLOW02:0.0","staCD_SYSTEM:10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("13");
+            obj.set_text("급여포함항목만보기");
+            obj.set_visible("false");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new CheckBox("chkYN_SALARY","staCD_SYSTEM06:0.0","staCD_SYSTEM:10.0","150","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("14");
+            obj.set_truevalue("Y");
+            obj.set_falsevalue("%");
+            obj.set_visible("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:5",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","10",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",1280,720,this,function(p){});
+            obj.set_mobileorientation("landscape");
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.ccfCD_CORP.form.CDTextBox","value","dsSearch","CD_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divSearch.form.calYM_SALARY.form.TextBox","value","dsSearch","YM_SALARY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divSearch.form.ccfCD_ALLOW01.form.CDTextBox","value","dsSearch","CD_ALLOW01");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divSearch.form.ccfCD_ALLOW02.form.CDTextBox","value","dsSearch","CD_ALLOW02");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","divSearch.form.cboTY_SALARY","value","dsSearch","TY_SALARY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item5","divSearch.form.cboSN_SALARY","value","dsSearch","SN_SALARY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item6","divSearch.form.cboTY_GUBUN","value","dsSearch","TY_GUBUN");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item7","divSearch.form.chkYN_SALARY","value","dsSearch","YN_SALARY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+            this._addPreloadList("fdl","cmm::cmmCalMM.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DAU_INCOMECHANGE.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.DAU_INCOMECHANGE_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	//this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         ************************************************************************/
+        this.fnSetButton = function() {
+        	this.FormBtns.Add.set_enable(false);
+        	this.FormBtns.Del.set_enable(false);
+        	this.FormBtns.Save.set_enable(false);
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+         ************************************************************************/
+
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+        	this.calYM_SALARY = this.divSearch.form.calYM_SALARY;
+        	this.ccfCD_ALLOW01 = this.divSearch.form.ccfCD_ALLOW01;
+        	this.ccfCD_ALLOW02 = this.divSearch.form.ccfCD_ALLOW02;
+        	this.staCD_SYSTEM03 = this.divSearch.form.staCD_SYSTEM03;
+        	this.staCD_SYSTEM04 = this.divSearch.form.staCD_SYSTEM04;
+        	this.dxGrid = this.divData.form.objGrid;
+
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	this.ccfCD_ALLOW01.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAU_INCOMECHANGE");
+
+        	this.dsSearch.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+        	this.ccfCD_CORP.form.fnCodeFindLoad();
+
+        	var date = this.gfnGetDate();
+        	this.dsSearch.setColumn(0, "YM_SALARY", date.substr(0, 6));
+
+        	this.divSearch.form.cboTY_SALARY.set_index(0);
+        	this.divSearch.form.cboSN_SALARY.set_index(0);
+        	this.divSearch.form.cboTY_GUBUN.set_index(0);
+
+        }
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("CD_CORP", "string");
+        	this.dsSelect.addColumn("YM_SALARY", "string");
+        	this.dsSelect.addColumn("TY_SALARY", "string");
+        	this.dsSelect.addColumn("SN_SALARY", "string");
+        	this.dsSelect.addColumn("CD_ALLOW", "string");
+        	this.dsSelect.addColumn("CD_SUBST", "string");
+        	this.dsSelect.addColumn("SN_SALARY_BEF", "string");
+        	this.dsSelect.addColumn("TY_GUBUN", "string");
+        	this.dsSelect.addColumn("YN_SALARY", "string");
+        	this.dsSelect.addColumn("TY_SEARCH", "string");
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+        	if (!this.fnSelectValidate()) return false;
+
+        	this.gfnGridBeforeSelect(this.dxGrid);
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+
+        	this.dsSelect.setColumn(0, "YM_SALARY", this.dsSearch.getColumn(0, "YM_SALARY")); // 지급년월 201908
+        	this.dsSelect.setColumn(0, "TY_SALARY", this.dsSearch.getColumn(0, "TY_SALARY")); // S(지급구분 S:급여, B:상여,X:성과급 )
+        	this.dsSelect.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP")); // 01  (법인코드)
+        	this.dsSelect.setColumn(0, "SN_SALARY", this.dsSearch.getColumn(0, "SN_SALARY")); // 1(지급구분의 지급순서)
+        	this.dsSelect.setColumn(0, "YN_SALARY", this.dsSearch.getColumn(0, "YN_SALARY")); //급여포함여부 체크시 'Y' 아니면 '%'
+        	this.dsSelect.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));	// 소득항목만(01), 공제항목만(02) 체크, 아니면 (0)
+        	this.dsSelect.setColumn(0, "CD_ALLOW", this.dsSearch.getColumn(0, "CD_ALLOW01"));
+        	this.dsSelect.setColumn(0, "CD_SUBST", this.dsSearch.getColumn(0, "CD_ALLOW02"));
+        // 	if(this.dsSearch.getColumn(0, "TY_GUBUN") == "01"){
+        // 		this.dsSelect.setColumn(0, "CD_ALLOW", this.dsSearch.getColumn(0, "CD_ALLOW01")); // 소득수당(또는 공제쪽에서는 공제항목)
+        // 	}else if(this.dsSearch.getColumn(0, "TY_GUBUN") == "02"){
+        // 		this.dsSelect.setColumn(0, "CD_ALLOW", this.dsSearch.getColumn(0, "CD_ALLOW02")); // 소득수당(또는 공제쪽에서는 공제항목)
+        // 	}
+
+        	// DAUPR_INCOMECHANGE_SELECT
+        	// 프로시저 매개변수 잘 모르겠음... TODO : 수정필요
+        	this.dsSelect.setColumn(0, "SN_SALARY_BEF", this.dsSearch.getColumn(0, "SN_SALARY"));
+
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+        	this.gfnGridAdd(this.dxGrid);
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+        	this.gfnGridDel(this.dxGrid);
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+          */
+        this.fnSelectValidate = function() {
+        	var validate = true;
+        	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.text)) {
+        		validate = false;
+        		this.fnVaidateCallback = function() {
+        			this.ccfCD_CORP.form.CDTextBox.setFocus();
+        		}
+        		this.gfnAlert("법인코드를 입력하세요.", "fnVaidateCallback");
+        	}else if (this.gfnIsNull(this.calYM_SALARY.form.TextBox.value)) {
+        		validate = false;
+        		this.fnVaidateCallback = function() {
+        			this.calYM_SALARY.form.TextBox.setFocus();
+        		}
+        		this.gfnAlert("지급년월을 입력하세요.", "fnVaidateCallback");
+        	}
+
+        	return validate;
+        };
+
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	if (svcID == "select") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+        	if (id == "ccfCD_ALLOW01") {
+        		dsUserParam.setColumn(nrow, "CD_GUBUN"	, "01");
+        	}
+        	return true;
+        };
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        /*
+         *	조회 조건 변경시 초기화
+         */
+        this.fnSearchInit = function(obj,e) {
+        	if(e == null || (e.pretext != e.posttext)) {
+        		// 폼상태 초기화
+        		this.gfnSetFormStatus(this);
+        		this.gfnGridClear(this.dxGrid);
+        	}
+        };
+
+        this.dsSearch_onvaluechanged = function(obj,e)
+        {
+        	if(e.oldvalue != e.newvalue) {
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.gfnGridClear(this.dxGrid);
+        	}
+        };
+
+        this.divSearch_cboTY_GUBUN_onitemchanged = function(obj,e)
+        {
+        	switch(obj.value){
+        		case "%":
+        			this.staCD_SYSTEM03.set_visible(true);
+        			this.ccfCD_ALLOW01.set_visible(true);
+        			this.staCD_SYSTEM04.set_visible(true);
+        			this.ccfCD_ALLOW02.set_visible(true);
+        			break;
+
+        		case "01":	//소득
+        			this.staCD_SYSTEM03.set_visible(true);
+        			this.ccfCD_ALLOW01.set_visible(true);
+        			this.staCD_SYSTEM04.set_visible(false);
+        			this.ccfCD_ALLOW02.set_visible(false);
+        			break;
+
+        		case "02":	//공제
+        			this.staCD_SYSTEM03.set_visible(false);
+        			this.ccfCD_ALLOW01.set_visible(false);
+        			this.staCD_SYSTEM04.set_visible(true);
+        			this.ccfCD_ALLOW02.set_visible(true);
+        			break;
+
+        		default:
+        	}
+        			this.ccfCD_ALLOW01.form.CDTextBox.set_value("");
+        			this.ccfCD_ALLOW01.form.DSTextBox.set_value("");
+        			this.ccfCD_ALLOW02.form.CDTextBox.set_value("");
+        			this.ccfCD_ALLOW02.form.DSTextBox.set_value("");
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.DAU_INCOMECHANGE_onload,this);
+            this.divSearch.form.cboTY_GUBUN.addEventHandler("onitemchanged",this.divSearch_cboTY_GUBUN_onitemchanged,this);
+            this.divData.form.objGrid.addEventHandler("oncellclick",this.divData_objGrid_oncellclick,this);
+            this.dsList.addEventHandler("onrowposchanged",this.dsList_onrowposchanged,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+        };
+        this.loadIncludeScript("DAU_INCOMECHANGE.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

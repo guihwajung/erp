@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="160" height="140" titletext="전자결재 상신" onload="form_onload">
+    <Layouts>
+      <Layout/>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	// ---------------------------//
+		
+	var that = window.opener;
+	
+	if (!this.gfnIsNull(that))
+	{
+		var parentForm = that.nexacro.getApplication().gvWorkFrame.getActiveFrame().form;
+		parentForm.gfnAprvDoorayCallBack();
+		window.close();
+	}
+	else
+	{
+		window.close();
+	}
+};
+
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

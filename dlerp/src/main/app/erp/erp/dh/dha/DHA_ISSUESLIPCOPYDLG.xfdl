@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="320" height="130" maxwidth="320" maxheight="200" titletext="전표 복사(팝업)" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="42" right="0" cssclass="div_DATA_Bg" height="35">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_DEPT" taborder="0" text="회계일자" left="10" top="2" width="95" height="30" onclick="divData_divDataRight_sta01_onclick" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta11" taborder="1" left="104" top="2" height="30" cssclass="sta_WF_tablebg" text="" right="10"/>
+              <Calendar id="calDT_ACCOUNT" taborder="2" left="110" top="7" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" enable="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staTitle" taborder="1" text="전표 복사" left="10" top="10" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+        <Button id="btnConf" taborder="2" text="확인" left="81" width="69" height="27" onclick="btnConf_onclick" bottom="3"/>
+        <Button id="btnCancel" taborder="3" text="취소" left="160" width="69" height="27" onclick="btnCancel_onclick" bottom="3"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+
+	
+	//회계일자 현재일자 셋팅
+	this.calDT_ACCOUNT.set_value(this.gfnGetDate());
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+
+	this.calDT_ACCOUNT = this.divData.form.calDT_ACCOUNT;
+
+	
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+
+}
+
+ /*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	
+
+}
+
+ /*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+
+}
+
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+	var validate = true;
+
+	return validate;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+*/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+//취소버튼 클릭
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close();
+};
+
+//확인버튼 클릭
+this.btnConf_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.gfnIsNull(this.calDT_ACCOUNT.value)){
+		this.gfnAlert("회계일자는 필수입니다.");
+		this.calDT_ACCOUNT.setFocus();
+		return;
+	}
+
+	this.getParentContext().close(this.calDT_ACCOUNT.value);
+};
+
+
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">eTaxBuy</Col>
+            <Col id="SP">DHVPR_ETAXBUYLIST_AR_INSERT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

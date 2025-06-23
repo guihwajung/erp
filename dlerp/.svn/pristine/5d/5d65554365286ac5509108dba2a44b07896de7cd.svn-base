@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="단지현황" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Div id="divSplitter" taborder="1" left="0" top="50%" width="100%" height="5" background="skyblue" cursor="ns-resize" ondrag="divData_divSplitter_ondrag"/>
+              <Div id="divDataTop" taborder="0" left="0" top="0" bottom="divSplitter:5" right="0">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta01" taborder="0" text="AS사무소 목록" left="0" top="0" width="100%" height="22" cssclass="sta_TITLE_Bg"/>
+                    <Grid id="objGrid" taborder="0" left="0" top="sta01:5" bottom="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataBottom" taborder="0" left="0" top="divSplitter:5" bottom="0" right="0">
+                <Layouts>
+                  <Layout>
+                    <PieChart id="PieChart2" taborder="1" top="0" bottom="0" binddataset="dsChart2" categorycolumn="bind:DS_YEAR" onmouseenter="PieChart00_onmouseenter" onmouseleave="PieChart00_onmouseleave" onmousemove="PieChart00_onmousemove" width="50%" right="0%">
+                      <Contents><![CDATA[{
+                      </Contents>
+                    </PieChart>
+                    <PieChart id="PieChart1" taborder="0" top="0" bottom="0" binddataset="dsList" categorycolumn="bind:DS_BUNSO_00" onmouseenter="PieChart00_onmouseenter" onmouseleave="PieChart00_onmouseleave" onmousemove="PieChart00_onmousemove" width="50.00%" left="0">
+                      <Contents><![CDATA[{
+                      </Contents>
+                    </PieChart>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	//this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+	// 입력버튼 사용안함
+	//this.alert(this.FormBtns.Add.enable);
+	//this.FormBtns.Add.set_enable(true);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnFormButton1 = this.gfnFormButtonAdd("WorkBtn1", "fnWorkBtn");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.dxGrid = this.divData.form.divDataTop.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid, this.dsList, "EI", "EIB_BUNSO");  // pForm.gfnGridInit = function(objGrid, objDs, cd_system, id_grid, tree_column, level_column, is_manual) 
+	this.dxGrid.set_selecttype("cell");	// IE경우만 multiarea모드에서 master선택후 마우스 이동 빠르게 할 경우 버그가 있어서 cell 모드로 변경
+	this.dxGrid.addEventHandler("oncelldblclick", this.dxGrid_oncelldblclick, this);
+	this.dxGrid.addEventHandler("oncellclick", this.dxGrid_oncellclick, this);
+	this.dxGrid.addEventHandler("onsummaryclick", this.dxGrid_onsummaryclick, this);
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_BUNSO", "string");
+	
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsList.clearData();
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_BUNSO", "");
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	//var outData     = "dsList=select0 dsChart2=select1";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+}
+
+/*
+ *	저장 버튼
+ */ 
+this.fnSave = function() {	
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+/*
+ *	삭제 버튼
+ */ 
+this.fnDel = function() {
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+		this.dsList.set_rowposition(0);
+		this.dxGrid_onsummaryclick();
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ this.dxGrid_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	 
+	 this.fnWorkBtn(this.btnFormButton1);
+};
+
+this.dxGrid_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var j = 5;
+	for( var i =0; i < this.dsChart2.rowcount; i++){			
+			this.dsChart2.setColumn( i, "CT_ASTO",this.dsList.getColumn(this.dsList.rowposition,j) );
+			j++;
+	}
+	
+};
+this.dxGrid_onsummaryclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var j = 5;
+	for( var i =0; i < this.dsChart2.rowcount; i++){			
+			var colId = this.dsList.getColID(j);
+			var val = this.dsList.getSum(colId); trace("val = "+val);
+			this.dsChart2.setColumn( i, "CT_ASTO", val );
+			j++;
+	}
+	trace(this.dsChart2.saveXML());
+};
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+/*
+ * 커스텀 버튼 이벤트
+ */
+this.fnWorkBtn = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if( obj.id == "btnExt_WorkBtn1"){
+		if(this.dsList.rowcount == 0) return;
+		var strColumnName = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, this.dxGrid.currentcol);
+		
+		var param = {};
+		param.CF_CD_BUNSO = this.dsList.getColumn(this.dsList.rowposition, "CD_BUNSO");
+		param.CF_DS_BUNSO = this.dsList.getColumn(this.dsList.rowposition, "DS_BUNSO_00");
+		param.CF_AS_TY = strColumnName.substr(strColumnName.lastIndexOf("_")+1);
+		this.gfnFormOpen("DBZ", "DBZ_SITEINFO", "", param);	
+	}
+};
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.divData_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	if(e.userdata == "splitter") {
+		this.divData.form.divSplitter.set_top(e.clienty);
+		this.divData.form.resetScroll();	
+	}
+};
+
+this.divData_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo)
+{
+	e.set_userdata("splitter");
+	return true;
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="DS_BUNSO_00" type="STRING" size="256"/>
+          <Column id="CT_SITE_00" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsChart2" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="CD_YEAR" type="STRING" size="256"/>
+          <Column id="DS_YEAR" type="STRING" size="256"/>
+          <Column id="CT_ASTO" type="INT" size="256"/>
+          <Column id="select" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_YEAR">01</Col>
+            <Col id="DS_YEAR">1년차</Col>
+            <Col id="CT_ASTO">0</Col>
+          </Row>
+          <Row>
+            <Col id="CD_YEAR">02</Col>
+            <Col id="DS_YEAR">2년차</Col>
+            <Col id="CT_ASTO">0</Col>
+          </Row>
+          <Row>
+            <Col id="CD_YEAR">03</Col>
+            <Col id="DS_YEAR">3년차</Col>
+            <Col id="CT_ASTO">0</Col>
+          </Row>
+          <Row>
+            <Col id="CD_YEAR">04</Col>
+            <Col id="DS_YEAR">4년차</Col>
+            <Col id="CT_ASTO">0</Col>
+          </Row>
+          <Row>
+            <Col id="CD_YEAR">05</Col>
+            <Col id="DS_YEAR">5년차</Col>
+            <Col id="CT_ASTO">0</Col>
+          </Row>
+          <Row>
+            <Col id="CD_YEAR">10</Col>
+            <Col id="DS_YEAR">10년차</Col>
+            <Col id="CT_ASTO">0</Col>
+          </Row>
+          <Row>
+            <Col id="CD_YEAR">99</Col>
+            <Col id="DS_YEAR">종료</Col>
+            <Col id="CT_ASTO">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">EIBPR_BUNSO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DAW_RETIRE_REQUEST" width="694" height="400" titletext="고용관계종료확인서" onload="form_onload" scrolltype="both" maxheight="474" maxwidth="735">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="9" left="0" top="0" cssclass="div_DATA_Bg" bottom="0" right="0">
+          <Layouts>
+            <Layout>
+              <Static id="staDesc01" taborder="0" text="본인은 " left="69" top="10" width="50" height="60" cssclass="sta_WF_noticeTit01"/>
+              <Static id="staDesc03" taborder="1" text=" 사직서에 기재한 사직일 이후 " left="28" top="140" height="23" font="14px/1.5 &quot;Malgun Gothic&quot;" cssclass="sta_WF_noticeTxt01" width="205"/>
+              <Static id="sta00_01" taborder="2" text="◀ 아 래 ▶" left="312" top="80" width="70" height="30" cssclass="ta_WF_tablelabelY"/>
+              <Static id="sta01" taborder="3" top="263" width="273" height="114" cssclass="sta_WF_noticeBox01" right="27"/>
+              <Static id="staCdCorp00_00_00" taborder="4" text="서약자" top="309" width="36" height="22" cssclass="sta_WF_bold" right="254"/>
+              <Edit id="edtName" taborder="5" top="308" width="108" height="24" readonly="true" value="홍 길동" text="홍 길동" right="108"/>
+              <Static id="staCdCorp00_00_00_00" taborder="6" text="(생년월일 :                                 )" top="339" width="209" height="22" cssclass="ta_WF_tablelabelY" right="81"/>
+              <Static id="staDate" taborder="7" text="2021년 12월 22일" top="277" width="188" height="22" cssclass="sta_WF_bold" right="102"/>
+              <Button id="btnConform" taborder="8" text="확인" top="339" width="52" height="24" onclick="divData_btnConform_onclick" right="32"/>
+              <Calendar id="ctclBdate" taborder="9" top="340" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="divSearch_ctclDT_END_onchanged" enable="true" right="111" readonly="true"/>
+              <Static id="staDsCorp" taborder="10" left="staDesc01:0" top="10" width="123" height="60" cssclass="sta_WF_noticeTit01"/>
+              <Static id="staDesc02" taborder="11" text="에서 퇴사하면서 아래사항을 준수할 것을 서약합니다." left="staDsCorp:0" top="10" width="362" height="60" cssclass="sta_WF_noticeTit01"/>
+              <Static id="staDesc05" taborder="12" text="퇴직금을 수령함으로써 임금, 성과금, 수당 등 모든 금품 관계가 청산되었음을 확인합니다.&#13;&#10;향후 이로 인해 민·형사·행정상 어떠한 이의제기도 하지 않음을 서약합니다." left="28" top="161" height="46" font="14px/1.5 &quot;Malgun Gothic&quot;" cssclass="sta_WF_noticeTxt01" width="638"/>
+              <Static id="staDsCorp2" taborder="13" text="CARBONCO" left="staDesc03:0" top="140" height="23" font="14px/1.5 &quot;Malgun Gothic&quot;" cssclass="sta_WF_noticeTxt01" width="90"/>
+              <Static id="staDesc04" taborder="14" text="과(와)의 모든 근로관계가 종료되었을음 확인하며" left="staDsCorp2:3" top="140" height="23" font="14px/1.5 &quot;Malgun Gothic&quot;" cssclass="sta_WF_noticeTxt01" width="332"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**  ③	AuthClient 사용자정보 ***
+this.AuthClient.ID_USER	: 사용자 ID
+this.AuthClient.DS_HNAME	: 사용자 이름
+this.AuthClient.CD_DEPT	: 사용자 부서코드
+this.AuthClient.DS_DEPT	: 사용자 부서명칭
+this.AuthClient.CD_CORP	: 사용자 법인코드
+this.AuthClient.DS_CORP	: 사용자 법인명칭
+this.AuthClient.ID_SABUN	: 사용자 사번 **/
+
+this.objApp = this.gfnGetApplication();
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{	
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	this.fnSetButton();			//버튼 공통 설정
+	this.fnSetExtendButton();	//화면별 버튼 id 설정
+	this.fnSetVariable();		//변수선언
+	this.fnSetEvent();			//이벤트 설정
+	this.fnSetParameter();		//파라미터 설정
+};
+
+/************************************************************************
+ * 버튼 설정 
+ * 서브버튼 사용 처리. 공통 및 확장버튼 버튼관리화면에서 셋팅.
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	var frame = this.getOwnerFrame();
+	// 법인명
+	this.divData.form.staDsCorp.set_text(frame.DsCorp );
+	this.divData.form.staDsCorp.set_fittocontents("width");
+	this.divData.form.staDesc02.set_left("staDsCorp:0");
+	
+	this.divData.form.staDsCorp2.set_text(frame.DsCorp );
+	this.divData.form.staDsCorp2.set_fittocontents("width");
+	this.divData.form.staDesc04.set_left("staDsCorp2:3");
+	
+	//서약자 셋팅
+	this.divData.form.edtName.set_value(frame.dsHname );
+	
+	var date = this.gfnGetDate();
+	if( !this.gfnIsNull(frame.dtInformationSecurity) ){
+		date = frame.dtInformationSecurity;
+	}
+	if( !this.gfnIsNull(frame.dtBirthday) ){
+		this.divData.form.ctclBdate.set_value(frame.dtBirthday);
+	}
+	//일자 셋팅
+	var year = date.substr(0, 4);
+	var month = date.substr(4, 2);
+	var day = date.substr(6, 2);
+	this.divData.form.staDate.set_text( year + "년 " + month + "월 " + day + "일");
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+//확인버튼 클릭
+this.divData_btnConform_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var bDate = this.divData.form.ctclBdate.value;
+	
+	
+	if (this.gfnIsNull(bDate)) {
+		this.divData.form.ctclBdate.setFocus();
+		this.gfnAlert("생년월일을 입력하세요.");
+		return false;
+	}
+	var param = {};
+	param.gubun = "Y";
+	param.bDate = bDate;
+
+	this.getParentContext().close(JSON.stringify(param));
+};
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

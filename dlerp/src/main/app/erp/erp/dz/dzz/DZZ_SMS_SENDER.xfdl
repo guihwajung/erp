@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DAJ_RTNG_SMS_DLG" width="302" height="407" maxwidth="325" maxheight="440" titletext="문자 발송" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="1" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTopTITLE" taborder="0" text="문자 발송" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staDS_TITLE" taborder="0" text="타이틀" left="0" top="staTopTITLE:5" width="70" height="35" visible="false" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_TITLE_bg" taborder="1" left="staDS_TITLE:-1" top="staDS_TITLE:-35" width="202" height="35" cssclass="sta_WF_tablebg" visible="false" text=""/>
+              <Edit id="edtDS_TITLE" taborder="6" left="staDS_TITLE:5" top="staTopTITLE:0" width="202" height="24" visible="false"/>
+              <Static id="staDS_MESSAGE" taborder="0" text="메시지" left="0" top="staTopTITLE:5" width="70" height="240" visible="true" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_REM_bg" taborder="1" text="[홍길동:010-1111-2222]" left="staDS_MESSAGE:-1" top="staTopTITLE:5" width="212" height="240" cssclass="sta_WF_tablebg" visible="true" textAlign="left" verticalAlign="top"/>
+              <TextArea id="txtDS_MESSAGE" taborder="5" left="staDS_MESSAGE:5" top="staTopTITLE:31" width="200" height="209" onchanged="divData_txt00_onchanged" onkeydown="txtDS_MESSAGE_onkeydown"/>
+              <Div id="divBtns" left="70" top="staDS_MESSAGE:55" width="190" height="27" text="">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnSend" taborder="1" text="발송" left="0" top="0" width="60" height="27" onclick="btnSend_onclick"/>
+                    <Button id="btnCancle" taborder="0" text="취소" left="btnSend:10" top="0" width="60" height="27" onclick="btnCANCLE_onclick"/>
+                    <Button id="btnClose" taborder="2" text="닫기" left="40" top="0" width="60" height="27" onclick="btnClose_onclick" tabstop="true" visible="false"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="staNotice1" taborder="7" text="※ 90바이트 이상의 긴 문자는 LMS로 전송됩니다." left="0" top="staDS_MESSAGE:0" width="100%" height="28" font="bold 12px/normal &quot;Malgun Gothic&quot;"/>
+              <!--<Static id="staNotice2" taborder="8" text="LMS의 경우 타이틀이 없을 경우 '제목없음'으로&#13;&#10;문자가 전송됩니다." left="13" top="staNotice1:-5" width="290" height="30" font="bold 12px/normal &quot;Malgun Gothic&quot;" visible="false"/>-->
+              <Static id="staDS_MESSAGE_BYTE1" taborder="33" text="( " left="100" top="staNotice1:-6" width="8" height="28"/>
+              <Static id="staDS_MESSAGE_BYTE2" taborder="33" text="00/90" left="staDS_MESSAGE_BYTE1:0" top="staNotice1:-6" width="40" height="28" font="bold 12px/normal &quot;Malgun Gothic&quot;" textAlign="center"/>
+              <Static id="staDS_MESSAGE_BYTE3" taborder="33" text="byte )" left="staDS_MESSAGE_BYTE2:0" top="staNotice1:-6" width="50" height="28"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form, e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetCombo();
+	this.fnInit();
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리  
+ ************************************************************************/
+this.fnSetButton = function() {
+	
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	
+}
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.edtDS_TITLE   = this.divData.form.edtDS_TITLE;				// 타이틀
+	this.txtDS_MESSAGE = this.divData.form.txtDS_MESSAGE;				// 메시지
+	this.btnClose      = this.divData.form.divBtns.form.btnClose;		// 닫기 버튼
+	this.btnSend       = this.divData.form.divBtns.form.btnSend;		// 확인 버튼
+	this.btnCancle     = this.divData.form.divBtns.form.btnCancle;	// 취소 버튼
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+}
+
+/************************************************************************
+ * 콤보 데이터 조회 및 설정
+ ************************************************************************/
+this.fnSetCombo = function() {
+	
+}
+
+/************************************************************************
+ * 화면 및 검색영역 초기화 
+ ************************************************************************/
+this.fnInit = function() {
+	this.dsSearch.setColumn(0, "DS_TITLE", this.getOwnerFrame().DS_TITLE);
+	this.dsSearch.setColumn(0, "DS_CONTENT", this.getOwnerFrame().DS_CONTENT);
+	
+	this.divData.form.staDS_REM_bg.set_text("[" + this.AuthClient.DS_HNAME + ":" + this.UserInfo.DS_HANDPHONE + "]");
+	
+	var DS_SENDER_BYTE = this.getByteLength(this.divData.form.staDS_REM_bg.text) - 1; 
+	var DS_CONTENT_BYTE = this.getByteLength(this.getOwnerFrame().DS_CONTENT); 
+	this.divData.form.staDS_MESSAGE_BYTE2.set_text(DS_SENDER_BYTE + DS_CONTENT_BYTE + "/90");
+	
+	if (this.getOwnerFrame().READONLY) {
+		this.edtDS_TITLE.set_readonly(true);
+		this.txtDS_MESSAGE.set_readonly(true);
+		
+		this.divData.form.staDS_REM_bg.set_text("");
+		this.divData.form.staDS_MESSAGE_BYTE2.set_text(DS_CONTENT_BYTE + "/90");
+		
+		this.btnClose.set_visible(true);
+		this.btnSend.set_visible(false);
+		this.btnCancle.set_visible(false);
+	}
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+/*
+ * 조회 버튼
+ */
+this.fnSelect = function() {
+	
+}
+
+/*
+ * 추가 버튼
+ */
+this.fnAdd = function() {
+	
+}
+
+/*
+ * 삭제 버튼
+ */
+this.fnDel = function() {
+	
+}
+
+/*
+ * 저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ * 엑셀 버튼
+ */
+this.fnExcel = function() {
+	
+}
+
+/*
+ * 출력 버튼
+ */
+this.fnPrint = function() {
+	
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValid = function() {
+	return true;
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/ 
+this.txtDS_MESSAGE_onkeydown = function(obj:nexacro.TextArea,e:nexacro.KeyEventInfo)
+{
+	var DS_SENDER_BYTE = this.getByteLength(this.divData.form.staDS_REM_bg.text) - 1; 
+	var DS_CONTENT_BYTE = this.getByteLength(obj.value); 
+	
+	if(90 < DS_SENDER_BYTE + DS_CONTENT_BYTE){
+		this.divData.form.staDS_MESSAGE_BYTE2.set_text("LMS");
+// 		this.gfnAlert("최대 90byte 입력이 가능합니다.");
+// 		obj.set_value(obj.value.substr(0, obj.value.length-2));
+// 		return;
+	} else {
+		this.divData.form.staDS_MESSAGE_BYTE2.set_text(DS_SENDER_BYTE + DS_CONTENT_BYTE + "/90");
+	}
+	
+};
+
+this.getByteLength = function(s) {
+
+	if (s == null || s.length == 0) {
+		return 0;
+	}
+	var size = 0;
+
+	for ( var i = 0; i < s.length; i++) {
+		size += this.charByteSize(s.charAt(i));
+	}
+
+	return size;
+}
+
+
+this.charByteSize = function(ch) {
+
+	if (ch == null || ch.length == 0) {
+		return 0;
+	}
+
+	var charCode = ch.charCodeAt(0);
+
+	if (charCode <= 0x00007F) {
+		return 1;
+	} else if (charCode <= 0x0007FF) {
+		return 2;
+	} else if (charCode <= 0x00FFFF) {
+		return 3;
+	} else {
+		return 4;
+	}
+}
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+// 확인 버튼
+this.btnSend_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	this.gfnConfirm("메시지를 전송하시겠습니까?", "fnOKCallback");
+}
+
+this.fnOKCallback = function() {
+	var json = {};
+	json.CONTINUE = true;
+	json.DS_TITLE = this.dsSearch.getColumn(0, "DS_TITLE");
+	json.DS_CONTENT = this.dsSearch.getColumn(0, "DS_CONTENT");
+	
+	this.getParentContext().close(JSON.stringify(json));
+}
+
+// 취소 버튼
+this.btnCANCLE_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	var json = {};
+	json.CONTINUE = false;
+	
+	this.getParentContext().close(JSON.stringify(json));
+}
+
+// 닫기 버튼
+this.btnClose_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	var json = {};
+	json.CONTINUE = false;
+	
+	this.getParentContext().close(JSON.stringify(json));
+}
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="DS_TITLE" type="STRING" size="256"/>
+          <Column id="DS_CONTENT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.edtDS_TITLE" propid="value" datasetid="dsSearch" columnid="DS_TITLE"/>
+      <BindItem id="item1" compid="divData.form.txtDS_MESSAGE" propid="value" datasetid="dsSearch" columnid="DS_CONTENT"/>
+    </Bind>
+  </Form>
+</FDL>

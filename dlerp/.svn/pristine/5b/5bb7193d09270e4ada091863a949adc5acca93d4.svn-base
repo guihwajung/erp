@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DAR_RECRUIT_ORDER_DLG" width="340" height="200" maxwidth="370" maxheight="250" titletext="대상자가져오기" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staTITLE" taborder="3" text="대상자가져오기" left="0" top="10" width="336" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+        <Div id="divBtns" left="2" top="144" width="334" height="40" taborder="0" text="">
+          <Layouts>
+            <Layout>
+              <Button id="btnCANCLE" taborder="1" text="취소" left="190" top="10" width="60" height="27" onclick="btnCANCLE_onclick"/>
+              <Button id="btnOK" taborder="0" text="확인" left="100" top="10" width="60" height="27" onclick="btnOK_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staCD_TYPE" taborder="1" text="작업구분" left="10" top="45" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="staNO_NOTICE" taborder="5" text="채용공고" left="10" top="74" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="staCD_CORP" taborder="8" text="채용법인" left="10" top="103" width="87" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="staNO_NOTICE2" taborder="6" left="86" top="74" width="250" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+        <Static id="staCD_CORP2" taborder="7" left="86" top="103" width="250" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+        <Static id="staCD_TYPE2" taborder="4" left="86" top="45" width="250" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+        <Div id="ccfNO_NOTICE" CodeFindName="DAX_RECRUIT_NOTICE" CDTextWidth="70" taborder="2" left="92" top="80" width="240" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="true" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+        <Div id="ccfCD_CORP" CodeFindName="DAX_CFCORP" CDTextWidth="70" taborder="10" left="92" top="108" width="240" height="20" url="cmm::cmmCodeFind.xfdl"/>
+        <Radio id="rdoCD_TYPE" taborder="9" left="92" top="50" width="168" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" value="DATA" text="데이터" index="0">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">DATA</Col>
+                <Col id="datacolumn">데이터</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">EXCEL</Col>
+                <Col id="datacolumn">엑셀업로드</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+
+	this.fnSetButton();
+	//this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	// this.FormBtns.Add.set_enable(false);
+	// this.FormBtns.Del.set_enable(false);
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.grSearch = this.FormInfo.GR_SEARCH;		// 권한
+	this.cdGroup = this.AuthClient.CD_GROUP;		// 그룹코드
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_CORP.form.CDTextBox.set_value(this.getOwnerFrame().CD_CORP);
+    this.ccfCD_CORP.form.DSTextBox.set_value(this.getOwnerFrame().DS_CORP);
+	
+	/*
+	var formType = this.getOwnerFrame().FORM_ID;	// DAR_VOLUNTEER_FINAL
+	if(this.getOwnerFrame().FORM_ID == "DAR_VOLUNTEER_FINAL"){
+		this.cboDS_RESULT.set_visible(true);
+		this.staDS_RESULT.set_visible(true);
+		this.staDS_RESULT2.set_visible(true);
+		this.fnSetCombo();
+		this.cboDS_RESULT.set_value("%");
+	}
+	*/
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+
+	// 채용공고
+	if (this.gfnIsNull(this.ccfNO_NOTICE.form.CDTextBox.value)) {
+		this.gfnAlert("채용공고를 입력하세요.");
+		this.ccfNO_NOTICE.form.CDTextBox.setFocus();
+		return false;
+	}
+
+	// 채용법인
+	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+		this.gfnAlert("채용법인를 입력하세요.");
+		this.ccfCD_CORP.form.CDTextBox.setFocus();
+		return false;
+	}
+
+ 	return true;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		//this.gfnGridAfterSelect(this.dxGrid);
+	}
+// 	else if(svcID == "save") {
+// 		if (errorCode == 0) {
+// 			this.FormBtns.Select.click();
+// 		} else {
+// 			this.gfnAlert(errorMsg);
+// 		}
+// 	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+ 	switch(id) {
+		case "ccfNO_NOTICE": // 법인코드
+			//dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+			//dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+			break;
+			
+		default:
+ 	}
+ 	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+
+};
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnSelectValidate()) return false;
+	
+	var json = {};
+
+	json.NO_NOTICE = this.ccfNO_NOTICE.form.CDTextBox.value;
+	json.CD_CORP = this.ccfCD_CORP.form.CDTextBox.value;
+	json.CD_TYPE = this.rdoCD_TYPE.value;
+	this.getParentContext().close(JSON.stringify(json));
+};
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP"/>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP"/>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP"/>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP"/>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DAZPR_COMMONCODE_COMBO</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="rdoCD_TYPE" propid="value" datasetid="dsSearch" columnid="TY_GUBUN"/>
+      <BindItem id="item0" compid="ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+    </Bind>
+  </Form>
+</FDL>

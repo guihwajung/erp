@@ -1,0 +1,1967 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1304" height="820" titletext="주택-프로젝트관리" onload="form_onload" scrolltype="both">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="78.0" right="0" cssclass="div_SEARCH_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_PROJ" taborder="1" text="프로젝트코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Edit id="ctxtCD_PROJ" taborder="1" width="66" height="24.0" value="" left="0.0" top="staCD_PROJ:10.0" readonly="true"/>
+              <Edit id="ctxtDS_PROJ" taborder="2" width="500" height="24.0" value="" left="ctxtCD_PROJ:0.0" top="staCD_PROJ:10.0"/>
+              <Edit id="edtCD_SAUP" taborder="4" top="staCD_PROJ:10.0" height="24.0" right="213" width="68" readonly="true"/>
+              <Static id="sta00" taborder="2" text="사업비프로젝트코드" top="10.0" height="24.0" right="edtCD_SAUP:3" width="92.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtDS_SAUP" taborder="3" top="staCD_PROJ:10.0" height="24.0" right="10" width="200"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" right="0" ondragmove="divData_ondragmove" cssclass="div_DATA_Bg" top="50" bottom="0">
+          <Layouts>
+            <Layout>
+              <Tab id="tabData" taborder="0" tabindex="0" left="0" top="0" bottom="0" right="0" onchanged="divData_tabData_onchanged">
+                <Tabpages>
+                  <Tabpage id="tab1" text="기본정보">
+                    <Layouts>
+                      <Layout>
+                        <Div id="div00" taborder="147" text="div00" left="0" top="0" right="0" bottom="0">
+                          <Layouts>
+                            <Layout>
+                              <Static id="staTab1Title" taborder="0" text="프로젝트 개요" left="5" top="0" right="5" height="22" cssclass="sta_TITLE_Bg"/>
+                              <Static id="staCD_BIZ_STAT" taborder="1" text="검토상태" left="5" width="120" height="30" textAlign="left" top="55" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="staTY_BIZ" taborder="8" text="사업유형" left="5" width="120" height="30" textAlign="left" top="84" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="staTY_BIZ_MHOD" taborder="15" text="사업방식" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="113"/>
+                              <Static id="sta00" taborder="2" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="55" onclick="divData_tabData_tab1_sta00_onclick"/>
+                              <Static id="sta01" taborder="9" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="84"/>
+                              <Static id="sta02" taborder="16" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="113"/>
+                              <Static id="staNM_PROV" taborder="4" text="정보제공자" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="55" textDecoration="none"/>
+                              <Static id="sta18" taborder="5" width="520" height="30" cssclass="sta_WF_tablebg" top="55" left="762"/>
+                              <Static id="staNM_ENF" taborder="11" text="사업시행사" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="84"/>
+                              <Static id="staDS_ENF_DEPT" taborder="18" text="사업시행담당부서" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="113"/>
+                              <Div id="ccfCD_BIZ_STAT" CodeFindName="CF_CODE_DO_06" CDTextWidth="80" taborder="3" width="505" height="20" url="cmm::cmmCodeFind.xfdl" left="130" top="60"/>
+                              <Div id="ccfTY_BIZ" CodeFindName="CF_CODE_DO_03" CDTextWidth="80" taborder="10" width="505" height="20" url="cmm::cmmCodeFind.xfdl" top="89" left="130"/>
+                              <Edit id="ctxtNM_PROV" taborder="6" width="309" height="20" value="" left="768" top="60"/>
+                              <Div id="ccfTY_BIZ_MHOD" CodeFindName="CF_CODE_DO_04" CDTextWidth="80" taborder="17" width="505" height="20" url="cmm::cmmCodeFind.xfdl" top="118" left="130"/>
+                              <Static id="staTY_PRDCT" taborder="21" text="상품분류" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="142"/>
+                              <Static id="sta09" taborder="22" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="142"/>
+                              <Static id="staDT_ACQ" taborder="24" text="정보입수일자" width="120" height="30" textAlign="left" left="643" top="142" cssclass="sta_WF_tablelabelE"/>
+                              <Div id="ccfTY_PRDCT" CodeFindName="CF_CODE_DO_41" CDTextWidth="80" taborder="23" width="505" height="20" url="cmm::cmmCodeFind.xfdl" top="147" left="130"/>
+                              <Combo id="ccboTY_ACQ1" taborder="7" width="190" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="1088" top="60" innerdataset="dsTY_ACQ1"/>
+                              <Static id="sta10" taborder="12" width="520" height="30" cssclass="sta_WF_tablebg" top="84" left="762"/>
+                              <Edit id="ctxtNM_ENF" taborder="13" width="309" height="20" value="" left="768" top="89"/>
+                              <Combo id="ccboTY_ENF" taborder="14" width="190" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="1088" top="89" innerdataset="dsTY_ENF"/>
+                              <Static id="sta11" taborder="19" width="520" height="30" cssclass="sta_WF_tablebg" top="113" left="762"/>
+                              <Edit id="ctxtDS_ENF_DEPT" taborder="20" width="509" height="20" value="" left="768" top="118"/>
+                              <Static id="sta12" taborder="25" width="200" height="30" cssclass="sta_WF_tablebg" top="142" left="762"/>
+                              <Calendar id="ctclDT_ACQ" taborder="26" left="768" top="144" width="110" height="25" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+                              <Static id="sta03" taborder="31" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="171"/>
+                              <Static id="staCD_LOC" taborder="30" text="지역" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="171"/>
+                              <Static id="staDS_LAND_CLS" taborder="35" text="지목" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="200"/>
+                              <Static id="staDS_ACC" taborder="41" text="접근성" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="229" onclick="divData_tabData_tab1_staDS_ACC_onclick"/>
+                              <Static id="sta04" taborder="36" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="200"/>
+                              <Static id="sta05" taborder="42" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="201"/>
+                              <Static id="staDS_LOCAL" taborder="38" text="지역지구" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="200"/>
+                              <Static id="staDS_CITY_PLAN" taborder="44" text="도시계획" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="229"/>
+                              <Static id="staDS_PUB_NOTICE" taborder="101" text="공시지가" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="258"/>
+                              <Static id="sta06" taborder="47" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="258"/>
+                              <Static id="staDS_USE_STAT" taborder="49" text="이용상태" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="258"/>
+                              <Static id="sta07" taborder="39" width="520" height="30" cssclass="sta_WF_tablebg" top="200" left="762"/>
+                              <Edit id="ctxtDS_LOCAL" taborder="40" width="509" height="20" value="" left="768" top="205"/>
+                              <Static id="sta08" taborder="45" width="520" height="30" cssclass="sta_WF_tablebg" top="229" left="762"/>
+                              <Edit id="ctxtDS_CITY_PLAN" taborder="46" width="509" height="20" value="" left="768" top="234"/>
+                              <Static id="sta13" taborder="50" width="520" height="30" cssclass="sta_WF_tablebg" top="258" left="762"/>
+                              <Static id="staDS_ROAD_STAT" taborder="52" text="도로현황" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="287" onclick="divData_tabData_tab1_staDS_ROAD_STAT_onclick"/>
+                              <Static id="sta14" taborder="53" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="287"/>
+                              <Static id="staDS_CONT_LIMIT" taborder="55" text="건축제한" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="287"/>
+                              <Static id="sta15" taborder="56" width="520" height="30" cssclass="sta_WF_tablebg" top="287" left="762"/>
+                              <Edit id="ctxtDS_ROAD_STAT" taborder="54" width="509" height="20" value="" left="130" top="292"/>
+                              <Edit id="ctxtDS_CONT_LIMIT" taborder="57" width="509" height="20" value="" left="768" top="292"/>
+                              <Edit id="ctxtDS_USE_STAT" taborder="51" width="509" height="20" value="" left="768" top="263"/>
+                              <Static id="staTab1Title01" taborder="58" text="건축 개요" left="5" top="320" right="35" height="22" cssclass="sta_TITLE_Bg"/>
+                              <Edit id="ctxtDS_ACC" taborder="43" width="509" height="20" value="" left="130" top="234"/>
+                              <Edit id="ctxtDS_LAND_CLS" taborder="37" width="509" height="20" value="" left="130" top="206"/>
+                              <Edit id="ctxtDS_PUB_NOTICE" taborder="48" width="509" height="20" value="" left="130" top="263"/>
+                              <Static id="staCD_BIZ01" taborder="74" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="408" text="건축면적"/>
+                              <Static id="staAM_BIZ" taborder="99" text="사업비(원)" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="437"/>
+                              <Static id="sta16" taborder="75" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="408" text=""/>
+                              <Static id="sta17" taborder="121" width="200" height="30" cssclass="sta_WF_tablebg" left="124" top="437"/>
+                              <Static id="staAR_SITE01" taborder="86" text="상가면적" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="408"/>
+                              <Static id="staAM_LAND" taborder="106" text="토지비(원)" left="643" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="437"/>
+                              <Static id="sta19" taborder="107" width="200" height="30" cssclass="sta_WF_tablebg" left="762" top="437"/>
+                              <Static id="staAM_CONST" taborder="103" text="공사비(원)" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="323" top="437"/>
+                              <Static id="sta20" taborder="87" width="520" height="30" cssclass="sta_WF_tablebg" top="408" left="762"/>
+                              <Static id="sta22" taborder="104" width="202" height="30" cssclass="sta_WF_tablebg" top="437" left="442"/>
+                              <Static id="staAM_AREA" taborder="109" text="평단가금액(원)" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="961" top="437"/>
+                              <Static id="sta24" taborder="110" width="202" height="30" cssclass="sta_WF_tablebg" top="437" left="1080"/>
+                              <Static id="sta25" taborder="113" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="466" text=""/>
+                              <Static id="staCD_LAND_STAT" taborder="112" text="토지작업현황" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="466" onclick="divData_tabData_tab1_staCD_LAND_STAT_onclick"/>
+                              <Static id="sta26" taborder="119" width="1158" height="39" cssclass="sta_WF_tablebg" left="124" top="495"/>
+                              <Static id="staDS_RM" taborder="118" text="사업조건/규모" left="5" width="120" height="39" cssclass="sta_WF_tablelabel" textAlign="left" top="495"/>
+                              <Static id="staCD_PERMIT_STAT" taborder="115" text="인허가상황" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="466"/>
+                              <Static id="sta28" taborder="116" width="520" height="30" cssclass="sta_WF_tablebg" top="466" left="762"/>
+                              <TextArea id="txtDS_RM" taborder="120" left="130" top="500" width="1145" height="30" maxlength="1000" onchanged="divData_tabData_tab1_txtDS_RM_onchanged"/>
+                              <Combo id="ccboCD_PERMIT_STAT" taborder="117" width="190" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="768" top="471" innerdataset="dsCD_PERMIT_STAT"/>
+                              <MaskEdit id="ctxtNO_ARCH_TOP" taborder="76" width="90" height="20" value="" textAlign="right" format="#,0" top="374" left="1100" autoselect="true" visible="false"/>
+                              <MaskEdit id="ctxtNO_ARCH_BOTTM" taborder="77" width="90" height="20" value="" textAlign="right" format="#,0" top="374" left="1262" autoselect="true" visible="false"/>
+                              <MaskEdit id="ctxtNO_ARCH_UNDR" taborder="78" width="90" height="20" value="" textAlign="right" format="#,0" top="374" left="1433" autoselect="true" visible="false"/>
+                              <MaskEdit id="ctxtSZ_ARCH" taborder="81" width="90" height="20" value="" textAlign="right" format="#,0.0000" top="413" left="348" autoselect="true" readonly="true"/>
+                              <MaskEdit id="ctxtSZ_ARCH_M" taborder="79" width="90" height="20" value="" textAlign="right" format="#,0.0000" top="413" left="185" autoselect="true" readonly="false"/>
+                              <MaskEdit id="ctxtRT_ARCH" taborder="84" width="90" height="20" value="" textAlign="right" format="#,0.00" top="413" left="518" autoselect="true" readonly="false"/>
+                              <MaskEdit id="ctxtSZ_SHOP_TOP" taborder="88" width="90" height="20" value="" textAlign="right" format="#,0" top="374" left="1740" autoselect="true" visible="false"/>
+                              <MaskEdit id="ctxtSZ_SHOP" taborder="94" width="90" height="20" value="" textAlign="right" format="#,0.0000" top="413" left="986" autoselect="true" readonly="true"/>
+                              <MaskEdit id="ctxtSZ_SHOP_BOTTM" taborder="89" width="90" height="20" value="" textAlign="right" format="#,0" top="374" left="1901" autoselect="true" visible="false"/>
+                              <MaskEdit id="ctxtSZ_SHOP_M" taborder="92" width="90" height="20" value="" textAlign="right" format="#,0.0000" top="413" left="825" autoselect="true" readonly="false"/>
+                              <MaskEdit id="ctxtRT_SHOP" taborder="97" width="90" height="20" value="" textAlign="right" format="#,0.00" top="413" left="1156" autoselect="true" readonly="false"/>
+                              <MaskEdit id="ctxtSZ_SHOP_UNDR" taborder="90" width="90" height="20" value="" textAlign="right" format="#,0" top="374" left="2071" autoselect="true" visible="false"/>
+                              <Combo id="ccboCD_LAND_STAT" taborder="114" width="190" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="130" top="471" innerdataset="dsCD_LAND_STAT" onitemchanged="divData_tabData_tab1_ccboCD_LAND_STAT_onitemchanged"/>
+                              <MaskEdit id="ctxtAM_BIZ" taborder="102" width="189" height="20" value="" textAlign="right" format="#,0" top="442" left="130" autoselect="true"/>
+                              <MaskEdit id="ctxtAM_LAND" taborder="108" width="189" height="20" value="" textAlign="right" format="#,0" top="442" left="staAM_LAND:5" autoselect="true"/>
+                              <MaskEdit id="ctxtAM_CONST" taborder="105" width="189" height="20" value="" textAlign="right" format="#,0" top="442" left="448" autoselect="true"/>
+                              <MaskEdit id="ctxtAM_AREA" taborder="111" width="193" height="20" value="" textAlign="right" format="#,0" top="442" left="staAM_AREA:3" autoselect="true"/>
+                              <Div id="ccfDS_REGION" CodeFindName="DZX_CFZIP_STREET" CDTextWidth="50" taborder="33" left="229" top="176" width="406" url="cmm::cmmCodeFind.xfdl" height="20"/>
+                              <Combo id="ccboCD_LOC" taborder="32" width="96" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="130" top="176" innerdataset="dsCD_LOC"/>
+                              <Edit id="ctxtDS_ADDR2" taborder="34" width="634" height="20" value="" left="642" top="176"/>
+                              <Static id="staPercent03" taborder="80" text="m²" width="20" height="20" top="414" left="280"/>
+                              <Static id="staPercent04" taborder="85" text="%" width="20" height="20" top="414" left="610"/>
+                              <Static id="staPercent05" taborder="82" text="평" width="20" height="20" top="414" left="441"/>
+                              <Static id="staPercent07" taborder="83" text="건폐율" width="40" height="20" top="414" left="469" textAlign="right"/>
+                              <Static id="staPercent09" taborder="91" text="연면적" width="40" height="20" top="414" left="776" textAlign="right" onclick="divData_tabData_tab1_staPercent09_onclick"/>
+                              <Static id="staPercent11" taborder="95" text="평" width="20" height="20" top="414" left="1080"/>
+                              <Static id="staPercent12" taborder="93" text="m²" width="20" height="20" top="414" left="918"/>
+                              <Static id="staPercent14" taborder="96" text="건폐율" width="40" height="20" top="414" left="1106" textAlign="right"/>
+                              <Static id="staPercent15" taborder="98" text="%" width="20" height="20" top="414" left="1248"/>
+                              <Static id="staCD_LAND_STAT00" taborder="59" text="대지면적" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="350"/>
+                              <Static id="sta21" taborder="60" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="350" text=""/>
+                              <Static id="staCD_PERMIT_STAT00" taborder="65" text="지상연면적" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="5" top="379"/>
+                              <Static id="sta23" taborder="66" width="520" height="30" cssclass="sta_WF_tablebg" top="379" left="124"/>
+                              <MaskEdit id="ctxtSZ_ARCH00" taborder="63" width="90" height="20" value="" textAlign="right" format="#,0.0000" top="355" left="348" autoselect="true" readonly="true"/>
+                              <Static id="staPercent16" taborder="64" text="평" width="20" height="20" top="357" left="441"/>
+                              <MaskEdit id="ctxtSZ_ARCH_M00" taborder="61" width="90" height="20" value="" textAlign="right" format="#,0.0000" top="355" left="185" autoselect="true" readonly="false"/>
+                              <Static id="staPercent17" taborder="62" text="m²" width="20" height="20" top="357" left="280"/>
+                              <MaskEdit id="ctxtSZ_SHOP00" taborder="69" width="90" height="20" value="" textAlign="right" format="#,0.0000" top="384" left="348" autoselect="true" readonly="true"/>
+                              <Static id="staPercent18" taborder="70" text="평" width="20" height="20" top="386" left="441"/>
+                              <MaskEdit id="ctxtSZ_SHOP_M00" taborder="67" width="90" height="20" value="" textAlign="right" format="#,0.0000" top="384" left="185" autoselect="true" readonly="false"/>
+                              <Static id="staPercent19" taborder="68" text="m²" width="20" height="20" top="386" left="280"/>
+                              <Static id="staPercent20" taborder="71" text="용적율" width="40" height="20" top="384" left="468" textAlign="right"/>
+                              <MaskEdit id="ctxtRT_SHOP00" taborder="72" width="90" height="20" value="" textAlign="right" format="#,0.00" top="384" left="518" autoselect="true" readonly="false"/>
+                              <Static id="staPercent21" taborder="73" text="%" width="20" height="20" top="386" left="610"/>
+                              <Static id="staDT_ACQ00" taborder="27" text="시공사선정일자" width="123" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="961" top="142"/>
+                              <Static id="sta29" taborder="28" width="200" height="30" cssclass="sta_WF_tablebg" top="142" left="1082"/>
+                              <Calendar id="ctclDT_COST_SEL" taborder="29" left="1088" top="144" width="110" height="25" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+                              <Static id="staCD_PERMIT_STAT00_00" taborder="122" text="전체연면적" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="350"/>
+                              <Static id="sta23_00" taborder="123" width="520" height="30" cssclass="sta_WF_tablebg" top="350" left="762"/>
+                              <MaskEdit id="ctxtSZ_SHOP00_00" taborder="124" width="90" height="20" value="" textAlign="right" format="#,0.0000" top="355" left="986" autoselect="true" readonly="true"/>
+                              <Static id="staPercent18_00" taborder="125" text="평" width="20" height="20" top="357" left="1080"/>
+                              <MaskEdit id="ctxtSZ_SHOP_M00_00" taborder="126" width="90" height="20" value="" textAlign="right" format="#,0.0000" top="355" left="825" autoselect="true" readonly="true"/>
+                              <Static id="staPercent19_00" taborder="127" text="m²" width="20" height="20" top="352" left="918"/>
+                              <Static id="staCD_PERMIT_STAT00_00_00" taborder="128" text="지하연면적" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="379" onclick="divData_tabData_tab1_staCD_PERMIT_STAT00_00_00_onclick"/>
+                              <Static id="sta23_00_00" taborder="129" width="520" height="30" cssclass="sta_WF_tablebg" top="379" left="762"/>
+                              <MaskEdit id="ctxtSZ_SHOP00_00_00" taborder="130" width="90" height="20" value="" textAlign="right" format="#,0.0000" top="384" left="986" autoselect="true" readonly="true"/>
+                              <Static id="staPercent18_00_00" taborder="131" text="평" width="20" height="20" top="386" left="1080"/>
+                              <MaskEdit id="ctxtSZ_SHOP_M00_00_00" taborder="132" width="90" height="20" value="" textAlign="right" format="#,0.0000" top="384" left="825" autoselect="true" readonly="false"/>
+                              <Static id="staPercent19_00_00" taborder="133" text="m²" width="20" height="20" top="386" left="918"/>
+                              <Static id="staCD_CORP" taborder="134" text="법인코드" left="5" width="120" height="30" textAlign="left" top="26" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta00_1" taborder="135" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="26"/>
+                              <Div id="ccfCD_CORP" CDTextWidth="100" CodeFindName="DHX_CFCORP" taborder="100" width="298" height="20" url="cmm::cmmCodeFind.xfdl" left="129" top="31" text=""/>
+                              <Static id="sta00_2" taborder="137" width="214" height="30" cssclass="sta_WF_tablebg" top="26" left="549" visible="true"/>
+                              <Combo id="ccboYN_SAUP" taborder="138" width="132" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="704" top="31" innerdataset="dsYN_SAUP" visible="false"/>
+                              <Static id="staCD_SAUP" taborder="139" text="사업관리부서" width="123" height="30" textAlign="left" left="835" top="26" visible="true" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta00_3" taborder="140" width="328" height="30" cssclass="sta_WF_tablebg" top="26" left="954" visible="true"/>
+                              <Div id="ccfCD_SAUP" CodeFindName="DOS_CFACNTUNIT" CDTextWidth="100" taborder="141" width="318" height="20" url="cmm::cmmCodeFind.xfdl" left="959" top="31" visible="true"/>
+                              <Static id="staYN_SAUP" taborder="136" text="사업관리여부" width="120" height="30" textAlign="left" left="710" top="-3" visible="false" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="staCD_CLS" taborder="142" text="공사분야" width="120" height="30" textAlign="left" left="430" top="26" cssclass="sta_WF_tablelabelE"/>
+                              <Combo id="ccboCD_CLS" taborder="143" width="132" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="554" top="31" innerdataset="dsDS_CD_CLS" index="-1"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                        <Div id="div01" taborder="1" text="div00" left="0" top="0" right="0" visible="false" bottom="0">
+                          <Layouts>
+                            <Layout>
+                              <Static id="staCD_SAUP" taborder="56" text="사업관리부서" width="123" height="30" textAlign="left" left="835" top="26" visible="true" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta17_00_00_00_00_00_00_00_01_00_00" taborder="101" width="562" height="30" cssclass="sta_WF_tablebg" left="720" top="324"/>
+                              <Static id="sta17_00_00_00_00_00_00_00_01_00" taborder="100" width="562" height="30" cssclass="sta_WF_tablebg" left="720" top="295"/>
+                              <Static id="sta17_00_00_00" taborder="87" width="120" height="30" cssclass="sta_WF_tablebg" left="244" top="324"/>
+                              <Static id="sta17_00_00_00_00" taborder="89" width="120" height="30" cssclass="sta_WF_tablebg" left="363" top="295"/>
+                              <Static id="sta26_00" taborder="83" width="1158" height="40" cssclass="sta_WF_tablebg" left="124" top="361"/>
+                              <Static id="staTab1Title" taborder="0" text="프로젝트 개요" left="5" top="0" right="5" height="22" cssclass="sta_TITLE_Bg"/>
+                              <Static id="staCD_BIZ_STAT" taborder="1" text="검토상태" left="5" width="120" height="30" textAlign="left" top="55" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="staTY_BIZ" taborder="8" text="사업유형" left="5" width="120" height="30" textAlign="left" top="84" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="staTY_BIZ_MHOD" taborder="15" text="사업방식" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="113"/>
+                              <Static id="sta00" taborder="2" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="55" onclick="divData_tabData_tab1_sta00_onclick"/>
+                              <Static id="sta01" taborder="9" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="84"/>
+                              <Static id="sta02" taborder="16" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="113"/>
+                              <Static id="staNM_PROV" taborder="4" text="정보제공자" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="55" textDecoration="none"/>
+                              <Static id="sta18" taborder="5" width="520" height="30" cssclass="sta_WF_tablebg" top="55" left="762"/>
+                              <Static id="staNM_ENF" taborder="11" text="사업시행사" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="84"/>
+                              <Static id="staDS_ENF_DEPT" taborder="18" text="사업시행담당부서" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="113"/>
+                              <Div id="ccfCD_BIZ_STAT" CodeFindName="CF_CODE_DO_06" CDTextWidth="80" taborder="3" width="505" height="20" url="cmm::cmmCodeFind.xfdl" left="130" top="60"/>
+                              <Div id="ccfTY_BIZ" CodeFindName="CF_CODE_DO_03" CDTextWidth="80" taborder="10" width="505" height="20" url="cmm::cmmCodeFind.xfdl" top="89" left="130"/>
+                              <Edit id="ctxtNM_PROV" taborder="6" width="309" height="20" value="" left="768" top="60"/>
+                              <Div id="ccfTY_BIZ_MHOD" CodeFindName="CF_CODE_DO_04" CDTextWidth="80" taborder="17" width="505" height="20" url="cmm::cmmCodeFind.xfdl" top="118" left="130"/>
+                              <Static id="staTY_PRDCT" taborder="21" text="상품분류" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="142"/>
+                              <Static id="sta09" taborder="22" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="142"/>
+                              <Static id="staDT_ACQ" taborder="24" text="정보입수일자" width="120" height="30" textAlign="left" left="643" top="142" cssclass="sta_WF_tablelabelE"/>
+                              <Div id="ccfTY_PRDCT" CodeFindName="CF_CODE_DO_41" CDTextWidth="80" taborder="23" width="505" height="20" url="cmm::cmmCodeFind.xfdl" top="147" left="130"/>
+                              <Combo id="ccboTY_ACQ1" taborder="7" width="190" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="1088" top="60" innerdataset="dsTY_ACQ1"/>
+                              <Static id="sta10" taborder="12" width="520" height="30" cssclass="sta_WF_tablebg" top="84" left="762"/>
+                              <Edit id="ctxtNM_ENF" taborder="13" width="309" height="20" value="" left="768" top="89"/>
+                              <Combo id="ccboTY_ENF" taborder="14" width="190" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="1088" top="89" innerdataset="dsTY_ENF"/>
+                              <Static id="sta11" taborder="19" width="520" height="30" cssclass="sta_WF_tablebg" top="113" left="762"/>
+                              <Edit id="ctxtDS_ENF_DEPT" taborder="20" width="509" height="20" value="" left="768" top="118"/>
+                              <Static id="sta12" taborder="25" width="200" height="30" cssclass="sta_WF_tablebg" top="142" left="762"/>
+                              <Calendar id="ctclDT_ACQ" taborder="26" left="768" top="144" width="110" height="25" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+                              <Static id="sta03" taborder="31" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="171"/>
+                              <Static id="staCD_LOC" taborder="30" text="지역" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="171"/>
+                              <Static id="staDS_LAND_CLS" taborder="35" text="지목" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="200"/>
+                              <Static id="sta04" taborder="36" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="200"/>
+                              <Static id="sta05" taborder="41" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="201"/>
+                              <Static id="staDS_LOCAL" taborder="38" text="지역지구" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="643" top="200"/>
+                              <Static id="sta07" taborder="39" width="520" height="30" cssclass="sta_WF_tablebg" top="200" left="762"/>
+                              <Edit id="ctxtDS_LOCAL" taborder="40" width="509" height="20" value="" left="768" top="205"/>
+                              <Static id="staDS_ROAD_STAT" taborder="42" text="구분" left="5" width="240" height="30" cssclass="sta_WF_tablelabel" textAlign="center" top="266" onclick="divData_tabData_tab1_staDS_ROAD_STAT_onclick"/>
+                              <Edit id="ctxtDS_LAND_CLS" taborder="37" width="509" height="20" value="" left="130" top="206"/>
+                              <Static id="sta26" taborder="49" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="439"/>
+                              <Static id="staDS_FI" taborder="48" text="금융자문사" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="439"/>
+                              <TextArea id="txtDS_FI" taborder="50" left="130" top="443" width="250" height="22" maxlength="1000" onchanged="divData_tabData_tab1_txtDS_RM_onchanged"/>
+                              <MaskEdit id="ctxtNO_ARCH_UNDR" taborder="43" width="90" height="20" value="" textAlign="right" format="#,0" top="374" left="1433" autoselect="true" visible="false"/>
+                              <MaskEdit id="ctxtSZ_SHOP_TOP" taborder="44" width="90" height="20" value="" textAlign="right" format="#,0" top="374" left="1740" autoselect="true" visible="false"/>
+                              <MaskEdit id="ctxtSZ_SHOP_BOTTM" taborder="45" width="90" height="20" value="" textAlign="right" format="#,0" top="374" left="1901" autoselect="true" visible="false"/>
+                              <MaskEdit id="ctxtSZ_SHOP_UNDR" taborder="46" width="90" height="20" value="" textAlign="right" format="#,0" top="374" left="2071" autoselect="true" visible="false"/>
+                              <Div id="ccfDS_REGION" CodeFindName="DZX_CFZIP_STREET" CDTextWidth="50" taborder="33" left="229" top="176" width="406" url="cmm::cmmCodeFind.xfdl" height="20"/>
+                              <Combo id="ccboCD_LOC" taborder="32" width="96" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="130" top="176" innerdataset="dsCD_LOC"/>
+                              <Edit id="ctxtDS_ADDR2" taborder="34" width="634" height="20" value="" left="642" top="176"/>
+                              <Static id="staDT_ACQ00" taborder="27" text="시공사선정일자" width="123" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="961" top="142"/>
+                              <Static id="sta29" taborder="28" width="200" height="30" cssclass="sta_WF_tablebg" top="142" left="1082"/>
+                              <Calendar id="ctclDT_COST_SEL" taborder="29" left="1088" top="144" width="110" height="25" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+                              <Static id="staCD_CORP" taborder="51" text="법인코드" left="5" width="120" height="30" textAlign="left" top="26" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="sta00_1" taborder="52" width="307" height="30" cssclass="sta_WF_tablebg" left="124" top="26"/>
+                              <Div id="ccfCD_CORP" CDTextWidth="100" CodeFindName="DHX_CFCORP" taborder="47" width="298" height="20" url="cmm::cmmCodeFind.xfdl" left="129" top="31" text=""/>
+                              <Static id="sta00_2" taborder="54" width="214" height="30" cssclass="sta_WF_tablebg" top="26" left="549" visible="true"/>
+                              <Combo id="ccboYN_SAUP" taborder="55" width="132" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="704" top="31" innerdataset="dsYN_SAUP" visible="false"/>
+                              <Static id="sta00_3" taborder="57" width="328" height="30" cssclass="sta_WF_tablebg" top="26" left="954" visible="true"/>
+                              <Div id="ccfCD_SAUP" CodeFindName="DOS_CFACNTUNIT" CDTextWidth="100" taborder="58" width="318" height="20" url="cmm::cmmCodeFind.xfdl" left="959" top="31" visible="true"/>
+                              <Static id="staYN_SAUP" taborder="53" text="사업관리여부" width="120" height="30" textAlign="left" left="710" top="-3" visible="false" cssclass="sta_WF_tablelabelE"/>
+                              <Static id="staCD_CLS" taborder="59" text="공사분야" width="120" height="30" textAlign="left" left="430" top="26" cssclass="sta_WF_tablelabelE"/>
+                              <Combo id="ccboCD_CLS" taborder="60" width="132" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" left="554" top="31" innerdataset="dsDS_CD_CLS" index="-1"/>
+                              <Static id="sta17_00" taborder="61" width="200" height="30" cssclass="sta_WF_tablebg" left="124" top="229"/>
+                              <MaskEdit id="ctxtAM_BIZ1" taborder="62" width="189" height="20" value="" textAlign="right" format="#,0" top="234" left="130" autoselect="true"/>
+                              <Static id="staAM_BIZ1" taborder="63" text="사업비(원)" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="229"/>
+                              <Static id="staAM_CONST1" taborder="64" text="공사비(원)" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="323" top="229"/>
+                              <Static id="sta22_00" taborder="65" width="202" height="30" cssclass="sta_WF_tablebg" top="229" left="442"/>
+                              <MaskEdit id="ctxtAM_CONST1" taborder="66" width="189" height="20" value="" textAlign="right" format="#,0" top="234" left="448" autoselect="true"/>
+                              <Static id="staAM_LAND1" taborder="67" text="토지비(원)" left="643" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="229"/>
+                              <Static id="sta19_00" taborder="68" width="200" height="30" cssclass="sta_WF_tablebg" left="762" top="229"/>
+                              <MaskEdit id="ctxtAM_LAND1" taborder="69" width="189" height="20" value="" textAlign="right" format="#,0" top="234" left="768" autoselect="true"/>
+                              <Static id="staAM_AREA1" taborder="70" text="평단가금액(원)" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" left="961" top="229"/>
+                              <Static id="sta24_00" taborder="71" width="202" height="30" cssclass="sta_WF_tablebg" top="229" left="1080"/>
+                              <MaskEdit id="ctxtAM_AREA1" taborder="72" width="193" height="20" value="" textAlign="right" format="#,0" top="234" left="1084" autoselect="true"/>
+                              <Static id="staDS_ROAD_STAT00" taborder="73" text="자기자본" left="244" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="center" top="266" onclick="divData_tabData_tab1_staDS_ROAD_STAT_onclick"/>
+                              <Static id="staDS_ROAD_STAT00_00" taborder="74" text="타인자본" left="363" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="center" top="266" onclick="divData_tabData_tab1_staDS_ROAD_STAT_onclick"/>
+                              <Static id="staDS_ROAD_STAT00_00_00" taborder="75" text="기타(분양금 등)" left="482" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="center" top="266" onclick="divData_tabData_tab1_staDS_ROAD_STAT_onclick"/>
+                              <Static id="staAM_TOT" taborder="76" text="계" left="601" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="center" top="266" onclick="divData_tabData_tab1_staDS_ROAD_STAT_onclick"/>
+                              <Static id="staDS_ROAD_STAT00_00_00_00_00" taborder="77" text="비고" left="720" height="30" cssclass="sta_WF_tablelabel" textAlign="center" top="266" onclick="divData_tabData_tab1_staDS_ROAD_STAT_onclick" width="562"/>
+                              <Static id="staMoneyState" taborder="78" text="자금조달" left="5" width="120" height="59" cssclass="sta_WF_tablelabel" textAlign="center" top="295" onclick="divData_tabData_tab1_staDS_ROAD_STAT_onclick"/>
+                              <Static id="staAM_OCAPITAL" taborder="79" text="금액(원)" left="124" width="121" height="30" cssclass="sta_WF_tablelabel" textAlign="center" top="295" onclick="divData_tabData_tab1_staDS_ROAD_STAT_onclick"/>
+                              <Static id="staRT_OCAPITAL" taborder="80" text="비율" left="124" width="121" height="30" cssclass="sta_WF_tablelabel" textAlign="center" top="324" onclick="divData_tabData_tab1_staDS_ROAD_STAT_onclick"/>
+                              <Static id="staDS_SCALE" taborder="81" text="사업규모" left="5" width="120" height="40" cssclass="sta_WF_tablelabel" textAlign="left" top="361"/>
+                              <TextArea id="txtDS_SCALE" taborder="82" left="130" top="365" width="1145" height="32" maxlength="1000" onchanged="divData_tabData_tab1_txtDS_RM_onchanged"/>
+                              <Static id="sta17_00_00" taborder="84" width="120" height="30" cssclass="sta_WF_tablebg" left="244" top="295"/>
+                              <MaskEdit id="ctxtAM_OCAPITAL" taborder="85" width="109" height="20" value="" textAlign="right" format="#,##0" top="300" left="250"/>
+                              <MaskEdit id="ctxtRT_OCAPITAL" taborder="86" width="109" height="20" value="" textAlign="right" format="#,##0.00" top="329" left="250"/>
+                              <MaskEdit id="ctxtAM_BCAPITAL" taborder="88" width="109" height="20" value="" textAlign="right" format="#,##0" top="300" left="369"/>
+                              <Static id="sta17_00_00_00_00_00" taborder="90" width="120" height="30" cssclass="sta_WF_tablebg" left="363" top="324"/>
+                              <MaskEdit id="ctxtRT_BCAPITAL" taborder="91" width="109" height="20" value="" textAlign="right" format="#,##0.00" top="329" left="369"/>
+                              <Static id="sta17_00_00_00_00_00_00" taborder="92" width="120" height="30" cssclass="sta_WF_tablebg" left="482" top="295"/>
+                              <MaskEdit id="ctxtAM_ETC" taborder="93" width="109" height="20" value="" textAlign="right" format="#,##0" top="300" left="488"/>
+                              <Static id="sta17_00_00_00_00_00_00_00" taborder="94" width="120" height="30" cssclass="sta_WF_tablebg" left="482" top="324"/>
+                              <MaskEdit id="ctxtRT_ETC" taborder="95" width="109" height="20" value="" textAlign="right" format="#,##0.00" top="329" left="488"/>
+                              <Static id="sta17_00_00_00_00_00_00_00_00" taborder="96" width="120" height="30" cssclass="sta_WF_tablebg" left="601" top="324"/>
+                              <MaskEdit id="ctxtRT_TOT" taborder="97" width="109" height="20" value="" textAlign="right" format="#,##0.00" top="329" left="607" readonly="true"/>
+                              <Static id="sta17_00_00_00_00_00_00_00_01" taborder="98" width="120" height="30" cssclass="sta_WF_tablebg" left="601" top="295"/>
+                              <MaskEdit id="ctxtAM_TOT" taborder="99" width="109" height="20" value="" textAlign="right" format="#,##0" top="300" left="607" readonly="true"/>
+                              <Edit id="ctxtDS_AMBIGO" taborder="102" width="550" height="20" value="" left="726" top="300"/>
+                              <Edit id="ctxtDS_RTBIGO" taborder="103" width="550" height="20" value="" left="726" top="329"/>
+                              <Static id="staDS_RM1" taborder="104" text="사업조건" left="5" width="120" height="40" cssclass="sta_WF_tablelabel" textAlign="left" top="400"/>
+                              <Static id="sta26_00_00" taborder="105" width="1158" height="40" cssclass="sta_WF_tablebg" left="124" top="400"/>
+                              <TextArea id="txtDS_RM1" taborder="106" left="130" top="404" width="1145" height="32" maxlength="1000" onchanged="divData_tabData_tab1_txtDS_RM_onchanged"/>
+                              <Static id="sta26_01" taborder="107" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="468"/>
+                              <TextArea id="txtDS_AI" taborder="108" left="130" top="472" width="250" height="22" maxlength="1000" onchanged="divData_tabData_tab1_txtDS_RM_onchanged"/>
+                              <Static id="staDS_AI" taborder="109" text="회계자문사" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="468"/>
+                              <Static id="sta26_01_00" taborder="110" width="1158" height="30" cssclass="sta_WF_tablebg" left="124" top="497"/>
+                              <TextArea id="txtDS_DI" taborder="111" left="130" top="501" width="250" height="22" maxlength="1000" onchanged="divData_tabData_tab1_txtDS_RM_onchanged"/>
+                              <Static id="staDS_DI" taborder="112" text="설계용역사" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="left" top="497"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                        <Static id="staID_FILE_ATTCH" taborder="2" text="첨부파일" left="5" width="120" height="149" cssclass="sta_WF_tablelabel" textAlign="left" top="545" onclick="divData_tabData_tab1_staID_FILE_ATTCH_onclick"/>
+                        <Static id="sta27" taborder="3" width="1158" height="149" cssclass="sta_WF_tablebg" left="124" top="545"/>
+                        <Div id="divFile" taborder="4" left="125" top="552" url="cmm::cmmFileManager.xfdl" text="" width="1154" height="136"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab6" text="사업성분석">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staTab1Title01" taborder="6" text="참여사" left="5" top="297" right="21" height="24" cssclass="sta_TITLE_Bg"/>
+                        <Static id="staTab1Title01_00" taborder="7" text="사업성 분석" left="4" top="7" right="13" height="24" cssclass="sta_TITLE_Bg" onclick="divData_tabData_tab6_staTab1Title01_00_onclick"/>
+                        <Button id="btnDelAnalysis" taborder="0" text="삭제" height="24" width="50" top="5" right="19" onclick="divData_tabData_tab2_btnDelAnalysis_onclick"/>
+                        <Button id="btnRegAnalysis" taborder="1" text="등록" height="24" width="50" top="5" onclick="divData_tabData_tab2_btnRegAnalysis_onclick" right="78"/>
+                        <Button id="btnUpdAnalysis" taborder="2" text="편집" height="24" width="50" top="5" onclick="divData_tabData_tab2_btnUpdAnalysis_onclick" right="134" visible="false"/>
+                        <Grid id="objGrdtab6" taborder="3" left="5" top="37" right="19" height="250" onselectchanged="divData_tabData_tab2_objGrdtab1_onselectchanged" oncelldblclick="divData_tabData_tab2_objGrdtab1_oncelldblclick"/>
+                        <Button id="btnRegJvFirm" taborder="4" text="참여사구성" height="24" width="88" top="297" onclick="divData_tabData_tab2_btnRegJvFirm_onclick" right="21" enable="false"/>
+                        <Grid id="objGrdtab7" taborder="5" left="5" top="327" right="19" height="250"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab2" text="약정">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staTab2Title1" taborder="34" text="계약금액" left="5" right="5" cssclass="sta_TITLE_Bg" visible="true" height="22" top="0"/>
+                        <Grid id="objGrdtab2" taborder="1" left="5" top="37" right="5" bottom="5" oncelldblclick="divData_tabData_tab2_objGrdtab2_oncelldblclick"/>
+                        <Button id="btnUpd" taborder="2" text="편집" height="24" right="85" width="50" top="5" onclick="divData_tabData_tab2_btnUpd_onclick" visible="false"/>
+                        <Button id="btnReg" taborder="3" text="등록" height="24" right="5" width="70" top="5" onclick="divData_tabData_tab2_btnReg_onclick"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab7" text="금융약정">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staTab1Title01" taborder="0" text="금융약정" left="5" top="35" height="22" cssclass="sta_TITLE_Bg" width="82"/>
+                        <Grid id="objGrdtab8" taborder="1" left="5" top="62" width="360" height="541" onselectchanged="divData_tabData_tab4_objGrdtab5_onselectchanged" oncelldblclick="divData_tabData_tab4_objGrdtab5_oncelldblclick"/>
+                        <Static id="staTab1Title" taborder="2" text="차입현황" left="370" top="36" height="22" cssclass="sta_TITLE_Bg" width="82"/>
+                        <Grid id="objGrdtab9" taborder="3" left="370" top="62" right="19" height="301"/>
+                        <Button id="btnUpdAgree" taborder="4" text="편집" height="24" width="50" top="5" right="160" onclick="divData_tabData_tab4_btnUpdAgree_onclick" visible="false"/>
+                        <Button id="btnRegAgree" taborder="5" text="등록" height="24" width="50" top="5" right="78" onclick="divData_tabData_tab4_btnRegAgree_onclick"/>
+                        <Button id="btnDelAgree" taborder="6" text="삭제" height="24" width="50" top="5" right="19" onclick="divData_tabData_tab4_btnDelAgree_onclick"/>
+                        <Static id="staTab1Title00" taborder="7" text="보증현황" left="370" top="372" height="22" cssclass="sta_TITLE_Bg" width="82"/>
+                        <Grid id="objGrdtab10" taborder="8" left="370" right="19" top="398" height="205"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab3" text="공동도급사">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrdtab3" taborder="0" left="5" top="33" right="5" bottom="5"/>
+                        <Button id="btnReg" taborder="1" text="등록/변경" height="24" onclick="divData_tabData_btnReg_onclick" right="5" width="70" top="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab4" text="관계사">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrdtab4" taborder="0" left="5" top="37" right="5" bottom="5"/>
+                        <Button id="btnReg" taborder="1" text="등록/변경" height="24" onclick="divData_tabData_btnReg_onclick" right="5" width="70" top="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab5" text="담당자 / 열람부서">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staTitle00" taborder="2" text="담당자" left="10" top="10" height="24" cssclass="sta_TITLE_Bg" right="24"/>
+                        <Grid id="objGrdtab5" taborder="0" left="5" top="staTitle00:10" right="5" height="265"/>
+                        <Button id="btnReg" taborder="1" text="등록/변경" height="24" onclick="divData_tabData_btnReg_onclick" right="5" width="70" top="10"/>
+                        <Static id="staTitle01" taborder="3" text="열람부서" left="10" top="objGrdtab5:10" height="24" cssclass="sta_TITLE_Bg" right="24"/>
+                        <Grid id="objGrdtab5_Auth" taborder="4" left="5" top="staTitle01:10" right="5" height="265"/>
+                        <Button id="btnReg_Auth" taborder="5" text="등록/변경" onclick="divData_tabData_btnReg_Auth_onclick" right="9" width="70" top="objGrdtab5:10" bottom="objGrdtab5_Auth:10"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+              <Static id="sta00_00" taborder="4" text="＊ 사업비프로젝트코드생성 : 사업비 회계 처리를 위한 프로젝트 코드 생성 " width="410" height="20" color="#2d33fa" top="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+this.serverTime = "";
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);	
+ 	// ---------------------------//
+	this.fnSetExtendButton();
+	
+	this.fnSetVariable();
+	this.fnSetParameter();
+	this.fnSetEvent();
+	
+	this.fnSetCombo();
+	
+	// 파일관리자 - 조회전에는 disable
+	this.divData.form.tabData.tab1.form.divFile.form.set_enable(false);
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_PROJ))
+	{
+		this.dsSearch.setColumn(0, "CD_PROJ", this.getOwnerFrame().CD_PROJ);
+		this.FormBtns.Select.click();
+	} else {
+		/*폼상태는 입력 모드*/
+		this.gfnSetFormStatus(this, "I");
+		this.fnAdd();
+	}
+	this.fnSetButton();
+	
+};
+
+/************************************************************************
+ * 담당자 여부 검사
+ ************************************************************************/
+ this.fnGetYNCharge = function(){
+	
+	this.dsReqYNCharge = new Dataset();
+	this.dsReqYNCharge.addColumn("CD_PROJ", "string");
+	this.dsReqYNCharge.addColumn("ID_USER", "string");
+	
+	this.dsReqYNCharge.addRow();
+	this.dsReqYNCharge.setColumn(0, "CD_PROJ", this.getOwnerFrame().CD_PROJ);
+	this.dsReqYNCharge.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+		
+	var strSvcId    = "selectCharge";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var	inData      = "selectCharge=dsReqYNCharge";
+	var	outData     = "dsRcvYNCharge=selectCharge0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+		
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+ }
+ 
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Select.set_enable(false);
+	this.FormBtns.Add.set_enable(false);
+	this.FormBtns.Save.set_enable(false);
+	this.FormBtns.Del.set_enable(false);
+	this.FormBtns.Excel.set_enable(false);
+	this.FormBtns.Print.set_enable(false);
+	
+	if(this.FormInfo.TY_AUTH == "R") {
+		this.FormBtns.Select.set_enable(true);
+		return;
+	}
+	
+	var frmStatus = this.gfnGetFormStatus(this);
+	
+	switch(frmStatus) {
+	case "I":
+		this.FormBtns.Select.set_enable(false);
+		this.FormBtns.Save.set_enable(true);
+		this.FormBtns.Del.set_enable(false);
+		/*Tab제어*/
+		this.divData.form.tabData.tab2.set_enable(false);
+		this.divData.form.tabData.tab3.set_enable(false);
+		this.divData.form.tabData.tab4.set_enable(false);
+		this.divData.form.tabData.tab5.set_enable(false);
+		this.divData.form.tabData.tab6.set_enable(false);
+		this.divData.form.tabData.tab7.set_enable(false);
+		
+		this.btnContCreate.set_enable(false);
+		this.btnHqCreate.set_enable(false);
+		break;
+	case "U":
+		this.FormBtns.Select.set_enable(true);
+		this.FormBtns.Save.set_enable(true);
+		this.FormBtns.Del.set_enable(true);
+		
+		this.btnContCreate.set_enable(false);
+		this.btnHqCreate.set_enable(false);
+		break;
+	case "D":
+		break;
+	default: /*기본(조회완료)*/
+		this.FormBtns.Select.set_enable(true);
+		this.FormBtns.Save.set_enable(false);
+		this.FormBtns.Del.set_enable(true);
+		/*Tab제어*/
+		this.divData.form.tabData.tab2.set_enable(true);
+		this.divData.form.tabData.tab3.set_enable(true);
+		this.divData.form.tabData.tab4.set_enable(true);
+		this.divData.form.tabData.tab5.set_enable(true);
+		this.divData.form.tabData.tab6.set_enable(true);
+		this.divData.form.tabData.tab7.set_enable(true);
+		
+		this.btnContCreate.set_enable(true);
+		this.btnHqCreate.set_enable(true);
+	}
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+    this.btnVendor = this.gfnFormButtonAdd("btnVendor", "fnVendor");
+	this.btnContCreate = this.gfnFormButtonAdd("btnContCreate", "fnContCreate");
+	this.btnHqCreate = this.gfnFormButtonAdd("btnHqCreate", "fnHqCreate");
+};
+
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ARCH_TY_PROJ = "SA00102";
+	
+	this.ccfCD_BIZ_STAT = this.divData.form.tabData.tab1.form.div00.form.ccfCD_BIZ_STAT;
+	this.ccfTY_BIZ = this.divData.form.tabData.tab1.form.div00.form.ccfTY_BIZ;
+	this.ccfTY_BIZ_MHOD = this.divData.form.tabData.tab1.form.div00.form.ccfTY_BIZ_MHOD;
+	this.ccfTY_PRDCT = this.divData.form.tabData.tab1.form.div00.form.ccfTY_PRDCT;
+	this.ccfDS_REGION = this.divData.form.tabData.tab1.form.div00.form.ccfDS_REGION;
+	this.ccfCD_CORP =  this.divData.form.tabData.tab1.form.div00.form.ccfCD_CORP;
+	this.ccfCD_SAUP =  this.divData.form.tabData.tab1.form.div00.form.ccfCD_SAUP;
+	
+	this.ccfCD_BIZ_STAT1 = this.divData.form.tabData.tab1.form.div01.form.ccfCD_BIZ_STAT;
+	this.ccfTY_BIZ1 = this.divData.form.tabData.tab1.form.div01.form.ccfTY_BIZ;
+	this.ccfTY_BIZ_MHOD1 = this.divData.form.tabData.tab1.form.div01.form.ccfTY_BIZ_MHOD;
+	this.ccfTY_PRDCT1 = this.divData.form.tabData.tab1.form.div01.form.ccfTY_PRDCT;
+	this.ccfDS_REGION1 = this.divData.form.tabData.tab1.form.div01.form.ccfDS_REGION;
+	this.ccfCD_CORP1 =  this.divData.form.tabData.tab1.form.div01.form.ccfCD_CORP;
+	this.ccfCD_SAUP1 =  this.divData.form.tabData.tab1.form.div01.form.ccfCD_SAUP;
+	this.edtCD_SAUP = this.divSearch.form.edtCD_SAUP;
+	this.edtDS_SAUP = this.divSearch.form.edtDS_SAUP;
+	
+	this.ccfCD_BIZ_STAT.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";      //검토상태
+	this.ccfTY_BIZ.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";           //사업유형
+	this.ccfTY_BIZ_MHOD.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";      //사업방식
+	this.ccfTY_PRDCT.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";      //상품분류
+	this.ccfDS_REGION.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";        //우편번호
+	
+	this.ccfCD_BIZ_STAT1.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";      //검토상태
+	this.ccfTY_BIZ1.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";           //사업유형
+	this.ccfTY_BIZ_MHOD1.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";      //사업방식
+	this.ccfTY_PRDCT1.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";      //상품분류
+	this.ccfDS_REGION1.AfterCDTextChanged = "fnCodeFinder_AfterCDTextChanged";        //우편번호
+	
+	//약정
+	this.dxGrid2 = this.divData.form.tabData.tab2.form.objGrdtab2;
+	//공동도급사
+	this.dxGrid3 = this.divData.form.tabData.tab3.form.objGrdtab3;
+	//관계사
+	this.dxGrid4 = this.divData.form.tabData.tab4.form.objGrdtab4;
+	//담당자
+	this.dxGrid5 = this.divData.form.tabData.tab5.form.objGrdtab5;
+	//열람부서
+	this.dxGrid5_Auth = this.divData.form.tabData.tab5.form.objGrdtab5_Auth;
+	//사업성 분석TAB 그리드
+	this.dxGrid6 = this.divData.form.tabData.tab6.form.objGrdtab6;
+	this.dxGrid7 = this.divData.form.tabData.tab6.form.objGrdtab7;
+    //금융약정TAB 그리드
+	this.dxGrid8 = this.divData.form.tabData.tab7.form.objGrdtab8;
+	this.dxGrid9 = this.divData.form.tabData.tab7.form.objGrdtab9;
+	this.dxGrid10 = this.divData.form.tabData.tab7.form.objGrdtab10;
+	
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	this.gfnGridInit(this.dxGrid2, this.dsList2, "DO", "DOA_ARCH_PROV_CONT");
+	this.gfnGridInit(this.dxGrid3, this.dsList3, "DO", "DOA_ARCH_CO_CONTRCT");
+	this.gfnGridInit(this.dxGrid4, this.dsList4, "DO", "DOA_ARCH_CONCERN");
+	this.gfnGridInit(this.dxGrid5, this.dsList5, "DO", "DOA_ARCH_CHARGE");
+	
+	this.gfnGridInit(this.dxGrid5_Auth, this.dsList5_Auth, "DO", "DOZ_PROJ_AUTH");
+	
+	//사업성 분석TAB 그리드
+	this.gfnGridInit(this.dxGrid6, this.dsList6, "DO", "DOC_SOC_ANALYSIS_LIST");	
+	this.gfnGridInit(this.dxGrid7, this.dsList7, "DO", "DOC_SOC_JV_LIST");
+ 	
+	//금융약정TAB 그리드
+	this.gfnGridInit(this.dxGrid8, this.dsList8, "DO", "DOC_SOC_AGREE_LIST");
+	this.gfnGridInit(this.dxGrid9, this.dsList9, "DO", "DOC_SOC_AGREE_LOAN_LIST");
+	this.gfnGridInit(this.dxGrid10, this.dsList10, "DO", "DOC_SOC_AGREE_ASSU_LIST");
+	
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_SAUP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.ccfCD_CORP1.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_SAUP1.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsBase.set_enableevent(false);
+	this.dsBase.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	//this.dsBase.setColumn(0, "CD_DEPT", this.AuthClient.CD_DEPT);
+	this.dsBase.set_enableevent(true);
+	
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_PROJ", "string");
+	
+	this.dsSelect1 = new Dataset();
+	this.dsSelect1.addColumn("CD_PROJ", "string");
+	this.dsSelect1.addColumn("YN_READ", "string");
+	
+	this.dsHqCreate = new Dataset();
+	this.dsHqCreate.addColumn("CD_PROJ", "string");
+	this.dsHqCreate.addColumn("DS_SAUP", "string");
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow)  {
+	  if (id == "ccfCD_CORP") {
+		dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+	  } else if(id == "ccfCD_SAUP"){
+	    dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+		dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+		dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "CD_PROJ", this.divSearch.form.ctxtCD_PROJ.value);
+	  } else if(id == "ccfCD_SAUP1"){
+	    dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+		dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+		dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "CD_PROJ", this.divSearch.form.ctxtCD_PROJ.value);
+	  } else if(id == "ccfCD_CORP1"){
+	    dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+	  }
+	return true;
+ }
+ 
+/************************************************************************
+ * 콤보 이벤트 설정
+ ************************************************************************/
+this.fnSetCombo = function() {
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DO");
+	this.dsCombo.setColumn(0, "CD_TYPE", "14");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(1, "CD_SYSTEM", "DO");
+	this.dsCombo.setColumn(1, "CD_TYPE", "15");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(2, "CD_SYSTEM", "DO");
+	this.dsCombo.setColumn(2, "CD_TYPE", "02");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(3, "CD_SYSTEM", "DO");
+	this.dsCombo.setColumn(3, "CD_TYPE", "08");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(4, "CD_SYSTEM", "DO");
+	this.dsCombo.setColumn(4, "CD_TYPE", "07");
+
+	this.dsCombo.addRow();	// 공사분야
+	this.dsCombo.setColumn(5, "CD_SYSTEM", "DO");
+	this.dsCombo.setColumn(5, "CD_TYPE", "24");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_ACQ1=combo0 dsTY_ENF=combo1 dsCD_LOC=combo2 dsCD_LAND_STAT=combo3 dsCD_PERMIT_STAT=combo4 dsDS_CD_CLS=combo5";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnCodeFinder_AfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+	if(arr.length > 0)
+	{
+		switch(id)
+		{
+			//우편번호
+			case "ccfDS_REGION":
+				this.dsBase.setColumn(0, "CD_ZIP", arr[0].ZIPCODE);
+				this.dsBase.setColumn(0, "DS_ADDR1", arr[0].ADDRESS);
+			break;
+			
+			//우편번호
+			case "ccfDS_REGION1":
+				this.dsBase.setColumn(0, "CD_ZIP", arr[0].ZIPCODE);
+				this.dsBase.setColumn(0, "DS_ADDR1", arr[0].ADDRESS);
+			break;
+		}
+	}
+}
+
+this.fnSaveValidate = function(){
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "DS_PROJ"))){
+		this.gfnAlert("프로젝트 명을 입력하세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "CD_BIZ_STAT"))){
+		this.gfnAlert("검토상태를 입력하세요.");
+		return false;
+	}
+	
+	/*
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "NM_PROV"))){
+		this.gfnAlert("정보제공자를 입력하세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "TY_ACQ"))){
+		this.gfnAlert("정보제공자 유형을 선택하세요.");
+		return false;
+	}
+	*/
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "TY_BIZ"))){
+		this.gfnAlert("사업유형을 입력하세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "DT_ACQ"))){
+		this.gfnAlert("정보입수일자를 입력하세요.");
+		return false;
+	}
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "CD_CORP"))){
+		this.gfnAlert("법인코드를 입력하세요.");
+		return false;
+	}
+// 	if(this.gfnIsNull(this.dsBase.getColumn(0, "YN_SAUP"))){
+// 		this.gfnAlert("사업관리여부를 선택하세요.");
+// 		return false;
+// 	}
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "CD_DEPT"))){
+		this.gfnAlert("사업관리부서를 입력하세요.");
+		return false;
+	}
+	
+	return true;
+}
+
+/************************************************************************
+ * 트렌젝션 버튼 이벤트
+ ************************************************************************/
+this.fnSelect = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	var tIdx = this.divData.form.tabData.tabindex;
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();	
+	this.dsSelect.setColumn(0, "CD_PROJ", this.dsSearch.getColumn(0, "CD_PROJ"));
+	
+	this.dsSelect1.clearData();
+	this.dsSelect1.addRow();
+	this.dsSelect1.setColumn(0, "CD_PROJ", this.dsSearch.getColumn(0, "CD_PROJ"));
+	this.dsSelect1.setColumn(0, "YN_READ", "Y");
+	
+	var strSvcId    = "select"+tIdx;
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "";
+	var outData     = "";
+	if(tIdx == 0){
+		inData      = "select0=dsSelect";
+		outData     = "dsBase=select00";
+	} else if (tIdx == 1){
+		inData      = "select1=dsSelect1";
+		outData     = "dsList6=select10";
+		this.dsList6.clearData();
+		this.dsList7.clearData();
+	} else if (tIdx == 2){
+		inData      = "select2=dsSelect";
+		outData     = "dsList2=select20";
+	} else if (tIdx == 3){
+		inData      = "select3=dsSelect";
+		outData     = "dsList8=select30";
+		this.dsList8.clearData();
+		this.dsList9.clearData();
+		this.dsList10.clearData();
+	} else if (tIdx == 4){
+		inData      = "select4=dsSelect";
+		outData     = "dsList3=select40";
+	} else if (tIdx == 5){
+		inData      = "select5=dsSelect";
+		outData     = "dsList4=select50";
+	} else if (tIdx == 6){
+		inData      = "select6=dsSelect";
+		outData     = "dsList5=select60";
+	}
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnSelect_Auth = function(){
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_PROJ", this.dsSearch.getColumn(0, "CD_PROJ"));
+	
+	var strSvcId    = "select6_auth";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select6_auth=dsSelect";
+	var outData     = "dsList5_Auth=select6_auth0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+}
+
+this.fnSave = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	if(!this.fnSaveValidate()) return;
+
+	this.dsBase.set_enableevent(false);
+	this.dsBase.setColumn(0, "DS_PROJ", this.dsSearch.getColumn(0, "DS_PROJ") );
+	this.dsBase.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	//this.dsBase.setColumn(0, "CD_DEPT", this.AuthClient.CD_DEPT);
+	this.dsBase.set_enableevent(true);
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsBase";
+	var outData     = "dsBaseRst=save";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+}
+
+this.fnDel = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	this.gfnConfirm("삭제 하시겠습니까?", function(strId, val){
+		if(val == true) {
+			var strSvcId    = "delete";
+			var strSvcType  = "save";
+			var inProc		= "_dsProc";
+			var inData      = "save1=dsBase";
+			var outData     = "";
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+			
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// transaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc,false); // 통신방법 정의 [생략가능]
+		}	
+	});
+}
+
+this.fnAdd = function() {
+	//var nrow = this.gfnGridAdd(this.dxGrid); // top (default), bottom, current
+	
+	this.gfnGetServerTime("serverTime");
+	this.dsBase.set_enableevent(false);
+	this.dsBase.setColumn(0, "CD_BIZ_STAT", "01");
+	this.dsBase.setColumn(0, "DS_BIZ_STAT", "접수");
+	this.dsBase.setColumn(0, "DT_ACQ", nexacro.replaceAll(this.serverTime.substr(0,10),"-",""));
+	this.dsBase.setColumn(0, "CD_DEPT", this.AuthClient.CD_DEPT);
+	this.dsBase.set_enableevent(true);
+	this.ccfCD_SAUP.form.fnCodeFindLoad();
+	this.fnSwichView();
+	
+}
+
+this.fnSwichView = function() {
+    var swichSel = this.dsBase.getColumn(0, "CD_CLS");
+    
+	if(swichSel == "SA00202"){
+	    this.divData.form.tabData.tab1.form.div01.set_visible(false);
+		this.divData.form.tabData.tab1.form.div00.set_visible(true);
+	}else{
+	    this.divData.form.tabData.tab1.form.div01.set_visible(true);
+		this.divData.form.tabData.tab1.form.div00.set_visible(false);
+	}
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg){
+	if (errorCode == 0) {
+		if (svcID == "combo") 
+		{
+			this.dsTY_ENF.insertRow(0);		
+			this.dsTY_ENF.setColumn(0, "CD_CODE", "");
+			this.dsTY_ENF.setColumn(0, "DS_CODE", "");
+			
+			this.dsCD_LAND_STAT.insertRow(0);		
+			this.dsCD_LAND_STAT.setColumn(0, "CD_CODE", "");
+			this.dsCD_LAND_STAT.setColumn(0, "DS_CODE", "");
+			
+			this.dsCD_PERMIT_STAT.insertRow(0);		
+			this.dsCD_PERMIT_STAT.setColumn(0, "CD_CODE", "");
+			this.dsCD_PERMIT_STAT.setColumn(0, "DS_CODE", "");
+			
+			if(this.gfnIsNull(this.getOwnerFrame().CD_PROJ)){
+				this.divData.form.tabData.tab1.form.div00.form.ccboCD_CLS.set_index(1);
+				this.divData.form.tabData.tab1.form.div01.form.ccboCD_CLS.set_index(1);
+			}
+			
+		} else if(svcID == "save") {
+			this.dsSearch.setColumn(0, "CD_PROJ", this.dsBaseRst.getColumn(0, "OUT_DATA"));
+			this.FormBtns.Select.click();
+		} else if(svcID == "select0") {
+			//TAB1 조회
+			this.divData.form.tabData.tab1.form.divFile.form.set_enable(true);
+			// 첨부파일
+			if(!this.gfnIsNull(this.dsBase.getColumn(0, "CD_PROJ"))){
+				var fileManager = {};
+				fileManager.CD_GUBUN = "DOA1";
+				fileManager.CD_DIR = [ this.dsBase.getColumn(0, "CD_PROJ") ];
+				fileManager.CD_REF1 = this.dsBase.getColumn(0, "CD_PROJ");
+				
+				if(this.FormInfo.TY_AUTH == "R") {
+					fileManager.IS_READONLY = true;
+				} else {
+					fileManager.IS_READONLY = false;
+				}
+				// div FileManager 셋팅
+				this.divData.form.tabData.tab1.form.divFile.form.setFileManager(fileManager);
+			}
+			this.dsSearch.setColumn(0, "DS_PROJ", this.dsBase.getColumn(0, "DS_PROJ"));
+			
+			this.edtCD_SAUP.set_value(this.dsBase.getColumn(0, "CD_SAUP"));
+			this.edtDS_SAUP.set_value(this.dsBase.getColumn(0, "DS_SAUP"));
+			
+			if(!this.gfnIsNull(this.dsBase.getColumn(0, "CD_SAUP"))){
+				this.edtDS_SAUP.set_readonly(true);
+			}else{
+				this.edtDS_SAUP.set_readonly(false);
+			}
+			
+			this.divData.form.tabData.tab1.form.div00.form.ccfDS_REGION.form.CDTextBox.set_value(this.dsBase.getColumn(0, "CD_ZIP"));
+			this.divData.form.tabData.tab1.form.div00.form.ccfDS_REGION.form.DSTextBox.set_value(this.dsBase.getColumn(0, "DS_ADDR1"));
+			
+			this.divData.form.tabData.tab1.form.div01.form.ccfDS_REGION.form.CDTextBox.set_value(this.dsBase.getColumn(0, "CD_ZIP"));
+			this.divData.form.tabData.tab1.form.div01.form.ccfDS_REGION.form.DSTextBox.set_value(this.dsBase.getColumn(0, "DS_ADDR1"));
+			
+			this.gfnSetFormStatus(this, "");
+			this.fnSetButton();
+			this.fnSwichView();
+			this.fnAM_TOT(this.dsBase);
+			this.fnRT_TOT(this.dsBase);
+		} else if(svcID == "delete"){
+			this.getParentContext().close();
+		} else if(svcID == "selectCharge"){
+		
+		}
+		else if(svcID == "select6"){
+			this.fnSelect_Auth();
+		}
+		else if(svcID == "select6_auth"){
+		}
+		else if(svcID == "select3"){
+			this.dxGrid8.selecttype = "row";
+			this.dxGrid8.selectRow(this.dxGrid8.getDatasetRow(0));
+		}
+		else if(svcID == "select1"){
+			this.dxGrid6.selecttype = "row";
+			this.dxGrid6.selectRow(this.dxGrid6.getDatasetRow(1));
+		}
+		else if(svcID == "selectJvFirm"){
+			if(this.dsList6.rowposition > -1){
+				this.divData.form.tabData.tab6.form.btnRegJvFirm.set_enable(true);
+			}else{
+				this.divData.form.tabData.tab6.form.btnRegJvFirm.set_enable(false);
+			}
+		}else if(svcID =="hqCreate") {
+			this.FormBtns.Select.click();
+		}
+	} else {
+		this.gfnAlert(errorMsg);
+	}
+
+};
+
+this.dsBase_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo){
+	var _val;
+	var _div;
+	var _rt_arch; //건폐율
+	var _rt_land_over; //용적율
+	
+	if(e.oldvalue != e.newvalue) {
+		this.dsBase.set_enableevent(false);
+		switch(e.columnid) {
+			case "SZ_AREA_M":		//대지면적 면적
+ 				_val = e.newvalue / 3.3058;
+				obj.setColumn(0, "SZ_AREA", nexacro.round(_val,2));
+				//건축면적 - 건폐율	건축면적 / 대지면적 * 100
+				_rt_arch = obj.getColumn(0, "SZ_AREA_M") == 0 ? 0 : (obj.getColumn(0, "SZ_ARCH_M") / obj.getColumn(0, "SZ_AREA_M")) * 100;
+				obj.setColumn(0, "RT_ARCH", nexacro.round(_rt_arch,2));
+				//상가면적 - 건폐율	상가면적 / 대지면적 * 100
+				_rt_arch = obj.getColumn(0, "SZ_AREA_M") == 0 ? 0 : (obj.getColumn(0, "SZ_SHOP_M") / obj.getColumn(0, "SZ_AREA_M")) * 100;
+				obj.setColumn(0, "RT_SHOP", nexacro.round(_rt_arch,2));
+				//용적율	지상연면적 / 대지면적 * 100
+				_rt_land_over = obj.getColumn(0, "SZ_AREA_M") == 0 ? 0 : (obj.getColumn(0, "SZ_LAND_OVR_M") / obj.getColumn(0, "SZ_AREA_M")) * 100;
+				obj.setColumn(0, "RT_LAND_OVR", nexacro.round(_rt_land_over,2));
+				break;
+			case "SZ_LAND_OVR_M":	//지상연면적
+ 				_val = e.newvalue  / 3.3058;
+				obj.setColumn(0, "SZ_LAND_OVR", nexacro.round(_val,2));
+				//용적율	지상연면적 / 대지면적 * 100
+				_rt_land_over = obj.getColumn(0, "SZ_AREA_M") == 0 ? 0 : (obj.getColumn(0, "SZ_LAND_OVR_M") / obj.getColumn(0, "SZ_AREA_M")) * 100;
+				obj.setColumn(0, "RT_LAND_OVR", nexacro.round(_rt_land_over,2));
+				//전체연면적
+				_val = obj.getColumn(0, "SZ_LAND_OVR_M") + obj.getColumn(0, "SZ_LAND_UNDR_M");
+				obj.setColumn(0, "SZ_LAND_M", _val);
+				obj.setColumn(0, "SZ_LAND", nexacro.round(_val / 3.3058,2));
+				break;
+			case "SZ_LAND_UNDR_M":	//지하연면적
+ 				_val = e.newvalue  / 3.3058 ;
+				obj.setColumn(0, "SZ_LAND_UNDR", nexacro.round(_val,2));
+				//전체연면적
+				_val = obj.getColumn(0, "SZ_LAND_OVR_M") + obj.getColumn(0, "SZ_LAND_UNDR_M");
+				obj.setColumn(0, "SZ_LAND_M", _val);
+				obj.setColumn(0, "SZ_LAND", nexacro.round(_val  / 3.3058,2));
+				break;
+			case "SZ_ARCH_M":	//건축면적-연면적
+ 				_val = e.newvalue  / 3.3058;
+				obj.setColumn(0, "SZ_ARCH", _val);
+				//건축면적 - 건폐율	건축면적 / 대지면적 * 100
+				_rt_arch = obj.getColumn(0, "SZ_AREA_M") == 0 ? 0 : (obj.getColumn(0, "SZ_ARCH_M") / obj.getColumn(0, "SZ_AREA_M")) * 100;
+				obj.setColumn(0, "RT_ARCH", nexacro.round(_rt_arch,2));
+				//상가면적 - 건폐율	상가면적 / 대지면적 * 100
+				_rt_arch = obj.getColumn(0, "SZ_AREA_M") == 0 ? 0 : (obj.getColumn(0, "SZ_SHOP_M") / obj.getColumn(0, "SZ_AREA_M")) * 100;
+				obj.setColumn(0, "RT_SHOP", nexacro.round( _rt_arch,2));
+				break;
+			case "SZ_SHOP_M":	//상가면적
+ 				_val = e.newvalue  / 3.3058;
+				obj.setColumn(0, "SZ_SHOP", _val);
+				//상가면적 - 건폐율	상가면적 / 대지면적 * 100
+				_rt_arch = obj.getColumn(0, "SZ_AREA_M") == 0 ? 0 : (obj.getColumn(0, "SZ_SHOP_M") / obj.getColumn(0, "SZ_AREA_M")) * 100;
+				obj.setColumn(0, "RT_SHOP", nexacro.round(_rt_arch,2));
+				break;
+			case "AM_OCAPITAL":	//자기자본
+				this.fnAM_TOT(obj);
+				break;
+			case "AM_BCAPITAL":	//타인자본
+				this.fnAM_TOT(obj);
+				break;
+			case "AM_ETC":	    //기타(분양금등)
+				this.fnAM_TOT(obj);
+				break;
+			case "RT_OCAPITAL":	//자기자본율
+			    this.fnRT_TOT(obj);
+				break;
+			case "RT_BCAPITAL":	//타인자본율
+			    this.fnRT_TOT(obj);
+				break;
+			case "RT_ETC":	    //기타율(분양금등)
+			    this.fnRT_TOT(obj);
+				break;
+			case "CD_CLS":	//공사분야
+ 				this.fnSwichView();
+				break;
+		}
+		this.dsBase.set_enableevent(true);
+				
+		if(this.gfnGetFormStatus(this) == "I"){
+			this.gfnSetFormStatus(this, "I");
+		}else{
+			this.gfnSetFormStatus(this, "U");
+		}
+		this.fnSetButton();
+	}
+};
+
+this.fnAM_TOT = function(obj){	
+	var AM_OCAPITAL = obj.getColumn(0, "AM_OCAPITAL");
+	var AM_BCAPITAL = obj.getColumn(0, "AM_BCAPITAL");
+	var AM_ETC = obj.getColumn(0, "AM_ETC");
+	
+	var AM_TOT = AM_OCAPITAL + AM_BCAPITAL + AM_ETC;
+	
+	this.dsTOT.set_enableevent(false);
+	this.dsTOT.setColumn(0, "AM_TOT", AM_TOT);
+	this.dsTOT.set_enableevent(true);
+};
+
+this.fnRT_TOT = function(obj){	
+	var RT_OCAPITAL = obj.getColumn(0, "RT_OCAPITAL");
+	var RT_BCAPITAL = obj.getColumn(0, "RT_BCAPITAL");
+	var RT_ETC = obj.getColumn(0, "RT_ETC");
+	
+	var RT_TOT = RT_OCAPITAL + RT_BCAPITAL + RT_ETC;
+	
+	this.dsTOT.set_enableevent(false);
+	this.dsTOT.setColumn(0, "RT_TOT", RT_TOT);
+	this.dsTOT.set_enableevent(true);
+};
+
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo){	
+	if(e.oldvalue != e.newvalue) {
+		if(this.gfnGetFormStatus(this) == "I"){
+			this.gfnSetFormStatus(this, "I");
+		}else{
+			this.gfnSetFormStatus(this, "U");
+		}
+		this.fnSetButton();
+	}
+};
+
+this.divData_tabData_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo){
+	switch(obj.tabindex) {
+		case 0:
+			this.fnSetButton();
+			break;
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+			this.fnSelect();
+			this.FormBtns.Select.set_enable(false);
+			this.FormBtns.Save.set_enable(false);
+			this.FormBtns.Del.set_enable(false);
+		break;
+	}
+};
+
+this.divData_tabData_btnReg_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	var tIdx = this.divData.form.tabData.tabindex;
+	
+	var popStr = "";
+	var _width = 0;
+	switch(tIdx) {
+		case 4:
+			//수주 > 주택 > 공통 > 공동도급사 관리
+			popStr = "DOZ_PROJ_CO_CONTRCT";
+			_width = 770;
+		break;
+		case 5:
+			//수주 > 주택 > 공통 > 관계사 관리
+			popStr = "DOZ_PROJ_CONCERN";
+			_width = 850;
+		break;
+		case 6:
+			//수주 > 주택 > 공통 > 담당자 관리
+			popStr = "DOZ_PROJ_CHARGE";
+			_width = 600;
+		break;
+	}
+	
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsBase.getColumn(0, "DS_PROJ")
+	  , TY_PROJ : this.ARCH_TY_PROJ
+	}
+	
+	this.gfnFormOpen("DOZ", popStr, "fnDialogCallback", param, 770, 600); 
+};
+
+this.divData_tabData_btnReg_Auth_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	popStr = "DOZ_PROJ_AUTH";
+	_width = 600;
+	_height = 600;
+	_popType = "DOZ";
+	
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsBase.getColumn(0, "DS_PROJ")
+	  , TY_VENDOR : ""
+	  }
+	  
+	this.gfnFormOpen(_popType, popStr, "fnDialogCallback", param, _width, _height); 
+};
+
+this.fnDialogCallback = function(svcID, value) {
+	this.fnSelect();
+};
+
+this.fnContCreate = function(){
+	var param = {
+		CD_PROJ  : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ  : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , TY_BIZ   : this.dsBase.getColumn(0, "TY_BIZ")
+	  , NM_BIZ   : this.dsBase.getColumn(0, "NM_BIZ")
+	  , CD_LOC	 : this.dsBase.getColumn(0, "CD_LOC")
+	  , CD_ZIP	 : this.dsBase.getColumn(0, "CD_ZIP")
+	  , DS_ADDR1 : this.dsBase.getColumn(0, "DS_ADDR1")
+	  , DS_ADDR2 : this.dsBase.getColumn(0, "DS_ADDR2")
+	  , CD_FIELD : this.dsBase.getColumn(0, "CD_FIELD")
+	  , NO_CONT : this.dsBase.getColumn(0, "NO_CONT")
+	  , NO_CHG_CONT : this.dsBase.getColumn(0, "NO_CHG_CONT")
+	  , CD_BONBU : "A0600000"
+	  , NM_BONBU : "주택"
+	}
+	this.gfnFormOpen("DOD", "DOD_ARCH_CONT", "fnDialogCallback", param, 1330, 840); 
+}
+
+this.fnHqCreateValidate = function() {	
+	var validate = true;
+	
+	if (this.gfnIsNull(this.edtDS_SAUP.value)) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.edtDS_SAUP.setFocus();
+		}
+		this.gfnAlert("사업비프로젝트명을 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	};
+	
+	return validate;
+}
+
+this.fnHqCreate = function(){
+	this.gfnConfirm("사업비 프로젝트 코드생성을 하시겠습니까?", function(strId, val){
+		if(val == true) {
+			if (!this.fnHqCreateValidate()) return false;
+			
+			this.dsHqCreate.clearData();
+			this.dsHqCreate.addRow();
+	
+			this.dsHqCreate.setColumn(0, "CD_PROJ", this.dsSearch.getColumn(0, "CD_PROJ"));
+			this.dsHqCreate.setColumn(0, "DS_SAUP", this.edtDS_SAUP.value);
+			
+			var strSvcId    = "hqCreate";
+			var strSvcType  = "save";
+			var inProc		= "_dsProc";
+			var inData 		= "updateHqCreate=dsHqCreate";
+			var outData     = "";
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+			
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// transaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc); // 통신방법 정의 [생략가능]
+		}	
+	});	
+}
+
+this.divData_tabData_tab2_btnReg_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , NO_PROV_CONT : 0
+	}
+	
+	this.gfnFormOpen("DOA", "DOA_ARCH_PROV_CONT", "fnDialogCallback", param, 1180, 800); 
+};
+
+this.divData_tabData_tab2_btnUpd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid2)) { return false; }
+	
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , NO_PROV_CONT : this.dsList2.getColumn(this.dsList2.rowposition, "NO_PROV_CONT")
+	}
+	
+	this.gfnFormOpen("DOA", "DOA_ARCH_PROV_CONT", "fnDialogCallback", param, 1180, 800); 
+};
+
+this.divData_tabData_tab2_objGrdtab2_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid2)) { return false; }
+	
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , NO_PROV_CONT : this.dsList2.getColumn(this.dsList2.rowposition, "NO_PROV_CONT")
+	}
+	
+	this.gfnFormOpen("DOA", "DOA_ARCH_PROV_CONT", "fnDialogCallback", param, 1180, 800); 
+};
+
+this.fnVendor = function(){
+    var param = {};
+    this.gfnFormOpen("DHZ", "DHZ_VENDORALL", "fnDialogCallback", param, 980, 720);
+}
+
+// 사업성분석 등록 버튼
+this.divData_tabData_tab2_btnRegAnalysis_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){	
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , ANALISYS_GUBUN : "I"
+	}
+	
+	this.gfnFormOpen("DOC", "DOC_SOC_ANALYSIS", "fnDialogCallback", param, 780, 510); 	
+};
+
+// 사업성분석 편집버튼
+this.divData_tabData_tab2_btnUpdAnalysis_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid6)) { return false; }
+	
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , DT_STD : this.dsList6.getColumn(this.dsList6.rowposition, "DT_STD")
+	  , ANALISYS_GUBUN : "U"
+	}
+	
+	this.gfnFormOpen("DOC", "DOC_SOC_ANALYSIS", "fnDialogCallback", param, 780, 510); 	
+};
+
+// 참여사구성 버튼
+this.divData_tabData_tab2_btnRegJvFirm_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){	
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid6)) { return false; }
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , DT_STD : this.dsList6.getColumn(this.dsList6.rowposition, "DT_STD")
+	}
+	
+	this.gfnFormOpen("DOC", "DOC_SOC_JV", "fnDialogCallback", param, 835, 540); 	
+};
+
+// 사업성분석 삭제
+this.divData_tabData_tab2_btnDelAnalysis_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	// 선택된 row가 있을 경우에만 삭제
+	if (!this.gfnGridIsRow(this.dxGrid6)) { return false; }
+	
+	this.gfnConfirm("사업성분석 삭제 하시겠습니까?", function(strId, val){
+		if(val == true) {
+			
+			this.dsDelTab.clearData();
+			this.dsDelTab.addRow();
+			
+			this.dsDelTab.setColumn(0, "CD_PROJ", this.dsList6.getColumn(this.dsList6.rowposition, "CD_PROJ"));
+			this.dsDelTab.setColumn(0, "DT_STD", this.dsList6.getColumn(this.dsList6.rowposition, "DT_STD"));
+			this.dsDelTab.setColumn(0, "NO_CONSOR", 0);
+		
+			var strSvcId    = "delete1";
+			var strSvcType  = "save";
+			var inProc		= "_dsProc";
+			var inData      = "delete1=dsDelTab";
+			var outData     = "";
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+			
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// transaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc,false); // 통신방법 정의 [생략가능]
+		}	
+	});	
+};
+
+// 금융약정 등록 버튼
+this.divData_tabData_tab4_btnRegAgree_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){	
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , AGREE_GUBUN : "I"
+	}
+	
+	this.gfnFormOpen("DOC", "DOC_SOC_AGREE", "fnDialogCallback", param, 1050, 850); 	
+	
+};
+
+// 금융약정 편집 버튼
+this.divData_tabData_tab4_btnUpdAgree_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid8)) { return false; }
+	
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , DT_STD : this.dsList8.getColumn(this.dsList8.rowposition, "DT_STD")
+	  , DS_STD : this.dsList8.getColumn(this.dsList8.rowposition, "DS_STD")
+	  , AGREE_GUBUN : "U"
+	}
+	
+	this.gfnFormOpen("DOC", "DOC_SOC_AGREE", "fnDialogCallback", param, 1050, 850); 	
+	
+};
+
+// 금융약정 삭제
+this.divData_tabData_tab4_btnDelAgree_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	// 선택된 row가 있을 경우에만 삭제
+	if (!this.gfnGridIsRow(this.dxGrid8)) { return false; }
+	
+	this.gfnConfirm("삭제 하시겠습니까?", function(strId, val){
+		if(val == true) {
+			
+			this.dsDelTab.clearData();
+			this.dsDelTab.addRow();
+			
+			this.dsDelTab.setColumn(0, "CD_PROJ", this.dsList8.getColumn(this.dsList8.rowposition, "CD_PROJ"));
+			this.dsDelTab.setColumn(0, "DT_STD", this.dsList8.getColumn(this.dsList8.rowposition, "DT_STD"));
+			this.dsDelTab.setColumn(0, "NO_CONSOR", 0);
+		
+			var strSvcId    = "delete3";
+			var strSvcType  = "save";
+			var inProc		= "_dsProc";
+			var inData      = "delete3=dsDelTab";
+			var outData     = "";
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+			
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// transaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc); // 통신방법 정의 [생략가능]
+		}	
+	});	
+};
+
+this.divData_tabData_tab2_objGrdtab1_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid6)) { return false; }
+	
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , DT_STD : this.dsList6.getColumn(this.dsList6.rowposition, "DT_STD")
+	  , ANALISYS_GUBUN : "U"
+	}
+	
+	this.gfnFormOpen("DOC", "DOC_SOC_ANALYSIS", "fnDialogCallback", param, 780, 510); 
+};
+
+this.divData_tabData_tab2_objGrdtab1_onselectchanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+	if(e.row<0) return;
+	this.fnJvFirmSelect();
+};
+
+/************************************************************************
+ * 사업성 분석 상세 조회 이벤트
+ ************************************************************************/
+this.fnJvFirmSelect = function(){
+	
+	this.dsJvFirmSelect = new Dataset();
+	this.dsJvFirmSelect.addColumn("CD_PROJ", "string");
+	this.dsJvFirmSelect.addColumn("DT_STD", "string");
+	this.dsJvFirmSelect.addColumn("YN_READ", "string");
+	
+	this.dsJvFirmSelect.addRow();
+	this.dsJvFirmSelect.setColumn(0, "CD_PROJ", this.dsSearch.getColumn(0, "CD_PROJ"));
+	this.dsJvFirmSelect.setColumn(0, "DT_STD", this.dsList6.getColumn(this.dsList6.rowposition, "DT_STD"));
+	this.dsJvFirmSelect.setColumn(0, "YN_READ", "Y");
+	
+	var strSvcId    = "selectJvFirm";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select7=dsJvFirmSelect";
+	var outData     = "dsList7=select70";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+		
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+this.divData_tabData_tab4_objGrdtab5_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid8)) { return false; }
+	
+	var param = {
+		CD_PROJ : this.dsSearch.getColumn(0, "CD_PROJ")
+	  , DS_PROJ : this.dsSearch.getColumn(0, "DS_PROJ")
+	  , DT_STD : this.dsList8.getColumn(this.dsList8.rowposition, "DT_STD")
+	  , DS_STD : this.dsList8.getColumn(this.dsList8.rowposition, "DS_STD")
+	  , AGREE_GUBUN : "U"
+	}
+	
+	this.gfnFormOpen("DOC", "DOC_SOC_AGREE", "fnDialogCallback", param, 1050, 850); 	
+};
+
+this.divData_tabData_tab4_objGrdtab5_onselectchanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+	if(e.row<0) return;
+	this.fnAgreeDetailSelect();
+};
+
+/************************************************************************
+ * 금융약정 상세 조회 이벤트
+ ************************************************************************/
+this.fnAgreeDetailSelect = function(){
+	
+	this.dsAgreeSelect = new Dataset();
+	this.dsAgreeSelect.addColumn("CD_PROJ", "string");
+	this.dsAgreeSelect.addColumn("DT_STD", "string");
+	this.dsAgreeSelect.addColumn("YN_READ", "string");
+	
+	this.dsAgreeSelect.addRow();
+	this.dsAgreeSelect.setColumn(0, "CD_PROJ", this.dsSearch.getColumn(0, "CD_PROJ"));
+	this.dsAgreeSelect.setColumn(0, "DT_STD", this.dsList8.getColumn(this.dsList8.rowposition, "DT_STD"));
+	this.dsAgreeSelect.setColumn(0, "YN_READ", "Y");
+		
+	var strSvcId    = "selectAgree";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var	inData      = "select9=dsAgreeSelect select10=dsAgreeSelect";
+	var	outData     = "dsList9=select90 dsList10=select100";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+		
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DOAPR_ARCH_PROJ_MERGE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select0</Col>
+            <Col id="SP">DOAPR_ARCH_PROJ_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save1</Col>
+            <Col id="SP">DOAPR_ARCH_PROJ_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select1</Col>
+            <Col id="SP">DOAPR_SOC_PROJ_ANALISYS_LIST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select3</Col>
+            <Col id="SP">DOAPR_SOC_PROJ_AGREE_LIST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select2</Col>
+            <Col id="SP">DOAPR_ARCH_PROV_CONT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select4</Col>
+            <Col id="SP">DOAPR_ARCH_CO_CONTRCT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select5</Col>
+            <Col id="SP">DOAPR_ARCH_CONCERN</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select6</Col>
+            <Col id="SP">DOAPR_ARCH_CHARGE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectCharge</Col>
+            <Col id="SP">DOAPR_PROJ_YNCHARGE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">updateHqCreate</Col>
+            <Col id="SP">DOZPR_HQ_CODE_CREATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select6_auth</Col>
+            <Col id="SP">DOAPR_PROJ_AUTH</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete3</Col>
+            <Col id="SP">DOAPR_SOC_PROJ_AGREE_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete1</Col>
+            <Col id="SP">DOAPR_SOC_PROJ_ANALISYS_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select7</Col>
+            <Col id="SP">DOAPR_SOC_PROJ_JV_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select9</Col>
+            <Col id="SP">DOAPR_SOC_PROJ_AGREE_LOAN_LIST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select10</Col>
+            <Col id="SP">DOAPR_SOC_PROJ_AGREE_ASSU_LIST_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_ACQ1"/>
+      <Dataset id="dsTY_ENF"/>
+      <Dataset id="dsCD_PERMIT_STAT"/>
+      <Dataset id="dsCD_LAND_STAT"/>
+      <Dataset id="dsBase" onvaluechanged="dsBase_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_PROJ" type="STRING" size="256"/>
+          <Column id="DS_PROJ" type="STRING" size="256"/>
+          <Column id="CD_BIZ_STAT" type="STRING" size="256"/>
+          <Column id="DS_BIZ_STAT" type="STRING" size="256"/>
+          <Column id="TY_BIZ" type="STRING" size="256"/>
+          <Column id="NM_BIZ" type="STRING" size="256"/>
+          <Column id="TY_BIZ_MHOD" type="STRING" size="256"/>
+          <Column id="NM_BIZ_MHOD" type="STRING" size="256"/>
+          <Column id="TY_PRDCT" type="STRING" size="256"/>
+          <Column id="NM_PRDCT" type="STRING" size="256"/>
+          <Column id="NM_PROV" type="STRING" size="256"/>
+          <Column id="TY_ACQ" type="STRING" size="256"/>
+          <Column id="NM_ENF" type="STRING" size="256"/>
+          <Column id="TY_ENF" type="STRING" size="256"/>
+          <Column id="DS_ENF_DEPT" type="STRING" size="256"/>
+          <Column id="DT_ACQ" type="STRING" size="256"/>
+          <Column id="CD_LOC" type="STRING" size="256"/>
+          <Column id="CD_ZIP" type="STRING" size="256"/>
+          <Column id="DS_ADDR1" type="STRING" size="256"/>
+          <Column id="DS_ADDR2" type="STRING" size="256"/>
+          <Column id="DS_LAND_CLS" type="STRING" size="256"/>
+          <Column id="DS_LOCAL" type="STRING" size="256"/>
+          <Column id="DS_ACC" type="STRING" size="256"/>
+          <Column id="DS_CITY_PLAN" type="STRING" size="256"/>
+          <Column id="DS_PUB_NOTICE" type="STRING" size="256"/>
+          <Column id="DS_USE_STAT" type="STRING" size="256"/>
+          <Column id="DS_ROAD_STAT" type="STRING" size="256"/>
+          <Column id="DS_CONT_LIMIT" type="STRING" size="256"/>
+          <Column id="SZ_AREA" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_AREA_M" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_LAND_OVR" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_LAND_OVR_M" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_LAND_UNDR" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_LAND_UNDR_M" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_LAND" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_LAND_M" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_LAND_OVR" type="BIGDECIMAL" size="256"/>
+          <Column id="NO_ARCH_TOP" type="INT" size="256"/>
+          <Column id="NO_ARCH_BOTTM" type="INT" size="256"/>
+          <Column id="NO_ARCH_UNDR" type="INT" size="256"/>
+          <Column id="SZ_ARCH" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_ARCH_M" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_ARCH" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_SHOP_TOP" type="INT" size="256"/>
+          <Column id="SZ_SHOP_BOTTM" type="INT" size="256"/>
+          <Column id="SZ_SHOP_UNDR" type="INT" size="256"/>
+          <Column id="SZ_SHOP" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_SHOP_M" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_SHOP" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_BIZ" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_CONST" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_LAND" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_AREA" type="BIGDECIMAL" size="256"/>
+          <Column id="CD_LAND_STAT" type="STRING" size="256"/>
+          <Column id="CD_PERMIT_STAT" type="STRING" size="256"/>
+          <Column id="DS_RM" type="STRING" size="256"/>
+          <Column id="DT_COST_SEL" type="STRING" size="256"/>
+          <Column id="ID_FILE_ATTCH" type="STRING" size="256"/>
+          <Column id="ID_USER" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="NO_CONT" type="INT" size="256"/>
+          <Column id="NO_CHG_CONT" type="INT" size="256"/>
+          <Column id="OUT_DATA" type="STRING" size="256"/>
+          <Column id="YN_SAUP" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_SAUP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="DS_SAUP" type="STRING" size="256"/>
+          <Column id="CD_CLS" type="STRING" size="256"/>
+          <Column id="AM_OCAPITAL" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_BCAPITAL" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_ETC" type="BIGDECIMAL" size="256"/>
+          <Column id="DS_AMBIGO" type="STRING" size="256"/>
+          <Column id="RT_OCAPITAL" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_BCAPITAL" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_ETC" type="BIGDECIMAL" size="256"/>
+          <Column id="DS_RTBIGO" type="STRING" size="256"/>
+          <Column id="DS_SCALE" type="STRING" size="256"/>
+          <Column id="DS_FI" type="STRING" size="256"/>
+          <Column id="DS_AI" type="STRING" size="256"/>
+          <Column id="DS_DI" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="SZ_AREA">0</Col>
+            <Col id="SZ_AREA_M">0</Col>
+            <Col id="SZ_LAND_OVR">0</Col>
+            <Col id="SZ_LAND_OVR_M">0</Col>
+            <Col id="SZ_LAND_UNDR">0</Col>
+            <Col id="SZ_LAND_UNDR_M">0</Col>
+            <Col id="SZ_LAND">0</Col>
+            <Col id="SZ_LAND_M">0</Col>
+            <Col id="RT_LAND_OVR">0</Col>
+            <Col id="SZ_ARCH">0</Col>
+            <Col id="SZ_ARCH_M">0</Col>
+            <Col id="RT_ARCH">0</Col>
+            <Col id="SZ_SHOP_TOP">0</Col>
+            <Col id="SZ_SHOP_BOTTM">0</Col>
+            <Col id="SZ_SHOP_UNDR">0</Col>
+            <Col id="SZ_SHOP">0</Col>
+            <Col id="SZ_SHOP_M">0</Col>
+            <Col id="RT_SHOP">0</Col>
+            <Col id="AM_BIZ">0</Col>
+            <Col id="AM_CONST">0</Col>
+            <Col id="AM_LAND">0</Col>
+            <Col id="AM_AREA">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCD_LOC"/>
+      <Dataset id="dsList2"/>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_PROJ" type="STRING" size="256"/>
+          <Column id="DS_PROJ" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList3"/>
+      <Dataset id="dsList4"/>
+      <Dataset id="dsList5"/>
+      <Dataset id="dsBaseRst"/>
+      <Dataset id="dsRcvYNCharge">
+        <ColumnInfo>
+          <ConstColumn id="YN_EXISTS" type="STRING" size="30"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsYN_SAUP">
+        <ColumnInfo>
+          <ConstColumn id="YN_EXISTS" type="STRING" size="30"/>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">관리</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">미관리</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList5_Auth"/>
+      <Dataset id="dsDS_CD_CLS"/>
+      <Dataset id="dsDelTab">
+        <ColumnInfo>
+          <Column id="CD_PROJ" type="STRING" size="256"/>
+          <Column id="DT_STD" type="STRING" size="256"/>
+          <Column id="NO_CONSOR" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList6"/>
+      <Dataset id="dsList7"/>
+      <Dataset id="dsList8"/>
+      <Dataset id="dsList9"/>
+      <Dataset id="dsList10"/>
+      <Dataset id="dsTOT">
+        <ColumnInfo>
+          <Column id="AM_TOT" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_TOT" type="BIGDECIMAL" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.tabData.tab1.form.div00.form.ctclDT_ACQ" propid="value" datasetid="dsBase" columnid="DT_ACQ"/>
+      <BindItem id="item1" compid="divData.form.tabData.tab1.form.div00.form.ccfDS_REGION.form.CDTextBox" propid="value" datasetid="dsData" columnid="DS_REGION"/>
+      <BindItem id="item2" compid="divSearch.form.ctxtCD_PROJ" propid="value" datasetid="dsSearch" columnid="CD_PROJ"/>
+      <BindItem id="item3" compid="divSearch.form.ctxtDS_PROJ" propid="value" datasetid="dsSearch" columnid="DS_PROJ"/>
+      <BindItem id="item4" compid="divData.form.tabData.tab1.form.div00.form.ctxtNM_PROV" propid="value" datasetid="dsBase" columnid="NM_PROV"/>
+      <BindItem id="item5" compid="divData.form.tabData.tab1.form.div00.form.ccboTY_ACQ1" propid="value" datasetid="dsBase" columnid="TY_ACQ"/>
+      <BindItem id="item6" compid="divData.form.tabData.tab1.form.div00.form.ctxtNM_ENF" propid="value" datasetid="dsBase" columnid="NM_ENF"/>
+      <BindItem id="item7" compid="divData.form.tabData.tab1.form.div00.form.ccboTY_ENF" propid="value" datasetid="dsBase" columnid="TY_ENF"/>
+      <BindItem id="item8" compid="divData.form.tabData.tab1.form.div00.form.ctxtDS_ENF_DEPT" propid="value" datasetid="dsBase" columnid="DS_ENF_DEPT"/>
+      <BindItem id="item9" compid="divData.form.tabData.tab1.form.div00.form.ccboCD_LOC" propid="value" datasetid="dsBase" columnid="CD_LOC"/>
+      <BindItem id="item10" compid="divData.form.tabData.tab1.form.div00.form.ctxtDS_ADDR2" propid="value" datasetid="dsBase" columnid="DS_ADDR2"/>
+      <BindItem id="item11" compid="divData.form.tabData.tab1.form.div00.form.ctxtDS_LAND_CLS" propid="value" datasetid="dsBase" columnid="DS_LAND_CLS"/>
+      <BindItem id="item12" compid="divData.form.tabData.tab1.form.div00.form.ctxtDS_LOCAL" propid="value" datasetid="dsBase" columnid="DS_LOCAL"/>
+      <BindItem id="item13" compid="divData.form.tabData.tab1.form.div00.form.ctxtDS_ACC" propid="value" datasetid="dsBase" columnid="DS_ACC"/>
+      <BindItem id="item14" compid="divData.form.tabData.tab1.form.div00.form.ctxtDS_CITY_PLAN" propid="value" datasetid="dsBase" columnid="DS_CITY_PLAN"/>
+      <BindItem id="item15" compid="divData.form.tabData.tab1.form.div00.form.ctxtDS_PUB_NOTICE" propid="value" datasetid="dsBase" columnid="DS_PUB_NOTICE"/>
+      <BindItem id="item16" compid="divData.form.tabData.tab1.form.div00.form.ctxtDS_USE_STAT" propid="value" datasetid="dsBase" columnid="DS_USE_STAT"/>
+      <BindItem id="item17" compid="divData.form.tabData.tab1.form.div00.form.ctxtDS_ROAD_STAT" propid="value" datasetid="dsBase" columnid="DS_ROAD_STAT"/>
+      <BindItem id="item18" compid="divData.form.tabData.tab1.form.div00.form.ctxtDS_CONT_LIMIT" propid="value" datasetid="dsBase" columnid="DS_CONT_LIMIT"/>
+      <BindItem id="item19" compid="divData.form.tabData.tab1.form.div00.form.ctxtNO_ARCH_TOP" propid="value" datasetid="dsBase" columnid="NO_ARCH_TOP"/>
+      <BindItem id="item20" compid="divData.form.tabData.tab1.form.div00.form.ctxtNO_ARCH_BOTTM" propid="value" datasetid="dsBase" columnid="NO_ARCH_BOTTM"/>
+      <BindItem id="item21" compid="divData.form.tabData.tab1.form.div00.form.ctxtNO_ARCH_UNDR" propid="value" datasetid="dsBase" columnid="NO_ARCH_UNDR"/>
+      <BindItem id="item22" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_SHOP_TOP" propid="value" datasetid="dsBase" columnid="SZ_SHOP_TOP"/>
+      <BindItem id="item23" compid="divData.form.tabData.tab1.form.div00.form.ctxtRT_ARCH" propid="value" datasetid="dsBase" columnid="RT_ARCH"/>
+      <BindItem id="item24" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_ARCH_M" propid="value" datasetid="dsBase" columnid="SZ_ARCH_M"/>
+      <BindItem id="item25" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_ARCH" propid="value" datasetid="dsBase" columnid="SZ_ARCH"/>
+      <BindItem id="item26" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_SHOP_BOTTM" propid="value" datasetid="dsBase" columnid="SZ_SHOP_BOTTM"/>
+      <BindItem id="item27" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_SHOP" propid="value" datasetid="dsBase" columnid="SZ_SHOP"/>
+      <BindItem id="item28" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_SHOP_M" propid="value" datasetid="dsBase" columnid="SZ_SHOP_M"/>
+      <BindItem id="item29" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_SHOP_UNDR" propid="value" datasetid="dsBase" columnid="SZ_SHOP_UNDR"/>
+      <BindItem id="item30" compid="divData.form.tabData.tab1.form.div00.form.ctxtRT_SHOP" propid="value" datasetid="dsBase" columnid="RT_SHOP"/>
+      <BindItem id="item31" compid="divData.form.tabData.tab1.form.div00.form.ctxtAM_BIZ" propid="value" datasetid="dsBase" columnid="AM_BIZ"/>
+      <BindItem id="item32" compid="divData.form.tabData.tab1.form.div00.form.ctxtAM_LAND" propid="value" datasetid="dsBase" columnid="AM_LAND"/>
+      <BindItem id="item33" compid="divData.form.tabData.tab1.form.div00.form.ccboCD_LAND_STAT" propid="value" datasetid="dsBase" columnid="CD_LAND_STAT"/>
+      <BindItem id="item34" compid="divData.form.tabData.tab1.form.div00.form.txtDS_RM" propid="value" datasetid="dsBase" columnid="DS_RM"/>
+      <BindItem id="item35" compid="divData.form.tabData.tab1.form.div00.form.ccboCD_PERMIT_STAT" propid="value" datasetid="dsBase" columnid="CD_PERMIT_STAT"/>
+      <BindItem id="item36" compid="divData.form.tabData.tab1.form.div00.form.ctxtAM_AREA" propid="value" datasetid="dsBase" columnid="AM_AREA"/>
+      <BindItem id="item37" compid="divData.form.tabData.tab1.form.div00.form.ctxtAM_CONST" propid="value" datasetid="dsBase" columnid="AM_CONST"/>
+      <BindItem id="item38" compid="divData.form.tabData.tab1.form.div00.form.ccfCD_BIZ_STAT.form.CDTextBox" propid="value" datasetid="dsBase" columnid="CD_BIZ_STAT"/>
+      <BindItem id="item39" compid="divData.form.tabData.tab1.form.div00.form.ccfTY_BIZ.form.CDTextBox" propid="value" datasetid="dsBase" columnid="TY_BIZ"/>
+      <BindItem id="item40" compid="divData.form.tabData.tab1.form.div00.form.ccfTY_BIZ_MHOD.form.CDTextBox" propid="value" datasetid="dsBase" columnid="TY_BIZ_MHOD"/>
+      <BindItem id="item42" compid="divData.form.tabData.tab1.form.div00.form.ccfCD_BIZ_STAT.form.DSTextBox" propid="value" datasetid="dsBase" columnid="DS_BIZ_STAT"/>
+      <BindItem id="item43" compid="divData.form.tabData.tab1.form.div00.form.ccfTY_BIZ.form.DSTextBox" propid="value" datasetid="dsBase" columnid="NM_BIZ"/>
+      <BindItem id="item44" compid="divData.form.tabData.tab1.form.div00.form.ccfTY_BIZ_MHOD.form.DSTextBox" propid="value" datasetid="dsBase" columnid="NM_BIZ_MHOD"/>
+      <BindItem id="item41" compid="divData.form.tabData.tab1.form.div00.form.ccfTY_PRDCT.form.CDTextBox" propid="value" datasetid="dsBase" columnid="TY_PRDCT"/>
+      <BindItem id="item45" compid="divData.form.tabData.tab1.form.div00.form.ccfTY_PRDCT.form.DSTextBox" propid="value" datasetid="dsBase" columnid="NM_PRDCT"/>
+      <BindItem id="item46" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_ARCH00" propid="value" datasetid="dsBase" columnid="SZ_AREA"/>
+      <BindItem id="item47" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_ARCH_M00" propid="value" datasetid="dsBase" columnid="SZ_AREA_M"/>
+      <BindItem id="item48" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_SHOP00" propid="value" datasetid="dsBase" columnid="SZ_LAND_OVR"/>
+      <BindItem id="item49" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_SHOP_M00" propid="value" datasetid="dsBase" columnid="SZ_LAND_OVR_M"/>
+      <BindItem id="item50" compid="divData.form.tabData.tab1.form.div00.form.ctxtRT_SHOP00" propid="value" datasetid="dsBase" columnid="RT_LAND_OVR"/>
+      <BindItem id="item51" compid="divData.form.tabData.tab1.form.div00.form.ctclDT_COST_SEL" propid="value" datasetid="dsBase" columnid="DT_COST_SEL"/>
+      <BindItem id="item52" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_SHOP00_00" propid="value" datasetid="dsBase" columnid="SZ_LAND"/>
+      <BindItem id="item53" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_SHOP_M00_00" propid="value" datasetid="dsBase" columnid="SZ_LAND_M"/>
+      <BindItem id="item54" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_SHOP00_00_00" propid="value" datasetid="dsBase" columnid="SZ_LAND_UNDR"/>
+      <BindItem id="item55" compid="divData.form.tabData.tab1.form.div00.form.ctxtSZ_SHOP_M00_00_00" propid="value" datasetid="dsBase" columnid="SZ_LAND_UNDR_M"/>
+      <BindItem id="item56" compid="divData.form.tabData.tab1.form.div00.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsBase" columnid="CD_CORP"/>
+      <BindItem id="item57" compid="divData.form.tabData.tab1.form.div00.form.ccfCD_SAUP.form.CDTextBox" propid="value" datasetid="dsBase" columnid="CD_DEPT"/>
+      <BindItem id="item58" compid="divData.form.tabData.tab1.form.div00.form.ccboYN_SAUP" propid="value" datasetid="dsBase" columnid="YN_SAUP"/>
+      <BindItem id="item59" compid="divData.form.tabData.tab1.form.div00.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsBase" columnid="DS_CORP"/>
+      <BindItem id="item60" compid="divData.form.tabData.tab1.form.div00.form.ccfCD_SAUP.form.DSTextBox" propid="value" datasetid="dsBase" columnid="DS_DEPT"/>
+      <BindItem id="item61" compid="divData.form.tabData.tab1.form.div00.form.ccboCD_CLS" propid="value" datasetid="dsBase" columnid="CD_CLS"/>
+      <BindItem id="item123" compid="divData.form.tabData.tab1.form.div01.form.ctclDT_ACQ" propid="value" datasetid="dsBase" columnid="DT_ACQ"/>
+      <BindItem id="item62" compid="divData.form.tabData.tab1.form.div01.form.ccfDS_REGION.form.CDTextBox" propid="value" datasetid="dsData" columnid="DS_REGION"/>
+      <BindItem id="item63" compid="divSearch.form.ctxtCD_PROJ" propid="value" datasetid="dsSearch" columnid="CD_PROJ"/>
+      <BindItem id="item64" compid="divSearch.form.ctxtDS_PROJ" propid="value" datasetid="dsSearch" columnid="DS_PROJ"/>
+      <BindItem id="item65" compid="divData.form.tabData.tab1.form.div01.form.ctxtNM_PROV" propid="value" datasetid="dsBase" columnid="NM_PROV"/>
+      <BindItem id="item66" compid="divData.form.tabData.tab1.form.div01.form.ccboTY_ACQ1" propid="value" datasetid="dsBase" columnid="TY_ACQ"/>
+      <BindItem id="item67" compid="divData.form.tabData.tab1.form.div01.form.ctxtNM_ENF" propid="value" datasetid="dsBase" columnid="NM_ENF"/>
+      <BindItem id="item68" compid="divData.form.tabData.tab1.form.div01.form.ccboTY_ENF" propid="value" datasetid="dsBase" columnid="TY_ENF"/>
+      <BindItem id="item69" compid="divData.form.tabData.tab1.form.div01.form.ctxtDS_ENF_DEPT" propid="value" datasetid="dsBase" columnid="DS_ENF_DEPT"/>
+      <BindItem id="item70" compid="divData.form.tabData.tab1.form.div01.form.ccboCD_LOC" propid="value" datasetid="dsBase" columnid="CD_LOC"/>
+      <BindItem id="item71" compid="divData.form.tabData.tab1.form.div01.form.ctxtDS_ADDR2" propid="value" datasetid="dsBase" columnid="DS_ADDR2"/>
+      <BindItem id="item72" compid="divData.form.tabData.tab1.form.div01.form.ctxtDS_LAND_CLS" propid="value" datasetid="dsBase" columnid="DS_LAND_CLS"/>
+      <BindItem id="item73" compid="divData.form.tabData.tab1.form.div01.form.ctxtDS_LOCAL" propid="value" datasetid="dsBase" columnid="DS_LOCAL"/>
+      <BindItem id="item74" compid="divData.form.tabData.tab1.form.div01.form.ctxtDS_ACC" propid="value" datasetid="dsBase" columnid="DS_ACC"/>
+      <BindItem id="item75" compid="divData.form.tabData.tab1.form.div01.form.ctxtDS_CITY_PLAN" propid="value" datasetid="dsBase" columnid="DS_CITY_PLAN"/>
+      <BindItem id="item76" compid="divData.form.tabData.tab1.form.div01.form.ctxtDS_PUB_NOTICE" propid="value" datasetid="dsBase" columnid="DS_PUB_NOTICE"/>
+      <BindItem id="item77" compid="divData.form.tabData.tab1.form.div01.form.ctxtDS_USE_STAT" propid="value" datasetid="dsBase" columnid="DS_USE_STAT"/>
+      <BindItem id="item78" compid="divData.form.tabData.tab1.form.div01.form.ctxtDS_ROAD_STAT" propid="value" datasetid="dsBase" columnid="DS_ROAD_STAT"/>
+      <BindItem id="item79" compid="divData.form.tabData.tab1.form.div01.form.ctxtDS_CONT_LIMIT" propid="value" datasetid="dsBase" columnid="DS_CONT_LIMIT"/>
+      <BindItem id="item80" compid="divData.form.tabData.tab1.form.div01.form.ctxtNO_ARCH_TOP" propid="value" datasetid="dsBase" columnid="NO_ARCH_TOP"/>
+      <BindItem id="item81" compid="divData.form.tabData.tab1.form.div01.form.ctxtNO_ARCH_BOTTM" propid="value" datasetid="dsBase" columnid="NO_ARCH_BOTTM"/>
+      <BindItem id="item82" compid="divData.form.tabData.tab1.form.div01.form.ctxtNO_ARCH_UNDR" propid="value" datasetid="dsBase" columnid="NO_ARCH_UNDR"/>
+      <BindItem id="item83" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_SHOP_TOP" propid="value" datasetid="dsBase" columnid="SZ_SHOP_TOP"/>
+      <BindItem id="item84" compid="divData.form.tabData.tab1.form.div01.form.ctxtRT_ARCH" propid="value" datasetid="dsBase" columnid="RT_ARCH"/>
+      <BindItem id="item85" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_ARCH_M" propid="value" datasetid="dsBase" columnid="SZ_ARCH_M"/>
+      <BindItem id="item86" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_ARCH" propid="value" datasetid="dsBase" columnid="SZ_ARCH"/>
+      <BindItem id="item87" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_SHOP_BOTTM" propid="value" datasetid="dsBase" columnid="SZ_SHOP_BOTTM"/>
+      <BindItem id="item88" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_SHOP" propid="value" datasetid="dsBase" columnid="SZ_SHOP"/>
+      <BindItem id="item89" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_SHOP_M" propid="value" datasetid="dsBase" columnid="SZ_SHOP_M"/>
+      <BindItem id="item90" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_SHOP_UNDR" propid="value" datasetid="dsBase" columnid="SZ_SHOP_UNDR"/>
+      <BindItem id="item91" compid="divData.form.tabData.tab1.form.div01.form.ctxtRT_SHOP" propid="value" datasetid="dsBase" columnid="RT_SHOP"/>
+      <BindItem id="item92" compid="divData.form.tabData.tab1.form.div01.form.ctxtAM_BIZ" propid="value" datasetid="dsBase" columnid="AM_BIZ"/>
+      <BindItem id="item93" compid="divData.form.tabData.tab1.form.div01.form.ctxtAM_LAND" propid="value" datasetid="dsBase" columnid="AM_LAND"/>
+      <BindItem id="item94" compid="divData.form.tabData.tab1.form.div01.form.ccboCD_LAND_STAT" propid="value" datasetid="dsBase" columnid="CD_LAND_STAT"/>
+      <BindItem id="item95" compid="divData.form.tabData.tab1.form.div01.form.txtDS_RM" propid="value" datasetid="dsBase" columnid="DS_RM"/>
+      <BindItem id="item96" compid="divData.form.tabData.tab1.form.div01.form.ccboCD_PERMIT_STAT" propid="value" datasetid="dsBase" columnid="CD_PERMIT_STAT"/>
+      <BindItem id="item97" compid="divData.form.tabData.tab1.form.div01.form.ctxtAM_AREA" propid="value" datasetid="dsBase" columnid="AM_AREA"/>
+      <BindItem id="item98" compid="divData.form.tabData.tab1.form.div01.form.ctxtAM_CONST" propid="value" datasetid="dsBase" columnid="AM_CONST"/>
+      <BindItem id="item99" compid="divData.form.tabData.tab1.form.div01.form.ccfCD_BIZ_STAT.form.CDTextBox" propid="value" datasetid="dsBase" columnid="CD_BIZ_STAT"/>
+      <BindItem id="item100" compid="divData.form.tabData.tab1.form.div01.form.ccfTY_BIZ.form.CDTextBox" propid="value" datasetid="dsBase" columnid="TY_BIZ"/>
+      <BindItem id="item101" compid="divData.form.tabData.tab1.form.div01.form.ccfTY_BIZ_MHOD.form.CDTextBox" propid="value" datasetid="dsBase" columnid="TY_BIZ_MHOD"/>
+      <BindItem id="item102" compid="divData.form.tabData.tab1.form.div01.form.ccfCD_BIZ_STAT.form.DSTextBox" propid="value" datasetid="dsBase" columnid="DS_BIZ_STAT"/>
+      <BindItem id="item103" compid="divData.form.tabData.tab1.form.div01.form.ccfTY_BIZ.form.DSTextBox" propid="value" datasetid="dsBase" columnid="NM_BIZ"/>
+      <BindItem id="item104" compid="divData.form.tabData.tab1.form.div01.form.ccfTY_BIZ_MHOD.form.DSTextBox" propid="value" datasetid="dsBase" columnid="NM_BIZ_MHOD"/>
+      <BindItem id="item105" compid="divData.form.tabData.tab1.form.div01.form.ccfTY_PRDCT.form.CDTextBox" propid="value" datasetid="dsBase" columnid="TY_PRDCT"/>
+      <BindItem id="item106" compid="divData.form.tabData.tab1.form.div01.form.ccfTY_PRDCT.form.DSTextBox" propid="value" datasetid="dsBase" columnid="NM_PRDCT"/>
+      <BindItem id="item107" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_ARCH00" propid="value" datasetid="dsBase" columnid="SZ_AREA"/>
+      <BindItem id="item108" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_ARCH_M00" propid="value" datasetid="dsBase" columnid="SZ_AREA_M"/>
+      <BindItem id="item109" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_SHOP00" propid="value" datasetid="dsBase" columnid="SZ_LAND_OVR"/>
+      <BindItem id="item110" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_SHOP_M00" propid="value" datasetid="dsBase" columnid="SZ_LAND_OVR_M"/>
+      <BindItem id="item111" compid="divData.form.tabData.tab1.form.div01.form.ctxtRT_SHOP00" propid="value" datasetid="dsBase" columnid="RT_LAND_OVR"/>
+      <BindItem id="item112" compid="divData.form.tabData.tab1.form.div01.form.ctclDT_COST_SEL" propid="value" datasetid="dsBase" columnid="DT_COST_SEL"/>
+      <BindItem id="item113" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_SHOP00_00" propid="value" datasetid="dsBase" columnid="SZ_LAND"/>
+      <BindItem id="item114" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_SHOP_M00_00" propid="value" datasetid="dsBase" columnid="SZ_LAND_M"/>
+      <BindItem id="item115" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_SHOP00_00_00" propid="value" datasetid="dsBase" columnid="SZ_LAND_UNDR"/>
+      <BindItem id="item116" compid="divData.form.tabData.tab1.form.div01.form.ctxtSZ_SHOP_M00_00_00" propid="value" datasetid="dsBase" columnid="SZ_LAND_UNDR_M"/>
+      <BindItem id="item117" compid="divData.form.tabData.tab1.form.div01.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsBase" columnid="CD_CORP"/>
+      <BindItem id="item118" compid="divData.form.tabData.tab1.form.div01.form.ccfCD_SAUP.form.CDTextBox" propid="value" datasetid="dsBase" columnid="CD_DEPT"/>
+      <BindItem id="item119" compid="divData.form.tabData.tab1.form.div01.form.ccboYN_SAUP" propid="value" datasetid="dsBase" columnid="YN_SAUP"/>
+      <BindItem id="item120" compid="divData.form.tabData.tab1.form.div01.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsBase" columnid="DS_CORP"/>
+      <BindItem id="item121" compid="divData.form.tabData.tab1.form.div01.form.ccfCD_SAUP.form.DSTextBox" propid="value" datasetid="dsBase" columnid="DS_DEPT"/>
+      <BindItem id="item122" compid="divData.form.tabData.tab1.form.div01.form.ccboCD_CLS" propid="value" datasetid="dsBase" columnid="CD_CLS"/>
+      <BindItem id="item124" compid="divData.form.tabData.tab1.form.div01.form.ctxtAM_OCAPITAL" propid="value" datasetid="dsBase" columnid="AM_OCAPITAL"/>
+      <BindItem id="item125" compid="divData.form.tabData.tab1.form.div01.form.ctxtAM_BCAPITAL" propid="value" datasetid="dsBase" columnid="AM_BCAPITAL"/>
+      <BindItem id="item126" compid="divData.form.tabData.tab1.form.div01.form.ctxtAM_ETC" propid="value" datasetid="dsBase" columnid="AM_ETC"/>
+      <BindItem id="item128" compid="divData.form.tabData.tab1.form.div01.form.ctxtDS_AMBIGO" propid="value" datasetid="dsBase" columnid="DS_AMBIGO"/>
+      <BindItem id="item129" compid="divData.form.tabData.tab1.form.div01.form.ctxtRT_OCAPITAL" propid="value" datasetid="dsBase" columnid="RT_OCAPITAL"/>
+      <BindItem id="item127" compid="divData.form.tabData.tab1.form.div01.form.ctxtRT_BCAPITAL" propid="value" datasetid="dsBase" columnid="RT_BCAPITAL"/>
+      <BindItem id="item131" compid="divData.form.tabData.tab1.form.div01.form.ctxtRT_ETC" propid="value" datasetid="dsBase" columnid="RT_ETC"/>
+      <BindItem id="item133" compid="divData.form.tabData.tab1.form.div01.form.ctxtDS_RTBIGO" propid="value" datasetid="dsBase" columnid="DS_RTBIGO"/>
+      <BindItem id="item134" compid="divData.form.tabData.tab1.form.div01.form.txtDS_SCALE" propid="value" datasetid="dsBase" columnid="DS_SCALE"/>
+      <BindItem id="item135" compid="divData.form.tabData.tab1.form.div01.form.txtDS_RM1" propid="value" datasetid="dsBase" columnid="DS_RM"/>
+      <BindItem id="item136" compid="divData.form.tabData.tab1.form.div01.form.txtDS_FI" propid="value" datasetid="dsBase" columnid="DS_FI"/>
+      <BindItem id="item137" compid="divData.form.tabData.tab1.form.div01.form.txtDS_AI" propid="value" datasetid="dsBase" columnid="DS_AI"/>
+      <BindItem id="item138" compid="divData.form.tabData.tab1.form.div01.form.txtDS_DI" propid="value" datasetid="dsBase" columnid="DS_DI"/>
+      <BindItem id="item130" compid="divData.form.tabData.tab1.form.div01.form.ctxtAM_TOT" propid="value" datasetid="dsTOT" columnid="AM_TOT"/>
+      <BindItem id="item132" compid="divData.form.tabData.tab1.form.div01.form.ctxtRT_TOT" propid="value" datasetid="dsTOT" columnid="RT_TOT"/>
+      <BindItem id="item139" compid="edtDS_SAUP" propid="value" datasetid="dsBase" columnid="DS_SAUP"/>
+    </Bind>
+  </Form>
+</FDL>

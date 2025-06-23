@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="410" height="360" maxwidth="430" maxheight="440" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staBg00" taborder="6" height="30" cssclass="sta_WF_tablebg" width="291" top="69" left="109"/>
+              <Static id="staBg2" taborder="0" height="30" cssclass="sta_WF_tablebg" onclick="divData_staBg2_onclick" width="291" left="109" top="98"/>
+              <Static id="staBg3" taborder="1" height="30" cssclass="sta_WF_tablebg" onclick="divData_staBg3_onclick" width="291" text="" top="127" left="109"/>
+              <Static id="staBg4" taborder="2" height="30" cssclass="sta_WF_tablebg" text="" width="291" top="127" left="109"/>
+              <Static id="staBg5" taborder="3" height="104" cssclass="sta_WF_tablebg" width="291" text="" top="156" left="109"/>
+              <Static id="staRM_BIGO" taborder="7" text="비고" left="0" width="110" height="105" cssclass="sta_WF_tablelabel" textAlign="right" top="155"/>
+              <Button id="btnSave" taborder="4" left="30.00%" width="60" onclick="divData_btnSave_onclick" height="20" top="293" text="구매승인"/>
+              <Button id="btnCancel" taborder="5" text="닫기" left="50.00%" width="60" height="20" onclick="divData_btnCancel_onclick" top="293"/>
+              <Static id="sta27" taborder="8" text="계약유형" left="0" top="98" width="110" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta31" taborder="9" text="인도조건" left="375" top="287" width="110" height="30" onclick="divData_divDataRight_sta01_onclick" textAlign="right" visible="false" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta45" taborder="10" text="재고관리구분" left="0" top="127" width="110" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg01" taborder="11" height="30" cssclass="sta_WF_tablebg" width="291" top="40" left="109"/>
+              <Static id="sta00" taborder="12" text="계약번호" left="0" top="40" width="110" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta01" taborder="13" text="납기일자" left="0" top="69" width="110" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+              <Button id="btnSave00" taborder="14" left="67.80%" width="109" height="20" top="132" text="현장요청구분변경" onclick="divData_btnSave00_onclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Calendar id="tclDT_DELIVERY" taborder="1" left="115" top="75" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+        <Combo id="cboYN_E_CONT" taborder="2" left="115" top="104" width="150" height="20" innerdataset="dsYN_E_CONT" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+        <Combo id="cboCD_DELIVERY" taborder="3" left="490" top="293" width="150" height="20" innerdataset="dsCD_DELIVERY" codecolumn="CD_CODE" datacolumn="DS_CODE" visible="false"/>
+        <Combo id="cboCD_INCREASE" taborder="4" left="115" top="133" width="150" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" visible="true" innerdataset="dsCD_INCREASE" readonly="true"/>
+        <TextArea id="txtRM_BIGO" taborder="5" left="115" top="164" width="275" height="90"/>
+        <Edit id="txtNO_CONT" taborder="6" left="115" top="45" height="20" width="148" enable="true" readonly="true"/>
+        <Static id="sta02" taborder="7" text="발주서승인" left="7" top="8" width="165" height="22" cssclass="sta_TITLE_Bg"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.fnSetCombo();
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	if(!this.gfnIsNull(this.getOwnerFrame().NO_CONT)) {
+
+		this.dsDetail.setColumn(0, "NO_CONT", this.getOwnerFrame().NO_CONT);
+		this.dsDetail.setColumn(0, "DT_DELIVERY", this.getOwnerFrame().DT_DELIVERY);
+		this.dsDetail.setColumn(0, "YN_E_CONT", this.getOwnerFrame().YN_E_CONT);
+		this.dsDetail.setColumn(0, "CD_DELIVERY", this.getOwnerFrame().CD_DELIVERY);
+		this.dsDetail.setColumn(0, "CD_INCREASE", this.getOwnerFrame().CD_INCREASE);
+		this.dsDetail.setColumn(0, "RM_BIGO", this.getOwnerFrame().RM_BIGO);
+	}	
+	
+	
+};
+
+this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DC");
+	this.dsCombo.setColumn(0, "CD_TYPE", "13");
+	
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(1, "CD_SYSTEM", "DM");
+	this.dsCombo.setColumn(1, "CD_TYPE", "AG");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(2, "CD_SYSTEM", "DM");
+	this.dsCombo.setColumn(2, "CD_TYPE", "H11");
+	
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsYN_E_CONT=combo0 dsCD_DELIVERY=combo1 dsCD_INCREASE=combo2";
+	var strArg      = "";
+	var callBackFnc = "fnCallbackCombo";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.fnCallbackCombo = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "combo") {
+ 		//this.divData.form.divData01.form.cboTY_HAJA.set_index(0);
+	}
+};
+
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	//this.ccfCD_VENDOR = this.divData.form.ccfCD_VENDOR;
+	//this.ccfCD_SITE = this.divData.form.ccfCD_SITE;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("NO_CONT", "string");
+	this.dsUpdate.addColumn("DT_DELIVERY", "string");
+	this.dsUpdate.addColumn("YN_E_CONT", "string");
+	this.dsUpdate.addColumn("CD_DELIVERY", "string");
+	this.dsUpdate.addColumn("CD_INCREASE", "string");
+	this.dsUpdate.addColumn("RM_BIGO", "string");
+	this.dsUpdate.addColumn("ID_USER", "string");
+	
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ this.divData_btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(!this.gfnDataValidate(this.dsDetail, this.dsRequired))return;
+	this.gfnConfirm("구매승인을 진행하시겠습니까?", "fnSaveDsDetail");
+};
+
+this.fnSaveDsDetail = function(svcId, val){
+	if(val){
+		this.dsUpdate.clearData();		
+		var nrow = this.dsUpdate.addRow();
+
+		this.dsUpdate.setColumn(nrow, "NO_CONT", this.dsDetail.getColumn(0, "NO_CONT"));
+		this.dsUpdate.setColumn(nrow, "DT_DELIVERY", this.dsDetail.getColumn(0, "DT_DELIVERY"));
+		this.dsUpdate.setColumn(nrow, "YN_E_CONT", this.dsDetail.getColumn(0, "YN_E_CONT"));
+		this.dsUpdate.setColumn(nrow, "CD_DELIVERY", this.dsDetail.getColumn(0, "CD_DELIVERY"));
+		this.dsUpdate.setColumn(nrow, "CD_INCREASE", this.dsDetail.getColumn(0, "CD_INCREASE"));
+		this.dsUpdate.setColumn(nrow, "RM_BIGO", this.dsDetail.getColumn(0, "RM_BIGO"));
+		this.dsUpdate.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+
+		if (this.dsUpdate.rowcount == 0) return;
+		
+		var strSvcId    = "save";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "save=dsUpdate";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+	}
+}
+
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+ /*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+ /*
+ *	저장 버튼
+ */
+this.fnSave = function() {	
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+*/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "save") {
+		if(errorCode == 0)
+		{
+			// this.close()가 작동하지 않았고, 
+			// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+			this.getParentContext().close(true);
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ 
+
+
+this.divData_btnSave00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.dsDetail.getColumn(0, "CD_INCREASE") == "01")
+	{
+		this.dsDetail.setColumn(0, "CD_INCREASE", "02");
+	} else
+	{
+		this.dsDetail.setColumn(0, "CD_INCREASE", "01");
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DMAPR_PO_DETAIL_OK</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_CODE_LIST_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDetail" onvaluechanged="dsData_onvaluechanged">
+        <ColumnInfo>
+          <Column id="NO_CONT" type="STRING" size="256"/>
+          <Column id="DT_DELIVERY" type="STRING" size="256"/>
+          <Column id="YN_E_CONT" type="STRING" size="256"/>
+          <Column id="CD_DELIVERY" type="STRING" size="256"/>
+          <Column id="CD_INCREASE" type="STRING" size="256"/>
+          <Column id="RM_BIGO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRequired">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="DS_FIELD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_FIELD">NO_CONT</Col>
+            <Col id="DS_FIELD">계약번호</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">DT_DELIVERY</Col>
+            <Col id="DS_FIELD">납기일자</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">YN_E_CONT</Col>
+            <Col id="DS_FIELD">계약유형</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_INCREASE</Col>
+            <Col id="DS_FIELD">재고관리구분</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_E_CONT"/>
+      <Dataset id="dsCD_DELIVERY"/>
+      <Dataset id="dsCD_INCREASE"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="tclDT_DELIVERY" propid="value" datasetid="dsDetail" columnid="DT_DELIVERY"/>
+      <BindItem id="item2" compid="cboYN_E_CONT" propid="value" datasetid="dsDetail" columnid="YN_E_CONT"/>
+      <BindItem id="item3" compid="cboCD_DELIVERY" propid="value" datasetid="dsDetail" columnid="CD_DELIVERY"/>
+      <BindItem id="item4" compid="cboCD_INCREASE" propid="value" datasetid="dsDetail" columnid="CD_INCREASE"/>
+      <BindItem id="item5" compid="txtRM_BIGO" propid="value" datasetid="dsDetail" columnid="RM_BIGO"/>
+      <BindItem id="item0" compid="txtNO_CONT" propid="value" datasetid="dsDetail" columnid="NO_CONT"/>
+    </Bind>
+  </Form>
+</FDL>

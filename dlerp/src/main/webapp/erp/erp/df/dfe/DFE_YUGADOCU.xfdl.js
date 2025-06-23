@@ -1,0 +1,812 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("유가증권 약정현황 조회");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DFEPR_YUGADOCU_SELECT</Col></Row><Row><Col id=\"TARGET\">combo</Col><Col id=\"SP\">DZXPR_COMBO_SELECT</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"CD_YUGA\" type=\"STRING\" size=\"256\"/><Column id=\"NO_YUGA\" type=\"STRING\" size=\"256\"/><Column id=\"YN_CLOSE\" type=\"STRING\" size=\"256\"/><Column id=\"YM_WORK\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYN_CLOSE", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0.0","10.0",null,"78.0","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_SEARCH_Bg");
+            obj.set_formscrolltype("none");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("sta04","0.0","10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("6");
+            obj.set_text("법인코드");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_CORP","sta04:0.0","10.0","269","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("70");
+            obj.set_taborder("0");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("sta01","0.0","sta04:10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("7");
+            obj.set_text("유가증권");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_YUGA","sta01:0.0","sta04:10.0","269","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("70");
+            obj.set_taborder("2");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("sta00","cfCD_YUGA:0.0","sta04:10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("8");
+            obj.set_text("관리번호");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("cfNO_YUGA","sta00:0.0","sta04:10.0","269","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("80");
+            obj.set_taborder("3");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("sta03","cfNO_YUGA:0.0","sta04:10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("5");
+            obj.set_text("완료여부");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("cboYN_CLOSE","sta03:0.0","sta04:10.0","91","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("4");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_innerdataset("dsYN_CLOSE");
+            obj.set_text("진행중");
+            obj.set_value("N");
+            obj.set_index("-1");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:10",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.cfCD_CORP.form.CDTextBox","value","dsSearch","CD_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divSearch.form.cfCD_YUGA.form.CDTextBox","value","dsSearch","CD_YUGA");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divSearch.form.cfNO_YUGA.form.CDTextBox","value","dsSearch","NO_YUGA");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divSearch.form.cboYN_CLOSE","value","dsSearch","YN_CLOSE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DFE_YUGADOCU.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+        	this.fnSetCombo();
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+        	// Select, Add, Del, Save, Excel, Print
+        	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        	 this.btnYugaReg = this.gfnFormButtonAdd("btnYugaReg", "fnYugaReg", "약정정보");
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+
+        	// 조회조건
+        	this.cfCD_CORP  = this.divSearch.form.cfCD_CORP;				// 법인코드
+        	//this.calYM_WORK  = this.divSearch.form.calYM_WORK;				// 기준년월
+        	this.cfCD_YUGA = this.divSearch.form.cfCD_YUGA;					// 유가종류
+        	this.cfNO_YUGA = this.divSearch.form.cfNO_YUGA;					// 관리번호
+        	this.cboYN_CLOSE = this.divSearch.form.cboYN_CLOSE;				// 완료여부
+
+        	this.dxGrid = this.divData.form.objGrid;		// 그리드
+        	this.grSearch = this.FormInfo.GR_SEARCH;						// 권한
+        	this.cdGroup = this.gfnIsNull(this.AuthClient.CD_GROUP) ? "" : this.AuthClient.CD_GROUP;						// 그룹코드
+
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	this.cfCD_CORP.CodeFindName = "DZX_CFCORP";				// 법인코드(조회조건)
+        	this.cfCD_YUGA.CodeFindName = "DFX_CFYUGAKIND";			// 유가증권(조회조건)
+        	this.cfNO_YUGA.CodeFindName = "DFX_CFNO_YUGA";			// 관리번호(조회조건)
+
+        	this.cfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.cfCD_YUGA.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.cfNO_YUGA.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+
+        	this.cfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.cfCD_YUGA.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.cfNO_YUGA.AfterCDTextChanged = "fnAfterCDTextChanged";
+
+        	// 그리드 초기화
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DF", "DFE_YUGADOCU");
+        // 	this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";
+        // 	this.dxGrid.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+
+        	if (this.gfnIsNull(this.cfCD_CORP.form.CDTextBox.value)) {
+        		this.cfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+        		this.cfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+        	}
+
+
+        	// 법인코드 포커스추가
+        	this.cfCD_CORP.form.CDTextBox.setFocus();
+
+        	var vToday = this.gfnGetDate().substr(0,6);
+        	//this.calYM_WORK.form.TextBox.set_value(vToday);
+
+        	// 권한체크 - 해당부서내역만 조회가능
+        	if (nexacro.toNumber(this.grSearch) >= 2) {
+        		this.cfCD_CORP.set_enable(false);
+        	}
+
+        	this.fnSetVisibleCol("N");
+        };
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("CD_CORP", "string");
+        	this.dsSelect.addColumn("YM_WORK", "string");
+        	this.dsSelect.addColumn("CD_YUGA", "string");
+        	this.dsSelect.addColumn("NO_YUGA", "string");
+        	this.dsSelect.addColumn("YN_CLOSE", "string");
+        	this.dsSelect.addColumn("ID_USER", "string");
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+
+        	if (!this.fnSelectValidate()) return false;
+
+        	this.gfnGridBeforeSelect(this.dxGrid);
+        	//this.fnSelectEnable();
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+
+        	this.dsSelect.setColumn(0, "CD_YUGA", this.dsSearch.getColumn(0, "CD_YUGA"));
+        	//this.dsSelect.setColumn(0, "YM_WORK", this.calYM_WORK.form.TextBox.value);
+        	this.dsSelect.setColumn(0, "NO_YUGA", this.dsSearch.getColumn(0, "NO_YUGA"));
+        	this.dsSelect.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+        	this.dsSelect.setColumn(0, "YN_CLOSE", this.dsSearch.getColumn(0, "YN_CLOSE"));
+        	this.dsSelect.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+
+        	//trace(this.dsSelect.saveXML());
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); 	// 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+         */
+        this.fnSelectValidate = function() {
+        // 	if (this.gfnIsNull(this.calYM_WORK.form.TextBox.value)) {
+        // 		this.gfnAlert("기준년월은 필수입력 입니다.");
+        // 		this.calYM_WORK.form.TextBox.setFocus();
+        // 		return false;
+        // 	}
+        	return true;
+        };
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	if (svcID == "select") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+
+        		// test 용
+        		//this.dsList.setColumn(this.dsList.rowposition, "YN_VIEW", "Y");
+
+        		if (this.dsList.rowcount > 0 && this.dsList.getColumn(this.dsList.rowposition, "YN_VIEW") == "Y") {
+        			this.fnSetVisibleCol("Y");
+        		}
+
+        		if (this.dsList.rowcount > 0 && this.dsList.getColumn(this.dsList.rowposition, "YN_VIEW") == "N") {
+        			this.fnSetVisibleCol("N");
+        		}
+
+        		if (this.dsList.rowcount == 0) {
+        			this.fnSetVisibleCol("N");
+        		}
+        	} else if(svcID == "save") {
+        		if (errorCode == 0) {
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}else if(svcID == "combo"){
+
+        		//  조회조건(완료여부)
+        		var iRow = this.dsYN_CLOSE.insertRow(0);
+        		this.dsYN_CLOSE.setColumn(iRow, "CD_CODE", "");
+        		this.dsYN_CLOSE.setColumn(iRow, "DS_CODE", "전체");
+        		this.cboYN_CLOSE.set_index(0);
+
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+        	var cdCorp = this.cfCD_CORP.form.CDTextBox.value;
+
+        	switch(id) {
+
+        	// 법인코드(조회조건)
+        	case "cfCD_CORP":
+        		dsUserParam.setColumn(nrow, "CD_GROUP", this.cdGroup);
+        		break;
+
+        	// 유가증권(조회조건)
+        	case "cfCD_YUGA":
+        		dsUserParam.setColumn(nrow, "YN_USE", "Y");
+        		dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        		break;
+
+        	// 관리번호(조회조건)
+        	case "cfNO_YUGA":
+        		dsUserParam.setColumn(nrow, "CD_CORP", this.gfnIsNull(cdCorp) ? "" : cdCorp);
+        		dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        		break;
+
+        	// 법인코드
+        	case "ccfCD_CORP2":
+        		dsUserParam.setColumn(nrow, "CD_GROUP", this.cdGroup);
+        		break;
+
+        	// 유가증권종류
+        	case "cfCD_YUGA2":
+        		dsUserParam.setColumn(nrow, "YN_USE", "Y");
+        		dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        		break;
+
+        	// 매입기관
+        	case "cfCD_VENDOR":
+        		dsUserParam.setColumn(nrow, "TY_VENDOR1", "전체");
+        		dsUserParam.setColumn(nrow, "CD_CORP", this.gfnIsNull(cdCorp) ? "" : cdCorp);
+        		break;
+
+        	// 귀속부서
+        	case "cfCD_DEPT_ACNT":
+        		dsUserParam.setColumn(nrow, "CD_GROUP", this.cdGroup);
+        		dsUserParam.setColumn(nrow, "CD_CORP", this.gfnIsNull(cdCorp) ? "" : cdCorp);
+        		break;
+
+        	// 보관처
+        	case "cfCD_REPOSIT":
+        		dsUserParam.setColumn(nrow, "TY_VENDOR1", "전체");
+        		dsUserParam.setColumn(nrow, "CD_CORP", this.gfnIsNull(cdCorp) ? "" : cdCorp);
+        		break;
+
+        	default:
+        	}
+        	return true;
+        };
+
+        this.fnAfterCDTextChanged = function(id, codeFindData) {
+        	var arr = codeFindData;
+
+        	switch(id) {
+
+        	// 법인코드(조회조건)
+        	case "cfCD_CORP":
+        		break;
+
+        	// 유가증권(조회조건)
+        	case "cfCD_YUGA":
+        		break;
+
+        	// 관리번호(조회조건)
+        	case "cfNO_YUGA":
+        		break;
+
+        	// 법인코드
+        	case "ccfCD_CORP2":
+        		break;
+
+        	// 유가증권종류
+        	case "cfCD_YUGA2":
+        		break;
+
+        	// 매입기관
+        	case "cfCD_VENDOR":
+        		break;
+
+        	// 귀속부서
+        	case "cfCD_DEPT_ACNT":
+        		break;
+
+        	// 보관처
+        	case "cfCD_REPOSIT":
+        		break;
+
+        	default:
+        	}
+        };
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        /*
+         *	조회 조건 변경시 초기화
+         */
+        this.fnSearchInit = function(obj,e) {
+
+        	if(e == null || (e.pretext != e.posttext)) {
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.gfnGridClear(this.dxGrid);
+        	}
+        };
+
+        /*
+         * 컴포넌트 enable/disable처리
+         */
+        this.fnSetComponent = function(flag) {
+
+        //	this.txtNO_CHAIP.set_enable(flag);		//  차입번호(관리번호)
+        // 	this.StxtAccntNo.set_enable(flag);		//  계좌번호
+        // 	this.ccfAccntOwner.set_enable(flag);	//  계좌소유주
+        }
+
+        this.fnDataValidate = function(){
+
+        	var msg = "은(는) 필수입력 입니다.";
+
+        	for (var i=0; i < this.dsList.rowcount; i++) {
+        		if (this.dsList.getColumn(i, "nx_flag") == "I" || this.dsList.getColumn(i, "nx_flag") == "U") {
+
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "CD_CORP")))){
+        				this.gfnAlert("법인코드" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.ccfCD_CORP2.form.CDTextBox.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "CD_YUGA")))){
+        				this.gfnAlert("종류" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.cfCD_YUGA2.form.CDTextBox.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "NM_YUGA")))){
+        				this.gfnAlert("유가증권명" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.txtNM_YUGA.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "DT_BUY")))){
+        				this.gfnAlert("매입일자" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.calDT_BUY.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "CD_VENDOR")))){
+        				this.gfnAlert("매입기관" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.cfCD_VENDOR.form.CDTextBox.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "CD_DEPT_ACNT")))){
+        				this.gfnAlert("귀속부서" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.cfCD_DEPT_ACNT.form.CDTextBox.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "CD_REPOSIT")))){
+        				this.gfnAlert("보관처" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.cfCD_REPOSIT.form.CDTextBox.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "DT_START")))){
+        				this.gfnAlert("기간(from)" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.calDT_START.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.dsList.getColumn(i, "DT_END"))){
+        				this.gfnAlert("기간(to)" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.calDT_END.setFocus();
+        				return false;
+        			}
+
+        			if ( !this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "DT_START"))) && !this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "DT_END"))) ) {
+        				if ( this.gfnTrim(this.dsList.getColumn(i, "DT_START")) > this.gfnTrim(this.dsList.getColumn(i, "DT_END")) ) {
+        					this.gfnAlert("기간이 잘못 입력 되었습니다.");
+        					this.dsList.set_rowposition(i);
+        					this.calDT_START.setFocus();
+        					return false;
+        				}
+        			}
+
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "TR_EZA")))){
+        				this.gfnAlert("방법" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.cboTR_EZA.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.dsList.getColumn(i, "RT_EZA"))){
+        				this.gfnAlert("이율" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.mskRT_EZA.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "TY_DANBOK")))){
+        				this.gfnAlert("방식" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.cboTY_DANBOK.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.dsList.getColumn(i, "TR_EZASTD"))){
+        				this.gfnAlert("지급일" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.mskTR_EZASTD.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.dsList.getColumn(i, "TR_INTTERM"))){
+        				this.gfnAlert("주기(개월)" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.mskTR_INTTERM.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.dsList.getColumn(i, "TY_SUNHOO"))){
+        				this.gfnAlert("기준" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.cboTY_SUNHOO.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.dsList.getColumn(i, "TY_EZACAL"))){
+        				this.gfnAlert("계산방식" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.cboTY_EZACAL.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.dsList.getColumn(i, "TY_YANGDAN"))){
+        				this.gfnAlert("일수계산" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.cboTY_YANGDAN.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.dsList.getColumn(i, "AM_FACE"))){
+        				this.gfnAlert("액면가액" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.mskAM_FACE.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.dsList.getColumn(i, "QN_BUY"))){
+        				this.gfnAlert("취득수량" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.mskQN_BUY.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.dsList.getColumn(i, "AM_BUY"))){
+        				this.gfnAlert("매입금액" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.mskAM_BUY.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "YN_CLOSE")))){
+        				this.gfnAlert("완료여부" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.cboYN_CLOSE2.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.gfnTrim(this.dsList.getColumn(i, "YN_DAMBO")))){
+        				this.gfnAlert("담보여부" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.cboYN_DAMBO.setFocus();
+        				return false;
+        			}
+
+        			if(this.gfnIsNull(this.dsList.getColumn(i, "AM_DAMBO"))){
+        				this.gfnAlert("금액" + msg);
+        				this.dsList.set_rowposition(i);
+        				this.mskAM_DAMBO.setFocus();
+        				return false;
+        			}
+        		}
+        	}
+        	return true;
+        }
+
+        this.fnSetCombo = function() {
+
+        	// 완료여부
+        	this.dsCombo = new Dataset();
+        	this.dsCombo.addColumn("CD_SYSTEM", "string");
+        	this.dsCombo.addColumn("CD_TYPE", "string");
+        	this.dsCombo.addRow();
+        	this.dsCombo.setColumn(0, "CD_SYSTEM", "DF");
+        	this.dsCombo.setColumn(0, "CD_TYPE", "E9");
+
+        	var strSvcId    = "combo";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "combo=dsCombo";
+        	var outData     = "dsYN_CLOSE=combo0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); 	// 통신방법 정의 [생략가능]
+        };
+
+        // 유가증권약정등록
+        this.fnYugaReg = function(obj,e) {
+        	if(!this.gfnGridIsRow(this.dxGrid)) return;
+        	var param = {};
+        	param.CD_CORP = this.dsList.getColumn(this.dsList.rowposition, "CD_CORP");		// 법인코드
+        	param.DS_CORP = this.dsList.getColumn(this.dsList.rowposition, "DS_CORP");		// 법인명
+        	param.NO_YUGA = this.dsList.getColumn(this.dsList.rowposition,"NO_YUGA");		// 관리번호
+        	param.NM_YUGA = this.dsList.getColumn(this.dsList.rowposition,"NM_YUGA");		// 유가증권명
+        	param.CD_YUGA = this.dsList.getColumn(this.dsList.rowposition,"CD_YUGA");		// 종류코드
+        	param.DS_YUGA = this.dsList.getColumn(this.dsList.rowposition,"DS_YUGA");		// 종류
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DFE_YUGA_REGISTRATION", "", param, this.getOffsetWidth(), this.getOffsetHeight());
+        }
+
+        this.dsSearch_onvaluechanged = function(obj,e)
+        {
+        	if ( e.oldvalue != e.newvalue ) {
+        		this.gfnSetFormStatus(this);
+        		this.gfnGridClear(this.dxGrid);
+        	}
+        };
+
+
+        // 조회결과 YN_VIEW에 따라 visible 처리
+        this.fnSetVisibleCol = function(flag) {
+        	//trace("flag ::: " + flag);
+
+        	var size0 = "15,17,18,29";
+        	var size70 = "9";
+        	var size80 = "21,25,27";
+        	var size100 = "5,6,7,8,10,12,13,14,16,19,20,22,23,24,26,28,30";
+        	var size150 = "11";
+
+        	for (var i=0; i < 31; i++) {
+
+        		if (flag == "Y") {
+        			// 구분(14) ~ 취득부서(30) 숨기고
+        			if (i >= 14 && i <= 30) {
+        				this.dxGrid.setFormatColProperty(i, "size", 0);
+        			}
+
+        			// 매입기관(5) ~ 사후신고일(13) 보여주고
+        			if (i >= 5 && i <= 13) {
+        				if (size70.indexOf(i)> -1 ) {
+        					this.dxGrid.setFormatColProperty(i, "size", 70);
+        				}
+        				if (size100.indexOf(i)> -1 ) {
+        					this.dxGrid.setFormatColProperty(i, "size", 100);
+        				}
+        				if (size150.indexOf(i)> -1 ) {
+        					this.dxGrid.setFormatColProperty(i, "size", 150);
+        				}
+        			}
+        		} else {
+
+        			// 매입기관(5) ~ 사후신고일(13) 숨기고
+        			if (i >= 5 && i <= 13) {
+        				this.dxGrid.setFormatColProperty(i, "size", 0);
+        			}
+
+        			// 구분(14) ~ 취득부서(30) 보여주고
+        			if (i >= 14 && i <= 30) {
+        				if (size0.indexOf(i)> -1 ) {
+        					this.dxGrid.setFormatColProperty(i, "size", 0);
+        				}
+        				if (size80.indexOf(i)> -1 ) {
+        					this.dxGrid.setFormatColProperty(i, "size", 80);
+        				}
+        				if (size100.indexOf(i)> -1 ) {
+        					this.dxGrid.setFormatColProperty(i, "size", 100);
+        				}
+        			}
+
+        		}
+
+        	}
+
+        }
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divSearch.form.cboYN_CLOSE.addEventHandler("onitemchanged",this.fnSearchInit,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+        };
+        this.loadIncludeScript("DFE_YUGADOCU.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

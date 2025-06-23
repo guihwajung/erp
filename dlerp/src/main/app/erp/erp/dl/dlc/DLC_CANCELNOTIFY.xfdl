@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1400" height="720" titletext="자동전표 코드등록" onload="form_onload">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divData" taborder="1" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="수신인정보" left="0" top="0" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+              <Static id="sta01" taborder="1" text="주소" left="0" width="100" height="30" cssclass="sta_WF_tablelabel" top="sta00:10"/>
+              <Static id="sta02" taborder="2" height="30" cssclass="sta_WF_tablebg" left="sta01:-1" top="sta00:10" right="0"/>
+              <Static id="sta03" taborder="3" text="성명" left="0" width="100" height="30" cssclass="sta_WF_tablelabel" top="sta01:-1"/>
+              <Static id="sta04" taborder="4" height="30" cssclass="sta_WF_tablebg" left="sta03:-1" top="sta02:-1" right="0"/>
+              <Static id="sta05" taborder="5" text="주민등록번호" left="0" width="100" height="30" cssclass="sta_WF_tablelabel" top="sta03:-1"/>
+              <Static id="sta06" taborder="6" height="30" cssclass="sta_WF_tablebg" left="sta05:-1" top="sta04:-1" right="0"/>
+              <Static id="sta07" taborder="7" text="재산의표시" left="0" width="100" height="30" top="sta05:-1" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta08" taborder="8" height="30" cssclass="sta_WF_tablebg" left="sta07:-1" top="sta06:-1" right="0"/>
+              <Static id="sta09" taborder="9" text="해약통보서 내용" left="0" top="160" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+              <Edit id="ctxtDS_CONTRACTOR_ADDR" taborder="10" left="sta01:5" top="sta02:-25" width="500" height="20" readonly="true"/>
+              <Edit id="ctxtDS_CONTRACTOR" taborder="11" left="sta03:5" top="sta04:-25" width="150" height="20" readonly="true"/>
+              <Edit id="ctxtNO_JUMIN" taborder="12" left="sta05:5" top="sta06:-25" width="150" height="20" readonly="true"/>
+              <Edit id="ctxtDS_ADDRESS" taborder="13" left="sta07:5" top="sta08:-25" width="300" height="20"/>
+              <Edit id="txtNO_DONG" taborder="14" left="ctxtDS_ADDRESS:10" top="sta08:-25" width="50" height="20" readonly="true"/>
+              <Static id="sta41" taborder="15" text="동" left="txtNO_DONG:5" top="sta08:-25" width="20" height="20"/>
+              <Edit id="txtNO_FLOOR" taborder="16" left="sta41:10" top="sta08:-25" width="50" height="20" readonly="true"/>
+              <Static id="sta10" taborder="17" text="층" left="txtNO_FLOOR:5" top="sta08:-25" width="20" height="20"/>
+              <Edit id="txtNO_HO" taborder="18" left="sta10:10" top="sta08:-25" width="50" height="20" readonly="true"/>
+              <Static id="sta11" taborder="19" text="호" left="txtNO_HO:5" top="sta08:-25" width="20" height="20"/>
+              <TextArea id="ctxtDS_COMMENT" taborder="20" left="5" top="sta09:10" right="5" bottom="5" wordWrap="char"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsList.set_enableevent(false);
+	this.dsList.setColumn(0, "CD_ACNTUNIT", this.getOwnerFrame().CD_ACNTUNIT);
+	this.dsList.setColumn(0, "NO_DONG", this.getOwnerFrame().NO_DONG);
+	this.dsList.setColumn(0, "NO_FLOOR", this.getOwnerFrame().NO_FLOOR);
+	this.dsList.setColumn(0, "NO_HO", this.getOwnerFrame().NO_HO);
+	this.dsList.set_enableevent(true);
+
+	if (!this.gfnIsNull(this.getOwnerFrame().CD_ACNTUNIT))
+		this.FormBtns.Select.click();
+};
+
+this.fnSetButton = function() {
+}
+
+this.fnSetExtendButton = function() {
+};
+
+this.fnSetVariable = function() {
+	this.ctxtDS_ADDRESS = this.divData.form.ctxtDS_ADDRESS;
+};
+
+this.fnSetEvent = function() {
+	
+}
+
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_ACNTUNIT", "string");
+	this.dsSelect.addColumn("TY_GUBUN", "string");
+	this.dsSelect.addColumn("NO_CHASU", "string");
+	this.dsSelect.addColumn("NO_DONG", "string");
+	this.dsSelect.addColumn("NO_FLOOR", "string");
+	this.dsSelect.addColumn("NO_HO", "string");
+
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("CD_ACNTUNIT", "string");
+	this.dsUpdate.addColumn("TY_GUBUN", "string");
+	this.dsUpdate.addColumn("NO_CHASU", "string");
+	this.dsUpdate.addColumn("DS_ADDRESS", "string");
+	this.dsUpdate.addColumn("DS_COMMENT", "string");
+	this.dsUpdate.addColumn("DS_REQUEST", "string");
+	this.dsUpdate.addColumn("ID_UPDATE", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+this.fnSelect = function() {
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_ACNTUNIT", this.dsList.getColumn(0, "CD_ACNTUNIT").substr(0, 6));
+	this.dsSelect.setColumn(0, "TY_GUBUN", this.dsList.getColumn(0, "CD_ACNTUNIT").substr(6, 1));
+	this.dsSelect.setColumn(0, "NO_CHASU", this.dsList.getColumn(0, "CD_ACNTUNIT").substr(7, 2));
+	this.dsSelect.setColumn(0, "NO_DONG", this.dsList.getColumn(0, "NO_DONG"));
+	this.dsSelect.setColumn(0, "NO_FLOOR", this.dsList.getColumn(0, "NO_FLOOR"));
+	this.dsSelect.setColumn(0, "NO_HO", this.dsList.getColumn(0, "NO_HO"));
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect"; 
+	var outData     = "dsResult=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnAdd = function() {
+	this.dsList.setColumn(0, "DS_ADDRESS", "");
+	this.dsList.setColumn(0, "DS_COMMENT", "");
+}
+
+this.fnDel = function() {
+	this.gfnConfirm("삭제 하시겠습니까?", "fnDel_callback");
+}
+
+this.fnDel_callback = function(strID, val) {
+	if (!val) return;
+	
+	this.dsList.setColumn(0, "DS_ADDRESS", "");
+	this.dsList.setColumn(0, "DS_COMMENT", "");
+}
+
+this.fnSave = function() {
+	if (!this.fnSaveValidate()) return;
+
+	this.dsUpdate.clearData();
+	
+	var nrow = this.dsUpdate.addRow();
+	this.dsUpdate.setColumn(nrow, "CD_ACNTUNIT", this.dsList.getColumn(0, "CD_ACNTUNIT").substr(0, 6));
+	this.dsUpdate.setColumn(nrow, "TY_GUBUN", this.dsList.getColumn(0, "CD_ACNTUNIT").substr(6, 1));
+	this.dsUpdate.setColumn(nrow, "NO_CHASU", this.dsList.getColumn(0, "CD_ACNTUNIT").substr(7, 2));
+	this.dsUpdate.setColumn(nrow, "YN_OPTION", "N");
+	this.dsUpdate.setColumn(nrow, "DS_ADDRESS", this.dsList.getColumn(0, "DS_ADDRESS"));
+	this.dsUpdate.setColumn(nrow, "DS_COMMENT", this.dsList.getColumn(0, "DS_COMMENT"));
+	this.dsUpdate.setColumn(nrow, "DS_REQUEST", "");
+	this.dsUpdate.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "update=dsUpdate";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnExcel = function() {
+}
+
+this.fnPrint = function() {
+
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSaveValidate = function() {
+	var strMsg = "";
+	var validate = true;
+	
+	if (this.gfnTrim(this.dsList.getColumn(0, "DS_ADDRESS")) == "") {
+		strMsg += "재산의 표시는 반드시 입력 하셔야 합니다.\n";
+		validate = false;
+	}
+	if (this.byte_length(this.gfnTrim(this.dsList.getColumn(0, "DS_ADDRESS"))) > 60) {
+		strMsg += "재산의 표시의 내용이 너무 많습니다.\n";
+		validate = false;
+	}
+	
+	if (this.gfnTrim(this.dsList.getColumn(0, "DS_COMMENT")) == "") {
+		strMsg += "해약통보서내용은 반드시 입력 하셔야 합니다.\n";
+		validate = false;
+	}
+	if (this.byte_length(this.gfnTrim(this.dsList.getColumn(0, "DS_COMMENT"))) > 2000) {
+		strMsg += "해약통보서의 내용이 너무 많습니다.\n";
+		validate = false;
+	}
+	
+	if (!validate) {
+		this.gfnAlert(strMsg);
+		return false;
+	}
+	
+	return true;
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if (svcID == "select") {
+		this.dsList.set_enableevent(false);
+		if (this.dsResult.rowcount > 0) {
+			this.dsList.setColumn(0, "DS_CONTRACTOR_ADDR", this.dsResult.getColumn(0, "주소"));
+			this.dsList.setColumn(0, "DS_CONTRACTOR", this.dsResult.getColumn(0, "성명"));
+			this.dsList.setColumn(0, "NO_JUMIN", this.dsResult.getColumn(0, "주민번호"));
+			this.dsList.setColumn(0, "DS_ADDRESS", this.dsResult.getColumn(0, "재산의표시"));
+			this.dsList.setColumn(0, "DS_COMMENT", this.dsResult.getColumn(0, "DS_COMMENT"));
+		}
+		
+		if (this.dsList.getColumn(0, "NO_JUMIN").length == 13) {
+			this.dsList.setColumn(0, "NO_JUMIN", this.dsList.getColumn(0, "NO_JUMIN").substr(0, 6) + "-" + this.dsList.getColumn(0, "NO_JUMIN").substr(6))
+		}
+		this.dsList.set_enableevent(true);
+	}
+	else if (svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		}
+		else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+ 
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	if (e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this, "U");
+	}
+};
+
+this.byte_length = function(str) {
+	var count = 0;
+	var ch = '';
+
+	for(var i = 0; i < str.length; i++) {
+		ch = str.charAt(i);
+		if(escape(ch).length == 6) {
+			count ++;
+		}
+		count ++;
+	}
+	return count;
+}
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_ACNTUNIT" type="STRING" size="256"/>
+          <Column id="DS_CONTRACTOR_ADDR" type="STRING" size="256"/>
+          <Column id="DS_CONTRACTOR" type="STRING" size="256"/>
+          <Column id="NO_JUMIN" type="STRING" size="256"/>
+          <Column id="DS_ADDRESS" type="STRING" size="256"/>
+          <Column id="NO_DONG" type="STRING" size="256"/>
+          <Column id="NO_FLOOR" type="STRING" size="256"/>
+          <Column id="NO_HO" type="STRING" size="256"/>
+          <Column id="DS_COMMENT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DLBPR_CANCEL_NOTIFY_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DLBPR_CANCEL_NOTIFY_UPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.ctxtDS_CONTRACTOR_ADDR" propid="value" datasetid="dsList" columnid="DS_CONTRACTOR_ADDR"/>
+      <BindItem id="item1" compid="divData.form.ctxtDS_CONTRACTOR" propid="value" datasetid="dsList" columnid="DS_CONTRACTOR"/>
+      <BindItem id="item2" compid="divData.form.ctxtNO_JUMIN" propid="value" datasetid="dsList" columnid="NO_JUMIN"/>
+      <BindItem id="item3" compid="divData.form.ctxtDS_ADDRESS" propid="value" datasetid="dsList" columnid="DS_ADDRESS"/>
+      <BindItem id="item4" compid="divData.form.txtNO_DONG" propid="value" datasetid="dsList" columnid="NO_DONG"/>
+      <BindItem id="item5" compid="divData.form.txtNO_FLOOR" propid="value" datasetid="dsList" columnid="NO_FLOOR"/>
+      <BindItem id="item6" compid="divData.form.txtNO_HO" propid="value" datasetid="dsList" columnid="NO_HO"/>
+      <BindItem id="item7" compid="divData.form.ctxtDS_COMMENT" propid="value" datasetid="dsList" columnid="DS_COMMENT"/>
+    </Bind>
+  </Form>
+</FDL>

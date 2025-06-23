@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="560" height="310" titletext="공지사항" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" text="div00" left="20" top="20" height="290" width="521">
+          <Layouts>
+            <Layout>
+              <!-- 공지사항 -->
+              <Static id="staNotice" taborder="8" text="공지사항" left="0" top="0" width="120" height="30" cssclass="sta_TITLE_Bg"/>
+              <!-- 제목 -->
+              <Static id="staTITLE" taborder="0" text="제목" left="0" top="staNotice:0" width="105" height="34" cssclass="sta_WF_tablelabel"/>
+              <Static id="staTITLE_bg" taborder="2" left="staTITLE:-1" top="staTITLE:-34" height="34" cssclass="sta_WF_tablebg" width="417"/>
+              <Edit id="edtTITLE" taborder="7" left="staTITLE:5" top="staTITLE:-29" width="405" height="24" readonly="true" enable="true"/>
+              <!-- 내용 -->
+              <Static id="staREG_DATE" taborder="6" left="0" top="staTITLE:-1" width="105" height="34" cssclass="sta_WF_tablelabel" text="등록일시" onclick="divData_staREG_DATE_onclick"/>
+              <Static id="staREG_DATE_bg" taborder="5" left="staREG_DATE:-1" top="staREG_DATE:-34" height="34" cssclass="sta_WF_tablebg" width="417"/>
+              <Edit id="edtREG_DATE" taborder="9" left="staREG_DATE:5" top="staREG_DATE:-29" width="405" height="24" readonly="true" enable="true"/>
+              <!-- 내용 -->
+              <Static id="staCONTENT" taborder="10" left="0" top="staREG_DATE:-1" width="105" height="150" cssclass="sta_WF_tablelabel" text="내용"/>
+              <Static id="staCONTENT_bg" taborder="11" left="staCONTENT:-1" top="staCONTENT:-150" height="150" cssclass="sta_WF_tablebg" width="417"/>
+              <TextArea id="edtCONTENT" taborder="1" left="staCONTENT:5" top="staCONTENT:-145" width="405" height="140" readonly="true" onchanged="divData_edtCONTENT_onchanged" enable="true" wordWrap="char" autoselect="true"/>
+              <!-- 버튼 -->
+              <Button id="btnFile" taborder="4" text="첨부파일" width="58" height="26" right="271" bottom="10" onclick="divData_btnFile_onclick"/>
+              <Button id="btnClose" taborder="5" text="닫기" width="58" height="26" right="201" bottom="10" onclick="divData_btnClose_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	//this.gfnFormInfo(this);
+	// ---------------------------//
+	
+	this.fnSelect();
+}
+
+this.fnSelect = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("SN_SEQ", "string");
+	var nrow = this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "SN_SEQ", this.getOwnerFrame().SN_SEQ);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+
+	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);	// 통신방법 정의 [생략가능] 
+}
+
+this.fnCallback = function(svcID, errorCode, errorMsg, strArg) {
+	if (svcID == "select") {
+		this.divData.form.edtTITLE.set_value(this.dsList.getColumn(0, "NM_TITLE"));
+		this.divData.form.edtREG_DATE.set_value(this.dsList.getColumn(0, "DT_UPDATE"));
+		this.divData.form.edtCONTENT.set_value(this.dsList.getColumn(0, "RM_CONTENT"));
+		
+		this.divData.form.edtCONTENT.scrollTo(0, 0);
+	}
+}
+
+this.divData_btnClose_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	this.close();
+}
+
+this.divData_btnFile_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	var fileManager = {};
+	
+    fileManager.CD_GUBUN = "DZ01";
+	fileManager.CD_DIR = [this.dsList.getColumn(0, "SN_SEQ")];
+	fileManager.IS_READONLY = true;
+    this.gfnFileManager(fileManager, "fnFileCallback");
+}
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DZZPR_DOTNET_GONGJI_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

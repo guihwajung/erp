@@ -1,0 +1,1309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1400" height="720" titletext="자체공사관리" onload="form_onload">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_CORP" taborder="0" text="법인코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_CORP" CodeFindName="DHX_CFCORP" CDTextWidth="50" taborder="1" left="staCD_CORP:0.0" top="10.0" width="278" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staCD_SITE" taborder="0" text="현장코드" left="ccfCD_CORP:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_SITE" CodeFindName="DHX_CFDHM_SITE1" CDTextWidth="70" taborder="2" left="staCD_SITE:0.0" top="10.0" width="350" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staYM_ACCOUNT" taborder="1" text="회계년월" left="ccfCD_SITE:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYM_ACCOUNT" taborder="6" left="staYM_ACCOUNT:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalMM.xfdl"/>
+              <Static id="staTY_GUBUN" taborder="1" text="용지구분" left="ctclYM_ACCOUNT:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfTY_GUBUN" CodeFindName="DHX_CFAREAGUBUN" CDTextWidth="40" taborder="2" left="staTY_GUBUN:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Tab id="tabData" taborder="0" tabindex="0" left="0" top="0" right="0" bottom="0" onchanged="divData_tabData_onchanged" canchange="divData_tabData_canchange">
+                <Tabpages>
+                  <Tabpage id="tab1" text="분양현황">
+                    <Layouts>
+                      <Layout>
+                        <Div id="divDataBunInfo" taborder="0" left="4" top="0" bottom="0" right="0" text="">
+                          <Layouts>
+                            <Layout>
+                              <Static id="sta00" taborder="0" text="분양금액" left="0" top="0" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+                              <Static id="sta01" taborder="3" text="세대수" left="0" width="120" height="30" cssclass="sta_WF_tablelabel" top="sta00:10"/>
+                              <Static id="sta02" taborder="4" width="170" height="30" cssclass="sta_WF_tablebg" left="sta01:-1" top="sta00:10"/>
+                              <Static id="sta03" taborder="5" text="분양율  (%)" left="sta02:-1" width="120" height="30" cssclass="sta_WF_tablelabel" top="sta00:10"/>
+                              <Static id="sta04" taborder="6" height="30" cssclass="sta_WF_tablebg" left="sta03:-1" top="sta00:10" width="170"/>
+                              <Static id="sta20" taborder="5" text="회계년월" left="sta04:-1" width="120" height="30" cssclass="sta_WF_tablelabel" top="sta00:10" visible="false"/>
+                              <Static id="sta21" taborder="6" height="30" cssclass="sta_WF_tablebg" left="sta20:-1" top="sta00:10" width="170" visible="false"/>
+                              <Static id="sta05" taborder="7" text="총분양금액" left="0" width="120" height="30" cssclass="sta_WF_tablelabel" top="sta01:-1"/>
+                              <Static id="sta06" taborder="8" height="30" cssclass="sta_WF_tablebg" left="sta05:-1" top="sta02:-1" width="170"/>
+                              <Static id="sta07" taborder="9" text="기분양금액" left="sta06:-1" width="120" height="30" cssclass="sta_WF_tablelabel" top="sta03:-1"/>
+                              <Static id="sta08" taborder="10" height="30" cssclass="sta_WF_tablebg" left="sta07:-1" top="sta04:-1" width="170"/>
+                              <Static id="sta09" taborder="11" text="미분양금액" left="sta08:-1" width="120" height="30" cssclass="sta_WF_tablelabel" top="sta04:-1"/>
+                              <Static id="sta10" taborder="12" height="30" cssclass="sta_WF_tablebg" left="sta09:-1" top="sta04:-1" width="170"/>
+                              <Static id="sta11" taborder="13" text="분양면적" left="0" top="sta05:20" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+                              <Static id="sta12" taborder="14" text="총분양면적" left="0" width="120" height="30" cssclass="sta_WF_tablelabel" top="sta11:10"/>
+                              <Static id="sta13" taborder="15" height="30" cssclass="sta_WF_tablebg" left="sta12:-1" top="sta11:10" width="170"/>
+                              <Static id="sta14" taborder="16" text="기분양면적" left="sta13:-1" width="120" height="30" cssclass="sta_WF_tablelabel" top="sta11:10"/>
+                              <Static id="sta15" taborder="17" height="30" cssclass="sta_WF_tablebg" left="sta14:-1" top="sta11:10" width="170"/>
+                              <Static id="sta16" taborder="18" text="미분양면적" left="sta15:-1" width="120" height="30" cssclass="sta_WF_tablelabel" top="sta11:10"/>
+                              <Static id="sta17" taborder="19" height="30" cssclass="sta_WF_tablebg" left="sta16:-1" top="sta11:10" width="170"/>
+                              <Static id="sta18" taborder="20" text="실행예산" left="0" top="sta12:20" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+                              <MaskEdit id="txtNO_TOTAL_SAEDAE" taborder="27" left="sta01:5" top="sta02:-25" width="160" height="20" format="#,##0"/>
+                              <MaskEdit id="txtRT_BUNYANG_RATE" taborder="34" left="sta03:5" top="sta04:-25" width="160" height="20" format="#,##0" enable="false"/>
+                              <Div id="ctclYM_ACDATE" taborder="26" left="sta20:5" top="sta04:-25" width="80" height="20" url="cmm::cmmCalMM.xfdl" enable="false" visible="false"/>
+                              <MaskEdit id="txtAM_BUILDING" taborder="28" left="sta05:5" top="sta06:-25" width="160" height="20" format="#,##0"/>
+                              <MaskEdit id="txtAM_BUNYANG_BUILDING" taborder="29" left="sta07:5" top="sta08:-25" width="160" height="20" format="#,##0"/>
+                              <MaskEdit id="txtAM_MIBUNYANG_BLDG" taborder="30" left="sta09:5" top="sta10:-25" width="160" height="20" format="#,##0" readonly="true"/>
+                              <MaskEdit id="txtSZ_TOTAL_BUILDING_AREA" taborder="31" left="sta12:5" top="sta13:-25" width="160" height="20" format="#,##0.0000"/>
+                              <MaskEdit id="txtSZ_BUNYANG_BUILDING_AREA" taborder="32" left="sta14:5" top="sta15:-25" width="160" height="20" format="#,##0.0000"/>
+                              <MaskEdit id="txtSZ_MIBUNYANG_BLDG_AREA" taborder="33" left="sta16:5" top="sta17:-25" width="160" height="20" format="#,##0.0000" readonly="true"/>
+                              <Grid id="objGridBunInfo1" taborder="2" left="0" top="sta18:1" right="0" height="0" visible="false"/>
+                              <Grid id="objGridBunInfo2" taborder="1" left="0" top="objGridBunInfo1:5" right="0" bottom="77"/>
+                              <Static id="sta47" taborder="21" text="실행예산" left="0" top="objGridBunInfo2:10" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+                              <Static id="sta48" taborder="22" text="비율(%)" left="0" width="120" height="30" cssclass="sta_WF_tablelabel" top="sta47:10"/>
+                              <Static id="sta49" taborder="23" height="30" cssclass="sta_WF_tablebg" left="sta48:-1" top="sta47:10" width="185"/>
+                              <Static id="sta50" taborder="24" text="금액" left="sta49:-1" width="120" height="30" cssclass="sta_WF_tablelabel" top="sta47:10"/>
+                              <Static id="sta51" taborder="25" height="30" cssclass="sta_WF_tablebg" left="sta50:-1" top="sta47:10" width="185"/>
+                              <MaskEdit id="txtRT_HAJA" taborder="34" left="sta48:5" top="sta49:-25" width="173" height="20" format="#,##0.00000"/>
+                              <MaskEdit id="txtAM_HAJA" taborder="35" left="sta50:5" top="sta51:-25" width="173" height="20" format="#,##0"/>
+                              <!--
+							  <Button id="btnCopy" taborder="36" text="전월자료복사" top="5" width="100" height="20" left="760" visible="false"/>
+							  -->
+                              <Button id="btnSelling" taborder="36" text="분양율조회" top="5" width="100" height="20" left="760" onclick="divData_tabData_tab1_divDataBunInfo_btnSelling_onclick" enable="false"/>
+                              <Button id="btnBunInfoDel" taborder="37" text="삭제" top="sta12:20" width="60" height="20" right="10" onclick="divData_tabData_tab1_divDataBunInfo_btnBunInfoDel_onclick"/>
+                              <Button id="btnBunInfoAdd" taborder="38" text="입력" top="sta12:20" width="60" height="20" right="btnBunInfoDel:5" onclick="divData_tabData_tab1_divDataBunInfo_btnBunInfoAdd_onclick"/>
+                              <!--
+                              <Button id="btnBunInfoDel" taborder="3" top="sta12:20" height="20" onclick="" text="삭제" right="10" width="60"/>
+                              <Button id="btnBunInfoSave" taborder="2" top="sta12:20" width="60" height="20" onclick="" right="btnBunInfoDel:5" text="저장"/>
+                              <Button id="btnBunInfoAdd" taborder="1" top="sta12:20" width="60" height="20" onclick="divData_tabData_tab1_divDataBunInfo_btnAdd_onclick" right="btnBunInfoSave:5" text="입력"/>
+							  -->
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab2" text="분양원가">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGridBunCostMng1" taborder="0" left="0" top="0" bottom="0" right="0"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab3" text="작업진행율">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGridProgCost1" taborder="0" left="0" top="0" bottom="0" right="0"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab4" text="용지및선급공사관리">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGridAreaCost1" taborder="0" left="0" top="0" bottom="0" right="0"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab5" text="미완성주택관리">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staGridProgArea1" taborder="78" text="미성(완성)주택 정보" left="4" top="0" width="50%" height="25" cssclass="sta_TITLE_Bg" textDecoration="none"/>
+                        <Grid id="objGridProgArea1" taborder="0" left="0" top="staGridProgArea1:5" right="0" bottom="127"/>
+                        <Static id="staGridProgArea2" taborder="78" text="분양율 정보" left="4" top="objGridProgArea1:5" width="50%" height="25" cssclass="sta_TITLE_Bg" textDecoration="none"/>
+                        <Grid id="objGridProgArea2" taborder="0" left="0" top="staGridProgArea2:5" right="0" height="92"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+this.postTabIndex = 0;
+// 분양현황관리,분양원가관리,작업진행율관리,용지및선급공사관리,미성(완성)주택관리
+this.aTabName = ["BunInfo", "BunCostMng", "ProgCost", "AreaCost", "ProgArea"];
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsSearch.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP); 
+	this.dsSearch.setColumn(0, "DS_CORP", this.AuthClient.DS_CORP);
+
+	this.dsSearch.setColumn(0, "YM_ACCOUNT", this.gfnGetDate().substr(0, 6));
+	this.dsSearch.setColumn(0, "TY_GUBUN", "A");
+	this.ccfTY_GUBUN.form.fnCodeFindLoad();
+
+	
+	this.btnDataCreate.set_enable(false);
+	this.btnSelling.set_enable(false);
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnCopyBunInfo = this.gfnFormButtonAdd("CopyBunInfo", "fnCopyBunInfoData");	// 전월자료복사
+	this.btnDataCreate = this.gfnFormButtonAdd("DataCreate", "fnDataCreate");		// 자료생성
+	this.btnIssueSlip = this.gfnFormButtonAdd("IssueSlip", "fnIssueSlip");
+	this.btnCancelSlip = this.gfnFormButtonAdd("CancelSlip", "fnCancelSlip");
+	this.btnViewSlip = this.gfnFormButtonAdd("ViewSlip", "fnViewSlip");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+	this.ctclYM_ACCOUNT = this.divSearch.form.ctclYM_ACCOUNT;
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ccfTY_GUBUN = this.divSearch.form.ccfTY_GUBUN;
+	
+	this.tabData = this.divData.form.tabData;
+	
+	this.btnSelling	= this.divData.form.tabData.tab1.form.divDataBunInfo.form.btnSelling;
+
+	// 그리드변수 세팅
+ 	//this.dxGridBunInfo1 	= this.divData.form.tabData.tab1.form.objGridBunInfo1;  	// 0 분양현황관리 BunInfo
+	this.dxGridBunInfo1 	= this.divData.form.tabData.tab1.form.divDataBunInfo.form.objGridBunInfo1;  	// 0 분양현황관리 BunInfo
+	this.dxGridBunInfo2 	= this.divData.form.tabData.tab1.form.divDataBunInfo.form.objGridBunInfo2;  	// 0 분양현황관리 BunInfo
+ 	this.dxGridBunCostMng1 	= this.divData.form.tabData.tab2.form.objGridBunCostMng1;	// 1 분양원가 BunCostMng
+ 	this.dxGridProgCost1 = this.divData.form.tabData.tab3.form.objGridProgCost1; 		// 2 작업진행율관리
+ 	this.dxGridAreaCost1 = this.divData.form.tabData.tab4.form.objGridAreaCost1; 		// 3 용지및선급공사관리
+ 	this.dxGridProgArea1 = this.divData.form.tabData.tab5.form.objGridProgArea1; 		// 4 미성(완성)주택관리
+ 	this.dxGridProgArea2 = this.divData.form.tabData.tab5.form.objGridProgArea2; 		// 4 미성(완성)주택관리
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	//this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHM_BUNCOSTMNG");
+
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfCD_SITE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+
+	// 그리드 세팅
+	this.fnSetGridCellProperty(0);	// 로딩시 분양현황 먼저
+}
+
+// 그리드 세팅
+this.fnSetGridCellProperty = function (nTabIdx){
+	var objJson = this.fnGetTabInfo(nTabIdx);
+	var objDS1 = objJson.objDsList1;
+	var objDS2 = objJson.objDsList2;
+	var objGrd1 = objJson.objGrid1;
+	var objGrd2 = objJson.objGrid2;
+
+	this.btnDataCreate.set_enable(false);
+	this.btnSelling.set_enable(false);
+	
+	switch(nTabIdx){
+	case 0:	// 1 분양현황
+		this.gfnGridInit(objGrd1, objDS1, "DH", "DHM_BUNINFO");
+		this.gfnGridInit(objGrd2, objDS2, "DH", "DHM_PROC_BUDGET");
+		//this.gfnGridInit(objGrd1, objDS1, "DA", "DAA_ADDRESS");
+		//this.gfnGridInit(objGrd2, objDS2, "DA", "DAA_ADDRESS_ASK");
+
+		//objGrd1.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";  // 코드파인더 연동
+		//objGrd1.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+		break;
+	case 1:	// 2 분양원가
+		this.gfnGridInit(objGrd1, objDS1, "DH", "DHM_BUNCOSTMNG");
+		break;
+	case 2:	// 3 작업진행율
+ 		this.gfnGridInit(objGrd1, objDS1, "DH", "DHM_PROGCOST");		
+// 		this.gfnGridInit(objGrd2, objDS2, "DA", "DAAPR_SCHOOL_ASK");
+// 
+// 		objGrd2.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";  // 코드파인더 연동
+// 		objGrd2.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+		break;
+	case 3:	// 4 용지및선급공사관리
+ 		this.gfnGridInit(objGrd1, objDS1, "DH", "DHM_AREACOST");		
+// 		this.gfnGridInit(objGrd2, objDS2, "DA", "DAAPR_SCHOOL_ASK");
+// 
+// 		objGrd2.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";  // 코드파인더 연동
+// 		objGrd2.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+		break;
+	case 4:	// 5 미완성주택관리
+ 		this.gfnGridInit(objGrd1, objDS1, "DH", "DHM_PROGAREA");		
+ 		this.gfnGridInit(objGrd2, objDS2, "DH", "DHM_PROGRATE");
+// 
+// 		objGrd2.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";  // 코드파인더 연동
+// 		objGrd2.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+		break;
+
+	}
+}
+
+this.fnCurrentGrid = function (){
+	var tabIdx = this.tabData.tabindex;
+	return this.fnGetTabInfo(tabIdx);
+}
+
+this.fnGetTabInfo = function (nIdx){
+	var objGrid1, objGrid2, objDsList1, objDsList2, objDsSave;
+	switch(nIdx){	
+		case 0:	// 분양현황관리	
+			objGrid1 = this.dxGridBunInfo1;
+			objGrid2 = this.dxGridBunInfo2;
+			objDsList1 = this.dsBunInfoList1;
+			objDsList2 = this.dsBunInfoList2;
+			objDsSave = this.dsBunInfoSave;
+			break;
+		case 1:	// 분양원가관리
+			objGrid1 = this.dxGridBunCostMng1;
+			objDsList1 = this.dsBunCostMngList1;
+			objDsSave = this.dsBunCostMngInsert;
+			break;
+		case 2:	// 작업진행율관리
+			objGrid1 = this.dxGridProgCost1;
+			//objGrid2 = this.dxGridProgCost2;
+			objDsList1 = this.dsProgCostList1;
+			//objDsList2 = this.dsProgCostList2;
+			objDsSave = this.dsProgCostSave;
+			break;
+		case 3:	// 용지 및 선급공사관리
+			objGrid1 = this.dxGridAreaCost1;
+			//objGrid2 = this.dxGridAreaCost2;
+			objDsList1 = this.dsAreaCostList1;
+			//objDsList2 = this.dsAreaCostList2;
+			objDsSave = this.dsAreaCostSave;
+			break;
+		case 4:	// 미성(완성)주택관리
+			objGrid1 = this.dxGridProgArea1;
+			objGrid2 = this.dxGridProgArea2;
+			objDsList1 = this.dsProgAreaList1;
+			objDsList2 = this.dsProgAreaList2;
+			objDsSave = this.dsProgAreaSave;
+			break;
+	}
+	var objJson = {};
+	objJson.objGrid1 = objGrid1;
+	objJson.objGrid2 = objGrid2;
+	objJson.objDsList1 = objDsList1;
+	objJson.objDsList2 = objDsList2;
+	objJson.objDsSave = objDsSave;		
+	return objJson;
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_DEPT_ACNT", "string");
+	this.dsSelect.addColumn("TY_GUBUN", "string");
+	this.dsSelect.addColumn("YM_ACCOUNT", "string");
+	
+	// 자료생성
+	this.dsCreate = new Dataset();
+	this.dsCreate.addColumn("CD_DEPT_ACNT", "string");
+	this.dsCreate.addColumn("TY_GUBUN", "string");
+	this.dsCreate.addColumn("YM_ACCOUNT", "string");
+	this.dsCreate.addColumn("ID_TRANS", "string");	
+
+	/*************** 분양현황관리 ***************/
+	this.dsBunInfoSave1 = new Dataset();
+	this.dsBunInfoSave1.addColumn("TY_SAVE", "string");
+	this.dsBunInfoSave1.addColumn("CD_DEPT_ACNT", "string");
+	this.dsBunInfoSave1.addColumn("TY_GUBUN", "string");
+	this.dsBunInfoSave1.addColumn("YM_ACCOUNT", "string");
+	this.dsBunInfoSave1.addColumn("AM_BUILDING", "bigdecimal");
+	this.dsBunInfoSave1.addColumn("AM_BUNYANG_BUILDING", "bigdecimal");
+	this.dsBunInfoSave1.addColumn("AM_LAND", "bigdecimal");
+	this.dsBunInfoSave1.addColumn("AM_BUNYANG_LAND", "bigdecimal");
+	this.dsBunInfoSave1.addColumn("SZ_TOTAL_LAND_AREA", "bigdecimal");
+	this.dsBunInfoSave1.addColumn("SZ_BUNYANG_LAND_AREA", "bigdecimal");
+	this.dsBunInfoSave1.addColumn("SZ_TOTAL_BUILDING_AREA", "bigdecimal");
+	this.dsBunInfoSave1.addColumn("SZ_BUNYANG_BUILDING_AREA", "bigdecimal");
+	this.dsBunInfoSave1.addColumn("RT_BUNYANG_RATE", "bigdecimal");
+	this.dsBunInfoSave1.addColumn("NO_TOTAL_SAEDAE", "bigdecimal");
+	this.dsBunInfoSave1.addColumn("ID_TRANS", "string");
+	this.dsBunInfoSave1.addColumn("AM_GONGSA_DOGUB", "bigdecimal");
+	this.dsBunInfoSave1.addColumn("RT_HAJA", "bigdecimal");
+	this.dsBunInfoSave1.addColumn("AM_HAJA", "bigdecimal");
+	
+	this.dsBunInfoSave2 = new Dataset();
+	this.dsBunInfoSave2.addColumn("TY_SAVE", "string");
+	this.dsBunInfoSave2.addColumn("CD_DEPT_ACNT", "string");
+	this.dsBunInfoSave2.addColumn("TY_GUBUN", "string");
+	this.dsBunInfoSave2.addColumn("YM_ACCOUNT", "string");
+	this.dsBunInfoSave2.addColumn("CD_CODE", "string");
+	this.dsBunInfoSave2.addColumn("DS_CODE", "string");
+	this.dsBunInfoSave2.addColumn("AM_BUDGET", "bigdecimal");
+	this.dsBunInfoSave2.addColumn("ID_SABUN", "string");	
+
+	/*************** 분양원가관리 ***************/
+	this.dsBunCostMngSave = new Dataset();
+	this.dsBunCostMngSave.addColumn("CD_DEPT_ACNT", "string");
+	this.dsBunCostMngSave.addColumn("TY_GUBUN", "string");
+	this.dsBunCostMngSave.addColumn("YM_ACCOUNT", "string");
+	this.dsBunCostMngSave.addColumn("ID_TRANS", "string");
+	
+	/*************** 작업진행율관리 ***************/
+	this.dsProgCostSave = new Dataset();
+	this.dsProgCostSave.addColumn("CD_DEPT_ACNT", "string");
+	this.dsProgCostSave.addColumn("TY_GUBUN", "string");
+	this.dsProgCostSave.addColumn("YM_ACCOUNT", "string");
+	
+	/*************** 용지 및 선급공사관리 ***************/
+	this.dsAreaCostSave = new Dataset();
+	this.dsAreaCostSave.addColumn("CD_DEPT_ACNT", "string");
+	this.dsAreaCostSave.addColumn("TY_GUBUN", "string");
+	this.dsAreaCostSave.addColumn("YM_ACCOUNT", "string");
+	this.dsAreaCostSave.addColumn("ID_TRANS", "string");
+
+	/*************** 미성(완성)주택관리 ***************/
+	this.dsProgAreaSave = new Dataset();
+	this.dsProgAreaSave.addColumn("CD_DEPT_ACNT", "string");
+	this.dsProgAreaSave.addColumn("TY_GUBUN", "string");
+	this.dsProgAreaSave.addColumn("YM_ACCOUNT", "string");
+	this.dsProgAreaSave.addColumn("ID_TRANS", "string");
+	
+	this.dsIssueSlip = new Dataset();
+	this.dsIssueSlip.addColumn("CD_CORP", "string");
+	this.dsIssueSlip.addColumn("CD_DEPT_ACNT", "string");
+	this.dsIssueSlip.addColumn("TY_GUBUN", "string");
+	this.dsIssueSlip.addColumn("YM_ACCOUNT", "string");
+	this.dsIssueSlip.addColumn("ID_TRANS", "string");
+
+	this.dsCancelSlip = new Dataset();
+	this.dsCancelSlip.addColumn("CD_CORP", "string");
+	this.dsCancelSlip.addColumn("CD_DEPT_ACNT", "string");
+	this.dsCancelSlip.addColumn("TY_GUBUN", "string");
+	this.dsCancelSlip.addColumn("YM_ACCOUNT", "string");
+	this.dsCancelSlip.addColumn("CD_TRADE", "string");
+
+	this.dsSelling = new Dataset();
+	this.dsSelling.addColumn("CD_SITE", "string");
+	this.dsSelling.addColumn("YM_WORK", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+this.fnSelect = function() {
+	var nTabIdx = this.tabData.tabindex;
+	var sTabNm = this.aTabName[nTabIdx];
+	
+	if (!this.fnSelectValidation()) return;
+
+	var objJson = this.fnCurrentGrid();	
+
+	this.gfnGridBeforeSelect(objJson.objGrid1);	
+	
+	var objDs1 = objJson.objDsList1;
+	var objDs2 = objJson.objDsList2;
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_DEPT_ACNT", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+	this.dsSelect.setColumn(0, "YM_ACCOUNT", this.dsSearch.getColumn(0, "YM_ACCOUNT"));
+
+	var strInData = "select" + sTabNm + "1=dsSelect";
+	var strOutData = objDs1.name + "=select" + sTabNm + "10";	
+	if(nTabIdx == 0 || nTabIdx == 4){
+		strInData = "select" + sTabNm + "1=dsSelect select" + sTabNm + "2=dsSelect";
+		strOutData = objDs1.name + "=select" + sTabNm + "10 " + objDs2.name + "=select" + sTabNm +"20";	
+	}	
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = strInData;
+	var outData     = strOutData;
+// 	var inData      = "select=dsSelect"; 
+// 	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnAdd = function() {
+	var nTabIdx = this.tabData.tabindex;
+	if(nTabIdx == 0){
+		if(this.dsBunInfoList1.rowcount == 0){
+			var nrow = this.gfnGridAdd(this.dxGridBunInfo1);
+			this.dsBunInfoList1.setColumn(nrow, "YM_ACCOUNT", this.dsSearch.getColumn(0, "YM_ACCOUNT"));
+		}
+	}
+}
+
+this.fnDel = function() {
+}
+
+this.fnSave = function() {
+	var nTabIdx = this.tabData.tabindex;
+	var objJson = this.fnCurrentGrid();
+	var sTabNm = this.aTabName[nTabIdx];
+	if(nTabIdx == 0){
+		this.fnBunInfoSave();
+	}
+}
+
+this.fnExcel = function() {
+	//this.gfnExcelExport(this.dxGrid);
+	var objJson = this.fnCurrentGrid();
+	this.gfnExcelExport(objJson.objGrid1);
+}
+
+this.fnPrint = function() {
+
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidation = function() {
+	var validate = true;
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_CORP"))) {
+		this.fnVaidateCallback = function() {
+			this.ccfCD_CORP.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("법인코드는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+		validate = false;
+	}
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE"))) {
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+		validate = false;
+	}
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "TY_GUBUN"))) {
+		this.fnVaidateCallback = function() {
+			this.ccfTY_GUBUN.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("용지구분은 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+		validate = false;
+	}
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "YM_ACCOUNT"))) {
+		this.fnVaidateCallback = function() {
+			this.ctclYM_ACCOUNT.form.TextBox.setFocus();
+		}
+		this.gfnAlert("회계년월은 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+		validate = false;
+	}
+	return validate;
+}
+
+this.fnSaveValidate = function() {
+	var strMsg = "";
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE"))) {
+		strMsg += "현장코드는 반드시 입력 하셔야 합니다.\n";
+	}
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "YM_ACCOUNT"))) {
+		strMsg += "회계년월은 반드시 입력 하셔야 합니다.\n";
+	}
+	
+	if (strMsg.length > 0) {
+		this.gfnAlert(strMsg);
+		return false;
+	}else{
+		return true;
+	}	
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	var objJson = this.fnCurrentGrid();	
+	if(svcID == "select") {
+		this.gfnGridAfterSelect(objJson.objGrid1);
+// 		if ( objJson.objDsList1.rowcount > 0) {
+// 			this.btnDataCreate.set_enable(false);
+// 		}else {
+			this.btnDataCreate.set_enable(true);
+			this.btnSelling.set_enable(true);
+//		}
+	}
+	else if(svcID == "save" ||  svcID == "saveBunInfo") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		}
+		else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "issueslip" || svcID == "cancelslip") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		}
+		else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "create" ||svcID == "copyBunInfo") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		}
+		else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "selling") {
+		if (errorCode == 0) {
+			trace(this.dsSellingList.saveXML());
+			
+			if(this.dsSellingList.rowcount == 0) return;
+			
+			var nrow = this.dsBunInfoList1.rowposition;
+			if(this.dsBunInfoList1.rowcount == 0){
+				nrow = this.gfnGridAdd(this.dxGridBunInfo1);
+				this.dsBunInfoList1.setColumn(nrow, "YM_ACCOUNT", this.dsSearch.getColumn(0, "YM_ACCOUNT"));
+			}
+			
+			// 세대수
+			this.dsBunInfoList1.setColumn(nrow, "NO_TOTAL_SAEDAE", this.dsSellingList.getColumn(0, "NO_SADAE_ALL"));
+			// 총분양금액
+			this.dsBunInfoList1.setColumn(nrow, "AM_BUILDING", this.dsSellingList.getColumn(0, "AM_SELLING_ALL"));
+			// 기분양금액
+			this.dsBunInfoList1.setColumn(nrow, "AM_BUNYANG_BUILDING", this.dsSellingList.getColumn(0, "AM_SELLING_CONT"));
+			// 총면적
+			this.dsBunInfoList1.setColumn(nrow, "SZ_TOTAL_BUILDING_AREA", this.dsSellingList.getColumn(0, "NO_SIZE_ALL"));
+			// 기분양면적
+			this.dsBunInfoList1.setColumn(nrow, "SZ_BUNYANG_BUILDING_AREA", this.dsSellingList.getColumn(0, "NO_SIZE_CONT"));
+
+		}
+		else {
+			this.gfnAlert(errorMsg);
+		}
+	}	
+}
+ 
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	var sCdCorp = this.dsSearch.getColumn(0, "CD_CORP");
+	switch(id) {
+		case "ccfCD_CORP":
+			dsUserParam.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+			break;
+		case "ccfCD_SITE":
+			if(this.gfnIsNull(sCdCorp)){
+				this.gfnAlert("법인코드를 선택하세요.");
+				return false;
+			}
+
+			dsUserParam.setColumn(nrow, "CD_CORP", sCdCorp);
+			break;
+	}
+	return true;
+};
+ 
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	if(id == "ccfCD_CORP") {
+		this.ccfCD_SITE.form.fnCodeFindClear();
+	}
+}
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+ /************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+this.fnIssueSlip = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+// 	var bSlipInsert = false;
+// 	for (var i = 0; i < this.dsList.rowcount; i++) {
+// 		if (nexacro.toNumber(this.dsList.getColumn(i, "AM_MONTH_COST")) != 0) {
+// 			bSlipInsert = true;
+// 			break;
+// 		}
+// 	}
+// 	
+// 	if (!bSlipInsert) {
+// 		this.gfnAlert("원가 대체 금액이 없습니다.");
+// 		return;
+// 	}
+
+	if (!this.fnSelectValidation()){
+		return false;
+	}
+	
+	this.gfnConfirm("전표를 발행하시겠습니까?", "fnIssueSlip_callback");
+}
+
+this.fnIssueSlip_callback = function(strId, val)  {
+	if (!val) return;
+	
+	this.dsIssueSlip.clearData();
+	var nrow = this.dsIssueSlip.addRow();
+	this.dsIssueSlip.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsIssueSlip.setColumn(nrow, "CD_DEPT_ACNT", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsIssueSlip.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+	this.dsIssueSlip.setColumn(nrow, "YM_ACCOUNT", this.dsSearch.getColumn(0, "YM_ACCOUNT"));
+	this.dsIssueSlip.setColumn(nrow, "ID_TRANS", this.AuthClient.ID_USER);
+
+	var strSvcId    = "issueslip";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "issueslip=dsIssueSlip";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnCancelSlip = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	//if (!this.gfnGridIsRow(this.dxGrid)) return;
+	
+	if (!this.fnSelectValidation()){
+		return false;
+	}
+
+	var objJson = this.fnCurrentGrid();
+	var objDS1 = objJson.objDsList1;
+
+	if (!this.gfnGridIsRow(objJson.objGrid1)) return;
+	var cdTrade = this.gfnTrim(objDS1.getColumn(objDS1.rowposition, "CD_TRADE"));
+	if (this.gfnIsNull(cdTrade)) {
+		this.gfnAlert("발행된 전표가 존재하지 않습니다.");
+		return;
+	}
+
+	this.gfnConfirm("전표를 취소하시겠습니까?", "fnCancelSlip_callback");
+}
+
+this.fnCancelSlip_callback = function(strId, val)  {
+	if (!val) return;
+	
+	var objJson = this.fnCurrentGrid();
+	var objDS1 = objJson.objDsList1;
+
+	if (!this.gfnGridIsRow(objJson.objGrid1)) return;
+	var cdTrade = this.gfnTrim(objDS1.getColumn(objDS1.rowposition, "CD_TRADE"));
+
+	this.dsCancelSlip.clearData();
+	var nrow = this.dsCancelSlip.addRow();
+	this.dsCancelSlip.setColumn(nrow, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsCancelSlip.setColumn(nrow, "CD_DEPT_ACNT", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsCancelSlip.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+	this.dsCancelSlip.setColumn(nrow, "YM_ACCOUNT", this.dsSearch.getColumn(0, "YM_ACCOUNT"));
+	//this.dsCancelSlip.setColumn(nrow, "ID_TRANS", this.AuthClient.ID_USER);
+	this.dsCancelSlip.setColumn(nrow, "CD_TRADE", cdTrade);
+
+	var strSvcId    = "cancelslip";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "cancelslip=dsCancelSlip";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnViewSlip = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	
+	var nTabIdx = this.tabData.tabindex;
+	if(nTabIdx == 4){	// 미완성주택관리에서만 조회
+		var objJson = this.fnCurrentGrid();
+		var objDS1 = objJson.objDsList1;
+
+		if (!this.gfnGridIsRow(objJson.objGrid1)) return;
+		var cdTrade = this.gfnTrim(objDS1.getColumn(objDS1.rowposition, "CD_TRADE"));
+
+		if (this.gfnIsNull(cdTrade)) {
+			this.gfnAlert("발행된 전표가 존재하지 않습니다.");
+			return;
+		}
+
+		var param = {};
+		param.IUD_FLAG = "S";
+		param.CD_TRADE = cdTrade;
+		param.strYN_JUNDO_START = "";
+
+		this.gfnFormOpen("DHA", "DHA_ISSUESLIP", "", param);
+	}
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	if(e.oldvalue != e.newvalue) {
+		var nTabIdx = this.tabData.tabindex;
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		//this.gfnGridClear(this.dxGrid);
+		var objJson = this.fnCurrentGrid();
+		this.gfnGridClear(objJson.objGrid1);
+		if(nTabIdx == 0 || nTabIdx == 4){
+			this.gfnGridClear(objJson.objGrid2);
+		}
+
+		if(nTabIdx == 0){
+			this.btnSelling.set_enable(false);
+		}
+		this.btnDataCreate.set_enable(false);		
+	}
+};
+
+// 분양현황 저장(tab1)
+this.fnBunInfoSave = function() {
+	if (!this.gfnGridValidate(this.dxGridBunInfo1)) return;
+	
+	this.dxGridBunInfo2.updateToDataset();
+
+	this.dsBunInfoSave1.clearData();
+	this.dsBunInfoSave2.clearData();
+		
+	for (var i = 0; i < this.dsBunInfoList1.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsBunInfoList1, i);
+		switch(flag) {
+			case "I":
+			case "U":
+			case "D":
+				var nrow = this.dsBunInfoSave1.addRow();
+				this.dsBunInfoSave1.setColumn(nrow, "TY_SAVE", flag);
+				this.dsBunInfoSave1.setColumn(nrow, "CD_DEPT_ACNT", this.dsSearch.getColumn(0, "CD_SITE"));
+				this.dsBunInfoSave1.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+				this.dsBunInfoSave1.setColumn(nrow, "YM_ACCOUNT", this.dsBunInfoList1.getColumn(i, "YM_ACCOUNT"));
+				this.dsBunInfoSave1.setColumn(nrow, "AM_BUILDING", this.dsBunInfoList1.getColumn(i, "AM_BUILDING"));
+				this.dsBunInfoSave1.setColumn(nrow, "AM_BUNYANG_BUILDING", this.dsBunInfoList1.getColumn(i, "AM_BUNYANG_BUILDING"));
+				this.dsBunInfoSave1.setColumn(nrow, "AM_LAND", this.dsBunInfoList1.getColumn(i, "AM_LAND"));
+				this.dsBunInfoSave1.setColumn(nrow, "AM_BUNYANG_LAND", this.dsBunInfoList1.getColumn(i, "AM_BUNYANG_LAND"));
+				this.dsBunInfoSave1.setColumn(nrow, "SZ_TOTAL_LAND_AREA", this.dsBunInfoList1.getColumn(i, "SZ_TOTAL_LAND_AREA"));
+				this.dsBunInfoSave1.setColumn(nrow, "SZ_BUNYANG_LAND_AREA", this.dsBunInfoList1.getColumn(i, "SZ_BUNYANG_LAND_AREA"));
+				this.dsBunInfoSave1.setColumn(nrow, "SZ_TOTAL_BUILDING_AREA", this.dsBunInfoList1.getColumn(i, "SZ_TOTAL_BUILDING_AREA"));
+				this.dsBunInfoSave1.setColumn(nrow, "SZ_BUNYANG_BUILDING_AREA", this.dsBunInfoList1.getColumn(i, "SZ_BUNYANG_BUILDING_AREA"));
+				this.dsBunInfoSave1.setColumn(nrow, "RT_BUNYANG_RATE", this.dsBunInfoList1.getColumn(i, "RT_BUNYANG_RATE"));
+				this.dsBunInfoSave1.setColumn(nrow, "NO_TOTAL_SAEDAE", this.dsBunInfoList1.getColumn(i, "NO_TOTAL_SAEDAE"));				
+				this.dsBunInfoSave1.setColumn(nrow, "RT_HAJA", this.dsBunInfoList1.getColumn(i, "RT_HAJA"));
+				this.dsBunInfoSave1.setColumn(nrow, "AM_HAJA", this.dsBunInfoList1.getColumn(i, "AM_HAJA"));
+				this.dsBunInfoSave1.setColumn(nrow, "ID_TRANS", this.AuthClient.ID_USER);
+				this.dsBunInfoSave1.setColumn(nrow, "AM_GONGSA_DOGUB", this.dsBunInfoList1.getColumn(i, "AM_GONGSA_DOGUB"));
+
+				break;
+		}
+	}
+
+	for (var i = 0; i < this.dsBunInfoList2.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsBunInfoList2, i);
+		switch(flag) {
+			case "I":
+			case "U":
+			case "D":
+				var nrow = this.dsBunInfoSave2.addRow();
+				this.dsBunInfoSave2.setColumn(nrow, "TY_SAVE", flag);
+				this.dsBunInfoSave2.setColumn(nrow, "CD_DEPT_ACNT", this.dsSearch.getColumn(0, "CD_SITE"));
+				this.dsBunInfoSave2.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+				this.dsBunInfoSave2.setColumn(nrow, "YM_ACCOUNT", this.dsSearch.getColumn(0, "YM_ACCOUNT"));
+				this.dsBunInfoSave2.setColumn(nrow, "CD_CODE", this.dsBunInfoList2.getColumn(i, "CD_CODE"));
+				this.dsBunInfoSave2.setColumn(nrow, "DS_CODE", this.dsBunInfoList2.getColumn(i, "DS_CODE"));
+				this.dsBunInfoSave2.setColumn(nrow, "AM_BUDGET", this.dsBunInfoList2.getColumn(i, "AM_BUDGET"));
+				this.dsBunInfoSave2.setColumn(nrow, "ID_SABUN", this.AuthClient.ID_USER);
+				
+				break;
+		}
+	}
+
+	if (this.dsBunInfoSave1.rowcount == 0 && this.dsBunInfoSave2.rowcount == 0) return;
+
+	var strSvcId    = "saveBunInfo";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "saveBunInfo1=dsBunInfoSave1 saveBunInfo2=dsBunInfoSave2";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+
+
+// 전월자료생성
+this.fnCopyBunInfoData = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if (!this.fnSelectValidation()){
+		return false;
+	}
+	this.gfnConfirm("전월자료 생성하시겠습니까?", "fnCopyBunInfoData_callback");
+}
+
+this.fnCopyBunInfoData_callback = function(strId, val)  {
+	if (!val) return;
+	
+	this.dsCreate.clearData();
+	var nrow = this.dsCreate.addRow();
+	this.dsCreate.setColumn(nrow, "CD_DEPT_ACNT", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsCreate.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+	this.dsCreate.setColumn(nrow, "YM_ACCOUNT", this.dsSearch.getColumn(0, "YM_ACCOUNT"));
+	this.dsCreate.setColumn(nrow, "ID_TRANS", this.AuthClient.ID_USER);
+
+	var strSvcId    = "copyBunInfo";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData 		= "selectBunInfoCopy=dsCreate";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+// 자료생성
+this.fnDataCreate = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+
+	this.gfnConfirm("기초 자료 생성하시겠습니까?", "fnDataCreate_callback");
+}
+
+this.fnDataCreate_callback = function(strId, val)  {
+	if (!val) return;
+	
+	if (!this.fnSelectValidation()){
+		return false;
+	}	
+	
+	this.dsCreate.clearData();
+	var nrow = this.dsCreate.addRow();
+	this.dsCreate.setColumn(nrow, "CD_DEPT_ACNT", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsCreate.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+	this.dsCreate.setColumn(nrow, "YM_ACCOUNT", this.dsSearch.getColumn(0, "YM_ACCOUNT"));
+	this.dsCreate.setColumn(nrow, "ID_TRANS", this.AuthClient.ID_USER);
+
+	var strSvcId    = "create";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData 		= "create=dsCreate";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.divData_tabData_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	var nTabIdx = this.divData.form.tabData.tabindex;
+	
+	// 그리드 셋팅
+	this.fnSetGridCellProperty(nTabIdx);
+	if (!this.fnSelectValidation()){
+		return false;
+	}	
+	this.FormBtns.Select.click();
+};
+
+this.dsBunInfoList1_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+if (e.oldvalue != e.newvalue) {
+		//this.gfnSetFormStatus(this, "U");
+
+		this.dsBunInfoList1.set_enableevent(false);
+		switch (e.columnid) {
+			case "RT_HAJA":
+				var amBuilding = nexacro.toNumber(this.gfnNvl(this.dsBunInfoList1.getColumn(e.row, "AM_BUILDING"), 0));
+				var rtHaja = nexacro.toNumber(this.gfnNvl(this.dsBunInfoList1.getColumn(e.row, "RT_HAJA"), 0));
+				this.dsBunInfoList1.setColumn(e.row, "AM_HAJA", nexacro.round(amBuilding * (rtHaja / 100), 0));
+				break;
+			case "AM_BUILDING":
+				var amBuilding = nexacro.toNumber(this.gfnNvl(this.dsBunInfoList1.getColumn(e.row, "AM_BUILDING"), 0));
+				var rtHaja = nexacro.toNumber(this.gfnNvl(this.dsBunInfoList1.getColumn(e.row, "RT_HAJA"), 0));
+				this.dsBunInfoList1.setColumn(e.row, "AM_HAJA", nexacro.round(amBuilding * (rtHaja / 100), 0));
+				
+				//var amBuilding = nexacro.toNumber(this.dsBunInfoList1.getColumn(e.row, "AM_BUILDING"));
+				var amBunyangBuilding = nexacro.toNumber(this.gfnNvl(this.dsBunInfoList1.getColumn(e.row, "AM_BUNYANG_BUILDING"), 0));
+				this.dsBunInfoList1.setColumn(e.row, "AM_MIBUNYANG_BLDG", amBuilding - amBunyangBuilding);
+
+				// 분양율 = (기분양금액 AM_BUNYANG_BUILDING / 총분양금액AM_BUILDING )
+				var rtBunyangRate = (amBuilding > 0) ? (( amBunyangBuilding / amBuilding ) * 100) : 0;
+				trace("분양율->" +  amBunyangBuilding + "/" + amBuilding + "* 100 " +"=" + rtBunyangRate);
+				//this.dsBunInfoList1.setColumn(e.row, "RT_BUNYANG_RATE", rtBunyangRate.toFixed(2));
+				this.dsBunInfoList1.setColumn(e.row, "RT_BUNYANG_RATE", rtBunyangRate.toFixed());
+
+				break;
+			case "AM_BUNYANG_BUILDING":
+				var amBuilding = nexacro.toNumber(this.gfnNvl(this.dsBunInfoList1.getColumn(e.row, "AM_BUILDING"), 0));
+				var amBunyangBuilding = nexacro.toNumber(this.gfnNvl(this.dsBunInfoList1.getColumn(e.row, "AM_BUNYANG_BUILDING"), 0));
+				this.dsBunInfoList1.setColumn(e.row, "AM_MIBUNYANG_BLDG", amBuilding - amBunyangBuilding);
+				
+				// 분양율 = (기분양금액 AM_BUNYANG_BUILDING / 총분양금액AM_BUILDING )
+				var rtBunyangRate = (amBuilding > 0) ? ( amBunyangBuilding / amBuilding ) : 0;
+				this.dsBunInfoList1.setColumn(e.row, "RT_BUNYANG_RATE", rtBunyangRate.toFixed(2));
+				
+				break;
+			case "SZ_TOTAL_BUILDING_AREA":
+			case "SZ_BUNYANG_BUILDING_AREA":
+				var szTotal = nexacro.toNumber(this.gfnNvl(this.dsBunInfoList1.getColumn(e.row, "SZ_TOTAL_BUILDING_AREA"), 0));
+				var szBunyang = nexacro.toNumber(this.gfnNvl(this.dsBunInfoList1.getColumn(e.row, "SZ_BUNYANG_BUILDING_AREA"), 0));
+				this.dsBunInfoList1.setColumn(e.row, "SZ_MIBUNYANG_BLDG_AREA", szTotal - szBunyang);
+				break;
+			case "SZ_TOTAL_BUILDING_AREA":
+			case "SZ_BUNYANG_BUILDING_AREA":
+				break;
+		}
+		this.dsBunInfoList1.set_enableevent(true);
+	}
+};
+
+this.divData_tabData_tab1_divDataBunInfo_btnBunInfoAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnSelectValidation()) return;
+	
+	this.gfnGridAdd(this.dxGridBunInfo2);
+	//this.btnSave.set_enable(true);
+	//this.btnDel.set_enable(true);
+	//this.btnExcel.set_enable(false);
+};
+
+this.divData_tabData_tab1_divDataBunInfo_btnBunInfoDel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnGridDel(this.dxGridBunInfo2);
+};
+
+this.divData_tabData_canchange = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	var tabIdx = this.divData.form.tabData.tabindex;
+	var objJson = this.fnGetTabInfo(e.preindex);
+	var objDS1 = objJson.objDsList1;
+	var objDS2 = objJson.objDsList2;
+	this.postTabIndex = e.postindex;
+
+	if(e.postindex != e.preindex){
+		var fRow1 = objDS1.findRowExprNF( this.ucFlag+" != '#' && !dataset.parent.gfnIsNull(" + this.ucFlag + ")");
+		if(fRow1 > -1){
+			this.gfnConfirm("변경된 데이터가 있습니다.\r\n계속 진행하시겠습니까?", "tabData_canchange_callback");
+			return false;
+		}
+		if(tabIdx == 0){
+			var fRow2 = objDS2.findRowExprNF( this.ucFlag+" != '#' && !dataset.parent.gfnIsNull(" + this.ucFlag + ")");
+			if(fRow2 > -1){
+				this.gfnConfirm("변경된 데이터가 있습니다.\r\n계속 진행하시겠습니까?", "tabData_canchange_callback");
+				return false;
+			}
+		}
+	}
+};
+
+this.tabData_canchange_callback = function(strId, val){
+	if(val == true) {
+ 		this.divData.form.tabData.set_enableevent(false);
+ 		this.divData.form.tabData.set_tabindex(this.postTabIndex);	//탭변경
+ 		this.divData.form.tabData.set_enableevent(true);
+ 
+ 		// 그리드 셋팅
+ 		this.fnSetGridCellProperty(this.postTabIndex);
+ 		this.FormBtns.Select.click();
+	}
+}
+// 분양율조회
+this.divData_tabData_tab1_divDataBunInfo_btnSelling_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	var nTabIdx = this.tabData.tabindex;
+	if(nTabIdx != 0) return;
+	if (!this.fnSaveValidate()){
+		return false;
+	}
+
+	this.dsSelling.clearData();
+	this.dsSelling.addRow();
+	
+	this.dsSelling.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelling.setColumn(0, "YM_WORK", this.dsSearch.getColumn(0, "YM_ACCOUNT"));
+
+	var strSvcId    = "selling";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData 		= "selectSelling=dsSelling";
+	var outData     = "dsSellingList=selectSelling0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+     <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <!-- 1 분양현황관리 BunInfo
+				select	DHMPR_BUNINFO_SELECT
+				insert	DHMPR_PLAN_INSERT
+				update	DHMPR_PLAN_UPDATE
+				delete	DHMPR_PLAN_DELETE
+				execute	DHMPR_SITEDATA_SELECT
+		  -->
+          <Row>
+            <Col id="TARGET">selectBunInfo1</Col>
+            <Col id="SP">DHMPR_BUNINFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">saveBunInfo1</Col>
+            <Col id="SP">DHMPR_PLAN_SAVE</Col>
+          </Row>
+          <!--
+          <Row>
+            <Col id="TARGET">insertBunInfo1</Col>
+            <Col id="SP">DHMPR_PLAN_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">updateBunInfo1</Col>
+            <Col id="SP">DHMPR_PLAN_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">deleteBunInfo1</Col>
+            <Col id="SP">DHMPR_PLAN_DELETE</Col>
+          </Row>
+		  -->
+          <Row>
+            <Col id="TARGET">selectBunInfo2</Col>
+            <Col id="SP">DHMPR_PLAN2_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">saveBunInfo2</Col>
+            <Col id="SP">DHMPR_PLAN2_SAVE</Col>
+          </Row>
+          <!--
+          <Row>
+            <Col id="TARGET">insertBunInfo2</Col>
+            <Col id="SP">DHMPR_PLAN2_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">updateBunInfo2</Col>
+            <Col id="SP">DHMPR_PLAN2_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">deleteBunInfo2</Col>
+            <Col id="SP">DHMPR_PLAN2_DELETE</Col>
+          </Row>
+
+		  -->
+          <!-- 2 분양원가관리 BunCostMng
+				select	DHMPR_BUNCOSTMNG_SELECT
+				insert	DHMPR_BUNCOSTMNG_INSERT
+		  -->
+          <Row>
+            <Col id="TARGET">selectBunCostMng1</Col>
+            <Col id="SP">DHMPR_BUNCOSTMNG_SELECT</Col>
+          </Row>
+          <!-- 3 작업진행율관리 ProgCost
+				select	DHMPR_PROGCOST_SELECT
+				insert	DHMPR_PROGCOST_INSERT
+		  -->
+          <Row>
+            <Col id="TARGET">selectProgCost1</Col>
+            <Col id="SP">DHMPR_PROGCOST_SELECT</Col>
+          </Row>
+          <!-- 4 용지 및 선급공사관리 AreaCost
+				select	DHMPR_BUNCOSTMNG_AREA_SELECT
+				insert	DHMPR_BUNCOSTMNG_AREA_INSERT
+				issueslip	DHMPR_AREACOST_AUTOSLIP_INSERT
+				cancelslip	DHMPR_AREACOST_AUTOSLIP_DELETE
+		  -->
+          <Row>
+            <Col id="TARGET">selectAreaCost1</Col>
+            <Col id="SP">DHMPR_BUNCOSTMNG_AREA_SELECT</Col>
+          </Row>
+          <!-- 5 미성(완성)주택관리 ProgArea
+				select	DHMPR_PROGAREA_SELECT
+				select1	DHMPR_PROGRATE_SELECT		  
+				insert	DHMPR_PROGAREA_INSERT
+				issueslip	DHMPR_PROGAREA_AFTER_AUTOSLIP_INSERT
+				issueslip2	DHMPR_PROGAREA_AUTOSLIP_INSERT
+				cancelslip	DHMPR_PROGAREA_AUTOSLIP_DELETE
+				
+				this.aTabName = ["BunInfo", "BunCostMng", "ProgCost", "AreaCost", "ProgArea"];
+		  -->
+          <Row>
+            <Col id="TARGET">selectProgArea1</Col>
+            <Col id="SP">DHMPR_PROGAREA_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectProgArea2</Col>
+            <Col id="SP">DHMPR_PROGRATE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">issueslip</Col>
+            <Col id="SP">DHMPR_ALL_AUTOSLIP_ISSUE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">cancelslip</Col>
+            <Col id="SP">DHMPR_ALL_AUTOSLIP_CANCEL</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">create</Col>
+            <Col id="SP">DHMPR_CREATE_ALL</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectSelling</Col>
+            <Col id="SP">DHMPR_SELLING_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectBunInfoCopy</Col>
+            <Col id="SP">DHMPR_BUNINFO_COPY</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="YM_ACCOUNT" type="STRING" size="256"/>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+          <Column id="DS_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CORP"/>
+            <Col id="DS_CORP"/>
+            <Col id="YM_ACCOUNT"/>
+            <Col id="CD_SITE"/>
+            <Col id="DS_SITE"/>
+            <Col id="TY_GUBUN"/>
+            <Col id="DS_GUBUN"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsBunInfoList1" onvaluechanged="dsBunInfoList1_onvaluechanged">
+        <ColumnInfo>
+          <Column id="YM_ACCOUNT" type="STRING" size="256"/>
+          <Column id="RT_BUNYANG_RATE" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_BUILDING" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_LAND" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_TOT" type="INT" size="256"/>
+          <Column id="AM_GONGSA_DOGUB" type="BIGDECIMAL" size="256" description=""/>
+          <Column id="AM_BUILDING" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_BUNYANG_BUILDING" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_MIBUNYANG_BLDG" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_LAND" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_BUNYANG_LAND" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_MIBUNYANG_LAND" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_TOTAL_LAND_AREA" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_BUNYANG_LAND_AREA" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_MIBUNYANG_LAND_AREA" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_TOTAL_BUILDING_AREA" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_BUNYANG_BUILDING_AREA" type="BIGDECIMAL" size="256"/>
+          <Column id="SZ_MIBUNYANG_BLDG_AREA" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_GONGSA" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_GONGSA_ADJ" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_GONGSA_TAR" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_PLAN" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_PLAN_ADJ" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_PLAN_TAR" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_LAND_SUM" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_LAND_ADJ" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_LAND_TAR" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_ETC_PROFIT" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_ETC_PROFIT_ADJ" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_ETC_PROFIT_TAR" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_ETC_CONTRCT" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_ETC_CONTRCT_ADJ" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_ETC_CONTRCT_TAR" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_ETC_COST" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_ETC_COST_ADJ" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_ETC_COST_TAR" type="BIGDECIMAL" size="256" description="삭제"/>
+          <Column id="AM_SUM" type="BIGDECIMAL" size="256"/>
+          <Column id="YM_COST" type="STRING" size="256"/>
+          <Column id="NO_TOTAL_SAEDAE" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_HAJA" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_HAJA" type="BIGDECIMAL" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsBunInfoList2"/>
+      <Dataset id="dsBunCostMngList1"/>
+      <Dataset id="dsProgCostList1"/>
+      <Dataset id="dsAreaCostList1"/>
+      <Dataset id="dsProgAreaList1"/>
+      <Dataset id="dsProgAreaList2"/>
+      <Dataset id="dsSellingList"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctclYM_ACCOUNT.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_ACCOUNT"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item2" compid="divSearch.form.ccfCD_SITE.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_SITE"/>
+      <BindItem id="item3" compid="divSearch.form.ccfTY_GUBUN.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="TY_GUBUN"/>
+      <BindItem id="item4" compid="divSearch.form.ccfTY_GUBUN.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_GUBUN"/>
+      <BindItem id="item5" compid="divData.form.tabData.tab1.form.divDataBunInfo.form.txtNO_TOTAL_SAEDAE" propid="value" datasetid="dsBunInfoList1" columnid="NO_TOTAL_SAEDAE"/>
+      <BindItem id="item6" compid="divData.form.tabData.tab1.form.divDataBunInfo.form.ctclYM_ACDATE.form.TextBox" propid="value" datasetid="dsBunInfoList1" columnid="YM_ACCOUNT"/>
+      <BindItem id="item7" compid="divData.form.tabData.tab1.form.divDataBunInfo.form.txtAM_BUILDING" propid="value" datasetid="dsBunInfoList1" columnid="AM_BUILDING"/>
+      <BindItem id="item8" compid="divData.form.tabData.tab1.form.divDataBunInfo.form.txtAM_BUNYANG_BUILDING" propid="value" datasetid="dsBunInfoList1" columnid="AM_BUNYANG_BUILDING"/>
+      <BindItem id="item9" compid="divData.form.tabData.tab1.form.divDataBunInfo.form.txtAM_MIBUNYANG_BLDG" propid="value" datasetid="dsBunInfoList1" columnid="AM_MIBUNYANG_BLDG"/>
+      <BindItem id="item10" compid="divData.form.tabData.tab1.form.divDataBunInfo.form.txtSZ_TOTAL_BUILDING_AREA" propid="value" datasetid="dsBunInfoList1" columnid="SZ_TOTAL_BUILDING_AREA"/>
+      <BindItem id="item11" compid="divData.form.tabData.tab1.form.divDataBunInfo.form.txtSZ_BUNYANG_BUILDING_AREA" propid="value" datasetid="dsBunInfoList1" columnid="SZ_BUNYANG_BUILDING_AREA"/>
+      <BindItem id="item12" compid="divData.form.tabData.tab1.form.divDataBunInfo.form.txtSZ_MIBUNYANG_BLDG_AREA" propid="value" datasetid="dsBunInfoList1" columnid="SZ_MIBUNYANG_BLDG_AREA"/>
+      <BindItem id="item31" compid="divData.form.tabData.tab1.form.divDataBunInfo.form.txtRT_HAJA" propid="value" datasetid="dsBunInfoList1" columnid="RT_HAJA"/>
+      <BindItem id="item32" compid="divData.form.tabData.tab1.form.divDataBunInfo.form.txtAM_HAJA" propid="value" datasetid="dsBunInfoList1" columnid="AM_HAJA"/>
+      <BindItem id="item33" compid="divData.form.tabData.tab1.form.divDataBunInfo.form.txtRT_BUNYANG_RATE" propid="value" datasetid="dsBunInfoList1" columnid="RT_BUNYANG_RATE"/>
+      <BindItem id="item34" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item35" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+    </Bind>
+  </Form>
+</FDL>

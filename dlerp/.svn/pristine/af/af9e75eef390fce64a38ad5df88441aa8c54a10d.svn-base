@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="판례데이터등록" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="10" top="divSearch:0" bottom="10" right="-10" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Div id="div_STD" taborder="0" left="0" top="10" height="550" right="0" text="">
+                <Layouts>
+                  <Layout>
+                    <Static id="staTitle" taborder="0" text="판례데이터 등록" left="0" top="0" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+                    <Static id="staLAWSUIT_NO" taborder="1" text="사건번호" left="0" top="27" width="90" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Static id="staBg00" taborder="2" left="staLAWSUIT_NO:-1" top="27" width="478" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staGBN" taborder="3" text="소송유형" left="566" top="27" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staBg02" taborder="4" left="655" top="staTitle:5" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staDECDATE" taborder="5" text="판결선고일" left="0" top="staLAWSUIT_NO:-1" width="90" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Static id="staBg03" taborder="6" left="staDECDATE:-1" top="56" width="195" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staLOC" taborder="7" text="지역" left="283" top="56" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staBg04" taborder="8" left="372" top="56" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staTOTAL_HOUSE" taborder="9" text="세대수" left="staBg04:-1" top="56" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staBg05" taborder="10" left="staTOTAL_HOUSE:-1" top="staBg02:-1" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staWONGO" taborder="11" text="원고" left="0" top="staDECDATE:-1" width="90" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Static id="staBg06" taborder="12" left="89" top="85" width="478" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staWONGO_DEPUTY" taborder="14" text="원고대리인" left="566" top="85" width="90" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Static id="staBg08" taborder="15" left="staWONGO_DEPUTY:-1" top="staBg05:-1" width="478" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staPIGO" taborder="16" text="피고" left="0" top="staWONGO:-1" width="90" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Static id="staBg09" taborder="17" left="89" top="114" width="478" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staJUDGE_AMT" taborder="18" text="판결금액" left="0" top="172" width="90" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Static id="staBg09_00" taborder="33" left="0" top="143" width="567" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staBg12" taborder="19" left="staJUDGE_AMT:-1" top="172" width="478" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staUSE_CONF_DATE" taborder="20" left="283" top="201" text="사용승인일" width="90" height="50" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staSAFE_AMT" taborder="34" text="안전진단금액" left="566" top="143" width="90" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Static id="staWIN_RATE" taborder="21" text="승소율" left="566" top="172" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staBg11_01" taborder="36" left="655" top="143" width="195" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staBg14" taborder="22" left="655" top="staBg11_01:-1" width="195" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Calendar id="ctclDT_FOUNDATION" taborder="23" width="185" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" left="94" top="61"/>
+                    <Edit id="edtDS_WIN_RATE" taborder="24" height="20" width="184" left="staWIN_RATE:5" top="177"/>
+                    <Div id="ccfCOURTHOUSE" taborder="25" CodeFindName="DVA_COURTHOUSE_CODEFIND" CDTextWidth="80" maxwidth="604" left="94" top="32" width="185" height="20" url="cmm::cmmCodeFind.xfdl"/>
+                    <Static id="sta02_00" taborder="26" left="staBg02:-1" top="27" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staTRANS_HOUSE" taborder="27" text="양도비율&#13;&#10;(전유면적)" left="staBg05:-1" top="56" width="90" height="30" cssclass="sta_WF_tablelabel" onclick="divData_div_STD_sta05_00_onclick"/>
+                    <Static id="staGAMJUNG_AMT" taborder="37" text="법원감정금액" left="849" top="143" width="90" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Static id="staONE_POINT_AMT" taborder="28" text="1세대당판결금" left="849" top="172" width="90" height="30" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staBg11_00_00" taborder="38" left="staGAMJUNG_AMT:-1" top="143" width="195" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staBg14_00" taborder="29" left="938" top="172" width="195" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staBg05_00" taborder="30" left="staTRANS_HOUSE:-1" top="56" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Static id="staBg02_00" taborder="31" left="sta02_00:-1" top="27" width="195" height="30" cssclass="sta_WF_tablebg"/>
+                    <Edit id="edtDS_SAFE_AMT" taborder="35" height="20" width="184" left="661" top="148"/>
+                    <Static id="staPIGO_DEPUTY" taborder="39" text="피고대리인" left="566" top="114" width="90" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Static id="staBg09_01" taborder="41" left="655" top="114" width="478" height="30" cssclass="sta_WF_tablebg" text=""/>
+                    <Edit id="edtDS_PIGO_DEPUTY" taborder="40" height="20" width="467" left="661" top="119"/>
+                    <Edit id="edtDS_ONE_POINT_AMT" taborder="42" height="20" width="184" left="944" top="177"/>
+                    <Edit id="edtDS_GAMJUNG_AMT" taborder="43" height="20" width="184" left="944" top="148"/>
+                    <Edit id="edtLAWSUIT_YEAR" taborder="48" height="20" width="87" left="284" top="32"/>
+                    <Static id="sta01_00_00" taborder="47" text="-" left="edtLAWSUIT_YEAR:4" top="36" width="10" height="10"/>
+                    <Edit id="edtLAWSUIT_CODE" taborder="44" height="20" width="67" left="sta01_00_00:1" top="32"/>
+                    <Static id="sta01_00" taborder="46" text="-" left="edtLAWSUIT_CODE:3" top="36" width="10" height="10"/>
+                    <Edit id="edtLAWSUIT_NO" taborder="45" height="20" width="94" left="sta01_00:2" top="32"/>
+                    <Static id="staBg12_00" taborder="49" left="89" top="201" width="195" height="50" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staRESP_LIMIT" taborder="50" text="책임제한" left="0" top="201" width="90" height="50" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Static id="staMETHOD" taborder="51" text="균열공법" left="566" top="201" width="90" height="50" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staFIRST_SOGA" taborder="32" text="최초소가" left="0" top="143" width="90" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Static id="staFINAL_SOGA" taborder="13" text="최종소가" left="283" top="143" width="90" height="30" cssclass="sta_WF_tablelabel" textDecoration="none"/>
+                    <Edit id="edtDS_LOC" taborder="53" height="20" width="184" left="377" top="61"/>
+                    <Edit id="edtDS_WONGO" taborder="54" height="20" width="468" left="94" top="90"/>
+                    <Edit id="edtDS_PIGO3" taborder="55" height="20" width="145" left="416" top="119"/>
+                    <Static id="sta00" taborder="56" text="/" left="406" top="118" width="21" height="23"/>
+                    <Edit id="edtDS_PIGO1" taborder="57" height="20" width="145" left="94" top="119"/>
+                    <Edit id="edtDS_PIGO2" taborder="58" height="20" width="145" left="256" top="119"/>
+                    <Static id="sta00_00" taborder="59" text="/" left="246" top="117" width="21" height="23"/>
+                    <Edit id="edtDS_FIRST_SOGA" taborder="60" height="20" width="185" left="94" top="148"/>
+                    <Edit id="edtDS_FINAL_SOGA" taborder="61" height="20" width="185" left="377" top="148"/>
+                    <Static id="staBg12_00_00" taborder="62" left="372" top="201" width="195" height="50" cssclass="sta_WF_tablebg" text=""/>
+                    <Calendar id="ctclDT_USE_CONF_DATE" taborder="52" width="133" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" left="378" top="214"/>
+                    <Edit id="edtDS_JUDGE_AMT1" taborder="63" height="20" width="145" left="94" top="177"/>
+                    <Static id="sta00_00_00" taborder="64" text="/" left="246" top="175" width="21" height="23"/>
+                    <Edit id="edtJUDGE_AMT2" taborder="65" height="20" width="145" left="256" top="177"/>
+                    <Static id="sta00_01" taborder="66" text="/" left="406" top="176" width="21" height="23"/>
+                    <Edit id="edtDS_JUDGE_AMT3" taborder="67" height="20" width="145" left="416" top="177"/>
+                    <Edit id="edtDS_RESP_LIMIT" taborder="68" height="20" width="158" left="98" top="215"/>
+                    <Static id="sta01" taborder="69" text="%" left="262" top="208" width="28" height="34"/>
+                    <Edit id="edtDS_TOTAL_HOUSE" taborder="70" height="20" width="59" left="661" top="61"/>
+                    <Edit id="edtDS_DONG" taborder="71" height="20" width="59" left="759" top="61"/>
+                    <Static id="sta03" taborder="72" text="세대" left="726" top="62" width="48" height="18" onclick="divData_div_STD_sta03_onclick"/>
+                    <Static id="staDONG" taborder="73" text="동" left="824" top="62" width="48" height="18" onclick="divData_div_STD_sta03_onclick"/>
+                    <Edit id="edtDS_TRANS_HOUSE" taborder="74" height="20" width="184" left="943" top="61"/>
+                    <Static id="staBg08_00" taborder="75" left="655" top="201" width="478" height="50" cssclass="sta_WF_tablebg" text=""/>
+                    <Edit id="edtDS_WONGO_DEPUTY" taborder="76" height="20" width="467" left="660" top="90"/>
+                    <Static id="staMETHOD1" taborder="77" text="0.3mm&#13;&#10;미만 :" left="666" top="211" width="42" height="29"/>
+                    <Static id="staMETHOD2" taborder="78" text="0.3mm&#13;&#10;이상 :" left="827" top="212" width="42" height="29"/>
+                    <Static id="staMETHOD3" taborder="79" text="층간 :" left="988" top="211" width="42" height="29" onclick="divData_div_STD_sta06_00_00_onclick"/>
+                    <Edit id="edtDS_METHOD1" taborder="80" height="20" width="80" left="staMETHOD1:2" top="214"/>
+                    <Edit id="edtDS_METHOD2" taborder="81" height="20" width="80" left="staMETHOD2:2" top="215"/>
+                    <Edit id="edtDS_METHOD3" taborder="82" height="20" width="80" left="staMETHOD3:2" top="215"/>
+                    <Static id="sta09" taborder="83" text="/" left="805" top="217" width="22" height="19"/>
+                    <Static id="sta09_00" taborder="84" text="/" left="967" top="216" width="22" height="19"/>
+                    <Static id="staKEYWORD" taborder="85" text="키워드" left="0" top="250" width="90" height="250" cssclass="sta_WF_tablelabel" textDecoration="none" onclick="divData_div_STD_sta12_00_00_onclick"/>
+                    <Static id="staBg12_00_01" taborder="86" left="89" top="250" width="195" height="250" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staPANRAE_POINT" taborder="87" left="283" top="250" text="판례요지" width="90" height="140" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staREMARK" taborder="88" left="283" top="389" text="비고" width="90" height="111" cssclass="sta_WF_tablelabel"/>
+                    <Static id="staBg12_00_00_00" taborder="89" left="372" top="250" width="761" height="140" cssclass="sta_WF_tablebg" text=""/>
+                    <Static id="staBg12_00_00_00_00" taborder="90" left="372" top="389" width="761" height="111" cssclass="sta_WF_tablebg" text=""/>
+                    <Edit id="edtDS_PANRAE_POINT" taborder="91" height="129" width="750" left="378" top="255"/>
+                    <Edit id="edtDS_REMARK" taborder="92" height="99" width="750" left="378" top="395"/>
+                    <Grid id="grd00" taborder="93" left="94" top="280" width="186" height="216"/>
+                    <Button id="btn01" taborder="94" text="추가" left="110" top="255" width="71" height="21" onclick="divData_div_STD_btn01_onclick"/>
+                    <Button id="btn02" taborder="95" text="삭제" left="196" top="255" width="71" height="21" onclick="divData_div_STD_btn02_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Combo id="cboSUEKIND" taborder="1" left="661" top="42" width="184" height="20" value="" index="-1" innerdataset="dsSUEKIND" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 ------------------- //
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// --------------------------- //
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetCombo();
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DV");
+	this.dsCombo.setColumn(0, "CD_TYPE", "SUEKIND");
+	
+
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsSUEKIND=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId , 	    // transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);   // 통신방법 정의 [생략가능]
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.dxGrid = this.divData.form.div_STD;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DV", "DVAPR_PRECEDENTS_DATA_SAVE");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSeve = new Dataset();
+	this.dsSave.setColumn(nrow, "TY_SAVE", flag);
+	this.dsSave.setColumn(nrow, "YEAR", this.dsList.getColumn(i, "YEAR"));                        // 기준년도
+	this.dsSave.setColumn(nrow, "NO", this.dsList.getColumn(i, "NO"));                            // 일련번호
+	this.dsSave.setColumn(nrow, "GBN", this.dsList.getColumn(i, "GBN"));                          // 구분
+	this.dsSave.setColumn(nrow, "KEYWORD", this.dsList.getColumn(i, "KEYWORD"));                  // 키워드
+	this.dsSave.setColumn(nrow, "DECDATE", this.dsList.getColumn(i, "DECDATE"));                  // 판결선고일
+	this.dsSave.setColumn(nrow, "COURTCODE", this.dsList.getColumn(i, "COURTCODE"));              // 법원명
+	this.dsSave.setColumn(nrow, "LAWSUIT_YEAR", this.dsList.getColumn(i, "LAWSUIT_YEAR"));        // 사건년도
+	this.dsSave.setColumn(nrow, "LAWSUIT_CODE", this.dsList.getColumn(i, "LAWSUIT_CODE"));        // 사건코드
+	this.dsSave.setColumn(nrow, "LAWSUIT_NO", this.dsList.getColumn(i, "LAWSUIT_NO"));            // 사건번호
+	this.dsSave.setColumn(nrow, "LOC", this.dsList.getColumn(i, "LOC"));                          // 지역
+	this.dsSave.setColumn(nrow, "DONG", this.dsList.getColumn(i, "DONG"));                        // 동
+	this.dsSave.setColumn(nrow, "TOTAL_HOUSE", this.dsList.getColumn(i, "TOTAL_HOUSE"));          // 총세대
+	this.dsSave.setColumn(nrow, "TRANS_HOUSE", this.dsList.getColumn(i, "TRANS_HOUSE"));          // 양도세대
+	this.dsSave.setColumn(nrow, "WONGO", this.dsList.getColumn(i, "WONGO"));                      // 원고
+	this.dsSave.setColumn(nrow, "WONGO_DEPUTY", this.dsList.getColumn(i, "WONGO_DEPUTY"));        // 원고대리인
+	this.dsSave.setColumn(nrow, "PIGO1", this.dsList.getColumn(i, "PIGO1"));                      // 피고1
+	this.dsSave.setColumn(nrow, "PIGO2", this.dsList.getColumn(i, "PIGO2"));                      // 피고2
+	this.dsSave.setColumn(nrow, "PIGO3", this.dsList.getColumn(i, "PIGO3"));                      // 피고3
+	this.dsSave.setColumn(nrow, "PIGO_DEPUTY", this.dsList.getColumn(i, "PIGO_DEPUTY"));          // 피고대리인
+	this.dsSave.setColumn(nrow, "FIRST_SOGA", this.dsList.getColumn(i, "FIRST_SOGA"));            // 최소소가
+	this.dsSave.setColumn(nrow, "FINAL_SOGA", this.dsList.getColumn(i, "FINAL_SOGA"));            // 최종소가
+	this.dsSave.setColumn(nrow, "SAFE_AMT", this.dsList.getColumn(i, "SAFE_AMT"));                // 안전진단금액
+	this.dsSave.setColumn(nrow, "GAMJUNG_AMT", this.dsList.getColumn(i, "GAMJUNG_AMT"));          // 법원감정금액
+	this.dsSave.setColumn(nrow, "JUDGE_AMT1", this.dsList.getColumn(i, "JUDGE_AMT1"));            // 판결금액1
+	this.dsSave.setColumn(nrow, "JUDGE_AMT2", this.dsList.getColumn(i, "JUDGE_AMT2"));            // 판결금액2
+	this.dsSave.setColumn(nrow, "JUDGE_AMT3", this.dsList.getColumn(i, "JUDGE_AMT3"));            // 판결금액3
+	this.dsSave.setColumn(nrow, "PANRAE_POINT", this.dsList.getColumn(i, "PANRAE_POINT"));        // 판례요지
+	this.dsSave.setColumn(nrow, "REMARK", this.dsList.getColumn(i, "REMARK"));                    // 비고
+	this.dsSave.setColumn(nrow, "WIN_RATE", this.dsList.getColumn(i, "WIN_RATE"));                // 승소율
+	this.dsSave.setColumn(nrow, "ONE_POINT_AMT", this.dsList.getColumn(i, "ONE_POINT_AMT"));      // 인당판결금액
+	this.dsSave.setColumn(nrow, "RESP_LIMIT", this.dsList.getColumn(i, "RESP_LIMIT"));            // 책임재한
+	this.dsSave.setColumn(nrow, "USE_CONF_DATE", this.dsList.getColumn(i, "USE_CONF_DATE"));      // 사용승인일
+	this.dsSave.setColumn(nrow, "METHOD1", this.dsList.getColumn(i, "METHOD1"));                  // 0.3mm미만 균열공법
+	this.dsSave.setColumn(nrow, "METHOD2", this.dsList.getColumn(i, "METHOD2"));                  // 0.3mm이상 균열공법
+	this.dsSave.setColumn(nrow, "METHOD3", this.dsList.getColumn(i, "METHOD3"));                  // 층간 균열공법
+	this.dsSave.setColumn(nrow, "WRITE_ER", this.dsList.getColumn(i, "WRITE_ER"));                // 작성자
+	this.dsSave.setColumn(nrow, "WRITE_YMD", this.dsList.getColumn(i, "WRITE_YMD"));              // 작성일
+
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "YEAR", this.dsSearch.getColumn(0, "YEAR"));
+	this.dsSelect.setColumn(0, "GBN", this.dsSearch.getColumn(0, "GBN"));
+	this.dsSelect.setColumn(0, "NO", this.dsSearch.getColumn(0, "NO"));
+	this.dsSelect.setColumn(0, "COURT", this.dsSearch.getColumn(0, "COURT"));
+	this.dsSelect.setColumn(0, "CODE", this.dsSearch.getColumn(0, "CODE"));
+	this.dsSelect.setColumn(0, "KEYWORD", this.dsSearch.getColumn(0, "KEYWORD"));
+	this.dsSelect.setColumn(0, "DECDATEFR", this.dsSearch.getColumn(0, "DECDATEFR"));
+	this.dsSelect.setColumn(0, "DECDATETO", this.dsSearch.getColumn(0, "DECDATETO"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);   // 통신방법 정의 [생략가능]
+};
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+    this.dsList.clearData();
+	this.dsList.addRow();
+	this.dsList.setColumn(0, "TY_SAVE", "I");
+	this.gfnSetFormStatus(this, "I");
+};
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+};
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+
+	if (!this.gfnGridValidate(this.dxGrid)) return;	
+
+	this.dxGrid.updateToDataset();
+
+	// save SP 한개로 사용하는 경우
+
+	this.dsSave.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.dsList.getColumn(i, "TY_SAVE");
+		switch(flag) {
+			case "I":
+			case "U":
+			case "D":
+				var nrow = this.dsSave.addRow();
+			    this.dsSave.setColumn(nrow, "TY_SAVE", flag);
+				this.dsSave.setColumn(nrow, "YEAR", this.dsList.getColumn(i, "YEAR"));                        // 기준년도
+				this.dsSave.setColumn(nrow, "NO", this.dsList.getColumn(i, "NO"));                            // 일련번호
+				this.dsSave.setColumn(nrow, "GBN", this.dsList.getColumn(i, "GBN"));                          // 구분
+				this.dsSave.setColumn(nrow, "KEYWORD", this.dsList.getColumn(i, "KEYWORD"));                  // 키워드
+				this.dsSave.setColumn(nrow, "DECDATE", this.dsList.getColumn(i, "DECDATE"));                  // 판결선고일
+				this.dsSave.setColumn(nrow, "COURTCODE", this.dsList.getColumn(i, "COURTCODE"));              // 법원명
+				this.dsSave.setColumn(nrow, "LAWSUIT_YEAR", this.dsList.getColumn(i, "LAWSUIT_YEAR"));        // 사건년도
+				this.dsSave.setColumn(nrow, "LAWSUIT_CODE", this.dsList.getColumn(i, "LAWSUIT_CODE"));        // 사건코드
+				this.dsSave.setColumn(nrow, "LAWSUIT_NO", this.dsList.getColumn(i, "LAWSUIT_NO"));            // 사건번호
+				this.dsSave.setColumn(nrow, "LOC", this.dsList.getColumn(i, "LOC"));                          // 지역
+				this.dsSave.setColumn(nrow, "DONG", this.dsList.getColumn(i, "DONG"));                        // 동
+				this.dsSave.setColumn(nrow, "TOTAL_HOUSE", this.dsList.getColumn(i, "TOTAL_HOUSE"));          // 총세대
+				this.dsSave.setColumn(nrow, "TRANS_HOUSE", this.dsList.getColumn(i, "TRANS_HOUSE"));          // 양도세대
+				this.dsSave.setColumn(nrow, "WONGO", this.dsList.getColumn(i, "WONGO"));                      // 원고
+				this.dsSave.setColumn(nrow, "WONGO_DEPUTY", this.dsList.getColumn(i, "WONGO_DEPUTY"));        // 원고대리인
+				this.dsSave.setColumn(nrow, "PIGO1", this.dsList.getColumn(i, "PIGO1"));                      // 피고1
+				this.dsSave.setColumn(nrow, "PIGO2", this.dsList.getColumn(i, "PIGO2"));                      // 피고2
+				this.dsSave.setColumn(nrow, "PIGO3", this.dsList.getColumn(i, "PIGO3"));                      // 피고3
+				this.dsSave.setColumn(nrow, "PIGO_DEPUTY", this.dsList.getColumn(i, "PIGO_DEPUTY"));          // 피고대리인
+				this.dsSave.setColumn(nrow, "FIRST_SOGA", this.dsList.getColumn(i, "FIRST_SOGA"));            // 최소소가
+				this.dsSave.setColumn(nrow, "FINAL_SOGA", this.dsList.getColumn(i, "FINAL_SOGA"));            // 최종소가
+				this.dsSave.setColumn(nrow, "SAFE_AMT", this.dsList.getColumn(i, "SAFE_AMT"));                // 안전진단금액
+				this.dsSave.setColumn(nrow, "GAMJUNG_AMT", this.dsList.getColumn(i, "GAMJUNG_AMT"));          // 법원감정금액
+				this.dsSave.setColumn(nrow, "JUDGE_AMT1", this.dsList.getColumn(i, "JUDGE_AMT1"));            // 판결금액1
+				this.dsSave.setColumn(nrow, "JUDGE_AMT2", this.dsList.getColumn(i, "JUDGE_AMT2"));            // 판결금액2
+				this.dsSave.setColumn(nrow, "JUDGE_AMT3", this.dsList.getColumn(i, "JUDGE_AMT3"));            // 판결금액3
+				this.dsSave.setColumn(nrow, "PANRAE_POINT", this.dsList.getColumn(i, "PANRAE_POINT"));        // 판례요지
+				this.dsSave.setColumn(nrow, "REMARK", this.dsList.getColumn(i, "REMARK"));                    // 비고
+				this.dsSave.setColumn(nrow, "WIN_RATE", this.dsList.getColumn(i, "WIN_RATE"));                // 승소율
+				this.dsSave.setColumn(nrow, "ONE_POINT_AMT", this.dsList.getColumn(i, "ONE_POINT_AMT"));      // 인당판결금액
+				this.dsSave.setColumn(nrow, "RESP_LIMIT", this.dsList.getColumn(i, "RESP_LIMIT"));            // 책임재한
+				this.dsSave.setColumn(nrow, "USE_CONF_DATE", this.dsList.getColumn(i, "USE_CONF_DATE"));      // 사용승인일
+				this.dsSave.setColumn(nrow, "METHOD1", this.dsList.getColumn(i, "METHOD1"));                  // 0.3mm미만 균열공법
+				this.dsSave.setColumn(nrow, "METHOD2", this.dsList.getColumn(i, "METHOD2"));                  // 0.3mm이상 균열공법
+				this.dsSave.setColumn(nrow, "METHOD3", this.dsList.getColumn(i, "METHOD3"));                  // 층간 균열공법
+				this.dsSave.setColumn(nrow, "WRITE_ER", this.dsList.getColumn(i, "WRITE_ER"));                // 작성자
+				this.dsSave.setColumn(nrow, "WRITE_YMD", this.dsList.getColumn(i, "WRITE_YMD"));              // 작성일
+				
+				break;
+		}
+	}
+	
+	if (this.dsSave.rowcount == 0) return;
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);   // 통신방법 정의 [생략가능]
+};
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+};
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	/*
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_SYSTEM"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SYSTEM.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("시스템을 입력하세요.", "fnVaidateCallback");
+	}
+	*/
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+	}
+	else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+ this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if(id = "DAX_CFDEPT"){
+		dsUserParam.setColumn(nrow, "GR_SEARCH", "");
+		dsUserParam.setColumn(nrow, "CD_DEPT", "");
+		dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+		dsUserParam.setColumn(nrow, "YN_CURRENT", "");	
+	}else if(id = "DAX_CFBASEINFO_ALL"){
+		dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+		dsUserParam.setColumn(nrow, "YN_CORP", "N");
+		dsUserParam.setColumn(nrow, "TY_RETIRE", "01");   // 재직구분	 	
+	}
+	
+	return true;
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+
+this.divData_div_STD_btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsList.addRow();
+	this.dsList.setColumn(0, "TY_SAVE", "I");
+	this.gfnSetFormStatus(this, "U");
+};
+
+this.divData_div_STD_btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsList.addRow();
+	this.dsList.setColumn(0, "TY_SAVE", "D");
+	this.gfnSetFormStatus(this, "U");
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DVAPR_PRECEDENTS_DATA_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DVAPR_PRECEDENTS_DATA_SAVE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="YEAR" type="STRING" size="256"/>
+          <Column id="GBN" type="STRING" size="256"/>
+          <Column id="NO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSUEKIND" onvaluechanged="dsList_onvaluechanged"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item21" compid="divData.form.div_STD.form.ctclDT_FOUNDATION" propid="value" datasetid="dsList" columnid="SUEDATE"/>
+      <BindItem id="item37" compid="divData.form.div_STD.form.edtDS_WIN_RATE" propid="value" datasetid="dsList" columnid="WONGO_SOGA"/>
+      <BindItem id="item1" compid="divData.form.div_STD.form.ccfCOURTHOUSE.form.CDTextBox" propid="value" datasetid="dsList" columnid="COURTCODE"/>
+      <BindItem id="item2" compid="divData.form.div_STD.form.ccfCOURTHOUSE.form.DSTextBox" propid="value" datasetid="dsList" columnid="COURTNAME"/>
+      <BindItem id="item17" compid="divData.form.div_STD.form.edtDS_GAMJUNG_AMT" propid="value" datasetid="dsList" columnid="PIGO_SOGA"/>
+      <BindItem id="item10" compid="divData.form.div_STD.form.edtLAWSUIT_CODE" propid="value" datasetid="dsList" columnid="LAWSUIT_NO"/>
+      <BindItem id="item11" compid="divData.form.div_STD.form.edtLAWSUIT_NO" propid="value" datasetid="dsList" columnid="LAWSUIT_CODE"/>
+      <BindItem id="item31" compid="divData.form.div_STD.form.edtDS_SAFE_AMT" propid="value" datasetid="dsList" columnid="JAEPAN_DEPT"/>
+      <BindItem id="item32" compid="divData.form.div_STD.form.edtDS_ONE_POINT_AMT" propid="value" datasetid="dsList" columnid="GAMJUNG_AMT"/>
+      <BindItem id="item0" compid="divData.form.div_STD.form.edtLAWSUIT_YEAR" propid="value" datasetid="dsList" columnid="LAWSUIT_YEAR"/>
+      <BindItem id="item3" compid="divData.form.div_STD.form.ctclDT_USE_CONF_DATE" propid="value" datasetid="dsList" columnid="SUEDATE"/>
+      <BindItem id="item6" compid="divData.form.cboSUEKIND" propid="value" datasetid="dsSearch" columnid="SUEKIND"/>
+      <BindItem id="item4" compid="divData.form.div_STD.form.edtDS_METHOD1" propid="value" datasetid="dsList" columnid="WONGO_SOGA"/>
+      <BindItem id="item5" compid="divData.form.div_STD.form.edtDS_METHOD2" propid="value" datasetid="dsList" columnid="WONGO_SOGA"/>
+      <BindItem id="item7" compid="divData.form.div_STD.form.edtDS_METHOD3" propid="value" datasetid="dsList" columnid="WONGO_SOGA"/>
+      <BindItem id="item8" compid="divData.form.div_STD.form.edtDS_PANRAE_POINT" propid="value" datasetid="dsList" columnid="WONGO_SOGA"/>
+      <BindItem id="item9" compid="divData.form.div_STD.form.edtDS_REMARK" propid="value" datasetid="dsList" columnid="WONGO_SOGA"/>
+    </Bind>
+  </Form>
+</FDL>

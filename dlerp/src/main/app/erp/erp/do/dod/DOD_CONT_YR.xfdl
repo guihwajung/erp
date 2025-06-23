@@ -1,0 +1,992 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1297" height="610" titletext="계약-차수계약관리" onload="form_onload" scrolltype="both" enable="true">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="78.0" right="0" cssclass="div_SEARCH_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_FIELD" taborder="0" text="현장코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtCD_FIELD" taborder="1" width="66" height="24.0" value="" left="0.0" top="staCD_FIELD:10.0" readonly="true"/>
+              <Edit id="ctxtDS_FIELD" taborder="2" width="500" height="24.0" value="" left="ctxtCD_FIELD:0.0" top="staCD_FIELD:10.0" readonly="true"/>
+              <Static id="staCD_FIELD00" taborder="3" text="사업부" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtCD_PROJ00" taborder="4" width="66" height="24.0" value="" left="0.0" top="staCD_FIELD:10.0" readonly="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" right="0" ondragmove="divData_ondragmove" cssclass="div_DATA_Bg" top="50" bottom="0">
+          <Layouts>
+            <Layout>
+              <Tab id="tabData" taborder="0" tabindex="0" left="0" top="0" bottom="0" right="0" onchanged="divData_tabData_onchanged">
+                <Tabpages>
+                  <Tabpage id="tab1" text="기본정보">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staTab1Title" taborder="0" text="계약기본정보" left="5" top="0" right="5" height="22" cssclass="sta_TITLE_Bg"/>
+                        <Static id="staCD_BIZ_STAT" taborder="1" text="계약명" left="5" width="120" height="30" textAlign="right" top="27" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="staTY_BIZ" taborder="49" text="사업유형/분야" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="56"/>
+                        <Static id="sta00" taborder="2" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="27"/>
+                        <Static id="sta01" taborder="52" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="56"/>
+                        <Static id="staNM_PROV" taborder="57" text="계약일자" width="120" height="30" textAlign="right" left="643" top="27" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta18" taborder="4" width="520" height="30" cssclass="sta_WF_tablebg" top="27" left="762"/>
+                        <Static id="staNM_ENF" taborder="58" text="계약수행방식" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="643" top="56"/>
+                        <Static id="staTY_PRDCT" taborder="6" text="착공일자" left="5" width="120" height="30" textAlign="right" top="85" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta09" taborder="7" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="85"/>
+                        <Static id="staDT_ACQ" taborder="9" text="준공일자" width="120" height="30" textAlign="right" left="643" top="85" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta10" taborder="59" width="520" height="30" cssclass="sta_WF_tablebg" top="56" left="762" text=""/>
+                        <Static id="sta12" taborder="10" width="520" height="30" cssclass="sta_WF_tablebg" top="85" left="762"/>
+                        <Static id="staDS_LAND_CLS" taborder="18" text="계약 공급가(과세)" left="5" width="120" height="30" textAlign="right" top="143" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="staDS_ACC" taborder="24" text="계약 부가세" left="5" width="120" height="30" textAlign="right" top="230" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta04" taborder="19" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="143" text=""/>
+                        <Static id="sta05" taborder="25" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="230"/>
+                        <Static id="staDS_LOCAL" taborder="21" text="당사 공급가(과세)" width="120" height="30" textAlign="right" left="643" top="143" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="staDS_CITY_PLAN" taborder="27" text="당사 부가세" width="120" height="30" textAlign="right" left="643" top="230" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="staDS_PUB_NOTICE" taborder="30" text="계약 공급가(면세)" left="5" width="120" height="30" textAlign="right" top="172" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta06" taborder="31" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="172"/>
+                        <Static id="staDS_USE_STAT" taborder="33" text="당사 공급가(면세)" width="120" height="30" textAlign="right" left="643" top="172" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta07" taborder="22" width="520" height="30" cssclass="sta_WF_tablebg" top="143" left="762"/>
+                        <Static id="sta08" taborder="28" width="520" height="30" cssclass="sta_WF_tablebg" top="230" left="762"/>
+                        <Static id="sta13" taborder="34" width="520" height="30" cssclass="sta_WF_tablebg" top="172" left="762"/>
+                        <Static id="staDS_ROAD_STAT" taborder="60" text="계약 총금액" left="5" width="120" height="30" textAlign="right" top="259" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta14" taborder="61" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="259"/>
+                        <Static id="staDS_CONT_LIMIT" taborder="62" text="당사 총금액" width="120" height="30" textAlign="right" left="643" top="259" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta15" taborder="63" width="520" height="30" cssclass="sta_WF_tablebg" top="259" left="762"/>
+                        <Static id="staTY_BIZ_MHOD00" taborder="12" text="과세율" left="5" width="120" height="30" textAlign="right" top="114" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta16" taborder="13" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="114"/>
+                        <Static id="staDS_ENF_DEPT00" taborder="15" text="당사 지분율" width="120" height="30" textAlign="right" left="643" top="114" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta17" taborder="16" width="520" height="30" cssclass="sta_WF_tablebg" top="114" left="762"/>
+                        <Static id="sta03" taborder="43" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="317"/>
+                        <Static id="staTY_PRDCT00" taborder="36" text="선수금액" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="288"/>
+                        <Static id="sta19" taborder="37" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="288"/>
+                        <Static id="staDT_ACQ00" taborder="39" text="선수금율" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="643" top="288"/>
+                        <Static id="sta21" taborder="40" width="520" height="30" cssclass="sta_WF_tablebg" top="288" left="762" text=""/>
+                        <Static id="staDS_LAND_CLS00" taborder="48" text="수금조건" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="346"/>
+                        <Static id="sta22" taborder="64" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="346"/>
+                        <Static id="staDS_LOCAL00" taborder="45" text="사용인감" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="643" top="317"/>
+                        <Static id="staDS_CITY_PLAN00" taborder="51" text="비고" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" left="643" top="346"/>
+                        <Static id="sta25" taborder="46" width="520" height="30" cssclass="sta_WF_tablebg" top="317" left="762"/>
+                        <Static id="sta26" taborder="65" width="520" height="30" cssclass="sta_WF_tablebg" top="346" left="762"/>
+                        <Static id="staTY_BIZ_MHOD01" taborder="42" text="계약보증금" left="5" width="120" height="30" cssclass="sta_WF_tablelabel" textAlign="right" top="317"/>
+                        <Edit id="ctxtNM_CHG_CONT" taborder="3" width="421" height="20" value="" left="staCD_BIZ_STAT:3" top="32"/>
+                        <Calendar id="ctclDT_ACQ" taborder="5" left="staNM_PROV:3" top="32" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+                        <Edit id="ctxtNM_CHG_CONT00" taborder="66" width="200" height="20" value="" left="staTY_BIZ:3" top="61" readonly="true"/>
+                        <Calendar id="ctclDT_ACQ00" taborder="8" left="staTY_PRDCT:3" top="90" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+                        <Calendar id="ctclDT_ACQ01" taborder="11" left="staDT_ACQ:3" top="90" width="110" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+                        <MaskEdit id="ctxtRT_ARCH" taborder="14" width="60" height="20" value="" textAlign="right" format="#,0.00" top="119" left="staTY_BIZ_MHOD00:3" autoselect="true"/>
+                        <MaskEdit id="ctxtRT_ARCH00" taborder="17" width="60" height="20" value="" textAlign="right" format="#,0.00" top="119" left="staDS_ENF_DEPT00:3" autoselect="true"/>
+                        <MaskEdit id="ctxtAM_LAND" taborder="20" width="200" height="20" value="" textAlign="right" format="#,0" top="148" left="staDS_LAND_CLS:3" autoselect="true"/>
+                        <MaskEdit id="ctxtAM_LAND00" taborder="26" width="200" height="20" value="" textAlign="right" format="#,0" top="236" left="staDS_ACC:3" autoselect="true"/>
+                        <MaskEdit id="ctxtAM_LAND01" taborder="32" width="200" height="20" value="" textAlign="right" format="#,0" top="177" left="staDS_PUB_NOTICE:3" autoselect="true"/>
+                        <MaskEdit id="ctxtAM_TOT" taborder="67" width="200" height="20" value="" textAlign="right" format="#,0" top="264" left="staDS_ROAD_STAT:3" autoselect="true" readonly="true"/>
+                        <MaskEdit id="ctxtAM_TOT_OUR" taborder="68" width="200" height="20" value="" textAlign="right" format="#,0" top="264" left="staDS_CONT_LIMIT:3" autoselect="true" readonly="true"/>
+                        <MaskEdit id="ctxtAM_LAND04" taborder="35" width="200" height="20" value="" textAlign="right" format="#,0" top="177" left="staDS_USE_STAT:3" autoselect="true"/>
+                        <MaskEdit id="ctxtAM_LAND05" taborder="29" width="200" height="20" value="" textAlign="right" format="#,0" top="236" left="staDS_CITY_PLAN:3" autoselect="true"/>
+                        <MaskEdit id="ctxtAM_LAND06" taborder="23" width="200" height="20" value="" textAlign="right" format="#,0" top="148" left="staDS_LOCAL:3" autoselect="true"/>
+                        <MaskEdit id="ctxtAM_LAND08" taborder="44" width="200" height="20" value="" textAlign="right" format="#,0" top="321" left="staTY_BIZ_MHOD01:3" autoselect="true"/>
+                        <MaskEdit id="ctxtAM_LAND09" taborder="38" width="200" height="20" value="" textAlign="right" format="#,0" top="293" left="staTY_PRDCT00:3" autoselect="true"/>
+                        <MaskEdit id="ctxtAM_LAND10" taborder="41" width="60" height="20" value="" textAlign="right" format="#,0.00" top="293" left="staDT_ACQ00:3" autoselect="true"/>
+                        <Edit id="ctxtNM_CHG_CONT01" taborder="47" width="510" height="20" value="" left="staDS_LOCAL00:3" top="322"/>
+                        <Edit id="ctxtNM_CHG_CONT03" taborder="53" width="510" height="20" value="" left="staDS_CITY_PLAN00:3" top="351"/>
+                        <Edit id="ctxtNM_CHG_CONT05" taborder="69" width="200" height="20" value="" left="staNM_ENF:3" top="61" readonly="true"/>
+                        <Edit id="ctxtNM_CHG_CONT04" taborder="70" width="30" height="20" value="" left="551" top="32" readonly="true" onclick="divData_tabData_tab1_ctxtNM_CHG_CONT04_onclick"/>
+                        <Edit id="ctxtNM_CHG_CONT06" taborder="71" width="30" height="20" left="596" top="32" readonly="true" text="99"/>
+                        <Edit id="ctxtNM_CHG_CONT07" taborder="50" width="510" height="20" value="" left="staDS_LAND_CLS00:3" top="351"/>
+                        <Static id="sta02" taborder="72" text="차" left="581" top="33" width="16" height="18"/>
+                        <Static id="sta02_00" taborder="73" text="회" left="628" top="33" width="16" height="18"/>
+                        <Static id="staID_FILE_ATTCH" taborder="54" text="첨부파일" left="5" width="120" height="149" cssclass="sta_WF_tablelabel" textAlign="right" top="374"/>
+                        <Static id="sta27_00" taborder="56" width="1158" height="149" cssclass="sta_WF_tablebg" left="124" top="374"/>
+                        <Div id="divFile" taborder="55" left="118" top="371" url="cmm::cmmFileManager.xfdl" text="" width="1145" height="150"/>
+                        <CheckBox id="chkYN_TAX_NA" taborder="74" left="219" top="117" width="74" height="25" truevalue="Y" falsevalue="N" text="영세" enable="false" readonly="true" value="N"/>
+                        <Static id="staPercent10_00_00" taborder="75" text="(세금계산서)" width="78" height="20" top="148" left="339" color="#2c4bfb"/>
+                        <Static id="staPercent10_00_00_00" taborder="76" text="(계산서)" width="78" height="20" top="177" left="339" color="#2c4bfb"/>
+                        <Static id="staPercent10_00_00_01" taborder="77" text="(세금계산서)" width="78" height="20" top="148" left="977" color="#2c4bfb"/>
+                        <Static id="staPercent10_00_00_00_00" taborder="78" text="(계산서)" width="78" height="20" top="177" left="977" color="#2c4bfb"/>
+                        <CheckBox id="cchkYN_MAIN" taborder="79" text="Main여부" top="59" width="74" height="25" onchanged="divSearch_cchkYN_Pre_onchanged" truevalue="Y" falsevalue="N" value="Y" readonly="false" enable="false" left="1031"/>
+                        <Static id="staAM_SUPTXF" taborder="80" text="계약 공급가(소계)" width="120" height="30" textAlign="right" left="5" top="201" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta34" taborder="81" width="520" height="30" cssclass="sta_WF_tablebg" left="124" top="201"/>
+                        <Static id="staAM_SUPTXF_OUR" taborder="82" text="당사 공급가(소계)" width="120" height="30" textAlign="right" left="643" top="201" cssclass="sta_WF_tablelabelE"/>
+                        <Static id="sta35" taborder="83" width="520" height="30" cssclass="sta_WF_tablebg" left="762" top="201" text=""/>
+                        <MaskEdit id="ctxtAM_SUPTXF" taborder="84" width="200" height="20" value="" textAlign="right" format="#,0" top="206" left="128" autoselect="true" readonly="true"/>
+                        <MaskEdit id="ctxtAM_SUPTXF_OUR" taborder="85" width="200" height="20" value="" textAlign="right" format="#,0" top="206" left="766" autoselect="true" readonly="true"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab2" text="계약내역">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrdtab2" taborder="1" left="5" top="5" right="5" bottom="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab3" text="공동도급사">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrdtab3" taborder="0" left="5" top="30" right="5" bottom="5"/>
+                        <Button id="btnReg" taborder="1" text="등록" height="24" onclick="divData_tabData_btnReg_onclick" right="5" width="60" top="3"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab4" text="관계사">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrdtab4" taborder="0" left="5" top="30" right="5" bottom="5"/>
+                        <Button id="btnReg" taborder="1" text="등록" height="24" onclick="divData_tabData_btnReg_onclick" right="5" width="60" top="3"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo){
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	this.fnSetExtendButton();
+	
+	this.fnSetVariable();
+	this.fnSetParameter();
+	this.fnSetEvent();
+	
+	if(this.getOwnerFrame().TYPE == "Y"){
+		//생성
+		this.dsInitSearch.setColumn(0, "CD_FIELD", this.getOwnerFrame().CD_FIELD);
+		this.dsInitSearch.setColumn(0, "NO_CONT", this.getOwnerFrame().NO_CONT);
+		this.dsInitSearch.setColumn(0, "TYPE", this.getOwnerFrame().TYPE);
+		this.fnInitSelect();
+		this.fnAdd();
+		this.gfnSetFormStatus(this, "I");
+	} else {
+		//편집
+		this.dsInitSearch.setColumn(0, "CD_FIELD", this.getOwnerFrame().CD_FIELD);
+		this.dsInitSearch.setColumn(0, "NO_CONT", this.getOwnerFrame().NO_CONT);
+		this.dsInitSearch.setColumn(0, "NO_CHG_CONT", this.getOwnerFrame().NO_CHG_CONT);
+		
+		this.fnInitSelect();
+		this.FormBtns.Select.click();
+	}
+	this.TY_PROJ = this.dsInitBase.getColumn(0,"TY_PROJ");
+	this.fnSetButton();
+	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Select.set_enable(false);
+	this.FormBtns.Add.set_enable(false);
+	this.FormBtns.Save.set_enable(false);
+	this.FormBtns.Del.set_enable(false);
+	//this.FormBtns.Excel.set_enable(false);
+	//this.FormBtns.Print.set_enable(false);
+	
+	if(this.FormInfo.TY_AUTH == "R") {
+		this.FormBtns.Select.set_enable(true);
+		return;
+	}
+	
+	var frmStatus = this.gfnGetFormStatus(this);
+	switch(frmStatus) {
+	case "I":
+		this.FormBtns.Select.set_enable(false);
+		this.FormBtns.Save.set_enable(true);
+		this.FormBtns.Del.set_enable(false);
+		/*Tab제어*/
+		this.divData.form.tabData.tab3.set_enable(false);
+		this.divData.form.tabData.tab4.set_enable(false);	
+		break;
+	case "U":
+		this.FormBtns.Select.set_enable(true);
+		this.FormBtns.Save.set_enable(true);
+		this.FormBtns.Del.set_enable(true);
+		break;
+	case "D":
+		break;
+	default: /*기본(조회완료)*/
+		this.FormBtns.Select.set_enable(true);
+		this.FormBtns.Save.set_enable(false);
+		this.FormBtns.Del.set_enable(true);
+		/*Tab제어*/
+		this.divData.form.tabData.tab3.set_enable(true);
+		this.divData.form.tabData.tab4.set_enable(true);	
+	}
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.TY_PROJ = "";
+	
+	this.serverTime = "";
+	this.gfnGetServerTime("serverTime");
+	
+	this.serverTimeStr = this.gfnGetDigit(this.serverTime.substring(0, 10));
+	
+	//계약내역
+	this.dxGrid1 = this.divData.form.tabData.tab2.form.objGrdtab2;
+	//공동도급사
+	this.dxGrid2 = this.divData.form.tabData.tab3.form.objGrdtab3;
+	//관계사
+	this.dxGrid3 = this.divData.form.tabData.tab4.form.objGrdtab4;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid1, this.dsList1, "DO", "DOD_CONT_YR_LIST","NM_CHG_CONT","NO_LVL");
+	this.gfnGridInit(this.dxGrid2, this.dsList2, "DO", "DOD_ARCH_CONT_CO_CONTRCT");
+	this.gfnGridInit(this.dxGrid3, this.dsList3, "DO", "DOD_ARCH_CONT_CONCERN");
+	
+	var colNM_CHG_CONT = this.dxGrid1.getBindCellIndex("body", "NM_CHG_CONT");
+	var colDS_TY_CONT = this.dxGrid1.getBindCellIndex("body", "DS_TY_CONT");
+	var colNO_ORD = this.dxGrid1.getBindCellIndex("body", "NO_ORD");
+	var colNO_CONT = this.dxGrid1.getBindCellIndex("body", "NO_CONT");
+	var colNO_CHG_CONT = this.dxGrid1.getBindCellIndex("body", "NO_CHG_CONT");
+	var colYN_MAIN = this.dxGrid1.getBindCellIndex("body", "YN_MAIN");
+	var colDS_CD_BONBU = this.dxGrid1.getBindCellIndex("body", "DS_CD_BONBU");
+	var colDS_CD_LOC = this.dxGrid1.getBindCellIndex("body", "DS_CD_LOC");
+	var colRT_OUR = this.dxGrid1.getBindCellIndex("body", "RT_OUR");
+	var colRT_TAX = this.dxGrid1.getBindCellIndex("body", "RT_TAX");
+	var colDT_CONT = this.dxGrid1.getBindCellIndex("body", "DT_CONT");
+	var colDT_CONST_SD = this.dxGrid1.getBindCellIndex("body", "DT_CONST_SD");
+	var colDT_CONST_ED = this.dxGrid1.getBindCellIndex("body", "DT_CONST_ED");
+	var colAM_SUP = this.dxGrid1.getBindCellIndex("body", "AM_SUP");
+	var colAM_VAT = this.dxGrid1.getBindCellIndex("body", "AM_VAT");
+	var colAM_TXF = this.dxGrid1.getBindCellIndex("body", "AM_TXF");
+	var colAM_TOT = this.dxGrid1.getBindCellIndex("body", "AM_TOT");
+	var colAM_CHG = this.dxGrid1.getBindCellIndex("body", "AM_CHG");
+	var colAM_SUP_OUR = this.dxGrid1.getBindCellIndex("body", "AM_SUP_OUR");
+	var colAM_VAT_OUR = this.dxGrid1.getBindCellIndex("body", "AM_VAT_OUR");
+	var colAM_TXF_OUR = this.dxGrid1.getBindCellIndex("body", "AM_TXF_OUR");
+	var colAM_TOT_OUR = this.dxGrid1.getBindCellIndex("body", "AM_TOT_OUR");
+	var colAM_CHG_OUR = this.dxGrid1.getBindCellIndex("body", "AM_CHG_OUR");
+	
+	
+	this.dxGrid1.setCellProperty("body", colNM_CHG_CONT, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colDS_TY_CONT, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colNO_ORD, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colNO_CONT, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colNO_CHG_CONT, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colYN_MAIN, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colDS_CD_BONBU, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colDS_CD_LOC, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colRT_OUR, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colRT_TAX, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colDT_CONT, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colDT_CONST_SD, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colDT_CONST_ED, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colAM_SUP, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colAM_VAT, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colAM_TXF, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colAM_TOT, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colAM_CHG, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colAM_SUP_OUR, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	
+	this.dxGrid1.setCellProperty("body", colAM_VAT_OUR, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colAM_TXF_OUR, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colAM_TOT_OUR, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	this.dxGrid1.setCellProperty("body", colAM_CHG_OUR, "cssclass", "expr: TY_CONT == 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : TY_CONT == 'SA07502' && NO_LVL == '1' ? 'BACK_SoKe' : TY_CONT != 'SA07502' && NO_LVL == '0' ? 'BACK_GangJo' : ''");
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_FIELD", "string");
+	this.dsSelect.addColumn("NO_CONT", "string");
+	this.dsSelect.addColumn("NO_CHG_CONT", "string");
+};
+
+this.fnInitSelect = function(){
+	var strSvcId    = "selectBase";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "selectBase=dsInitSearch";
+	var outData     = "dsInitBase=selectBase0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+};
+
+/************************************************************************
+ * 트렌젝션 버튼 이벤트
+ ************************************************************************/
+this.fnSelect = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	var tIdx = this.divData.form.tabData.tabindex;
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_FIELD", this.dsInitSearch.getColumn(0, "CD_FIELD"));
+	this.dsSelect.setColumn(0, "NO_CONT", this.dsInitSearch.getColumn(0, "NO_CONT"));
+	this.dsSelect.setColumn(0, "NO_CHG_CONT", this.dsInitSearch.getColumn(0, "NO_CHG_CONT"));
+	
+	var strSvcId    = "select"+tIdx;
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "";
+	var outData     = "";
+	if(tIdx == 0){
+		inData      = "select0=dsSelect";
+		outData     = "dsBase=select00";
+	} else if(tIdx == 1){
+		this.dsSearchOfTab2.setColumn(0, "CD_FIELD", this.dsInitSearch.getColumn(0, "CD_FIELD"));
+		
+		inData      = "select1=dsSearchOfTab2";
+		outData     = "dsList1=select10";
+	} else if(tIdx == 2){
+		inData      = "select2=dsSelect";
+		outData     = "dsList2=select20";
+	} else if(tIdx == 3){
+		inData      = "select3=dsSelect";
+		outData     = "dsList3=select30";
+	}   
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.fnSave = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	if(!this.fnSaveValidate()) return;
+	
+	this.dsBase.setColumn(0, "ID_ADD", this.objApp.gdsUserInfo.getColumn(0, "ID_USER"));
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsBase";
+	var outData     = "dsBaseRst=save";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,false); // 통신방법 정의 [생략가능]
+};
+
+this.fnAdd = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	var nRow = this.dsBase.addRow();
+	 
+	this.dsBase.set_enableevent(false);
+	this.dsBase.setColumn(nRow, "CD_FIELD", this.getOwnerFrame().CD_FIELD);
+	this.dsBase.setColumn(nRow, "NO_CONT", this.dsInitBase.getColumn(0,"NO_CONT"));
+	this.dsBase.setColumn(nRow, "NO_CHG_CONT", this.dsInitBase.getColumn(0,"NO_CHG_CONT"));
+	
+	this.dsBase.setColumn(nRow, "TYPE", this.getOwnerFrame().TYPE);
+	this.dsBase.setColumn(nRow, "DT_CONT", this.serverTimeStr);
+	this.dsBase.setColumn(nRow, "NM_BIZ", this.dsInitBase.getColumn(0,"NM_BIZ"));
+	this.dsBase.setColumn(nRow, "NM_TY_CONT", this.dsInitBase.getColumn(0,"NM_TY_CONT"));
+	this.dsBase.setColumn(nRow, "YN_MAIN", this.dsInitBase.getColumn(0,"YN_MAIN"));
+	
+	this.dsBase.setColumn(nRow, "DT_CONST_ST", this.dsInitBase.getColumn(0,"DT_CONST_ST"));
+	this.dsBase.setColumn(nRow, "DT_CONST_ED", this.dsInitBase.getColumn(0,"DT_CONST_ED"));
+	this.dsBase.setColumn(nRow, "RT_TAX", this.dsInitBase.getColumn(0,"RT_TAX"));
+	this.dsBase.setColumn(nRow, "RT_OUR", this.dsInitBase.getColumn(0,"RT_OUR"));
+	this.dsBase.setColumn(nRow, "RT_ADV", this.dsInitBase.getColumn(0,"RT_ADV"));
+	this.dsBase.setColumn(nRow, "NO_REG_SEAL", this.dsInitBase.getColumn(0,"NO_REG_SEAL"));
+	this.dsBase.setColumn(nRow, "DS_CND_COLT", this.dsInitBase.getColumn(0,"DS_CND_COLT"));
+	
+	this.dsBase.setColumn(nRow, "AM_SUP", 0);
+	this.dsBase.setColumn(nRow, "AM_VAT", 0);
+	this.dsBase.setColumn(nRow, "AM_TXF", 0);
+	this.dsBase.setColumn(nRow, "AM_SUP_OUR", 0);
+	this.dsBase.setColumn(nRow, "AM_VAT_OUR", 0);
+	this.dsBase.setColumn(nRow, "AM_TXF_OUR", 0);
+	this.dsBase.setColumn(nRow, "YN_TAX_NA", this.dsInitBase.getColumn(0,"YN_TAX_NA"));
+	
+	this.dsBase.set_enableevent(true);
+};
+
+this.fnDel = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	this.gfnConfirm("삭제 하시겠습니까?", function(strId, val){
+		if(val == true) {
+			var strSvcId    = "delete";
+			var strSvcType  = "save";
+			var inProc		= "_dsProc";
+			var inData      = "delete=dsBase";
+			var outData     = "";
+			var strArg      = "";
+			var callBackFnc = "fnCallback";
+			
+			this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+								strSvcType , 	// transaction을 요청할 구분
+								inProc,			// Procedure 정보 Dataset 이름
+								inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+								outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+								strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+								callBackFnc,false); // 통신방법 정의 [생략가능]
+		}	
+	});
+};
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg){
+	if (errorCode == 0) {
+		if(svcID == "selectBase"){
+			
+			if(this.dsInitBase.getColumn(0, "YN_TAX_NA") == "Y"){
+				this.divData.form.tabData.tab1.form.ctxtRT_ARCH.set_readonly(true);
+				this.divData.form.tabData.tab1.form.ctxtAM_LAND00.set_readonly(true);
+				this.divData.form.tabData.tab1.form.ctxtAM_LAND05.set_readonly(true);
+			} else {
+				this.divData.form.tabData.tab1.form.ctxtRT_ARCH.set_readonly(false);
+				this.divData.form.tabData.tab1.form.ctxtAM_LAND00.set_readonly(false);
+				this.divData.form.tabData.tab1.form.ctxtAM_LAND05.set_readonly(false);
+			}
+		} else if(svcID == "select0"){
+			if(this.dsBase.getRowCount() == 0){
+				this.fnAdd();
+			} else {
+				var _sup, _vat, _txf
+				  , _supOur, _vatOur, _txfOur= 0;
+				_sup = nexacro.toNumber(this.dsBase.getColumn(0, "AM_SUP"), 0);
+				_vat = nexacro.toNumber(this.dsBase.getColumn(0, "AM_VAT"), 0);
+				_txf = nexacro.toNumber(this.dsBase.getColumn(0, "AM_TXF"), 0);
+
+				this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF.set_value(_sup+_txf);
+				this.divData.form.tabData.tab1.form.ctxtAM_TOT.set_value(_sup+_vat+_txf);
+				
+				_supOur = nexacro.toNumber(this.dsBase.getColumn(0, "AM_SUP_OUR"), 0);
+				_vatOur = nexacro.toNumber(this.dsBase.getColumn(0, "AM_VAT_OUR"), 0);
+				_txfOur = nexacro.toNumber(this.dsBase.getColumn(0, "AM_TXF_OUR"), 0);
+				
+				this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF_OUR.set_value(_supOur+_txfOur);
+				this.divData.form.tabData.tab1.form.ctxtAM_TOT_OUR.set_value(_supOur+_vatOur+_txfOur);
+				
+			
+				this.divData.form.tabData.tab1.form.divFile.form.set_enable(true);
+				// 첨부파일
+				//var cd_site = this.ccfCD_SITE.form.CDTextBox.value;
+				var fileManager = {};
+				fileManager.CD_GUBUN = "DOF1";
+				fileManager.CD_DIR = [ this.dsBase.getColumn(0, "CD_FIELD"), this.dsBase.getColumn(0, "NO_CONT"),this.dsBase.getColumn(0, "NO_CHG_CONT")];
+
+				fileManager.CD_REF1 = this.dsBase.getColumn(0, "CD_FIELD");
+				fileManager.CD_REF2 = this.dsBase.getColumn(0, "NO_CONT");
+				fileManager.CD_REF3 = this.dsBase.getColumn(0, "NO_CHG_CONT");
+				if(this.FormInfo.TY_AUTH == "R") {
+					fileManager.IS_READONLY = true;
+				} else {
+					fileManager.IS_READONLY = false;
+				}
+				// div FileManager 셋팅
+				this.divData.form.tabData.tab1.form.divFile.form.setFileManager(fileManager);
+			}
+			
+			if(this.dsBase.getColumn(0, "YN_TAX_NA") == "Y"){
+				this.divData.form.tabData.tab1.form.ctxtRT_ARCH.set_readonly(true);
+				this.divData.form.tabData.tab1.form.ctxtAM_LAND00.set_readonly(true);
+				this.divData.form.tabData.tab1.form.ctxtAM_LAND05.set_readonly(true);
+			} else {
+				this.divData.form.tabData.tab1.form.ctxtRT_ARCH.set_readonly(false);
+				this.divData.form.tabData.tab1.form.ctxtAM_LAND00.set_readonly(false);
+				this.divData.form.tabData.tab1.form.ctxtAM_LAND05.set_readonly(false);
+			}
+				
+			this.gfnSetFormStatus(this, "");
+			this.fnSetButton();
+		} else if(svcID == "save"){
+			this.dsInitSearch.setColumn(0, "CD_FIELD", this.dsBaseRst.getColumn(0, "OUT_CD_FIELD"));
+			this.dsInitSearch.setColumn(0, "NO_CONT", this.dsBaseRst.getColumn(0, "OUT_NO_CONT"));
+			this.dsInitSearch.setColumn(0, "NO_CHG_CONT", this.dsBaseRst.getColumn(0, "OUT_NO_CHG_CONT"));
+			this.FormBtns.Select.click();
+		} else if(svcID == "select1"){
+			this.gfnGridAfterSelect(this.dxGrid1);
+			this._gfnGridTreeOpen(this.dxGrid1, 2);
+		} else if(svcID == "delete"){
+			this.getParentContext().close();
+		}
+	} else {
+		this.gfnAlert(errorMsg);
+	}
+	
+};
+
+this.dsBase_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo){
+	var _sup = 0, _vat = 0, _txf = 0, _rtour = 0;
+	
+	if(e.oldvalue != e.newvalue) {
+		if(e.columnid == "AM_SUP"){
+			_sup = obj.getColumn(0, "AM_SUP");
+			if(this.dsBase.getColumn(0, "YN_TAX_NA") != "Y"){
+				_vat = nexacro.round(_sup * 0.1);
+			}
+			_txf = obj.getColumn(0, "AM_TXF");
+			
+			this.dsBase.set_enableevent(false);
+			obj.setColumn(0, "AM_VAT", _vat);
+			this.dsBase.set_enableevent(true);
+			
+			this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF.set_value(_sup+_txf);
+			this.divData.form.tabData.tab1.form.ctxtAM_TOT.set_value(_sup+_vat+_txf);
+			
+			//당사지분율
+			_rtour = obj.getColumn(0, "RT_OUR");
+			
+			_sup = nexacro.round(obj.getColumn(0, "AM_SUP") * (_rtour / 100));
+			_vat = nexacro.round(obj.getColumn(0, "AM_VAT") * (_rtour / 100));
+			_txf = obj.getColumn(0, "AM_TXF_OUR");
+			
+			this.dsBase.set_enableevent(false);
+			obj.setColumn(0, "AM_SUP_OUR",_sup);
+			obj.setColumn(0, "AM_VAT_OUR",_vat);
+			obj.setColumn(0, "AM_TXF_OUR",_txf);
+			this.dsBase.set_enableevent(true);
+
+			this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF_OUR.set_value(_sup+_txf);
+			this.divData.form.tabData.tab1.form.ctxtAM_TOT_OUR.set_value(_sup+_vat+_txf);
+		} else if(e.columnid == "AM_VAT"){
+			//계약도급액
+			_sup = obj.getColumn(0, "AM_SUP");
+			if(this.dsBase.getColumn(0, "YN_TAX_NA") != "Y"){
+				_vat = nexacro.round(_sup * 0.1);
+			}
+			_txf = obj.getColumn(0, "AM_TXF");
+
+			this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF.set_value(_sup+_txf);
+			this.divData.form.tabData.tab1.form.ctxtAM_TOT.set_value(_sup+_vat+_txf);
+			
+			//당사지분율
+			_rtour = obj.getColumn(0, "RT_OUR");
+			
+			_sup =obj.getColumn(0, "AM_SUP_OUR") ;
+			_vat = nexacro.round(obj.getColumn(0, "AM_VAT") * (_rtour / 100));
+			_txf = obj.getColumn(0, "AM_TXF_OUR");
+			
+			this.dsBase.set_enableevent(false);
+			obj.setColumn(0, "AM_VAT_OUR",_vat);
+			this.dsBase.set_enableevent(true);
+			
+			this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF_OUR.set_value(_sup+_txf);
+			this.divData.form.tabData.tab1.form.ctxtAM_TOT_OUR.set_value(_sup+_vat+_txf);
+		
+		} else if(e.columnid == "AM_TXF"){
+			//계약도급액
+			_sup = obj.getColumn(0, "AM_SUP");
+			if(this.dsBase.getColumn(0, "YN_TAX_NA") != "Y"){
+				_vat = nexacro.round(_sup * 0.1);
+			}
+			_txf = obj.getColumn(0, "AM_TXF");
+			
+			this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF.set_value(_sup+_txf);
+			this.divData.form.tabData.tab1.form.ctxtAM_TOT.set_value(_sup+_vat+_txf);
+			
+			//당사지분율
+			_rtour = obj.getColumn(0, "RT_OUR");
+			
+			_sup = obj.getColumn(0, "AM_SUP_OUR");
+			_vat = obj.getColumn(0, "AM_VAT_OUR");
+			_txf = nexacro.round(obj.getColumn(0, "AM_TXF") * (_rtour / 100));
+			
+			this.dsBase.set_enableevent(false);
+			obj.setColumn(0, "AM_TXF_OUR",_txf);
+			this.dsBase.set_enableevent(true);
+
+			this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF_OUR.set_value(_sup+_txf);
+			this.divData.form.tabData.tab1.form.ctxtAM_TOT_OUR.set_value(_sup+_vat+_txf);
+		} else if(e.columnid == "RT_OUR"){
+			//당사지분율
+			_rtour = obj.getColumn(0, "RT_OUR");
+			
+			_sup = nexacro.round(obj.getColumn(0, "AM_SUP") * (_rtour / 100));
+			_vat = nexacro.round(obj.getColumn(0, "AM_VAT") * (_rtour / 100));
+			_txf = nexacro.round(obj.getColumn(0, "AM_TXF") * (_rtour / 100));
+			
+			this.dsBase.set_enableevent(false);
+			obj.setColumn(0, "AM_SUP_OUR",_sup);
+			obj.setColumn(0, "AM_VAT_OUR",_vat);
+			obj.setColumn(0, "AM_TXF_OUR",_txf);
+
+			this.dsBase.set_enableevent(true);
+
+			this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF_OUR.set_value(_sup+_txf);
+			this.divData.form.tabData.tab1.form.ctxtAM_TOT_OUR.set_value(_sup+_vat+_txf);
+			
+		} else if(e.columnid == "AM_SUP_OUR"){
+		
+			_sup = obj.getColumn(0, "AM_SUP_OUR");
+			if(this.dsBase.getColumn(0, "YN_TAX_NA") != "Y"){
+				_vat = nexacro.round(_sup * 0.1);
+			}
+			_txf = obj.getColumn(0, "AM_TXF_OUR");
+			
+			this.dsBase.set_enableevent(false);
+			obj.setColumn(0, "AM_VAT_OUR",_vat);
+			this.dsBase.set_enableevent(true);
+			
+			this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF_OUR.set_value(_sup+_txf);
+			this.divData.form.tabData.tab1.form.ctxtAM_TOT_OUR.set_value(_sup+_vat+_txf);
+
+		} else if(e.columnid == "AM_VAT_OUR" || e.columnid == "AM_TXF_OUR"){
+			//당사도급액
+			_sup = obj.getColumn(0, "AM_SUP_OUR");
+			_vat = obj.getColumn(0, "AM_VAT_OUR");
+			_txf = obj.getColumn(0, "AM_TXF_OUR");
+
+			this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF_OUR.set_value(_sup+_txf);
+			this.divData.form.tabData.tab1.form.ctxtAM_TOT_OUR.set_value(_sup+_vat+_txf);
+
+		} else if(e.columnid == "YN_TAX_NA"){
+			if(obj.getColumn(0, "YN_TAX_NA") == "Y"){
+				this.divData.form.tabData.tab1.form.ctxtRT_ARCH.set_readonly(true);
+				obj.setColumn(0, "RT_TAX",0);
+				this.divData.form.tabData.tab1.form.ctxtAM_LAND00.set_readonly(true);
+				obj.setColumn(0, "AM_VAT",0);
+				this.divData.form.tabData.tab1.form.ctxtAM_LAND05.set_readonly(true);
+			} else {
+				this.divData.form.tabData.tab1.form.ctxtRT_ARCH.set_readonly(false);
+				this.divData.form.tabData.tab1.form.ctxtAM_LAND00.set_readonly(false);
+				this.divData.form.tabData.tab1.form.ctxtAM_LAND05.set_readonly(false);
+			}
+			
+			_sup = obj.getColumn(0, "AM_SUP");
+			if(this.dsBase.getColumn(0, "YN_TAX_NA") != "Y"){
+				_vat = nexacro.round(_sup * 0.1);
+			}
+			_txf = obj.getColumn(0, "AM_TXF");
+			
+			this.dsBase.set_enableevent(false);
+			obj.setColumn(0, "AM_VAT", _vat);
+			this.dsBase.set_enableevent(true);
+
+			this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF.set_value(_sup+_txf);
+			this.divData.form.tabData.tab1.form.ctxtAM_TOT.set_value(_sup+_vat+_txf);
+			
+			//당사지분율
+			_rtour = obj.getColumn(0, "RT_OUR");
+			
+			_sup = nexacro.round(obj.getColumn(0, "AM_SUP") * (_rtour / 100));
+			_vat = nexacro.round(obj.getColumn(0, "AM_VAT") * (_rtour / 100));
+			_txf = obj.getColumn(0, "AM_TXF_OUR");
+			
+			this.dsBase.set_enableevent(false);
+			obj.setColumn(0, "AM_SUP_OUR",_sup);
+			obj.setColumn(0, "AM_VAT_OUR",_vat);
+			obj.setColumn(0, "AM_TXF_OUR",_txf);
+			this.dsBase.set_enableevent(true);
+
+			this.divData.form.tabData.tab1.form.ctxtAM_SUPTXF_OUR.set_value(_sup+_txf);
+			this.divData.form.tabData.tab1.form.ctxtAM_TOT_OUR.set_value(_sup+_vat+_txf);
+		}
+		
+		if(this.gfnGetFormStatus(this) == "I"){
+			this.gfnSetFormStatus(this, "I");
+		}else{
+			this.gfnSetFormStatus(this, "U");
+		}
+		this.fnSetButton();
+	}
+};
+
+this.fnSaveValidate = function(){
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "NM_CHG_CONT"))){
+		this.gfnAlert("계약명을 입력해주세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "DT_CONT"))){
+		this.gfnAlert("계약일자를 입력해주세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "DT_CONST_ST"))){
+		this.gfnAlert("착공일자를 입력해주세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "DT_CONST_ED"))){
+		this.gfnAlert("준공일자를 입력해주세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "RT_TAX"))){
+		this.gfnAlert("과세율을 입력해주세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "RT_OUR"))){
+		this.gfnAlert("당사지분율을 입력해주세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "AM_SUP"))){
+		this.gfnAlert("계약 공급가를 입력해주세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "AM_VAT"))){
+		this.gfnAlert("계약 부가세를 입력해주세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "AM_TXF"))){
+		this.gfnAlert("계약 비과세를 입력해주세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "AM_SUP_OUR"))){
+		this.gfnAlert("당사 공급가를 입력해주세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "AM_VAT_OUR"))){
+		this.gfnAlert("당사 부가세를 입력해주세요.");
+		return false;
+	}
+	
+	if(this.gfnIsNull(this.dsBase.getColumn(0, "AM_TXF_OUR"))){
+		this.gfnAlert("당사 비과세를 입력해주세요.");
+		return false;
+	}
+	
+	
+	return true;
+}
+
+this.divData_tabData_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo){
+	switch(obj.tabindex) {
+		case 0:
+			this.fnSetButton();
+		break;
+		case 1:
+		case 2:
+		case 3:
+			this.fnSelect();
+			this.FormBtns.Select.set_enable(false);
+			this.FormBtns.Save.set_enable(false);
+			this.FormBtns.Del.set_enable(false);
+		break;
+	
+	}
+};
+
+this.fnDialogCallback = function(svcID, value) {
+	this.fnSelect();
+};
+
+this.divData_tabData_btnReg_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	var tIdx = this.divData.form.tabData.tabindex;
+	
+	var popStr = "";
+	var _width = 0;
+	switch(tIdx) {
+		case 2:
+			//수주 > 주택 > 공통 > 공동도급사 관리
+			popStr = "DOZ_CO_CONTRCT";
+			_width = 1220;
+		break;
+		case 3:
+			//수주 > 주택 > 공통 > 관계사 관리
+			popStr = "DOZ_CONTRCT_CONCERN";
+			_width = 850;
+		break;
+	}
+	
+	
+	var param = {
+		CD_FIELD : this.dsBase.getColumn(0, "CD_FIELD")
+	  , DS_FIELD : this.dsInitBase.getColumn(0, "DS_FIELD")
+	  , NO_CONT : this.dsBase.getColumn(0, "NO_CONT")
+	  , NO_CHG_CONT : this.dsBase.getColumn(0, "NO_CHG_CONT")
+	  , TY_PROJ : this.TY_PROJ
+	}
+	
+	this.gfnFormOpen("DOZ", popStr, "fnDialogCallback", param, _width, 600); 
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">selectBase</Col>
+            <Col id="SP">DODPR_CONT_YR_BASE_INFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select0</Col>
+            <Col id="SP">DODPR_CONT_YR_INFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select1</Col>
+            <Col id="SP">DODPR_CONTRCT_LIST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select2</Col>
+            <Col id="SP">DODPR_ARCH_CONT_CO_CONTRCT_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select3</Col>
+            <Col id="SP">DODPR_ARCH_CONT_CONCERN_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DODPR_CONT_YR_MERGE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DODPR_CONT_YR_DELETE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsBase" onvaluechanged="dsBase_onvaluechanged" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="NO_CONT" type="INT" size="256"/>
+          <Column id="NO_CHG_CONT" type="INT" size="256"/>
+          <Column id="TYPE" type="STRING" size="256"/>
+          <Column id="NM_CHG_CONT" type="STRING" size="256"/>
+          <Column id="DT_CONT" type="STRING" size="256"/>
+          <Column id="NM_BIZ" type="STRING" size="256"/>
+          <Column id="NM_TY_CONT" type="STRING" size="256"/>
+          <Column id="YN_MAIN" type="STRING" size="256"/>
+          <Column id="DT_CONST_ST" type="STRING" size="256"/>
+          <Column id="DT_CONST_ED" type="STRING" size="256"/>
+          <Column id="RT_TAX" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_SUP" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_TXF" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_VAT" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_OUR" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_SUP_OUR" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_TXF_OUR" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_VAT_OUR" type="BIGDECIMAL" size="256"/>
+          <Column id="RT_ADV" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_ADV" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_CONT_GRNT" type="BIGDECIMAL" size="256"/>
+          <Column id="NO_REG_SEAL" type="STRING" size="256"/>
+          <Column id="DS_CND_COLT" type="STRING" size="256"/>
+          <Column id="DS_RM_CHG" type="STRING" size="256"/>
+          <Column id="ID_ADD" type="STRING" size="256"/>
+          <Column id="OUT_CD_FIELD" type="STRING" size="256"/>
+          <Column id="OUT_NO_CONT" type="INT" size="256"/>
+          <Column id="OUT_NO_CHG_CONT" type="INT" size="256"/>
+          <Column id="YN_TAX_NA" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsBaseRst"/>
+      <Dataset id="dsInitSearch">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="NO_CONT" type="STRING" size="256"/>
+          <Column id="NO_CHG_CONT" type="STRING" size="256"/>
+          <Column id="TYPE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList1"/>
+      <Dataset id="dsList2"/>
+      <Dataset id="dsList3"/>
+      <Dataset id="dsInitBase" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="DS_FIELD" type="STRING" size="256"/>
+          <Column id="NO_CONT" type="STRING" size="256"/>
+          <Column id="NO_CHG_CONT" type="STRING" size="256"/>
+          <Column id="TY_PROJ" type="STRING" size="256"/>
+          <Column id="DS_BONBU" type="STRING" size="256"/>
+          <Column id="NM_BIZ" type="STRING" size="256"/>
+          <Column id="NM_TY_CONT" type="STRING" size="256"/>
+          <Column id="YN_MAIN" type="STRING" size="256"/>
+          <Column id="DT_CONST_ST" type="STRING" size="256"/>
+          <Column id="DT_CONST_ED" type="STRING" size="256"/>
+          <Column id="RT_TAX" type="STRING" size="256"/>
+          <Column id="RT_OUR" type="STRING" size="256"/>
+          <Column id="RT_ADV" type="STRING" size="256"/>
+          <Column id="NO_REG_SEAL" type="STRING" size="256"/>
+          <Column id="DS_CND_COLT" type="STRING" size="256"/>
+          <Column id="YN_TAX_NA" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearchOfTab2">
+        <ColumnInfo>
+          <Column id="TY_PROJ" type="STRING" size="256"/>
+          <Column id="CD_BONBU" type="STRING" size="256"/>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="TY_CONT" type="STRING" size="256"/>
+          <Column id="CD_LOC" type="STRING" size="256"/>
+          <Column id="YN_MAIN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctxtCD_FIELD" propid="value" datasetid="dsInitBase" columnid="CD_FIELD"/>
+      <BindItem id="item1" compid="divSearch.form.ctxtDS_FIELD" propid="value" datasetid="dsInitBase" columnid="DS_FIELD"/>
+      <BindItem id="item2" compid="divSearch.form.ctxtCD_PROJ00" propid="value" datasetid="dsInitBase" columnid="DS_BONBU"/>
+      <BindItem id="item3" compid="divData.form.tabData.tab1.form.ctxtNM_CHG_CONT00" propid="value" datasetid="dsBase" columnid="NM_BIZ"/>
+      <BindItem id="item4" compid="divData.form.tabData.tab1.form.ctxtNM_CHG_CONT05" propid="value" datasetid="dsBase" columnid="NM_TY_CONT"/>
+      <BindItem id="item6" compid="divData.form.tabData.tab1.form.ctxtNM_CHG_CONT04" propid="value" datasetid="dsBase" columnid="NO_CONT"/>
+      <BindItem id="item7" compid="divData.form.tabData.tab1.form.ctxtNM_CHG_CONT06" propid="value" datasetid="dsBase" columnid="NO_CHG_CONT"/>
+      <BindItem id="item10" compid="divData.form.tabData.tab1.form.ctxtNM_CHG_CONT" propid="value" datasetid="dsBase" columnid="NM_CHG_CONT"/>
+      <BindItem id="item11" compid="divData.form.tabData.tab1.form.ctclDT_ACQ" propid="value" datasetid="dsBase" columnid="DT_CONT"/>
+      <BindItem id="item12" compid="divData.form.tabData.tab1.form.ctclDT_ACQ00" propid="value" datasetid="dsBase" columnid="DT_CONST_ST"/>
+      <BindItem id="item13" compid="divData.form.tabData.tab1.form.ctclDT_ACQ01" propid="value" datasetid="dsBase" columnid="DT_CONST_ED"/>
+      <BindItem id="item14" compid="divData.form.tabData.tab1.form.ctxtRT_ARCH" propid="value" datasetid="dsBase" columnid="RT_TAX"/>
+      <BindItem id="item15" compid="divData.form.tabData.tab1.form.ctxtAM_LAND" propid="value" datasetid="dsBase" columnid="AM_SUP"/>
+      <BindItem id="item16" compid="divData.form.tabData.tab1.form.ctxtAM_LAND00" propid="value" datasetid="dsBase" columnid="AM_VAT"/>
+      <BindItem id="item17" compid="divData.form.tabData.tab1.form.ctxtAM_LAND01" propid="value" datasetid="dsBase" columnid="AM_TXF"/>
+      <BindItem id="item18" compid="divData.form.tabData.tab1.form.ctxtAM_LAND09" propid="value" datasetid="dsBase" columnid="AM_ADV"/>
+      <BindItem id="item19" compid="divData.form.tabData.tab1.form.ctxtAM_LAND08" propid="value" datasetid="dsBase" columnid="AM_CONT_GRNT"/>
+      <BindItem id="item21" compid="divData.form.tabData.tab1.form.ctxtRT_ARCH00" propid="value" datasetid="dsBase" columnid="RT_OUR"/>
+      <BindItem id="item22" compid="divData.form.tabData.tab1.form.ctxtAM_LAND06" propid="value" datasetid="dsBase" columnid="AM_SUP_OUR"/>
+      <BindItem id="item23" compid="divData.form.tabData.tab1.form.ctxtAM_LAND06" propid="accessibilityaction" datasetid="dsBase" columnid="AM_VAT_OUR"/>
+      <BindItem id="item24" compid="divData.form.tabData.tab1.form.ctxtAM_LAND04" propid="value" datasetid="dsBase" columnid="AM_TXF_OUR"/>
+      <BindItem id="item25" compid="divData.form.tabData.tab1.form.ctxtAM_LAND10" propid="value" datasetid="dsBase" columnid="RT_ADV"/>
+      <BindItem id="item26" compid="divData.form.tabData.tab1.form.ctxtNM_CHG_CONT01" propid="value" datasetid="dsBase" columnid="NO_REG_SEAL"/>
+      <BindItem id="item27" compid="divData.form.tabData.tab1.form.ctxtNM_CHG_CONT03" propid="value" datasetid="dsBase" columnid="DS_RM_CHG"/>
+      <BindItem id="item28" compid="divData.form.tabData.tab1.form.ctxtAM_LAND05" propid="value" datasetid="dsBase" columnid="AM_VAT_OUR"/>
+      <BindItem id="item20" compid="divData.form.tabData.tab1.form.ctxtNM_CHG_CONT07" propid="value" datasetid="dsBase" columnid="DS_CND_COLT"/>
+      <BindItem id="item8" compid="divData.form.tabData.tab1.form.chkYN_TAX_NA" propid="value" datasetid="dsBase" columnid="YN_TAX_NA"/>
+      <BindItem id="item5" compid="divData.form.tabData.tab1.form.cchkYN_MAIN" propid="value" datasetid="dsBase" columnid="YN_MAIN"/>
+    </Bind>
+  </Form>
+</FDL>

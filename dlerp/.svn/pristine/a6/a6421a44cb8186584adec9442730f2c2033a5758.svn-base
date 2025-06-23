@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="유가증권거래현황조회" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="78.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="sta04" taborder="7" text="법인코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="cfCD_CORP" CDTextWidth="70" taborder="0" left="sta04:0.0" top="10.0" width="269" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="sta00" taborder="8" text="거래기간" left="cfCD_CORP:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Calendar id="calFR_TRADE" taborder="1" left="sta00:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staCD_TILDE" taborder="10" text="~" left="calFR_TRADE:0.0" top="10.0" width="30.0" height="24.0" cssclass="sta_WF_AC"/>
+              <Calendar id="calTO_TRADE" taborder="2" left="staCD_TILDE:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="sta01" taborder="9" text="유가증권" left="0.0" top="sta04:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="cfCD_YUGA" CDTextWidth="70" taborder="3" left="sta01:0.0" top="sta04:10.0" width="269" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="sta02" taborder="11" text="관리번호" left="cfCD_YUGA:0.0" top="sta04:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="cfNO_YUGA" CDTextWidth="80" taborder="4" left="sta02:0.0" top="sta04:10.0" width="269" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="sta03" taborder="6" text="완료여부" left="cfNO_YUGA:0.0" top="sta04:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboYN_CLOSE" taborder="5" text="진행중" left="sta03:0.0" top="sta04:10.0" width="105" height="24.0" codecolumn="CD_CODE" datacolumn="DS_CODE" value="N" index="-1" onitemchanged="fnSearchInit" innerdataset="dsYN_CLOSE"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0" oncellclick="divData_objGrid_oncellclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();				
+	this.fnSetCombo();
+	
+}; 
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+	// 입력,저장,삭제 버튼 비활성화 처리
+//  	this.FormBtns.Add.set_enable(false);
+//  	this.FormBtns.Save.set_enable(false);
+//  	this.FormBtns.Del.set_enable(false);
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnAgreementInf = this.gfnFormButtonAdd("btnAgreementInf", "fnAgreementInf", "약정정보"); 
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+	// 조회조건
+	this.cfCD_CORP  = this.divSearch.form.cfCD_CORP;		// 법인코드
+	this.calFR_TRADE = this.divSearch.form.calFR_TRADE;		// 거래일자(from)
+	this.calTO_TRADE = this.divSearch.form.calTO_TRADE;		// 거래일자(to)
+	this.cfCD_YUGA = this.divSearch.form.cfCD_YUGA;			// 유가증권
+	this.cfNO_YUGA = this.divSearch.form.cfNO_YUGA;			// 관리번호
+	this.cboYN_CLOSE = this.divSearch.form.cboYN_CLOSE;	// 완료여부
+	
+	this.dxGrid = this.divData.form.objGrid;				// 그리드
+	this.grSearch = this.FormInfo.GR_SEARCH;				// 권한?
+	this.cdGroup = this.gfnIsNull(this.AuthClient.CD_GROUP) ? "" : this.AuthClient.CD_GROUP;				// 그룹코드	
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+		
+	this.cfCD_CORP.CodeFindName = "DZX_CFCORP";			// 법인코드(조회조건)
+	this.cfCD_YUGA.CodeFindName = "DFX_CFYUGAKIND";		// 유가증권(조회조건)
+	this.cfNO_YUGA.CodeFindName = "DFX_CFNO_YUGA";		// 관리번호(조회조건)
+	
+	this.cfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfCD_YUGA.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfNO_YUGA.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.cfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.cfCD_YUGA.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.cfNO_YUGA.AfterCDTextChanged = "fnAfterCDTextChanged";
+
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DF", "DFE_YUGASCDL");		
+	this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";
+	this.dxGrid.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+
+	// 법인코드 init
+	if (this.gfnIsNull(this.cfCD_CORP.form.CDTextBox.value)) {
+		this.cfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP); 
+		this.cfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);	
+	}	
+
+	var today = this.gfnGetDate();
+	this.dsSearch.setColumn(0, "FR_TRADE", this.gfnGetFirstDate(today));
+	this.dsSearch.setColumn(0, "TO_TRADE", today);
+	
+	
+	// 권한체크
+	if (nexacro.toNumber(this.grSearch) >= 2) {
+		this.cfCD_CORP.set_enable(false);
+	}	
+	
+	this.cfCD_CORP.form.CDTextBox.setFocus();	
+	
+	this.fnSetVisibleCol("N");
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("FR_TRADE", "string");
+	this.dsSelect.addColumn("TO_TRADE", "string");
+	this.dsSelect.addColumn("CD_YUGA", "string");
+	this.dsSelect.addColumn("NO_YUGA", "string");
+	this.dsSelect.addColumn("YN_CLOSE", "string");
+	this.dsSelect.addColumn("ID_USER", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSelect.setColumn(0, "FR_TRADE", this.dsSearch.getColumn(0, "FR_TRADE"));
+	this.dsSelect.setColumn(0, "TO_TRADE", this.dsSearch.getColumn(0, "TO_TRADE"));
+	this.dsSelect.setColumn(0, "CD_YUGA", this.dsSearch.getColumn(0, "CD_YUGA"));
+	this.dsSelect.setColumn(0, "NO_YUGA", this.dsSearch.getColumn(0, "NO_YUGA"));
+	this.dsSelect.setColumn(0, "YN_CLOSE", this.dsSearch.getColumn(0, "YN_CLOSE"));
+	this.dsSelect.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function(svcId) {
+
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {	
+	return true;
+};
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+		
+		if (this.dsList.rowcount > 0 && this.dsList.getColumn(this.dsList.rowposition, "YN_VIEW") == "Y") {
+			this.fnSetVisibleCol("Y");
+		}
+		
+		if (this.dsList.rowcount > 0 && this.dsList.getColumn(this.dsList.rowposition, "YN_VIEW") == "N") {
+			this.fnSetVisibleCol("N");
+		}
+		
+		if (this.dsList.rowcount == 0) {
+			this.fnSetVisibleCol("N");
+		}		
+	}
+	 else if(svcID == "combo") {
+	
+		//  조회조건(완료여부)
+		var iRow = this.dsYN_CLOSE.insertRow(0);
+		this.dsYN_CLOSE.setColumn(iRow, "CD_CODE", "");
+		this.dsYN_CLOSE.setColumn(iRow, "DS_CODE", "전체");
+		this.cboYN_CLOSE.set_index(2);	
+	}
+}
+
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+	var cdCorp = this.cfCD_CORP.form.CDTextBox.value;
+	
+	switch(id) {
+	
+	// 법인코드(조회조건)
+	case "cfCD_CORP": 	
+		dsUserParam.setColumn(nrow, "CD_GROUP", this.cdGroup);	
+		break;
+		
+	// 유가증권(조회조건)
+	case "cfCD_YUGA":	
+		dsUserParam.setColumn(nrow, "YN_USE", "");	
+		dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+		break;			
+		
+	// 관리번호(조회조건)	
+	case "cfNO_YUGA": 
+		dsUserParam.setColumn(nrow, "CD_CORP", this.gfnIsNull(cdCorp) ? "" : cdCorp);
+		dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+		break;	
+		
+	default:
+	}	
+	return true;
+}
+ 
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	
+	var arr = codeFindData;
+	
+	switch(id) {
+	
+	// 법인코드(조회조건)
+	case "cfCD_CORP":
+		break;		
+		
+	// 관리번호(조회조건)	
+	case "cfNO_YUGA": 
+		break;
+		
+	// 유가증권(조회조건)
+	case "cfCD_YUGA":	
+		break;				
+		
+	default:
+	}	
+	return true;
+}
+
+
+ 
+this.fnGrid_BeforuserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+}
+
+this.fnGrid_AfterCDTextChanged = function(id, codeFindData) {
+};
+ 
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+	}
+};
+
+
+// 약정정보
+this.fnAgreementInf = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(!this.gfnGridIsRow(this.dxGrid)) return;
+	var param = {};
+	param.CD_CORP = this.dsList.getColumn(this.dsList.rowposition, "CD_CORP");		// 법인코드 
+	param.DS_CORP = this.dsList.getColumn(this.dsList.rowposition, "DS_CORP");		// 법인명
+	param.NO_YUGA = this.dsList.getColumn(this.dsList.rowposition,"NO_YUGA");		// 관리번호
+	param.NM_YUGA = this.dsList.getColumn(this.dsList.rowposition,"NM_YUGA");		// 유가증권명
+	param.CD_YUGA = this.dsList.getColumn(this.dsList.rowposition,"CD_YUGA");		// 종류코드
+	param.DS_YUGA = this.dsList.getColumn(this.dsList.rowposition,"DS_YUGA");		// 종류	
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DFE_YUGA_REGISTRATION", "", param, this.getOffsetWidth(), this.getOffsetHeight());
+}
+
+
+
+
+// 공통코드콤보
+this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DF");
+	this.dsCombo.setColumn(0, "CD_TYPE", "E9");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsYN_CLOSE=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+};
+
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+
+
+
+// 조회결과 YN_VIEW에 따라 visible 처리
+this.fnSetVisibleCol = function(flag) {
+	//trace("flag ::: " + flag);
+
+	var size70 = "13,14";
+	var size80 = "22,24,25,26,27,28";
+	var size100 = "12,15,16,17,19,20,21,23";
+	var size150 = "18";
+	
+	for (var i=0; i < 31; i++) {
+		
+		if (flag == "Y") {
+			// 원금(21) ~ 주민세(28) 숨기고
+			if (i >= 21 && i <= 28) {
+				this.dxGrid.setFormatColProperty(i, "size", 0);
+			}
+			
+			// 송금액(12) ~ 사후신고일(20) 보여주고
+			if (i >= 12 && i <= 20) {
+				if (size70.indexOf(i)> -1 ) {
+					this.dxGrid.setFormatColProperty(i, "size", 70);
+				}
+				if (size100.indexOf(i)> -1 ) {
+					this.dxGrid.setFormatColProperty(i, "size", 100);
+				}
+				if (size150.indexOf(i)> -1 ) {
+					this.dxGrid.setFormatColProperty(i, "size", 150);
+				}				
+			}
+		} else {
+		
+			// 송금액(12) ~ 사후신고일(20) 숨기고
+			if (i >= 12 && i <= 20) {
+				this.dxGrid.setFormatColProperty(i, "size", 0);
+			}
+			
+			// 원금(21) ~ 주민세(28) 보여주고
+			if (i >= 21 && i <= 28) {
+				if (size80.indexOf(i)> -1 ) {
+					this.dxGrid.setFormatColProperty(i, "size", 80);
+				}
+				if (size100.indexOf(i)> -1 ) {
+					this.dxGrid.setFormatColProperty(i, "size", 100);
+				}							
+			}
+		
+		}
+		
+	}
+
+}]]></Script>
+    <Objects>
+      <Dataset id="dsList" oncolumnchanged="dsList_oncolumnchanged"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DFEPR_YUGASCDL_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="FR_TRADE" type="STRING" size="256"/>
+          <Column id="TO_TRADE" type="STRING" size="256"/>
+          <Column id="CD_YUGA" type="STRING" size="256"/>
+          <Column id="NO_YUGA" type="STRING" size="256"/>
+          <Column id="YN_CLOSE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_CLOSE"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item5" compid="divSearch.form.cfCD_YUGA.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_YUGA"/>
+      <BindItem id="item2" compid="divSearch.form.calFR_TRADE" propid="value" datasetid="dsSearch" columnid="FR_TRADE"/>
+      <BindItem id="item3" compid="divSearch.form.calTO_TRADE" propid="value" datasetid="dsSearch" columnid="TO_TRADE"/>
+      <BindItem id="item7" compid="divSearch.form.cboYN_CLOSE" propid="value" datasetid="dsSearch" columnid="YN_CLOSE"/>
+      <BindItem id="item1" compid="divSearch.form.cfNO_YUGA.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="NO_YUGA"/>
+    </Bind>
+  </Form>
+</FDL>

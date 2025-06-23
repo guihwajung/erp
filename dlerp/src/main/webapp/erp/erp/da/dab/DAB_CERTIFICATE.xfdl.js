@@ -1,0 +1,1866 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("증명서 발급");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListSub", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DAAPR_CERTIFICATE_SELECT</Col></Row><Row><Col id=\"TARGET\">save</Col><Col id=\"SP\">DAAPR_CERTIFICATE_SAVE</Col></Row><Row><Col id=\"TARGET\">update-x</Col><Col id=\"SP\">DAAPR_CERTIFICATE_UPDATE</Col></Row><Row><Col id=\"SP\">DAAPR_CERTIFICATE_DELETE</Col><Col id=\"TARGET\">delete-x</Col></Row><Row><Col id=\"TARGET\">approval</Col><Col id=\"SP\">DAAPR_CERTIFICATE_APPROVAL</Col></Row><Row><Col id=\"TARGET\">cancel</Col><Col id=\"SP\">DAAPR_CERTIFICATE_CANCEL</Col></Row><Row><Col id=\"TARGET\">reportA</Col><Col id=\"SP\">DAAPR_CERTIFICATE_A_RPT</Col></Row><Row><Col id=\"TARGET\">reportACE</Col><Col id=\"SP\">DAAPR_CERTIFICATE_ACE_RPT</Col></Row><Row><Col id=\"TARGET\">reportFSub1</Col><Col id=\"SP\">DAVPR_YEARENDRECEIPTSUB1_2021_SELECT</Col></Row><Row><Col id=\"TARGET\">reportFSub2</Col><Col id=\"SP\">DAVPR_YEARENDRECEIPTSUB2_2021_SELECT</Col></Row><Row><Col id=\"TARGET\">reportFPension</Col><Col id=\"SP\">DAVPR_YEARENDSUBSTPENSIONRPT_SELECT</Col></Row><Row><Col id=\"TARGET\">reportI</Col><Col id=\"SP\">DAVPR_SALARYTAX_SELECT</Col></Row><Row><Col id=\"TARGET\">reportISub</Col><Col id=\"SP\">DAVPR_SALARYTAX_SUB_SELECT</Col></Row><Row><Col id=\"TARGET\">selectRptG</Col><Col id=\"SP\">DAVPR_INCOMETAXCERTIFICATE_SELECT</Col></Row><Row><Col id=\"TARGET\">combo</Col><Col id=\"SP\">DAZPR_COMMONCODE_COMBO</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"TY_CERTIFICATE\" type=\"STRING\" size=\"256\"/><Column id=\"YN_APPROVE\" type=\"STRING\" size=\"256\"/><Column id=\"ID_SABUN\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HNAME\" type=\"STRING\" size=\"256\"/><Column id=\"ID_PERSON\" type=\"STRING\" size=\"256\"/><Column id=\"CD_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SINCHUNG_FR\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SINCHUNG_TO\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_STATUS", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">%</Col><Col id=\"DS_CODE\">전체</Col></Row><Row><Col id=\"CD_CODE\">Y</Col><Col id=\"DS_CODE\">승인</Col></Row><Row><Col id=\"CD_CODE\">N</Col><Col id=\"DS_CODE\">미승인</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsRptListACE1", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsRptListACE2", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsRptListACE3", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsRptListF", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsRptListG", this);
+            obj._setContents("<Dataset id=\"dsRptListI\"/><ColumnInfo><Column id=\"DS_HNAME\" type=\"STRING\" size=\"256\"/><Column id=\"ID_RESIDENT\" type=\"STRING\" size=\"256\"/><Column id=\"DS_ADDRESS\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SAUP\" type=\"STRING\" size=\"256\"/><Column id=\"NO_SAUP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SAUPADDR\" type=\"STRING\" size=\"256\"/><Column id=\"DS_NAME\" type=\"STRING\" size=\"256\"/><Column id=\"NO_ID\" type=\"STRING\" size=\"256\"/><Column id=\"DS_USE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SUBMIT\" type=\"STRING\" size=\"256\"/><Column id=\"NO_BUSU\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SINCHUNG_YY\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SINCHUNG_MM\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SINCHUNG_DD\" type=\"STRING\" size=\"256\"/><Column id=\"DS_PRINT\" type=\"STRING\" size=\"256\"/><Column id=\"CD_DEPT_SELFACNT\" type=\"STRING\" size=\"256\"/><Column id=\"ID_SABUN\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"TY_SINGO\" type=\"STRING\" size=\"256\"/><Column id=\"NO_TEL\" type=\"STRING\" size=\"256\"/><Column id=\"IMG_STAMP\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY01\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY02\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY03\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY04\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY05\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY06\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY07\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY08\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY09\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY10\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY11\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY12\" type=\"STRING\" size=\"256\"/><Column id=\"AM_SALARY01\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY02\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY03\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY04\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY05\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY06\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY07\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY08\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY09\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY10\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY11\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY12\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST01\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST02\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST03\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST04\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST05\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST06\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST07\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST08\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST09\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST10\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST11\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST12\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"DT_SALARY01\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY02\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY03\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY04\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY05\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY06\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY07\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY08\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY09\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY10\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY11\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY12\" type=\"STRING\" size=\"256\"/><Column id=\"SALSUM\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"SUBSTSUM\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"DT_OFFICER\" type=\"STRING\" size=\"256\"/><Column id=\"DT_PRINT\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsRptListGTemp", this);
+            obj._setContents("<ColumnInfo><Column id=\"DS_HNAME\" type=\"STRING\" size=\"256\"/><Column id=\"ID_RESIDENT\" type=\"STRING\" size=\"256\"/><Column id=\"DS_ADDRESS\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SAUP\" type=\"STRING\" size=\"256\"/><Column id=\"NO_SAUP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SAUPADDR\" type=\"STRING\" size=\"256\"/><Column id=\"DS_NAME\" type=\"STRING\" size=\"256\"/><Column id=\"NO_ID\" type=\"STRING\" size=\"256\"/><Column id=\"DS_USE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SUBMIT\" type=\"STRING\" size=\"256\"/><Column id=\"NO_BUSU\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SINCHUNG_YY\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SINCHUNG_MM\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SINCHUNG_DD\" type=\"STRING\" size=\"256\"/><Column id=\"DS_PRINT\" type=\"STRING\" size=\"256\"/><Column id=\"CD_DEPT_SELFACNT\" type=\"STRING\" size=\"256\"/><Column id=\"ID_SABUN\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"TY_SINGO\" type=\"STRING\" size=\"256\"/><Column id=\"NO_TEL\" type=\"STRING\" size=\"256\"/><Column id=\"IMG_STAMP\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY01\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY02\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY03\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY04\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY05\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY06\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY07\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY08\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY09\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY10\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY11\" type=\"STRING\" size=\"256\"/><Column id=\"YM_SALARY12\" type=\"STRING\" size=\"256\"/><Column id=\"AM_SALARY01\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY02\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY03\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY04\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY05\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY06\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY07\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY08\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY09\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY10\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY11\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SALARY12\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST01\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST02\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST03\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST04\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST05\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST06\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST07\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST08\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST09\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST10\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST11\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"AM_SUBST12\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"DT_SALARY01\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY02\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY03\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY04\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY05\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY06\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY07\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY08\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY09\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY10\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY11\" type=\"STRING\" size=\"256\"/><Column id=\"DT_SALARY12\" type=\"STRING\" size=\"256\"/><Column id=\"SALSUM\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"SUBSTSUM\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"DT_OFFICER\" type=\"STRING\" size=\"256\"/><Column id=\"DT_PRINT\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsRptListISub", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_CERTIFICATE", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsImageFile", this);
+            obj._setContents("<ColumnInfo><Column id=\"filepath\" type=\"STRING\" size=\"256\"/><Column id=\"filename\" type=\"STRING\" size=\"256\"/><Column id=\"filereturn\" type=\"STRING\" size=\"100000\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsImageFile2", this);
+            obj._setContents("<ColumnInfo><Column id=\"filepath\" type=\"STRING\" size=\"256\"/><Column id=\"filename\" type=\"STRING\" size=\"256\"/><Column id=\"filereturn\" type=\"STRING\" size=\"100000\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0","0",null,"78.0","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_SEARCH_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staCD_CORP","0","10.0","66","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("0");
+            obj.set_text("법인");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_CORP","staCD_CORP:0.0","10.0","250","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCORP");
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("1");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staTY_CERTIFICATE","ccfCD_CORP:0.0","10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("2");
+            obj.set_text("증명종류");
+            obj.set_textDecoration("none");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("cboTY_CERTIFICATE","staTY_CERTIFICATE:0.0","10.0","230","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("3");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_innerdataset("dsTY_CERTIFICATE");
+            obj.set_text("전체");
+            obj.set_value("%");
+            obj.set_index("0");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staTY_STATUS","cboTY_CERTIFICATE:0.0","10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("4");
+            obj.set_text("승인상태");
+            obj.set_textDecoration("none");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("cboYN_APPROVE","staTY_STATUS:0.0","10.0","80","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("5");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_innerdataset("dsTY_STATUS");
+            obj.set_text("전체");
+            obj.set_value("%");
+            obj.set_index("0");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staID_PERSON","cboYN_APPROVE:0.0","10.0","110","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("15");
+            obj.set_text("ID_PERSON");
+            obj.set_visible("false");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Edit("edtID_PERSON","staID_PERSON:0.0","10.0","157","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("14");
+            obj.set_visible("false");
+            obj.set_readonly("true");
+            obj.set_enable("false");
+            obj.set_text("부서");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staID_SABUN","0","staCD_CORP:10.0","66","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("6");
+            obj.set_text("성명");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfID_SABUN","staID_SABUN:0.0","staCD_CORP:10.0","250","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CodeFindName").set("DAX_CFBASEINFO_ALL");
+            obj.getSetter("CDTextWidth").set("90");
+            obj.set_taborder("7");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staDT_SINCHUNG","ccfID_SABUN:0.0","staCD_CORP:10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("10");
+            obj.set_text("신청일자");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Calendar("calDT_SINCHUNG_FR","staDT_SINCHUNG:0.0","staCD_CORP:10.0","100","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("11");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staDT_ORD_TO","calDT_SINCHUNG_FR:0.0","staCD_CORP:10.0","30.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("13");
+            obj.set_text("~");
+            obj.set_cssclass("sta_WF_AC");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Calendar("calDT_SINCHUNG_TO","staDT_ORD_TO:0.0","staCD_CORP:10.0","100","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("12");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_DEPT","calDT_SINCHUNG_TO:0.0","staCD_CORP:10.0","92.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("8");
+            obj.set_text("부서");
+            obj.set_visible("true");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_DEPT","staCD_DEPT:0.0","staCD_CORP:10.0","262","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CodeFindName").set("DAX_CFDEPT");
+            obj.getSetter("CDTextWidth").set("80");
+            obj.set_taborder("9");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.set_visible("true");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:10",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.ccfCD_CORP.form.CDTextBox","value","dsSearch","CD_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divSearch.form.ccfCD_CORP.form.DSTextBox","value","dsSearch","DS_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divSearch.form.cboTY_CERTIFICATE","value","dsSearch","TY_CERTIFICATE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divSearch.form.cboYN_APPROVE","value","dsSearch","YN_APPROVE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","divSearch.form.ccfID_SABUN.form.CDTextBox","value","dsSearch","ID_SABUN");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item5","divSearch.form.ccfID_SABUN.form.DSTextBox","value","dsSearch","DS_HNAME");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item6","divSearch.form.edtID_PERSON","value","dsSearch","ID_PERSON");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item7","divSearch.form.ccfCD_DEPT.form.CDTextBox","value","dsSearch","CD_DEPT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item8","divSearch.form.ccfCD_DEPT.form.DSTextBox","value","dsSearch","DS_DEPT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item9","divSearch.form.calDT_SINCHUNG_FR","value","dsSearch","DT_SINCHUNG_FR");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item10","divSearch.form.calDT_SINCHUNG_TO","value","dsSearch","DT_SINCHUNG_TO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DAB_CERTIFICATE.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.fv_tyFlag = "";
+        this.COL_SPLIT = "|";
+        this.ROW_SPLIT = ";";
+
+        this.form_onload = function(obj,e) {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+        	this.fnSetCombo();
+        	this.fnInit();
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        	if (this.FormInfo.GR_SEARCH == 1) {
+        		this.btnApproval     = this.gfnFormButtonAdd("Approval"    , "fnApproval");			// 승인
+        		this.btnApprovalCanc = this.gfnFormButtonAdd("ApprovalCanc", "fnApprovalCanc");		// 승인취소
+        	}
+        	this.btnCertiRequest = this.gfnFormButtonAdd("CertiRequest", "fnCertiRequest");			// 증명서 발급신청
+        }
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.dxGrid = this.divData.form.objGrid;
+
+        	this.ccfCD_CORP        = this.divSearch.form.ccfCD_CORP;			// 법인코드
+        	this.cboTY_CERTIFICATE = this.divSearch.form.cboTY_CERTIFICATE;		// 증명종류
+        	this.cboYN_APPROVE     = this.divSearch.form.cboYN_APPROVE;			// 승인상태
+        	this.ccfID_SABUN       = this.divSearch.form.ccfID_SABUN;			// 성명
+        	this.edtID_PERSON      = this.divSearch.form.edtID_PERSON;			// ID_PERSON(숨김)
+        	this.calDT_SINCHUNG_FR = this.divSearch.form.calDT_SINCHUNG_FR; 	// 신청일자(FROM)
+        	this.calDT_SINCHUNG_TO = this.divSearch.form.calDT_SINCHUNG_TO;		// 신청일자(TO)
+        	this.ccfCD_DEPT        = this.divSearch.form.ccfCD_DEPT;			// 부서(숨김)
+
+        	this.grSearch = this.FormInfo.GR_SEARCH;	// 권한
+        	this.cdGroup  = this.AuthClient.CD_GROUP;	// 그룹코드
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	// 그리드영역
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAA_CERTIFICATE");
+        	this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+        	this.dxGrid.AfterCDTextChanged     = "fnGrid_AfterCDTextChanged";
+        	this.dxGrid.EnterCell              = "fnGrid_EnterCell";
+
+        	// 검색영역
+        	this.ccfCD_CORP.BeforeUserDataSetParam  = "fnBeforeUserDataSetParam";	// 법인코드
+        	this.ccfCD_CORP.AfterCDTextChanged      = "fnAfterCDTextChanged";
+        	this.ccfID_SABUN.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	// 성명
+        	this.ccfID_SABUN.AfterCDTextChanged     = "fnAfterCDTextChanged";
+        	this.ccfCD_DEPT.BeforeUserDataSetParam  = "fnBeforeUserDataSetParam";	// 부서(숨김)
+        	this.ccfCD_DEPT.AfterCDTextChanged      = "fnAfterCDTextChanged";
+        };
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+        	// 조회
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("CD_CORP", "string");
+        	this.dsSelect.addColumn("CD_DEPT", "string");
+        	this.dsSelect.addColumn("ID_SABUN", "string");
+        	this.dsSelect.addColumn("TY_CERTIFICATE", "string");
+        	this.dsSelect.addColumn("YN_APPROVE", "string");
+        	this.dsSelect.addColumn("DT_SINCHUNG_FR", "string");
+        	this.dsSelect.addColumn("DT_SINCHUNG_TO", "string");
+        	this.dsSelect.addColumn("GR_SEARCH", "string");
+        	this.dsSelect.addColumn("GR_DEPT", "string");
+        	this.dsSelect.addColumn("ID_LOGIN", "string");
+
+        	// 저장
+        	this.dsSave = new Dataset();
+        	this.dsSave.addColumn("TY_SAVE", "string");
+        	this.dsSave.addColumn("NO_SEQ", "int");
+        	this.dsSave.addColumn("CD_CORP_REQUEST", "string");
+        	this.dsSave.addColumn("ID_SABUN_REQUEST", "string");
+        	this.dsSave.addColumn("CD_DEPT_REQUEST", "string");
+        	this.dsSave.addColumn("ID_PERSON_REQUEST", "int");
+        	this.dsSave.addColumn("CD_CORP", "string");
+        	this.dsSave.addColumn("ID_SABUN", "string");
+        	this.dsSave.addColumn("ID_PERSON", "int");
+        	this.dsSave.addColumn("CD_DEPT", "string");
+        	this.dsSave.addColumn("CD_POSITION", "string");
+        	this.dsSave.addColumn("CD_DUTY", "string");
+        	this.dsSave.addColumn("DS_ADDRESS", "string");
+        	this.dsSave.addColumn("YN_RESIDENT", "string");
+        	this.dsSave.addColumn("YN_INGAM", "string");
+        	this.dsSave.addColumn("NO_CERTIFICATE", "string");
+        	this.dsSave.addColumn("TY_CERTIFICATE", "string");
+        	this.dsSave.addColumn("DT_SINCHUNG", "string");
+        	this.dsSave.addColumn("DS_SUBMIT", "string");
+        	this.dsSave.addColumn("DS_USE", "string");
+        	this.dsSave.addColumn("YY_RECEIPT", "string");
+        	this.dsSave.addColumn("DS_REMARK", "string");
+        	this.dsSave.addColumn("YN_JOIN", "string");
+        	this.dsSave.addColumn("YM_INCOME", "string");
+        	this.dsSave.addColumn("CD_BAL_DEPT", "string");
+        	this.dsSave.addColumn("CD_BAL_POSITION", "string");
+        	this.dsSave.addColumn("DT_BAL_JOIN", "string");
+        	this.dsSave.addColumn("DT_BAL_FROM", "string");
+        	this.dsSave.addColumn("DT_BAL_TO", "string");
+        	this.dsSave.addColumn("GR_SEARCH", "string");
+        	this.dsSave.addColumn("TY_AUTH", "string");
+        	this.dsSave.addColumn("GR_DEPT", "string");
+        	this.dsSave.addColumn("ID_USER", "string");
+
+        	// 전자결재
+        	this.dsApproval = new Dataset();
+        	this.dsApproval.addColumn("ID_PERSON", "string");
+        	this.dsApproval.addColumn("NO_SEQ", "string");
+        	this.dsApproval.addColumn("GR_SEARCH", "string");
+        	this.dsApproval.addColumn("GR_DEPT", "string");
+        	this.dsApproval.addColumn("ID_LOGIN", "string");
+
+        	// 출력물(A, B, C, E) 형
+        	// A	재직증명서
+        	// C	경력증명서
+        	// E	퇴직증명서
+        	this.dsSelectRpt = new Dataset();
+        	this.dsSelectRpt.addColumn("ID_LOGIN", "string");
+        	this.dsSelectRpt.addColumn("MULTI_DATA", "string");
+
+        	// 출력물(G : 갑종근로소득 원천징수확인서)
+        	this.dsSelectRptG = new Dataset();
+        	this.dsSelectRptG.addColumn("CD_CORP", "string");
+        	this.dsSelectRptG.addColumn("ID_SABUN", "string");
+        	this.dsSelectRptG.addColumn("FR_BASE", "string");//대상기간 FROM
+        	this.dsSelectRptG.addColumn("TO_BASE", "string");//대상기간 TO
+        	this.dsSelectRptG.addColumn("TY_TAX", "string"); //비과세포함/비과세불포함 I(INCLUDE) 포함 / O (INCLUDE OUT) 불포함
+        	this.dsSelectRptG.addColumn("TY_SINGO", "string"); //신고구분 M(MONTHLY)매월 / H(HALF)반기
+        	this.dsSelectRptG.addColumn("NO_SEQ", "string");
+        	this.dsSelectRptG.addColumn("ID_LOGIN", "string");
+        	this.dsSelectRptG.addColumn("TY_CERTIFICATE", "string");
+
+        	// 출력물(F : 근로소득 원천징수영수증(연말))
+        	//원천징수영수증출력 main
+        	this.dsSelectRptF = new Dataset();
+        	this.dsSelectRptF.addColumn("YY_BASE", "string");
+        	this.dsSelectRptF.addColumn("NO_APPLY", "int");
+        	this.dsSelectRptF.addColumn("ID_RESIDENT", "string");
+        	this.dsSelectRptF.addColumn("TY_ORDERBY", "int");
+        	this.dsSelectRptF.addColumn("TY_SIGN", "int");
+        	this.dsSelectRptF.addColumn("YN_MID", "string");
+        	this.dsSelectRptF.addColumn("CD_CORP", "string");
+        	this.dsSelectRptF.addColumn("YN_STAMP_IMG", "string");
+
+        	//출력물(F : 근로소득 원천징수영수증(연말)) sub
+        	this.dsSelectRptFSub = new Dataset();
+        	this.dsSelectRptFSub.addColumn("YY_BASE", "string");
+        	this.dsSelectRptFSub.addColumn("MM_BASE", "string");
+        	this.dsSelectRptFSub.addColumn("NO_APPLY", "int");
+        	this.dsSelectRptFSub.addColumn("ID_RESIDENT", "string");
+        	this.dsSelectRptFSub.addColumn("YN_MID", "string");
+        	this.dsSelectRptFSub.addColumn("CD_CORP", "string");
+
+        	//출력물(I : 근로소득 원천징수부)
+        	this.dsSelectRptI = new Dataset();
+        	this.dsSelectRptI.addColumn("YM_BASE", "string");
+        	this.dsSelectRptI.addColumn("NO_APPLY", "int");
+        	this.dsSelectRptI.addColumn("ID_RESIDENT", "string");
+        	this.dsSelectRptI.addColumn("TY_ORDERBY", "int");
+        	this.dsSelectRptI.addColumn("CD_ORG2", "string");
+        	this.dsSelectRptI.addColumn("CD_CORP", "string");
+        	this.dsSelectRptI.addColumn("YN_STAMP_IMG", "string");
+
+        	//출력물(I : 근로소득 원천징수부) sub
+        	this.dsSelectRptISub = new Dataset();
+        	this.dsSelectRptISub.addColumn("YY_BASE", "string");
+        	this.dsSelectRptISub.addColumn("MM_BASE", "string");
+        	this.dsSelectRptISub.addColumn("NO_APPLY", "int");
+        	this.dsSelectRptISub.addColumn("ID_RESIDENT", "string");
+        	this.dsSelectRptISub.addColumn("TY_ORDERBY", "int");
+        	this.dsSelectRptISub.addColumn("CD_ORG2", "string");
+        	this.dsSelectRptISub.addColumn("CD_CORP", "string");
+        	this.dsSelectRptISub.addColumn("YN_STAMP_IMG", "string");
+
+        	this.dsReportParam = new Dataset();
+        	this.dsReportParam.addColumn("DT_PRINT", "STRING");
+        	this.dsReportParam.addColumn("IMG", "STRING");
+
+        	this.dsReportParam2 = new Dataset();
+        	this.dsReportParam2.addColumn("DT_PRINT", "STRING");
+        	this.dsReportParam2.addColumn("IMG", "STRING");
+        }
+
+        /************************************************************************
+         * 콤보 설정
+         ************************************************************************/
+        this.fnSetCombo = function() {
+           this.dsCombo = new Dataset();
+           this.dsCombo.addColumn("TY_SEL"     , "string");
+           this.dsCombo.addColumn("CD_PREFIX"  , "string");
+           this.dsCombo.addColumn("CD_UPPREFIX", "string");
+
+           this.dsCombo.addRow();
+           this.dsCombo.setColumn(0, "TY_SEL"     , "A");
+           this.dsCombo.setColumn(0, "CD_PREFIX"  , "CE");
+           this.dsCombo.setColumn(0, "CD_UPPREFIX", "");
+
+        //    this.dsCombo.addRow();
+        //    this.dsCombo.setColumn(1, "TY_SEL"     , "P");
+        //    this.dsCombo.setColumn(1, "CD_PREFIX"  , "EA");
+        //    this.dsCombo.setColumn(1, "CD_UPPREFIX", "");
+
+        	var strSvcId    = "combo";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "combo=dsCombo";
+        	var outData     = "dsTY_CERTIFICATE=combo0";
+        	//var outData     = "dsTY_CERTIFICATE=combo0 dsCD_EMPTYPE=combo1";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        /************************************************************************
+         * 화면 및 검색영역 초기화
+         ************************************************************************/
+        this.fnInit = function() {
+        	// 법인
+        	this.dsSearch.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+        	this.dsSearch.setColumn(0, "DS_CORP", this.AuthClient.DS_CORP);
+
+        	// 증명종류
+        	this.dsSearch.setColumn(0, "TY_CERTIFICATE", "%");
+
+        	// 승인상태
+        	this.dsSearch.setColumn(0, "YN_APPROVE", "%");
+
+        	// 신청일자
+        	var today = this.gfnGetDate();
+        	this.dsSearch.setColumn(0, "DT_SINCHUNG_FR", today.substr(0, 6) + "01");
+        	this.dsSearch.setColumn(0, "DT_SINCHUNG_TO", today);
+
+        	// 권한별 설정
+            // GR_SEARCH = 1: 전체, 2: 법인, 3: 본부, 5: 부문, 7: 부서, 9: 개인
+            // TY_AUTH = F: 전체, U: 쓰기, R: 읽기
+        	if (this.FormInfo.GR_SEARCH != 1) {
+        		console.log('this', this);
+        		// 성명
+        		this.ccfID_SABUN.form.CDTextBox.set_value(this.AuthClient.ID_SABUN);
+        		this.dsSearch.setColumn(0, "ID_SABUN", this.AuthClient.ID_SABUN);
+        		this.dsSearch.setColumn(0, "DS_HNAME", this.AuthClient.DS_HNAME);
+        		this.dsSearch.setColumn(0, "ID_PERSON", this.AuthClient.ID_PERSON);
+
+        		// 부서
+        		this.dsSearch.setColumn(0, "CD_DEPT", this.AuthClient.CD_DEPT);
+        		this.dsSearch.setColumn(0, "DS_DEPT", this.AuthClient.DS_DEPT);
+
+        		this.ccfCD_CORP.set_enable(false);	// 법인
+        		this.ccfID_SABUN.set_enable(false);	// 성명
+        		this.ccfCD_DEPT.set_enable(false);	// 부서
+        	}
+
+        	this.fnResizeHeader(this.dxGrid, 2, 3);
+
+        	// 법인직인
+        	this.dsReportParam.clearData();
+        	this.dsReportParam.addRow();
+
+        	this.dsImageFile.clearData();
+        	this.dsImageFile.addRow();
+
+        	this.dsImageFile.setColumn(0, "filepath", "/DA/CORP/" + this.dsSearch.getColumn(0, "CD_CORP") );
+        	this.dsImageFile.setColumn(0, "filename", "STAMP_IMG.png");
+
+        	// 서버 이미지파일 base64 로 받아오기
+        	var strSvcId    = "selectIMG";
+        	var strSvcType  = "file/imageFile";
+        	var inProc      = "";
+        	var inData      = "input=dsImageFile";
+        	var outData     = "dsImageFile=input";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,   	// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,  		// Procedure 정보 Dataset 이름
+        						inData,  		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg,  		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc,
+        						false); 		// 통신방법 정의 [생략가능]
+
+        	// 대표서명
+        	this.dsReportParam2.clearData();
+        	this.dsReportParam2.addRow();
+
+        	this.dsImageFile2.clearData();
+        	this.dsImageFile2.addRow();
+
+        	this.dsImageFile2.setColumn(0, "filepath", "/DA/CORP/" + this.dsSearch.getColumn(0, "CD_CORP") );
+        	this.dsImageFile2.setColumn(0, "filename", "STAMP_IMG2.png");
+
+        	// 서버 이미지파일 base64 로 받아오기
+        	var strSvcId    = "selectIMG2";
+        	var strSvcType  = "file/imageFile";
+        	var inProc      = "";
+        	var inData      = "input=dsImageFile2";
+        	var outData     = "dsImageFile2=input";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,   	// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,  		// Procedure 정보 Dataset 이름
+        						inData,  		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg,  		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc,
+        						false); 		// 통신방법 정의 [생략가능]
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+        	if (!this.gfnSearchValidate(this.divSearch, this.dsSearch)) return false;
+
+        	this.gfnGridBeforeSelect(this.dxGrid);
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+        	this.dsSelect.setColumn(0, "CD_CORP"       , this.gfnNvl(this.dsSearch.getColumn(0, "CD_CORP"), ""));
+        	this.dsSelect.setColumn(0, "CD_DEPT"       , this.gfnNvl(this.dsSearch.getColumn(0, "CD_DEPT"), ""));
+        	this.dsSelect.setColumn(0, "ID_SABUN"      , this.gfnNvl(this.dsSearch.getColumn(0, "ID_SABUN"), ""));
+        	// 증명종류 A:재직, B:재직(기술자), C:경력, D:경력확인, E:퇴직, F:원천징수, G:갑근세
+        	this.dsSelect.setColumn(0, "TY_CERTIFICATE", this.gfnNvl(this.dsSearch.getColumn(0, "TY_CERTIFICATE"), ""));
+        	// 상태조회 %:전체, Y: 승인, N:미승인
+        	this.dsSelect.setColumn(0, "YN_APPROVE"    , this.gfnNvl(this.dsSearch.getColumn(0, "YN_APPROVE"), ""));
+        	this.dsSelect.setColumn(0, "DT_SINCHUNG_FR", this.gfnNvl(this.dsSearch.getColumn(0, "DT_SINCHUNG_FR"), ""));
+        	this.dsSelect.setColumn(0, "DT_SINCHUNG_TO", this.gfnNvl(this.dsSearch.getColumn(0, "DT_SINCHUNG_TO"), ""));
+        	this.dsSelect.setColumn(0, "GR_SEARCH"     , this.FormInfo.GR_SEARCH);
+        	this.dsSelect.setColumn(0, "GR_DEPT"       , this.AuthClient.CD_DEPT);
+        	this.dsSelect.setColumn(0, "ID_LOGIN"      , this.AuthClient.ID_USER);
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0 dsListSub=select1";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        };
+
+        /*
+         * 추가 버튼
+         */
+        this.fnAdd = function() {
+
+        }
+
+        /*
+         * 삭제 버튼
+         */
+        this.fnDel = function() {
+        	var yn_approve = this.gfnNvl(this.dsList.getColumn(this.dsList.rowposition, "YN_APPROVE"));
+        	if (yn_approve == "Y") {
+        		this.gfnAlert("승인된 내역은 삭제가 불가능합니다. 확인해주세요.");
+        		return;
+        	}
+        	this.gfnGridDel(this.dxGrid);
+        }
+
+        /*
+         * 저장 버튼
+         */
+        this.fnSave = function() {
+        	// 그리드 필수항목 체크
+        	if (!this.gfnGridValidate(this.dxGrid)) return;
+
+        	this.dxGrid.updateToDataset();
+        	this.dsSave.clearData();
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var flag = this.gfnGetFlag(this.dsList, i);
+        		switch(flag) {
+        			case "D":
+        				var nrow = this.dsSave.addRow();
+        				this.dsSave.setColumn(nrow, "TY_SAVE"          , flag);
+        				this.dsSave.setColumn(nrow, "NO_SEQ"           , this.dsList.getColumn(i, "NO_SEQ"));
+        				this.dsSave.setColumn(nrow, "CD_CORP_REQUEST"  , this.gfnNvl(this.dsList.getColumn(i, "CD_CORP_REQUEST"), ""));
+        				this.dsSave.setColumn(nrow, "ID_SABUN_REQUEST" , this.gfnNvl(this.dsList.getColumn(i, "ID_SABUN_REQUEST"), ""));
+        				this.dsSave.setColumn(nrow, "CD_DEPT_REQUEST"  , this.gfnNvl(this.dsList.getColumn(i, "CD_DEPT_REQUEST"), ""));
+        				this.dsSave.setColumn(nrow, "ID_PERSON_REQUEST", this.gfnNvl(this.dsList.getColumn(i, "ID_PERSON_REQUEST"), 0));
+        				this.dsSave.setColumn(nrow, "CD_CORP"          , this.gfnNvl(this.dsList.getColumn(i, "CD_CORP"), ""));
+        				this.dsSave.setColumn(nrow, "ID_SABUN"         , this.gfnNvl(this.dsList.getColumn(i, "ID_SABUN"), ""));
+        				this.dsSave.setColumn(nrow, "ID_PERSON"        , this.gfnNvl(this.dsList.getColumn(i, "ID_PERSON"), 0));
+        				this.dsSave.setColumn(nrow, "CD_DEPT"          , this.gfnNvl(this.dsList.getColumn(i, "CD_DEPT"), ""));
+        				this.dsSave.setColumn(nrow, "CD_POSITION"      , this.gfnNvl(this.dsList.getColumn(i, "CD_POSITION"), ""));
+        				this.dsSave.setColumn(nrow, "CD_DUTY"          , this.gfnNvl(this.dsList.getColumn(i, "CD_DUTY"), ""));
+        				this.dsSave.setColumn(nrow, "DS_ADDRESS"       , this.gfnNvl(this.dsList.getColumn(i, "DS_ADDRESS"), ""));
+        				this.dsSave.setColumn(nrow, "YN_RESIDENT"      , this.gfnNvl(this.dsList.getColumn(i, "YN_RESIDENT"), ""));
+        				this.dsSave.setColumn(nrow, "YN_INGAM"         , this.gfnNvl(this.dsList.getColumn(i, "YN_INGAM"), ""));
+        				this.dsSave.setColumn(nrow, "NO_CERTIFICATE"   , this.gfnNvl(this.dsList.getColumn(i, "NO_CERTIFICATE"), ""));
+        				this.dsSave.setColumn(nrow, "TY_CERTIFICATE"   , this.gfnNvl(this.dsList.getColumn(i, "TY_CERTIFICATE"), ""));
+        				this.dsSave.setColumn(nrow, "DT_SINCHUNG"      , this.gfnNvl(this.dsList.getColumn(i, "DT_SINCHUNG"), ""));
+        				this.dsSave.setColumn(nrow, "DS_SUBMIT"        , this.gfnNvl(this.dsList.getColumn(i, "DS_SUBMIT"), ""));
+        				this.dsSave.setColumn(nrow, "DS_USE"           , this.gfnNvl(this.dsList.getColumn(i, "DS_USE"), ""));
+        				this.dsSave.setColumn(nrow, "YY_RECEIPT"       , this.gfnNvl(this.dsList.getColumn(i, "YY_RECEIPT"), ""));
+        				this.dsSave.setColumn(nrow, "DS_REMARK"        , this.gfnNvl(this.dsList.getColumn(i, "DS_REMARK"), ""));
+        				this.dsSave.setColumn(nrow, "YN_JOIN"          , this.gfnNvl(this.dsList.getColumn(i, "YN_JOIN"), ""));
+        				this.dsSave.setColumn(nrow, "YM_INCOME"        , this.gfnNvl(this.dsList.getColumn(i, "YM_INCOME"), ""));
+        				this.dsSave.setColumn(nrow, "CD_BAL_DEPT"      , this.gfnNvl(this.dsList.getColumn(i, "CD_BAL_DEPT"), ""));
+        				this.dsSave.setColumn(nrow, "CD_BAL_POSITION"  , this.gfnNvl(this.dsList.getColumn(i, "CD_BAL_POSITION"), ""));
+        				this.dsSave.setColumn(nrow, "DT_BAL_JOIN"      , this.gfnNvl(this.dsList.getColumn(i, "DT_BAL_JOIN"), ""));
+        				this.dsSave.setColumn(nrow, "DT_BAL_FROM"      , this.gfnNvl(this.dsList.getColumn(i, "DT_BAL_FROM"), ""));
+        				this.dsSave.setColumn(nrow, "DT_BAL_TO"        , this.gfnNvl(this.dsList.getColumn(i, "DT_BAL_TO"), ""));
+        				this.dsSave.setColumn(nrow, "GR_SEARCH"        , this.FormInfo.GR_SEARCH);
+        				this.dsSave.setColumn(nrow, "TY_AUTH"          , this.FormInfo.TY_AUTH);
+        				this.dsSave.setColumn(nrow, "GR_DEPT"          , this.AuthClient.CD_DEPT);
+        				this.dsSave.setColumn(nrow, "ID_USER"          , this.AuthClient.ID_USER);
+        				break;
+        		}
+        	}
+
+        	if (this.dsSave.rowcount == 0) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save=dsSave";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+        						strSvcType,     // transaction을 요청할 구분
+        						inProc,         // Procedure 정보 Dataset 이름
+        						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg,         // 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         * 엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         * 출력 버튼
+         */
+        this.fnPrint = function() {
+        	this.fnPrintProc();
+        	return false;	// 브라우저 프린트 막기
+        }
+
+        this.fnPrintProc = function(){
+        // AK	재직증명서(국문)
+        // AK	재직증명서(영문)
+        // CK	경력증명서(국문)
+        // CE	경력증명서(영문)
+        // EK	퇴직증명서(국문)
+        // EE	퇴직증명서(영문)
+        // F	근로소득원천징수영수증(연말정산)
+        // G	갑종근로소득 원천징수확인서
+        // I	근로소득 원천징수부
+        	if (this.dsList.rowcount == 0) {
+        		this.gfnAlert("조회후 작업하세요!");
+        		return false;
+        	}
+
+        	var nChkRow = this.dsList.getCaseCount("CHK == '1'");
+        	if (nChkRow <= 0) {
+        		this.gfnAlert("선택한 자료가 없습니다.\n출력할 자료를 선택하세요.");
+        		return false;
+        	} else if (nChkRow > 1) {
+        		this.gfnAlert("증명서는 한건씩 발행가능합니다.");
+        		return false;
+        	}
+
+        	var nCntPrintKind = 0;
+        	var nCnt = 0;
+        	var nCntAK = 0;    	// AK	재직증명서(국문)
+        	var nCntAE = 0;    	// AE	재직증명서(영문)
+        	var nCntCK = 0;    	// CK	경력증명서(국문)
+        	var nCntCE = 0;    	// CE	경력증명서(영문)
+        	var nCntEK = 0;    	// EK	퇴직증명서(국문)
+        	var nCntEE = 0;    	// EE	퇴직증명서(영문)
+        	var nCntF = 0;      // F	근로소득원천징수영수증(연말정산)
+        	var nCntG = 0; 	    // G	갑종근로소득 원천징수확인서(국문)
+        	var nCntGE = 0; 	// G	갑종근로소득 원천징수확인서(영문)
+        	var nCntI = 0; 	    // I	근로소득 원천징수부
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var rtn = this.fnPrintValid(i, true);
+        		if (rtn == 1) {
+        			continue;
+        		} else if (rtn == -1) {
+        			return;
+        		} else if (rtn == 0) {
+        			var sTY_CERTIFICATE = this.dsList.getColumn(i, "TY_CERTIFICATE");
+        			if (sTY_CERTIFICATE == "AK") {
+        				nCntAK++;
+        			} else if (sTY_CERTIFICATE == "AE") {
+        				nCntAE++;
+        			} else if (sTY_CERTIFICATE == "CK") {
+        				nCntCK++;
+        			} else if (sTY_CERTIFICATE == "CE") {
+        				nCntCE++;
+        			} else if (sTY_CERTIFICATE == "EK") {
+        				nCntEK++;
+        			} else if (sTY_CERTIFICATE == "EE") {
+        				nCntEE++;
+        			} else if (sTY_CERTIFICATE == "F") {
+        				nCntF++;
+        			} else if (sTY_CERTIFICATE == "G") {
+        				nCntG++;
+        			} else if (sTY_CERTIFICATE == "GE") {
+        				nCntGE++;
+        			} else if (sTY_CERTIFICATE == "I") {
+        				nCntI++;
+        			}
+        			nCnt++;
+        		}
+        	}
+
+        	if (nCnt == 0) {
+        		return false;
+        	}
+
+        	if (nCntAK > 0) nCntPrintKind++;
+        	if (nCntAE > 0) nCntPrintKind++;
+        	if (nCntCK > 0) nCntPrintKind++;
+        	if (nCntCE > 0) nCntPrintKind++;
+        	if (nCntEK > 0) nCntPrintKind++;
+        	if (nCntEE > 0) nCntPrintKind++;
+        	if (nCntF > 0) nCntPrintKind++;
+        	if (nCntG > 0) nCntPrintKind++;
+        	if (nCntGE > 0) nCntPrintKind++;
+        	if (nCntI > 0) nCntPrintKind++;
+        	if (nCntPrintKind > 1) {
+        		this.gfnAlert("선태한 내역 중 발급구분(증명서종류)이 다른 데이터가 있습니다.");
+        		return false;
+        	}
+        	if (nCntF > 1) { //F	근로소득원천징수영수증(연말정산)
+        		this.gfnAlert("근로소득원천징수영수증은 한건씩 발행가능합니다.");
+        		return false;
+        	}
+        	if (nCntG > 1) { //G	갑종근로소득 원천징수확인서
+        		this.gfnAlert("갑종근로소득 원천징수확인서는 한건씩 발행가능합니다.");
+        		return false;
+        	}
+        	if (nCntI > 1) { //I	근로소득 원천징수부
+        		this.gfnAlert("근로소득 원천징수부는 한건씩 발행가능합니다.");
+        		return false;
+        	}
+
+        	// 발행 호출
+        	if (nCntAK > 0) this.fnPrint_AK(nCntAK);
+        	if (nCntAE > 0) this.fnPrint_AE(nCntAE);
+        	if (nCntCK > 0) this.fnPrint_CK(nCntCK);
+        	if (nCntCE > 0) this.fnPrint_CE(nCntCE);
+        	if (nCntEK > 0) this.fnPrint_EK(nCntEK);
+        	if (nCntEE > 0) this.fnPrint_EE(nCntEE);
+        	if (nCntF > 0) this.fnPrint_F(nCntF);
+        	if (nCntG > 0) this.fnPrint_G(nCntG);
+        	if (nCntGE > 0) this.fnPrint_GE(nCntGE);
+        	if (nCntI > 0) this.fnPrint_I(nCntI);
+        }
+
+        this.fnPrintValid = function(targetIdx, bMsgDisplay) {
+        	var flag = this.gfnGetFlag(this.dsList, targetIdx);
+        	if (flag == "#") {
+        		return 1;
+        	}
+        	if (this.dsList.getColumn(targetIdx, "CHK") != "1") {
+        		return 1;
+        	}
+        	if (this.dsList.getColumn(targetIdx, "YN_APPROVE") != "Y") {
+        		if (bMsgDisplay) {
+        			this.gfnAlert("승인완료 후 증명서 출력이 가능합니다.");
+        		}
+        		return -1;
+        	}
+        	if (this.dsList.getColumn(targetIdx, "TY_CERTIFICATE") == "D") {
+        		if (bMsgDisplay) {
+        			this.gfnAlert("경력확인서는 출력이 불가능합니다. 인사팀으로 문의해주세요.");
+        		}
+        		return -1;
+        	}
+        	if (this.dsList.getColumn(targetIdx, "TY_CERTIFICATE") == "I") {
+        		if (this.gfnIsNull(this.dsList.getColumn(targetIdx, "ID_RESIDENT"))) {
+        			if (bMsgDisplay) {
+        				this.gfnAlert("근로소득원천징수부는 주민등록번호가 필수입니다.");
+        			}
+        			return -1;
+        		}
+        	}
+        	if (this.gfnAddDate(this.dsList.getColumn(targetIdx, "DT_APPROVE"), 7) < this.gfnGetDate()) {
+        		if (bMsgDisplay) {
+        			this.gfnAlert("승인일 기준 8일이상 지난 신청건은 출력할 수 없습니다.");
+        		}
+        		return -1;
+        	}
+        	return 0;
+        }
+
+        // 재직증명서(국문)
+        this.fnPrint_AK = function(nReqCnt) {
+        	this.dsSelectRpt.clearData();
+        	this.dsSelectRpt.addRow();
+
+        	this.dsRptListACE1.clearData();
+        	this.dsRptListACE2.clearData();
+        	this.dsRptListACE3.clearData();
+
+        	this.dsSelectRpt.setColumn(0, "ID_LOGIN"  , this.AuthClient.ID_SABUN);
+        	this.dsSelectRpt.setColumn(0, "MULTI_DATA", this.dsList.getColumn(this.dsList.rowposition, "ID_PERSON") + this.COL_SPLIT + this.dsList.getColumn(this.dsList.rowposition, "NO_SEQ"));
+
+        	var strSvcId    = "selectRptAK";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "reportACE=dsSelectRpt";
+        	var outData     = "dsRptListACE1=reportACE0 dsRptListACE2=reportACE1 dsRptListACE3=reportACE2";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+                                strSvcType,     // transaction을 요청할 구분
+        						inProc,         // Procedure 정보 Dataset 이름
+        						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        }
+
+        // 재직증명서(영문)
+        this.fnPrint_AE = function(nReqCnt) {
+        	this.dsSelectRpt.clearData();
+        	this.dsSelectRpt.addRow();
+
+        	this.dsRptListACE1.clearData();
+        	this.dsRptListACE2.clearData();
+
+        	this.dsSelectRpt.setColumn(0, "ID_LOGIN"  , this.AuthClient.ID_SABUN);
+        	this.dsSelectRpt.setColumn(0, "MULTI_DATA", this.dsList.getColumn(this.dsList.rowposition, "ID_PERSON") + this.COL_SPLIT + this.dsList.getColumn(this.dsList.rowposition, "NO_SEQ"));
+
+        	var strSvcId    = "selectRptAE";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "reportACE=dsSelectRpt";
+        	var outData     = "dsRptListACE1=reportACE0 dsRptListACE2=reportACE1";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+                                strSvcType,     // transaction을 요청할 구분
+        						inProc,         // Procedure 정보 Dataset 이름
+        						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        }
+
+        // 경력증명서(국문)
+        this.fnPrint_CK = function(nReqCnt) {
+        	this.dsSelectRpt.clearData();
+        	this.dsSelectRpt.addRow();
+
+        	this.dsRptListACE1.clearData();
+        	this.dsRptListACE2.clearData();
+
+        	this.dsSelectRpt.setColumn(0, "ID_LOGIN"  , this.AuthClient.ID_SABUN);
+        	this.dsSelectRpt.setColumn(0, "MULTI_DATA", this.dsList.getColumn(this.dsList.rowposition, "ID_PERSON") + this.COL_SPLIT + this.dsList.getColumn(this.dsList.rowposition, "NO_SEQ"));
+
+        	var strSvcId    = "selectRptCK";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "reportACE=dsSelectRpt";
+        	var outData     = "dsRptListACE1=reportACE0 dsRptListACE2=reportACE1";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+                                strSvcType,     // transaction을 요청할 구분
+        						inProc,         // Procedure 정보 Dataset 이름
+        						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        }
+
+        // 경력증명서(영문)
+        this.fnPrint_CE = function(nReqCnt) {
+        	this.dsSelectRpt.clearData();
+        	this.dsSelectRpt.addRow();
+
+        	this.dsRptListACE1.clearData();
+        	this.dsRptListACE2.clearData();
+
+        	this.dsSelectRpt.setColumn(0, "ID_LOGIN"  , this.AuthClient.ID_SABUN);
+        	this.dsSelectRpt.setColumn(0, "MULTI_DATA", this.dsList.getColumn(this.dsList.rowposition, "ID_PERSON") + this.COL_SPLIT + this.dsList.getColumn(this.dsList.rowposition, "NO_SEQ"));
+
+        	var strSvcId    = "selectRptCE";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "reportACE=dsSelectRpt";
+        	var outData     = "dsRptListACE1=reportACE0 dsRptListACE2=reportACE1";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+                                strSvcType,     // transaction을 요청할 구분
+        						inProc,         // Procedure 정보 Dataset 이름
+        						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        }
+
+        // 퇴직증명서(국문)
+        this.fnPrint_EK = function(nReqCnt) {
+        	this.dsSelectRpt.clearData();
+        	this.dsSelectRpt.addRow();
+
+        	this.dsRptListACE1.clearData();
+        	this.dsRptListACE2.clearData();
+
+        	this.dsSelectRpt.setColumn(0, "ID_LOGIN"  , this.AuthClient.ID_SABUN);
+        	this.dsSelectRpt.setColumn(0, "MULTI_DATA", this.dsList.getColumn(this.dsList.rowposition, "ID_PERSON") + this.COL_SPLIT + this.dsList.getColumn(this.dsList.rowposition, "NO_SEQ"));
+
+        	var strSvcId    = "selectRptEK";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "reportACE=dsSelectRpt";
+        	var outData     = "dsRptListACE1=reportACE0 dsRptListACE2=reportACE1";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+                                strSvcType,     // transaction을 요청할 구분
+        						inProc,         // Procedure 정보 Dataset 이름
+        						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        }
+
+        // 퇴직증명서(영문)
+        this.fnPrint_EE = function(nReqCnt) {
+        	this.dsSelectRpt.clearData();
+        	this.dsSelectRpt.addRow();
+
+        	this.dsRptListACE1.clearData();
+        	this.dsRptListACE2.clearData();
+
+        	this.dsSelectRpt.setColumn(0, "ID_LOGIN"  , this.AuthClient.ID_SABUN);
+        	this.dsSelectRpt.setColumn(0, "MULTI_DATA", this.dsList.getColumn(this.dsList.rowposition, "ID_PERSON") + this.COL_SPLIT + this.dsList.getColumn(this.dsList.rowposition, "NO_SEQ"));
+
+        	var strSvcId    = "selectRptEE";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "reportACE=dsSelectRpt";
+        	var outData     = "dsRptListACE1=reportACE0 dsRptListACE2=reportACE1";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+                                strSvcType,     // transaction을 요청할 구분
+        						inProc,         // Procedure 정보 Dataset 이름
+        						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        }
+
+        // A	재직증명서
+        // C	경력증명서
+        // E	퇴직증명서
+        // 멀티 데이타 발행 가능함
+        this.fnPrint_ACE = function(nReqCnt) {
+        	this.dsSelectRpt.clearData();
+        	this.dsSelectRpt.addRow();
+
+        	this.dsRptListAB1.clearData();
+        	this.dsRptListAB2.clearData();
+        	this.dsRptListABTemp1.clearData();
+        	this.dsRptListABTemp2.clearData();
+
+        	var strData = "";
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var rtn = this.fnPrintValid(i, true);
+        		if (rtn == 1) {
+        			continue;
+        		} else if (rtn == -1) {
+        			return;
+        		} else if (rtn == 0) {
+        			var sTY_CERTIFICATE = this.dsList.getColumn(i, "TY_CERTIFICATE");
+        			if (sTY_CERTIFICATE == "A" || sTY_CERTIFICATE == "C" || sTY_CERTIFICATE == "E") {
+        				var ID_PERSON = this.gfnNvl(this.dsList.getColumn(i, "ID_PERSON"), "");
+        				var NO_SEQ = this.gfnNvl(this.dsList.getColumn(i, "NO_SEQ"), "");
+        				var sRowData = ID_PERSON + this.COL_SPLIT + NO_SEQ ;
+        				strData += sRowData + this.ROW_SPLIT;
+        			}
+        		}
+        	}
+        	strData = strData.substr(0, strData.length - 1);
+
+        	this.dsSelectRpt.setColumn(0, "ID_LOGIN"  , this.AuthClient.ID_SABUN);
+        	this.dsSelectRpt.setColumn(0, "MULTI_DATA", strData);
+
+        	var strSvcId    = "selectRptAB";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "selectRptAB=dsSelectRpt";
+        	var outData     = "dsRptListABTemp1=selectRptAB0 dsRptListABTemp2=selectRptAB1";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+                                strSvcType,     // transaction을 요청할 구분
+        						inProc,         // Procedure 정보 Dataset 이름
+        						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        }
+
+        // F	근로소득원천징수영수증(연말정산)
+        // 단건 발행만됨
+        this.fnPrint_F = function(nReqCnt) {
+
+        	var id_sabun = "";
+        	var yy_receipt = "";
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		if (this.dsList.getColumn(i, "CHK") == "1") {
+        			id_sabun = this.gfnNvl(this.dsList.getColumn(i, "ID_SABUN"));
+        			yy_receipt = this.gfnNvl(this.dsList.getColumn(i, "YY_RECEIPT"));
+        		}
+        	}
+
+        	var fileManager = {};
+        	fileManager.CD_GUBUN = "DA20";
+        	fileManager.CD_DIR = [this.dsSearch.getColumn(0, "CD_CORP"),yy_receipt,id_sabun];
+        	// 권한설정
+        	if (this.FormInfo.GR_SEARCH == "1") {
+        		fileManager.IS_READONLY = false;
+        	} else {
+        		fileManager.IS_READONLY = true;
+        	}
+        	this.gfnFileManager(fileManager, "fnFileCallback");
+        	/*
+        	this.dsRptListF.clearData();
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var rtn = this.fnPrintValid(i, true);
+        		if (rtn == 1) {
+        			continue;
+        		} else if (rtn == -1) {
+        			return;
+        		} else if (rtn == 0) {
+        			var sTY_CERTIFICATE = this.dsList.getColumn(i, "TY_CERTIFICATE");
+                    //무조건 최초 선택된 데이타만 출력됨
+        			if (sTY_CERTIFICATE == "F") {
+        				//근로소득 원천징수영수증.
+        				this.dsSelectRptF.clearData();
+        				this.dsSelectRptF.addRow();
+        				this.dsSelectRptF.setColumn(0, "YY_BASE"     , this.dsList.getColumn(i, "YY_RECEIPT").substring(0,4)+"12");
+        				this.dsSelectRptF.setColumn(0, "NO_APPLY"    , "1");
+        				this.dsSelectRptF.setColumn(0, "ID_RESIDENT" , this.fnReplace(this.dsList.getColumn(i, "ID_RESIDENT"), "-", ""));
+                        // 1 부서, 2 주민번호, 3 법인
+        				this.dsSelectRptF.setColumn(0, "TY_ORDERBY"  , "2");
+                        // 1 발행자 보고용, 2 발행자 보관용, 3 소득자 보관용
+        				this.dsSelectRptF.setColumn(0, "TY_SIGN"     , "3");
+                        // 연말정산/중도정산
+        				this.dsSelectRptF.setColumn(0, "YN_MID"      , "N");
+        				this.dsSelectRptF.setColumn(0, "CD_CORP"     , this.dsList.getColumn(i, "CD_CORP"));
+        				this.dsSelectRptF.setColumn(0, "YN_STAMP_IMG", this.dsList.getColumn(i, "YN_INGAM"));
+
+        				this.dsSelectRptFSub.clearData();
+        				this.dsSelectRptFSub.addRow();
+        				this.dsSelectRptFSub.setColumn(0, "YY_BASE"    , this.dsList.getColumn(i, "YY_RECEIPT").substring(0,4));
+        				this.dsSelectRptFSub.setColumn(0, "MM_BASE"    , "12");
+        				this.dsSelectRptFSub.setColumn(0, "NO_APPLY"   ,  "1");
+        				this.dsSelectRptFSub.setColumn(0, "ID_RESIDENT", this.fnReplace(this.dsList.getColumn(i, "ID_RESIDENT"), "-", ""));
+        				this.dsSelectRptFSub.setColumn(0, "YN_MID"     , "N");
+        				this.dsSelectRptFSub.setColumn(0, "CD_CORP"     , this.dsList.getColumn(i, "CD_CORP"));
+        				break;
+        			}
+        		}
+        	}
+
+        	var strSvcId    = "selectRpt4";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "reportF=dsSelectRptF reportFSub1=dsSelectRptFSub reportFSub2=dsSelectRptFSub";
+        	var outData     = "dsRptListF=reportF0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+        						strSvcType,     // transaction을 요청할 구분
+        						inProc,         // Procedure 정보 Dataset 이름
+        						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg,         // 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        	*/
+        }
+
+        // G	갑종근로소득 원천징수확인서
+        this.fnPrint_G = function(nReqCnt) {
+        	this.dsRptListG.clearData();
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var rtn = this.fnPrintValid(i, true);
+        		if (rtn == 1) {
+        			continue;
+        		} else if (rtn == -1) {
+        			return;
+        		} else if (rtn == 0) {
+        			var sTY_CERTIFICATE = this.dsList.getColumn(i, "TY_CERTIFICATE");
+                    //무조건 최초 선택된 데이타만 출력됨
+        			if (sTY_CERTIFICATE == "G") {
+        				this.dsRptListGTemp.clearData();
+
+        				//갑종근로소득 원천징수확인서
+        				this.dsSelectRptG.clearData();
+        				this.dsSelectRptG.addRow();
+        				this.dsSelectRptG.setColumn(0, "CD_CORP" , this.dsList.getColumn(i, "CD_CORP"));        // 법인
+        				this.dsSelectRptG.setColumn(0, "ID_SABUN", this.dsList.getColumn(i, "ID_SABUN"));       // 사번
+        				this.dsSelectRptG.setColumn(0, "FR_BASE" , this.dsList.getColumn(i, "YM_INCOME_FROM")); // 대상기간 FROM
+        				this.dsSelectRptG.setColumn(0, "TO_BASE" , this.dsList.getColumn(i, "YM_INCOME_TO"));   // 대상기간 TO
+                        // 비과세포함/비과세불포함 I(INCLUDE) 포함 / O (INCLUDE OUT) 불포함
+        				this.dsSelectRptG.setColumn(0, "TY_TAX"  , this.gfnNvl(this.dsList.getColumn(i, "TY_TAX"), "I"));
+                        // 신고구분 M(MONTHLY)매월 / H(HALF)반기
+        				this.dsSelectRptG.setColumn(0, "TY_SINGO", "M");
+        				//this.dsSelectRptG.setColumn(0, "YN_STAMP_IMG", "Y");  //인감여부
+        				this.dsSelectRptG.setColumn(0, "ID_LOGIN"  , this.AuthClient.ID_SABUN);
+        				this.dsSelectRptG.setColumn(0, "NO_SEQ", this.dsList.getColumn(i, "NO_SEQ"));       // 순번
+        				this.dsSelectRptG.setColumn(0, "TY_CERTIFICATE", sTY_CERTIFICATE);
+        				break;
+        			}
+        		}
+        	}
+
+        	var strSvcId    = "selectRpt3";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData 		= "selectRptG=dsSelectRptG";
+        	var outData 	= "dsRptListGTemp=selectRptG0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+        						strSvcType,     // transaction을 요청할 구분
+        						inProc,         // Procedure 정보 Dataset 이름
+        						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg,         // 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        }
+
+
+        // GE	갑종근로소득 원천징수확인서(영문)
+        this.fnPrint_GE = function(nReqCnt) {
+        	this.dsRptListG.clearData();
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var rtn = this.fnPrintValid(i, true);
+        		if (rtn == 1) {
+        			continue;
+        		} else if (rtn == -1) {
+        			return;
+        		} else if (rtn == 0) {
+        			var sTY_CERTIFICATE = this.dsList.getColumn(i, "TY_CERTIFICATE");
+                    //무조건 최초 선택된 데이타만 출력됨
+        			if (sTY_CERTIFICATE == "GE") {
+        				this.dsRptListGTemp.clearData();
+
+        				//갑종근로소득 원천징수확인서
+        				this.dsSelectRptG.clearData();
+        				this.dsSelectRptG.addRow();
+        				this.dsSelectRptG.setColumn(0, "CD_CORP" , this.dsList.getColumn(i, "CD_CORP"));        // 법인
+        				this.dsSelectRptG.setColumn(0, "ID_SABUN", this.dsList.getColumn(i, "ID_SABUN"));       // 사번
+        				this.dsSelectRptG.setColumn(0, "FR_BASE" , this.dsList.getColumn(i, "YM_INCOME_FROM")); // 대상기간 FROM
+        				this.dsSelectRptG.setColumn(0, "TO_BASE" , this.dsList.getColumn(i, "YM_INCOME_TO"));   // 대상기간 TO
+                        // 비과세포함/비과세불포함 I(INCLUDE) 포함 / O (INCLUDE OUT) 불포함
+        				this.dsSelectRptG.setColumn(0, "TY_TAX"  , this.gfnNvl(this.dsList.getColumn(i, "TY_TAX"), "I"));
+                        // 신고구분 M(MONTHLY)매월 / H(HALF)반기
+        				this.dsSelectRptG.setColumn(0, "TY_SINGO", "M");
+        				//this.dsSelectRptG.setColumn(0, "YN_STAMP_IMG", "Y");  //인감여부
+        				this.dsSelectRptG.setColumn(0, "ID_LOGIN"  , this.AuthClient.ID_SABUN);
+        				this.dsSelectRptG.setColumn(0, "NO_SEQ", this.dsList.getColumn(i, "NO_SEQ"));       // 순번
+        				this.dsSelectRptG.setColumn(0, "TY_CERTIFICATE", sTY_CERTIFICATE);
+        				break;
+        			}
+        		}
+        	}
+
+        	var strSvcId    = "selectRpt6";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData 		= "selectRptG=dsSelectRptG";
+        	var outData 	= "dsRptListGTemp=selectRptG0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+        						strSvcType,     // transaction을 요청할 구분
+        						inProc,         // Procedure 정보 Dataset 이름
+        						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg,         // 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        }
+
+        // I	근로소득 원천징수부
+        this.fnPrint_I = function(nReqCnt) {
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var rtn = this.fnPrintValid(i, true);
+        		if (rtn == 1) {
+        			continue;
+        		} else if (rtn == -1) {
+        			return;
+        		} else if (rtn == 0) {
+        			var sTY_CERTIFICATE = this.dsList.getColumn(i, "TY_CERTIFICATE");
+                    //무조건 최초 선택된 데이타만 출력됨
+        			if (sTY_CERTIFICATE == "I") {
+        				this.dsSelectRptI.clearData();
+        				this.dsSelectRptISub.clearData();
+
+        				//근로소득 원천징수부
+        				this.dsSelectRptI.addRow();
+        				this.dsSelectRptI.setColumn(0, "YM_BASE"    , this.dsList.getColumn(i, "YM_INCOME").substring(0, 6));
+        				this.dsSelectRptI.setColumn(0, "NO_APPLY"   , 1);
+        				this.dsSelectRptI.setColumn(0, "ID_RESIDENT", this.dsList.getColumn(i, "ID_RESIDENT"));
+        				this.dsSelectRptI.setColumn(0, "TY_ORDERBY" , "2");	// 1 부서, 2 주민번호
+        				this.dsSelectRptI.setColumn(0, "CD_ORG2"    , "");
+        				this.dsSelectRptI.setColumn(0, "CD_CORP"     , this.dsList.getColumn(i, "CD_CORP"));
+        				this.dsSelectRptI.setColumn(0, "YN_STAMP_IMG", this.dsList.getColumn(i, "YN_INGAM"));
+
+        				this.dsSelectRptISub.addRow();
+        				this.dsSelectRptISub.setColumn(0, "YY_BASE"     , this.dsList.getColumn(i, "YM_INCOME").substring(0, 4));
+        				this.dsSelectRptISub.setColumn(0, "MM_BASE"     , this.dsList.getColumn(i, "YM_INCOME").substring(4, 6));
+        				this.dsSelectRptISub.setColumn(0, "NO_APPLY"    , 1);
+        				this.dsSelectRptISub.setColumn(0, "ID_RESIDENT" , this.dsList.getColumn(i, "ID_RESIDENT"));
+        				this.dsSelectRptISub.setColumn(0, "TY_ORDERBY"  , "2"); // 1 부서, 2 주민번호
+        				this.dsSelectRptISub.setColumn(0, "CD_ORG2"     , "");
+        				this.dsSelectRptISub.setColumn(0, "CD_CORP"     , this.dsList.getColumn(i, "CD_CORP"));
+        				this.dsSelectRptISub.setColumn(0, "YN_STAMP_IMG", this.dsList.getColumn(i, "YN_INGAM"));
+        				break;
+        			}
+        		}
+        	}
+
+        	var strSvcId    = "selectRpt5";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "reportI=dsSelectRptI reportISub=dsSelectRptISub";
+        	var outData     = "dsRptListI=reportI0 dsRptListISub=reportISub0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+            this.gfnTransaction(strSvcId,       // transaction을 구분하기 위한 svc id값
+        						strSvcType,     // transaction을 요청할 구분
+        						inProc,         // Procedure 정보 Dataset 이름
+        						inData,         // 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData,        // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg,         // 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);   // 통신방법 정의 [생략가능]
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        this.fnSelectValid = function() {
+        	return false;
+        };
+
+        /************************************************************************
+         * 확장버튼 이벤트
+         ************************************************************************/
+        // 승인
+        this.fnApproval = function(obj,e) {
+        	this.fnApprovalProc("I");
+        }
+
+        // 승인취소
+        this.fnApprovalCanc = function(obj,e) {
+        	this.fnApprovalProc("C");
+        }
+
+
+        this.fnApprovalProc = function(paramTyFlag) {
+        	var nChkRow = this.dsList.getCaseCount("CHK == '1'");
+        	if (nChkRow <= 0) {
+        		this.gfnAlert("선택한 자료가 없습니다. 승인/승인취소건을 선택해 주세요.");
+        		return;
+        	}
+
+        	this.fv_tyFlag = paramTyFlag;	// D:담당자 / B:부서장 / I:임원 / C:취소
+        	var confirmMsg = "증명서 발급을\r\n승인하시겠습니까?"
+        	if (this.fv_tyFlag == "C") {
+        		confirmMsg = "증명서 발급을\r\n승인취소 하시겠습니까?";
+        	}
+        	this.gfnConfirm(confirmMsg,	"fnApprovalProcCallback");
+        }
+
+        this.fnApprovalProcCallback = function(strId, val) {
+        	if (val == true) {
+        		this.dsApproval.clearData();
+        		for (var i = 0; i < this.dsList.rowcount; i++) {
+        			if (this.dsList.getColumn(i, "CHK") == "1") {
+        				var nrow = this.dsApproval.addRow();
+        				this.dsApproval.setColumn(nrow, "ID_PERSON", this.dsList.getColumn(i, "ID_PERSON"));
+        				this.dsApproval.setColumn(nrow, "NO_SEQ"   , this.dsList.getColumn(i, "NO_SEQ"));
+        				this.dsApproval.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+        				this.dsApproval.setColumn(nrow, "GR_DEPT"  , this.AuthClient.CD_DEPT);
+        				this.dsApproval.setColumn(nrow, "ID_LOGIN" , this.AuthClient.ID_USER);
+        			}
+        		}
+
+        		var strSvcId = "approval";
+        		var inData   = "approval=dsApproval";
+        		if (this.fv_tyFlag == "C") {
+        			strSvcId = "cancel";
+        			inData   = "cancel=dsApproval";
+        		}
+
+        		var strSvcType  = "save";
+        		var inProc		= "_dsProc";
+        		var outData     = "";
+        		var strArg      = "";
+        		var callBackFnc = "fnCallback";
+
+        		if (this.dsApproval.rowcount == 0) return;
+
+        		this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        							strSvcType, 	// transaction을 요청할 구분
+        							inProc,			// Procedure 정보 Dataset 이름
+        							inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        							outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        							strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        							callBackFnc);	// 통신방법 정의 [생략가능]
+        	}
+        }
+
+        // 신청자현황
+        this.fnReqList = function(obj,e) {
+        	if (this.gfnIsNull(this.calDT_SINCHUNG_FR.value) || this.gfnIsNull(this.calDT_SINCHUNG_FR.value)) {
+        		this.fnValidCallback = function() {
+        			this.calDT_SINCHUNG_TO.setFocus();
+        		}
+        		this.gfnAlert("신청기간을 입력해주세요.", "fnValidCallback");
+        		return false;
+        	}
+
+        	var param = {};
+        	param.CD_CORP = this.gfnNvl(this.ccfCD_CORP.form.CDTextBox.value, "");
+        	param.TY_CERTIFICATE = this.gfnNvl(this.cboTY_CERTIFICATE.value, "");
+        	param.YN_APPROVE = this.gfnNvl(this.cboYN_APPROVE.value, "");
+        	param.ID_SABUN = this.gfnNvl(this.ccfID_SABUN.form.CDTextBox.value, "");
+        	param.CD_DEPT = this.gfnNvl(this.ccfCD_DEPT.form.CDTextBox.value, "");
+        	param.DT_SINCHUNG_FR = this.gfnNvl(this.calDT_SINCHUNG_FR.value, "");
+        	param.DT_SINCHUNG_TO = this.gfnNvl(this.calDT_SINCHUNG_TO.value, "");
+
+        	// 내역 / 집계 값 받아오기
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DAB_CERTIFICATE_RPT_DLG", "fnReqListCallback", param, 379, 149);
+        }
+
+        this.fnReqListCallback = function(strId, val) {
+
+        };
+
+        // 발급신청
+        this.fnCertiRequest = function(obj,e) {
+        	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+        		this.fnValidCallback = function() {
+        			this.ccfCD_CORP.form.CDTextBox.setFocus();
+        		}
+        		this.gfnAlert("법인을 입력하세요.", "fnValidCallback");
+        		return false;
+        	}
+
+        	if (this.FormInfo.GR_SEARCH != "1") {
+        		if (this.gfnIsNull(this.ccfID_SABUN.form.CDTextBox.value)) {
+        			this.gfnAlert("사번을 입력하세요.");
+        			this.ccfID_SABUN.form.CDTextBox.setFocus();
+        			return false;
+        		}
+        	}
+
+        	var param = {};
+        	param.CD_CORP = this.AuthClient.CD_CORP;		// 법인코드
+        	param.DS_CORP = this.AuthClient.DS_CORP;
+        	param.ID_SABUN = this.AuthClient.ID_SABUN;		// 성명
+        	param.DS_HNAME = this.AuthClient.DS_HNAME;
+        	param.ID_PERSON = this.AuthClient.ID_PERSON;
+        	param.CD_DEPT = this.AuthClient.CD_DEPT;		// 부서
+        	param.DS_DEPT = this.AuthClient.DS_DEPT;
+        	param.NO_SEQ = "";
+        	param.YN_APPROVE = "";
+        	param.TY_FLAG = "I";
+
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DAB_CERTIFICATE_DLG", "fnCertiRequestCallback", param, 728, 646);
+        }
+
+        this.fnCertiRequestCallback = function (strId, val) {
+        	if (val == true) {
+        		this.FormBtns.Select.click();
+        	}
+        };
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         * 기본 콜백
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg) {
+        	if (svcID == "select") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+        	} else if (svcID == "save") {
+        		if (errorCode == 0) {
+        			this.gfnAlert("작업이 완료되었습니다.");
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	} else if (svcID == "selectIMG") {
+        		this.dsReportParam.setColumn(0, "IMG", this.dsImageFile.getColumn(0, "filereturn"));
+        	} else if (svcID == "selectIMG2") {
+        		this.dsReportParam2.setColumn(0, "IMG", this.dsImageFile2.getColumn(0, "filereturn"));
+        	} else if (svcID == "approval") {
+        		if (errorCode == 0) {
+        			this.gfnAlert("승인이 완료되었습니다.");
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	} else if (svcID == "cancel") {
+        		if (errorCode == 0) {
+        			this.gfnAlert("승인취소 되었습니다.");
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	} else if (svcID == "selectRptAK") {		// 재직증명서(국문)
+        		if (this.dsRptListACE1.rowcount > 0) {
+        			var inProc     = "_dsProc";
+        			var inParam    = "params=dsRptListACE1 params1=dsRptListACE2 params2=dsRptListACE3 param3=dsReportParam";
+        			var inData     = "reportACE=dsSelectRpt";
+        			var reportpath = "/da/dab/DAB_CERTIFICATE_A_KOR.ozr";
+
+        			gfnOpenReport(this, reportpath, inProc, inParam, inData, false, '재직증명서(국문) 발급');
+        		} else {
+        			this.gfnAlert("출력할 자료가 없습니다.");
+        			return;
+        		}
+        	} else if (svcID == "selectRptAE") {		// 재직증명서(영문)
+        		if (this.dsRptListACE1.rowcount > 0) {
+        			var inProc     = "_dsProc";
+        			var inParam    = "params=dsRptListACE1 params1=dsRptListACE2 params2=dsReportParam2";
+        			var inData     = "reportACE=dsSelectRpt";
+        			var reportpath = "/da/dab/DAB_CERTIFICATE_A_ENG.ozr";
+
+        			gfnOpenReport(this, reportpath, inProc, inParam, inData, false, '재직증명서(영문) 발급');
+        		} else {
+        			this.gfnAlert("출력할 자료가 없습니다.");
+        			return;
+        		}
+        	} else if (svcID == "selectRptCK") {		// 경력증명서(국문)
+        		if (this.dsRptListACE1.rowcount > 0) {
+        			var inProc     = "_dsProc";
+        			var inParam    = "params=dsRptListACE1 params1=dsRptListACE2 param2=dsReportParam";
+        			var inData     = "reportACE=dsSelectRpt";
+        			var reportpath = "/da/dab/DAB_CERTIFICATE_C_KOR.ozr";
+
+        			gfnOpenReport(this, reportpath, inProc, inParam, inData, false, '경력증명서(국문) 발급');
+        		} else {
+        			this.gfnAlert("출력할 자료가 없습니다.");
+        			return;
+        		}
+        	} else if (svcID == "selectRptCE") {		// 경력증명서(영문)
+        		if (this.dsRptListACE1.rowcount > 0) {
+        			var inProc     = "_dsProc";
+        			var inParam    = "params=dsRptListACE1 params1=dsRptListACE2 param2=dsReportParam2";
+        			var inData     = "reportACE=dsSelectRpt";
+        			var reportpath = "/da/dab/DAB_CERTIFICATE_C_ENG.ozr";
+
+        			gfnOpenReport(this, reportpath, inProc, inParam, inData, false, '경력증명서(영문) 발급');
+        		} else {
+        			this.gfnAlert("출력할 자료가 없습니다.");
+        			return;
+        		}
+        	} else if (svcID == "selectRptEK") {		// 퇴직증명서(국문)
+        		if (this.dsRptListACE1.rowcount > 0) {
+        			var inProc     = "_dsProc";
+        			var inParam    = "params=dsRptListACE1 params1=dsRptListACE2 param2=dsReportParam";
+        			var inData     = "reportACE=dsSelectRpt";
+        			var reportpath = "/da/dab/DAB_CERTIFICATE_E_KOR.ozr";
+
+        			gfnOpenReport(this, reportpath, inProc, inParam, inData, false, '퇴직증명서(국문) 발급');
+        		} else {
+        			this.gfnAlert("출력할 자료가 없습니다.");
+        			return;
+        		}
+        	} else if (svcID == "selectRptEE") {		// 퇴직증명서(영문)
+        		if (this.dsRptListACE1.rowcount > 0) {
+        			var inProc     = "_dsProc";
+        			var inParam    = "params=dsRptListACE1 params1=dsRptListACE2 param2=dsReportParam2";
+        			var inData     = "reportACE=dsSelectRpt";
+        			var reportpath = "/da/dab/DAB_CERTIFICATE_E_ENG.ozr";
+
+        			gfnOpenReport(this, reportpath, inProc, inParam, inData, false, '퇴직증명서(영문) 발급');
+        		} else {
+        			this.gfnAlert("출력할 자료가 없습니다.");
+        			return;
+        		}
+        	} else if (svcID == "selectRpt4") {		// 근로소득 원천징수영수증
+        		if (this.dsRptListF.rowcount > 0) {
+        			var inProc     = "_dsProc";
+        			var inParam    = "";
+        			var inData     = "reportF=dsSelectRptF reportFSub1=dsSelectRptFSub reportFSub2=dsSelectRptFSub";
+        			var reportpath = "/da/dav/DAV_YEARENDRECEIPT.ozr";
+
+        			gfnOpenReport(this, reportpath, inProc, inParam, inData, false, 'selectRpt4');
+        		} else {
+        			this.gfnAlert("출력할 자료가 없습니다.[근로소득 원천징수영수증]");
+        			return;
+        		}
+        	} else if (svcID == "selectRpt3") {		// 갑근세
+        		if (this.dsRptListGTemp.rowcount > 0)
+        		{
+        			var inProc     = "_dsProc";
+        			var inParam    = "params=dsSelectRptG params1=dsRptListGTemp param2=dsReportParam";
+        			//var inParam    = "";
+        			var inData     = "selectRptG=dsSelectRptG";
+        			var reportpath = "/da/daa/DAA_CERTIFICATE_G.ozr";
+
+        			gfnOpenReport(this, reportpath, inProc, inParam, inData, false, 'selectRpt3');
+        		} else {
+        			this.gfnAlert("출력할 자료가 없습니다.[갑근세]");
+        			return;
+        		}
+        	} else if (svcID == "selectRpt6") {		// 갑근세
+        		if (this.dsRptListGTemp.rowcount > 0)
+        		{
+        			var inProc     = "_dsProc";
+        			var inParam    = "params=dsSelectRptG params1=dsRptListGTemp param2=dsReportParam";
+        			//var inParam    = "";
+        			var inData     = "selectRptG=dsSelectRptG";
+        			var reportpath = "/da/daa/DAA_CERTIFICATE_GE.ozr";
+
+        			gfnOpenReport(this, reportpath, inProc, inParam, inData, false, 'selectRpt6');
+        		} else {
+        			this.gfnAlert("출력할 자료가 없습니다.[갑근세]");
+        			return;
+        		}
+        	} else if (svcID == "selectRpt5") {		// 근로소득 원천징수부
+        		if (this.dsRptListI.rowcount > 0) {
+        			var inProc     = "_dsProc";
+        			var inParam    = "params=dsRptListI";	// 조회SP 이외 사용할 정보
+        			var inData     = "reportI=dsSelectRptI reportISub=dsSelectRptISub";
+        			var reportpath = "/da/dav/DAV_YEARENDCOLLECT.ozr";
+
+        			gfnOpenReport(this, reportpath, inProc, inParam, inData, false, 'selectRpt5');
+        		} else {
+        			this.gfnAlert("출력할 자료가 없습니다.[근로소득 원천징수부]");
+        			return;
+        		}
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+        	if (id == "ccfCD_DEPT") {
+        		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+        		dsUserParam.setColumn(nrow, "CD_DEPT"  , this.gfnNvl(this.AuthClient.CD_DEPT, ""));
+        		dsUserParam.setColumn(nrow, "CD_CORP"  , this.gfnNvl(this.ccfCD_CORP.form.CDTextBox.value, "%"));
+        		dsUserParam.setColumn(nrow, "YN_DELETE", "N");
+        	} else if (id == "ccfID_SABUN") {
+        		dsUserParam.setColumn(nrow, "CD_DEPT"  , "");
+        		dsUserParam.setColumn(nrow, "CD_CORP"  , this.gfnNvl(this.ccfCD_CORP.form.CDTextBox.value, "%"));
+        		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+        		dsUserParam.setColumn(nrow, "YN_CORP"  , "N");
+        		dsUserParam.setColumn(nrow, "TY_RETIRE", "%");
+        	}
+        	return true;
+        };
+
+        this.fnAfterCDTextChanged = function(id, codeFindData) {
+        	var arr = codeFindData;
+        	if (id == "ccfCD_CORP") {
+        		this.ccfID_SABUN.form.fnCodeFindClear();
+        		this.ccfCD_DEPT.form.fnCodeFindClear();
+        	} else if (id == "ccfID_SABUN") {
+        		this.ccfCD_DEPT.form.fnCodeFindClear();
+        		this.divSearch.form.edtID_PERSON.set_value("");
+        		if (arr.length > 0) {
+        			this.dsSearch.setColumn(0, "ID_PERSON", arr[0]["ID_PERSON"] );
+        			this.dsSearch.setColumn(0, "CD_DEPT"  , arr[0]["CD_DEPT"] );
+        			this.dsSearch.setColumn(0, "DS_DEPT"  , arr[0]["DS_DEPT"] );
+        		}
+        	}
+        }
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+        this.fnGrid_BeforeUserDataSetParam = function(id, dsUserParam, nrow){
+        	var gridIdx = this.dxGrid.currentrow;
+        	switch (id) {
+        	case "CD_SUN_SITE":	// 선임현장	DAX_CERTIFICATE_DEPT  >> DAX_CFDEPT
+        		dsUserParam.setColumn(nrow, "GR_SEARCH" , this.FormInfo.GR_SEARCH);
+        		dsUserParam.setColumn(nrow, "CD_DEPT"   , this.AuthClient.CD_DEPT);
+        		dsUserParam.setColumn(nrow, "CD_CORP"   , this.dxGrid.getCellValue(gridIdx, this.dxGrid.getBindCellIndex("body", "CD_CORP")));
+        		dsUserParam.setColumn(nrow, "YN_CURRENT", "");
+        		break;
+        	case "CD_SUN_CAREER":	// 선임자격	DAX_CERTIFICATE_LIC
+        		dsUserParam.setColumn(nrow, "ID_PERSON", this.dxGrid.getCellValue(gridIdx, this.dxGrid.getBindCellIndex("body", "ID_PERSON")));
+        		break;
+        	case "CD_BAL_DEPT":     // 발급정보_부서	DAX_CFDEPT
+        		dsUserParam.setColumn(nrow, "GR_SEARCH" , this.FormInfo.GR_SEARCH);
+        		dsUserParam.setColumn(nrow, "CD_DEPT"   , this.AuthClient.CD_DEPT);
+        		dsUserParam.setColumn(nrow, "CD_CORP"   , this.dxGrid.getCellValue(gridIdx, this.dxGrid.getBindCellIndex("body", "CD_CORP")));
+        		dsUserParam.setColumn(nrow, "YN_CURRENT", "");
+        		break;
+        	case "CD_BAL_POSITION":	// 발급정보_직급	DAX_CFCOMMONCODE
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "ED");
+        		break;
+        	}
+        	return true;
+        }
+
+        this.fnGrid_AfterCDTextChanged = function(id, codeFindData) {
+        	var arr = codeFindData;
+        	switch (id) {
+        	case "CD_SUN_SITE":		// 선임현장	DAX_CERTIFICATE_DEPT
+        		this.dsList.setColumn(this.dsList.rowposition, "CD_SUN_SITE", arr[0]["CD_DEPT"]);
+        		this.dsList.setColumn(this.dsList.rowposition, "DS_SUN_SITE", arr[0]["DS_DEPT"]);
+        		break;
+        	case "CD_SUN_CAREER":     // 선임자격	DAX_CERTIFICATE_LIC
+        		this.dsList.setColumn(this.dsList.rowposition, "CD_SUN_CAREER", arr[0]["CD_LICENSE"]);
+        		this.dsList.setColumn(this.dsList.rowposition, "DS_SUN_CAREER", arr[0]["DS_LICENSE"]);
+        		this.dsList.setColumn(this.dsList.rowposition, "NO_SUN_CAREER", arr[0]["NO_LICENSE"]);
+        		break;
+        	case "CD_BAL_DEPT":     // 발급정보_부서	DAX_CFDEPT
+        		this.dsList.setColumn(this.dsList.rowposition, "CD_BAL_DEPT", arr[0]["CD_DEPT"]);
+        		this.dsList.setColumn(this.dsList.rowposition, "DS_BAL_DEPT", arr[0]["DS_DEPT"]);
+        		break;
+        	case "CD_BAL_POSITION":     // 발급정보_직급	DAX_CFCOMMONCODE
+        		this.dsList.setColumn(this.dsList.rowposition, "CD_BAL_POSITION", arr[0]["CD_CODE"]);
+        		this.dsList.setColumn(this.dsList.rowposition, "DS_BAL_POSITION", arr[0]["DS_CODE"]);
+        		break;
+        	}
+        	return true;
+        };
+
+        // 셀 수정가능 여부
+        this.fnGrid_EnterCell = function(obj, row, cell) {
+        	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, cell);
+
+        	// 개인일 때 발급정보(부서, 직급) 수정불가
+        	if (this.FormInfo.GR_SEARCH != 1) {
+        		if (colnm == "CD_BAL_DEPT" || colnm == "DS_BAL_DEPT" || colnm == "CD_BAL_POSITION" || colnm == "DS_BAL_POSITION") {
+        			return false;
+        		}
+        	}
+        }
+
+        this.divData_objGrid_oncelldblclick = function(obj,e){
+        	if (!this.gfnGridIsRow(this.dxGrid)) return;
+
+        	var nIndex0 = this.divData.form.objGrid.getBindCellIndex( "body", "CHK"); //선택
+        	if(e.cell == nIndex0) return;
+        	if (this.gfnIsNull(this.dsList.getColumn(e.row, "ID_PERSON"))) return;
+
+        	var param = {};
+        	param.ID_PERSON = this.gfnNvl(this.dsList.getColumn(this.dsList.rowposition, "ID_PERSON"), "");
+        	param.NO_SEQ = this.gfnNvl(this.dsList.getColumn(this.dsList.rowposition, "NO_SEQ"), "");
+        	param.TY_FLAG = "U";
+
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DAB_CERTIFICATE_DLG", "fnCertiRequestCallback", param, 728, 646);
+        }
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        // 조회 조건 변경시 초기화
+        this.dsSearch_onvaluechanged = function(obj,e){
+        	if(e.oldvalue != e.newvalue) {
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.gfnGridClear(this.dxGrid);
+        	}
+        }
+
+        /************************************************************************
+         * 기타 함수
+         ************************************************************************/
+        this.fnReplace = function(orgText, fromSplit, toSplit){
+        	if (this.gfnIsNull(orgText)) return "";
+
+        	var newSplit = "";
+        	if (!this.gfnIsNull(toSplit)) {
+        		newSplit = toSplit;
+        	}
+
+        	return orgText.split(fromSplit).join(newSplit);
+        }
+
+        // 헤더의 높이를 변경한다.
+        this.fnResizeHeader = function(grid, row, line) {
+        	console.log('row: ', row);
+        	console.log('line: ', line);
+        	grid.setFormatRowProperty(row - 1, "size", this.dxGrid.getFormatRowProperty(0, "size") * line - (line * 8));
+        }
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divSearch.form.cboTY_CERTIFICATE.addEventHandler("onitemchanged",this.dsSearch_onvaluechanged,this);
+            this.divSearch.form.cboYN_APPROVE.addEventHandler("onitemchanged",this.fnSearchInit,this);
+            this.divSearch.form.calDT_SINCHUNG_FR.addEventHandler("onchanged",this.fnSearchInit,this);
+            this.divSearch.form.calDT_SINCHUNG_TO.addEventHandler("onchanged",this.fnSearchInit,this);
+            this.divData.form.objGrid.addEventHandler("oncelldblclick",this.divData_objGrid_oncelldblclick,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+        };
+        this.loadIncludeScript("DAB_CERTIFICATE.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

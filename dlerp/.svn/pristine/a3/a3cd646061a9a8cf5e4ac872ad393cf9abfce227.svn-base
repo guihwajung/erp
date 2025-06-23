@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="평가(본사)" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="110.0" right="0" cssclass="div_SEARCH_Bg" formscrollbartype="auto auto">
+          <Layouts>
+            <Layout>
+              <Static id="staYY_WORK" taborder="0" text="평가년도" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctcYY_WORK" taborder="1" left="staYY_WORK:0.0" top="10.0" width="70" height="24.0" url="cmm::cmmCalYY.xfdl"/>
+              <Div id="ccfMagam" CDTextWidth="50" CodeFindName="DCX_CFEVALUE_MAGAM_BON" taborder="2" left="ctcYY_WORK:0.0" top="10.0" width="98" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staCD_EVALUEKIND" taborder="3" text="평가기준" left="ccfMagam:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_EVALUEKIND" CodeFindName="DCX_CFEVALUEKIND_YEAR_BONSA" CDTextWidth="50" taborder="4" left="staCD_EVALUEKIND:0.0" top="10.0" width="200" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staID_EVALUE" taborder="5" text="평가자" left="ccfCD_EVALUEKIND:0.0" top="10.0" width="92.0" height="24.0" textAlign="center" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfID_EVALUE" CodeFindName="DZX_CFUSER" CDTextWidth="70" taborder="6" left="staID_EVALUE:0.0" top="10.0" width="200" height="24.0" url="cmm::cmmCodeFind.xfdl" enable="false"/>
+              <Static id="staCD_SITE" taborder="7" text="현장코드" left="0.0" top="staYY_WORK:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFSITE" CDTextWidth="70" taborder="8" left="staCD_SITE:0.0" top="ctcYY_WORK:10.0" width="200" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staCD_VENDOR" taborder="9" text="업체코드" left="ccfCD_SITE:0.0" top="staYY_WORK:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_VENDOR" CodeFindName="DCX_CFVENDOR_COMMON" CDTextWidth="50" taborder="10" left="staCD_VENDOR:0.0" top="staYY_WORK:10.0" width="200" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DCDPR_EVALUE_BON_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DCDPR_EVALUE_BONSA_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DCDPR_EVALUE_BONSA_DELETE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="YR_EVALUE" type="STRING" size="256"/>
+          <Column id="NO_SEQ" type="STRING" size="256"/>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="CD_EVALUEKIND" type="STRING" size="256"/>
+          <Column id="CD_VENDOR" type="STRING" size="256"/>
+          <Column id="ID_EVALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="YR_EVALUE"/>
+            <Col id="NO_SEQ"/>
+            <Col id="CD_SITE"/>
+            <Col id="CD_EVALUEKIND"/>
+            <Col id="CD_VENDOR"/>
+            <Col id="ID_EVALUE"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	var dt = new Date();
+	//this.divSearch.form.ctcYY_WORK.form.TextBox.set_value(dt.getFullYear());
+	this.dsSearch.setColumn(0, "YR_EVALUE", dt.getFullYear());
+	this.dsSearch.setColumn(0, "ID_EVALUE", this.AuthClient.ID_USER);
+	this.divSearch.form.ccfID_EVALUE.form.DSTextBox.set_value(this.AuthClient.DS_HNAME);
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().NO_SEQ) && !this.gfnIsNull(this.getOwnerFrame().CD_EVALUEKIND))
+	{
+		this.dsSearch.setColumn(0, "NO_SEQ", this.getOwnerFrame().NO_SEQ);
+		this.dsSearch.setColumn(0, "CD_EVALUEKIND", this.getOwnerFrame().CD_EVALUEKIND);
+		this.divSearch.form.ccfCD_EVALUEKIND.form.DSTextBox.set_value(this.getOwnerFrame().DS_EVALUEKIND);
+		this.dsSearch.setColumn(0, "CD_VENDOR", this.getOwnerFrame().CD_VENDOR);
+		this.divSearch.form.ccfCD_VENDOR.form.DSTextBox.set_value(this.getOwnerFrame().DS_VENDOR);
+		this.dsSearch.setColumn(0, "NO_HADOCONT", this.getOwnerFrame().NO_HADOCONT);
+		this.divSearch.form.ccfNO_HADOCONT.form.DSTextBox.set_value(this.getOwnerFrame().DS_HADOCONT);
+	}
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	//this.btn1 = this.gfnFormButtonAdd("btnLoad", "fnLoad");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfMagam = this.divSearch.form.ccfMagam;
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ccfCD_EVALUEKIND = this.divSearch.form.ccfCD_EVALUEKIND;
+	this.ccfCD_VENDOR = this.divSearch.form.ccfCD_VENDOR;
+	this.ccfID_EVALUE = this.divSearch.form.ccfID_EVALUE;
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	this.ccfMagam.form.DSTextBox.set_width("0");
+	this.ccfMagam.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_EVALUEKIND.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DC", "DCD_EVALUE_BONSA");
+	
+	// 그리드 코드파인드 설정
+	this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("YR_EVALUE", "string");
+	this.dsSelect.addColumn("NO_SEQ", "string");
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("CD_VENDOR", "string");
+	this.dsSelect.addColumn("CD_EVALUEKIND", "string");
+	this.dsSelect.addColumn("ID_EVALUE", "string");
+
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("CD_SITE", "string");
+	this.dsInsert.addColumn("YR_EVALUE", "string");
+	this.dsInsert.addColumn("NO_SEQ", "string");
+	this.dsInsert.addColumn("CD_EVALUEKIND", "string");
+	this.dsInsert.addColumn("CD_VENDOR", "string");
+	this.dsInsert.addColumn("DS_VENDOR", "string");
+	this.dsInsert.addColumn("CD_LEVEL", "string");
+	this.dsInsert.addColumn("DS_LEVEL", "string");
+	this.dsInsert.addColumn("CD_CODE", "string");
+	this.dsInsert.addColumn("DS_CODE", "string");
+	this.dsInsert.addColumn("AM_EVALUE", "bigdecimal");
+	this.dsInsert.addColumn("CD_STANDARD", "string");
+	this.dsInsert.addColumn("DS_STANDARD", "string");
+	this.dsInsert.addColumn("AM_STANDARD", "bigdecimal");
+	this.dsInsert.addColumn("ID_EVALUE", "string");
+	this.dsInsert.addColumn("DS_EVALUEJUDGE", "string");
+	this.dsInsert.addColumn("RM_BIGO", "string");
+	this.dsInsert.addColumn("NO_HADOCONT", "string");
+
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("CD_SITE", "string");
+	this.dsDelete.addColumn("YR_EVALUE", "string");
+	this.dsDelete.addColumn("NO_SEQ", "string");
+	this.dsDelete.addColumn("CD_EVALUEKIND", "string");
+	this.dsDelete.addColumn("CD_VENDOR", "string");
+	this.dsDelete.addColumn("CD_LEVEL", "string");
+	this.dsDelete.addColumn("CD_CODE", "string");
+	this.dsDelete.addColumn("ID_EVALUE", "string");
+	this.dsDelete.addColumn("NO_HADOCONT", "string");
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if(!this.fnValidate()) return;
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "YR_EVALUE", this.dsSearch.getColumn(0, "YR_EVALUE"));
+	this.dsSelect.setColumn(0, "NO_SEQ", this.dsSearch.getColumn(0, "NO_SEQ"));
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "CD_VENDOR", this.dsSearch.getColumn(0, "CD_VENDOR"));
+	this.dsSelect.setColumn(0, "CD_EVALUEKIND", this.dsSearch.getColumn(0, "CD_EVALUEKIND"));
+	this.dsSelect.setColumn(0, "ID_EVALUE", this.dsSearch.getColumn(0, "ID_EVALUE"));
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+
+};
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	if (!this.gfnGridValidate(this.dxGrid)) return;	
+
+	this.dxGrid.updateToDataset();
+		
+	this.dsInsert.clearData();
+	this.dsDelete.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+			case "U":
+				var nrow = this.dsInsert.addRow();
+				this.dsInsert.setColumn(nrow, "CD_SITE", this.dsList.getColumn(i, "CD_SITE"));
+				this.dsInsert.setColumn(nrow, "YR_EVALUE", this.dsList.getColumn(i, "YR_EVALUE"));
+				this.dsInsert.setColumn(nrow, "NO_SEQ", this.dsList.getColumn(i, "NO_SEQ"));
+				this.dsInsert.setColumn(nrow, "CD_EVALUEKIND", this.dsList.getColumn(i, "CD_EVALUEKIND"));
+				this.dsInsert.setColumn(nrow, "CD_VENDOR", this.dsList.getColumn(i, "CD_VENDOR"));
+				this.dsInsert.setColumn(nrow, "DS_VENDOR", this.dsList.getColumn(i, "DS_VENDOR"));
+				this.dsInsert.setColumn(nrow, "CD_LEVEL", this.dsList.getColumn(i, "CD_LEVEL"));
+				this.dsInsert.setColumn(nrow, "DS_LEVEL", this.dsList.getColumn(i, "DS_LEVEL"));
+				this.dsInsert.setColumn(nrow, "CD_CODE", this.dsList.getColumn(i, "CD_CODE"));
+				this.dsInsert.setColumn(nrow, "DS_CODE", this.dsList.getColumn(i, "DS_CODE"));
+				this.dsInsert.setColumn(nrow, "AM_EVALUE", this.dsList.getColumn(i, "AM_EVALUE"));
+				this.dsInsert.setColumn(nrow, "CD_STANDARD", this.dsList.getColumn(i, "CD_STANDARD"));
+				this.dsInsert.setColumn(nrow, "DS_STANDARD", this.dsList.getColumn(i, "DS_STANDARD"));
+				this.dsInsert.setColumn(nrow, "AM_STANDARD", this.dsList.getColumn(i, "AM_STANDARD"));
+				this.dsInsert.setColumn(nrow, "ID_EVALUE", this.dsSearch.getColumn(0, "ID_EVALUE"));
+				this.dsInsert.setColumn(nrow, "DS_EVALUEJUDGE", this.dsList.getColumn(i, "DS_EVALUEJUDGE"));
+				this.dsInsert.setColumn(nrow, "RM_BIGO", this.dsList.getColumn(i, "RM_BIGO"));
+				this.dsInsert.setColumn(nrow, "NO_HADOCONT", this.dsList.getColumn(i, "NO_HADOCONT"));
+				break;
+				
+			case "D":
+				var nrow = this.dsDelete.addRow();
+				this.dsDelete.setColumn(nrow, "CD_SITE", this.dsList.getColumn(i, "CD_SITE"));
+				this.dsDelete.setColumn(nrow, "YR_EVALUE", this.dsList.getColumn(i, "YR_EVALUE"));
+				this.dsDelete.setColumn(nrow, "NO_SEQ", this.dsList.getColumn(i, "NO_SEQ"));
+				this.dsDelete.setColumn(nrow, "CD_EVALUEKIND", this.dsList.getColumn(i, "CD_EVALUEKIND"));
+				this.dsDelete.setColumn(nrow, "CD_VENDOR", this.dsList.getColumn(i, "CD_VENDOR"));
+				this.dsDelete.setColumn(nrow, "CD_LEVEL", this.dsList.getColumn(i, "CD_LEVEL"));
+				this.dsDelete.setColumn(nrow, "CD_CODE", this.dsList.getColumn(i, "CD_CODE"));
+				this.dsDelete.setColumn(nrow, "ID_EVALUE", this.dsSearch.getColumn(0, "ID_EVALUE"));
+				this.dsDelete.setColumn(nrow, "NO_HADOCONT", this.dsList.getColumn(i, "NO_HADOCONT"));
+				
+				break;
+		}
+	}
+	
+	if (this.dsInsert.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+		
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert delete=dsDelete";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnValidate = function() {
+
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "YR_EVALUE"))) {
+		this.fnVaidateCallback = function() {
+			this.divSearch.form.ctcYY_WORK.form.TextBox.setFocus();
+		}
+		this.gfnAlert("평가년도를 입력하세요.");
+		return false;
+	}
+	else if (this.gfnIsNull(this.dsSearch.getColumn(0, "NO_SEQ"))){
+		this.fnVaidateCallback = function() {
+			this.ccfMagam.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("회차를 입력하세요.");
+		return false;
+	}
+	else if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_EVALUEKIND"))){
+		this.fnVaidateCallback = function() {
+			this.ccfCD_EVALUEKIND.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("평가기준을 입력하세요.");
+		return false;
+	}
+	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+	}
+	else if(svcID == "save"){
+		if(errorCode == 0)
+		{
+			this.FormBtns.Select.click();
+		}	
+		else 
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if(id == "ccfMagam"){
+		dsUserParam.setColumn(nrow, "YR_EVALUE", this.dsSearch.getColumn(0, "YR_EVALUE"));
+		dsUserParam.setColumn(nrow, "ID_EVALUE", this.dsSearch.getColumn(0, "ID_EVALUE"));	
+	}else if(id == "ccfCD_EVALUEKIND"){
+		dsUserParam.setColumn(nrow, "YR_EVALUE", this.dsSearch.getColumn(0, "YR_EVALUE"));
+		dsUserParam.setColumn(nrow, "NO_SEQ", this.dsSearch.getColumn(0, "NO_SEQ"));
+	}
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id){
+};
+
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ this.fnGrid_BeforeUserDataSetParam = function(id, dsUserParam, nrow) {	
+	// 그리드에서 코드파인드 id는 그리드셋팅의 코드파인드 식별ID
+ 	if (id == "DCX_CFCD_STANDARD") {
+		dsUserParam.setColumn(nrow, "CD_EVALUEKIND", this.dsList.getColumn(this.dsList.rowposition, "CD_EVALUEKIND"));
+		dsUserParam.setColumn(nrow, "CD_LEVEL", this.dsList.getColumn(this.dsList.rowposition, "CD_LEVEL"));
+ 		dsUserParam.setColumn(nrow, "CD_CODE", this.dsList.getColumn(this.dsList.rowposition, "CD_CODE"));	
+	}
+	return true;
+}
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+// this.fnSearchInit = function(obj,e) {
+// 	if(e == null || (e.pretext != e.posttext)) {
+// 		// 폼상태 초기화
+// 		this.gfnSetFormStatus(this);	
+// 		this.gfnGridClear(this.dxGrid);
+// 	}
+// };
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		
+		if(e.columnid == "YR_EVALUE")
+		{
+			this.dsSearch.setColumn(0, "NO_SEQ", "");
+			this.dsSearch.setColumn(0, "CD_EVALUEKIND", "");
+			this.ccfCD_EVALUEKIND.form.DSTextBox.set_value("");
+		}
+		else if(e.columnid == "NO_SEQ")
+		{
+			this.dsSearch.setColumn(0, "CD_EVALUEKIND", "");
+			this.ccfCD_EVALUEKIND.form.DSTextBox.set_value("");
+		}
+	}
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctcYY_WORK.form.TextBox" propid="value" datasetid="dsSearch" columnid="YR_EVALUE"/>
+      <BindItem id="item1" compid="divSearch.form.ccfMagam.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="NO_SEQ"/>
+      <BindItem id="item2" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item3" compid="divSearch.form.ccfCD_EVALUEKIND.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_EVALUEKIND"/>
+      <BindItem id="item4" compid="divSearch.form.ccfCD_VENDOR.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_VENDOR"/>
+      <BindItem id="item5" compid="divSearch.form.ccfID_EVALUE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="ID_EVALUE"/>
+    </Bind>
+  </Form>
+</FDL>

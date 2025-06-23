@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form1" width="339" height="135" maxwidth="385" maxheight="220" titletext="" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTY_ORDER_bg00_00" taborder="7" left="79" top="29" width="260" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Static id="staTITLE" taborder="0" text="승인처리 " left="0" top="-6" height="30" cssclass="sta_TITLE_Bg" textAlign="left" right="6"/>
+              <Static id="staTY_ORDER" taborder="2" text="승인자" left="0" top="staTITLE:5" width="80" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Div id="divBtns" left="70" top="staTY_ORDER:45" width="190" height="30" taborder="1">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnOK" taborder="0" text="승인" left="30" top="0" width="60" height="30" onclick="btnOK_onclick"/>
+                    <Button id="btnCANCLE" taborder="1" text="취소" left="btnOK:10" top="0" width="60" height="30" onclick="btnCANCLE_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="staTY_ORDER00" taborder="3" text="발급근거" left="0" top="58" width="80" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staTY_ORDER_bg00" taborder="4" left="79" top="58" width="260" height="30" cssclass="sta_WF_tablebg" text=""/>
+              <Button id="btnOK" taborder="5" text="파일첨부" left="183" top="63" width="60" height="20" onclick="fnFileUpload"/>
+              <Static id="staFileUpload" taborder="6" text="파일수 :  0 개" left="89" top="61" width="91" height="24"/>
+              <Div id="ccfID_APPROVE" CDTextWidth="90" taborder="8" left="83" top="34" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DAX_CFBASEINFO_FULL" enable="false"/>
+              <Edit id="edtFILE_CNT" taborder="9" left="259" top="63" width="67" height="20" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsList.setColumn(0, "ID_SABUN" , this.getOwnerFrame().ID_SABUN );
+	this.dsList.setColumn(0, "DS_HNAME" , this.getOwnerFrame().DS_HNAME );
+	this.dsList.setColumn(0, "FILE_CNT" , this.getOwnerFrame().FILE_CNT );
+	this.dsList.setColumn(0, "NO_ID" 	, this.getOwnerFrame().NO_ID );
+	this.dsList.setColumn(0, "CD_CORP" 	, this.getOwnerFrame().CD_CORP );
+	this.dsList.setColumn(0, "DS_CORP" 	, this.getOwnerFrame().DS_CORP );
+	this.dsList.setColumn(0, "NO_BUSU" 	, this.getOwnerFrame().NO_BUSU );
+	this.dsList.setColumn(0, "ID_APPROVE" 	, this.AuthClient.ID_USER);
+	this.dsList.setColumn(0, "DS_APPROVE" 	, this.AuthClient.DS_HNAME);
+
+	this.staFileUpload.set_text("파일수 : "+ this.getOwnerFrame().FILE_CNT + " 개");
+
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	
+}
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfID_APPROVE = this.divData.form.ccfID_APPROVE;
+	this.staFileUpload = this.divData.form.staFileUpload; 
+	this.edtFILE_CNT = this.divData.form.edtFILE_CNT;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfID_APPROVE.BeforeUserDataSetParam    = "fnBeforeUserDataSetParam";	// 성명
+	this.ccfID_APPROVE.AfterCDTextChanged        = "fnAfterCDTextChanged";		
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {	
+
+	this.dsApprove = new Dataset();
+	this.dsApprove.addColumn("CD_CORP", "string");
+	this.dsApprove.addColumn("ID_PERSON", "int");
+	this.dsApprove.addColumn("NO_ID", "int");
+	this.dsApprove.addColumn("NO_BUSU", "int");
+	this.dsApprove.addColumn("TY_GUBUN", "string");
+	this.dsApprove.addColumn("GR_SEARCH", "string");
+	this.dsApprove.addColumn("GR_DEPT", "string");
+	this.dsApprove.addColumn("ID_LOGIN", "string");
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+/*
+ * 저장 버튼
+ */
+this.fnSave = function() {
+	if (this.gfnIsNull(this.getOwnerFrame().NO_ID) || this.getOwnerFrame().NO_ID == 0	||
+	    this.gfnIsNull(this.getOwnerFrame().ID_PERSON) || this.getOwnerFrame().ID_PERSON == 0) {
+		return;
+	}
+	if (!this.fnSaveValid()) return;
+	
+	this.dsApprove.clearData();
+	var nrow = this.dsApprove.addRow();	
+	this.dsApprove.setColumn(nrow, "CD_CORP", this.getOwnerFrame().CD_CORP);
+	this.dsApprove.setColumn(nrow, "ID_PERSON", this.getOwnerFrame().ID_PERSON);
+	this.dsApprove.setColumn(nrow, "NO_ID", this.getOwnerFrame().NO_ID);
+	this.dsApprove.setColumn(nrow, "NO_BUSU", this.getOwnerFrame().NO_BUSU);
+	this.dsApprove.setColumn(nrow, "TY_GUBUN", this.getOwnerFrame().TY_GUBUN);
+	this.dsApprove.setColumn(nrow, "GR_SEARCH", this.AuthClient.GR_SEARCH );
+	this.dsApprove.setColumn(nrow, "GR_DEPT", this.AuthClient.GR_DEPT);
+	this.dsApprove.setColumn(nrow, "ID_LOGIN",  this.AuthClient.ID_USER);
+
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsApprove";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);	// 통신방법 정의 [생략가능]
+	
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSaveValid = function() {
+// 	if (this.getOwnerFrame().TY_GUBUN == "HR" && (this.gfnIsNull(this.edtFILE_CNT.value) || this.edtFILE_CNT.value == 0)) {		
+// 		this.gfnAlert("발급근거를 파일첨부해주세요.", "fnValidCallback");
+// 		return false;
+// 	}
+	
+	
+	return true;
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValid = function() {
+	return true;
+}
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+// 확인 버튼
+this.btnOK_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	this.fnSave();
+}
+
+// 취소 버튼
+this.btnCANCLE_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	this.getParentContext().close(false);
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ * 기본 콜백
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if (errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return;
+	} 
+	if (svcID == "save") {
+		if (errorCode == 0) {
+			this.fnWorkAfter = function() {
+				this.getParentContext().close(true);
+			}
+			this.gfnAlert("승인처리 완료되었습니다.", "fnWorkAfter");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGridBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+}
+
+this.fnGridAfterCDTextChanged = function(id, codeFindData) {
+
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+// 첨부파일
+this.fnFileUpload = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	//trace("this.btnFileUpload.text :: " + this.btnFileUpload.text);
+
+		var cdGubun = "";
+		var cdDir = "";		
+
+		cdGubun = "DA90";
+		var fileManager = {};
+		fileManager.CD_GUBUN = cdGubun;
+		fileManager.CD_DIR = [this.dsList.getColumn(0, "NO_ID")];
+		fileManager.IS_READONLY = false;
+		
+		this.gfnFileManager(fileManager, "fnFileCallback");
+
+}
+
+
+this.fnFileCallback = function(strID, val) {
+	// val.IsChange : 변경여부, val.Cnt : 파일개수
+		
+	// 파일개수를 다시 셋팅
+	this.dsList.set_enableevent(false);
+	if(val.Cnt == 0) {
+		this.staFileUpload.set_text("파일수 : 0 개");
+		this.edtFILE_CNT.set_value(0);
+	} else {
+		this.staFileUpload.set_text("파일수 : " + val.Cnt + " 개");
+		this.edtFILE_CNT.set_value(val.Cnt);
+	}
+
+	//this.dsList.setColumn(this.dsList.rowposition, "URL_PROOF", val.Cnt);
+	this.dsList.set_enableevent(true);
+};
+
+/************************************************************************
+ * 기타 함수
+ ************************************************************************/
+
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+
+
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	var strColid = e.columnid;	
+	if(e.oldvalue != e.newvalue) {	
+	}	
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+          <Column id="FILE_CNT" type="INT" size="256"/>
+          <Column id="NO_ID" type="INT" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="NO_BUSU" type="INT" size="256"/>
+          <Column id="ID_APPROVE" type="STRING" size="256"/>
+          <Column id="DS_APPROVE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DABPR_ENGINEERS_APPROVE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.edtFILE_CNT" propid="value" datasetid="dsList" columnid="FILE_CNT"/>
+      <BindItem id="item1" compid="divData.form.ccfID_APPROVE.form.CDTextBox" propid="value" datasetid="dsList" columnid="ID_APPROVE"/>
+      <BindItem id="item2" compid="divData.form.ccfID_APPROVE.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_APPROVE"/>
+    </Bind>
+  </Form>
+</FDL>

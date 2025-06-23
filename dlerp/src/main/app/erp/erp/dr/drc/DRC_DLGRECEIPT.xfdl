@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="500" height="550" maxwidth="500" maxheight="550" titletext="분양금 수납" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="1" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="분양금 수납" left="0" top="20" width="100.00%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staSunapInfo" taborder="37" left="0" top="staTITLE:5" height="22" text="수납내역" right="0"/>
+              <Static id="sta00" taborder="1" text="수납일자" left="0" top="staSunapInfo:5" width="87" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta01" taborder="2" left="sta00:-1" top="staSunapInfo:5" height="30" cssclass="sta_WF_tablebg" text="" right="0"/>
+              <Static id="sta02" taborder="5" text="수납금액" left="0" top="sta00:-1" width="87" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta03" taborder="6" left="sta02:-1" top="sta01:-1" height="30" cssclass="sta_WF_tablebg" text="" right="0"/>
+              <Static id="sta04" taborder="7" text="수납구분" left="0" top="sta02:-1" width="87" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta05" taborder="8" left="sta04:-1" top="sta03:-1" height="30" cssclass="sta_WF_tablebg" text="" right="0"/>
+              <Static id="sta06" taborder="9" text="수납처구분" left="0" top="sta04:-1" width="87" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta07" taborder="10" left="sta06:-1" top="sta05:-1" height="30" cssclass="sta_WF_tablebg" text="" right="0"/>
+              <Static id="sta08" taborder="11" text="납입계좌" left="0" top="sta06:-1" width="87" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta09" taborder="12" left="sta08:-1" top="sta07:-1" height="30" cssclass="sta_WF_tablebg" text="" right="0"/>
+              <Static id="sta10" taborder="13" text="카드사" left="0" top="sta08:-1" width="87" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta11" taborder="14" left="sta10:-1" top="sta09:-1" height="30" cssclass="sta_WF_tablebg" text="" right="0"/>
+              <Static id="sta12" taborder="15" text="승인번호" left="0" top="sta10:-1" width="87" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta13" taborder="16" left="sta12:-1" top="sta11:-1" height="30" cssclass="sta_WF_tablebg" text="" right="0"/>
+              <Static id="sta14" taborder="17" text="납입구분" left="0" top="sta12:-1" width="87" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta15" taborder="18" left="sta14:-1" top="sta13:-1" height="30" cssclass="sta_WF_tablebg" text="" right="0"/>
+              <Static id="sta16" taborder="19" text="융자사코드" left="0" top="sta14:-1" width="87" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta17" taborder="20" left="sta16:-1" top="sta15:-1" height="30" cssclass="sta_WF_tablebg" text="" right="0"/>
+              <Static id="sta18" taborder="21" text="연체적용" left="0" top="sta16:-1" width="87" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta19" taborder="22" left="sta18:-1" top="sta17:-1" height="30" cssclass="sta_WF_tablebg" text="" right="0"/>
+              <Static id="sta20" taborder="23" text="할인적용" left="0" top="sta18:-1" width="87" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta21" taborder="24" left="sta20:-1" top="sta19:-1" height="30" cssclass="sta_WF_tablebg" text="" right="0"/>
+              <Button id="btnOK" taborder="3" text="확인" left="134" top="420" width="60" height="27" onclick="btnOK_onclick"/>
+              <Button id="btnCANCLE" taborder="4" text="취소" left="btnOK:30" top="420" width="60" height="27" onclick="btnCANCLE_onclick"/>
+              <Calendar id="tclDT_RECEIVED" taborder="25" left="sta00:5" top="87" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <MaskEdit id="txtAM_RECEIVED" taborder="26" left="sta02:5" top="sta01:4" width="120" height="20" format="#,##0"/>
+              <Static id="sta22" taborder="27" text="원" left="txtAM_RECEIVED:5" top="sta01:4" width="20" height="20"/>
+              <Radio id="rdoTY_RECEIPT" taborder="28" left="92" top="sta03:4" height="20" direction="vertical" width="228" codecolumn="CD_CODE" datacolumn="DS_CODE" innerdataset="dsTY_RECEIPT" fittocontents="width"/>
+              <Combo id="cboTY_POSITION" taborder="29" left="92" top="sta05:4" width="200" height="20" innerdataset="dsTY_POSITION" datacolumn="DS_CODE" codecolumn="CD_CODE"/>
+              <Div id="cfCD_GUJA" CodeFindName="DRX_CFACCOUNT_CODEFIND" CDTextWidth="70" taborder="30" left="92" top="sta07:4" width="300" height="20" url="cmm::cmmCodeFind.xfdl"/>
+              <Div id="cfCD_CARD" CodeFindName="DRX_CARD_CODEFIND" CDTextWidth="70" taborder="31" left="92" top="sta09:4" width="300" height="20" url="cmm::cmmCodeFind.xfdl"/>
+              <Edit id="txtNO_APPROVAL" taborder="32" left="92" top="sta11:4" width="150" height="20"/>
+              <Combo id="cboTY_MONEY" taborder="33" left="92" top="sta13:4" width="120" height="20" innerdataset="dsTY_MONEY" datacolumn="DS_CODE" codecolumn="CD_CODE"/>
+              <Div id="cfCD_FINANCING" CodeFindName="DRX_CFFINANCING_CODEFIND" CDTextWidth="70" taborder="34" left="92" top="sta15:4" width="300" height="20" url="cmm::cmmCodeFind.xfdl"/>
+              <Radio id="rdoYN_DELAY" taborder="35" left="92" top="sta17:4" height="20" direction="vertical" width="178" codecolumn="CD_CODE" datacolumn="DS_CODE" innerdataset="dsYN" fittocontents="width"/>
+              <Radio id="rdoYN_DISCOUNT" taborder="36" left="92" top="sta19:4" height="20" direction="vertical" width="178" codecolumn="CD_CODE" datacolumn="DS_CODE" innerdataset="dsYN" fittocontents="width"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+
+	this.fnSetVariable();
+	this.fnSetEvent(); 
+	this.fnSetParameter();
+
+	this.CD_ACNTUNIT = this.getOwnerFrame().CD_ACNTUNIT;
+	this.NO_DONG = this.getOwnerFrame().NO_DONG;
+	this.NO_FLOOR = this.getOwnerFrame().NO_FLOOR;
+	this.NO_HO = this.getOwnerFrame().NO_HO;
+	this.NO_UNIONMEMBER = this.getOwnerFrame().NO_UNIONMEMBER;
+	this.YN_VACNT = this.getOwnerFrame().YN_VACNT;
+	this.CD_GUJA = this.getOwnerFrame().CD_GUJA;
+	this.NO_GUJA = this.getOwnerFrame().NO_GUJA;
+	
+	if (!this.gfnIsNull(this.getOwnerFrame().IsSalediscount)) {
+		if (this.getOwnerFrame().IsSalediscount == "false")
+			this.dsTY_RECEIPT.deleteRow(1);
+	}
+	this.staSunapInfo.set_text("수납정보 ( " + this.NO_DONG + "동 " + this.NO_FLOOR + "층 " + this.NO_HO + "호 )");
+
+	
+	this.dsList.setColumn(0, "DT_RECEIVED", this.gfnGetDate());
+	this.dsList.setColumn(0, "AM_RECEIVED", 0);
+	this.dsList.setColumn(0, "AM_COMMISSION", 0);
+	this.dsList.setColumn(0, "TY_RECEIPT", "N");
+	this.dsList.setColumn(0, "YN_DELAY", "Y");
+	this.dsList.setColumn(0, "YN_DISCOUNT", "Y");
+	this.cfCD_FINANCING.set_enable(false);
+	this.dsList.setColumn(0, "TY_MONEY", "1");
+	if (this.YN_VACNT == "Y") {
+		this.dsList.setColumn(0, "CD_GUJA", this.CD_GUJA);
+		this.dsList.setColumn(0, "DS_GUJA", this.NO_GUJA);
+	}
+	
+	this.txtAM_RECEIVED.setFocus();
+};
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.tclDT_RECEIVED = this.divData.form.tclDT_RECEIVED;
+	this.txtAM_RECEIVED = this.divData.form.txtAM_RECEIVED;
+	this.rdoTY_RECEIPT = this.divData.form.rdoTY_RECEIPT;
+	this.cboTY_POSITION = this.divData.form.cboTY_POSITION;
+	this.cfCD_GUJA = this.divData.form.cfCD_GUJA;
+	this.cfCD_CARD = this.divData.form.cfCD_CARD;
+	this.txtNO_APPROVAL = this.divData.form.txtNO_APPROVAL;
+	this.cboTY_MONEY = this.divData.form.cboTY_MONEY;
+	this.cfCD_FINANCING = this.divData.form.cfCD_FINANCING;
+	this.rdoYN_DELAY = this.divData.form.rdoYN_DELAY
+	this.rdoYN_DISCOUNT = this.divData.form.rdoYN_DISCOUNT;
+	this.staSunapInfo = this.divData.form.staSunapInfo;
+	this.sta08 = this.divData.form.sta08;	//납입계좌 label
+	this.sta10 = this.divData.form.sta10;	//카드사 label
+	this.sta12 = this.divData.form.sta12;	//승인번호 label
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.cfCD_GUJA.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfCD_FINANCING.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("CD_ACNTUNIT", "string");
+	this.dsSave.addColumn("TY_GUBUN", "string");
+	this.dsSave.addColumn("NO_CHASU", "string");
+	this.dsSave.addColumn("NO_DONG", "string");
+	this.dsSave.addColumn("NO_FLOOR", "string");
+	this.dsSave.addColumn("NO_HO", "string");
+	this.dsSave.addColumn("NO_UNIONMEMBER", "string");
+	this.dsSave.addColumn("DT_RECEIVED", "string");
+	this.dsSave.addColumn("AM_RECEIVED", "bigdecimal");
+	this.dsSave.addColumn("TY_RECEIPT", "string");
+	this.dsSave.addColumn("TY_POSITION", "string");
+	this.dsSave.addColumn("DT_REPAYMENT", "string");
+	this.dsSave.addColumn("CD_GUJA", "string");
+	this.dsSave.addColumn("TY_MONEY", "string");
+	this.dsSave.addColumn("CD_VENDOR", "string");
+	this.dsSave.addColumn("YN_DELAY", "string");
+	this.dsSave.addColumn("YN_DISCOUNT", "string");
+	this.dsSave.addColumn("AM_SETTLE", "bigdecimal");
+	this.dsSave.addColumn("CD_ACCOUNT", "string");
+	this.dsSave.addColumn("YN_AUTO", "string");
+	this.dsSave.addColumn("DT_TRADE", "string");
+	this.dsSave.addColumn("TM_TRADE", "string");
+	this.dsSave.addColumn("CD_TRADE", "string");
+	this.dsSave.addColumn("ID_INSERT", "string");
+	this.dsSave.addColumn("CD_CARD", "string");
+	this.dsSave.addColumn("DS_CARD", "string");
+	this.dsSave.addColumn("NO_APPROVAL", "string");
+	this.dsSave.addColumn("AM_DEPOSITFEE", "bigdecimal");
+	this.dsSave.addColumn("CD_CHAIP", "string");
+	this.dsSave.addColumn("DT_PAYBACK", "string");
+	this.dsSave.addColumn("CD_DEPT_BE", "string");
+	this.dsSave.addColumn("TY_DAEMUL", "string");
+	
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_ACNTUNIT", "string");
+	this.dsSelect.addColumn("TY_GUBUN", "string");
+	this.dsSelect.addColumn("NO_CHASU", "string");
+	this.dsSelect.addColumn("NO_DONG", "string");
+	this.dsSelect.addColumn("NO_FLOOR", "string");
+	this.dsSelect.addColumn("NO_HO", "string");
+	this.dsSelect.addColumn("NO_UNIONMEMBER", "string");
+	this.dsSelect.addColumn("DT_RECEIVED", "string");
+	this.dsSelect.addColumn("AM_RECEIVED", "bigdecimal");
+	this.dsSelect.addColumn("TY_RECEIPT", "string");
+	this.dsSelect.addColumn("TY_POSITION", "string");
+	this.dsSelect.addColumn("DT_REPAYMENT", "string");
+	this.dsSelect.addColumn("CD_GUJA", "string");
+	this.dsSelect.addColumn("TY_MONEY", "string");
+	this.dsSelect.addColumn("CD_VENDOR", "string");
+	this.dsSelect.addColumn("YN_DELAY", "string");
+	this.dsSelect.addColumn("YN_DISCOUNT", "string");
+	this.dsSelect.addColumn("AM_SETTLE", "bigdecimal");
+	this.dsSelect.addColumn("CD_ACCOUNT", "string");
+	this.dsSelect.addColumn("YN_AUTO", "string");
+	this.dsSelect.addColumn("DT_TRADE", "string");
+	this.dsSelect.addColumn("TM_TRADE", "string");
+	this.dsSelect.addColumn("CD_TRADE", "string");
+	this.dsSelect.addColumn("ID_INSERT", "string");
+	this.dsSelect.addColumn("CD_CARD", "string");
+	this.dsSelect.addColumn("DS_CARD", "string");
+	this.dsSelect.addColumn("NO_APPROVAL", "string");
+	this.dsSelect.addColumn("AM_DEPOSITFEE", "bigdecimal");
+	this.dsSelect.addColumn("CD_CHAIP", "string");
+	this.dsSelect.addColumn("DT_PAYBACK", "string");
+	this.dsSelect.addColumn("CD_DEPT_BE", "string");
+	this.dsSelect.addColumn("TY_DAEMUL", "string");
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSaveValidate = function() {
+	if (this.gfnIsNull(this.dsList.getColumn(0, "DT_RECEIVED"))) {
+		this.fnVaidateCallback = function() {
+			this.tclDT_RECEIVED.setFocus();
+		}
+		this.gfnAlert("수납일자가 입력되지 않았습니다.", "fnVaidateCallback");
+		return false;
+	}
+
+	if (this.gfnIsNull(this.dsList.getColumn(0, "AM_RECEIVED"))) {
+		this.fnVaidateCallback = function() {
+			this.txtAM_RECEIVED.setFocus();
+		}
+		this.gfnAlert("수납금액이 입력되지 않았습니다.", "fnVaidateCallback");
+		return false;
+	}
+	else {
+		if (nexacro.toNumber(this.dsList.getColumn(0, "AM_RECEIVED")) <= 0) {
+			this.fnVaidateCallback = function() {
+				this.txtAM_RECEIVED.setFocus();
+			}
+			this.gfnAlert("수납금액을 잘못 입력하였습니다.", "fnVaidateCallback");
+			return false;
+		}
+	}
+	
+	if (this.dsList.getColumn(0, "TY_POSITION") == "F") {
+		if (this.gfnIsNull(this.dsList.getColumn(0, "CD_CARD"))) {
+			this.fnVaidateCallback = function() {
+				this.cfCD_CARD.form.CDTextBox.setFocus();
+			}
+			this.gfnAlert("카드사정보가 입력되지 않았습니다.", "fnVaidateCallback");
+			return false;
+		}
+		else if (this.gfnIsNull(this.dsList.getColumn(0, "NO_APPROVAL"))) {
+			this.fnVaidateCallback = function() {
+				this.txtNO_APPROVAL.setFocus();
+			}
+			this.gfnAlert("승인번호가 입력되지 않았습니다.", "fnVaidateCallback");
+			return false;
+		}
+	}
+	else if (this.dsList.getColumn(0, "TY_POSITION") != "1"
+			&& this.dsList.getColumn(0, "TY_RECEIPT") != "D" && this.dsList.getColumn(0, "TY_RECEIPT") != "M"
+			&& this.gfnIsNull(this.dsList.getColumn(0, "CD_GUJA"))) {
+		this.fnVaidateCallback = function() {
+			this.cfCD_GUJA.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("계좌정보가 입력되지 않았습니다.", "fnVaidateCallback");
+		return false;
+	}
+	
+	if (this.dsList.getColumn(0, "TY_MONEY") == "2" || this.dsList.getColumn(0, "TY_MONEY") == "3" && this.gfnIsNull(this.dsList.getColumn(0, "CD_FINANCING"))) {
+		this.fnVaidateCallback = function() {
+			this.cfCD_FINANCING.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("융자사정보가 입력되지 않았습니다.", "fnVaidateCallback");
+		return false;
+	}
+	
+	return true;
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if (id == "cfCD_GUJA") {
+		dsUserParam.setColumn(nrow, "CD_ACNTUNIT", this.CD_ACNTUNIT);
+	}
+	else if (id == "cfCD_FINANCING") {
+		dsUserParam.setColumn(nrow, "CD_ACNTUNIT", this.CD_ACNTUNIT);
+		dsUserParam.setColumn(nrow, "YN_OPTION", "N");
+	}
+	return true;
+};
+
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	//if(svcID == "select"){
+	if(svcID == "save"){
+		if (errorCode == 0) {
+			if (this.dsResult.rowcount == 0) {
+				this.gfnAlert("분양금 수납에 실패하였습니다.");
+			}
+			else {
+				this.btnOK_callback = function() {
+					this.gfnSetFormStatus(this);
+					this.getParentContext().close(true);
+				}
+				this.gfnAlert(this.dsResult.getColumn(0, "MSG"), "btnOK_callback");
+			}
+		}
+		else {
+			this.gfnAlert(errorMsg);
+		}
+ 	}
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	if (e.oldvalue != e.newvalue) {
+		if (e.columnid == "DT_RECEIVED") {
+			if (e.newvalue.length != 0 && (this.dsList.getColumn(0, "TY_POSITION") == "단기대여금" || this.dsList.getColumn(0, "TY_POSITION") == "장기대여금")) {
+				this.dsList.setColumn(0, "DT_PAYBACK", e.newvalue);
+			}
+		}
+		else if (e.columnid == "TY_RECEIPT") {
+			switch (e.newvalue) {
+				case "N":	//정상
+					this.dsList.setColumn(0, "TY_POSITION", "2");
+					break;
+				case "D":	//매출할인
+					this.dsList.setColumn(0, "TY_POSITION", "3");
+					this.cboTY_POSITION.set_readonly(true);
+					this.cboTY_MONEY.set_readonly(true);
+					this.cfCD_GUJA.set_enable(false);
+					this.dsList.setColumn(0, "YN_DELAY", "N");
+					this.rdoYN_DELAY.set_readonly(true);
+					this.dsList.setColumn(0, "YN_DISCOUNT", "N");
+					this.rdoYN_DISCOUNT.set_readonly(true);
+					this.dsList.setColumn(0, "CD_GUJA", "");
+					this.dsList.setColumn(0, "DS_GUJA", "");
+					break;
+				case "M":	//마이너스
+					//this.dsList.setColumn(0, "TY_POSITION", "2");
+					this.cboTY_POSITION.set_readonly(false);
+					this.dsList.setColumn(0, "YN_DELAY", "N");
+					this.rdoYN_DELAY.set_readonly(false);
+					this.dsList.setColumn(0, "YN_DISCOUNT", "N");
+					this.rdoYN_DELAY.set_readonly(false);
+					this.cfCD_GUJA.set_enable(false);
+					break;
+			}
+		}
+		else if (e.columnid == "TY_POSITION") {
+			switch (e.newvalue) {
+				case "1":
+					this.cboTY_MONEY.set_readonly(false);
+					this.dsList.setColumn(0, "YN_DELAY", "Y");
+					this.rdoYN_DELAY.set_readonly(false);
+					this.dsList.setColumn(0, "YN_DISCOUNT", "Y");
+					this.rdoYN_DISCOUNT.set_readonly(false);
+					this.cfCD_GUJA.set_enable(false);
+					this.dsList.setColumn(0, "CD_GUJA", this.YN_VACNT == "Y" ? this.CD_GUJA : "");
+					this.dsList.setColumn(0, "DS_GUJA", this.YN_VACNT == "Y" ? this.NO_GUJA : "");
+					this.txtNO_APPROVAL.set_readonly(true);
+					this.dsList.setColumn(0, "NO_APPROVAL", "");
+					this.cfCD_CARD.set_enable(false);
+					this.dsList.setColumn(0, "CD_CARD", "");
+					this.dsList.setColumn(0, "DS_CARD", "");
+					break;
+				case "F":
+					this.dsList.setColumn(0, "TY_MONEY", "9");
+					this.cboTY_MONEY.set_readonly(true);
+					this.dsList.setColumn(0, "YN_DELAY", "Y");
+					this.rdoYN_DELAY.set_readonly(false);
+					this.dsList.setColumn(0, "YN_DISCOUNT", "Y");
+					this.rdoYN_DISCOUNT.set_readonly(false);
+					this.cfCD_GUJA.set_enable(false);
+					this.dsList.setColumn(0, "CD_GUJA", "");
+					this.dsList.setColumn(0, "DS_GUJA", "");
+					this.txtNO_APPROVAL.set_readonly(false);
+					this.cfCD_CARD.set_enable(true);
+					break;
+				case "3":
+					this.cboTY_MONEY.set_readonly(false);
+					this.dsList.setColumn(0, "YN_DELAY", "Y");
+					this.rdoYN_DELAY.set_readonly(false);
+					this.dsList.setColumn(0, "YN_DISCOUNT", "Y");
+					this.rdoYN_DISCOUNT.set_readonly(false);
+					this.cfCD_GUJA.set_enable(false);
+					this.dsList.setColumn(0, "CD_GUJA", "");
+					this.dsList.setColumn(0, "DS_GUJA", "");
+					this.txtNO_APPROVAL.set_readonly(true);
+					this.dsList.setColumn(0, "NO_APPROVAL", "");
+					this.cfCD_CARD.set_enable(false);
+					this.dsList.setColumn(0, "CD_CARD", "");
+					this.dsList.setColumn(0, "DS_CARD", "");
+					break;
+				default:
+					this.cboTY_MONEY.set_readonly(false);
+					this.dsList.setColumn(0, "YN_DELAY", "Y");
+					this.rdoYN_DELAY.set_readonly(false);
+					this.dsList.setColumn(0, "YN_DISCOUNT", "Y");
+					this.rdoYN_DISCOUNT.set_readonly(false);
+					this.cfCD_GUJA.set_enable(this.YN_VACNT == "Y" ? false : true);
+					this.dsList.setColumn(0, "CD_GUJA", this.YN_VACNT == "Y" ? this.CD_GUJA : "");
+					this.dsList.setColumn(0, "DS_GUJA", this.YN_VACNT == "Y" ? this.NO_GUJA : "");
+					this.txtNO_APPROVAL.set_readonly(true);
+					this.dsList.setColumn(0, "NO_APPROVAL", "");
+					this.cfCD_CARD.set_enable(false);
+					this.dsList.setColumn(0, "CD_CARD", "");
+					this.dsList.setColumn(0, "DS_CARD", "");
+					break;
+			}
+			
+			if (e.newvalue == "F") {
+				this.sta08.set_textDecoration("");
+				this.sta10.set_textDecoration("underline");
+				this.sta12.set_textDecoration("underline");
+			}
+			else {
+				this.sta08.set_textDecoration("underline");
+				this.sta10.set_textDecoration("");
+				this.sta12.set_textDecoration("");
+			}
+		}
+		else if (e.columnid == "TY_MONEY") {
+			switch (e.newvalue) {
+				case "2":
+				case "3":
+				case "4":
+					this.cfCD_FINANCING.set_enable(true);
+					break;
+				default:
+					this.cfCD_FINANCING.set_enable(false);
+					this.dsList.setColumn(0, "CD_FINANCING", "");
+					this.dsList.setColumn(0, "DS_FINANCING", "");
+					break;
+			}
+		}
+	}
+};
+
+this.fnReceiptSelectData = function() {
+	if (this.dsList.getColumn(0, "TY_RECEIPT") == "D") {
+	
+		this.dsSelect.clearData();
+		this.dsSelect.addRow();
+		this.dsSelect.setColumn(0, "CD_ACNTUNIT", this.CD_ACNTUNIT.substr(0, 6));
+		this.dsSelect.setColumn(0, "TY_GUBUN", this.CD_ACNTUNIT.substr(6, 1));
+		this.dsSelect.setColumn(0, "NO_CHASU", this.CD_ACNTUNIT.substr(7, 2));
+		this.dsSelect.setColumn(0, "NO_DONG", this.NO_DONG);
+		this.dsSelect.setColumn(0, "NO_FLOOR", this.NO_FLOOR);
+		this.dsSelect.setColumn(0, "NO_HO", this.NO_HO);
+		this.dsSelect.setColumn(0, "NO_UNIONMEMBER", this.NO_UNIONMEMBER);
+		this.dsSelect.setColumn(0, "DT_RECEIVED", this.dsList.getColumn(0, "DT_RECEIVED"));
+		this.dsSelect.setColumn(0, "AM_RECEIVED", this.dsList.getColumn(0, "AM_RECEIVED"));
+		this.dsSelect.setColumn(0, "TY_RECEIPT", this.dsList.getColumn(0, "TY_RECEIPT"));
+		this.dsSelect.setColumn(0, "TY_POSITION", this.dsList.getColumn(0, "TY_POSITION"));
+		this.dsSelect.setColumn(0, "DT_REPAYMENT", "");
+		this.dsSelect.setColumn(0, "CD_GUJA", this.dsList.getColumn(0, "CD_GUJA"));
+		this.dsSelect.setColumn(0, "TY_MONEY", this.dsList.getColumn(0, "TY_MONEY"));
+		this.dsSelect.setColumn(0, "CD_VENDOR", "");
+		this.dsSelect.setColumn(0, "YN_DELAY", this.dsList.getColumn(0, "YN_DELAY"));
+		this.dsSelect.setColumn(0, "YN_DISCOUNT", this.dsList.getColumn(0, "YN_DISCOUNT"));
+		this.dsSelect.setColumn(0, "AM_SETTLE", 0);
+		this.dsSelect.setColumn(0, "CD_ACCOUNT", "");
+		this.dsSelect.setColumn(0, "YN_AUTO", "N");
+		this.dsSelect.setColumn(0, "DT_TRADE", "");
+		this.dsSelect.setColumn(0, "TM_TRADE", "");
+		this.dsSelect.setColumn(0, "CD_TRADE", "");
+		this.dsSelect.setColumn(0, "ID_INSERT", this.AuthClient.ID_USER);
+		this.dsSelect.setColumn(0, "CD_CARD", this.dsList.getColumn(0, "CD_CARD"));
+		this.dsSelect.setColumn(0, "DS_CARD", this.dsList.getColumn(0, "DS_CARD"));
+		this.dsSelect.setColumn(0, "NO_APPROVAL", this.dsList.getColumn(0, "NO_APPROVAL"));
+		this.dsSelect.setColumn(0, "AM_DEPOSITFEE", 0);
+		this.dsSelect.setColumn(0, "CD_CHAIP", "");
+		this.dsSelect.setColumn(0, "DT_PAYBACK", this.dsList.getColumn(0, "DT_PAYBACK"));
+		this.dsSelect.setColumn(0, "CD_DEPT_BE", "");
+		this.dsSelect.setColumn(0, "TY_DAEMUL", "");
+		
+	// 	var strSvcId = "save";
+	// 	var strInData = "save=dsSave";
+	// 	var strOutData = "dsResult=save0";
+	// 	if (this.dsList.getColumn(0, "TY_RECEIPT") == "D") {
+	// 		var strSvcId = "select";
+	// 		var strInData = "select2=dsSelect";
+	// 		var strOutData = "dsResult=select20";
+	// 	}
+		
+	// 	var strInData = "select=dsSelect";
+	// 	var strOutData = "dsResult=select0";
+	// 	if (this.dsList.getColumn(0, "TY_RECEIPT") == "D") {
+	// 		var strInData = "select2=dsSelect";
+	// 		var strOutData = "dsResult=select20";
+	// 	}
+		
+		var strSvcId    = "select";
+		var strSvcType  = "grid";
+		var inProc		= "_dsProc";
+		var inData      = "select2=dsSelect";
+		var outData     = "dsResult=select20";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// trabsaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]	
+	}			
+	else {
+		this.dsSave.clearData();
+		this.dsSave.addRow();
+		this.dsSave.setColumn(0, "CD_ACNTUNIT", this.CD_ACNTUNIT.substr(0, 6));
+		this.dsSave.setColumn(0, "TY_GUBUN", this.CD_ACNTUNIT.substr(6, 1));
+		this.dsSave.setColumn(0, "NO_CHASU", this.CD_ACNTUNIT.substr(7, 2));
+		this.dsSave.setColumn(0, "NO_DONG", this.NO_DONG);
+		this.dsSave.setColumn(0, "NO_FLOOR", this.NO_FLOOR);
+		this.dsSave.setColumn(0, "NO_HO", this.NO_HO);
+		this.dsSave.setColumn(0, "NO_UNIONMEMBER", this.NO_UNIONMEMBER);
+		this.dsSave.setColumn(0, "DT_RECEIVED", this.dsList.getColumn(0, "DT_RECEIVED"));
+		this.dsSave.setColumn(0, "AM_RECEIVED", this.dsList.getColumn(0, "AM_RECEIVED"));
+		this.dsSave.setColumn(0, "TY_RECEIPT", this.dsList.getColumn(0, "TY_RECEIPT"));
+		this.dsSave.setColumn(0, "TY_POSITION", this.dsList.getColumn(0, "TY_POSITION"));
+		this.dsSave.setColumn(0, "DT_REPAYMENT", "");
+		this.dsSave.setColumn(0, "CD_GUJA", this.dsList.getColumn(0, "CD_GUJA"));
+		this.dsSave.setColumn(0, "TY_MONEY", this.dsList.getColumn(0, "TY_MONEY"));
+		this.dsSave.setColumn(0, "CD_VENDOR", "");
+		this.dsSave.setColumn(0, "YN_DELAY", this.dsList.getColumn(0, "YN_DELAY"));
+		this.dsSave.setColumn(0, "YN_DISCOUNT", this.dsList.getColumn(0, "YN_DISCOUNT"));
+		this.dsSave.setColumn(0, "AM_SETTLE", 0);
+		this.dsSave.setColumn(0, "CD_ACCOUNT", "");
+		this.dsSave.setColumn(0, "YN_AUTO", "N");
+		this.dsSave.setColumn(0, "DT_TRADE", "");
+		this.dsSave.setColumn(0, "TM_TRADE", "");
+		this.dsSave.setColumn(0, "CD_TRADE", "");
+		this.dsSave.setColumn(0, "ID_INSERT", this.AuthClient.ID_USER);
+		this.dsSave.setColumn(0, "CD_CARD", this.dsList.getColumn(0, "CD_CARD"));
+		this.dsSave.setColumn(0, "DS_CARD", this.dsList.getColumn(0, "DS_CARD"));
+		this.dsSave.setColumn(0, "NO_APPROVAL", this.dsList.getColumn(0, "NO_APPROVAL"));
+		this.dsSave.setColumn(0, "AM_DEPOSITFEE", 0);
+		this.dsSave.setColumn(0, "CD_CHAIP", "");
+		this.dsSave.setColumn(0, "DT_PAYBACK", this.dsList.getColumn(0, "DT_PAYBACK"));
+		this.dsSave.setColumn(0, "CD_DEPT_BE", "");
+		this.dsSave.setColumn(0, "TY_DAEMUL", "");
+		
+		var strSvcId    = "save";
+		var strSvcType  = "select";
+		var inProc		= "_dsProc";
+		var inData      = "save=dsSave";
+		var outData     = "dsResult=save0";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// trabsaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]	
+	}
+};
+
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(!this.fnSaveValidate()) return;	
+
+	this.fnReceiptSelectData();
+};
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	this.getParentContext().close(false);
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="DT_RECEIVED" type="STRING" size="256"/>
+          <Column id="AM_RECEIVED" type="BIGDECIMAL" size="256"/>
+          <Column id="AM_COMMISSION" type="BIGDECIMAL" size="256"/>
+          <Column id="TY_RECEIPT" type="STRING" size="256"/>
+          <Column id="TY_POSITION" type="STRING" size="256"/>
+          <Column id="CD_GUJA" type="STRING" size="256"/>
+          <Column id="DS_GUJA" type="STRING" size="256"/>
+          <Column id="CD_CARD" type="STRING" size="256"/>
+          <Column id="DS_CARD" type="STRING" size="256"/>
+          <Column id="NO_APPROVAL" type="STRING" size="256"/>
+          <Column id="TY_MONEY" type="STRING" size="256"/>
+          <Column id="CD_FINANCING" type="STRING" size="256"/>
+          <Column id="DS_FINANCING" type="STRING" size="256"/>
+          <Column id="YN_DELAY" type="STRING" size="256"/>
+          <Column id="YN_DISCOUNT" type="STRING" size="256"/>
+          <Column id="DT_PAYBACK" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DRCPR_RECEIPT_HANDLE3</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select2</Col>
+            <Col id="SP">DRCPR_RECEIPT_SALEDISCOUNT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_RECEIPT">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">정상</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">D</Col>
+            <Col id="DS_CODE">매출할인</Col>
+          </Row>
+          <Row>
+            <Col id="DS_CODE">마이너스</Col>
+            <Col id="CD_CODE">M</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">Y</Col>
+            <Col id="DS_CODE">적용함</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">N</Col>
+            <Col id="DS_CODE">적용안함</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_POSITION">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">1</Col>
+            <Col id="DS_CODE">M/H(현금)</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">2</Col>
+            <Col id="DS_CODE">은행</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">3</Col>
+            <Col id="DS_CODE">본사</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">4</Col>
+            <Col id="DS_CODE">기타</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">F</Col>
+            <Col id="DS_CODE">카드</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_MONEY">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">1</Col>
+            <Col id="DS_CODE">본인</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">2</Col>
+            <Col id="DS_CODE">기금융자</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">3</Col>
+            <Col id="DS_CODE">알선융자</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">4</Col>
+            <Col id="DS_CODE">기타융자</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">9</Col>
+            <Col id="DS_CODE">기타</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.tclDT_RECEIVED" propid="value" datasetid="dsList" columnid="DT_RECEIVED"/>
+      <BindItem id="item1" compid="divData.form.txtAM_RECEIVED" propid="value" datasetid="dsList" columnid="AM_RECEIVED"/>
+      <BindItem id="item2" compid="divData.form.rdoTY_RECEIPT" propid="value" datasetid="dsList" columnid="TY_RECEIPT"/>
+      <BindItem id="item3" compid="divData.form.cboTY_POSITION" propid="value" datasetid="dsList" columnid="TY_POSITION"/>
+      <BindItem id="item4" compid="divData.form.cfCD_GUJA.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_GUJA"/>
+      <BindItem id="item5" compid="divData.form.cfCD_GUJA.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_GUJA"/>
+      <BindItem id="item6" compid="divData.form.cfCD_CARD.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_CARD"/>
+      <BindItem id="item7" compid="divData.form.cfCD_CARD.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_CARD"/>
+      <BindItem id="item9" compid="divData.form.txtNO_APPROVAL" propid="value" datasetid="dsList" columnid="NO_APPROVAL"/>
+      <BindItem id="item10" compid="divData.form.cboTY_MONEY" propid="value" datasetid="dsList" columnid="TY_MONEY"/>
+      <BindItem id="item11" compid="divData.form.cfCD_FINANCING.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_FINANCING"/>
+      <BindItem id="item12" compid="divData.form.cfCD_FINANCING.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_FINANCING"/>
+      <BindItem id="item13" compid="divData.form.rdoYN_DELAY" propid="value" datasetid="dsList" columnid="YN_DELAY"/>
+      <BindItem id="item14" compid="divData.form.rdoYN_DISCOUNT" propid="value" datasetid="dsList" columnid="YN_DISCOUNT"/>
+    </Bind>
+  </Form>
+</FDL>

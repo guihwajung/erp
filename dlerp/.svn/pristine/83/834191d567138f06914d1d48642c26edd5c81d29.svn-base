@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DBS_COSTGUBUN_MONTH" width="1280" height="720" titletext="월별기성현황(비목)" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staItem01" taborder="3" text="AS사무소" left="0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_BUNSO" CDTextWidth="70" taborder="0" left="staItem01:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staItem02" taborder="4" text="조회기간" left="ccfCD_BUNSO:0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="calYM_FROM" taborder="1" left="staItem02:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalMM.xfdl"/>
+              <Static id="sta00" taborder="5" text="~" left="calYM_FROM:0.0" top="10.0" width="30.0" height="24.0" cssclass="sta_WF_AC"/>
+              <Div id="calYM_TO" taborder="2" left="sta00:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalMM.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" top="40" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0">
+                <Formats>
+                  <Format id="default"/>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);
+	// ---------------------------//
+	//this.fnSetButton();
+	//this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// AS사무소 셋팅
+	if(this.FormInfo.ID_GROUP != "0" && this.FormInfo.ID_GROUP != "A" && this.FormInfo.ID_GROUP != "3" && this.FormInfo.ID_GROUP != "W" ){
+		if( this.FormInfo.ID_GROUP == "2" ){
+			this.ccfCD_BUNSO.form.CDTextBox.set_value(this.AuthClient.CD_DEPT.substr(1));
+			this.ccfCD_BUNSO.form.fnCodeFindLoad();
+		}
+		this.ccfCD_BUNSO.form.set_readonly(true);
+	}
+	
+	//작업일자 셋팅
+	var strYM = this.gfnGetDate().substring(0,6);
+	this.calYM_FROM.form.TextBox.set_value(strYM.substring(0,4)+"01");
+	this.calYM_TO.form.TextBox.set_value(strYM);
+	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {	
+	// 서브 버튼 사용
+	//this.gfnUseSubBtn(true, this.divData, this.divData.form.divSplitter); // divSplitter sync
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_BUNSO = this.divSearch.form.ccfCD_BUNSO;
+	this.calYM_FROM = this.divSearch.form.calYM_FROM;
+	this.calYM_TO = this.divSearch.form.calYM_TO;
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	this.ccfCD_BUNSO.CodeFindName = "DBX_CFBUNSO";
+	this.gfnGridInit(this.dxGrid, this.dsList, "DB", "DBS_COSTGUBUN_MONTH");  // pForm.gfnGridInit = function(objGrid, objDs, cd_system, id_grid, tree_column, level_column, is_manual) 
+	this.dxGrid.setCellProperty( "body", this.dxGrid.getBindCellIndex("body","DS_GUBUN"), "subsumtext","소 계");
+	this.dxGrid.setCellProperty( "summary", this.dxGrid.getBindCellIndex("body","DS_GUBUN"), "text", "합  계");
+	this.dxGrid.setCellProperty( "summary", this.dxGrid.getBindCellIndex("body","DS_GUBUN"), "textAlign", "center");
+	
+	this.grdFormat = this.dxGrid.getCurFormatString();
+	trace("this.grdFormat="+this.grdFormat);
+	// 그리드 셋팅
+	this.fnSetGridColunm();
+	
+	this.dsSearch.addEventHandler("onvaluechanged", this.dsSearch_onvaluechanged, this);
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_BUNSO", "string");
+	this.dsSelect.addColumn("YM_FROM", "string");
+	this.dsSelect.addColumn("YM_TO", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsList.clearData();
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_BUNSO", this.dsSearch.getColumn(0,"CD_BUNSO"));
+	this.dsSelect.setColumn(0, "YM_FROM", this.dsSearch.getColumn(0,"YM_FROM"));
+	this.dsSelect.setColumn(0, "YM_TO", this.dsSearch.getColumn(0,"YM_TO"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	if ( !this.gfnIsNull(this.dsSearch.getColumn(0,"YM_FROM")) && !this.gfnIsNull(this.dsSearch.getColumn(0,"YM_TO")) )  {
+		if (this.dsSearch.getColumn(0,"YM_FROM") > this.dsSearch.getColumn(0,"YM_TO") )  {
+			validate = false;
+			this.fnVaidateCallback = function() {
+				this.calYM_FROM.setFocus();
+			}
+			this.gfnAlert("시작월이 종료일보다 클 수 없습니다.", "fnVaidateCallback"); // gfnAlert = function (sMsgId, arrArg, sPopId, sCallback)
+		}
+	}
+	return validate;
+}
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);
+	}
+	
+	if( e.columnid == "YM_FROM" || e.columnid == "YM_TO" ){
+		this.fnSetGridColunm();
+	}
+};
+
+this.fnSetGridColunm = function (){
+	var ncol = 0;
+	var intDiffMonth = nexacro.toNumber(this.gfnGetDiffMonth(this.dsSearch.getColumn(0,"YM_FROM")+"01",this.dsSearch.getColumn(0,"YM_TO")+"01"),0)+1;
+	
+	this.dxGrid.set_enableredraw(false);
+	this.dsList.set_enableevent(false);
+	
+	// 그리드 초기화	
+	this.dxGrid.set_formats(this.grdFormat);
+	
+	// 데이터셋 초기화
+	for ( var i =this.dsList.colcount-1; -1 < i ; i--){
+		
+		if( this.dsList.getColID(i).search("YM_") > -1){
+			this.dsList.deleteColumn(i);
+		}
+	}
+	
+	// 동적으로 데이터셋, 그리드 컬럼 추가
+	for( var i = 0; i < intDiffMonth; i++ ){
+		var strYm = "YM_"+this.gfnAddMonth(this.dsSearch.getColumn(0,"YM_FROM")+"01", i).substr(0,6);
+		
+		
+		var objColinfo = new ColumnInfo() ;
+		objColinfo.set_type( "BIGDECIMAL" );
+		objColinfo.set_size( 256 );
+		
+		this.dsList.addColumnInfo(strYm,objColinfo);
+		
+		
+		ncol = this.dxGrid.appendContentsCol();
+		this.dxGrid.setFormatColProperty(ncol, "size", 120);
+		this.dxGrid.setCellProperty("head", ncol, "text", strYm.substr(3,4)+"-"+strYm.substr(7,2));
+		this.dxGrid.setCellProperty("body", ncol, "displaytype", "mask");
+		this.dxGrid.setCellProperty("body", ncol, "maskeditformat", "#,###,###,##0");
+		this.dxGrid.setCellProperty("body", ncol, "text", "bind:" + strYm);	
+		this.dxGrid.setCellProperty( "body", ncol, "cssclass", "expr:dataset.getRowLevel(currow) == 1 ? 'subtotal':''");
+		this.dxGrid.setCellProperty("summary", ncol, "displaytype", "mask");
+		this.dxGrid.setCellProperty("summary", ncol, "maskeditformat", "#,###,###,##0");
+		this.dxGrid.setCellProperty( "summary", ncol, "text", "expr:dataset.getSum('"+strYm+"')");
+	}
+	
+	this.dsList.set_keystring( "SORT" );
+	this.dxGrid.set_enableredraw(true);
+	this.dsList.set_enableevent(true);
+};]]></Script>
+    <Objects>
+      <Dataset id="dsList" />
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DBSPR_COSTGUBUN_MONTH_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_BUNSO" type="STRING" size="256"/>
+          <Column id="YM_FROM" type="STRING" size="256"/>
+          <Column id="YM_TO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_BUNSO.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_BUNSO"/>
+      <BindItem id="item1" compid="divSearch.form.calYM_FROM.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_FROM"/>
+      <BindItem id="item2" compid="divSearch.form.calYM_TO.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_TO"/>
+    </Bind>
+  </Form>
+</FDL>

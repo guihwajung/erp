@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="430" height="280" maxwidth="440" maxheight="360" titletext="어음번호등록" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTitle" taborder="9" text="어음생성" left="20" top="10" height="22" cssclass="sta_TITLE_Bg" right="0"/>
+              <Static id="staItem17" taborder="7" text="어음정보" left="20" top="40" height="30" cssclass="sta_WF_tablelabel" width="340"/>
+              <Static id="staBar53" taborder="8" left="89" top="69" height="30" cssclass="sta_WF_tablebg" width="271"/>
+              <Button id="btnOk" taborder="5" text="확인" left="143" width="45" height="21" onclick="btnOk_onclick" uWord="popup.ok" top="246"/>
+              <Button id="btnCancle" taborder="6" text="취소" left="193" width="45" height="21" onclick="btnCancle_onclick" uWord="popup.cancel" top="246"/>
+              <Static id="staItem55" taborder="10" text="계좌번호" left="20" top="69" width="70" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Div id="cfCD_SideBank" CDTextWidth="100" taborder="0" left="95" top="74" height="20" url="cmm::cmmCodeFind.xfdl" width="258"/>
+              <Static id="staItem00" taborder="11" text="수령일자" left="20" top="98" width="70" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBar00" taborder="12" left="89" top="98" height="30" cssclass="sta_WF_tablebg" width="271"/>
+              <Static id="staItem01" taborder="13" text="구분" left="20" top="127" width="70" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBar01" taborder="14" left="89" top="127" height="30" cssclass="sta_WF_tablebg" width="271"/>
+              <Static id="staItem02" taborder="15" text="어음번호" left="20" top="156" width="70" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBar02" taborder="16" left="89" top="156" height="30" cssclass="sta_WF_tablebg" width="271"/>
+              <Calendar id="tclDT_FROM" taborder="1" left="95" top="103" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Combo id="cboGubun" taborder="2" text="어음" left="95" top="132" width="105" height="20" innerdataset="dsGUBUN" codecolumn="CODE" datacolumn="VALUE" value="Y" index="0"/>
+              <Edit id="txtNO_FROM" taborder="3" left="95" top="161" width="173" height="20" maxlength="20" inputtype="number" inputfilter="none,comma,dot,alpha"/>
+              <MaskEdit id="txtNO_TO" taborder="4" left="274" top="161" width="55" height="20" format="##,##0" limitbymask="integer"/>
+              <Static id="sta00" taborder="17" text="생성하시겠습니까?" left="20" top="191" width="150" height="20" font="normal bold 10pt/normal &quot;Arial&quot;"/>
+              <Static id="sta01" taborder="18" text="매" left="336" top="161" width="20" height="20"/>
+              <Edit id="txtCD_BANK" taborder="19" left="155" top="41" width="23" height="20" maxlength="20" inputtype="number" visible="false"/>
+              <Edit id="txtDS_BANK" taborder="20" left="185" top="41" width="23" height="20" maxlength="20" inputtype="number" visible="false"/>
+              <Edit id="txtDS_VENDOR" taborder="21" left="215" top="41" width="23" height="20" maxlength="20" inputtype="number" visible="false"/>
+              <Edit id="txtNO_ACCOUNT" taborder="22" left="245" top="41" width="23" height="20" maxlength="20" inputtype="number" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmPopup.xfdl (공통 팝업페이지)
+*  @FileName 	cmmPopup.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.10.19
+*  @Desction         스크립트 표준 및 주석 표준 정의
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ this.pv_CD_CORP;
+ this.pv_DS_CORP;
+ this.CD_MANAGEBANK;
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this); //초기화[필수]
+	this.gfnFormInfo(this);
+	
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	var frame = this.getOwnerFrame();	
+	if(!this.gfnIsNull(frame.CD_CORP) && !this.gfnIsNull(frame.DS_CORP)) {
+	    this.pv_CD_CORP = frame.CD_CORP;				
+ 		this.pv_DS_CORP = frame.DS_CORP; 
+	}
+	
+	//trace("this.pv_CD_CORP :: " + this.pv_CD_CORP);
+	//trace("this.pv_DS_CORP :: " + this.pv_DS_CORP);
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+	this.cfCD_SideBank = this.divData.form.cfCD_SideBank;
+	this.tclDT_FROM = this.divData.form.tclDT_FROM;
+	this.cboGubun = this.divData.form.cboGubun;
+	this.txtNO_FROM = this.divData.form.txtNO_FROM;
+	this.txtNO_TO = this.divData.form.txtNO_TO;
+
+	this.txtCD_BANK = this.divData.form.txtCD_BANK;
+	this.txtDS_BANK = this.divData.form.txtDS_BANK;
+	this.txtDS_VENDOR = this.divData.form.txtDS_VENDOR;
+	this.txtNO_ACCOUNT = this.divData.form.txtNO_ACCOUNT;
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.cfCD_SideBank.CodeFindName = "DFX_CFNO_ACCOUNT";
+	this.cfCD_SideBank.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	
+	this.cfCD_SideBank.AfterCDTextChanged = "fnAfterCDTextChanged";
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnValidation = function() {
+	if (this.gfnIsNull(this.cfCD_SideBank.form.CDTextBox.text)) {
+		this.gfnAlert("지점 코드를 입력하십시오.");
+		this.cfCD_SideBank.form.CDTextBox.setFocus();
+		return false;
+	}
+	
+	if (this.gfnIsNull(this.tclDT_FROM.value)) {
+		this.gfnAlert("수령일자를 입력하십시오.");
+		this.tclDT_FROM.setFocus();
+		return false;
+	}	
+	
+	if (this.gfnIsNull(this.cboGubun.value)) {
+		this.gfnAlert("어음/B2B 구분을 선택하십시오.");
+		this.cboGubun.setFocus();
+		return false;
+	}	
+	
+	if (this.gfnIsNull(this.txtNO_FROM.value)) {
+		this.gfnAlert("어음번호를 입력하십시오.");
+		this.txtNO_FROM.setFocus();
+		return false;
+	}	
+	
+	if (this.gfnIsNull(this.txtNO_TO.value)) {
+		this.gfnAlert("어름번호 매수를 입력하십시오.");
+		this.txtNO_TO.setFocus();
+		return false;
+	}
+	
+	return true;
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	
+	if (id == "cfCD_SideBank") {
+		this.txtCD_BANK.set_value("");
+		this.txtDS_BANK.set_value("");
+		this.txtDS_VENDOR.set_value("");
+		this.txtNO_ACCOUNT.set_value("");
+		dsUserParam.setColumn(nrow, "GUBUN", "NOTE");	
+		dsUserParam.setColumn(nrow, "CD_CORP", this.pv_CD_CORP);
+	}
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+
+	var arr = codeFindData;
+	
+	if (id == "cfCD_SideBank") {
+		if(arr.length > 0) {
+			this.txtCD_BANK.set_value(arr[0]["CD_BANK"]);
+			this.txtDS_BANK.set_value(arr[0]["DS_BANK"]);
+			this.txtDS_VENDOR.set_value(arr[0]["DS_VENDOR"]);
+			this.txtNO_ACCOUNT.set_value(arr[0]["NO_ACCOUNT"]);
+			this.CD_MANAGEBANK = arr[0]["CD_MANAGEBANK"];
+			//trace(this.txtCD_BANK.value);
+			//trace(this.txtDS_BANK.value);
+			//trace(this.txtDS_VENDOR.value);
+			//trace(this.txtNO_ACCOUNT.value);
+		}
+	}
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* @ OK버튼이벤트
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnValidation()) return false;
+
+	// 확인
+	var json = {};
+	
+	json.CD_SIDEBANK = this.cfCD_SideBank.form.CDTextBox.value;
+	json.CD_BANK = this.txtCD_BANK.value;
+	json.DS_BANK = this.txtDS_BANK.value;
+	json.NO_ACCOUNT = this.txtNO_ACCOUNT.value;
+	json.DS_VENDOR = this.txtDS_VENDOR.value;
+	json.DT_REGIST = this.tclDT_FROM.value;
+	//json.NO_NOTES = newNoteNumber;
+	json.NO_FROM = this.txtNO_FROM.value
+	json.NO_TO = this.txtNO_TO.value
+	json.TY_USE = "미발행";
+	json.TY_GUBUN = this.cboGubun.value;	
+	JSON.CD_MANAGEBANK = this.CD_MANAGEBANK;
+	
+	trace("json :: " + json);
+	
+	this.getParentContext().close(JSON.stringify(json));
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsGUBUN">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="VALUE">어음</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="VALUE">B2B</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind/>
+  </Form>
+</FDL>

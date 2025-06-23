@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1600" height="867" titletext="출장계획서주의사항" onload="form_onload" maxwidth="1640" maxheight="945">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0" top="0" text="" height="830" width="1600">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="PIC" taborder="1" left="0" top="0" width="1600" height="830"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="3" left="0" top="divSearch:10" text="" height="27" width="1600">
+          <Layouts>
+            <Layout>
+              <Div id="divBtns" left="0" top="0" width="1600" height="27" text="">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnOK" taborder="1" text="닫기" left="770" top="0" width="60" height="27" onclick="btnOK_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------// 
+
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnSetCombo();
+	this.fnInit();
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	
+}
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+}
+
+/************************************************************************
+ * 콤보 데이터 조회 및 설정
+ ************************************************************************/
+this.fnSetCombo = function() {
+	
+}
+
+/************************************************************************
+ * 화면 및 검색영역 초기화
+ ************************************************************************/
+this.fnInit = function() {
+	this.fnSelect();
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+/*
+ * 조회 버튼
+ */
+this.fnSelect = function() {
+	this.dsImageFile.clearData();
+	this.dsImageFile.addRow();
+
+	this.dsImageFile.setColumn(0, "filepath", "DA/CORP/" + this.AuthClient.CD_CORP);
+	if (this.getOwnerFrame().GUBUN == "PLAN")
+	{
+		this.dsImageFile.setColumn(0, "filename", "LOGO1_IMG.png");
+	}
+	else
+	{
+		this.dsImageFile.setColumn(0, "filename", "LOGO2_IMG.png");		
+	}
+	
+	var strSvcId    = "imagefile";
+	var strSvcType  = "file/imageFile"; 
+	var inProc		= "";
+	var inData      = "input=dsImageFile";
+	var outData     = "dsImageFile=input";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+
+	this.gfnTransaction(strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,
+						false); 		// 통신방법 정의 [생략가능]
+}
+
+/*
+ * 추가 버튼
+ */
+this.fnAdd = function() {
+	
+}
+
+/*
+ * 삭제 버튼
+ */
+this.fnDel = function() { 
+	
+}
+
+/*
+ * 저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ * 엑셀 버튼
+ */
+this.fnExcel = function() {
+	
+}
+
+/*
+ * 출력 버튼
+ */
+this.fnPrint = function() {
+	
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValid = function() {
+	return true;
+}
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+// 확인버튼
+this.btnOK_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	this.getParentContext().close(false);
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ * 기본 콜백
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if (errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return;
+	}
+	
+	if (svcID == "imagefile") {
+	    this.divSearch.form.PIC.set_image(null);
+		this.divSearch.form.PIC.set_image(this.dsImageFile.getColumn(0, "filereturn"));
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {	
+	
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGridBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+}
+
+this.fnGridAfterCDTextChanged = function(id, codeFindData) {
+	
+}
+
+this.fnGridAfterEdit = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 함수
+ ************************************************************************/]]></Script>
+    <Objects>
+      <Dataset id="dsImageFile">
+        <ColumnInfo>
+          <Column id="filepath" type="STRING" size="256"/>
+          <Column id="filename" type="STRING" size="256"/>
+          <Column id="filereturn" type="STRING" size="10000"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

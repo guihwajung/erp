@@ -1,0 +1,448 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DAU_INCOMECHANGE" width="1280" height="720" titletext="소득증감내역(전월대비)" onload="DAU_INCOMECHANGE_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SYSTEM" taborder="0" text="법인" left="0" top="10.0" width="66" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_CORP" CodeFindName="DAX_CFCORP" CDTextWidth="50" taborder="1" left="staCD_SYSTEM:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" onchanged="fnSearchInit"/>
+              <Static id="staCD_SYSTEM00" taborder="2" text="지급년월" left="ccfCD_CORP:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="calYM_SALARY" taborder="3" left="staCD_SYSTEM00:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalMM.xfdl" onchanged="fnSearchInit"/>
+              <Static id="staCD_SYSTEM01" taborder="4" text="지급구분" left="calYM_SALARY:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Combo id="cboTY_SALARY" taborder="5" left="staCD_SYSTEM01:0.0" top="10.0" width="70" height="24.0" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">S</Col>
+                      <Col id="datacolumn">급여</Col>
+                    </Row>
+                    <!--
+                    <Row>
+                      <Col id="codecolumn">B</Col>
+                      <Col id="datacolumn">상여</Col>
+                    </Row>
+-->
+                    <Row>
+                      <Col id="codecolumn">X</Col>
+                      <Col id="datacolumn">성과급</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">R</Col>
+                      <Col id="datacolumn">퇴직급여</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Combo id="cboSN_SALARY" taborder="6" left="cboTY_SALARY:5" top="10.0" width="50" height="24.0" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">1</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">2</Col>
+                      <Col id="datacolumn">2</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">3</Col>
+                      <Col id="datacolumn">3</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">4</Col>
+                      <Col id="datacolumn">4</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">5</Col>
+                      <Col id="datacolumn">5</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">6</Col>
+                      <Col id="datacolumn">6</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">7</Col>
+                      <Col id="datacolumn">7</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">8</Col>
+                      <Col id="datacolumn">8</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">9</Col>
+                      <Col id="datacolumn">9</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">10</Col>
+                      <Col id="datacolumn">10</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="staCD_SYSTEM03" taborder="9" text="소득항목" left="0.0" top="staCD_SYSTEM:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_ALLOW01" CodeFindName="DAX_CFALLOW_CODE" CDTextWidth="80" taborder="10" left="staCD_SYSTEM03:0.0" top="ccfCD_CORP:10.0" width="240" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staCD_SYSTEM04" taborder="11" text="공제항목" left="ccfCD_ALLOW01:0.0" top="staCD_SYSTEM00:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_ALLOW02" CodeFindName="DAX_CFSUBSTRACTION" CDTextWidth="80" taborder="12" left="staCD_SYSTEM04:0.0" top="staCD_SYSTEM01:10.0" width="240" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staCD_SYSTEM07" taborder="7" text="소득공제구분" left="cboSN_SALARY:0.0" top="staCD_SYSTEM:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Combo id="cboTY_GUBUN" taborder="8" left="staCD_SYSTEM07:0.0" top="staCD_SYSTEM:10.0" width="60" height="24.0" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" onitemchanged="divSearch_cboTY_GUBUN_onitemchanged">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="datacolumn">전체</Col>
+                      <Col id="codecolumn">%</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">소득</Col>
+                      <Col id="codecolumn">01</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">공제</Col>
+                      <Col id="codecolumn">02</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="staCD_SYSTEM06" taborder="13" text="급여포함항목만보기" left="ccfCD_ALLOW02:0.0" top="staCD_SYSTEM:10.0" width="92.0" height="24.0" visible="false" cssclass="sta_WF_SchLabel"/>
+              <CheckBox id="chkYN_SALARY" taborder="14" left="staCD_SYSTEM06:0.0" top="staCD_SYSTEM:10.0" width="150" height="24.0" truevalue="Y" falsevalue="%" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" top="divSearch:5" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="10" right="0" oncellclick="divData_objGrid_oncellclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item1" compid="divSearch.form.calYM_SALARY.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_SALARY"/>
+      <BindItem id="item2" compid="divSearch.form.ccfCD_ALLOW01.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_ALLOW01"/>
+      <BindItem id="item3" compid="divSearch.form.ccfCD_ALLOW02.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_ALLOW02"/>
+      <BindItem id="item4" compid="divSearch.form.cboTY_SALARY" propid="value" datasetid="dsSearch" columnid="TY_SALARY"/>
+      <BindItem id="item5" compid="divSearch.form.cboSN_SALARY" propid="value" datasetid="dsSearch" columnid="SN_SALARY"/>
+      <BindItem id="item6" compid="divSearch.form.cboTY_GUBUN" propid="value" datasetid="dsSearch" columnid="TY_GUBUN"/>
+      <BindItem id="item7" compid="divSearch.form.chkYN_SALARY" propid="value" datasetid="dsSearch" columnid="YN_SALARY"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.DAU_INCOMECHANGE_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	//this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Add.set_enable(false);
+	this.FormBtns.Del.set_enable(false);
+	this.FormBtns.Save.set_enable(false);	
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+	this.calYM_SALARY = this.divSearch.form.calYM_SALARY;
+	this.ccfCD_ALLOW01 = this.divSearch.form.ccfCD_ALLOW01;
+	this.ccfCD_ALLOW02 = this.divSearch.form.ccfCD_ALLOW02;
+	this.staCD_SYSTEM03 = this.divSearch.form.staCD_SYSTEM03;	
+	this.staCD_SYSTEM04 = this.divSearch.form.staCD_SYSTEM04;
+	this.dxGrid = this.divData.form.objGrid;
+
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_ALLOW01.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAU_INCOMECHANGE");
+
+	this.dsSearch.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+	this.ccfCD_CORP.form.fnCodeFindLoad();
+	
+	var date = this.gfnGetDate();
+	this.dsSearch.setColumn(0, "YM_SALARY", date.substr(0, 6));
+	
+	this.divSearch.form.cboTY_SALARY.set_index(0);
+	this.divSearch.form.cboSN_SALARY.set_index(0);
+	this.divSearch.form.cboTY_GUBUN.set_index(0);
+	
+}
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("YM_SALARY", "string");
+	this.dsSelect.addColumn("TY_SALARY", "string");
+	this.dsSelect.addColumn("SN_SALARY", "string");
+	this.dsSelect.addColumn("CD_ALLOW", "string");
+	this.dsSelect.addColumn("CD_SUBST", "string");	
+	this.dsSelect.addColumn("SN_SALARY_BEF", "string");	
+	this.dsSelect.addColumn("TY_GUBUN", "string");
+	this.dsSelect.addColumn("YN_SALARY", "string");	
+	this.dsSelect.addColumn("TY_SEARCH", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "YM_SALARY", this.dsSearch.getColumn(0, "YM_SALARY")); // 지급년월 201908
+	this.dsSelect.setColumn(0, "TY_SALARY", this.dsSearch.getColumn(0, "TY_SALARY")); // S(지급구분 S:급여, B:상여,X:성과급 )
+	this.dsSelect.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP")); // 01  (법인코드)
+	this.dsSelect.setColumn(0, "SN_SALARY", this.dsSearch.getColumn(0, "SN_SALARY")); // 1(지급구분의 지급순서)
+	this.dsSelect.setColumn(0, "YN_SALARY", this.dsSearch.getColumn(0, "YN_SALARY")); //급여포함여부 체크시 'Y' 아니면 '%'
+	this.dsSelect.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));	// 소득항목만(01), 공제항목만(02) 체크, 아니면 (0)
+	this.dsSelect.setColumn(0, "CD_ALLOW", this.dsSearch.getColumn(0, "CD_ALLOW01"));
+	this.dsSelect.setColumn(0, "CD_SUBST", this.dsSearch.getColumn(0, "CD_ALLOW02"));
+// 	if(this.dsSearch.getColumn(0, "TY_GUBUN") == "01"){
+// 		this.dsSelect.setColumn(0, "CD_ALLOW", this.dsSearch.getColumn(0, "CD_ALLOW01")); // 소득수당(또는 공제쪽에서는 공제항목)
+// 	}else if(this.dsSearch.getColumn(0, "TY_GUBUN") == "02"){
+// 		this.dsSelect.setColumn(0, "CD_ALLOW", this.dsSearch.getColumn(0, "CD_ALLOW02")); // 소득수당(또는 공제쪽에서는 공제항목)
+// 	}
+	
+	// DAUPR_INCOMECHANGE_SELECT
+	// 프로시저 매개변수 잘 모르겠음... TODO : 수정필요
+	this.dsSelect.setColumn(0, "SN_SALARY_BEF", this.dsSearch.getColumn(0, "SN_SALARY"));
+	
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	this.gfnGridAdd(this.dxGrid);
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+  */
+this.fnSelectValidate = function() {
+	var validate = true;
+	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.text)) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.ccfCD_CORP.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("법인코드를 입력하세요.", "fnVaidateCallback");
+	}else if (this.gfnIsNull(this.calYM_SALARY.form.TextBox.value)) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.calYM_SALARY.form.TextBox.setFocus();
+		}
+		this.gfnAlert("지급년월을 입력하세요.", "fnVaidateCallback");
+	}
+	
+	return validate;
+};
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+	}
+}
+ 
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+	if (id == "ccfCD_ALLOW01") {
+		dsUserParam.setColumn(nrow, "CD_GUBUN"	, "01");
+	}
+	return true;
+};
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		// 폼상태 초기화
+		this.gfnSetFormStatus(this);	
+		this.gfnGridClear(this.dxGrid);
+	}
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+
+this.divSearch_cboTY_GUBUN_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	switch(obj.value){
+		case "%":
+			this.staCD_SYSTEM03.set_visible(true);
+			this.ccfCD_ALLOW01.set_visible(true);
+			this.staCD_SYSTEM04.set_visible(true);
+			this.ccfCD_ALLOW02.set_visible(true);			
+			break;
+		
+		case "01":	//소득
+			this.staCD_SYSTEM03.set_visible(true);
+			this.ccfCD_ALLOW01.set_visible(true);
+			this.staCD_SYSTEM04.set_visible(false);
+			this.ccfCD_ALLOW02.set_visible(false);			
+			break;
+		
+		case "02":	//공제
+			this.staCD_SYSTEM03.set_visible(false);
+			this.ccfCD_ALLOW01.set_visible(false);
+			this.staCD_SYSTEM04.set_visible(true);
+			this.ccfCD_ALLOW02.set_visible(true);			
+			break;
+		
+		default:
+	}	
+			this.ccfCD_ALLOW01.form.CDTextBox.set_value("");
+			this.ccfCD_ALLOW01.form.DSTextBox.set_value("");	
+			this.ccfCD_ALLOW02.form.CDTextBox.set_value("");
+			this.ccfCD_ALLOW02.form.DSTextBox.set_value("");	
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" onrowposchanged="dsList_onrowposchanged"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DAUPR_INCOMECHANGE_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="YM_SALARY" type="STRING" size="256"/>
+          <Column id="TY_SALARY" type="STRING" size="256"/>
+          <Column id="SN_SALARY" type="STRING" size="256"/>
+          <Column id="YN_SALARY" type="STRING" size="256"/>
+          <Column id="CD_ALLOW01" type="STRING" size="256"/>
+          <Column id="CD_ALLOW02" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

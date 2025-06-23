@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="cmmPopup" width="512" height="384" titletext="화면 연결" onload="form_onload">
+    <Layouts>
+      <Layout height="384" width="512">
+        <Button id="btnClose" taborder="0" text="close" width="100" height="30" onclick="btnClose_onclick" left="40%" bottom="10"/>
+        <Div id="divForm" taborder="1" left="10" top="10" right="10" bottom="47"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmPopup.xfdl (공통 팝업페이지)
+*  @FileName 	cmmPopup.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.10.19
+*  @Desction         스크립트 표준 및 주석 표준 정의
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ 
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//trace("paramTitle : " + this.getOwnerFrame().paramTitle);	
+    trace("paramCode : " + this.getOwnerFrame().paramCode);	
+    trace("paramNum : " + this.getOwnerFrame().paramNum);	
+	trace("paramUrl : " + this.getOwnerFrame().paramUrl);	
+	
+	//타이틀세팅
+	//if( !this.gfnIsNull(this.getOwnerFrame().paramTitle)){
+	//	this.set_titletext(this.getOwnerFrame().paramTitle);
+	//}
+	//divForm url 세팅
+	if( !this.gfnIsNull(this.getOwnerFrame().paramUrl)){
+		this.divForm.set_url(this.getOwnerFrame().paramUrl);
+	}
+};
+
+/************************************************************************************************
+* TRANSACTION 서비스 호출 처리
+************************************************************************************************/
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+
+ /************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ 
+ /************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description popup close
+*/
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var strReturnValue = "가나다123";
+	this.close(strReturnValue);
+};]]></Script>
+  </Form>
+</FDL>

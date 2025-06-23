@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="380" height="240" maxwidth="420" maxheight="275" titletext="전표발행" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="20" left="0" top="0" cssclass="div_DATA_Bg" right="0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="전표발행" left="0" top="0" width="359" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staCD_CORP" taborder="2" text="법인" left="0" top="95" width="100" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta06" taborder="3" left="99" top="95" height="30" cssclass="sta_WF_tablebg" visible="true" right="0"/>
+              <Div id="ccfCD_CORP" CodeFindName="DAX_CFCORP2" CDTextWidth="70" taborder="1" left="staCD_CORP:5" top="100" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="true" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+              <Static id="staYM_PROVIDE" taborder="5" text="지급일자" left="0" top="37" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta04" taborder="6" left="99" top="37" height="30" cssclass="sta_WF_tablebg" onclick="sta04_onclick" textAlign="right" right="0"/>
+              <Static id="staID_SABUN" taborder="8" text="사번" left="0" top="66" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta00" taborder="9" left="99" top="66" height="30" cssclass="sta_WF_tablebg" onclick="sta04_onclick" textAlign="right" right="0"/>
+              <Static id="staDT_ACCOUNT" taborder="10" text="회계일자" left="0" top="124" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta02" taborder="11" left="99" top="124" height="30" cssclass="sta_WF_tablebg" onclick="sta04_onclick" textAlign="right" right="0"/>
+              <Calendar id="calDT_ACCOUNT" taborder="12" left="105" top="129" width="100" height="20" dateformat="yyyy-MM-dd"/>
+              <Calendar id="ctclDT_JIGUB" taborder="17" left="105" top="43" width="100" height="20" editformat="yyyyMMdd" dateformat="yyyy-MM-dd" onchanged="ctclDT_JIGUB_onchanged"/>
+              <Div id="ccfCD_DEPT_ACNT" CDTextWidth="70" taborder="16" left="99" top="230" width="248" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="false"/>
+              <Div id="ccfID_SABUN" CodeFindName="DAX_CFBASEINFO" CDTextWidth="80" taborder="17" left="staID_SABUN:5" top="71" width="250" height="20" url="cmm::cmmCodeFind.xfdl" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged" enable="false"/>
+              <Radio id="rdoTY_AUTOSLIP" taborder="15" left="107" top="8" width="149" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="ISSUE" text="발행" index="0" direction="vertical" readonly="true" visible="false">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">ISSUE</Col>
+                      <Col id="datacolumn">발행</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">CANCEL</Col>
+                      <Col id="datacolumn">발행취소</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Div id="divBtns" left="73" top="168" width="200" height="27" taborder="4">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnCANCLE" taborder="0" text="취소" left="120" top="0" width="60" height="27" onclick="btnCANCLE_onclick"/>
+                    <Button id="btnOK" taborder="1" text="확인" left="30" top="0" width="60" height="27" onclick="btnOK_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+
+	this.fnSetButton();
+	//this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+
+	this.fnSetDisplay();
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	// this.FormBtns.Add.set_enable(false);
+	// this.FormBtns.Del.set_enable(false);
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+
+	this.grSearch = this.FormInfo.GR_SEARCH;					          // 권한
+	this.cdGroup = this.AuthClient.CD_GROUP;					          // 그룹코드
+	
+	this.rdoTY_AUTOSLIP = this.divData.form.rdoTY_AUTOSLIP;
+	this.ccfID_SABUN = this.divData.form.ccfID_SABUN;
+	this.ctclDT_JIGUB = this.divData.form.ctclDT_JIGUB;
+	this.ccfCD_CORP = this.divData.form.ccfCD_CORP;
+	this.calDT_ACCOUNT = this.divData.form.calDT_ACCOUNT;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	//this.ccfCD_DEPT_ACNT.CodeFindName = "DAX_CFDEPT";
+	//this.ccfCD_DEPT_ACNT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+};
+
+// 부모창에서 받아온것 셋팅
+this.fnSetDisplay = function() {
+
+	var frame = this.getOwnerFrame();
+	// 발행구분 - ISSUE:전표발행 CANCEL:전표취소
+	this.rdoTY_AUTOSLIP.set_value(frame.TY_AUTOSLIP);
+	var strText = (frame.TY_AUTOSLIP == "CANCEL") ? "발행취소" : "발행";
+	this.divData.form.divBtns.form.btnOK.set_text(strText);	
+
+	trace("적용년월->" + frame.YM_RETIRE +
+		  "/n 퇴직금지급일->" + frame.DT_JIGUB +
+		  "/n 적용차수->" + frame.NO_RETIRE +
+		  "/n 사원번호->" + frame.ID_SABUN +
+		  "/n ID_PERSON->" + frame.ID_PERSON +
+		  "/n CD_CORP->" + frame.CD_CORP +
+		  "/n DS_CORP->" + frame.DS_CORP 
+	);
+	
+	// 사번
+	this.ccfID_SABUN.form.CDTextBox.set_value(frame.ID_SABUN);
+    this.ccfID_SABUN.form.DSTextBox.set_value(frame.DS_HNAME);
+
+	// 퇴직금지급일
+	this.ctclDT_JIGUB.set_value(frame.DT_JIGUB);
+	//회계일자
+	this.calDT_ACCOUNT.set_value(this.gfnGetDate("date"));
+
+
+	// 법인
+	this.ccfCD_CORP.form.CDTextBox.set_value(frame.CD_CORP);
+    this.ccfCD_CORP.form.DSTextBox.set_value(frame.DS_CORP);
+
+	// 법인코드 및 법인명 기본세팅
+	//this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+    //this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsExecute = new Dataset();
+	this.dsExecute.addColumn("YM_RETIRE", "string");
+	this.dsExecute.addColumn("NO_RETIRE", "int");
+	this.dsExecute.addColumn("CD_CORP", "string");
+	this.dsExecute.addColumn("ID_SABUN", "string");
+	this.dsExecute.addColumn("ID_PERSON", "int");
+	this.dsExecute.addColumn("CD_DEPT_ACNT", "string");
+	this.dsExecute.addColumn("DT_ACCOUNT", "string");
+	this.dsExecute.addColumn("DT_JIGUB", "string");
+	this.dsExecute.addColumn("ID_INSERT", "string");
+
+	
+	this.dsExecuteCanc = new Dataset();
+	this.dsExecuteCanc.addColumn("CD_TRADE", "string");
+	this.dsExecuteCanc.addColumn("YM_RETIRE", "string");
+	this.dsExecuteCanc.addColumn("NO_RETIRE", "float");
+	this.dsExecuteCanc.addColumn("CD_CORP", "string");
+	this.dsExecuteCanc.addColumn("ID_SABUN", "string");
+	this.dsExecuteCanc.addColumn("ID_PERSON", "float");
+	this.dsExecuteCanc.addColumn("CD_DEPT_BH", "string");
+	
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSaveValidate = function() {
+	var validate = true;
+	var strMsg = "";
+
+	var TY_AUTOSLIP = this.dsList.getColumn(0, "TY_AUTOSLIP");		// 발행구분
+	var DT_JIGUB = this.dsList.getColumn(0, "DT_JIGUB");			// 지급일자
+	var CD_CORP = this.dsList.getColumn(0, "CD_CORP");				// 법인코드
+	var DT_ACCOUNT = this.dsList.getColumn(0, "DT_ACCOUNT");		// 회계일자
+	var CD_DEPT_ACNT = this.dsList.getColumn(0, "CD_DEPT_ACNT");	// 관리부서
+
+	/*
+	if(this.gfnIsNull(YM_PROVIDE)) {
+		strMsg += "지급년월은 반드시 입력 하셔야 합니다.\n";
+	}
+	*/
+
+	if(this.gfnIsNull(CD_CORP)) {
+		strMsg += "법인코드는 반드시 입력 하셔야 합니다.\n";
+	}
+
+	if(TY_AUTOSLIP == "ISSUE" && this.gfnIsNull(DT_ACCOUNT)) {
+		strMsg += "회계일자는 반드시 입력 하셔야 합니다.\n";
+	}
+	
+	/*
+	if(TY_AUTOSLIP == "ISSUE" && this.gfnIsNull(CD_DEPT_ACNT)) {
+		strMsg += "관리부서는 반드시 입력 하셔야 합니다.\n";
+	}
+	*/
+
+	if(strMsg.length > 0) {
+		this.gfnAlert(strMsg);
+		return false;
+	}
+	return true;
+
+/*
+	//지급년월
+	if(this.gfnIsNull(DT_JIGUB)){
+		this.fnValidateCallback = function() {
+			this.ctclDT_JIGUB.setFocus();
+		}
+		this.gfnAlert("지급년월을 입력하세요.", "fnValidateCallback");
+		return false;
+	}
+	*/
+	
+ 	return true;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	switch(svcID) {
+		case "createSlip":	// 전표발행
+		case "cancelSlip":	// 전표발행취소
+			if (errorCode == 0) {
+				var json = {TY_AUTOSLIP : this.rdoTY_AUTOSLIP.value};
+				this.getParentContext().close(JSON.stringify(json));
+				//this.getParentContext().close(true);
+			} else {
+				this.gfnAlert(errorMsg);
+			}
+		break;
+
+		default:
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+ 	switch(id) {
+		case "ccfCD_DEPT_ACNT":
+			//var cd_corp = this.ccfCD_CORP.form.CDTextBox.value;	
+			var cd_corp = this.gfnNvl(this.ccfCD_CORP.form.CDTextBox.value, this.AuthClient.CD_CORP);
+			var gr_search = this.gfnNvl(this.FormInfo.GR_SEARCH, this.getOwnerFrame().GR_SEARCH)
+
+			dsUserParam.setColumn(nrow, "GR_SEARCH", gr_search);
+			dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+			//dsUserParam.setColumn(nrow, "CD_CORP", this.gfnNvl(this.ccfCD_CORP.form.CDTextBox.value,this.AuthClient.CD_CORP));
+			dsUserParam.setColumn(nrow, "CD_CORP", cd_corp);
+			dsUserParam.setColumn(nrow, "YN_CURRENT", "");			
+
+			break;
+			
+		case "ccfCD_CORP": // 법인코드
+			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+			dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+			break;
+
+		case "ccfID_SABUN":
+			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+ 			dsUserParam.setColumn(nrow, "CD_DEPT", "%");
+ 			dsUserParam.setColumn(nrow, "TY_RETIRE", "04");		
+			break;
+
+		default:
+ 	}
+ 	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData;
+};
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+	if(!this.fnSaveValidate()) return false;
+	
+	//발행구분 - ISSUE:전표발행 CANCEL:전표취소
+	if(this.dsList.getColumn(0, "TY_AUTOSLIP") == "ISSUE"){
+		this.fnIssueSlip();
+	}else{
+		this.fnCancelSlip();
+	}	
+};
+
+// 전표발행
+this.fnIssueSlip = function() {
+
+	this.dsExecute.clearData();
+	var nrow = this.dsExecute.addRow();
+
+	var frame = this.getOwnerFrame();
+
+	this.dsExecute.setColumn(nrow, "YM_RETIRE", frame.YM_RETIRE);
+	this.dsExecute.setColumn(nrow, "NO_RETIRE", frame.NO_RETIRE);
+	this.dsExecute.setColumn(nrow, "CD_CORP", this.dsList.getColumn(0, "CD_CORP"));
+	this.dsExecute.setColumn(nrow, "ID_SABUN", frame.ID_SABUN);
+	this.dsExecute.setColumn(nrow, "ID_PERSON", frame.ID_PERSON);
+	//this.dsExecute.setColumn(nrow, "CD_DEPT_ACNT", this.dsList.getColumn(0, "CD_DEPT_ACNT")); //관리부서
+	this.dsExecute.setColumn(nrow, "DT_ACCOUNT", this.dsList.getColumn(0, "DT_ACCOUNT"));
+	this.dsExecute.setColumn(nrow, "DT_JIGUB", this.dsList.getColumn(0, "DT_JIGUB"));
+	this.dsExecute.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+
+	var strSvcId    = "createSlip";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "createSlip=dsExecute";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+// 전표발행취소
+this.fnCancelSlip = function() 
+{
+	this.dsExecuteCanc.clearData();
+	
+	var frame = this.getOwnerFrame();
+	
+	var nrow = this.dsExecuteCanc.addRow();
+	this.dsExecuteCanc.setColumn(nrow, "CD_TRADE", frame.CD_TRADE);
+	this.dsExecuteCanc.setColumn(nrow, "YM_RETIRE", frame.YM_RETIRE);
+	this.dsExecuteCanc.setColumn(nrow, "NO_RETIRE", frame.NO_RETIRE);
+	this.dsExecuteCanc.setColumn(nrow, "CD_CORP", this.dsList.getColumn(0, "CD_CORP"));
+	this.dsExecuteCanc.setColumn(nrow, "ID_SABUN", frame.ID_SABUN);
+	this.dsExecuteCanc.setColumn(nrow, "ID_PERSON", frame.ID_PERSON);	
+	this.dsExecuteCanc.setColumn(nrow, "CD_DEPT_BH", this.AuthClient.CD_DEPT);	//발행부서 (로그인부서)
+
+	
+	var strSvcId    = "cancelSlip";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "cancelSlip=dsExecuteCanc";
+	var outData     = "dsResult=cancelSlip0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+
+};
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+
+this.ctclDT_JIGUB_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	if(e.prevalue != e.postvalue){	
+		// 회계일자
+		this.calDT_ACCOUNT.set_value(e.postvalue);
+	}
+
+};
+]]></Script>
+    <Dataset id="dsList"/>
+    <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+      <ColumnInfo>
+        <Column id="DT_PROVATION_FROM" type="STRING" size="256"/>
+      </ColumnInfo>
+      <Rows>
+        <Row>
+          <Col id="DT_PROVATION_FROM"/>
+        </Row>
+      </Rows>
+    </Dataset>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="TY_AUTOSLIP" type="STRING" size="256" description="발행구분"/>
+          <Column id="CD_CORP" type="STRING" size="256" description="법인코드"/>
+          <Column id="DT_ACCOUNT" type="STRING" size="256" description="회계일자"/>
+          <Column id="CD_DEPT_ACNT" type="STRING" size="256" description="발행부서"/>
+          <Column id="DT_JIGUB" type="STRING" size="256" description="지급일자"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">createSlip</Col>
+            <Col id="SP">DAWPR_RETIRE_AUTOSLIP_CREATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">cancelSlip</Col>
+            <Col id="SP">DAWPR_RETIRE_AUTOSLIP_CANCEL</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult">
+        <ColumnInfo>
+          <Column id="RST_VAL" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.rdoTY_AUTOSLIP" propid="value" datasetid="dsList" columnid="TY_AUTOSLIP"/>
+      <BindItem id="item2" compid="divData.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_CORP"/>
+      <BindItem id="item3" compid="divData.form.ccfCD_DEPT_ACNT.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_DEPT_ACNT"/>
+      <BindItem id="item4" compid="divData.form.calDT_ACCOUNT" propid="value" datasetid="dsList" columnid="DT_ACCOUNT"/>
+      <BindItem id="item5" compid="divData.form.ctclDT_JIGUB" propid="value" datasetid="dsList" columnid="DT_JIGUB"/>
+    </Bind>
+  </Form>
+</FDL>

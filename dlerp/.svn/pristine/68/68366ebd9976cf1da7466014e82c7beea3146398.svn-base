@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="400" height="210" maxwidth="440" maxheight="290" titletext="부서명칭변경" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTitle" taborder="0" text="부서명칭개편" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staCdDept" taborder="1" text="부서코드" left="0" top="36" width="90" height="30" textAlign="left" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBgCdDept" taborder="2" left="staCdDept:-1" top="staCdDept:-30" height="30" cssclass="sta_WF_tablebg" width="110"/>
+              <Edit id="txtCD_DEPT" taborder="3" left="staCdDept:5" top="staCdDept:-25" width="170" height="20" readonly="true" autoselect="true" autoskip="true"/>
+              <Static id="staDsDept" taborder="4" text="부서명" left="0" top="staCdDept:-1" width="90" height="30" textAlign="left" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBgDsDept" taborder="5" left="staDsDept:-1" top="staDsDept:-30" height="30" cssclass="sta_WF_tablebg" width="311"/>
+              <Edit id="txtDS_DEPT" taborder="6" left="staDsDept:5" top="staDsDept:-25" width="301" height="20"/>
+              <Static id="staDsDeptE" taborder="4" text="부서명(영문)" left="0" top="staDsDept:-1" width="90" height="30" textAlign="left" cssclass="sta_WF_tablelabel"/>
+              <Static id="staBgDsDeptE" taborder="5" left="staDsDeptE:-1" top="staDsDeptE:-30" height="30" cssclass="sta_WF_tablebg" width="311"/>
+              <Edit id="txtDS_DEPT_ENG" taborder="6" left="staDsDeptE:5" top="staDsDeptE:-25" width="301" height="20"/>
+              <Static id="staDtChange" taborder="7" text="변경일" left="staBgCdDept:-1" top="staBgCdDept:-30" width="90" height="30" textAlign="left" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBgDtChange" taborder="8" left="staDtChange:-1" top="staDtChange:-30" height="30" cssclass="sta_WF_tablebg" width="113"/>
+              <Calendar id="tclDT_CHANGE" taborder="9" left="staDtChange:5" top="staDtChange:-25" width="104" height="20" dateformat="yyyy-MM-dd"/>
+              <Static id="staTyGubun" taborder="10" text="개정된 부서명칭을 입력하세요.&#13;&#10;이전 명칭은 이력정보에서 확인할 수 있습니다." left="0" top="staDsDeptE:10" width="100%" height="50" cssclass="sta_WF_notice" textAlign="left"/>
+              <Button id="btnOk" taborder="11" text="확인" left="32.50%" top="190" width="60" height="20" onclick="divData_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="12" text="취소" left="52.50%" top="190" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();	
+			
+	var frame = this.getOwnerFrame();
+	
+	if(!this.gfnIsNull(frame.CD_DEPT)) {	
+		this.dsList.setColumn(0, "CD_DEPT", frame.CD_DEPT);
+		this.dsList.setColumn(0, "DS_DEPT", frame.DS_DEPT);
+		this.dsList.setColumn(0, "DS_DEPT_ENG", frame.DS_DEPT_ENG);
+	}
+	
+	var today = this.gfnGetDate();	
+	this.dsList.setColumn(0, "DT_CHANGE", today);
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.txtCD_DEPT = this.divData.form.txtCD_DEPT;		// 부서코드
+	this.txtDS_DEPT = this.divData.form.txtDS_DEPT;		// 부서명
+	this.txtDS_DEPT_ENG = this.divData.form.txtDS_DEPT_ENG;		// 부서명(영문)
+	this.tclDT_CHANGE = this.divData.form.tclDT_CHANGE;	// 변경일
+	
+	this.grSearch = this.FormInfo.GR_SEARCH;			// 권한
+	this.cdGroup = this.AuthClient.CD_GROUP;			// 그룹코드
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {	
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("CD_CORP", "string");
+	this.dsUpdate.addColumn("CD_DEPT", "string");
+	this.dsUpdate.addColumn("DS_DEPT", "string");
+	this.dsUpdate.addColumn("DS_DEPT_ENG", "string");
+	this.dsUpdate.addColumn("DT_CHANGE", "string");
+	this.dsUpdate.addColumn("ID_UPDATE", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/ 
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+
+	var validate = true;
+
+	//부서코드
+	if (this.gfnIsNull(this.dsList.getColumn(0,"CD_DEPT"))) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.txtCD_DEPT.setFocus();
+		}
+		this.gfnAlert("부서코드를 입력하세요.");
+		return validate;
+	}
+
+	//부서명
+	if (this.gfnIsNull(this.dsList.getColumn(0,"DS_DEPT"))) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.txtDS_DEPT.setFocus();
+		}
+		this.gfnAlert("부서명을 입력하세요.", "fnVaidateCallback");
+		return validate;
+	}
+
+	//변경일
+	if (this.gfnIsNull(this.dsList.getColumn(0,"DT_CHANGE"))) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.tclDT_CHANGE.setFocus();
+		}
+		this.gfnAlert("변경일을 입력하세요.");
+		return false;
+	}
+
+	return validate;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "select") {
+		//this.gfnGridAfterSelect(this.dxGrid);
+	}
+	else if(svcID == "update") {
+		if (errorCode == 0) {
+			this.fnClose = function() {
+				this.getParentContext().close(true);
+			}
+			this.gfnAlert("부서명칭 개편작업이 완료되었습니다.", "fnClose");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+// 확인 버튼 클릭
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnSelectValidate()) return false;
+
+	this.dsUpdate.clearData();
+	var nrow = this.dsUpdate.addRow();
+	this.dsUpdate.setColumn(nrow, "CD_CORP", this.getOwnerFrame().CD_CORP);
+	this.dsUpdate.setColumn(nrow, "CD_DEPT", this.dsList.getColumn(0, "CD_DEPT"));
+	this.dsUpdate.setColumn(nrow, "DS_DEPT", this.dsList.getColumn(0, "DS_DEPT"));
+	this.dsUpdate.setColumn(nrow, "DS_DEPT_ENG", this.dsList.getColumn(0, "DS_DEPT_ENG"));
+	this.dsUpdate.setColumn(nrow, "DT_CHANGE", this.dsList.getColumn(0, "DT_CHANGE"));
+	this.dsUpdate.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+
+	var strSvcId    = "update";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "update=dsUpdate";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]	
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DAZPR_DEPTNAME_UPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT_ENG" type="STRING" size="256"/>
+          <Column id="DT_CHANGE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_DEPT"/>
+            <Col id="DS_DEPT"/>
+            <Col id="DS_DEPT_ENG"/>
+            <Col id="DT_CHANGE"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.txtCD_DEPT" propid="value" datasetid="dsList" columnid="CD_DEPT"/>
+      <BindItem id="item1" compid="divData.form.txtDS_DEPT" propid="value" datasetid="dsList" columnid="DS_DEPT"/>
+      <BindItem id="item2" compid="divData.form.txtDS_DEPT_ENG" propid="value" datasetid="dsList" columnid="DS_DEPT_ENG"/>
+      <BindItem id="item3" compid="divData.form.tclDT_CHANGE" propid="value" datasetid="dsList" columnid="DT_CHANGE"/>
+    </Bind>
+  </Form>
+</FDL>

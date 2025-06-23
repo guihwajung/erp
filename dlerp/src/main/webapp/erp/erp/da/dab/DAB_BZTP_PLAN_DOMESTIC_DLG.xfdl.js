@@ -1,0 +1,2642 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("출장계획서(국내) 상세");
+            this.getSetter("maxwidth").set("1065");
+            this.getSetter("maxheight").set("835");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1021,760);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsListCost", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsCD_STDMNEY", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">USD</Col><Col id=\"DS_CODE\">USD</Col></Row><Row><Col id=\"CD_CODE\">KRW</Col><Col id=\"DS_CODE\">KRW</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DABPR_BZTP_PLAN_DETAIL_SELECT</Col></Row><Row><Col id=\"TARGET\">select_cost</Col><Col id=\"SP\">DABPR_BZTP_PLAN_COST_SELECT</Col></Row><Row><Col id=\"TARGET\">save</Col><Col id=\"SP\">DABPR_BZTP_PLAN_DETAIL_SAVE</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"SN_BZTPSEQ\" type=\"STRING\" size=\"256\"/><Column id=\"TY_BZTP\" type=\"STRING\" size=\"256\"/><Column id=\"ID_SABUN_APL\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HANME_APL\" type=\"STRING\" size=\"256\"/><Column id=\"DT_BZTP_FROM\" type=\"STRING\" size=\"256\"/><Column id=\"DT_BZTP_TO\" type=\"STRING\" size=\"256\"/><Column id=\"CD_AREA_BZTP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_AREA_BZTP\" type=\"STRING\" size=\"256\"/><Column id=\"ID_SABUN_BZTP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HNAME_BZTP\" type=\"STRING\" size=\"256\"/><Column id=\"CD_EMPTYPE_BZTP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_EMPTYPE_BZTP\" type=\"STRING\" size=\"256\"/><Column id=\"DT_WRITE\" type=\"STRING\" size=\"256\"/><Column id=\"AM_STDEXRT\" type=\"STRING\" size=\"256\"/><Column id=\"AM_ADVPGLD\" type=\"STRING\" size=\"256\"/><Column id=\"DT_BZTP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_APRV_NAME\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsData", this);
+            obj._setContents("<ColumnInfo><Column id=\"UNIT_STDMNEY\" type=\"STRING\" size=\"256\"/><Column id=\"AM_IOUTBRUFLGTNOT\" type=\"STRING\" size=\"256\"/><Column id=\"AM_RAILNOT\" type=\"STRING\" size=\"256\"/><Column id=\"AM_SHIPNOT\" type=\"STRING\" size=\"256\"/><Column id=\"AM_FLGTNOT\" type=\"STRING\" size=\"256\"/><Column id=\"AM_CARNOT\" type=\"STRING\" size=\"256\"/><Column id=\"AM_LDGGNOT\" type=\"STRING\" size=\"256\"/><Column id=\"DY_LDGGDR\" type=\"STRING\" size=\"256\"/><Column id=\"AM_CRMNNOT\" type=\"STRING\" size=\"256\"/><Column id=\"DY_CRMNNOTDR\" type=\"STRING\" size=\"256\"/><Column id=\"AM_ETCNOT\" type=\"STRING\" size=\"256\"/><Column id=\"DY_ETCDR\" type=\"STRING\" size=\"256\"/><Column id=\"AM_COMMNOT\" type=\"STRING\" size=\"256\"/><Column id=\"AM_VISAPBCNCMMS\" type=\"STRING\" size=\"256\"/><Column id=\"AM_INSRCOST\" type=\"STRING\" size=\"256\"/><Column id=\"AM_ETCADTNCOST\" type=\"STRING\" size=\"256\"/><Column id=\"AM_TCHMCOST\" type=\"STRING\" size=\"256\"/><Column id=\"DS_RMK\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0","0","1021","130",null,null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("sta_TITLE_T","0","5","90","18",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("0");
+            obj.set_text("출장정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_CORP","0","sta_TITLE_T:10","80","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("5");
+            obj.set_text("법인");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_CORP_bg","staCD_CORP:-1","staCD_CORP:-30","262","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("2");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_CORP","staCD_CORP:5","staCD_CORP:-24","250","20",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("4");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.getSetter("CodeFindName").set("DAX_CFCORP");
+            obj.set_enable("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staBZTP_AREA","0","staCD_CORP:-1","80","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("6");
+            obj.set_text("출장지역");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staBZTP_AREA_bg","staBZTP_AREA:-1","staBZTP_AREA:-30","262","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("7");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfBZTP_AREA","staBZTP_AREA:5","staBZTP_AREA:-25","250","20",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("3");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.getSetter("CodeFindName").set("DAX_CFCORP");
+            obj.set_enable("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staDT_WRITE","0","staBZTP_AREA:-1","80","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("8");
+            obj.set_text("작성일");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staDT_WRITE_bg","staDT_WRITE:-1","staDT_WRITE:-30","262","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("9");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Calendar("tclDT_WRITE","staDT_WRITE:5","staDT_WRITE:-25","105","20",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            obj.set_value("");
+            obj.set_enable("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staID_SABUN_APL","staCD_CORP_bg:-1","staCD_CORP_bg:-30","80","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("12");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_text("신청자");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staID_SABUN_APL_bg","staID_SABUN_APL:-1","staID_SABUN_APL:-30","262","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("13");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfID_SABUN_APL","staID_SABUN_APL:5","staID_SABUN_APL:-25","250","20",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("90");
+            obj.set_taborder("3");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.getSetter("CodeFindName").set("DAX_CFCORP");
+            obj.set_enable("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staID_SABUN_BZTP","staBZTP_AREA_bg:-1","staID_SABUN_APL:-1","80","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("10");
+            obj.set_text("출장자");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staID_SABUN_BZTP_bg","staID_SABUN_BZTP:-1","staID_SABUN_BZTP:-30","262","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("11");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfID_SABUN_BZTP","staID_SABUN_BZTP:5","staID_SABUN_BZTP:-25","250","20",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("90");
+            obj.set_taborder("3");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.getSetter("CodeFindName").set("DAX_CFCORP");
+            obj.set_enable("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staAM_STDEXRT","staDT_WRITE_bg:-1","staID_SABUN_BZTP:-1","80","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("14");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_text("기준환율");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staAM_STDEXRT_bg","staAM_STDEXRT:-1","staAM_STDEXRT:-30","262","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("15");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new MaskEdit("txtAM_STDEXRT","staAM_STDEXRT:5","staAM_STDEXRT:-25","225","20",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_value("");
+            obj.set_enable("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staAM_STDEXRT_unit","txtAM_STDEXRT:10","txtAM_STDEXRT:-25","30","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("15");
+            obj.set_text("원");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staDT_BZTP","staID_SABUN_APL_bg:-1","staID_SABUN_APL_bg:-30","80","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("18");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_text("출장일");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staDT_BZTP_bg","staDT_BZTP:-1","staDT_BZTP:-30","262","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("19");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Calendar("tclDT_BZTP_FROM","staDT_BZTP:5","staDT_BZTP:-25","105","20",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            obj.set_value("");
+            obj.set_enable("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staDT_BZTP_range","tclDT_BZTP_FROM:10","tclDT_BZTP_FROM:-25","10","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_text("~");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Calendar("tclDT_BZTP_TO","staDT_BZTP_range:10","staDT_BZTP:-25","105","20",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            obj.set_value("");
+            obj.set_enable("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_EMPTYPE_BZTP","staID_SABUN_BZTP_bg:-1","staID_SABUN_BZTP_bg:-30","80","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("20");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_text("출장직급");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_EMPTYPE_BZTP_bg","staCD_EMPTYPE_BZTP:-1","staCD_EMPTYPE_BZTP:-30","262","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("21");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_EMPTYPE_BZTP","staCD_EMPTYPE_BZTP:5","staCD_EMPTYPE_BZTP:-25","250","20",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("3");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.getSetter("CodeFindName").set("DAX_CFCORP");
+            obj.set_enable("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_STDMNEY","staAM_STDEXRT_bg:-1","staAM_STDEXRT_bg:-30","80","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("22");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            obj.set_text("기준화폐");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staCD_STDMNEY_bg","staCD_STDMNEY:-1","staCD_STDMNEY:-30","262","30",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("23");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("cboCD_STDMNEY","staCD_STDMNEY:5","staCD_STDMNEY:-25","200","20",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_innerdataset("dsCD_STDMNEY");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_enable("false");
+            obj.set_autoselect("false");
+            obj.set_text("KRW");
+            obj.set_value("KRW");
+            obj.set_index("1");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:4",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("sta_TITLE_L","0","10","90","18",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj.set_text("출장계획서");
+            obj.set_cssclass("sta_TITLE_Bg");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staCost","sta_TITLE_L:0","10","800","18",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj.set_text("단가");
+            obj.set_cssclass("sta_TITLE_B");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTYPE","0","sta_TITLE_L:10","173","59",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("2");
+            obj.set_text("구분");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_verticalAlign("middle");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDY_BZTP","staTYPE:-1","staTYPE:-59","95","59",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("12");
+            obj.set_text("출장일수");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staCOST_MAN","staDY_BZTP:-1","staDY_BZTP:-59","229","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("13");
+            obj.set_text("단가(금액/인원)");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staCOST","staDY_BZTP:-1","staDY_BZTP:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("14");
+            obj.set_text("금액(KRW)");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staMAN","staCOST:-1","staCOST:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("15");
+            obj.set_text("인원");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staCOST_MAN_LIMIT","staCOST_MAN:-1","staCOST_MAN:-30","229","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("24");
+            obj.set_text("정산한도");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staCOST_LIMIT","staMAN:-1","staMAN:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("25");
+            obj.set_text("금액(KRW)");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staMAN_LIMIT","staCOST_LIMIT:-1","staCOST_LIMIT:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("26");
+            obj.set_text("인원");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTOTAL_COST_EST","staCOST_MAN_LIMIT:-1","staCOST_MAN_LIMIT:-30","150","59",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("27");
+            obj.set_text("금회출장예산\r\n(KRW)");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ADVPGLD","staTOTAL_COST_EST:-1","staTOTAL_COST_EST:-59","150","59",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("28");
+            obj.set_text("가불금신청금\r\n(KRW)");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_IOUTBRUFLGTNOT","0","staTYPE:-1","173","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("3");
+            obj.set_text("입출국항공료");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_IOUTBRUFLGTNOT_DY_BZTP_bg","staAM_IOUTBRUFLGTNOT:-1","staAM_IOUTBRUFLGTNOT:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("1");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_IOUTBRUFLGTNOT_COST_bg","staAM_IOUTBRUFLGTNOT_DY_BZTP_bg:-1","staAM_IOUTBRUFLGTNOT_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("29");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_IOUTBRUFLGTNOT_MAN_bg","staAM_IOUTBRUFLGTNOT_COST_bg:-1","staAM_IOUTBRUFLGTNOT_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("30");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_IOUTBRUFLGTNOT_COST_LIMIT_bg","staAM_IOUTBRUFLGTNOT_MAN_bg:-1","staAM_IOUTBRUFLGTNOT_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("31");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_IOUTBRUFLGTNOT_MAN_LIMIT_bg","staAM_IOUTBRUFLGTNOT_COST_LIMIT_bg:-1","staAM_IOUTBRUFLGTNOT_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("32");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_IOUTBRUFLGTNOT_EST_KRW_bg","staAM_IOUTBRUFLGTNOT_MAN_LIMIT_bg:-1","staAM_IOUTBRUFLGTNOT_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("33");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_IOUTBRUFLGTNOT_ADVPGLD_KRW_bg","staAM_IOUTBRUFLGTNOT_EST_KRW_bg:-1","staAM_IOUTBRUFLGTNOT_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("34");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_IOUTBRUFLGTNOT","staAM_IOUTBRUFLGTNOT:98","staAM_IOUTBRUFLGTNOT:-25","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("125");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_IOUTBRUFLGTNOT_MAN","mskAM_IOUTBRUFLGTNOT:9","mskAM_IOUTBRUFLGTNOT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("126");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_IOUTBRUFLGTNOT_COST_LIMIT","mskAM_IOUTBRUFLGTNOT_MAN:9","mskAM_IOUTBRUFLGTNOT_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("127");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_IOUTBRUFLGTNOT_MAN_LIMIT","mskAM_IOUTBRUFLGTNOT_COST_LIMIT:9","mskAM_IOUTBRUFLGTNOT_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("128");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_IOUTBRUFLGTNOT_EST_KRW","mskAM_IOUTBRUFLGTNOT_MAN_LIMIT:9","mskAM_IOUTBRUFLGTNOT_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("129");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_IOUTBRUFLGTNOT_ADVPGLD_KRW","mskAM_IOUTBRUFLGTNOT_EST_KRW:9","mskAM_IOUTBRUFLGTNOT_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("130");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_TRANS","0","staAM_IOUTBRUFLGTNOT:-1","64","116",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("4");
+            obj.set_text("교통비");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_verticalAlign("middle");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_RAILNOT","staAM_TRANS:-1","staAM_TRANS:-116","110","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("5");
+            obj.set_text("철도비");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_RAILNOT_DY_BZTP_bg","staAM_RAILNOT:-1","staAM_RAILNOT:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("35");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_RAILNOT_COST_bg","staAM_RAILNOT_DY_BZTP_bg:-1","staAM_RAILNOT_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("36");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_RAILNOT_MAN_bg","staAM_RAILNOT_COST_bg:-1","staAM_RAILNOT_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("37");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_RAILNOT_COST_LIMIT_bg","staAM_RAILNOT_MAN_bg:-1","staAM_RAILNOT_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("38");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_RAILNOT_MAN_LIMIT_bg","staAM_RAILNOT_COST_LIMIT_bg:-1","staAM_RAILNOT_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("39");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_RAILNOT_EST_KRW_bg","staAM_RAILNOT_MAN_LIMIT_bg:-1","staAM_RAILNOT_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("40");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_RAILNOT_ADVPGLD_KRW_bg","staAM_RAILNOT_EST_KRW_bg:-1","staAM_RAILNOT_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("41");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_RAILNOT","staAM_RAILNOT:98","staAM_RAILNOT:-25","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("131");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_RAILNOT_MAN","mskAM_RAILNOT:9","mskAM_RAILNOT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("132");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_RAILNOT_COST_LIMIT","mskAM_RAILNOT_MAN:9","mskAM_RAILNOT_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("133");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_RAILNOT_MAN_LIMIT","mskAM_RAILNOT_COST_LIMIT:9","mskAM_RAILNOT_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("134");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_RAILNOT_EST_KRW","mskAM_RAILNOT_MAN_LIMIT:9","mskAM_RAILNOT_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("135");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_RAILNOT_ADVPGLD_KRW","mskAM_RAILNOT_EST_KRW:9","mskAM_RAILNOT_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("136");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_SHIPNOT","staAM_TRANS:-1","staAM_TRANS:-87","110","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("6");
+            obj.set_text("선박비");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_SHIPNOT_DY_BZTP_bg","staAM_SHIPNOT:-1","staAM_SHIPNOT:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("42");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_SHIPNOT_COST_bg","staAM_SHIPNOT_DY_BZTP_bg:-1","staAM_SHIPNOT_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("43");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_SHIPNOT_MAN_bg","staAM_SHIPNOT_COST_bg:-1","staAM_SHIPNOT_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("44");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_SHIPNOT_COST_LIMIT_bg","staAM_SHIPNOT_MAN_bg:-1","staAM_SHIPNOT_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("45");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_SHIPNOT_MAN_LIMIT_bg","staAM_SHIPNOT_COST_LIMIT_bg:-1","staAM_SHIPNOT_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("46");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_SHIPNOT_EST_KRW_bg","staAM_SHIPNOT_MAN_LIMIT_bg:-1","staAM_SHIPNOT_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("47");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_SHIPNOT_ADVPGLD_KRW_bg","staAM_SHIPNOT_EST_KRW_bg:-1","staAM_SHIPNOT_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("48");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_SHIPNOT","staAM_SHIPNOT:98","staAM_SHIPNOT:-25","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("137");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_SHIPNOT_MAN","mskAM_SHIPNOT:9","mskAM_SHIPNOT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("138");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_SHIPNOT_COST_LIMIT","mskAM_SHIPNOT_MAN:9","mskAM_SHIPNOT_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("139");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_SHIPNOT_MAN_LIMIT","mskAM_SHIPNOT_COST_LIMIT:9","mskAM_SHIPNOT_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("140");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_SHIPNOT_EST_KRW","mskAM_SHIPNOT_MAN_LIMIT:9","mskAM_SHIPNOT_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("141");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_SHIPNOT_ADVPGLD_KRW","mskAM_SHIPNOT_EST_KRW:9","mskAM_SHIPNOT_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("142");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_FLGTNOT","staAM_TRANS:-1","staAM_TRANS:-58","110","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("7");
+            obj.set_text("항공비");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_FLGTNOT_DY_BZTP_bg","staAM_FLGTNOT:-1","staAM_FLGTNOT:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("49");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_FLGTNOT_COST_bg","staAM_FLGTNOT_DY_BZTP_bg:-1","staAM_FLGTNOT_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("50");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_FLGTNOT_MAN_bg","staAM_FLGTNOT_COST_bg:-1","staAM_FLGTNOT_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("51");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_FLGTNOT_COST_LIMIT_bg","staAM_FLGTNOT_MAN_bg:-1","staAM_FLGTNOT_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("52");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_FLGTNOT_MAN_LIMIT_bg","staAM_FLGTNOT_COST_LIMIT_bg:-1","staAM_FLGTNOT_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("53");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_FLGTNOT_EST_KRW_bg","staAM_FLGTNOT_MAN_LIMIT_bg:-1","staAM_FLGTNOT_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("54");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_FLGTNOT_ADVPGLD_KRW_bg","staAM_FLGTNOT_EST_KRW_bg:-1","staAM_FLGTNOT_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("55");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_FLGTNOT","staAM_FLGTNOT:98","staAM_FLGTNOT:-25","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("143");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_FLGTNOT_MAN","mskAM_FLGTNOT:9","mskAM_FLGTNOT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("144");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_FLGTNOT_COST_LIMIT","mskAM_FLGTNOT_MAN:9","mskAM_FLGTNOT_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("145");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_FLGTNOT_MAN_LIMIT","mskAM_FLGTNOT_COST_LIMIT:9","mskAM_FLGTNOT_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("146");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_FLGTNOT_EST_KRW","mskAM_FLGTNOT_MAN_LIMIT:9","mskAM_FLGTNOT_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("147");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_FLGTNOT_ADVPGLD_KRW","mskAM_FLGTNOT_EST_KRW:9","mskAM_FLGTNOT_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("148");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CARNOT","staAM_TRANS:-1","staAM_TRANS:-29","110","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("8");
+            obj.set_text("자동차비");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CARNOT_DY_BZTP_bg","staAM_CARNOT:-1","staAM_CARNOT:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("56");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CARNOT_COST_bg","staAM_CARNOT_DY_BZTP_bg:-1","staAM_CARNOT_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("57");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CARNOT_MAN_bg","staAM_CARNOT_COST_bg:-1","staAM_CARNOT_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("58");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CARNOT_COST_LIMIT_bg","staAM_CARNOT_MAN_bg:-1","staAM_CARNOT_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("59");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CARNOT_MAN_LIMIT_bg","staAM_CARNOT_COST_LIMIT_bg:-1","staAM_CARNOT_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("60");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CARNOT_EST_KRW_bg","staAM_CARNOT_MAN_LIMIT_bg:-1","staAM_CARNOT_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("61");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CARNOT_ADVPGLD_KRW_bg","staAM_CARNOT_EST_KRW_bg:-1","staAM_CARNOT_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("62");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CARNOT","staAM_CARNOT:98","staAM_CARNOT:-25","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("149");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CARNOT_MAN","mskAM_CARNOT:9","mskAM_CARNOT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("151");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CARNOT_COST_LIMIT","mskAM_CARNOT_MAN:9","mskAM_CARNOT_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("152");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CARNOT_MAN_LIMIT","mskAM_CARNOT_COST_LIMIT:9","mskAM_CARNOT_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("153");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CARNOT_EST_KRW","mskAM_CARNOT_MAN_LIMIT:9","mskAM_CARNOT_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("154");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CARNOT_ADVPGLD_KRW","mskAM_CARNOT_EST_KRW:9","mskAM_CARNOT_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("155");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_LDGGNOT","0","staAM_TRANS:-1","173","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("9");
+            obj.set_text("숙박비");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_LDGGNOT_DY_BZTP_bg","staAM_LDGGNOT:-1","staAM_LDGGNOT:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("63");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_LDGGNOT_COST_bg","staAM_LDGGNOT_DY_BZTP_bg:-1","staAM_LDGGNOT_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("64");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_LDGGNOT_MAN_bg","staAM_LDGGNOT_COST_bg:-1","staAM_LDGGNOT_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("65");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_LDGGNOT_COST_LIMIT_bg","staAM_LDGGNOT_MAN_bg:-1","staAM_LDGGNOT_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("66");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_LDGGNOT_MAN_LIMIT_bg","staAM_LDGGNOT_COST_LIMIT_bg:-1","staAM_LDGGNOT_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("67");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_LDGGNOT_EST_KRW_bg","staAM_LDGGNOT_MAN_LIMIT_bg:-1","staAM_LDGGNOT_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("68");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_LDGGNOT_ADVPGLD_KRW_bg","staAM_LDGGNOT_EST_KRW_bg:-1","staAM_LDGGNOT_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("69");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_LDGGNOT_DY_BZTP","staAM_LDGGNOT_DY_BZTP_bg:-90","staAM_LDGGNOT_DY_BZTP_bg:-25","85","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("150");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_LDGGNOT","mskAM_LDGGNOT_DY_BZTP:9","mskAM_LDGGNOT_DY_BZTP:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("156");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_LDGGNOT_MAN","mskAM_LDGGNOT:9","mskAM_LDGGNOT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("157");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_LDGGNOT_COST_LIMIT","mskAM_LDGGNOT_MAN:9","mskAM_LDGGNOT_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("158");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_LDGGNOT_MAN_LIMIT","mskAM_LDGGNOT_COST_LIMIT:9","mskAM_LDGGNOT_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("159");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_LDGGNOT_EST_KRW","mskAM_LDGGNOT_MAN_LIMIT:9","mskAM_LDGGNOT_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("160");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_LDGGNOT_ADVPGLD_KRW","mskAM_LDGGNOT_EST_KRW:9","mskAM_LDGGNOT_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("161");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CRMNNOT","0","staAM_LDGGNOT:-1","173","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("10");
+            obj.set_text("식비");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CRMNNOT_DY_BZTP_bg","staAM_CRMNNOT:-1","staAM_CRMNNOT:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("70");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CRMNNOT_COST_bg","staAM_CRMNNOT_DY_BZTP_bg:-1","staAM_CRMNNOT_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("71");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CRMNNOT_MAN_bg","staAM_CRMNNOT_COST_bg:-1","staAM_CRMNNOT_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("72");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CRMNNOT_COST_LIMIT_bg","staAM_CRMNNOT_MAN_bg:-1","staAM_CRMNNOT_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("73");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CRMNNOT_MAN_LIMIT_bg","staAM_CRMNNOT_COST_LIMIT_bg:-1","staAM_CRMNNOT_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("74");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CRMNNOT_EST_KRW_bg","staAM_CRMNNOT_MAN_LIMIT_bg:-1","staAM_CRMNNOT_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("75");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_CRMNNOT_ADVPGLD_KRW_bg","staAM_CRMNNOT_EST_KRW_bg:-1","staAM_CRMNNOT_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("76");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CRMNNOT_DY_BZTP","staAM_CRMNNOT:4","staAM_CRMNNOT:-25","85","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("162");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CRMNNOT","mskAM_CRMNNOT_DY_BZTP:9","mskAM_CRMNNOT_DY_BZTP:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("163");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CRMNNOT_MAN","mskAM_CRMNNOT:9","mskAM_CRMNNOT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("164");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CRMNNOT_COST_LIMIT","mskAM_CRMNNOT_MAN:9","mskAM_CRMNNOT_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("165");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CRMNNOT_MAN_LIMIT","mskAM_CRMNNOT_COST_LIMIT:9","mskAM_CRMNNOT_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("166");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CRMNNOT_EST_KRW","mskAM_CRMNNOT_MAN_LIMIT:9","mskAM_CRMNNOT_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("167");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_CRMNNOT_ADVPGLD_KRW","mskAM_CRMNNOT_EST_KRW:9","mskAM_CRMNNOT_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("168");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCNOT","0","staAM_CRMNNOT:-1","173","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("11");
+            obj.set_text("잡비");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCNOT_DY_BZTP_bg","staAM_ETCNOT:-1","staAM_ETCNOT:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("77");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCNOT_COST_bg","staAM_ETCNOT_DY_BZTP_bg:-1","staAM_ETCNOT_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("78");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCNOT_MAN_bg","staAM_ETCNOT_COST_bg:-1","staAM_ETCNOT_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("79");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCNOT_COST_LIMIT_bg","staAM_ETCNOT_MAN_bg:-1","staAM_ETCNOT_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("80");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCNOT_MAN_LIMIT_bg","staAM_ETCNOT_COST_LIMIT_bg:-1","staAM_ETCNOT_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("81");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCNOT_EST_KRW_bg","staAM_ETCNOT_MAN_LIMIT_bg:-1","staAM_ETCNOT_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("82");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCNOT_ADVPGLD_KRW_bg","staAM_ETCNOT_EST_KRW_bg:-1","staAM_ETCNOT_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("83");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCNOT_DY_BZTP","staAM_ETCNOT:4","staAM_ETCNOT:-25","85","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("169");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCNOT","mskAM_ETCNOT_DY_BZTP:9","mskAM_ETCNOT_DY_BZTP:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("170");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCNOT_MAN","mskAM_ETCNOT:9","mskAM_ETCNOT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("171");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            obj.set_enableevent("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCNOT_COST_LIMIT","mskAM_ETCNOT_MAN:9","mskAM_ETCNOT_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("172");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCNOT_MAN_LIMIT","mskAM_ETCNOT_COST_LIMIT:9","mskAM_ETCNOT_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("173");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCNOT_EST_KRW","mskAM_ETCNOT_MAN_LIMIT:9","mskAM_ETCNOT_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("174");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCNOT_ADVPGLD_KRW","mskAM_ETCNOT_EST_KRW:9","mskAM_ETCNOT_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("175");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETC","0","staAM_ETCNOT:-1","64","116",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("16");
+            obj.set_text("기타");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_verticalAlign("middle");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_COMMNOT","staAM_ETC:-1","staAM_ETC:-116","110","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("17");
+            obj.set_text("통신비(로밍)");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_COMMNOT_DY_BZTP_bg","staAM_COMMNOT:-1","staAM_COMMNOT:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("84");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_COMMNOT_COST_bg","staAM_COMMNOT_DY_BZTP_bg:-1","staAM_COMMNOT_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("85");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_COMMNOT_MAN_bg","staAM_COMMNOT_COST_bg:-1","staAM_COMMNOT_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("86");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_COMMNOT_COST_LIMIT_bg","staAM_COMMNOT_MAN_bg:-1","staAM_COMMNOT_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("87");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_COMMNOT_MAN_LIMIT_bg","staAM_COMMNOT_COST_LIMIT_bg:-1","staAM_COMMNOT_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("88");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_COMMNOT_EST_KRW_bg","staAM_COMMNOT_MAN_LIMIT_bg:-1","staAM_COMMNOT_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("89");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_COMMNOT_ADVPGLD_KRW_bg","staAM_COMMNOT_EST_KRW_bg:-1","staAM_COMMNOT_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("90");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_COMMNOT","staAM_COMMNOT:98","staAM_COMMNOT:-25","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("176");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_COMMNOT_MAN","mskAM_COMMNOT:9","mskAM_COMMNOT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("177");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_COMMNOT_COST_LIMIT","mskAM_COMMNOT_MAN:9","mskAM_COMMNOT_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("178");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_COMMNOT_MAN_LIMIT","mskAM_COMMNOT_COST_LIMIT:9","mskAM_COMMNOT_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("179");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_COMMNOT_EST_KRW","mskAM_COMMNOT_MAN_LIMIT:9","mskAM_COMMNOT_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("180");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_COMMNOT_ADVPGLD_KRW","mskAM_COMMNOT_EST_KRW:9","mskAM_COMMNOT_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("181");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_VISAPBCNCMMS","staAM_ETC:-1","staAM_ETC:-87","110","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("18");
+            obj.set_text("Visa 발급수수료");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_VISAPBCNCMMS_DY_BZTP_bg","staAM_VISAPBCNCMMS:-1","staAM_VISAPBCNCMMS:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("91");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_VISAPBCNCMMS_COST_bg","staAM_VISAPBCNCMMS_DY_BZTP_bg:-1","staAM_VISAPBCNCMMS_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("92");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_VISAPBCNCMMS_MAN_bg","staAM_VISAPBCNCMMS_COST_bg:-1","staAM_VISAPBCNCMMS_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("93");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_VISAPBCNCMMS_COST_LIMIT_bg","staAM_VISAPBCNCMMS_MAN_bg:-1","staAM_VISAPBCNCMMS_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("94");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_VISAPBCNCMMS_MAN_LIMIT_bg","staAM_VISAPBCNCMMS_COST_LIMIT_bg:-1","staAM_VISAPBCNCMMS_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("95");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_VISAPBCNCMMS_EST_KRW_bg","staAM_VISAPBCNCMMS_MAN_LIMIT_bg:-1","staAM_VISAPBCNCMMS_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("96");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_VISAPBCNCMMS_ADVPGLD_KRW_bg","staAM_VISAPBCNCMMS_EST_KRW_bg:-1","staAM_VISAPBCNCMMS_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("97");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_VISAPBCNCMMS","staAM_VISAPBCNCMMS:98","staAM_VISAPBCNCMMS:-25","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("182");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_VISAPBCNCMMS_MAN","mskAM_VISAPBCNCMMS:9","mskAM_VISAPBCNCMMS:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("183");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_VISAPBCNCMMS_COST_LIMIT","mskAM_VISAPBCNCMMS_MAN:9","mskAM_VISAPBCNCMMS_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("184");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_VISAPBCNCMMS_MAN_LIMIT","mskAM_VISAPBCNCMMS_COST_LIMIT:9","mskAM_VISAPBCNCMMS_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("185");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_VISAPBCNCMMS_EST_KRW","mskAM_VISAPBCNCMMS_MAN_LIMIT:9","mskAM_VISAPBCNCMMS_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("186");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_VISAPBCNCMMS_ADVPGLD_KRW","mskAM_VISAPBCNCMMS_EST_KRW:9","mskAM_VISAPBCNCMMS_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("187");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_INSRCOST","staAM_ETC:-1","staAM_ETC:-58","110","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("19");
+            obj.set_text("추가비용1");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_INSRCOST_DY_BZTP_bg","staAM_INSRCOST:-1","staAM_INSRCOST:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("98");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_INSRCOST_COST_bg","staAM_INSRCOST_DY_BZTP_bg:-1","staAM_INSRCOST_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("99");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_INSRCOST_MAN_bg","staAM_INSRCOST_COST_bg:-1","staAM_INSRCOST_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("100");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_INSRCOST_COST_LIMIT_bg","staAM_INSRCOST_MAN_bg:-1","staAM_INSRCOST_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("101");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_INSRCOST_MAN_LIMIT_bg","staAM_INSRCOST_COST_LIMIT_bg:-1","staAM_INSRCOST_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("102");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_INSRCOST_EST_KRW_bg","staAM_INSRCOST_MAN_LIMIT_bg:-1","staAM_INSRCOST_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("103");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_INSRCOST_ADVPGLD_KRW_bg","staAM_INSRCOST_EST_KRW_bg:-1","staAM_INSRCOST_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("104");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_INSRCOST","staAM_INSRCOST:98","staAM_INSRCOST:-25","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("188");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_INSRCOST_MAN","mskAM_INSRCOST:9","mskAM_INSRCOST:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("189");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_INSRCOST_COST_LIMIT","mskAM_INSRCOST_MAN:9","mskAM_INSRCOST_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("190");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_INSRCOST_MAN_LIMIT","mskAM_INSRCOST_COST_LIMIT:9","mskAM_INSRCOST_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("191");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_INSRCOST_EST_KRW","mskAM_INSRCOST_MAN_LIMIT:9","mskAM_INSRCOST_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("192");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_INSRCOST_ADVPGLD_KRW","mskAM_INSRCOST_EST_KRW:9","mskAM_INSRCOST_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("193");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCADTNCOST","staAM_ETC:-1","staAM_ETC:-29","110","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("20");
+            obj.set_text("추가비용2");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCADTNCOST_DY_BZTP_bg","staAM_ETCADTNCOST:-1","staAM_ETCADTNCOST:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("105");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCADTNCOST_COST_bg","staAM_ETCADTNCOST_DY_BZTP_bg:-1","staAM_ETCADTNCOST_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("106");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCADTNCOST_MAN_bg","staAM_ETCADTNCOST_COST_bg:-1","staAM_ETCADTNCOST_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("107");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCADTNCOST_COST_LIMIT_bg","staAM_ETCADTNCOST_MAN_bg:-1","staAM_ETCADTNCOST_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("108");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCADTNCOST_MAN_LIMIT_bg","staAM_ETCADTNCOST_COST_LIMIT_bg:-1","staAM_ETCADTNCOST_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("109");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCADTNCOST_EST_KRW_bg","staAM_ETCADTNCOST_MAN_LIMIT_bg:-1","staAM_ETCADTNCOST_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("110");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_ETCADTNCOST_ADVPGLD_KRW_bg","staAM_ETCADTNCOST_EST_KRW_bg:-1","staAM_ETCADTNCOST_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("111");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCADTNCOST","staAM_ETCADTNCOST:98","staAM_ETCADTNCOST:-25","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("194");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCADTNCOST_MAN","mskAM_ETCADTNCOST:9","mskAM_ETCADTNCOST:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("195");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            obj.set_enableevent("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCADTNCOST_COST_LIMIT","mskAM_ETCADTNCOST_MAN:9","mskAM_ETCADTNCOST_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("196");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCADTNCOST_MAN_LIMIT","mskAM_ETCADTNCOST_COST_LIMIT:9","mskAM_ETCADTNCOST_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("197");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            obj.set_enableevent("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCADTNCOST_EST_KRW","mskAM_ETCADTNCOST_MAN_LIMIT:9","mskAM_ETCADTNCOST_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("198");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_ETCADTNCOST_ADVPGLD_KRW","mskAM_ETCADTNCOST_EST_KRW:9","mskAM_ETCADTNCOST_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("199");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTOTAL","0","staAM_ETC:-1","173","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("21");
+            obj.set_text("합계");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_font("normal bold 10pt/normal \"Arial\"");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTOTAL_DY_BZTP_bg","staTOTAL:-1","staTOTAL:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("112");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_text("");
+            obj.set_color("#fef8f5");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTOTAL_COST_bg","staTOTAL_DY_BZTP_bg:-1","staTOTAL_DY_BZTP_bg:-30","229","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("113");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTOTAL_COST_LIMIT_bg","staTOTAL_COST_bg:-1","staTOTAL_COST_bg:-30","229","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("114");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTOTAL_EST_KRW_bg","staTOTAL_COST_LIMIT_bg:-1","staTOTAL_COST_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("115");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staTOTAL_ADVPGLD_KRW_bg","staTOTAL_EST_KRW_bg:-1","staTOTAL_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("116");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskTOTAL","staTOTAL:98","staTOTAL:-25","219","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("200");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskTOTAL_COST_LIMIT","mskTOTAL:9","mskTOTAL:-20","219","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("201");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskTOTAL_EST_KRW","mskTOTAL_COST_LIMIT:9","mskTOTAL_COST_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("202");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskTOTAL_ADVPGLD_KRW","mskTOTAL_EST_KRW:9","mskTOTAL_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("203");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_TCHMCOST","0","staTOTAL:-1","173","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("22");
+            obj.set_text("[별도계정] 교제비");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_font("normal bold 10pt/normal \"Arial\"");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_TCHMCOST_DY_BZTP_bg","staAM_TCHMCOST:-1","staAM_TCHMCOST:-30","95","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("117");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_TCHMCOST_COST_bg","staAM_TCHMCOST_DY_BZTP_bg:-1","staAM_TCHMCOST_DY_BZTP_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("118");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_TCHMCOST_MAN_bg","staAM_TCHMCOST_COST_bg:-1","staAM_TCHMCOST_COST_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("119");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_TCHMCOST_COST_LIMIT_bg","staAM_TCHMCOST_MAN_bg:-1","staAM_TCHMCOST_MAN_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("120");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_TCHMCOST_MAN_LIMIT_bg","staAM_TCHMCOST_COST_LIMIT_bg:-1","staAM_TCHMCOST_COST_LIMIT_bg:-30","80","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("121");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_TCHMCOST_EST_KRW_bg","staAM_TCHMCOST_MAN_LIMIT_bg:-1","staAM_TCHMCOST_MAN_LIMIT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("122");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staAM_TCHMCOST_ADVPGLD_KRW_bg","staAM_TCHMCOST_EST_KRW_bg:-1","staAM_TCHMCOST_EST_KRW_bg:-30","150","30",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("123");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_TCHMCOST","staAM_TCHMCOST:98","staAM_TCHMCOST:-25","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("204");
+            obj.set_format("###,##0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_TCHMCOST_MAN","mskAM_TCHMCOST:9","mskAM_TCHMCOST:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("205");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_TCHMCOST_COST_LIMIT","mskAM_TCHMCOST_MAN:9","mskAM_TCHMCOST_MAN:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("206");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_TCHMCOST_MAN_LIMIT","mskAM_TCHMCOST_COST_LIMIT:9","mskAM_TCHMCOST_COST_LIMIT:-20","70","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("207");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_TCHMCOST_EST_KRW","mskAM_TCHMCOST_MAN_LIMIT:9","mskAM_TCHMCOST_MAN_LIMIT:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("208");
+            obj.set_format("###,##0");
+            obj.set_enable("false");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new MaskEdit("mskAM_TCHMCOST_ADVPGLD_KRW","mskAM_TCHMCOST_EST_KRW:9","mskAM_TCHMCOST_EST_KRW:-20","140","20",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("209");
+            obj.set_format("###,##0");
+            obj.set_enable("true");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_RMK","0","staAM_TCHMCOST:-1","173","90",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("23");
+            obj.set_text("비고");
+            obj.set_cssclass("sta_WF_tablelabelN");
+            obj.set_textAlign("center");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_RMK_bg","staDS_RMK:-1","staDS_RMK:-90","849","90",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("124");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new TextArea("txtDS_RMK","staDS_RMK_bg:-844","staDS_RMK_bg:-85","839","80",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("210");
+            obj.set_scrolltype("vertical");
+            obj.set_maxlength("300");
+            obj.set_wordWrap("char");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Div("divBtns","445","txtDS_RMK:14","157","27",null,null,null,null,null,null,this.divData.form);
+            obj.set_text("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Button("btnOK","0","0","60","27",null,null,null,null,null,null,this.divData.form.divBtns.form);
+            obj.set_taborder("1");
+            obj.set_text("저장");
+            this.divData.form.divBtns.addChild(obj.name, obj);
+
+            obj = new Button("btnCANCLE","btnOK:10","0","60","27",null,null,null,null,null,null,this.divData.form.divBtns.form);
+            obj.set_taborder("0");
+            obj.set_text("취소");
+            this.divData.form.divBtns.addChild(obj.name, obj);
+
+            obj = new Button("btnNotice",null,"4","80","30","3",null,null,null,null,null,this.divData.form);
+            obj.set_taborder("177");
+            obj.set_text("주의사항");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.ccfCD_CORP.form.CDTextBox","value","dsSearch","CD_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divSearch.form.ccfCD_CORP.form.DSTextBox","value","dsSearch","DS_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divSearch.form.ccfBZTP_AREA.form.CDTextBox","value","dsSearch","CD_AREA_BZTP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divSearch.form.ccfBZTP_AREA.form.DSTextBox","value","dsSearch","DS_AREA_BZTP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","divSearch.form.tclDT_WRITE","value","dsSearch","DT_WRITE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item5","divSearch.form.ccfID_SABUN_APL.form.CDTextBox","value","dsSearch","ID_SABUN_APL");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item6","divSearch.form.ccfID_SABUN_APL.form.DSTextBox","value","dsSearch","DS_HANME_APL");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item7","divSearch.form.ccfID_SABUN_BZTP.form.CDTextBox","value","dsSearch","ID_SABUN_BZTP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item8","divSearch.form.ccfID_SABUN_BZTP.form.DSTextBox","value","dsSearch","DS_HNAME_BZTP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item9","divSearch.form.txtAM_STDEXRT","value","dsSearch","AM_STDEXRT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item10","divSearch.form.tclDT_BZTP_FROM","value","dsSearch","DT_BZTP_FROM");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item11","divSearch.form.tclDT_BZTP_TO","value","dsSearch","DT_BZTP_TO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item12","divSearch.form.ccfCD_EMPTYPE_BZTP.form.CDTextBox","value","dsSearch","CD_EMPTYPE_BZTP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item13","divSearch.form.ccfCD_EMPTYPE_BZTP.form.DSTextBox","value","dsSearch","DS_EMPTYPE_BZTP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DAB_BZTP_PLAN_DOMESTIC_DLG.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e) {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+        	this.fnSetCombo();
+        	this.fnInit();
+        }
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+
+        }
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.cboCD_STDMNEY = this.divSearch.form.cboCD_STDMNEY;		// 기준화폐
+
+        	// 정산한도
+        	this.mskAM_LDGGNOT_COST_LIMIT = this.divData.form.mskAM_LDGGNOT_COST_LIMIT;	// 숙박비
+        	this.mskAM_CRMNNOT_COST_LIMIT = this.divData.form.mskAM_CRMNNOT_COST_LIMIT;	// 식비
+        	this.mskAM_ETCNOT_COST_LIMIT  = this.divData.form.mskAM_ETCNOT_COST_LIMIT;	// 잡비
+
+        	this.mskAM_LDGGNOT_DY_BZTP = this.divData.form.mskAM_LDGGNOT_DY_BZTP;
+        	this.mskAM_CRMNNOT_DY_BZTP = this.divData.form.mskAM_CRMNNOT_DY_BZTP;
+        	this.mskAM_ETCNOT_DY_BZTP  = this.divData.form.mskAM_ETCNOT_DY_BZTP;
+        	this.mskAM_IOUTBRUFLGTNOT  = this.divData.form.mskAM_IOUTBRUFLGTNOT;
+        	this.mskAM_RAILNOT         = this.divData.form.mskAM_RAILNOT;
+        	this.mskAM_SHIPNOT         = this.divData.form.mskAM_SHIPNOT;
+        	this.mskAM_FLGTNOT         = this.divData.form.mskAM_FLGTNOT;
+        	this.mskAM_CARNOT          = this.divData.form.mskAM_CARNOT;
+        	this.mskAM_LDGGNOT         = this.divData.form.mskAM_LDGGNOT;
+        	this.mskAM_CRMNNOT         = this.divData.form.mskAM_CRMNNOT;
+        	this.mskAM_ETCNOT          = this.divData.form.mskAM_ETCNOT;
+        	this.mskAM_COMMNOT         = this.divData.form.mskAM_COMMNOT;
+        	this.mskAM_CRMNNOT         = this.divData.form.mskAM_CRMNNOT;
+        	this.mskAM_VISAPBCNCMMS    = this.divData.form.mskAM_VISAPBCNCMMS;
+        	this.mskAM_INSRCOST        = this.divData.form.mskAM_INSRCOST;
+        	this.mskAM_ETCADTNCOST     = this.divData.form.mskAM_ETCADTNCOST;
+        	this.mskAM_TCHMCOST        = this.divData.form.mskAM_TCHMCOST;
+
+        	this.mskAM_IOUTBRUFLGTNOT_ADVPGLD_KRW  = this.divData.form.mskAM_IOUTBRUFLGTNOT_ADVPGLD_KRW;
+        	this.mskAM_RAILNOT_ADVPGLD_KRW         = this.divData.form.mskAM_RAILNOT_ADVPGLD_KRW;
+        	this.mskAM_SHIPNOT_ADVPGLD_KRW         = this.divData.form.mskAM_SHIPNOT_ADVPGLD_KRW;
+        	this.mskAM_FLGTNOT_ADVPGLD_KRW         = this.divData.form.mskAM_FLGTNOT_ADVPGLD_KRW;
+        	this.mskAM_CARNOT_ADVPGLD_KRW          = this.divData.form.mskAM_CARNOT_ADVPGLD_KRW;
+        	this.mskAM_LDGGNOT_ADVPGLD_KRW         = this.divData.form.mskAM_LDGGNOT_ADVPGLD_KRW;
+        	this.mskAM_CRMNNOT_ADVPGLD_KRW         = this.divData.form.mskAM_CRMNNOT_ADVPGLD_KRW;
+        	this.mskAM_ETCNOT_ADVPGLD_KRW          = this.divData.form.mskAM_ETCNOT_ADVPGLD_KRW;
+        	this.mskAM_COMMNOT_ADVPGLD_KRW         = this.divData.form.mskAM_COMMNOT_ADVPGLD_KRW;
+        	this.mskAM_VISAPBCNCMMS_ADVPGLD_KRW    = this.divData.form.mskAM_VISAPBCNCMMS_ADVPGLD_KRW;
+        	this.mskAM_INSRCOST_ADVPGLD_KRW        = this.divData.form.mskAM_INSRCOST_ADVPGLD_KRW;
+        	this.mskAM_ETCADTNCOST_ADVPGLD_KRW     = this.divData.form.mskAM_ETCADTNCOST_ADVPGLD_KRW;
+        	this.mskAM_TCHMCOST_ADVPGLD_KRW        = this.divData.form.mskAM_TCHMCOST_ADVPGLD_KRW;
+
+        	this.txtDS_RMK             = this.divData.form.txtDS_RMK;
+        	this.staCost			   = this.divData.form.staCost;
+        }
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+
+        }
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+        	// 출장계획 상세 조회
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("CD_CORP", "string");
+        	this.dsSelect.addColumn("SN_BZTPSEQ", "string");
+        	this.dsSelect.addColumn("ID_SABUN_BZTP", "string");
+        	this.dsSelect.addColumn("TY_BZTP", "string");
+
+        	// 출장비 조회
+        	this.dsSelectCost = new Dataset();
+        	this.dsSelectCost.addColumn("CD_AREA_BZTP", "string");
+
+        	// 출장계획 상세 저장
+        	this.dsSave = new Dataset();
+        	this.dsSave.addColumn("TY_WRK", "string");
+        	this.dsSave.addColumn("CD_CORP", "string");
+        	this.dsSave.addColumn("SN_BZTPSEQ", "string");
+        	this.dsSave.addColumn("ID_PERSON_BZTP", "int");
+        	this.dsSave.addColumn("ID_SABUN_BZTP", "string");
+        	this.dsSave.addColumn("TY_BZTP", "string");
+        	this.dsSave.addColumn("DT_WRITE", "string");
+        	this.dsSave.addColumn("CD_STDMNEY", "string");
+        	this.dsSave.addColumn("AM_IOUTBRUFLGTNOT", "bigdecimal");
+        	this.dsSave.addColumn("AM_RAILNOT", "bigdecimal");
+        	this.dsSave.addColumn("AM_SHIPNOT", "bigdecimal");
+        	this.dsSave.addColumn("AM_FLGTNOT", "bigdecimal");
+        	this.dsSave.addColumn("AM_CARNOT", "bigdecimal");
+        	this.dsSave.addColumn("AM_LDGGNOT", "bigdecimal");
+        	this.dsSave.addColumn("DY_LDGGDR", "bigdecimal");
+        	this.dsSave.addColumn("AM_CRMNNOT", "bigdecimal");
+        	this.dsSave.addColumn("DY_CRMNNOTDR", "bigdecimal");
+        	this.dsSave.addColumn("AM_ETCNOT", "bigdecimal");
+        	this.dsSave.addColumn("DY_ETCDR", "bigdecimal");
+        	this.dsSave.addColumn("AM_COMMNOT", "bigdecimal");
+        	this.dsSave.addColumn("AM_VISAPBCNCMMS", "bigdecimal");
+        	this.dsSave.addColumn("AM_INSRCOST", "bigdecimal");
+        	this.dsSave.addColumn("AM_ETCADTNCOST", "bigdecimal");
+        	this.dsSave.addColumn("AM_TCHMCOST", "bigdecimal");
+        	this.dsSave.addColumn("DS_RMK", "string");
+        	this.dsSave.addColumn("AM_IOUTBRUFLGTNOT_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_RAILNOT_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_SHIPNOT_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_FLGTNOT_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_CARNOT_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_LDGGNOT_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_CRMNNOT_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_ETCNOT_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_COMMNOT_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_VISAPBCNCMMS_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_INSRCOST_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_ETCADTNCOST_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_TCHMCOST_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_IOUTBRUFLGTNOT_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_RAILNOT_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_SHIPNOT_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_FLGTNOT_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_CARNOT_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_LDGGNOT_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_CRMNNOT_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_ETCNOT_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_COMMNOT_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_VISAPBCNCMMS_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_INSRCOST_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_ETCADTNCOST_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_TCHMCOST_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_IOUTBRUFLGTNOT_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_RAILNOT_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_SHIPNOT_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_FLGTNOT_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_CARNOT_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_LDGGNOT_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_CRMNNOT_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_ETCNOT_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_COMMNOT_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_VISAPBCNCMMS_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_INSRCOST_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_ETCADTNCOST_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_TCHMCOST_BDGT_KRW", "bigdecimal");
+
+        	this.dsSave.addColumn("AM_IOUTBRUFLGTNOT_ADVPGLD_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_RAILNOT_ADVPGLD_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_SHIPNOT_ADVPGLD_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_FLGTNOT_ADVPGLD_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_CARNOT_ADVPGLD_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_LDGGNOT_ADVPGLD_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_CRMNNOT_ADVPGLD_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_ETCNOT_ADVPGLD_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_COMMNOT_ADVPGLD_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_VISAPBCNCMMS_ADVPGLD_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_INSRCOST_ADVPGLD_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_ETCADTNCOST_ADVPGLD_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_TCHMCOST_ADVPGLD_KRW", "bigdecimal");
+
+        	this.dsSave.addColumn("AM_TT_UPRC", "bigdecimal");
+        	this.dsSave.addColumn("AM_TT_SOA", "bigdecimal");
+        	this.dsSave.addColumn("AM_TT_BDGT_USD", "bigdecimal");
+        	this.dsSave.addColumn("AM_TT_BDGT_KRW", "bigdecimal");
+        	this.dsSave.addColumn("AM_TT_ADVPGLD_KRW", "bigdecimal");
+        }
+
+        /************************************************************************
+         * 콤보 데이터 조회 및 설정
+         ************************************************************************/
+        this.fnSetCombo = function() {
+
+        }
+
+        /************************************************************************
+         * 화면 및 검색영역 초기화
+         ************************************************************************/
+        this.fnInit = function() {
+        	if (this.getOwnerFrame().READ_ONLY == true) {
+        		this.cboCD_STDMNEY.set_enable(false);
+        		this.mskAM_LDGGNOT_DY_BZTP.set_enable(false);
+        		this.mskAM_CRMNNOT_DY_BZTP.set_enable(false);
+        		this.mskAM_ETCNOT_DY_BZTP.set_enable(false);
+        		this.mskAM_IOUTBRUFLGTNOT.set_enable(false);
+        		this.mskAM_RAILNOT.set_enable(false);
+        		this.mskAM_SHIPNOT.set_enable(false);
+        		this.mskAM_FLGTNOT.set_enable(false);
+        		this.mskAM_CARNOT.set_enable(false);
+        		this.mskAM_LDGGNOT.set_enable(false);
+        		this.mskAM_CRMNNOT.set_enable(false);
+        		this.mskAM_ETCNOT.set_enable(false);
+        		this.mskAM_COMMNOT.set_enable(false);
+        		this.mskAM_CRMNNOT.set_enable(false);
+        		this.mskAM_VISAPBCNCMMS.set_enable(false);
+        		this.mskAM_INSRCOST.set_enable(false);
+        		this.mskAM_ETCADTNCOST.set_enable(false);
+        		this.mskAM_TCHMCOST.set_enable(false);
+
+        		this.mskAM_IOUTBRUFLGTNOT_ADVPGLD_KRW.set_enable(false);
+        		this.mskAM_RAILNOT_ADVPGLD_KRW.set_enable(false);
+        		this.mskAM_SHIPNOT_ADVPGLD_KRW.set_enable(false);
+        		this.mskAM_FLGTNOT_ADVPGLD_KRW.set_enable(false);
+        		this.mskAM_CARNOT_ADVPGLD_KRW.set_enable(false);
+        		this.mskAM_LDGGNOT_ADVPGLD_KRW.set_enable(false);
+        		this.mskAM_CRMNNOT_ADVPGLD_KRW.set_enable(false);
+        		this.mskAM_ETCNOT_ADVPGLD_KRW.set_enable(false);
+        		this.mskAM_COMMNOT_ADVPGLD_KRW.set_enable(false);
+        		this.mskAM_VISAPBCNCMMS_ADVPGLD_KRW.set_enable(false);
+        		this.mskAM_INSRCOST_ADVPGLD_KRW.set_enable(false);
+        		this.mskAM_ETCADTNCOST_ADVPGLD_KRW.set_enable(false);
+        		this.mskAM_TCHMCOST_ADVPGLD_KRW.set_enable(false);
+
+        		this.txtDS_RMK.set_enable(false);
+        		this.divData.form.divBtns.form.btnOK.set_enable(false);
+        	}
+
+        	this.dsSearch.setColumn(0, "CD_CORP",         this.getOwnerFrame().CD_CORP);			// 법인
+        	this.dsSearch.setColumn(0, "DS_CORP",         this.getOwnerFrame().DS_CORP);
+        	this.dsSearch.setColumn(0, "SN_BZTPSEQ",      this.getOwnerFrame().SN_BZTPSEQ);			// 출장순번
+        	this.dsSearch.setColumn(0, "TY_BZTP",         this.getOwnerFrame().TY_BZTP);			// 유형
+        	this.dsSearch.setColumn(0, "ID_SABUN_APL",    this.getOwnerFrame().ID_SABUN_APL);		// 신청자
+        	this.dsSearch.setColumn(0, "DS_HANME_APL",    this.getOwnerFrame().DS_HANME_APL);
+        	this.dsSearch.setColumn(0, "DT_BZTP_FROM",    this.getOwnerFrame().DT_BZTP_FROM);		// 출장일(FROM)
+        	this.dsSearch.setColumn(0, "DT_BZTP_TO",      this.getOwnerFrame().DT_BZTP_TO);			// 출장일(TO)
+        	this.dsSearch.setColumn(0, "CD_AREA_BZTP",    this.getOwnerFrame().CD_AREA_BZTP);		// 출장지역
+        	this.dsSearch.setColumn(0, "DS_AREA_BZTP",    this.getOwnerFrame().DS_AREA_BZTP);
+        	this.dsSearch.setColumn(0, "ID_SABUN_BZTP",   this.getOwnerFrame().ID_SABUN_BZTP);		// 출장자
+        	this.dsSearch.setColumn(0, "DS_HNAME_BZTP",   this.getOwnerFrame().DS_HNAME_BZTP);
+        	this.dsSearch.setColumn(0, "CD_EMPTYPE_BZTP", this.getOwnerFrame().CD_EMPTYPE_BZTP);	// 출장직급
+        	this.dsSearch.setColumn(0, "DS_EMPTYPE_BZTP", this.getOwnerFrame().DS_EMPTYPE_BZTP);
+        	this.dsSearch.setColumn(0, "DT_WRITE",        this.getOwnerFrame().DT_WRITE);			// 작성일
+        	this.dsSearch.setColumn(0, "AM_STDEXRT",      this.getOwnerFrame().AM_STDEXRT);			// 기준환율
+        	this.dsSearch.setColumn(0, "AM_ADVPGLD",      this.getOwnerFrame().AM_ADVPGLD);			// 가불금
+        	this.dsSearch.setColumn(0, "DT_BZTP",         this.gfnGetDiffDate(this.getOwnerFrame().DT_BZTP_FROM, this.getOwnerFrame().DT_BZTP_TO) + 1);	// 출장기간
+        	this.dsSearch.setColumn(0, "DS_APRV_NAME"	, this.getOwnerFrame().DS_APRV_NAME);		// domestic
+
+        	this.fnSelect();
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+        /*
+         * 조회 버튼
+         */
+        this.fnSelect = function() {
+        	this.dsSelectCost.clearData();
+        	this.dsSelectCost.addRow();
+        	this.dsSelectCost.setColumn(0, "CD_AREA_BZTP", this.dsSearch.getColumn(0, "CD_AREA_BZTP"));
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+        	this.dsSelect.setColumn(0, "CD_CORP",       this.dsSearch.getColumn(0, "CD_CORP"));
+        	this.dsSelect.setColumn(0, "SN_BZTPSEQ",    this.dsSearch.getColumn(0, "SN_BZTPSEQ"));
+        	this.dsSelect.setColumn(0, "ID_SABUN_BZTP", this.dsSearch.getColumn(0, "ID_SABUN_BZTP"));
+        	this.dsSelect.setColumn(0, "TY_BZTP",       this.dsSearch.getColumn(0, "TY_BZTP"));
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select_cost=dsSelectCost select=dsSelect";
+        	var outData     = "dsListCost=select_cost0 dsList=select0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        /*
+         * 추가 버튼
+         */
+        this.fnAdd = function() {
+
+        }
+
+        /*
+         * 삭제 버튼
+         */
+        this.fnDel = function() {
+
+        }
+
+        /*
+         * 저장 버튼
+         */
+        this.fnSave = function() {
+        	var TY_WRK        = this.dsList.getColumn(0, "TY_WRK");
+            var CD_CORP       = this.dsSearch.getColumn(0, "CD_CORP");
+            var SN_BZTPSEQ    = this.dsSearch.getColumn(0, "SN_BZTPSEQ");
+            var ID_SABUN_BZTP = this.dsSearch.getColumn(0, "ID_SABUN_BZTP");
+            var TY_BZTP       = this.dsSearch.getColumn(0, "TY_BZTP");
+        	var DT_WRITE	  = this.dsSearch.getColumn(0, "DT_WRITE");
+        	var CD_STDMNEY    = this.divSearch.form.cboCD_STDMNEY.value;
+        	// 단가
+        	var AM_IOUTBRUFLGTNOT = this.divData.form.mskAM_IOUTBRUFLGTNOT.value;
+        	var AM_RAILNOT        = this.divData.form.mskAM_RAILNOT.value;
+        	var AM_SHIPNOT        = this.divData.form.mskAM_SHIPNOT.value;
+        	var AM_FLGTNOT        = this.divData.form.mskAM_FLGTNOT.value;
+        	var AM_CARNOT         = this.divData.form.mskAM_CARNOT.value;
+        	var AM_LDGGNOT        = this.divData.form.mskAM_LDGGNOT.value;
+        	var DY_LDGGDR         = this.divData.form.mskAM_LDGGNOT_DY_BZTP.value;
+        	var AM_CRMNNOT        = this.divData.form.mskAM_CRMNNOT.value;
+        	var DY_CRMNNOTDR      = this.divData.form.mskAM_CRMNNOT_DY_BZTP.value;
+        	var AM_ETCNOT         = this.divData.form.mskAM_ETCNOT.value;
+        	var DY_ETCDR          = this.divData.form.mskAM_ETCNOT_DY_BZTP.value;
+        	var AM_COMMNOT        = this.divData.form.mskAM_COMMNOT.value;
+        	var AM_VISAPBCNCMMS   = this.divData.form.mskAM_VISAPBCNCMMS.value;
+        	var AM_INSRCOST       = this.divData.form.mskAM_INSRCOST.value;
+        	var AM_ETCADTNCOST    = this.divData.form.mskAM_ETCADTNCOST.value;
+        	var AM_TCHMCOST       = this.divData.form.mskAM_TCHMCOST.value;
+        	var DS_RMK            = this.divData.form.txtDS_RMK.value;
+        	// 정산한도
+        	var AM_IOUTBRUFLGTNOT_SOA = this.divData.form.mskAM_IOUTBRUFLGTNOT_COST_LIMIT.value;
+        	var AM_RAILNOT_SOA        = this.divData.form.mskAM_RAILNOT_COST_LIMIT.value;
+        	var AM_SHIPNOT_SOA        = this.divData.form.mskAM_SHIPNOT_COST_LIMIT.value;
+        	var AM_FLGTNOT_SOA        = this.divData.form.mskAM_FLGTNOT_COST_LIMIT.value;
+        	var AM_CARNOT_SOA         = this.divData.form.mskAM_CARNOT_COST_LIMIT.value;
+        	var AM_LDGGNOT_SOA        = this.divData.form.mskAM_LDGGNOT_COST_LIMIT.value;
+        	var AM_CRMNNOT_SOA        = this.divData.form.mskAM_CRMNNOT_COST_LIMIT.value;
+        	var AM_ETCNOT_SOA         = this.divData.form.mskAM_ETCNOT_COST_LIMIT.value;
+        	var AM_COMMNOT_SOA        = this.divData.form.mskAM_COMMNOT_COST_LIMIT.value;
+        	var AM_VISAPBCNCMMS_SOA   = this.divData.form.mskAM_VISAPBCNCMMS_COST_LIMIT.value;
+        	var AM_INSRCOST_SOA       = this.divData.form.mskAM_INSRCOST_COST_LIMIT.value;
+        	var AM_ETCADTNCOST_SOA    = this.divData.form.mskAM_ETCADTNCOST_COST_LIMIT.value;
+        	var AM_TCHMCOST_SOA       = this.divData.form.mskAM_TCHMCOST_COST_LIMIT.value;
+        	// 예산(KRW)
+        	var AM_IOUTBRUFLGTNOT_BDGT_KRW = this.divData.form.mskAM_IOUTBRUFLGTNOT_EST_KRW.value;
+        	var AM_RAILNOT_BDGT_KRW        = this.divData.form.mskAM_RAILNOT_EST_KRW.value;
+        	var AM_SHIPNOT_BDGT_KRW        = this.divData.form.mskAM_SHIPNOT_EST_KRW.value;
+        	var AM_FLGTNOT_BDGT_KRW        = this.divData.form.mskAM_FLGTNOT_EST_KRW.value;
+        	var AM_CARNOT_BDGT_KRW         = this.divData.form.mskAM_CARNOT_EST_KRW.value;
+        	var AM_LDGGNOT_BDGT_KRW        = this.divData.form.mskAM_LDGGNOT_EST_KRW.value;
+        	var AM_CRMNNOT_BDGT_KRW        = this.divData.form.mskAM_CRMNNOT_EST_KRW.value;
+        	var AM_ETCNOT_BDGT_KRW         = this.divData.form.mskAM_ETCNOT_EST_KRW.value;
+        	var AM_COMMNOT_BDGT_KRW        = this.divData.form.mskAM_COMMNOT_EST_KRW.value;
+        	var AM_VISAPBCNCMMS_BDGT_KRW   = this.divData.form.mskAM_VISAPBCNCMMS_EST_KRW.value;
+        	var AM_INSRCOST_BDGT_KRW       = this.divData.form.mskAM_INSRCOST_EST_KRW.value;
+        	var AM_ETCADTNCOST_BDGT_KRW    = this.divData.form.mskAM_ETCADTNCOST_EST_KRW.value;
+        	var AM_TCHMCOST_BDGT_KRW       = this.divData.form.mskAM_TCHMCOST_EST_KRW.value;
+        	// 가불금신청금(KRW)
+        	var AM_IOUTBRUFLGTNOT_ADVPGLD_KRW = this.divData.form.mskAM_IOUTBRUFLGTNOT_ADVPGLD_KRW.value;
+        	var AM_RAILNOT_ADVPGLD_KRW        = this.divData.form.mskAM_RAILNOT_ADVPGLD_KRW.value;
+        	var AM_SHIPNOT_ADVPGLD_KRW        = this.divData.form.mskAM_SHIPNOT_ADVPGLD_KRW.value;
+        	var AM_FLGTNOT_ADVPGLD_KRW        = this.divData.form.mskAM_FLGTNOT_ADVPGLD_KRW.value;
+        	var AM_CARNOT_ADVPGLD_KRW         = this.divData.form.mskAM_CARNOT_ADVPGLD_KRW.value;
+        	var AM_LDGGNOT_ADVPGLD_KRW        = this.divData.form.mskAM_LDGGNOT_ADVPGLD_KRW.value;
+        	var AM_CRMNNOT_ADVPGLD_KRW        = this.divData.form.mskAM_CRMNNOT_ADVPGLD_KRW.value;
+        	var AM_ETCNOT_ADVPGLD_KRW         = this.divData.form.mskAM_ETCNOT_ADVPGLD_KRW.value;
+        	var AM_COMMNOT_ADVPGLD_KRW        = this.divData.form.mskAM_COMMNOT_ADVPGLD_KRW.value;
+        	var AM_VISAPBCNCMMS_ADVPGLD_KRW   = this.divData.form.mskAM_VISAPBCNCMMS_ADVPGLD_KRW.value;
+        	var AM_INSRCOST_ADVPGLD_KRW       = this.divData.form.mskAM_INSRCOST_ADVPGLD_KRW.value;
+        	var AM_ETCADTNCOST_ADVPGLD_KRW    = this.divData.form.mskAM_ETCADTNCOST_ADVPGLD_KRW.value;
+        	var AM_TCHMCOST_ADVPGLD_KRW       = this.divData.form.mskAM_TCHMCOST_ADVPGLD_KRW.value;
+        	// 합계
+        	var AM_TT_UPRC     = this.divData.form.mskTOTAL.value;
+        	var AM_TT_SOA      = this.divData.form.mskTOTAL_COST_LIMIT.value;
+        	var AM_TT_BDGT_KRW = this.divData.form.mskTOTAL_EST_KRW.value;
+        	var AM_TT_ADVPGLD_KRW = this.divData.form.mskTOTAL_ADVPGLD_KRW.value;
+
+        	// 숙박비 일자
+        	if (DY_LDGGDR > this.dsSearch.getColumn(0, "DT_BZTP")) {
+        		this.gfnConfirm("출장일수(숙박비)가 출장일수 기준일 " + this.dsSearch.getColumn(0, "DT_BZTP") + "일을 넘었습니다.");
+        		return;
+        	}
+        	// 식비 일자
+        	if (DY_CRMNNOTDR > this.dsSearch.getColumn(0, "DT_BZTP")) {
+        		this.gfnConfirm("출장일수(식비)가 출장일수 기준일 " + this.dsSearch.getColumn(0, "DT_BZTP") + "일을 넘었습니다.");
+        		return;
+        	}
+        	// 잡비 일자
+        	if (DY_ETCDR > this.dsSearch.getColumn(0, "DT_BZTP")) {
+        		this.gfnConfirm("출장일수(식비)가 출장일수 기준일 " + this.dsSearch.getColumn(0, "DT_BZTP") + "일을 넘었습니다.");
+        		return;
+        	}
+
+        	if (!this.fnSaveValid()) {
+        		this.dsListCost.filter("DS_CODE == '정산한도'");
+        		var limit = parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW"));
+        		this.gfnConfirm("숙박비, 식비, 잡비의 합계가 정산한도[" + limit + "]를 초과하였습니다.\n금액을 확인하시기 바랍니다. ");
+        		return;
+        	}
+
+        	this.dsSave.clearData();
+        	var nrow = this.dsSave.addRow();
+
+        	this.dsSave.setColumn(nrow, "TY_WRK",        "U");
+        	this.dsSave.setColumn(nrow, "CD_CORP",       CD_CORP);
+        	this.dsSave.setColumn(nrow, "SN_BZTPSEQ",    SN_BZTPSEQ);
+        	this.dsSave.setColumn(nrow, "ID_SABUN_BZTP", ID_SABUN_BZTP);
+        	this.dsSave.setColumn(nrow, "TY_BZTP",       TY_BZTP);
+        	this.dsSave.setColumn(nrow, "DT_WRITE",      DT_WRITE);
+        	this.dsSave.setColumn(nrow, "CD_STDMNEY",    CD_STDMNEY);
+        	// 단가
+        	this.dsSave.setColumn(nrow, "AM_IOUTBRUFLGTNOT", AM_IOUTBRUFLGTNOT);
+        	this.dsSave.setColumn(nrow, "AM_RAILNOT",        AM_RAILNOT);
+        	this.dsSave.setColumn(nrow, "AM_SHIPNOT",        AM_SHIPNOT);
+        	this.dsSave.setColumn(nrow, "AM_FLGTNOT",        AM_FLGTNOT);
+        	this.dsSave.setColumn(nrow, "AM_CARNOT",         AM_CARNOT);
+        	this.dsSave.setColumn(nrow, "AM_LDGGNOT",        AM_LDGGNOT);
+        	this.dsSave.setColumn(nrow, "DY_LDGGDR",         DY_LDGGDR);
+        	this.dsSave.setColumn(nrow, "AM_CRMNNOT",        AM_CRMNNOT);
+        	this.dsSave.setColumn(nrow, "DY_CRMNNOTDR",      DY_CRMNNOTDR);
+        	this.dsSave.setColumn(nrow, "AM_ETCNOT",         AM_ETCNOT);
+        	this.dsSave.setColumn(nrow, "DY_ETCDR",          DY_ETCDR);
+        	this.dsSave.setColumn(nrow, "AM_COMMNOT",        AM_COMMNOT);
+        	this.dsSave.setColumn(nrow, "AM_VISAPBCNCMMS",   AM_VISAPBCNCMMS);
+        	this.dsSave.setColumn(nrow, "AM_INSRCOST",       AM_INSRCOST);
+        	this.dsSave.setColumn(nrow, "AM_ETCADTNCOST",    AM_ETCADTNCOST);
+        	this.dsSave.setColumn(nrow, "AM_TCHMCOST",       AM_TCHMCOST);
+        	this.dsSave.setColumn(nrow, "DS_RMK",            DS_RMK);
+        	// 정산한도
+        	this.dsSave.setColumn(nrow, "AM_IOUTBRUFLGTNOT_SOA", AM_IOUTBRUFLGTNOT_SOA);
+        	this.dsSave.setColumn(nrow, "AM_RAILNOT_SOA",        AM_RAILNOT_SOA);
+        	this.dsSave.setColumn(nrow, "AM_SHIPNOT_SOA",        AM_SHIPNOT_SOA);
+        	this.dsSave.setColumn(nrow, "AM_FLGTNOT_SOA",        AM_FLGTNOT_SOA);
+        	this.dsSave.setColumn(nrow, "AM_CARNOT_SOA",         AM_CARNOT_SOA);
+        	this.dsSave.setColumn(nrow, "AM_LDGGNOT_SOA",        AM_LDGGNOT_SOA);
+        	this.dsSave.setColumn(nrow, "AM_CRMNNOT_SOA",        AM_CRMNNOT_SOA);
+        	this.dsSave.setColumn(nrow, "AM_ETCNOT_SOA",         AM_ETCNOT_SOA);
+        	this.dsSave.setColumn(nrow, "AM_COMMNOT_SOA",        AM_COMMNOT_SOA);
+        	this.dsSave.setColumn(nrow, "AM_VISAPBCNCMMS_SOA",   AM_VISAPBCNCMMS_SOA);
+        	this.dsSave.setColumn(nrow, "AM_INSRCOST_SOA",       AM_INSRCOST_SOA);
+        	this.dsSave.setColumn(nrow, "AM_ETCADTNCOST_SOA",    AM_ETCADTNCOST_SOA);
+        	this.dsSave.setColumn(nrow, "AM_TCHMCOST_SOA",       AM_TCHMCOST_SOA);
+        	// 예산(KRW)
+        	this.dsSave.setColumn(nrow, "AM_IOUTBRUFLGTNOT_BDGT_KRW", AM_IOUTBRUFLGTNOT_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_RAILNOT_BDGT_KRW",        AM_RAILNOT_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_SHIPNOT_BDGT_KRW",        AM_SHIPNOT_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_FLGTNOT_BDGT_KRW",        AM_FLGTNOT_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_CARNOT_BDGT_KRW",         AM_CARNOT_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_LDGGNOT_BDGT_KRW",        AM_LDGGNOT_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_CRMNNOT_BDGT_KRW",        AM_CRMNNOT_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_ETCNOT_BDGT_KRW",         AM_ETCNOT_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_COMMNOT_BDGT_KRW",        AM_COMMNOT_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_VISAPBCNCMMS_BDGT_KRW",   AM_VISAPBCNCMMS_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_INSRCOST_BDGT_KRW",       AM_INSRCOST_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_ETCADTNCOST_BDGT_KRW",    AM_ETCADTNCOST_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_TCHMCOST_BDGT_KRW",       AM_TCHMCOST_BDGT_KRW);
+        	// 가불금신청금(KRW)
+        	this.dsSave.setColumn(nrow, "AM_IOUTBRUFLGTNOT_ADVPGLD_KRW", AM_IOUTBRUFLGTNOT_ADVPGLD_KRW);
+        	this.dsSave.setColumn(nrow, "AM_RAILNOT_ADVPGLD_KRW",        AM_RAILNOT_ADVPGLD_KRW);
+        	this.dsSave.setColumn(nrow, "AM_SHIPNOT_ADVPGLD_KRW",        AM_SHIPNOT_ADVPGLD_KRW);
+        	this.dsSave.setColumn(nrow, "AM_FLGTNOT_ADVPGLD_KRW",        AM_FLGTNOT_ADVPGLD_KRW);
+        	this.dsSave.setColumn(nrow, "AM_CARNOT_ADVPGLD_KRW",         AM_CARNOT_ADVPGLD_KRW);
+        	this.dsSave.setColumn(nrow, "AM_LDGGNOT_ADVPGLD_KRW",        AM_LDGGNOT_ADVPGLD_KRW);
+        	this.dsSave.setColumn(nrow, "AM_CRMNNOT_ADVPGLD_KRW",        AM_CRMNNOT_ADVPGLD_KRW);
+        	this.dsSave.setColumn(nrow, "AM_ETCNOT_ADVPGLD_KRW",         AM_ETCNOT_ADVPGLD_KRW);
+        	this.dsSave.setColumn(nrow, "AM_COMMNOT_ADVPGLD_KRW",        AM_COMMNOT_ADVPGLD_KRW);
+        	this.dsSave.setColumn(nrow, "AM_VISAPBCNCMMS_ADVPGLD_KRW",   AM_VISAPBCNCMMS_ADVPGLD_KRW);
+        	this.dsSave.setColumn(nrow, "AM_INSRCOST_ADVPGLD_KRW",       AM_INSRCOST_ADVPGLD_KRW);
+        	this.dsSave.setColumn(nrow, "AM_ETCADTNCOST_ADVPGLD_KRW",    AM_ETCADTNCOST_ADVPGLD_KRW);
+        	this.dsSave.setColumn(nrow, "AM_TCHMCOST_ADVPGLD_KRW",       AM_TCHMCOST_ADVPGLD_KRW);
+        	// 합계
+        	this.dsSave.setColumn(nrow, "AM_TT_UPRC",     AM_TT_UPRC);
+        	this.dsSave.setColumn(nrow, "AM_TT_SOA",      AM_TT_SOA);
+        	this.dsSave.setColumn(nrow, "AM_TT_BDGT_KRW", AM_TT_BDGT_KRW);
+        	this.dsSave.setColumn(nrow, "AM_TT_ADVPGLD_KRW", AM_TT_ADVPGLD_KRW);
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save=dsSave";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+        						strSvcType, 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc);	// 통신방법 정의 [생략가능]
+        }
+
+        /*
+         * 엑셀 버튼
+         */
+        this.fnExcel = function() {
+
+        }
+
+        /*
+         * 출력 버튼
+         */
+        this.fnPrint = function() {
+
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        this.fnSelectValid = function() {
+        	return true;
+        }
+
+        this.fnSaveValid = function() {
+        	var AM_LDGGNOT         = this.divData.form.mskAM_LDGGNOT.value;
+        	var DY_LDGGDR          = this.divData.form.mskAM_LDGGNOT_DY_BZTP.value;
+        	var AM_CRMNNOT         = this.divData.form.mskAM_CRMNNOT.value;
+        	var DY_CRMNNOTDR       = this.divData.form.mskAM_CRMNNOT_DY_BZTP.value;
+        	var AM_ETCNOT          = this.divData.form.mskAM_ETCNOT.value;
+        	var DY_ETCDR           = this.divData.form.mskAM_ETCNOT_DY_BZTP.value;
+
+        	// 출장지역이 국내이면서 임원이상인 경우 검증하지 않음
+        	// 단, 잡비는 비용을 입력하는 순간에 검증됨
+        	var CD_EMPTYPE_BZTP = this.dsSearch.getColumn(0, "CD_EMPTYPE_BZTP");
+        	//var CD_AREA_BZTP = this.dsSearch.getColumn(0, "CD_AREA_BZTP");
+        	var DS_APRV_NAME = this.dsSearch.getColumn(0, "DS_APRV_NAME");
+
+        	if( DS_APRV_NAME == "DOMESTIC") {
+        	//if (CD_AREA_BZTP == "A22" || CD_AREA_BZTP == "B22" || CD_AREA_BZTP == "C22") {
+        		if (CD_EMPTYPE_BZTP == "A" || CD_EMPTYPE_BZTP == "B") {
+        			return true;
+        		}
+        	}
+
+        	this.dsListCost.filter("DS_CODE == '정산한도'");
+        	var limit = parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW"));
+        	var total = parseFloat(AM_LDGGNOT) + parseFloat(AM_CRMNNOT) + parseFloat(AM_ETCNOT);
+        	this.dsListCost.filter("");
+
+        	if (total > limit) {
+        		return false
+        	}
+        	return true;
+        }
+
+        /************************************************************************
+         * 확장버튼 이벤트
+         ************************************************************************/
+        // 확인버튼
+        this.btnOK_onclick = function(obj, e) {
+        	this.gfnConfirm("저장하시겠습니까?", "fnOKCallback");
+        }
+
+        // 취소버튼
+        this.btnCANCLE_onclick = function(obj, e) {
+        	this.getParentContext().close(false);
+        }
+
+        // 주의사항버튼 클릭
+        this.btnNotice_onclick = function(obj, e) {
+        	var param = {};
+        	param.GUBUN       	= "PLAN";
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DAB_BZTP_PLAN_RULE_DLG","",param);
+        }
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         * 기본 콜백
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg) {
+        	if (errorCode != 0) {
+        		this.gfnAlert(errorMsg);
+        		return;
+        	}
+
+        	if (svcID == "select") {
+        		// 기준화폐
+        		if (this.dsList.getColumn(0, "CD_STDMNEY") != undefined && this.dsList.getColumn(0, "CD_STDMNEY") != "") {
+        			this.divSearch.form.cboCD_STDMNEY.set_value(this.dsList.getColumn(0, "CD_STDMNEY"));
+        		}
+        		// 가불금
+        		//this.divData.form.mskAM_IOUTBRUFLGTNOT_ADVPGLD_KRW.set_value(this.dsSearch.getColumn(0, "AM_ADVPGLD"));
+        		// 입출국항공료
+        		this.divData.form.mskAM_IOUTBRUFLGTNOT_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_IOUTBRUFLGTNOT_ADVPGLD_KRW"));
+        		// 철도비
+        		this.divData.form.mskAM_RAILNOT_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_RAILNOT_ADVPGLD_KRW"));
+        		// 선박비
+        		this.divData.form.mskAM_SHIPNOT_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_SHIPNOT_ADVPGLD_KRW"));
+        		// 항공비
+        		this.divData.form.mskAM_FLGTNOT_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_FLGTNOT_ADVPGLD_KRW"));
+        		// 차동차비
+        		this.divData.form.mskAM_CARNOT_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_CARNOT_ADVPGLD_KRW"));
+        		// 숙박비
+        		this.divData.form.mskAM_LDGGNOT_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_LDGGNOT_ADVPGLD_KRW"));
+        		// 식비
+        		this.divData.form.mskAM_CRMNNOT_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_CRMNNOT_ADVPGLD_KRW"));
+        		// 잡비
+        		this.divData.form.mskAM_ETCNOT_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_ETCNOT_ADVPGLD_KRW"));
+        		// 통신비(로밍)
+        		this.divData.form.mskAM_COMMNOT_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_COMMNOT_ADVPGLD_KRW"));
+        		// Visa 발급수수료
+        		this.divData.form.mskAM_VISAPBCNCMMS_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_VISAPBCNCMMS_ADVPGLD_KRW"));
+        		// 추가비용1
+        		this.divData.form.mskAM_INSRCOST_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_INSRCOST_ADVPGLD_KRW"));
+        		// 추가	비용2
+        		this.divData.form.mskAM_ETCADTNCOST_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_ETCADTNCOST_ADVPGLD_KRW"));
+        		// [별도계정] 교제비
+        		this.divData.form.mskAM_TCHMCOST_ADVPGLD_KRW.set_value(this.dsList.getColumn(0, "AM_TCHMCOST_ADVPGLD_KRW"));
+
+
+        		// 입출국항공료
+        		this.divData.form.mskAM_IOUTBRUFLGTNOT.set_value(this.dsList.getColumn(0, "AM_IOUTBRUFLGTNOT"));
+        		this.setObject("mskAM_IOUTBRUFLGTNOT", this.dsList.getColumn(0, "AM_IOUTBRUFLGTNOT"));
+        		// 철도비
+        		this.divData.form.mskAM_RAILNOT.set_value(this.dsList.getColumn(0, "AM_RAILNOT"));
+        		this.setObject("mskAM_RAILNOT", this.dsList.getColumn(0, "AM_RAILNOT"));
+        		// 선박비
+        		this.divData.form.mskAM_SHIPNOT.set_value(this.dsList.getColumn(0, "AM_SHIPNOT"));
+        		this.setObject("mskAM_SHIPNOT", this.dsList.getColumn(0, "AM_SHIPNOT"));
+        		// 항공비
+        		this.divData.form.mskAM_FLGTNOT.set_value(this.dsList.getColumn(0, "AM_FLGTNOT"));
+        		this.setObject("mskAM_FLGTNOT", this.dsList.getColumn(0, "AM_FLGTNOT"));
+        		// 차동차비
+        		this.divData.form.mskAM_CARNOT.set_value(this.dsList.getColumn(0, "AM_CARNOT"));
+        		this.setObject("mskAM_CARNOT", this.dsList.getColumn(0, "AM_CARNOT"));
+        		// 숙박비
+        		this.divData.form.mskAM_LDGGNOT.set_value(this.dsList.getColumn(0, "AM_LDGGNOT"));
+        		this.divData.form.mskAM_LDGGNOT_DY_BZTP.set_value(this.dsList.getColumn(0, "DY_LDGGDR"));
+        		this.setObject("mskAM_LDGGNOT", this.dsList.getColumn(0, "AM_LDGGNOT"));
+        		// 식비
+        		this.divData.form.mskAM_CRMNNOT.set_value(this.dsList.getColumn(0, "AM_CRMNNOT"));
+        		this.divData.form.mskAM_CRMNNOT_DY_BZTP.set_value(this.dsList.getColumn(0, "DY_CRMNNOTDR") > 0 ? this.dsList.getColumn(0, "DY_CRMNNOTDR") : this.dsSearch.getColumn(0, "DT_BZTP"));
+        		this.setObject("mskAM_CRMNNOT", this.dsList.getColumn(0, "AM_CRMNNOT"));
+        		// 잡비
+        		this.divData.form.mskAM_ETCNOT.set_value(this.dsList.getColumn(0, "AM_ETCNOT"));
+        		this.divData.form.mskAM_ETCNOT_DY_BZTP.set_value(this.dsList.getColumn(0, "DY_ETCDR") > 0 ? this.dsList.getColumn(0, "DY_ETCDR") : this.dsSearch.getColumn(0, "DT_BZTP"));
+        		this.setObject("mskAM_ETCNOT", this.dsList.getColumn(0, "AM_ETCNOT"));
+        		// 통신비(로밍)
+        		this.divData.form.mskAM_COMMNOT.set_value(this.dsList.getColumn(0, "AM_COMMNOT"));
+        		this.setObject("mskAM_COMMNOT", this.dsList.getColumn(0, "AM_COMMNOT"));
+        		// Visa 발급수수료
+        		this.divData.form.mskAM_VISAPBCNCMMS.set_value(this.dsList.getColumn(0, "AM_VISAPBCNCMMS"));
+        		this.setObject("mskAM_VISAPBCNCMMS", this.dsList.getColumn(0, "AM_VISAPBCNCMMS"));
+        		// 추가비용1
+        		this.divData.form.mskAM_INSRCOST.set_value(this.dsList.getColumn(0, "AM_INSRCOST"));
+        		this.setObject("mskAM_INSRCOST", this.dsList.getColumn(0, "AM_INSRCOST"));
+        		// 추가	비용2
+        		this.divData.form.mskAM_ETCADTNCOST.set_value(this.dsList.getColumn(0, "AM_ETCADTNCOST"));
+        		this.setObject("mskAM_ETCADTNCOST", this.dsList.getColumn(0, "AM_ETCADTNCOST"));
+        		// [별도계정] 교제비
+        		this.divData.form.mskAM_TCHMCOST.set_value(this.dsList.getColumn(0, "AM_TCHMCOST"));
+        		this.setObject("mskAM_TCHMCOST", this.dsList.getColumn(0, "AM_TCHMCOST"));
+        		// 비고
+        		this.divData.form.txtDS_RMK.set_value(this.dsList.getColumn(0, "DS_RMK"));
+
+        		// 정산한도 설정
+        		var Cost = "[단가] ";
+        		this.dsListCost.filter("DS_CODE == '숙박비'");
+        		var DY_LDGGDR = this.divData.form.mskAM_LDGGNOT_DY_BZTP.value;
+        		var AM_LDGGNOT = parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW"));
+        		var AM_LDGGNOT_COST_LIMIT = parseFloat(AM_LDGGNOT != undefined ? AM_LDGGNOT : 0) * parseFloat(DY_LDGGDR != undefined ? DY_LDGGDR : 0);
+        		this.mskAM_LDGGNOT_COST_LIMIT.set_value(AM_LDGGNOT_COST_LIMIT);	// 숙박비
+        		Cost = Cost + "숙박비: " + (parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW")) == 0 ? "실비" : this.divSearch.form.cboCD_STDMNEY.value + " " + this.gfnAppendComma(parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW")))) + " / ";
+
+        		this.dsListCost.filter("DS_CODE == '식비'");
+        		var DY_CRMNNOT = this.dsSearch.getColumn(0, "DT_BZTP");
+        		var AM_CRMNNOT = this.divData.form.mskAM_CRMNNOT.value;
+        		var AM_CRMNNOT_COST_LIMIT = parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW")) * parseFloat(DY_CRMNNOT != undefined ? DY_CRMNNOT : 0);
+        		this.mskAM_CRMNNOT_COST_LIMIT.set_value(AM_CRMNNOT_COST_LIMIT);	// 식비
+        		Cost = Cost + "식비: " + (parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW")) == 0 ? "실비" : this.divSearch.form.cboCD_STDMNEY.value + " " + this.gfnAppendComma(parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW")))) + " / ";
+
+        		this.dsListCost.filter("DS_CODE == '잡비'");
+        		var DY_ETCNOT = this.dsSearch.getColumn(0, "DT_BZTP");
+        		var AM_ETCNOT = this.divData.form.mskAM_ETCNOT.value;
+        		var AM_ETCNOT_COST_LIMIT = parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW")) * parseFloat(DY_ETCNOT != undefined ? DY_ETCNOT : 0);
+        		this.mskAM_ETCNOT_COST_LIMIT.set_value(AM_ETCNOT_COST_LIMIT);	// 잡비
+        		Cost = Cost + "잡비: " + (parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW")) == 0 ? "실비" : this.divSearch.form.cboCD_STDMNEY.value + " " + this.gfnAppendComma(parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW")))) + " / ";
+
+        		this.dsListCost.filter("DS_CODE == '정산한도'");
+        		Cost = Cost + "정산한도: " + (parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW")) == 0 ? "실비" : this.divSearch.form.cboCD_STDMNEY.value + " " + this.gfnAppendComma(parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW"))));
+
+        		this.staCost.set_text(Cost);
+        		this.dsListCost.filter("");
+
+        		this.fnSetTotal();
+        	} else if (svcID == "save") {
+        		this.fnWorkAfter = function() {
+        			this.getParentContext().close(true);
+        		}
+        		this.gfnAlert("저장이 완료되었습니다.", "fnWorkAfter");
+        	}
+        }
+
+        this.setObject = function(obj, val) {
+        	// 단가(금액/인원)
+        	this.findObject(obj + "_MAN").set_value(val != undefined && val > 0 ? 1 : 0);		// 인원
+        	// 출장일수
+        	var dayObj = this.findObject(obj + "_DY_BZTP");
+        	var day = 1;
+        	if (dayObj != null) {
+        		day = parseInt(dayObj.text);
+        		if (day == 0) day = 1;
+        	}
+        	// 금회출장예산
+        	//this.findObject(obj + "_EST_KRW").set_value((val != undefined ? val : 0) * day);	// KRW
+        	this.findObject(obj + "_EST_KRW").set_value(nexacro.round((val != undefined ? val : 0) * day,0));	// KRW
+        }
+
+        // 확인버튼 콜백
+        this.fnOKCallback = function(strId, val) {
+        	if (val) {
+        		this.fnSave();
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+        	return true;
+        }
+
+        this.fnAfterCDTextChanged = function(id, codeFindData) {
+
+        }
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+        this.fnGridBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+        	return true;
+        }
+
+        this.fnGridAfterCDTextChanged = function(id, codeFindData) {
+
+        }
+
+        this.fnGridAfterEdit = function(obj,e) {
+
+        }
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        // 단가 변경 이벤트
+        // 대상: 입출국항공료, 교통비, 기타
+        this.divDataCOST_onchanged = function(obj, e) {
+        	if (parseFloat(e.postvalue) == 0) {
+        		this.findObject(e.fromobject.id + "_MAN").set_value(0);			// 단가 인원
+        		this.findObject(e.fromobject.id + "_COST_LIMIT").set_value(0);	// 한도 금액
+        		this.findObject(e.fromobject.id + "_MAN_LIMIT").set_value(0);	// 한도 인원
+        		this.findObject(e.fromobject.id + "_EST_KRW").set_value(0);		// 예산 KRW
+        		this.fnSetTotal();
+        		return;
+        	}
+
+        	// 단가(금액/인원)
+        	this.findObject(e.fromobject.id + "_MAN").set_value(1);		// 인원
+
+        	// 금회출장예산
+        	var newValue = parseFloat(e.postvalue != "" ? e.postvalue : "0");
+        	this.findObject(e.fromobject.id + "_EST_KRW").set_value(newValue);	// KRW
+
+        	// 합계
+        	this.fnSetTotal();
+        }
+
+        // 단가/출장일수 변경 이벤트
+        // 대상: 숙박비, 식비, 잡비
+        this.divDataCOST1_onchanged = function(obj, e) {
+        	var baseObj = e.fromobject.id.replace("_DY_BZTP", "");
+        	var day = parseFloat(this.findObject(baseObj + "_DY_BZTP").value);	// 출장일수
+        	var dtBztp = parseFloat(this.dsSearch.getColumn(0, "DT_BZTP"));
+        	if (day > dtBztp) {
+        		this.findObject(baseObj + "_DY_BZTP").set_value(e.prevalue);
+        		this.findObject(baseObj + "_DY_BZTP").setFocus();
+        		this.gfnAlert("출장일수[" + day + "]가 출장기간[" + dtBztp + "]를 초과하였습니다.\n일정을 확인하시기 바랍니다.");
+        		return;
+        	}
+
+        	// 숙박비는 출장일수 기준이 아닌 실 숙박일 기준
+        	if (baseObj == "mskAM_LDGGNOT") {
+        		this.dsListCost.filter("DS_CODE == '숙박비'");
+
+        		var AM_LDGGNOT = parseFloat(this.dsListCost.getColumn(0, "AM_ALLOW"));
+        		var AM_LDGGNOT_DY_BZTP = this.divData.form.mskAM_LDGGNOT_DY_BZTP.value;
+        		this.findObject("mskAM_LDGGNOT_COST_LIMIT").set_value(AM_LDGGNOT * AM_LDGGNOT_DY_BZTP);
+
+        		this.dsListCost.filter("");
+        	}
+
+        	var cost = parseFloat(this.findObject(baseObj).value);		// 단가
+        	if (day == undefined || day == 0 || isNaN(day) || cost == undefined || cost == 0 || isNaN(cost)) {
+        		this.findObject(baseObj + "_MAN").set_value(0);			// 단가(금액/인원) 인원
+        		this.findObject(baseObj + "_MAN_LIMIT").set_value(0);	// 정산한도 인원
+        		this.findObject(baseObj + "_EST_KRW").set_value(0);		// 예산 KRW
+        		this.fnSetTotal();
+        		return;
+        	}
+
+        	// 인원
+        	this.findObject(baseObj + "_MAN").set_value(1);			// 단가(금액/인원)
+        	this.findObject(baseObj + "_MAN_LIMIT").set_value(1);	// 정산한도
+
+        	// 금회출장예산
+        	this.findObject(baseObj + "_EST_KRW").set_value(parseFloat(cost) * day);	// KRW
+
+        	// 정산한도 검증
+        	var limit = parseFloat(this.findObject(baseObj + "_COST_LIMIT").value) / (baseObj != "mskAM_LDGGNOT" ? parseFloat(this.dsSearch.getColumn(0, "DT_BZTP")) : day);
+        	if (limit == 0) {
+        		// 정산한도가 0인 경우 실비정산이므로 검증 필요없음. 단 합계 검증은 필요함.
+        		this.fnSetTotal();
+        		return;
+        	}
+
+        	if (parseFloat(cost) > limit) {
+        		var text = this.findObject(baseObj.replace("msk", "sta")).text;
+        		this.gfnAlert(text + "[" + this.gfnAppendComma(parseFloat(cost)) + "]가 정산한도[" + this.gfnAppendComma(limit) + "]를 초과하였습니다.\n금액을 확인하시기 바랍니다.", "fnValidCallback");
+        		this.findObject(e.fromobject.id).set_value(0);
+        		this.findObject(e.fromobject.id).setFocus();
+        		this.findObject(baseObj + "_EST_KRW").set_value(0);	// 숙박비 금회출장예산(KRW) 초기화
+        		this.fnSetTotal();
+        		return;
+        	}
+
+        	// 합계
+        	this.fnSetTotal();
+        }
+
+        // 가불금신청금 변경 이벤트
+        this.divDataCOST2_onchanged = function(obj, e) {
+        	// 합계
+        	this.fnSetTotal();
+        }
+
+        this.fnSetTotal = function() {
+        	// 단가(금액/인원) 합계
+        	var list = ["mskAM_IOUTBRUFLGTNOT", "mskAM_RAILNOT", "mskAM_SHIPNOT",
+        				"mskAM_FLGTNOT", "mskAM_CARNOT",
+        				"mskAM_LDGGNOT", "mskAM_CRMNNOT", "mskAM_ETCNOT",
+        				//"mskAM_LDGGNOT_DY_BZTP,mskAM_LDGGNOT,*", "mskAM_CRMNNOT_DY_BZTP,mskAM_CRMNNOT,*", "mskAM_ETCNOT_DY_BZTP,mskAM_ETCNOT,*",
+        				"mskAM_COMMNOT", "mskAM_VISAPBCNCMMS", "mskAM_INSRCOST", "mskAM_ETCADTNCOST",
+        				];
+        	this.sumTotal("mskTOTAL", list, obj);
+
+        	// 정산한도 합계
+         	list = ["mskAM_IOUTBRUFLGTNOT_COST_LIMIT", "mskAM_RAILNOT_COST_LIMIT", "mskAM_SHIPNOT_COST_LIMIT",
+        			"mskAM_FLGTNOT_COST_LIMIT", "mskAM_CARNOT_COST_LIMIT",
+        			"mskAM_LDGGNOT_COST_LIMIT", "mskAM_CRMNNOT_COST_LIMIT", "mskAM_ETCNOT_COST_LIMIT",
+         			"mskAM_COMMNOT_COST_LIMIT", "mskAM_VISAPBCNCMMS_COST_LIMIT", "mskAM_INSRCOST_COST_LIMIT", "mskAM_ETCADTNCOST_COST_LIMIT",
+        			];
+        	this.sumTotal("mskTOTAL_COST_LIMIT", list, obj);
+
+        	// 금회출장예산 KRW
+        	list = ["mskAM_IOUTBRUFLGTNOT_EST_KRW", "mskAM_RAILNOT_EST_KRW", "mskAM_SHIPNOT_EST_KRW",
+        			"mskAM_FLGTNOT_EST_KRW", "mskAM_CARNOT_EST_KRW",
+        			"mskAM_LDGGNOT_DY_BZTP,mskAM_LDGGNOT,*", "mskAM_CRMNNOT_DY_BZTP,mskAM_CRMNNOT,*", "mskAM_ETCNOT_DY_BZTP,mskAM_ETCNOT,*",
+        			"mskAM_COMMNOT_EST_KRW", "mskAM_VISAPBCNCMMS_EST_KRW", "mskAM_INSRCOST_EST_KRW", "mskAM_ETCADTNCOST_EST_KRW",
+        			];
+        	this.sumTotal("mskTOTAL_EST_KRW", list, obj);
+
+        	// 가불신청금 KRW
+        	list = ["mskAM_IOUTBRUFLGTNOT_ADVPGLD_KRW", "mskAM_RAILNOT_ADVPGLD_KRW", "mskAM_SHIPNOT_ADVPGLD_KRW",
+        			"mskAM_FLGTNOT_ADVPGLD_KRW", "mskAM_CARNOT_ADVPGLD_KRW",
+        			"mskAM_LDGGNOT_ADVPGLD_KRW", "mskAM_CRMNNOT_ADVPGLD_KRW", "mskAM_ETCNOT_ADVPGLD_KRW",
+        			"mskAM_COMMNOT_ADVPGLD_KRW", "mskAM_VISAPBCNCMMS_ADVPGLD_KRW", "mskAM_INSRCOST_ADVPGLD_KRW", "mskAM_ETCADTNCOST_ADVPGLD_KRW",
+        			];
+        	this.sumTotal("mskTOTAL_ADVPGLD_KRW", list, obj);
+        }
+
+        // 합계 업데이트
+        this.sumTotal = function(totalObj, list, obj) {
+        	var sum = 0.0;
+        	for (var i = 0; i < list.length; i++) {
+        		var temp = list[i].split(",")
+        		if (temp.length == 1) {
+        			var v = parseFloat(this.findObject(temp[0]).value);
+        			sum += isNaN(v) ? 0.0 : v;
+        		} else if (temp.length == 3) {
+        			var v1 = parseFloat(this.findObject(temp[0]).value);
+        			var v2 = parseFloat(this.findObject(temp[1]).value);
+        			var v = parseFloat(eval(v1 + temp[2] + v2));
+        			sum += isNaN(v) ? 0.0 : v;
+        		} else if (temp.length == 4) {
+        			var v1 = parseFloat(this.findObject(temp[0]).value);
+        			var v2 = parseFloat(this.findObject(temp[1]).value);
+        			var v = parseFloat(eval(v1 + temp[3] + v2 + temp[3] + temp[2]));
+        			sum += isNaN(v) ? 0.0 : v;
+        		}
+        	}
+        	this.findObject(totalObj).set_value(sum == undefined ? 0 : sum);
+        }
+
+        // 객체탐색
+        this.findObject = function(name) {
+        	for (var i = 0; i < this.divData.form.components.length; i++) {
+        		if (this.divData.form.components[i].name == name) {
+        			return this.divData.form.components[i];
+        		}
+        	}
+        	return null;
+        }
+
+        /************************************************************************
+         * 기타 함수
+         ************************************************************************/
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divData.form.staTOTAL_COST_EST.addEventHandler("onclick",this.divData_staTOTAL_COST_EST_onclick,this);
+            this.divData.form.mskAM_IOUTBRUFLGTNOT.addEventHandler("onchanged",this.divDataCOST_onchanged,this);
+            this.divData.form.mskAM_IOUTBRUFLGTNOT_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staAM_RAILNOT.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.mskAM_RAILNOT.addEventHandler("onchanged",this.divDataCOST_onchanged,this);
+            this.divData.form.mskAM_RAILNOT_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staAM_SHIPNOT.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.mskAM_SHIPNOT.addEventHandler("onchanged",this.divDataCOST_onchanged,this);
+            this.divData.form.mskAM_SHIPNOT_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staAM_FLGTNOT.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.mskAM_FLGTNOT.addEventHandler("onchanged",this.divDataCOST_onchanged,this);
+            this.divData.form.mskAM_FLGTNOT_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staAM_CARNOT.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.mskAM_CARNOT.addEventHandler("onchanged",this.divDataCOST_onchanged,this);
+            this.divData.form.mskAM_CARNOT_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staAM_LDGGNOT.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.mskAM_LDGGNOT_DY_BZTP.addEventHandler("onchanged",this.divDataCOST1_onchanged,this);
+            this.divData.form.mskAM_LDGGNOT.addEventHandler("onchanged",this.divDataCOST1_onchanged,this);
+            this.divData.form.mskAM_LDGGNOT_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staAM_CRMNNOT.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.mskAM_CRMNNOT_DY_BZTP.addEventHandler("onchanged",this.divDataCOST1_onchanged,this);
+            this.divData.form.mskAM_CRMNNOT.addEventHandler("onchanged",this.divDataCOST1_onchanged,this);
+            this.divData.form.mskAM_CRMNNOT_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staAM_ETCNOT.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.mskAM_ETCNOT_DY_BZTP.addEventHandler("onchanged",this.divDataCOST1_onchanged,this);
+            this.divData.form.mskAM_ETCNOT.addEventHandler("onchanged",this.divDataCOST1_onchanged,this);
+            this.divData.form.mskAM_ETCNOT_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staAM_ETC.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.staAM_COMMNOT.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.mskAM_COMMNOT.addEventHandler("onchanged",this.divDataCOST_onchanged,this);
+            this.divData.form.mskAM_COMMNOT_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staAM_VISAPBCNCMMS.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.mskAM_VISAPBCNCMMS.addEventHandler("onchanged",this.divDataCOST_onchanged,this);
+            this.divData.form.mskAM_VISAPBCNCMMS_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staAM_INSRCOST.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.mskAM_INSRCOST.addEventHandler("onchanged",this.divDataCOST_onchanged,this);
+            this.divData.form.mskAM_INSRCOST_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staAM_ETCADTNCOST.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.mskAM_ETCADTNCOST.addEventHandler("onchanged",this.divDataCOST_onchanged,this);
+            this.divData.form.mskAM_ETCADTNCOST_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staTOTAL.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.staAM_TCHMCOST.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.mskAM_TCHMCOST.addEventHandler("onchanged",this.divDataCOST_onchanged,this);
+            this.divData.form.mskAM_TCHMCOST_ADVPGLD_KRW.addEventHandler("onchanged",this.divDataCOST2_onchanged,this);
+            this.divData.form.staDS_RMK.addEventHandler("onclick",this.divData_staCD_CORP00_00_onclick,this);
+            this.divData.form.divBtns.form.btnOK.addEventHandler("onclick",this.btnOK_onclick,this);
+            this.divData.form.divBtns.form.btnCANCLE.addEventHandler("onclick",this.btnCANCLE_onclick,this);
+            this.divData.form.btnNotice.addEventHandler("onclick",this.btnNotice_onclick,this);
+        };
+        this.loadIncludeScript("DAB_BZTP_PLAN_DOMESTIC_DLG.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

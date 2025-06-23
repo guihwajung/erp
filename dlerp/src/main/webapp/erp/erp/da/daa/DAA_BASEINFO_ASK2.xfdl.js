@@ -1,0 +1,4971 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("인사정보변경신청");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,1000);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">selectAskCnt</Col><Col id=\"SP\">DAAPR_BASEINFO_ASK_SELECT</Col></Row><Row><Col id=\"TARGET\">selectAddr1</Col><Col id=\"SP\">DAAPR_ADDRESS_SELECT</Col></Row><Row><Col id=\"TARGET\">selectAddr2</Col><Col id=\"SP\">DAAPR_ADDRESS_ASK_SELECT</Col></Row><Row><Col id=\"TARGET\">saveAddr</Col><Col id=\"SP\">DAAPR_ADDRESS_ASK_SAVE</Col></Row><Row><Col id=\"TARGET\">selectFmy1</Col><Col id=\"SP\">DAAPR_FAMILY_SELECT</Col></Row><Row><Col id=\"TARGET\">selectFmy2</Col><Col id=\"SP\">DAAPR_FAM_ASK_SELECT</Col></Row><Row><Col id=\"TARGET\">saveFmy</Col><Col id=\"SP\">DAAPR_FAM_ASK_SAVE</Col></Row><Row><Col id=\"TARGET\">selectSch1</Col><Col id=\"SP\">DAAPR_SCHOOLCAREER_SELECT</Col></Row><Row><Col id=\"TARGET\">selectSch2</Col><Col id=\"SP\">DAAPR_SCHOOL_ASK_SELECT</Col></Row><Row><Col id=\"TARGET\">saveSch</Col><Col id=\"SP\">DAAPR_SCHOOL_ASK_SAVE</Col></Row><Row><Col id=\"TARGET\">selectLic1</Col><Col id=\"SP\">DAAPR_LICENSE_SELECT</Col></Row><Row><Col id=\"TARGET\">selectLic2</Col><Col id=\"SP\">DAAPR_LIC_ASK_SELECT</Col></Row><Row><Col id=\"TARGET\">saveLic</Col><Col id=\"SP\">DAAPR_LIC_ASK_SAVE</Col></Row><Row><Col id=\"TARGET\">selectCrr1</Col><Col id=\"SP\">DAAPR_CAREER_SELECT</Col></Row><Row><Col id=\"TARGET\">selectCrr2</Col><Col id=\"SP\">DAAPR_CAREER_ASK_SELECT</Col></Row><Row><Col id=\"TARGET\">saveCrr</Col><Col id=\"SP\">DAAPR_CAREER_ASK_SAVE</Col></Row><Row><Col id=\"TARGET\">select1</Col><Col id=\"SP\">DAAPR_BASEINFO_TEMP_SELECT</Col></Row><Row><Col id=\"TARGET\">save1</Col><Col id=\"SP\">DAAPR_BASEINFO_TEMP_SAVE</Col></Row><Row><Col id=\"TARGET\">select7</Col><Col id=\"SP\">DAAPR_BASEINFO_TEMP_ETC_SELECT</Col></Row><Row><Col id=\"TARGET\">save7</Col><Col id=\"SP\">DAAPR_BASEINFO_TEMP_ETC_SAVE</Col></Row><Row><Col id=\"TARGET\">selectLang1</Col><Col id=\"SP\">DAAPR_LANGUAGE_INFO_SELECT</Col></Row><Row><Col id=\"TARGET\">selectLang2</Col><Col id=\"SP\">DAAPR_LANGUAGE_INFO_ASK_SELECT</Col></Row><Row><Col id=\"TARGET\">saveLang</Col><Col id=\"SP\">DAAPR_LANGUAGE_INFO_ASK_SAVE</Col></Row><Row><Col id=\"TARGET\">update</Col><Col id=\"SP\">DAAPR_BASEINFO_ASK_UPDATE</Col></Row><Row><Col id=\"TARGET\">updateAll</Col><Col id=\"SP\">DAAPR_BASEINFO_ASK_ALL_UPDATE</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsAddrList1", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsAddrList2", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsFmyList1", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsFmyList2", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsLicList1", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsLicList2", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSchList1", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSchList2", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsCrrList1", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsCrrList2", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsDeleteFile", this);
+            obj._setContents("<ColumnInfo><Column id=\"filepath\" type=\"STRING\" size=\"256\"/><Column id=\"filename\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"ID_SABUN\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HNAME\" type=\"STRING\" size=\"256\"/><Column id=\"ID_PERSON\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListAskCnt", this);
+            obj._setContents("<ColumnInfo><Column id=\"PIC_BEF\" type=\"INT\" size=\"256\"/><Column id=\"PIC_ING\" type=\"INT\" size=\"256\"/><Column id=\"PIC_AFT\" type=\"INT\" size=\"256\"/><Column id=\"ADDRESS_BEF\" type=\"INT\" size=\"256\"/><Column id=\"ADDRESS_ING\" type=\"INT\" size=\"256\"/><Column id=\"ADDRESS_AFT\" type=\"INT\" size=\"256\"/><Column id=\"FAMILY_BEF\" type=\"INT\" size=\"256\"/><Column id=\"FAMILY_ING\" type=\"INT\" size=\"256\"/><Column id=\"FAMILY_AFT\" type=\"INT\" size=\"256\"/><Column id=\"SCHOOL_BEF\" type=\"INT\" size=\"256\"/><Column id=\"SCHOOL_ING\" type=\"INT\" size=\"256\"/><Column id=\"SCHOOL_AFT\" type=\"INT\" size=\"256\"/><Column id=\"LICENSE_BEF\" type=\"INT\" size=\"256\"/><Column id=\"LICENSE_ING\" type=\"INT\" size=\"256\"/><Column id=\"LICENSE_AFT\" type=\"INT\" size=\"256\"/><Column id=\"CAREER_BEF\" type=\"INT\" size=\"256\"/><Column id=\"CAREER_ING\" type=\"INT\" size=\"256\"/><Column id=\"CAREER_AFT\" type=\"INT\" size=\"256\"/><Column id=\"BASEINFO_BEF\" type=\"INT\" size=\"256\"/><Column id=\"BASEINFO_ING\" type=\"INT\" size=\"256\"/><Column id=\"BASEINFO_AFT\" type=\"INT\" size=\"256\"/><Column id=\"BASEINFO_ETC_BEF\" type=\"INT\" size=\"256\"/><Column id=\"BASEINFO_ETC_ING\" type=\"INT\" size=\"256\"/><Column id=\"BASEINFO_ETC_AFT\" type=\"INT\" size=\"256\"/><Column id=\"LANGUAGE_INFO_BEF\" type=\"INT\" size=\"256\"/><Column id=\"LANGUAGE_INFO_ING\" type=\"INT\" size=\"256\"/><Column id=\"LANGUAGE_INFO_AFT\" type=\"INT\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsRequiredList", this);
+            obj._setContents("<ColumnInfo><Column id=\"TY_DATA\" type=\"STRING\" size=\"256\"/><Column id=\"DS_FIELD\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HEADER\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TY_DATA\">Addr</Col><Col id=\"DS_HEADER\">주소코드</Col><Col id=\"DS_FIELD\">CD_ADDRESS</Col></Row><Row><Col id=\"TY_DATA\">Fmy</Col><Col id=\"DS_FIELD\">CD_FAMILY</Col><Col id=\"DS_HEADER\">관계코드</Col></Row><Row><Col id=\"DS_FIELD\">DS_HNAME</Col><Col id=\"DS_HEADER\">가족성명</Col><Col id=\"TY_DATA\">Fmy</Col></Row><Row><Col id=\"DS_FIELD\">ID_RESIDENT</Col><Col id=\"DS_HEADER\">가족생년월일</Col><Col id=\"TY_DATA\">Fmy</Col></Row><Row><Col id=\"TY_DATA\">Sch</Col><Col id=\"DS_FIELD\">CD_LEVEL</Col><Col id=\"DS_HEADER\">학력구분</Col></Row><Row><Col id=\"TY_DATA\">Sch</Col><Col id=\"DS_FIELD\">CD_SCHOOL</Col><Col id=\"DS_HEADER\">학교코드</Col></Row><Row><Col id=\"TY_DATA\">Sch</Col><Col id=\"DS_FIELD\">YM_SCHOOLFROM</Col><Col id=\"DS_HEADER\">입학년월</Col></Row><Row><Col id=\"TY_DATA\">Sch</Col><Col id=\"DS_FIELD\">YM_SCHOOLTO</Col><Col id=\"DS_HEADER\">졸업년월</Col></Row><Row><Col id=\"TY_DATA\">Lic</Col><Col id=\"DS_HEADER\">자격증코드</Col><Col id=\"DS_FIELD\">CD_LICENSE</Col></Row><Row><Col id=\"TY_DATA\">Lic</Col><Col id=\"DS_HEADER\">자격번호</Col><Col id=\"DS_FIELD\">NO_LICENSE</Col></Row><Row><Col id=\"TY_DATA\">Lic</Col><Col id=\"DS_HEADER\">취득일자</Col><Col id=\"DS_FIELD\">DT_ACQUIRE</Col></Row><Row><Col id=\"TY_DATA\">Lic</Col><Col id=\"DS_HEADER\">취득기관</Col><Col id=\"DS_FIELD\">DS_ORGAN</Col></Row><Row><Col id=\"TY_DATA\">Crr</Col><Col id=\"DS_FIELD\">DS_COMPANY</Col><Col id=\"DS_HEADER\">근무처</Col></Row><Row><Col id=\"TY_DATA\">Crr</Col><Col id=\"DS_FIELD\">DT_CAREERFROM</Col><Col id=\"DS_HEADER\">근무기간From</Col></Row><Row><Col id=\"TY_DATA\">Crr</Col><Col id=\"DS_FIELD\">DT_CAREERTO</Col><Col id=\"DS_HEADER\">근무기간To</Col></Row><Row><Col id=\"TY_DATA\">Lang</Col><Col id=\"DS_FIELD\">CD_LANGUAGE</Col><Col id=\"DS_HEADER\">어학구분</Col></Row><Row><Col id=\"TY_DATA\">Lang</Col><Col id=\"DS_FIELD\">CD_EXAM</Col><Col id=\"DS_HEADER\">시험종류</Col></Row><Row><Col id=\"TY_DATA\">Lang</Col><Col id=\"DS_FIELD\">DT_LANGUAGE</Col><Col id=\"DS_HEADER\">평가일자</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsBaseList2", this);
+            obj._setContents("<ColumnInfo><Column id=\"ID_PERSON\" type=\"INT\" size=\"256\"/><Column id=\"NO_SEQ\" type=\"INT\" size=\"256\"/><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"ID_SABUN\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HNAME\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CNAME\" type=\"STRING\" size=\"256\"/><Column id=\"DS_ENAME\" type=\"STRING\" size=\"256\"/><Column id=\"DS_EMAIL\" type=\"STRING\" size=\"256\"/><Column id=\"ID_RESIDENT\" type=\"STRING\" size=\"256\"/><Column id=\"DT_BIRTH\" type=\"STRING\" size=\"256\"/><Column id=\"YN_SOLAR\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HANDPHONE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_OFFICEPHONE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_EXTENSION\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HOMEPHONE\" type=\"STRING\" size=\"256\"/><Column id=\"CD_RELIGION\" type=\"STRING\" size=\"256\"/><Column id=\"DS_RELIGION\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HOBBY\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SPECIAL\" type=\"STRING\" size=\"256\"/><Column id=\"YN_SUPPORTED\" type=\"STRING\" size=\"256\"/><Column id=\"NO_SUPPORTED\" type=\"STRING\" size=\"256\"/><Column id=\"CD_SUPPORTED\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SUPPORTED_FAM\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SUPPORTED\" type=\"STRING\" size=\"256\"/><Column id=\"YN_FOREIGNER\" type=\"STRING\" size=\"256\"/><Column id=\"CD_FOREIGNER\" type=\"STRING\" size=\"256\"/><Column id=\"DS_FOREIGNER\" type=\"STRING\" size=\"256\"/><Column id=\"YN_HANDICAP\" type=\"STRING\" size=\"256\"/><Column id=\"NO_DISABILITY\" type=\"STRING\" size=\"256\"/><Column id=\"CD_DISABILITY\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DISABILITY\" type=\"STRING\" size=\"256\"/><Column id=\"CD_DISABILITY_GRADE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DISABILITY_GRADE\" type=\"STRING\" size=\"256\"/><Column id=\"YN_MARRIAGE\" type=\"STRING\" size=\"256\"/><Column id=\"DT_MARRIAGE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_BIRTHPLACE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_FAMILYPLACE\" type=\"STRING\" size=\"256\"/><Column id=\"YN_GENDER\" type=\"STRING\" size=\"256\"/><Column id=\"CD_FAMILY_HEAD\" type=\"STRING\" size=\"256\"/><Column id=\"DS_FAMILY_HEAD\" type=\"STRING\" size=\"256\"/><Column id=\"DS_FAMILY_HEADNAME\" type=\"STRING\" size=\"256\"/><Column id=\"CD_HOUSEHOLDER\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HOUSEHOLDER\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HOUSEHOLDER_NAME\" type=\"STRING\" size=\"256\"/><Column id=\"DS_BUSINESS\" type=\"STRING\" size=\"256\"/><Column id=\"CD_RESOURCE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_RESOURCE\" type=\"STRING\" size=\"256\"/><Column id=\"CD_SERVICESTS\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SERVICESTS\" type=\"STRING\" size=\"256\"/><Column id=\"CD_BRANCH\" type=\"STRING\" size=\"256\"/><Column id=\"DS_BRANCH\" type=\"STRING\" size=\"256\"/><Column id=\"CD_MILITARY\" type=\"STRING\" size=\"256\"/><Column id=\"DS_MILITARY\" type=\"STRING\" size=\"256\"/><Column id=\"CD_DISCHARGE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DISCHARGE\" type=\"STRING\" size=\"256\"/><Column id=\"CD_MILITARYRANK\" type=\"STRING\" size=\"256\"/><Column id=\"DS_MILITARYRANK\" type=\"STRING\" size=\"256\"/><Column id=\"DT_CHARGE\" type=\"STRING\" size=\"256\"/><Column id=\"DT_DISCHARGE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SERVICENO\" type=\"STRING\" size=\"256\"/><Column id=\"DS_REASON\" type=\"STRING\" size=\"256\"/><Column id=\"DS_EMAIL_ETC\" type=\"STRING\" size=\"256\"/><Column id=\"DS_FAX\" type=\"STRING\" size=\"256\"/><Column id=\"TY_STATUS\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYN_SOLAR", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">Y</Col><Col id=\"DS_CODE\">양</Col></Row><Row><Col id=\"CD_CODE\">N</Col><Col id=\"DS_CODE\">음</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_SUPPORTED", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">Y</Col><Col id=\"DS_CODE\">Y</Col></Row><Row><Col id=\"CD_CODE\">N</Col><Col id=\"DS_CODE\">N</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_HANDICAP", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">Y</Col><Col id=\"DS_CODE\">Y</Col></Row><Row><Col id=\"CD_CODE\">N</Col><Col id=\"DS_CODE\">N</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_MARRIAGE", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">Y</Col><Col id=\"DS_CODE\">Y</Col></Row><Row><Col id=\"CD_CODE\">N</Col><Col id=\"DS_CODE\">N</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_GENDER", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">M</Col><Col id=\"DS_CODE\">남성</Col></Row><Row><Col id=\"CD_CODE\">W</Col><Col id=\"DS_CODE\">여성</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsYN_FOREIGNER", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">Y</Col><Col id=\"DS_CODE\">Y</Col></Row><Row><Col id=\"CD_CODE\">N</Col><Col id=\"DS_CODE\">N</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_SMOKING", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_CODE\">Y</Col><Col id=\"DS_CODE\">흡연</Col></Row><Row><Col id=\"CD_CODE\">N</Col><Col id=\"DS_CODE\">비흡연</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsEtcList2", this);
+            obj._setContents("<ColumnInfo><Column id=\"ID_PERSON\" type=\"INT\" size=\"256\"/><Column id=\"NO_SEQ\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"ID_SABUN\" type=\"STRING\" size=\"256\"/><Column id=\"QT_HEIGHT\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"QT_WEIGHT\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"RT_LEFTEYE\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"RT_RIGHTEYE\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"CD_BLOOD\" type=\"STRING\" size=\"256\"/><Column id=\"DS_BLOOD\" type=\"STRING\" size=\"256\"/><Column id=\"DS_ALCOHOL\" type=\"STRING\" size=\"256\"/><Column id=\"YN_SMOKING\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HEALTH_REMARK\" type=\"STRING\" size=\"256\"/><Column id=\"DT_JIK_ORDER\" type=\"STRING\" size=\"256\"/><Column id=\"DT_JUNG_ORDER\" type=\"STRING\" size=\"256\"/><Column id=\"DT_RETIRESTART\" type=\"STRING\" size=\"256\"/><Column id=\"DS_COMPANY\" type=\"STRING\" size=\"256\"/><Column id=\"DS_COM_OTHER\" type=\"STRING\" size=\"256\"/><Column id=\"DS_COM_TOTAL\" type=\"STRING\" size=\"256\"/><Column id=\"DS_RECOM_HNAME\" type=\"STRING\" size=\"256\"/><Column id=\"DS_RECOM_RELATION\" type=\"STRING\" size=\"256\"/><Column id=\"DS_RECOM_JOB\" type=\"STRING\" size=\"256\"/><Column id=\"DS_RECOM_ADDRESS\" type=\"STRING\" size=\"256\"/><Column id=\"DS_MOVABLES\" type=\"STRING\" size=\"256\"/><Column id=\"DS_IMMOVABLES\" type=\"STRING\" size=\"256\"/><Column id=\"ROWNUM\" type=\"BIGDECIMAL\" size=\"256\"/><Column id=\"TY_STATUS\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsLangList1", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsLangList2", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new FileDownTransfer("FileDownTransfer00", this);
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0","0",null,"46.0","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_SEARCH_Bg");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("ccfCorpCD_CORP","0","10.0","66","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("0");
+            obj.set_text("법인");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_CORP","ccfCorpCD_CORP:0.0","10.0","200","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("1");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.getSetter("CodeFindName").set("DAX_CFCORP");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staID_SABUN","ccfCD_CORP:0.0","10.0","66.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("3");
+            obj.set_text("성명");
+            obj.set_cssclass("sta_WF_SchLabelE");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("ccfID_SABUN","staID_SABUN:0.0","10.0","200","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.getSetter("CDTextWidth").set("90");
+            obj.set_taborder("2");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.getSetter("CodeFindName").set("DAX_CFBASEINFO_ALL");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Edit("txtID_PERSON","ccfID_SABUN:10","10.0","150","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("4");
+            obj.set_visible("false");
+            obj.set_enable("false");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","divSearch:10",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divInfo","0","0","840","210",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("1");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Static("staCnt1","100","0","80","26",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("24");
+            obj.set_text("요청전");
+            obj.set_textAlign("center");
+            obj.set_font("bold 12px/normal \"Dotum\"");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staCnt2","staCnt1:-1","0","80","26",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("25");
+            obj.set_text("요청진행");
+            obj.set_textAlign("center");
+            obj.set_font("bold 13px/normal \"Dotum\"");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staCnt3","staCnt2:-1","0","80","26",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("26");
+            obj.set_text("완료");
+            obj.set_textAlign("center");
+            obj.set_font("bold 12px/normal \"Dotum\"");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("sta00","10","staCnt1:0","87","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("0");
+            obj.set_text("사 진");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("sta01","10","sta00:-1","87","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("17");
+            obj.set_text("주 소");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("sta02","10","sta01:-1","87","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("21");
+            obj.set_text("가 족");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("sta03","10","sta02:-1","87","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("18");
+            obj.set_text("학 력");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("sta04","10","sta03:-1","87","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("19");
+            obj.set_text("자 격");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("sta05","10","sta04:-1","87","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("20");
+            obj.set_text("경 력");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staPIC_BEF","sta00:-1","staCnt1:0","90","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("6");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staADDRESS_BEF","sta00:-1","sta00:-1","90","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("7");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staFAMILY_BEF","sta01:-1","sta01:-1","90","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("8");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staSCHOOL_BEF","sta02:-1","sta02:-1","90","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("9");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staLICENSE_BEF","sta03:-1","sta03:-1","90","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("10");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staCAREER_BEF","sta04:-1","sta04:-1","90","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("11");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staPIC_ING","staPIC_BEF:-1","staCnt1:0","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("22");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staADDRESS_ING","staADDRESS_BEF:-1","sta00:-1","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("12");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staFAMILY_ING","staFAMILY_BEF:-1","sta01:-1","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("13");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staSCHOOL_ING","staSCHOOL_BEF:-1","sta02:-1","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("14");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staLICENSE_ING","staLICENSE_BEF:-1","sta03:-1","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("15");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staCAREER_ING","staCAREER_BEF:-1","sta04:-1","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("16");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staPIC_AFT","staPIC_ING:-1","staCnt1:0","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("23");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staADDRESS_AFT","staADDRESS_ING:-1","sta00:-1","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("5");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staFAMILY_AFT","staFAMILY_ING:-1","sta01:-1","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("4");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staSCHOOL_AFT","staSCHOOL_ING:-1","sta02:-1","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("3");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staLICENSE_AFT","staLICENSE_ING:-1","sta03:-1","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("2");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staCAREER_AFT","staCAREER_ING:-1","sta04:-1","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("1");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staBASEINFO_TITLE","staPIC_AFT:-1","26","97","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("27");
+            obj.set_text("인사기본정보");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staBASEINFO_ETC_TITLE","staADDRESS_AFT:-1","55","97","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("28");
+            obj.set_text("기 타");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staLANGUAGE_INFO_TITLE","staFAMILY_AFT:-1","84","97","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("29");
+            obj.set_text("외국어");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staEMPTY_TITLE_1","staSCHOOL_AFT:-1","113","97","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("30");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staEMPTY_TITLE_2","staLICENSE_AFT:-1","142","97","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("31");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staEMPTY_TITLE_3","staCAREER_AFT:-1","171","97","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("32");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staBASEINFO_BEF","staBASEINFO_TITLE:-1","26","90","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("33");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staBASEINFO_ING","staBASEINFO_BEF:-1","26","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("34");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staBASEINFO_AFT","staBASEINFO_ING:-1","26","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("35");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staBASEINFO_ETC_BEF","staBASEINFO_ETC_TITLE:-1","55","90","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("36");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staBASEINFO_ETC_ING","staBASEINFO_ETC_BEF:-1","55","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("37");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staBASEINFO_ETC_AFT","staBASEINFO_ETC_ING:-1","55","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("38");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staLANGUAGE_INFO_BEF","staLANGUAGE_INFO_TITLE:-1","84","90","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("39");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staLANGUAGE_INFO_ING","staLANGUAGE_INFO_BEF:-1","84","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("40");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staLANGUAGE_INFO_AFT","staLANGUAGE_INFO_ING:-1","84","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("41");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staEMPTY_11","staEMPTY_TITLE_1:-1","113","90","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("42");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staEMPTY_12","staEMPTY_11:-1","113","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("43");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staEMPTY_13","staEMPTY_12:-1","113","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("44");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staEMPTY_14","staEMPTY_TITLE_2:-1","142","90","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("45");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staEMPTY_15","staEMPTY_14:-1","142","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("46");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staEMPTY_16","staEMPTY_15:-1","142","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("47");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staEMPTY_17","staEMPTY_TITLE_3:-1","171","90","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("48");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staEMPTY_18","staEMPTY_17:-1","171","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("49");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staEMPTY_19","staEMPTY_18:-1","171","80","30",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("50");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_textAlign("center");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staCnt3_00","608","0","80","26",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("51");
+            obj.set_text("완료");
+            obj.set_textAlign("center");
+            obj.set_font("bold 12px/normal \"Dotum\"");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staCnt2_00","529","0","80","26",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("52");
+            obj.set_text("요청진행");
+            obj.set_textAlign("center");
+            obj.set_font("bold 13px/normal \"Dotum\"");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Static("staCnt1_00","450","0","80","26",null,null,null,null,null,null,this.divData.form.divInfo.form);
+            obj.set_taborder("53");
+            obj.set_text("요청전");
+            obj.set_textAlign("center");
+            obj.set_font("bold 12px/normal \"Dotum\"");
+            this.divData.form.divInfo.addChild(obj.name, obj);
+
+            obj = new Tab("tabData","0","divInfo:5",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj.set_tabindex("0");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Tabpage("tab1",this.divData.form.tabData);
+            obj.set_text("인사기본정보");
+            this.divData.form.tabData.addChild(obj.name, obj);
+
+            obj = new Static("staDS_CNAME","5","5","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("0");
+            obj.set_text("한자성명");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_CNAME_bg","staDS_CNAME:-1","staDS_CNAME:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("1");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_CNAME","staDS_CNAME:5","staDS_CNAME:-25","178","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("2");
+            obj.set_maxlength("16");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_ENAME","5","staDS_CNAME:-1","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("3");
+            obj.set_text("영어성명");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_ENAME_bg","staDS_ENAME:-1","staDS_ENAME:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("4");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_ENAME","staDS_ENAME:5","staDS_ENAME:-25","179","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("5");
+            obj.set_maxlength("16");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_HANDPHONE","5","staDS_ENAME:-1","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("18");
+            obj.set_text("휴대폰");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_HANDPHONE_bg","staDS_HANDPHONE:-1","staDS_HANDPHONE:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("19");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_HANDPHONE","staDS_HANDPHONE:5","staDS_HANDPHONE:-25","178","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("20");
+            obj.set_maxlength("50");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_RELIGION","5","staDS_HANDPHONE:-1","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("27");
+            obj.set_text("종교");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_RELIGION_bg","staCD_RELIGION:-1","staCD_RELIGION:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("28");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_RELIGION","staCD_RELIGION:5","staCD_RELIGION:-25","178","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("29");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_accessibilityrole("form");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staYN_SUPPORTED","5","staCD_RELIGION:-1","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("36");
+            obj.set_text("보훈여부/번호");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staYN_SUPPORTED_bg","staYN_SUPPORTED:-1","staYN_SUPPORTED:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("37");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Radio("rdoYN_SUPPORTED","staYN_SUPPORTED:5","staYN_SUPPORTED:-25","85","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("41");
+            obj.set_innerdataset("dsTY_SUPPORTED");
+            obj.set_direction("vertical");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_columncount("-1");
+            obj.set_rowcount("-1");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtNO_SUPPORTED","rdoYN_SUPPORTED:-5","staYN_SUPPORTED:-25","98","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("42");
+            obj.set_maxlength("20");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staYN_HANDICAP","5","staYN_SUPPORTED:-1","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("43");
+            obj.set_text("장애여부/번호");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staYN_HANDICAP_bg","staYN_HANDICAP:-1","staYN_HANDICAP:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("40");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Radio("rdoYN_HANDICAP","staYN_HANDICAP:5","staYN_HANDICAP:-25","85","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("45");
+            obj.set_innerdataset("dsTY_HANDICAP");
+            obj.set_direction("vertical");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_columncount("-1");
+            obj.set_rowcount("-1");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("ctxtNO_DISABILITY","rdoYN_HANDICAP:-5","staYN_HANDICAP:-25","98","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("46");
+            obj.set_value("");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_BIRTHPLACE","5","staYN_HANDICAP:-1","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("61");
+            obj.set_text("출생지");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_BIRTHPLACE_bg","staDS_BIRTHPLACE:-1","staDS_BIRTHPLACE:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("39");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_BIRTHPLACE","staDS_BIRTHPLACE:5","staDS_BIRTHPLACE:-25","178","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("62");
+            obj.set_maxlength("15");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_FAMILY_HEAD","5","staDS_BIRTHPLACE:-1","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("69");
+            obj.set_text("호주/관계");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_FAMILY_HEAD_bg","staCD_FAMILY_HEAD:-1","staCD_FAMILY_HEAD:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("70");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_FAMILY_HEAD","staCD_FAMILY_HEAD:5","staCD_FAMILY_HEAD:-25","90","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("0");
+            obj.set_taborder("72");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_FAMILY_HEADNAME","cfCD_FAMILY_HEAD:2","staCD_FAMILY_HEAD:-25","86","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("73");
+            obj.set_enable("true");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staID_RESIDENT","staDS_CNAME_bg:-1","staDS_CNAME_bg:-30","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("9");
+            obj.set_text("주민번호");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staID_RESIDENT_bg","staID_RESIDENT:-1","staID_RESIDENT:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("10");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtID_RESIDENT","staID_RESIDENT:5","staID_RESIDENT:-25","178","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("11");
+            obj.set_maxlength("14");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDT_BIRTH","staDS_ENAME_bg:-1","staDS_ENAME_bg:-30","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("12");
+            obj.set_text("생일(양/음)");
+            obj.set_cssclass("sta_WF_tablelabelE");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDT_BIRTH_bg","staDT_BIRTH:-1","staDT_BIRTH:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("4");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Calendar("tclDT_BIRTH","staDT_BIRTH:5","staDT_BIRTH:-25","95","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("14");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            obj.set_value("");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Radio("rdoYN_SOLAR","tclDT_BIRTH:2","staDT_BIRTH:-25","82","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("17");
+            obj.set_innerdataset("dsYN_SOLAR");
+            obj.set_direction("vertical");
+            obj.set_fittocontents("width");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_text("Y");
+            obj.set_value("Y");
+            obj.set_index("0");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_OFFICEPHONE","staDS_HANDPHONE_bg:-1","staDS_HANDPHONE_bg:-30","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("21");
+            obj.set_text("회사전화/내선");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_OFFICEPHONE_bg","staDS_OFFICEPHONE:-1","staDS_OFFICEPHONE:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("22");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_OFFICEPHONE","staDS_OFFICEPHONE:5","staDS_OFFICEPHONE:-25","119","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("23");
+            obj.set_inputtype("normal");
+            obj.set_maxlength("50");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_OFFICEPHONE00","txtDS_OFFICEPHONE:2","staDS_OFFICEPHONE:-25","58","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("105");
+            obj.set_inputtype("digit");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_HOBBY","staCD_RELIGION_bg:-1","staCD_RELIGION_bg:-30","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("30");
+            obj.set_text("취미");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_HOBBY_bg","staDS_HOBBY:-1","staDS_HOBBY:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("31");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_HOBBY","staDS_HOBBY:5","staDS_HOBBY:-25","179","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("32");
+            obj.set_maxlength("30");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_SUPPORTED","staYN_SUPPORTED_bg:-1","staYN_SUPPORTED_bg:-30","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("101");
+            obj.set_text("보훈관계/사유");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_SUPPORTED_bg","staCD_SUPPORTED:-1","staCD_SUPPORTED:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("31");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("ccfCD_SUPPORTED","staCD_SUPPORTED:5","staCD_SUPPORTED:-25","100","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("0");
+            obj.set_taborder("102");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_SUPPORTED","ccfCD_SUPPORTED:2","staCD_SUPPORTED:-25","77","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("103");
+            obj.set_maxlength("50");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_DISABILITY","staYN_HANDICAP_bg:-1","staYN_HANDICAP_bg:-30","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("47");
+            obj.set_text("장애종류/등급");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_DISABILITY_bg","staDS_DISABILITY:-1","staDS_DISABILITY:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("48");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("ccfDS_DISABILITY","staDS_DISABILITY:5","staDS_DISABILITY:-25","100","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("0");
+            obj.set_taborder("44");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("ccfDS_DISABILITY_GRADE","ccfDS_DISABILITY:0","staDS_DISABILITY:-25","79","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("0");
+            obj.set_taborder("50");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_FAMILYPLACE","staDS_BIRTHPLACE_bg:-1","staDS_BIRTHPLACE_bg:-30","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("63");
+            obj.set_text("본적");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_FAMILYPLACE_bg","staDS_FAMILYPLACE:-1","staDS_FAMILYPLACE:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("64");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_FAMILYPLACE","staDS_FAMILYPLACE:5","staDS_FAMILYPLACE:-25","179","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("65");
+            obj.set_maxlength("50");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_HOUSEHOLDER","staCD_FAMILY_HEAD_bg:-1","staCD_FAMILY_HEAD_bg:-30","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("74");
+            obj.set_text("세대주/관계");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_HOUSEHOLDER_bg","staCD_HOUSEHOLDER:-1","staCD_HOUSEHOLDER:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("75");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_HOUSEHOLDER","staCD_HOUSEHOLDER:5","staCD_HOUSEHOLDER:-25","100","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("0");
+            obj.set_taborder("76");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_HOUSEHOLDER_NAME","cfCD_HOUSEHOLDER:2","staCD_HOUSEHOLDER:-25","77","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("77");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_EMAIL","staID_RESIDENT_bg:-1","staID_RESIDENT_bg:-30","150","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("6");
+            obj.set_text("E-Mail");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_enable("true");
+            obj.set_enableevent("true");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_EMAIL_bg","staDS_EMAIL:-1","staDS_EMAIL:-30","242","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("7");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_enableevent("true");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_EMAIL","staDS_EMAIL:5","staDS_EMAIL:-25","230","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("8");
+            obj.set_enable("true");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_EMAIL_ETC","staDT_BIRTH_bg:-1","staDT_BIRTH_bg:-30","150","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("15");
+            obj.set_text("외부E-Mail");
+            obj.set_cssclass("sta_WF_tablelabel");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_EMAIL_ETC_bg","staDS_EMAIL_ETC:-1","staDS_EMAIL_ETC:-30","242","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("16");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_EMAIL_ETC","staDS_EMAIL_ETC:5","staDS_EMAIL_ETC:-25","230","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("109");
+            obj.set_enable("true");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_HOMEPHONE","staDS_OFFICEPHONE_bg:-1","staDS_OFFICEPHONE_bg:-30","150","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("24");
+            obj.set_text("자택전화/FAX");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_HOMEPHONE_bg","staDS_HOMEPHONE:-1","staDS_HOMEPHONE:-30","242","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("25");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_HOMEPHONE","staDS_HOMEPHONE:5","staDS_HOMEPHONE:-25","124","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("26");
+            obj.set_inputtype("normal");
+            obj.set_maxlength("50");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_FAX","txtDS_HOMEPHONE:1","staDS_HOMEPHONE:-25","105","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("110");
+            obj.set_inputtype("normal");
+            obj.set_maxlength("50");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_SPECIAL","staDS_HOBBY_bg:-1","staDS_HOBBY_bg:-30","150","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("33");
+            obj.set_text("특기");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_SPECIAL_bg","staDS_SPECIAL:-1","staDS_SPECIAL:-30","242","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("34");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_SPECIAL","staDS_SPECIAL:5","staDS_SPECIAL:-25","230","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("35");
+            obj.set_maxlength("30");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staYN_FOREIGNER","staCD_SUPPORTED_bg:-1","staCD_SUPPORTED_bg:-30","150","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("55");
+            obj.set_text("외국인여부/국적");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staYN_FOREIGNER_bg","staYN_FOREIGNER:-1","staYN_FOREIGNER:-30","242","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("104");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Radio("rdoYN_FOREIGNER","staYN_FOREIGNER:5","staYN_FOREIGNER:-25","70","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("56");
+            obj.set_innerdataset("dsTY_HANDICAP");
+            obj.set_direction("vertical");
+            obj.set_fittocontents("width");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_text("N");
+            obj.set_value("N");
+            obj.set_index("1");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("ccfDS_FOREIGNER","rdoYN_FOREIGNER:16","staYN_FOREIGNER:-25","131","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("0");
+            obj.set_taborder("57");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staYN_MARRIAGE","staDS_DISABILITY_bg:-1","staDS_DISABILITY_bg:-30","150","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("51");
+            obj.set_text("결혼여부/기념일");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staYN_MARRIAGE_bg","staYN_MARRIAGE:-1","staYN_MARRIAGE:-30","242","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("52");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Radio("rdoYN_MARRIAGE","staYN_MARRIAGE:5","staYN_MARRIAGE:-25","70","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("53");
+            obj.set_innerdataset("dsTY_MARRIAGE");
+            obj.set_direction("vertical");
+            obj.set_fittocontents("width");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_datacolumn("DS_CODE");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Calendar("tclDT_MARRIAGE","rdoYN_MARRIAGE:17","staYN_MARRIAGE:-25","100","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("54");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            obj.set_value("");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staYN_GENDER","staDS_FAMILYPLACE_bg:-1","staDS_FAMILYPLACE_bg:-30","150","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("66");
+            obj.set_text("성별");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staYN_GENDER_bg","staYN_GENDER:-1","staYN_GENDER:-30","242","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("67");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Radio("rdoYN_GENDER","staYN_GENDER:5","staYN_GENDER:-25","113","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("68");
+            obj.set_innerdataset("dsTY_GENDER");
+            obj.set_direction("vertical");
+            obj.set_fittocontents("width");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_datacolumn("DS_CODE");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_BUSINESS","staCD_HOUSEHOLDER_bg:-1","staCD_HOUSEHOLDER_bg:-30","150","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("106");
+            obj.set_text("담당업무");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_BUSINESS_bg","staDS_BUSINESS:-1","staDS_BUSINESS:-30","242","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("71");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_BUSINESS","staDS_BUSINESS:5","staDS_BUSINESS:-25","230","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("107");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staTitle","5","staCD_FAMILY_HEAD:10","61","25",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("81");
+            obj.set_text("병역");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_RESOURCE","5","staTitle:5","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("82");
+            obj.set_text("군필종류");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_RESOURCE_bg","staCD_RESOURCE:-1","staCD_RESOURCE:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("88");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_RESOURCE","staCD_RESOURCE:5","staCD_RESOURCE:-25","178","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("90");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_MILITARY","5","staCD_RESOURCE:-1","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("87");
+            obj.set_text("군별");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_MILITARY_bg","staCD_MILITARY:-1","staCD_MILITARY:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("96");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_MILITARY","staCD_MILITARY:5","staCD_MILITARY:-25","178","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("99");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDT_CHARGE","5","staCD_MILITARY:-1","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("100");
+            obj.set_text("입대일자");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDT_CHARGE_bg","staDT_CHARGE:-1","staDT_CHARGE:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("101");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Calendar("tclDT_CHARGE","staDT_CHARGE:5","staDT_CHARGE:-25","100","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("108");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            obj.set_value("");
+            obj.set_autoskip("true");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_REASON","5","staDT_CHARGE:-1","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("106");
+            obj.set_text("면제사유");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_REASON_bg","staDS_REASON:-1","staDS_REASON:-30","888","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("107");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_REASON","staDS_REASON:5","staDS_REASON:-25","876","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("111");
+            obj.set_autoselect("true");
+            obj.set_autoskip("true");
+            obj.set_accessibilityenable("false");
+            obj.set_maxlength("100");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_SERVICESTS","staCD_RESOURCE_bg:-1","staCD_RESOURCE_bg:-30","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("83");
+            obj.set_text("역종");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_SERVICESTS_bg","staCD_SERVICESTS:-1","staCD_SERVICESTS:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("89");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_SERVICESTS","staCD_SERVICESTS:5","staCD_SERVICESTS:-25","179","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("91");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_DISCHARGE","staCD_MILITARY_bg:-1","staCD_MILITARY_bg:-30","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("92");
+            obj.set_text("제대구분");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_DISCHARGE_bg","staCD_DISCHARGE:-1","staCD_DISCHARGE:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("93");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_DISCHARGE","staCD_DISCHARGE:5","staCD_DISCHARGE:-25","179","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("94");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDT_DISCHARGE","staDT_CHARGE_bg:-1","staDT_CHARGE_bg:-30","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("102");
+            obj.set_text("제대일자");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDT_DISCHARGE_bg","staDT_DISCHARGE:-1","staDT_DISCHARGE:-30","190","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("103");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Calendar("tclDT_DISCHARGE","staDT_DISCHARGE:5","staDT_DISCHARGE:-25","100","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("109");
+            obj.set_dateformat("yyyy-MM-dd");
+            obj.set_editformat("yyyyMMdd");
+            obj.set_autoselect("true");
+            obj.set_value("");
+            obj.set_autoskip("true");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_BRANCH","staCD_SERVICESTS_bg:-1","staCD_SERVICESTS_bg:-30","150","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("84");
+            obj.set_text("병과");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_BRANCH_bg","staCD_BRANCH:-1","staCD_BRANCH:-30","242","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("85");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_BRANCH","staCD_BRANCH:5","staCD_BRANCH:-25","230","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("86");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_MILITARYRANK","staCD_DISCHARGE_bg:-1","staCD_DISCHARGE_bg:-30","150","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("95");
+            obj.set_text("계급");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staCD_MILITARYRANK_bg","staCD_MILITARYRANK:-1","staCD_MILITARYRANK:-30","242","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("97");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Div("cfCD_MILITARYRANK","staCD_MILITARYRANK:5","staCD_MILITARYRANK:-25","230","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("50");
+            obj.set_taborder("98");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_SERVICENO","staDT_DISCHARGE_bg:-1","staDT_DISCHARGE_bg:-30","150","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("104");
+            obj.set_text("군번");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Static("staDS_SERVICENO_bg","staDS_SERVICENO:-1","staDS_SERVICENO:-30","242","30",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("105");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_SERVICENO","staDS_SERVICENO:5","staDS_SERVICENO:-25","230","20",null,null,null,null,null,null,this.divData.form.tabData.tab1.form);
+            obj.set_taborder("110");
+            obj.set_autoselect("true");
+            obj.set_autoskip("true");
+            obj.set_maxlength("50");
+            this.divData.form.tabData.tab1.addChild(obj.name, obj);
+
+            obj = new Tabpage("tab2",this.divData.form.tabData);
+            obj.set_text("주소");
+            this.divData.form.tabData.addChild(obj.name, obj);
+
+            obj = new Static("staGridAddr1","4","0","50%","25",null,null,null,null,null,null,this.divData.form.tabData.tab2.form);
+            obj.set_taborder("3");
+            obj.set_text("현재정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab2.addChild(obj.name, obj);
+
+            obj = new Grid("objGridAddr1","0","staGridAddr1:5",null,"200","0","0",null,null,null,null,this.divData.form.tabData.tab2.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.tabData.tab2.addChild(obj.name, obj);
+
+            obj = new Static("staGridAddr2","4","objGridAddr1:5","50%","25",null,null,null,null,null,null,this.divData.form.tabData.tab2.form);
+            obj.set_taborder("2");
+            obj.set_text("변경정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab2.addChild(obj.name, obj);
+
+            obj = new Grid("objGridAddr2","0","staGridAddr2:5",null,null,"0","0",null,null,null,null,this.divData.form.tabData.tab2.form);
+            obj.set_taborder("1");
+            obj._setContents("");
+            this.divData.form.tabData.tab2.addChild(obj.name, obj);
+
+            obj = new Tabpage("tab3",this.divData.form.tabData);
+            obj.set_text("가족");
+            this.divData.form.tabData.addChild(obj.name, obj);
+
+            obj = new Static("staGridFmy1","4","0","50%","25",null,null,null,null,null,null,this.divData.form.tabData.tab3.form);
+            obj.set_taborder("78");
+            obj.set_text("현재정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab3.addChild(obj.name, obj);
+
+            obj = new Grid("objGridFmy1","0","staGridFmy1:5",null,"200","496","0",null,null,null,null,this.divData.form.tabData.tab3.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.tabData.tab3.addChild(obj.name, obj);
+
+            obj = new Static("staGridFmy2","4","objGridFmy1:5","50%","25",null,null,null,null,null,null,this.divData.form.tabData.tab3.form);
+            obj.set_taborder("78");
+            obj.set_text("변경정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab3.addChild(obj.name, obj);
+
+            obj = new Grid("objGridFmy2","0","staGridFmy2:5",null,null,"496","0",null,null,null,null,this.divData.form.tabData.tab3.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.tabData.tab3.addChild(obj.name, obj);
+
+            obj = new Static("sta00_00",null,"35","476",null,"0","0",null,null,null,null,this.divData.form.tabData.tab3.form);
+            obj.set_taborder("4");
+            obj.set_text("가족사항변경 증빙서류 안내\r\n\r\n 1. 추가\r\n    - 필수(관계여부 확인가능 서류)\r\n       * 주소지가 동일한 경우 : 주민등록등본\r\n       * 주소지가 동일하지 않은 경우 : 가족관계증명서(상세)\r\n       * 당해 년도 출생 자녀의 경우(주소지 동일 여부와 상관없음) : 가족관계증명서(상세) \r\n\r\n    - 대상별 추가\r\n       * 장애인 유무 : 복지카드 또는 장애인증명서\r\n       * 외국인 유무 : 외국인등록증\r\n\r\n  2. 변경\r\n      - 부양, 동거 유무 : 증빙 없음\r\n      - 성명, 주민등록번호 : 주민등록초본\r\n      - 장애인 유무 : 복지카드 또는 장애인증명서\r\n      - 외국인 유무 : 외국인등록증\r\n\r\n   3. 삭제(증빙 없음)\r\n      - 사망의 경우 :  사망년도란에 사망년도 반드시 입력\r\n        ※ 년도중 사망의 경우 해당년도까지 공제적용 가능");
+            obj.set_cssclass("sta_WF_notice");
+            obj.set_font("normal 12px/1.5 \"Malgun Gothic\"");
+            this.divData.form.tabData.tab3.addChild(obj.name, obj);
+
+            obj = new Tabpage("tab4",this.divData.form.tabData);
+            obj.set_text("학력");
+            this.divData.form.tabData.addChild(obj.name, obj);
+
+            obj = new Static("staGridSch1","4","0","50%","25",null,null,null,null,null,null,this.divData.form.tabData.tab4.form);
+            obj.set_taborder("78");
+            obj.set_text("현재정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab4.addChild(obj.name, obj);
+
+            obj = new Grid("objGridSch1","0","staGridSch1:5",null,"200","0","0",null,null,null,null,this.divData.form.tabData.tab4.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.tabData.tab4.addChild(obj.name, obj);
+
+            obj = new Static("staGridSch2","4","objGridSch1:5","50%","25",null,null,null,null,null,null,this.divData.form.tabData.tab4.form);
+            obj.set_taborder("78");
+            obj.set_text("변경정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab4.addChild(obj.name, obj);
+
+            obj = new Grid("objGridSch2","0","staGridSch2:5",null,null,"0","0",null,null,null,null,this.divData.form.tabData.tab4.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.tabData.tab4.addChild(obj.name, obj);
+
+            obj = new Tabpage("tab5",this.divData.form.tabData);
+            obj.set_text("자격");
+            this.divData.form.tabData.addChild(obj.name, obj);
+
+            obj = new Static("staGridLic1","4","0","50%","25",null,null,null,null,null,null,this.divData.form.tabData.tab5.form);
+            obj.set_taborder("78");
+            obj.set_text("현재정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab5.addChild(obj.name, obj);
+
+            obj = new Grid("objGridLic1","0","staGridLic1:5",null,"200","0","0",null,null,null,null,this.divData.form.tabData.tab5.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.tabData.tab5.addChild(obj.name, obj);
+
+            obj = new Static("staGridLic2","4","objGridLic1:5","50%","25",null,null,null,null,null,null,this.divData.form.tabData.tab5.form);
+            obj.set_taborder("78");
+            obj.set_text("변경정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab5.addChild(obj.name, obj);
+
+            obj = new Grid("objGridLic2","0","staGridLic2:5",null,null,"0","0",null,null,null,null,this.divData.form.tabData.tab5.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.tabData.tab5.addChild(obj.name, obj);
+
+            obj = new Tabpage("tab6",this.divData.form.tabData);
+            obj.set_text("그룹외경력");
+            this.divData.form.tabData.addChild(obj.name, obj);
+
+            obj = new Static("staGridCrr1","4","0","50%","25",null,null,null,null,null,null,this.divData.form.tabData.tab6.form);
+            obj.set_taborder("78");
+            obj.set_text("현재정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab6.addChild(obj.name, obj);
+
+            obj = new Grid("objGridCrr1","0","staGridCrr1:5",null,"200","0","0",null,null,null,null,this.divData.form.tabData.tab6.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.tabData.tab6.addChild(obj.name, obj);
+
+            obj = new Static("staGridCrr2","4","objGridCrr1:5","50%","25",null,null,null,null,null,null,this.divData.form.tabData.tab6.form);
+            obj.set_taborder("78");
+            obj.set_text("변경정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab6.addChild(obj.name, obj);
+
+            obj = new Grid("objGridCrr2","0","staGridCrr2:5",null,null,"0","0",null,null,null,null,this.divData.form.tabData.tab6.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.form.tabData.tab6.addChild(obj.name, obj);
+
+            obj = new Tabpage("tab7",this.divData.form.tabData);
+            obj.set_text("기타");
+            this.divData.form.tabData.addChild(obj.name, obj);
+
+            obj = new Static("sta47","0","5","120","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("0");
+            obj.set_text("신체정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta00","0","sta47:5","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("1");
+            obj.set_text("신장");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta01","sta00:-1","sta00:-30","185","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("2");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("txtQT_HEIGHT","sta00:5","sta00:-25","173","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("3");
+            obj.set_inputmode("normal");
+            obj.set_enable("true");
+            obj.set_enableevent("true");
+            obj.set_autoselect("true");
+            obj.set_autoskip("true");
+            obj.set_readonly("false");
+            obj.set_maxlength("6");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta04","0","sta00:-1","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("4");
+            obj.set_text("시력");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta05","sta04:-1","sta04:-30","185","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("5");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("staEYE1","sta04:10","sta04:-25","20","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("6");
+            obj.set_text("좌: ");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("txtRT_LEFTEYE","staEYE1:5","sta04:-25","54","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("7");
+            obj.set_inputmode("normal");
+            obj.set_maxlength("3");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("staEYE00","txtRT_LEFTEYE:10","sta04:-25","20","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("8");
+            obj.set_text("우: ");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("txtRT_RIGHTEYE","staEYE00:5","sta04:-25","40","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("9");
+            obj.set_inputmode("normal");
+            obj.set_maxlength("3");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta08","0","sta04:-1","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("10");
+            obj.set_text("주량");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta09","sta08:-1","sta08:-30","185","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("11");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_ALCOHOL","sta08:5","sta08:-25","173","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("12");
+            obj.set_inputmode("normal");
+            obj.set_maxlength("10");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta12","0","sta08:-1","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("13");
+            obj.set_text("비고");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta13","sta12:-1","sta12:-30","448","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("14");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_HEALTH_REMARK","sta12:5","sta12:-25","173","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("15");
+            obj.set_inputmode("normal");
+            obj.set_maxlength("20");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta02","sta01:-1","sta01:-30","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("16");
+            obj.set_text("체중");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta03","sta02:-1","sta02:-30","185","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("17");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("txtQT_WEIGHT","sta02:5","sta02:-25","174","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("18");
+            obj.set_inputmode("normal");
+            obj.set_maxlength("6");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta06","sta05:-1","sta05:-30","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("19");
+            obj.set_text("혈액형");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta07","sta06:-1","sta06:-30","185","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("20");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_text("");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Div("ccfTY_BLOOD","sta06:5","sta06:-25","174","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.getSetter("CodeFindName").set("DAX_CFCOMMONCODE");
+            obj.getSetter("CDTextWidth").set("30");
+            obj.set_taborder("21");
+            obj.set_url("cmm::cmmCodeFind.xfdl");
+            obj.set_text("");
+            obj.set_visible("true");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta10","sta09:-1","sta09:-30","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("22");
+            obj.set_text("흡연여부");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta11","sta10:-1","sta10:-30","185","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("23");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Radio("rdoYN_SMOKING","sta10:5","sta10:-25","120","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("24");
+            obj.set_innerdataset("dsTY_SMOKING");
+            obj.set_direction("vertical");
+            obj.set_fittocontents("width");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_datacolumn("DS_CODE");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta28","0","sta12:10","25.00%","25",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("25");
+            obj.set_text("추천인정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta32","0","sta28:10","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("26");
+            obj.set_text("성명");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta29","sta32:-1","sta32:-30","185","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("27");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_RECOM_HNAME","sta32:5","sta32:-25","173","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("28");
+            obj.set_inputmode("normal");
+            obj.set_maxlength("10");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta33","0","sta32:-1","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("29");
+            obj.set_text("직업");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta34","sta33:-1","sta33:-30","448","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("30");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_RECOM_JOB","sta33:5","sta33:-25","437","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("31");
+            obj.set_inputmode("normal");
+            obj.set_maxlength("10");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta37","0","sta33:-1","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("32");
+            obj.set_text("주소");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta38","sta37:-1","sta37:-30","448","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("33");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_RECOM_ADDRESS","sta37:5","sta37:-25","437","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("34");
+            obj.set_inputmode("normal");
+            obj.set_maxlength("60");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta30","sta29:-1","sta29:-30","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("35");
+            obj.set_text("관계");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta31","sta30:-1","sta30:-30","185","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("36");
+            obj.set_cssclass("sta_WF_tablebg");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_RECOM_RELATION","sta30:5","sta30:-25","174","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("37");
+            obj.set_inputmode("normal");
+            obj.set_maxlength("5");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta39","0","sta37:10","25.00%","25",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("38");
+            obj.set_text("재산정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            obj.set_visible("false");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta40","0","sta39:5","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("39");
+            obj.set_text("동산");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_visible("false");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta41","sta40:-1","sta40:-30","185","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("40");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_visible("false");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_MOVABLES","sta40:5","sta40:-25","174","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("41");
+            obj.set_inputmode("normal");
+            obj.set_maxlength("20");
+            obj.set_visible("false");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta42","sta41:-1","sta41:-30","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("42");
+            obj.set_text("부동산");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_textDecoration("none");
+            obj.set_visible("false");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta43","sta42:-1","sta42:-30","185","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("43");
+            obj.set_cssclass("sta_WF_tablebg");
+            obj.set_visible("false");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("txtDS_IMMOVABLES","sta42:5","sta42:-25","174","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("44");
+            obj.set_inputmode("normal");
+            obj.set_maxlength("20");
+            obj.set_visible("false");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta56_00_00","0","sta40:10","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("45");
+            obj.set_text("요청순번");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_visible("false");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("edtETC_NO_SEQ","sta56_00_00:5","sta56_00_00:-25","174","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("46");
+            obj.set_visible("false");
+            obj.set_enable("false");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Static("sta56_00","edtETC_NO_SEQ:-1","edtETC_NO_SEQ:-30","80","30",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("47");
+            obj.set_text("요청상태");
+            obj.set_cssclass("sta_WF_tablelabel");
+            obj.set_visible("false");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Edit("edtETC_TY_STATUS","sta56_00:5","sta56_00:-25","174","20",null,null,null,null,null,null,this.divData.form.tabData.tab7.form);
+            obj.set_taborder("48");
+            obj.set_visible("false");
+            obj.set_enable("false");
+            this.divData.form.tabData.tab7.addChild(obj.name, obj);
+
+            obj = new Tabpage("tab8",this.divData.form.tabData);
+            obj.set_text("외국어");
+            this.divData.form.tabData.addChild(obj.name, obj);
+
+            obj = new Static("staGridAddr1","4","0","50.00%","25",null,null,null,null,null,null,this.divData.form.tabData.tab8.form);
+            obj.set_taborder("0");
+            obj.set_text("현재정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab8.addChild(obj.name, obj);
+
+            obj = new Grid("objGridLang1","0","30",null,"200","0","0",null,null,null,null,this.divData.form.tabData.tab8.form);
+            obj.set_taborder("1");
+            obj._setContents("");
+            this.divData.form.tabData.tab8.addChild(obj.name, obj);
+
+            obj = new Static("staGridAddr2","4","objGridLang1:5","50.00%","25",null,null,null,null,null,null,this.divData.form.tabData.tab8.form);
+            obj.set_taborder("2");
+            obj.set_text("변경정보");
+            obj.set_cssclass("sta_TITLE_Bg");
+            obj.set_textDecoration("none");
+            this.divData.form.tabData.tab8.addChild(obj.name, obj);
+
+            obj = new Grid("objGridLang2","0","270",null,null,"0","0",null,null,null,null,this.divData.form.tabData.tab8.form);
+            obj.set_taborder("3");
+            obj._setContents("");
+            this.divData.form.tabData.tab8.addChild(obj.name, obj);
+
+            obj = new Static("sta00","1014","28","196","24",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("2");
+            obj.set_text("FORM 높이 >> 720");
+            obj.set_visible("false");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.ccfCD_CORP.form.CDTextBox","value","dsSearch","CD_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divSearch.form.ccfCD_CORP.form.DSTextBox","value","dsSearch","DS_CORP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divSearch.form.ccfID_SABUN.form.CDTextBox","value","dsSearch","ID_SABUN");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divSearch.form.ccfID_SABUN.form.DSTextBox","value","dsSearch","DS_HNAME");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","divSearch.form.txtID_PERSON","value","dsSearch","ID_PERSON");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item5","divData.form.divInfo.form.staPIC_BEF","text","dsListAskCnt","PIC_BEF");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item6","divData.form.divInfo.form.staADDRESS_BEF","text","dsListAskCnt","ADDRESS_BEF");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item7","divData.form.divInfo.form.staFAMILY_BEF","text","dsListAskCnt","FAMILY_BEF");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item8","divData.form.divInfo.form.staSCHOOL_BEF","text","dsListAskCnt","SCHOOL_BEF");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item9","divData.form.divInfo.form.staLICENSE_BEF","text","dsListAskCnt","LICENSE_BEF");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item10","divData.form.divInfo.form.staCAREER_BEF","text","dsListAskCnt","CAREER_BEF");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item11","divData.form.divInfo.form.staPIC_ING","text","dsListAskCnt","PIC_ING");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item12","divData.form.divInfo.form.staADDRESS_ING","text","dsListAskCnt","ADDRESS_ING");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item13","divData.form.divInfo.form.staFAMILY_ING","text","dsListAskCnt","FAMILY_ING");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item14","divData.form.divInfo.form.staSCHOOL_ING","text","dsListAskCnt","SCHOOL_ING");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item15","divData.form.divInfo.form.staLICENSE_ING","text","dsListAskCnt","LICENSE_ING");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item16","divData.form.divInfo.form.staCAREER_ING","text","dsListAskCnt","CAREER_ING");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item17","divData.form.divInfo.form.staPIC_AFT","text","dsListAskCnt","PIC_AFT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item18","divData.form.divInfo.form.staADDRESS_AFT","text","dsListAskCnt","ADDRESS_AFT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item19","divData.form.divInfo.form.staFAMILY_AFT","text","dsListAskCnt","FAMILY_AFT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item20","divData.form.divInfo.form.staSCHOOL_AFT","text","dsListAskCnt","SCHOOL_AFT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item21","divData.form.divInfo.form.staLICENSE_AFT","text","dsListAskCnt","LICENSE_AFT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item22","divData.form.divInfo.form.staCAREER_AFT","text","dsListAskCnt","CAREER_AFT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item23","divData.form.tabData.tab1.form.txtDS_CNAME","value","dsBaseList2","DS_CNAME");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item24","divData.form.tabData.tab1.form.txtDS_ENAME","value","dsBaseList2","DS_ENAME");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item25","divData.form.tabData.tab1.form.txtDS_EMAIL","value","dsBaseList2","DS_EMAIL");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item26","divData.form.tabData.tab1.form.tclDT_BIRTH","value","dsBaseList2","DT_BIRTH");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item27","divData.form.tabData.tab1.form.ccfDS_DISABILITY.form.CDTextBox","value","dsBaseList2","CD_DISABILITY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item28","divData.form.tabData.tab1.form.ccfDS_DISABILITY_GRADE.form.CDTextBox","value","dsBaseList2","CD_DISABILITY_GRADE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item29","divData.form.tabData.tab1.form.ccfDS_DISABILITY.form.DSTextBox","value","dsBaseList2","DS_DISABILITY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item30","divData.form.tabData.tab1.form.ccfDS_DISABILITY_GRADE.form.DSTextBox","value","dsBaseList2","DS_DISABILITY_GRADE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item34","divData.form.tabData.tab1.form.txtID_RESIDENT","value","dsBaseList2","ID_RESIDENT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item35","divData.form.tabData.tab1.form.txtDS_HANDPHONE","value","dsBaseList2","DS_HANDPHONE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item36","divData.form.tabData.tab1.form.rdoYN_SUPPORTED","value","dsBaseList2","YN_SUPPORTED");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item37","divData.form.tabData.tab1.form.txtNO_SUPPORTED","value","dsBaseList2","NO_SUPPORTED");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item38","divData.form.tabData.tab1.form.rdoYN_MARRIAGE","value","dsBaseList2","YN_MARRIAGE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item39","divData.form.tabData.tab1.form.txtDS_BIRTHPLACE","value","dsBaseList2","DS_BIRTHPLACE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item40","divData.form.tabData.tab1.form.txtDS_BUSINESS","value","dsBaseList2","DS_BUSINESS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item41","divData.form.tabData.tab1.form.cfCD_FAMILY_HEAD.form.CDTextBox","value","dsBaseList2","CD_FAMILY_HEAD");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item42","divData.form.tabData.tab1.form.cfCD_FAMILY_HEAD.form.DSTextBox","value","dsBaseList2","DS_FAMILY_HEAD");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item43","divData.form.tabData.tab1.form.txtDS_FAMILY_HEADNAME","value","dsBaseList2","DS_FAMILY_HEADNAME");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item44","divData.form.tabData.tab1.form.cfCD_HOUSEHOLDER.form.CDTextBox","value","dsBaseList2","CD_HOUSEHOLDER");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item45","divData.form.tabData.tab1.form.cfCD_HOUSEHOLDER.form.DSTextBox","value","dsBaseList2","DS_HOUSEHOLDER");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item46","divData.form.tabData.tab1.form.txtDS_HOUSEHOLDER_NAME","value","dsBaseList2","DS_HOUSEHOLDER_NAME");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item47","divData.form.tabData.tab1.form.txtDS_FAMILYPLACE","value","dsBaseList2","DS_FAMILYPLACE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item48","divData.form.tabData.tab1.form.rdoYN_HANDICAP","value","dsBaseList2","YN_HANDICAP");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item49","divData.form.tabData.tab1.form.ctxtNO_DISABILITY","value","dsBaseList2","NO_DISABILITY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item50","divData.form.tabData.tab1.form.txtDS_OFFICEPHONE","value","dsBaseList2","DS_OFFICEPHONE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item51","divData.form.tabData.tab1.form.txtDS_OFFICEPHONE00","value","dsBaseList2","DS_EXTENSION");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item52","divData.form.tabData.tab1.form.txtDS_HOBBY","value","dsBaseList2","DS_HOBBY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item53","divData.form.tabData.tab1.form.txtDS_HOMEPHONE","value","dsBaseList2","DS_HOMEPHONE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item54","divData.form.tabData.tab1.form.txtDS_SPECIAL","value","dsBaseList2","DS_SPECIAL");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item56","divData.form.tabData.tab1.form.rdoYN_GENDER","value","dsBaseList2","YN_GENDER");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item63","divData.form.tabData.tab1.form.cfCD_RELIGION.form.CDTextBox","value","dsBaseList2","CD_RELIGION");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item64","divData.form.tabData.tab1.form.cfCD_RELIGION.form.DSTextBox","value","dsBaseList2","DS_RELIGION");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item65","divData.form.tabData.tab1.form.tclDT_MARRIAGE","value","dsBaseList2","DT_MARRIAGE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item66","divData.form.tabData.tab1.form.rdoYN_FOREIGNER","value","dsBaseList2","YN_FOREIGNER");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item67","divData.form.tabData.tab1.form.ccfDS_FOREIGNER.form.CDTextBox","value","dsBaseList2","CD_FOREIGNER");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item68","divData.form.tabData.tab1.form.ccfDS_FOREIGNER.form.DSTextBox","value","dsBaseList2","DS_FOREIGNER");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item71","divData.form.tabData.tab1.form.rdoYN_SOLAR","value","dsBaseList2","YN_SOLAR");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item73","divData.form.tabData.tab1.form.ccfCD_SUPPORTED.form.CDTextBox","value","dsBaseList2","CD_SUPPORTED");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item74","divData.form.tabData.tab1.form.ccfCD_SUPPORTED.form.DSTextBox","value","dsBaseList2","DS_SUPPORTED_FAM");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item75","divData.form.tabData.tab1.form.txtDS_SUPPORTED","value","dsBaseList2","DS_SUPPORTED");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item76","divData.form.tabData.tab1.form.txtDS_EXTENSION","value","dsBaseList2","DS_EXTENSION");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item77","divData.form.tabData.tab1.form.txtDS_BUSINESS","value","dsBaseList2","DS_BUSINESS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item33","divData.form.tabData.tab1.form.cfCD_BRANCH.form.CDTextBox","value","dsBaseList2","CD_BRANCH");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item55","divData.form.tabData.tab1.form.cfCD_BRANCH.form.DSTextBox","value","dsBaseList2","DS_BRANCH");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item57","divData.form.tabData.tab1.form.cfCD_RESOURCE.form.CDTextBox","value","dsBaseList2","CD_RESOURCE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item58","divData.form.tabData.tab1.form.cfCD_RESOURCE.form.DSTextBox","value","dsBaseList2","DS_RESOURCE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item59","divData.form.tabData.tab1.form.cfCD_SERVICESTS.form.CDTextBox","value","dsBaseList2","CD_SERVICESTS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item60","divData.form.tabData.tab1.form.cfCD_SERVICESTS.form.DSTextBox","value","dsBaseList2","DS_SERVICESTS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item61","divData.form.tabData.tab1.form.cfCD_DISCHARGE.form.CDTextBox","value","dsBaseList2","CD_DISCHARGE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item62","divData.form.tabData.tab1.form.cfCD_DISCHARGE.form.DSTextBox","value","dsBaseList2","DS_DISCHARGE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item69","divData.form.tabData.tab1.form.cfCD_MILITARYRANK.form.CDTextBox","value","dsBaseList2","CD_MILITARYRANK");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item70","divData.form.tabData.tab1.form.cfCD_MILITARYRANK.form.DSTextBox","value","dsBaseList2","DS_MILITARYRANK");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item72","divData.form.tabData.tab1.form.cfCD_MILITARY.form.CDTextBox","value","dsBaseList2","CD_MILITARY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item78","divData.form.tabData.tab1.form.cfCD_MILITARY.form.DSTextBox","value","dsBaseList2","DS_MILITARY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item81","divData.form.tabData.tab1.form.tclDT_CHARGE","value","dsBaseList2","DT_CHARGE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item82","divData.form.tabData.tab1.form.tclDT_DISCHARGE","value","dsBaseList2","DT_DISCHARGE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item83","divData.form.tabData.tab1.form.txtDS_SERVICENO","value","dsBaseList2","DS_SERVICENO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item84","divData.form.tabData.tab1.form.txtDS_REASON","value","dsBaseList2","DS_REASON");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item85","divData.form.tabData.tab1.form.txtDS_EMAIL_ETC","value","dsBaseList2","DS_EMAIL_ETC");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item86","divData.form.tabData.tab1.form.txtDS_FAX","value","dsBaseList2","DS_FAX");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item87","divData.form.tabData.tab1.form.edtBASE_NO_SEQ","value","dsBaseList2","NO_SEQ");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item95","divData.form.tabData.tab7.form.txtDS_RECOM_HNAME","value","dsEtcList2","DS_RECOM_HNAME");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item96","divData.form.tabData.tab7.form.txtDS_RECOM_RELATION","value","dsEtcList2","DS_RECOM_RELATION");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item97","divData.form.tabData.tab7.form.txtDS_RECOM_JOB","value","dsEtcList2","DS_RECOM_JOB");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item98","divData.form.tabData.tab7.form.txtDS_RECOM_ADDRESS","value","dsEtcList2","DS_RECOM_ADDRESS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item99","divData.form.tabData.tab7.form.txtDS_HEALTH_REMARK","value","dsEtcList2","DS_HEALTH_REMARK");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item100","divData.form.tabData.tab7.form.txtQT_HEIGHT","value","dsEtcList2","QT_HEIGHT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item101","divData.form.tabData.tab7.form.txtQT_WEIGHT","value","dsEtcList2","QT_WEIGHT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item102","divData.form.tabData.tab7.form.txtRT_LEFTEYE","value","dsEtcList2","RT_LEFTEYE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item103","divData.form.tabData.tab7.form.txtDS_ALCOHOL","value","dsEtcList2","DS_ALCOHOL");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item104","divData.form.tabData.tab7.form.txtDS_MOVABLES","value","dsEtcList2","DS_MOVABLES");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item105","divData.form.tabData.tab7.form.txtDS_IMMOVABLES","value","dsEtcList2","DS_IMMOVABLES");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item106","divData.form.tabData.tab7.form.txtRT_RIGHTEYE","value","dsEtcList2","RT_RIGHTEYE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item107","divData.form.tabData.tab7.form.rdoYN_SMOKING","value","dsEtcList2","YN_SMOKING");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item109","divData.form.tabData.tab7.form.ccfTY_BLOOD.form.CDTextBox","value","dsEtcList2","CD_BLOOD");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item110","divData.form.tabData.tab7.form.ccfTY_BLOOD.form.DSTextBox","value","dsEtcList2","DS_BLOOD");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item111","divData.form.tabData.tab7.form.edtETC_NO_SEQ","value","dsEtcList2","NO_SEQ");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item112","divData.form.tabData.tab1.form.edtBASE_TY_STATUS","value","dsBaseList2","TY_STATUS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item114","divData.form.tabData.tab7.form.edtETC_TY_STATUS","value","dsEtcList2","TY_STATUS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item116","divData.form.divInfo.form.staBASEINFO_BEF","text","dsListAskCnt","BASEINFO_BEF");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item117","divData.form.divInfo.form.staBASEINFO_ING","text","dsListAskCnt","BASEINFO_ING");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item118","divData.form.divInfo.form.staBASEINFO_AFT","text","dsListAskCnt","BASEINFO_AFT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item119","divData.form.divInfo.form.staBASEINFO_ETC_BEF","text","dsListAskCnt","BASEINFO_ETC_BEF");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item120","divData.form.divInfo.form.staBASEINFO_ETC_ING","text","dsListAskCnt","BASEINFO_ETC_ING");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item121","divData.form.divInfo.form.staBASEINFO_ETC_AFT","text","dsListAskCnt","BASEINFO_ETC_AFT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item122","divData.form.divInfo.form.staLANGUAGE_INFO_BEF","text","dsListAskCnt","LANGUAGE_INFO_BEF");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item123","divData.form.divInfo.form.staLANGUAGE_INFO_ING","text","dsListAskCnt","LANGUAGE_INFO_ING");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item124","divData.form.divInfo.form.staLANGUAGE_INFO_AFT","text","dsListAskCnt","LANGUAGE_INFO_AFT");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item31","divData.form.divInfo.form.cfCD_BRANCH.form.CDTextBox","value","dsBaseList2","CD_BRANCH");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item32","divData.form.divInfo.form.cfCD_BRANCH.form.DSTextBox","value","dsBaseList2","DS_BRANCH");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item79","divData.form.divInfo.form.cfCD_RESOURCE.form.CDTextBox","value","dsBaseList2","CD_RESOURCE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item80","divData.form.divInfo.form.cfCD_RESOURCE.form.DSTextBox","value","dsBaseList2","DS_RESOURCE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item88","divData.form.divInfo.form.cfCD_SERVICESTS.form.CDTextBox","value","dsBaseList2","CD_SERVICESTS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item89","divData.form.divInfo.form.cfCD_SERVICESTS.form.DSTextBox","value","dsBaseList2","DS_SERVICESTS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item90","divData.form.divInfo.form.cfCD_DISCHARGE.form.CDTextBox","value","dsBaseList2","CD_DISCHARGE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item91","divData.form.divInfo.form.cfCD_DISCHARGE.form.DSTextBox","value","dsBaseList2","DS_DISCHARGE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item92","divData.form.divInfo.form.cfCD_MILITARYRANK.form.CDTextBox","value","dsBaseList2","CD_MILITARYRANK");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item93","divData.form.divInfo.form.cfCD_MILITARYRANK.form.DSTextBox","value","dsBaseList2","DS_MILITARYRANK");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item94","divData.form.divInfo.form.cfCD_MILITARY.form.CDTextBox","value","dsBaseList2","CD_MILITARY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item108","divData.form.divInfo.form.cfCD_MILITARY.form.DSTextBox","value","dsBaseList2","DS_MILITARY");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item113","divData.form.divInfo.form.tclDT_CHARGE","value","dsBaseList2","DT_CHARGE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item115","divData.form.divInfo.form.tclDT_DISCHARGE","value","dsBaseList2","DT_DISCHARGE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item125","divData.form.divInfo.form.txtDS_SERVICENO","value","dsBaseList2","DS_SERVICENO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item126","divData.form.divInfo.form.txtDS_REASON","value","dsBaseList2","DS_REASON");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","cmm::cmmCodeFind.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("DAA_BASEINFO_ASK2.xfdl", function() {
+
+        this.objApp = this.gfnGetApplication();
+
+        this.filepath = "DA/DAA_FAMILY/";
+        this.fileuploads = {};
+        this.filecnt = 0;
+
+        this.id = 0;
+        this.preTabIdx = 0;
+        this.postTabIdx = 0;
+        this.arrTabNm = ["Base", "Addr", "Fmy", "Sch", "Lic", "Crr", "Etc", "Lang"];	// 인사기본정보,주소,가족,학력,자격,경력,기타,외국어
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+
+        	// 파일설정	-- 사용안함
+        	this.fileConfig = this.gfnGetFileConfig();
+        	this.fileConfig.uploadUrl = this.fileConfig.uploadUrl.replace("path=", "path=" + this.filepath);
+        	this.fileConfig.downloadUrl = this.fileConfig.downloadUrl.replace("path=", "path=" + this.filepath);
+
+        	this.divData.form.tabData.set_tabindex(0);
+        	// 그리드 세팅
+        	this.fnSetGridCellProperty(0);	// 로딩시 주소먼저
+        	this.fnSetSingleForm(0); //인사기본정보
+        	this.fnSetSingleForm(6); //기타
+
+        	//var CD_COSTCENTER = this.objApp.gdsUserInfo.getColumn(0, "CD_COSTCENTER");
+
+        	//trace("ID_GROUP->" + this.FormInfo.ID_GROUP);
+        	//trace("CD_COSTCENTER->" + CD_COSTCENTER);
+
+        	this.ccfCD_CORP.set_enable(false);
+        	this.ccfID_SABUN.set_enable(false);
+        	if(this.FormInfo.ID_GROUP == 0){
+        		this.ccfCD_CORP.set_enable(true);
+        		this.ccfID_SABUN.set_enable(true);
+        	}
+        	// 비서권한인 경우 활성화(임원 검색을 위해) "R28"
+        	if(this.FormInfo.CD_ROLE == this.gfnGetConfig("DZ" , "CD_ROLE_SECRETARY")){
+        		this.ccfID_SABUN.set_enable(true);
+        	}
+        	this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+        	this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+        	this.ccfID_SABUN.form.CDTextBox.set_value(this.AuthClient.ID_USER);
+        	this.ccfID_SABUN.form.DSTextBox.set_value(this.AuthClient.DS_HNAME);
+
+        	this.txtID_PERSON.set_value(this.AuthClient.ID_PERSON);
+
+        	this.FormBtns.Select.click();
+        };
+
+        this.fnGetTabInfo = function (nIdx){
+        	var objGrid1, objGrid2, objDsList1, objDsList2, objDsSave;
+        	switch(nIdx){
+        		case 0:	// 인사기본정보
+        			objGrid1 = null;
+        			objGrid2 = null;
+        			objDsList1 = null;
+        			objDsList2 = this.dsBaseList2;
+        			objDsSave = this.dsBaseSave;
+        			break;
+        		case 1:	// 주소
+        			objGrid1 = this.dxGridAddr1;
+        			objGrid2 = this.dxGridAddr2;
+        			objDsList1 = this.dsAddrList1;
+        			objDsList2 = this.dsAddrList2;
+        			objDsSave = this.dsAddrSave;
+        			break;
+        		case 2:	// 가족
+        			objGrid1 = this.dxGridFmy1;
+        			objGrid2 = this.dxGridFmy2;
+        			objDsList1 = this.dsFmyList1;
+        			objDsList2 = this.dsFmyList2;
+        			objDsSave = this.dsFmySave;
+        			break;
+        		case 3:	// 학력
+        			objGrid1 = this.dxGridSch1;
+        			objGrid2 = this.dxGridSch2;
+        			objDsList1 = this.dsSchList1;
+        			objDsList2 = this.dsSchList2;
+        			objDsSave = this.dsSchSave;
+        			break;
+        		case 4:	// 자격
+        			objGrid1 = this.dxGridLic1;
+        			objGrid2 = this.dxGridLic2;
+        			objDsList1 = this.dsLicList1;
+        			objDsList2 = this.dsLicList2;
+        			objDsSave = this.dsLicSave;
+        			break;
+        		case 5:	// 경력
+        			objGrid1 = this.dxGridCrr1;
+        			objGrid2 = this.dxGridCrr2;
+        			objDsList1 = this.dsCrrList1;
+        			objDsList2 = this.dsCrrList2;
+        			objDsSave = this.dsCrrSave;
+        			break;
+        		case 6:	// 기타
+        			objGrid1 = null;
+        			objGrid2 = null;
+        			objDsList1 = null;
+        			objDsList2 = this.dsEtcList2;
+        			objDsSave = this.dsEtcSave;
+        			break;
+        		case 7:	// 외국어
+        			objGrid1 = this.dxGridLang1;
+        			objGrid2 = this.dxGridLang2;
+        			objDsList1 = this.dsLangList1;
+        			objDsList2 = this.dsLangList2;
+        			objDsSave = this.dsLangSave;
+        			break;
+        	}
+
+        	var objTarget = {};
+        	objTarget.objGrid1 = objGrid1;
+        	objTarget.objGrid2 = objGrid2;
+        	objTarget.objDsList1 = objDsList1;
+        	objTarget.objDsList2 = objDsList2;
+        	objTarget.objDsSave = objDsSave;
+        	return objTarget;
+        }
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         ************************************************************************/
+        this.fnSetButton = function() {
+        	switch(this.divData.form.tabData.tabindex) {
+        		case 0: //인사기본정보
+        			this.FormBtns.Add.set_enable(false);
+        			this.FormBtns.Del.set_enable(true);
+        			this.FormBtns.Excel.set_enable(false);
+        			//this.FormBtns.Save.set_enable(true);
+        			break;
+        		case 1: //주소
+        		case 2: //가족
+        		case 3: //학력
+        		case 4: //자격
+        		case 5: //경력
+        			this.FormBtns.Add.set_enable(true);
+        			this.FormBtns.Del.set_enable(true);
+        			this.FormBtns.Excel.set_enable(true);
+        			//this.FormBtns.Save.set_enable(true);
+        			break;
+        		case 6: //기타
+        			this.FormBtns.Add.set_enable(false);
+        			this.FormBtns.Del.set_enable(true);
+        			this.FormBtns.Excel.set_enable(false);
+        			//this.FormBtns.Save.set_enable(true);
+        			break;
+        		case 7: //외국어
+        			this.FormBtns.Add.set_enable(true);
+        			this.FormBtns.Del.set_enable(true);
+        			this.FormBtns.Excel.set_enable(true);
+        			//this.FormBtns.Save.set_enable(true);
+        			break;
+
+        	}
+        };
+
+        this.fnSetSingleForm = function(nTabIdx){
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+
+        	var dataset = objTarget.objDsList2;
+
+        	if(nTabIdx == 0){ //인사기본정보
+        		if(dataset.rowcount == 0 ){
+        			//인사기본정보
+        			this.cfCD_RELIGION.set_enable(false);
+        			this.ccfCD_SUPPORTED.set_enable(false);
+        			this.txtDS_SUPPORTED.set_enable(false);
+        			this.ccfDS_FOREIGNER.set_enable(false);
+        			this.ccfDS_DISABILITY.set_enable(false);
+        			this.ccfDS_DISABILITY_GRADE.set_enable(false);
+        			this.cfCD_FAMILY_HEAD.set_enable(false);
+        			this.cfCD_HOUSEHOLDER.set_enable(false);
+
+        			//병역
+        			this.cfCD_RESOURCE.set_enable(false);
+        			this.cfCD_SERVICESTS.set_enable(false);
+        			this.cfCD_BRANCH.set_enable(false);
+        			this.cfCD_MILITARY.set_enable(false);
+        			this.cfCD_DISCHARGE.set_enable(false);
+        			this.cfCD_MILITARYRANK.set_enable(false);
+        		}else{
+        			//인사기본정보
+        			this.cfCD_RELIGION.set_enable(true);
+        			this.cfCD_FAMILY_HEAD.set_enable(true);
+        			this.cfCD_HOUSEHOLDER.set_enable(true);
+
+        			//병역
+        			this.cfCD_RESOURCE.set_enable(true);
+        			this.cfCD_SERVICESTS.set_enable(true);
+        			this.cfCD_BRANCH.set_enable(true);
+        			this.cfCD_MILITARY.set_enable(true);
+        			this.cfCD_DISCHARGE.set_enable(true);
+        			this.cfCD_MILITARYRANK.set_enable(true);
+
+        			//********************
+        			//보훈여부
+        			//********************
+        			var YN_SUPPORTED = dataset.getColumn(0, "YN_SUPPORTED");
+        			if(YN_SUPPORTED == "Y"){
+        				this.divData.form.tabData.tab1.form.txtNO_SUPPORTED.set_enable(true);
+        				this.ccfCD_SUPPORTED.set_enable(true);
+        				this.divData.form.tabData.tab1.form.txtDS_SUPPORTED.set_enable(true);
+
+        			}else{
+        				this.divData.form.tabData.tab1.form.txtNO_SUPPORTED.set_enable(false);
+        				this.ccfCD_SUPPORTED.set_enable(false);
+        				this.divData.form.tabData.tab1.form.txtDS_SUPPORTED.set_enable(false);
+        			}
+
+        			//********************
+        			//외국인여부
+        			//********************
+        			var YN_FOREIGNER = dataset.getColumn(0, "YN_FOREIGNER");
+        			if(YN_FOREIGNER == "Y"){
+        				this.divData.form.tabData.tab1.form.ccfDS_FOREIGNER.set_enable(true);
+        			}else{
+        				this.divData.form.tabData.tab1.form.ccfDS_FOREIGNER.set_enable(false);
+        			}
+
+        			//********************
+        			//장애인여부
+        			//********************
+        			var YN_HANDICAP = dataset.getColumn(0, "YN_HANDICAP");
+        			if(YN_HANDICAP == "Y"){
+        				this.divData.form.tabData.tab1.form.ctxtNO_DISABILITY.set_readonly(false);
+        				this.divData.form.tabData.tab1.form.ccfDS_DISABILITY.set_enable(true);
+        				this.divData.form.tabData.tab1.form.ccfDS_DISABILITY_GRADE.set_enable(true);
+        			}else{
+        				this.divData.form.tabData.tab1.form.ctxtNO_DISABILITY.set_readonly(true);
+        				this.divData.form.tabData.tab1.form.ccfDS_DISABILITY.set_enable(false);
+        				this.divData.form.tabData.tab1.form.ccfDS_DISABILITY_GRADE.set_enable(false);
+        			}
+
+        			//********************
+        			//결혼여부
+        			//********************
+        			var YN_MARRIAGE = dataset.getColumn(0, "YN_MARRIAGE");
+        			if(YN_MARRIAGE == "Y"){
+        				this.divData.form.tabData.tab1.form.tclDT_MARRIAGE.set_enable(true);
+        			}else{
+        				this.divData.form.tabData.tab1.form.tclDT_MARRIAGE.set_enable(false);
+        			}
+        		}
+        	}
+        	else if(nTabIdx == 6){ //기타
+        		if(dataset.rowcount == 0 ){
+        			this.ccfTY_BLOOD.set_enable(false);
+        		}else{
+        			this.ccfTY_BLOOD.set_enable(true);
+        		}
+        	}
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        	this.btnChangePic = this.gfnFormButtonAdd("btnChangePic", "fnChangePic", "사진변경");
+        	this.btnChangeAsk = this.gfnFormButtonAdd("btnChangeAsk", "fnChangeAsk", "변경요청");
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+
+        	//조회조건
+        	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;			// 법인코드
+        	this.ccfID_SABUN = this.divSearch.form.ccfID_SABUN;         // 사번
+        	this.txtID_PERSON = this.divSearch.form.txtID_PERSON;
+
+        	//tab0
+        	//인사기본정보
+        	this.cfCD_RELIGION = this.divData.form.tabData.tab1.form.cfCD_RELIGION; //종교
+        	this.ccfCD_SUPPORTED = this.divData.form.tabData.tab1.form.ccfCD_SUPPORTED; //보훈관계/사유
+        	this.txtDS_SUPPORTED = this.divData.form.tabData.tab1.form.txtDS_SUPPORTED; //보훈관계/사유
+        	this.ccfDS_FOREIGNER  =this.divData.form.tabData.tab1.form.ccfDS_FOREIGNER;	//외국인국적
+        	this.ccfDS_DISABILITY  =this.divData.form.tabData.tab1.form.ccfDS_DISABILITY;	//장애종류
+        	this.ccfDS_DISABILITY_GRADE  =this.divData.form.tabData.tab1.form.ccfDS_DISABILITY_GRADE;	//장애등급
+        	this.cfCD_FAMILY_HEAD = this.divData.form.tabData.tab1.form.cfCD_FAMILY_HEAD; //호주
+        	this.cfCD_HOUSEHOLDER = this.divData.form.tabData.tab1.form.cfCD_HOUSEHOLDER; //세대주
+        	//병역
+        	this.cfCD_RESOURCE = this.divData.form.tabData.tab1.form.cfCD_RESOURCE; //군필종류
+        	this.cfCD_SERVICESTS = this.divData.form.tabData.tab1.form.cfCD_SERVICESTS; //역종
+        	this.cfCD_BRANCH = this.divData.form.tabData.tab1.form.cfCD_BRANCH; //병과
+        	this.cfCD_MILITARY = this.divData.form.tabData.tab1.form.cfCD_MILITARY; //군별
+        	this.cfCD_DISCHARGE = this.divData.form.tabData.tab1.form.cfCD_DISCHARGE; //제대구분
+        	this.cfCD_MILITARYRANK = this.divData.form.tabData.tab1.form.cfCD_MILITARYRANK; //계급
+
+        	//tab7 - 기타탭
+        	this.ccfTY_BLOOD = this.divData.form.tabData.tab7.form.ccfTY_BLOOD;
+
+        	//this.tabData = this.divData.form.tabData;
+
+        	// 그리드변수 세팅
+        	this.dxGridAddr1 = this.divData.form.tabData.tab2.form.objGridAddr1;  	// 주소
+        	this.dxGridAddr2 = this.divData.form.tabData.tab2.form.objGridAddr2;  	// 주소
+        	this.dxGridFmy1 = this.divData.form.tabData.tab3.form.objGridFmy1;		// 가족
+        	this.dxGridFmy2 = this.divData.form.tabData.tab3.form.objGridFmy2;		// 가족
+        	this.dxGridSch1 = this.divData.form.tabData.tab4.form.objGridSch1; 		// 학력
+        	this.dxGridSch2 = this.divData.form.tabData.tab4.form.objGridSch2; 		// 학력
+        	this.dxGridLic1 = this.divData.form.tabData.tab5.form.objGridLic1; 		// 자격
+        	this.dxGridLic2 = this.divData.form.tabData.tab5.form.objGridLic2; 		// 자격
+        	this.dxGridCrr1 = this.divData.form.tabData.tab6.form.objGridCrr1; 		// 경력
+        	this.dxGridCrr2 = this.divData.form.tabData.tab6.form.objGridCrr2; 		// 경력
+        	this.dxGridLang1 = this.divData.form.tabData.tab8.form.objGridLang1; 	// 외국어
+        	this.dxGridLang2 = this.divData.form.tabData.tab8.form.objGridLang2; 	// 외국어
+        }
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	// 조회조건
+        	this.ccfCD_CORP.BeforeUserDataSetParam  = "fnBeforeUserDataSetParam";
+        	this.ccfCD_CORP.AfterCDTextChanged      = "fnAfterCDTextChanged";
+        	this.ccfID_SABUN.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.ccfID_SABUN.AfterCDTextChanged     = "fnAfterCDTextChanged";
+
+        	//tab1
+        	//인사기본정보
+        	this.cfCD_RELIGION.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.ccfCD_SUPPORTED.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.ccfDS_FOREIGNER.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.ccfDS_DISABILITY.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.ccfDS_DISABILITY_GRADE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.cfCD_FAMILY_HEAD.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.cfCD_HOUSEHOLDER.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.cfCD_RELIGION.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.ccfCD_SUPPORTED.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.ccfDS_FOREIGNER.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.ccfDS_DISABILITY.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.ccfDS_DISABILITY_GRADE.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.cfCD_FAMILY_HEAD.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.cfCD_HOUSEHOLDER.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	//병역
+        	this.cfCD_RESOURCE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.cfCD_SERVICESTS.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.cfCD_BRANCH.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.cfCD_MILITARY.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.cfCD_DISCHARGE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.cfCD_MILITARYRANK.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.cfCD_RESOURCE.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.cfCD_SERVICESTS.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.cfCD_BRANCH.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.cfCD_MILITARY.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.cfCD_DISCHARGE.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.cfCD_MILITARYRANK.AfterCDTextChanged = "fnAfterCDTextChanged";
+
+        	//tab1
+        	//기타
+        	this.ccfTY_BLOOD.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.ccfTY_BLOOD.AfterCDTextChanged = "fnAfterCDTextChanged";
+        }
+
+        // 그리드 세팅
+        this.fnSetGridCellProperty = function (nTabIdx){
+
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+        	var objDS1 = objTarget.objDsList1;
+        	var objDS2 = objTarget.objDsList2;
+        	var objGrd1 = objTarget.objGrid1;
+        	var objGrd2 = objTarget.objGrid2;
+
+        	var strDsField = "";
+        	var strEdittype = "text";
+        	var strTyInput = "";
+        	var strFilterExpr = "NO_WIDTH != 0 && YN_READONLY=='N' && DS_FIELD !='' ";
+
+        	switch(nTabIdx){
+        	case 0:	//인사기본정보
+        		break;
+        	case 1:	// 1 주소 그리드 세팅
+        		this.gfnGridInit(objGrd1, objDS1, "DA", "DAA_ADDRESS");
+        		this.gfnGridInit(objGrd2, objDS2, "DA", "DAA_ADDRESS_ASK");
+
+        		objGrd2.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";  // 코드파인더 연동
+        		objGrd2.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+        		objGrd2.EnterCell = "fnGrid_EnterCell";
+        		objGrd2.ExpandUp = "fnGrid_ExpandUp";
+        		//objGrd2.addEventHandler("oncelldblclick", this.fnGrid_CellDblclick, this);	// 파일다운
+        		/* ========================== 주소 ========================== */
+        		// 현재 주소구분(NM_ADDRESS_ORG)  - 변경 삭제만 가능
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","NM_ADDRESS_ORG"),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'hide':'show'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","NM_ADDRESS_ORG"),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'none':'text'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","NM_ADDRESS_ORG"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'? 'BACK_ReadOnly' : ''");
+
+        		// 변경 주소코드 (CD_ADDRESS) - 추가일때만 가능
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_ADDRESS"),"expandshow", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'show':'hide'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_ADDRESS"),"edittype", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'text':'none'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_ADDRESS"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'? '' : 'BACK_ReadOnly'");
+
+        		// I : 추가	현재정보 DISABLE
+        		// U : 변경	현재정보의 주소구분 코드파인드 실행.  / 변경정보의 CD_ADDRESS, NM_ADDRESS에 동일값을 넣어주고, 변경정보의 주소코드 코드파인드는 DISABLE
+        		// D : 삭제	현재정보의 주소구분 코드파인드 실행 / 나머지 다 비활성화
+        		//     지역코드(CD_AREA),우편번호(CD_ZIP),주소(DS_ADDRESS),전화번호(NO_TEL), 파일명(NM_FILE)
+
+        		this.dsGridSpec.filter(strFilterExpr);
+        		for (var i = 0; i < this.dsGridSpec.rowcount; i++) {
+        			strDsField = this.dsGridSpec.getColumn(i, "DS_FIELD");
+        			strTyInput = this.dsGridSpec.getColumn(i, "TY_INPUT");
+        			// NM_ADDRESS_ORG 현재정보 주소구분 빼고 (삭제일때 주소구분만 수정가능)
+        			if( strDsField != "TY_GUBUN" && strDsField != "NM_ADDRESS_ORG" && strDsField != "CD_ADDRESS" && strDsField != "NM_FILE"){
+        				if(strTyInput == "CODEFIND"){
+        					objGrd2.setCellProperty("body",objTarget.objGrid2.getBindCellIndex("body",strDsField),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'?'hide':'show'");
+        				}
+        				strEdittype = (strTyInput == "CALENDAR_YMD") ? "date" : (strTyInput == "LIST") ? "combo" : "text";
+
+        				objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'?'none':'"+strEdittype+"'");
+        				objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'? 'BACK_ReadOnly' : ''");
+        			}
+        		}
+        		this.dsGridSpec.filter("");
+        		break;
+
+        	case 2:	// 가족
+
+        		this.gfnGridInit(objGrd1, objDS1, "DA", "DAA_FAMILY");
+        		this.gfnGridInit(objGrd2, objDS2, "DA", "DAA_FAM_ASK");
+
+        		objGrd2.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";  // 코드파인더 연동
+        		objGrd2.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+        		objGrd2.EnterCell = "fnGrid_EnterCell";
+        		objGrd2.ExpandUp = "fnGrid_ExpandUp";
+        		//objGrd2.addEventHandler("oncelldblclick", this.fnGrid_CellDblclick, this);	// 파일다운
+        		/* ========================== 가족 ========================== */
+        		// 현재 관계명(DS_FAMILY_ORG) - 변경 삭제만 가능
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","DS_FAMILY_ORG"),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'hide':'show'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","DS_FAMILY_ORG"),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'none':'text'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","DS_FAMILY_ORG"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'? 'BACK_ReadOnly' : ''");
+
+        		// 변경 관계코드(CD_FAMILY) - 추가일때만 가능
+        		//2022.02.24
+        // 		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_FAMILY"),"expandshow", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'show':'hide'");
+        // 		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_FAMILY"),"edittype", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'text':'none'");
+        // 		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_FAMILY"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'? '' : 'BACK_ReadOnly'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_FAMILY"),"expandshow", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'||dataset.getColumn(currow,'TY_GUBUN') == 'U'?'show':'hide'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_FAMILY"),"edittype", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'||dataset.getColumn(currow,'TY_GUBUN') == 'U'?'text':'none'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_FAMILY"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'||dataset.getColumn(currow,'TY_GUBUN') == 'U'? '' : 'BACK_ReadOnly'");
+
+        		//var chkProperty = objGrd2.getCellProperty("body",objGrd2.getBindCellIndex("body","NM_FILE"),"edittype");
+        		this.dsGridSpec.filter(strFilterExpr);
+        		for (var i = 0; i < this.dsGridSpec.rowcount; i++) {
+        			strDsField = this.dsGridSpec.getColumn(i, "DS_FIELD");
+        			strTyInput = this.dsGridSpec.getColumn(i, "TY_INPUT");
+        			// DS_FAMILY_ORG 현재정보 관계명 빼고 (삭제일때 관계명만 수정가능)
+        			if( strDsField != "TY_GUBUN" && strDsField != "DS_FAMILY_ORG" && strDsField != "CD_FAMILY" && strDsField != "NM_FILE"){
+        				if(strTyInput == "CODEFIND"){
+        					objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'?'hide':'show'");
+        				}
+        				strEdittype = (strTyInput == "CALENDAR_YMD") ? "date" : (strTyInput == "LIST") ? "combo" : "text";
+        				objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'?'none':'"+strEdittype+"'");
+        				objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'? 'BACK_ReadOnly' : ''");
+        			}
+        		}
+        		this.dsGridSpec.filter("");
+        		break;
+
+        	case 3:	// 학력
+        		// 3 학력 그리드 세팅
+        		this.gfnGridInit(objGrd1, objDS1, "DA", "DAAPR_SCHOOL");
+        		this.gfnGridInit(objGrd2, objDS2, "DA", "DAAPR_SCHOOL_ASK");
+
+        		objGrd2.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";  // 코드파인더 연동
+        		objGrd2.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+        		objGrd2.EnterCell = "fnGrid_EnterCell";
+        		objGrd2.ExpandUp = "fnGrid_ExpandUp";
+        		//objGrd2.addEventHandler("oncelldblclick", this.fnGrid_CellDblclick, this);	// 파일다운
+
+        		/* ========================== 학력 ========================== */
+        		// 현재 학력구분(DS_LEVEL_ORG) - 변경 삭제만 가능
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","DS_LEVEL_ORG"),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'hide':'show'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","DS_LEVEL_ORG"),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'none':'text'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","DS_LEVEL_ORG"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'? 'BACK_ReadOnly' : ''");
+
+        		// 변경 학력구분(CD_LEVEL) - 추가일때만 가능
+        		//2022.02.24
+        // 		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LEVEL"),"expandshow", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'show':'hide'");
+        // 		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LEVEL"),"edittype", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'text':'none'");
+        // 		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LEVEL"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'? '' : 'BACK_ReadOnly'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LEVEL"),"expandshow", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'||dataset.getColumn(currow,'TY_GUBUN') == 'U'?'show':'hide'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LEVEL"),"edittype", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'||dataset.getColumn(currow,'TY_GUBUN') == 'U'?'text':'none'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LEVEL"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'||dataset.getColumn(currow,'TY_GUBUN') == 'U'? '' : 'BACK_ReadOnly'");
+
+        		// 변경 학교코드(CD_SCHOOL) - 추가일때만 가능
+        		//objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_SCHOOL"),"expandshow", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'show':'hide'");
+        		//objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_SCHOOL"),"edittype", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'text':'none'");
+        		//objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_SCHOOL"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'? '' : 'BACK_ReadOnly'");
+
+        		this.dsGridSpec.filter(strFilterExpr);
+        		for (var i = 0; i < this.dsGridSpec.rowcount; i++) {
+        			strDsField = this.dsGridSpec.getColumn(i, "DS_FIELD");
+        			strTyInput = this.dsGridSpec.getColumn(i, "TY_INPUT");
+        			// DS_LEVEL_ORG 학력구분 학교코드 빼고 (삭제일때 학력구분만 수정가능)
+        			if( strDsField != "TY_GUBUN" && strDsField != "DS_LEVEL_ORG" && strDsField != "CD_LEVEL" && strDsField != "NM_FILE"){	//  && strDsField != "CD_SCHOOL"
+        				if(strTyInput == "CODEFIND"){
+        					objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'?'hide':'show'");
+        				}
+        				strEdittype = (strTyInput == "CALENDAR_YMD") ? "date" : (strTyInput == "LIST") ? "combo" : "text";
+        				objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'?'none':'"+strEdittype+"'");
+        				objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'? 'BACK_ReadOnly' : ''");
+        			}
+        		}
+        		this.dsGridSpec.filter("");
+
+        		break;
+
+        	case 4:	// 자격
+        		// 4 자격 그리드 세팅
+        		this.gfnGridInit(objGrd1, objDS1, "DA", "DAA_LICENSE");
+        		this.gfnGridInit(objGrd2, objDS2, "DA", "DAA_LIC_ASK");
+
+        		objGrd2.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";  // 코드파인더 연동
+        		objGrd2.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+        		objGrd2.EnterCell = "fnGrid_EnterCell";
+        		objGrd2.ExpandUp = "fnGrid_ExpandUp";
+        		//objGrd2.addEventHandler("oncelldblclick", this.fnGrid_CellDblclick, this);	// 파일다운
+
+        		/* ========================== 자격 ========================== */
+        		// 현재 자격증명(DS_LICENSE_ORG) - 변경 삭제만 가능
+        		//2022.02.24
+        // 		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","DS_LICENSE_ORG"),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'hide':'show'");
+        // 		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","DS_LICENSE_ORG"),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'none':'text'");
+        // 		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","DS_LICENSE_ORG"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'? 'BACK_ReadOnly' : ''");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LICENSE_ORG"),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'hide':'show'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LICENSE_ORG"),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'none':'text'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LICENSE_ORG"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'? 'BACK_ReadOnly' : ''");
+
+        		// 변경 자격증코드(CD_LICENSE) - 추가일때만 가능
+        		//2022.02.24
+        // 		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LICENSE"),"expandshow", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'show':'hide'");
+        // 		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LICENSE"),"edittype", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'text':'none'");
+        // 		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LICENSE"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'? '' : 'BACK_ReadOnly'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LICENSE"),"expandshow", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'||dataset.getColumn(currow,'TY_GUBUN') == 'U'?'show':'hide'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LICENSE"),"edittype", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'||dataset.getColumn(currow,'TY_GUBUN') == 'U'?'text':'none'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LICENSE"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'||dataset.getColumn(currow,'TY_GUBUN') == 'U'? '' : 'BACK_ReadOnly'");
+
+        		this.dsGridSpec.filter(strFilterExpr);
+        		for (var i = 0; i < this.dsGridSpec.rowcount; i++) {
+        			strDsField = this.dsGridSpec.getColumn(i, "DS_FIELD");
+        			strTyInput = this.dsGridSpec.getColumn(i, "TY_INPUT");
+        			// DS_LICENSE_ORG 현재정보 자격증명 빼고 (삭제일때 자격증명만 수정가능)
+        			if( strDsField != "TY_GUBUN" && strDsField != "DS_LICENSE_ORG" && strDsField != "CD_LICENSE" && strDsField != "NM_FILE"){
+        				if(strTyInput == "CODEFIND"){
+        					objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'?'hide':'show'");
+        				}
+        				strEdittype = (strTyInput == "CALENDAR_YMD") ? "date" : (strTyInput == "LIST") ? "combo" : "text";
+        				objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'?'none':'"+strEdittype+"'");
+
+        				objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'? 'BACK_ReadOnly' : ''");
+        			}
+        		}
+        		this.dsGridSpec.filter("");
+        		break;
+
+        	case 5:	// 경력
+        		// 4 경력 그리드 세팅
+        		this.gfnGridInit(objGrd1, objDS1, "DA", "DAA_CAREER");
+        		this.gfnGridInit(objGrd2, objDS2, "DA", "DAA_CAREER_ASK");
+
+        		objGrd2.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";  // 코드파인더 연동
+        		objGrd2.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+        		objGrd2.EnterCell = "fnGrid_EnterCell";
+        		objGrd2.ExpandUp = "fnGrid_ExpandUp";
+        		//objGrd2.addEventHandler("oncelldblclick", this.fnGrid_CellDblclick, this);	// 파일다운
+
+        		/* ========================== 경력 ========================== */
+        		// 현재 근무처(DS_COMPANY_ORG) - 변경 삭제만 가능
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","DS_COMPANY_ORG"),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'hide':'show'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","DS_COMPANY_ORG"),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'none':'text'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","DS_COMPANY_ORG"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'? 'BACK_ReadOnly' : ''");
+
+        		this.dsGridSpec.filter(strFilterExpr);
+        		for (var i = 0; i < this.dsGridSpec.rowcount; i++) {
+        			strDsField = this.dsGridSpec.getColumn(i, "DS_FIELD");
+        			strTyInput = this.dsGridSpec.getColumn(i, "TY_INPUT");
+        			// DS_COMPANY_ORG 현재정보 근무처 빼고 (삭제일때 근무처만 수정가능)
+        			if( strDsField != "TY_GUBUN" && strDsField != "DS_COMPANY_ORG" && strDsField != "NM_FILE"){
+        				if(strTyInput == "CODEFIND"){
+        					objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'?'hide':'show'");
+        				}
+        				strEdittype = (strTyInput == "CALENDAR_YMD") ? "date" : (strTyInput == "LIST") ? "combo" : "text";
+        				objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'?'none':'"+strEdittype+"'");
+        				objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'? 'BACK_ReadOnly' : ''");
+        			}
+        		}
+        		this.dsGridSpec.filter("");
+        		break;
+
+        	case 6:	//기타
+        		break;
+        	case 7:	// 외국어
+        		this.gfnGridInit(objGrd1, objDS1, "DA", "DAA_BASEINFO_ASK_8_OLD"); //OLD
+        		this.gfnGridInit(objGrd2, objDS2, "DA", "DAA_BASEINFO_ASK_8_NEW"); //NEW
+
+        		objGrd2.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";  // 코드파인더 연동
+        		objGrd2.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+        		objGrd2.EnterCell = "fnGrid_EnterCell";
+        		objGrd2.ExpandUp = "fnGrid_ExpandUp";
+
+        		//신규일때 현재정보 수정 못하게
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LANGUAGE_ORG"),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'hide':'show'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LANGUAGE_ORG"),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'?'none':'text'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LANGUAGE_ORG"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'? 'BACK_ReadOnly' : ''");
+
+
+        		// 변경 외국어코드(CD_LANGUAGE) - 추가일때만 가능
+        		//2022.02.24
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LANGUAGE"),"expandshow", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'||dataset.getColumn(currow,'TY_GUBUN') == 'U'?'show':'hide'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LANGUAGE"),"edittype", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'||dataset.getColumn(currow,'TY_GUBUN') == 'U'?'text':'none'");
+        		objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body","CD_LANGUAGE"),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'I'||dataset.getColumn(currow,'TY_GUBUN') == 'U'? '' : 'BACK_ReadOnly'");
+
+        		//삭제일때 현재정보 선택만하게
+        		this.dsGridSpec.filter(strFilterExpr);
+        		for (var i = 0; i < this.dsGridSpec.rowcount; i++) {
+        			strDsField = this.dsGridSpec.getColumn(i, "DS_FIELD");
+        			strTyInput = this.dsGridSpec.getColumn(i, "TY_INPUT");
+
+        			if( strDsField != "TY_GUBUN" && strDsField != "CD_LANGUAGE_ORG"){
+        				if(strTyInput == "CODEFIND"){
+        					objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"expandshow","expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'?'hide':'show'");
+        				}
+        				strEdittype = (strTyInput == "CALENDAR_YMD") ? "date" : (strTyInput == "LIST") ? "combo" : "text";
+        				objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"edittype","expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'?'none':'"+strEdittype+"'");
+        				objGrd2.setCellProperty("body",objGrd2.getBindCellIndex("body",strDsField),"cssclass", "expr:dataset.getColumn(currow,'TY_GUBUN') == 'D'? 'BACK_ReadOnly' : ''");
+        			}
+        		}
+        		this.dsGridSpec.filter("");
+        	}
+        }
+
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+        	//********************
+        	//조회
+        	//********************
+
+        	// 조회조건
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("ID_PERSON", "string");  //PERSON ID
+        	this.dsSelect.addColumn("CD_CORP", "string"); // 법인코드
+        	this.dsSelect.addColumn("ID_SABUN", "string");  // 사원번호
+
+        	//tab1 - 인사기본정보
+        	this.dsSelect1 = new Dataset();
+        	this.dsSelect1.addColumn("ID_PERSON", "string");
+        	this.dsSelect1.addColumn("CD_CORP", "string");
+        	this.dsSelect1.addColumn("ID_SABUN", "string");
+        	this.dsSelect1.addColumn("ID_USER", "string");
+        	this.dsSelect1.addColumn("IP_ADDR", "string");
+        	this.dsSelect1.addColumn("CALL_TYPE", "string");
+
+        	//********************
+        	//저장
+        	//********************
+
+        	// 인사정보변경 요청
+        	this.dsUpdateSP = new Dataset();
+        	//this.dsUpdateSP.addColumn("TY_GUBUN","string"); 	// 요청구분 A :주소 F: 가족  S:학력  L:자격 C:경력
+        	this.dsUpdateSP.addColumn("ID_PERSON","string"); 	// PERSON ID
+        	this.dsUpdateSP.addColumn("CD_CORP","string"); 		// 법인코드
+        	this.dsUpdateSP.addColumn("ID_SABUN","string"); 	// 사원번호
+        	this.dsUpdateSP.addColumn("ID_USER","string"); 		//로그인 ID
+
+        	//tab1 - 인사기본정보
+        	this.dsBaseSave = new Dataset();
+        	this.dsBaseSave.set_name("dsBaseSave");
+        	this.dsBaseSave.addColumn("TY_SAVE", "string");
+        	this.dsBaseSave.addColumn("ID_PERSON", "bigdecimal");
+        	this.dsBaseSave.addColumn("NO_SEQ", "bigdecimal");
+        	this.dsBaseSave.addColumn("CD_CORP", "string");
+        	this.dsBaseSave.addColumn("ID_SABUN", "string");
+        	this.dsBaseSave.addColumn("TY_GUBUN", "string");
+        	this.dsBaseSave.addColumn("TY_STATUS", "string");
+        	this.dsBaseSave.addColumn("DS_HNAME", "string");
+        	this.dsBaseSave.addColumn("DS_CNAME", "string");
+        	this.dsBaseSave.addColumn("DS_ENAME", "string");
+        	this.dsBaseSave.addColumn("DS_EMAIL", "string");
+        	this.dsBaseSave.addColumn("ID_RESIDENT", "string");
+        	this.dsBaseSave.addColumn("DT_BIRTH", "string");
+        	this.dsBaseSave.addColumn("YN_SOLAR", "string");
+        	this.dsBaseSave.addColumn("DS_HANDPHONE", "string");
+        	this.dsBaseSave.addColumn("DS_OFFICEPHONE", "string");
+        	this.dsBaseSave.addColumn("DS_EXTENSION", "string");
+        	this.dsBaseSave.addColumn("DS_HOMEPHONE", "string");
+        	this.dsBaseSave.addColumn("CD_RELIGION", "string");
+        	this.dsBaseSave.addColumn("DS_HOBBY", "string");
+        	this.dsBaseSave.addColumn("DS_SPECIAL", "string");
+        	this.dsBaseSave.addColumn("YN_SUPPORTED", "string");
+        	this.dsBaseSave.addColumn("NO_SUPPORTED", "string");
+        	this.dsBaseSave.addColumn("CD_SUPPORTED", "string");
+        	this.dsBaseSave.addColumn("DS_SUPPORTED", "string");
+        	this.dsBaseSave.addColumn("YN_FOREIGNER", "string");
+        	this.dsBaseSave.addColumn("CD_FOREIGNER", "string");
+        	this.dsBaseSave.addColumn("YN_HANDICAP", "string");
+        	this.dsBaseSave.addColumn("NO_DISABILITY", "string");
+        	this.dsBaseSave.addColumn("CD_DISABILITY", "string");
+        	this.dsBaseSave.addColumn("CD_DISABILITY_GRADE", "string");
+        	this.dsBaseSave.addColumn("YN_MARRIAGE", "string");
+        	this.dsBaseSave.addColumn("DT_MARRIAGE", "string");
+        	this.dsBaseSave.addColumn("DS_BIRTHPLACE", "string");
+        	this.dsBaseSave.addColumn("DS_FAMILYPLACE", "string");
+        	this.dsBaseSave.addColumn("YN_GENDER", "string");
+        	this.dsBaseSave.addColumn("CD_FAMILY_HEAD", "string");
+        	this.dsBaseSave.addColumn("DS_FAMILY_HEADNAME", "string");
+        	this.dsBaseSave.addColumn("CD_HOUSEHOLDER", "string");
+        	this.dsBaseSave.addColumn("DS_HOUSEHOLDER_NAME", "string");
+        	this.dsBaseSave.addColumn("DS_BUSINESS", "string");
+        	this.dsBaseSave.addColumn("CD_RESOURCE", "string");
+        	this.dsBaseSave.addColumn("CD_SERVICESTS", "string");
+        	this.dsBaseSave.addColumn("CD_BRANCH", "string");
+        	this.dsBaseSave.addColumn("CD_MILITARY", "string");
+        	this.dsBaseSave.addColumn("CD_DISCHARGE", "string");
+        	this.dsBaseSave.addColumn("CD_MILITARYRANK", "string");
+        	this.dsBaseSave.addColumn("DT_CHARGE", "string");
+        	this.dsBaseSave.addColumn("DT_DISCHARGE", "string");
+        	this.dsBaseSave.addColumn("DS_SERVICENO", "string");
+        	this.dsBaseSave.addColumn("DS_REASON", "string");
+        	this.dsBaseSave.addColumn("ID_USER", "string");
+        	this.dsBaseSave.addColumn("DS_EMAIL_ETC", "string");
+        	this.dsBaseSave.addColumn("DS_FAX", "string");
+
+        	// 주소
+        	this.dsAddrSave = new Dataset();
+        	this.dsAddrSave.set_name("dsAddrSave");
+        	this.dsAddrSave.addColumn("TY_SAVE","string");	 // 저장 I:입력 U:수정 D:삭제 (I : 추가 | U : 변경 | D : 삭제)
+        	this.dsAddrSave.addColumn("ID_PERSON","string");	 // ID_PERSON
+        	this.dsAddrSave.addColumn("NO_SEQ","string");	 // 순번
+        	this.dsAddrSave.addColumn("TY_GUBUN","string");	 // 구분(I:신규 U:변경 D:삭제)
+        	this.dsAddrSave.addColumn("CD_CORP","string");	 // 법인코드
+        	this.dsAddrSave.addColumn("ID_SABUN","string");	 // 사원번호
+        	this.dsAddrSave.addColumn("CD_ADDRESS_ORG","string");	 // 현재정보-주소구분
+        	this.dsAddrSave.addColumn("CD_ADDRESS","string");	 // 주소구분
+        	this.dsAddrSave.addColumn("CD_AREA","string");	 // 지역구분
+        	this.dsAddrSave.addColumn("CD_ZIP","string");	 // 우편번호
+        	this.dsAddrSave.addColumn("DS_ADDRESS","string");	 // 주소
+        	this.dsAddrSave.addColumn("DS_ADDRESS_DETAIL","string");	 // 주소
+        	this.dsAddrSave.addColumn("NO_TEL","string");	 // 전화번호
+        	this.dsAddrSave.addColumn("NM_FILE","string");	 // 파일명
+        	this.dsAddrSave.addColumn("DS_PATH","string");	 // 파일경로
+        	this.dsAddrSave.addColumn("ID_USER","string");	 // 작업자ID
+
+        	// 가족
+        	this.dsFmySave = new Dataset();
+        	this.dsFmySave.set_name("dsFmySave");
+        	this.dsFmySave.addColumn("TY_SAVE","string");	// 저장 I:입력 U:수정 D:삭제 (I : 추가 | U : 변경 | D : 삭제)
+        	this.dsFmySave.addColumn("ID_PERSON","string");	// ID_PERSON
+        	this.dsFmySave.addColumn("NO_SEQ","string");	// 요청순번
+        	this.dsFmySave.addColumn("NO_SEQ_ORG","string");	// DAAT_FAMILY 순번
+        	this.dsFmySave.addColumn("CD_CORP","string");	// 법인코드
+        	this.dsFmySave.addColumn("ID_SABUN","string");	// 사원번호
+        	this.dsFmySave.addColumn("TY_GUBUN","string");	// 구분(I:신규 U:변경 D:삭제)
+        	this.dsFmySave.addColumn("CD_FAMILY","string");	// 관계코드
+        	this.dsFmySave.addColumn("DS_HNAME","string");	// 가족성명
+        	this.dsFmySave.addColumn("ID_RESIDENT","string");	// 가족생년월일
+        	this.dsFmySave.addColumn("CD_SCHOLARSHIP","string");	// 가족 학력
+        	this.dsFmySave.addColumn("YN_TOGETHER","string");	// 동거여부
+        	this.dsFmySave.addColumn("DS_ADDRESS","string");	// 주소
+        	this.dsFmySave.addColumn("YN_BASE","string");	// 기본공제
+        	this.dsFmySave.addColumn("YN_HANDICAP","string");	// 장애여부
+        	this.dsFmySave.addColumn("YN_FOREIGNER","string");	// 외국인여부
+        	this.dsFmySave.addColumn("DS_JOB","string");	// 직업
+        	this.dsFmySave.addColumn("DS_REMARK","string");	// 비고
+        	this.dsFmySave.addColumn("YN_FAMILY","string");	// 수당지급여부
+        	this.dsFmySave.addColumn("AM_FAMILY","BIGDECIMAL");	// 수당금액
+        	this.dsFmySave.addColumn("NM_FILE","string");	// 첨부파일
+        	this.dsFmySave.addColumn("DS_PATH","string");	// 파일경로
+        	this.dsFmySave.addColumn("ID_USER","string");	// 작업자ID
+
+        	// 학력
+        	this.dsSchSave = new Dataset();
+        	this.dsSchSave.set_name("dsSchSave");
+        	this.dsSchSave.addColumn("TY_SAVE","string"); 	// 저장 I:입력 U:수정 D:삭제 (I : 추가 | U : 변경 | D : 삭제)
+        	this.dsSchSave.addColumn("ID_PERSON","string");	// ID_PERSON
+        	this.dsSchSave.addColumn("NO_SEQ","string");	// 요청순번
+        	this.dsSchSave.addColumn("NO_SEQ_ORG","string");	// DAAT_FAMILY 순번
+        	this.dsSchSave.addColumn("CD_CORP","string");	// 법인코드
+        	this.dsSchSave.addColumn("ID_SABUN","string");	// 사원번호
+        	this.dsSchSave.addColumn("TY_GUBUN","string");	// 구분(I:신규 U:변경 D:삭제)
+        	this.dsSchSave.addColumn("CD_LEVEL","string");	// 학력코드
+        	this.dsSchSave.addColumn("CD_SCHOOL","string");	// 학교코드
+        	this.dsSchSave.addColumn("DS_SCHOOL","string");	// 학교명
+        	this.dsSchSave.addColumn("DS_SCHOOL_ETC","string");	// 학교명(기타)
+        	this.dsSchSave.addColumn("CD_GRADUATION","string");	// 졸업구분
+        	this.dsSchSave.addColumn("YM_SCHOOLFROM","string");	// 입학년월
+        	this.dsSchSave.addColumn("YM_SCHOOLTO","string");	// 졸업년월
+        	this.dsSchSave.addColumn("CD_MAJOR","string");	// 전공코드
+        	this.dsSchSave.addColumn("DS_MAJOR","string");	// 전공명
+        	this.dsSchSave.addColumn("DS_MAJOR_ETC","string");	// 전공명(기타)
+        	this.dsSchSave.addColumn("CD_DEGREE","string");	// 학위코드
+        	this.dsSchSave.addColumn("CD_DOUBLE_MAJOR","string");	// 복수전공코드
+        	this.dsSchSave.addColumn("DS_DOUBLE_MAJOR","string");	// 복수전공명
+        	this.dsSchSave.addColumn("DS_DOUBLE_MAJOR_ETC","string");	// 복수전공명(기타)
+        	this.dsSchSave.addColumn("DS_REMARK","string");	// 비고
+        	this.dsSchSave.addColumn("NM_FILE","string");	// 첨부파일
+        	this.dsSchSave.addColumn("DS_PATH","string");	// 파일경로
+        	this.dsSchSave.addColumn("ID_USER","string");	// 작업자ID
+
+        	// 자격
+        	this.dsLicSave = new Dataset();
+        	this.dsLicSave.set_name("dsLicSave");
+        	this.dsLicSave.addColumn("TY_SAVE","string");	// 저장 I:입력 U:수정 D:삭제 (I : 추가 | U : 변경 | D : 삭제)
+        	this.dsLicSave.addColumn("ID_PERSON","string");	// ID_PERSON
+        	this.dsLicSave.addColumn("NO_SEQ","string");	// 요청순번
+        	this.dsLicSave.addColumn("NO_SEQ_ORG","string");	// DAAT_LICENSE 순번
+        	this.dsLicSave.addColumn("CD_CORP","string");	// 법인코드
+        	this.dsLicSave.addColumn("ID_SABUN","string");	// 사원번호
+        	this.dsLicSave.addColumn("TY_GUBUN","string");	// 구분(I:신규 U:변경 D:삭제)
+        	this.dsLicSave.addColumn("CD_LICENSE","string");	// 자격증코드
+        	this.dsLicSave.addColumn("DS_LICENSE","string");	// 자격증명
+        	this.dsLicSave.addColumn("DS_LICENSE_ETC","string");	// 자격증명_기타
+        	this.dsLicSave.addColumn("NO_LICENSE","string");	// 자격증번호
+        	this.dsLicSave.addColumn("DT_ACQUIRE","string");	// 취득일
+        	this.dsLicSave.addColumn("DS_ORGAN","string");	// 취득기관
+        	this.dsLicSave.addColumn("DT_EXPIRE","string");	// 만료일
+        	this.dsLicSave.addColumn("DS_LEVEL","string");	// 등급
+        	this.dsLicSave.addColumn("DS_REMARK","string");	// 비고
+        	this.dsLicSave.addColumn("NM_FILE","string");	// 첨부파일
+        	this.dsLicSave.addColumn("DS_PATH","string");	// 파일경로
+        	this.dsLicSave.addColumn("ID_USER","string");	// 작업자ID
+
+        	// 경력
+        	this.dsCrrSave = new Dataset();
+        	this.dsCrrSave.set_name("dsCrrSave");
+        	this.dsCrrSave.addColumn("TY_SAVE","string");	// 저장 I:입력 U:수정 D:삭제 (I : 추가 | U : 변경 | D : 삭제)
+        	this.dsCrrSave.addColumn("ID_PERSON","string");	// ID_PERSON
+        	this.dsCrrSave.addColumn("NO_SEQ","string");	// 요청순번
+        	this.dsCrrSave.addColumn("NO_SEQ_ORG","string");	// DAAT_LICENSE 순번
+        	this.dsCrrSave.addColumn("CD_CORP","string");	// 법인코드
+        	this.dsCrrSave.addColumn("ID_SABUN","string");	// 사원번호
+        	this.dsCrrSave.addColumn("TY_GUBUN","string");	// 구분(I:신규 U:변경 D:삭제)
+        	this.dsCrrSave.addColumn("DS_COMPANY","string");	// 근무처
+        	this.dsCrrSave.addColumn("DT_CAREERFROM","string");	// 근무기간From
+        	this.dsCrrSave.addColumn("DT_CAREERTO","string");	// 근무기간To
+        	this.dsCrrSave.addColumn("DS_SITE","string");	// 부서(현장)
+        	this.dsCrrSave.addColumn("DS_POSITION","string");	// 직급
+        	this.dsCrrSave.addColumn("DS_DUTY","string");	// 업무
+        	this.dsCrrSave.addColumn("QN_CAREER_Y","string");	// 근무년수
+        	this.dsCrrSave.addColumn("QN_CAREER_M","string");	// 근무개월수
+        	this.dsCrrSave.addColumn("DS_CAREER","string");	// 총 근속년수
+        	this.dsCrrSave.addColumn("NM_FILE","string");	// 첨부파일
+        	this.dsCrrSave.addColumn("DS_PATH","string");	// 파일경로
+        	this.dsCrrSave.addColumn("ID_USER","string");	// 작업자ID
+
+        	//기타
+        	this.dsEtcSave = new Dataset();
+        	this.dsEtcSave.set_name("dsEtcSave");
+        	this.dsEtcSave.addColumn("TY_SAVE", "string");
+        	this.dsEtcSave.addColumn("ID_PERSON", "int");
+        	this.dsEtcSave.addColumn("NO_SEQ", "int");
+        	this.dsEtcSave.addColumn("CD_CORP", "string");
+        	this.dsEtcSave.addColumn("ID_SABUN", "string");
+        	this.dsEtcSave.addColumn("TY_GUBUN", "string");
+        	this.dsEtcSave.addColumn("TY_STATUS", "string");
+        	this.dsEtcSave.addColumn("DS_RECOM_HNAME", "string");
+        	this.dsEtcSave.addColumn("DS_RECOM_RELATION", "string");
+        	this.dsEtcSave.addColumn("DS_RECOM_JOB", "string");
+        	this.dsEtcSave.addColumn("DS_RECOM_ADDRESS", "string");
+        	this.dsEtcSave.addColumn("QT_HEIGHT", "bigdecimal");
+        	this.dsEtcSave.addColumn("QT_WEIGHT", "bigdecimal");
+        	this.dsEtcSave.addColumn("RT_LEFTEYE", "bigdecimal");
+        	this.dsEtcSave.addColumn("RT_RIGHTEYE", "bigdecimal");
+        	this.dsEtcSave.addColumn("DS_ALCOHOL", "string");
+        	this.dsEtcSave.addColumn("YN_SMOKING", "string");
+        	this.dsEtcSave.addColumn("CD_BLOOD", "string");
+        	this.dsEtcSave.addColumn("DS_HEALTH_REMARK", "string");
+        	this.dsEtcSave.addColumn("DS_MOVABLES", "string");
+        	this.dsEtcSave.addColumn("DS_IMMOVABLES", "string");
+        	this.dsEtcSave.addColumn("ID_USER", "string");
+
+        	//외국어
+        	this.dsLangSave = new Dataset();
+        	this.dsLangSave.set_name("dsLangSave");
+        	this.dsLangSave.addColumn("TY_SAVE", "string");
+        	this.dsLangSave.addColumn("ID_PERSON", "int");
+        	this.dsLangSave.addColumn("NO_SEQ", "int");
+        	this.dsLangSave.addColumn("NO_SEQ_ORG", "int");
+        	this.dsLangSave.addColumn("CD_CORP", "string");
+        	this.dsLangSave.addColumn("ID_SABUN", "string");
+        	this.dsLangSave.addColumn("TY_GUBUN", "string");
+        	this.dsLangSave.addColumn("CD_LANGUAGE", "string");
+        	this.dsLangSave.addColumn("CD_EXAM", "string");
+        	this.dsLangSave.addColumn("DT_LANGUAGE", "string");
+        	this.dsLangSave.addColumn("DT_EXPIRE", "string");
+        	this.dsLangSave.addColumn("NO_TOTAL", "bigdecimal");
+        	this.dsLangSave.addColumn("DS_LEVEL", "string");
+        	this.dsLangSave.addColumn("DS_CONVERSATION", "string");
+        	this.dsLangSave.addColumn("DS_READING", "string");
+        	this.dsLangSave.addColumn("DS_REMARK", "string");
+        	this.dsLangSave.addColumn("ID_USER", "string");
+
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+
+        	// 데이터 조회
+        	this.fnSelectAskData();
+
+        	// 변경 요청전,진행,완료 건수 조회
+        	this.fnSelectAskCnt();
+        }
+
+        // 조회
+        this.fnSelectAskData = function() {
+
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+        	var sTabNm = this.arrTabNm[nTabIdx];
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+
+        	trace("조회(fnSelectAskData) >>> nTabIdx>>"+nTabIdx);
+
+        	if (!this.fnSelectValid()) return false;
+
+        	if(nTabIdx == 1 || nTabIdx == 2 || nTabIdx == 3 || nTabIdx == 4 || nTabIdx == 5 || nTabIdx == 7){
+
+        		this.dsSelect.clearData();
+        		this.dsSelect.addRow();
+        		this.dsSelect.setColumn(0, "ID_PERSON", this.dsSearch.getColumn(0, "ID_PERSON"));
+        		this.dsSelect.setColumn(0, "CD_CORP" , this.dsSearch.getColumn(0, "CD_CORP"));
+        		this.dsSelect.setColumn(0, "ID_SABUN", this.dsSearch.getColumn(0, "ID_SABUN"));
+
+        		this.gfnGridBeforeSelect(objTarget.objGrid2);
+
+        		var objDs1 = objTarget.objGrid1.getBindDataset();
+        		var objDs2 = objTarget.objGrid2.getBindDataset();
+
+        		objDs1.clearData();
+        		objDs2.clearData();
+
+        		var strSvcId    = "select_"+(nTabIdx+1);
+        		var strSvcType  = "grid";
+        		var inProc		= "_dsProc";
+        		var	inData      = "select" + sTabNm + "1=dsSelect select" + sTabNm + "2=dsSelect";
+        		var	outData     = objDs1.name + "=select" + sTabNm + "10 " + objDs2.name + "=select" + sTabNm +"20";
+        		var strArg      = "";
+        		var callBackFnc = "fnCallback";
+
+        		trace("inData", inData);
+        		trace("outData", outData);
+
+        		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        							strSvcType , 	// transaction을 요청할 구분
+        							inProc,			// Procedure 정보 Dataset 이름
+        							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+        							callBackFnc); 	// 통신방법 정의 [생략가능]
+
+        	}
+        	else if(nTabIdx == 0 || nTabIdx == 6){
+
+        		var targetDs = objTarget.objDsList2;
+
+        		//인사기본정보
+        		//기타
+        		this.dsSelect1.clearData();
+        		this.dsSelect1.addRow();
+        		this.dsSelect1.setColumn(0, "ID_PERSON", this.dsSearch.getColumn(0, "ID_PERSON"));
+        		this.dsSelect1.setColumn(0, "CD_CORP" , this.dsSearch.getColumn(0, "CD_CORP"));
+        		this.dsSelect1.setColumn(0, "ID_SABUN", this.dsSearch.getColumn(0, "ID_SABUN"));
+        		this.dsSelect1.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+        		this.dsSelect1.setColumn(0, "IP_ADDR", this.AuthClient.NO_IP);
+        		this.dsSelect1.setColumn(0, "CALL_TYPE", "S");
+
+        		var strSvcId    = "select_"+(nTabIdx+1);
+        		var strSvcType  = "grid";
+        		var inProc		= "_dsProc";
+        		var inData      = "select"+(nTabIdx+1)+"=dsSelect1";
+        		var outData     = targetDs.name+"=select"+(nTabIdx+1)+"0";
+        		var strArg      = "";
+        		var callBackFnc = "fnCallback";
+
+        // trace("nTabIdx", nTabIdx);
+        // trace("inData", inData);
+        // trace("outData", outData);
+
+        		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        							strSvcType , 	// transaction을 요청할 구분
+        							inProc,			// Procedure 정보 Dataset 이름
+        							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+        							callBackFnc); 	// 통신방법 정의 [생략가능]
+
+        	}
+        }
+
+        // 변경 요청전,진행,완료 건수 조회
+        this.fnSelectAskCnt = function() {
+
+        	//if (!this.fnSelectValid()) return false;
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+        	this.dsSelect.setColumn(0, "ID_PERSON", this.dsSearch.getColumn(0, "ID_PERSON"));
+        	this.dsSelect.setColumn(0, "CD_CORP" , this.dsSearch.getColumn(0, "CD_CORP"));
+        	this.dsSelect.setColumn(0, "ID_SABUN", this.dsSearch.getColumn(0, "ID_SABUN"));
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "selectAskCnt=dsSelect";
+        	var outData     = "dsListAskCnt=selectAskCnt0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        this.fnAddSelect = function() {
+
+        	trace("조회(fnAddSelect) >>> ");
+
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+        	var targetDs = objTarget.objDsList2;
+
+        	if (!this.fnSelectValid()) return false;
+
+        	if(nTabIdx == 1 || nTabIdx == 2 || nTabIdx == 3 || nTabIdx == 4 || nTabIdx == 5 || nTabIdx == 7){
+        		;
+        	}
+        	else if(nTabIdx == 0 || nTabIdx == 6){
+
+        		//인사기본정보
+        		//기타
+        		this.dsSelect1.clearData();
+        		this.dsSelect1.addRow();
+        		this.dsSelect1.setColumn(0, "ID_PERSON", this.dsSearch.getColumn(0, "ID_PERSON"));
+        		this.dsSelect1.setColumn(0, "CD_CORP" , this.dsSearch.getColumn(0, "CD_CORP"));
+        		this.dsSelect1.setColumn(0, "ID_SABUN", this.dsSearch.getColumn(0, "ID_SABUN"));
+        		this.dsSelect1.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+        		this.dsSelect1.setColumn(0, "IP_ADDR", this.AuthClient.NO_IP);
+        		this.dsSelect1.setColumn(0, "CALL_TYPE", "A");
+
+
+        		//인사기본정보
+        		var strSvcId    = "addselect_"+(nTabIdx+1);
+        		var strSvcType  = "grid";
+        		var inProc		= "_dsProc";
+        		var inData      = "select"+(nTabIdx+1)+"=dsSelect1";
+        		var outData     = targetDs.name + "=select"+(nTabIdx+1)+"0";
+        		var strArg      = "";
+        		var callBackFnc = "fnCallback";
+
+        		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        							strSvcType , 	// transaction을 요청할 구분
+        							inProc,			// Procedure 정보 Dataset 이름
+        							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+        							callBackFnc); 	// 통신방법 정의 [생략가능]
+
+        	}
+        }
+
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+
+        	if(nTabIdx == 1 || nTabIdx == 2 || nTabIdx == 3 || nTabIdx == 4 || nTabIdx == 5 || nTabIdx == 7){
+        		var objTarget = this.fnGetTabInfo(nTabIdx);
+        		var nRow1 = objTarget.objGrid1.currentrow;
+        		var nRow2 = this.gfnGridAdd(objTarget.objGrid2);
+
+        		objTarget.objDsList2.set_enableevent(false);
+        		objTarget.objDsList2.setColumn(nRow2, "ID_PERSON", this.dsSearch.getColumn(0, "ID_PERSON"));
+        		objTarget.objDsList2.setColumn(nRow2, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+        		objTarget.objDsList2.setColumn(nRow2, "ID_SABUN", this.dsSearch.getColumn(0, "ID_SABUN"));
+        		//objTarget.objDsList2.setColumn(nRow2, "DS_HNAME", this.dsSearch.getColumn(0, "DS_HNAME"));
+        		objTarget.objDsList2.set_enableevent(true);
+
+        	}
+        	else if(nTabIdx == 0){
+        		//인사기본정보
+        		this.dsBaseList2.clearData();
+        		this.fnAddSelect();
+        	}
+        	else if(nTabIdx == 6){
+        		//기타
+        		this.dsEtcList2.clearData();
+        		this.fnAddSelect();
+        	}
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+
+        	// Grid의 상태(TY_STATUS) 값이 '01' 또는 '02' 일 경우에는 해당 ROW 가 수정/삭제가 불가 합니다.
+
+        	if(nTabIdx == 1 || nTabIdx == 2 || nTabIdx == 3 || nTabIdx == 4 || nTabIdx == 5 || nTabIdx == 7){
+
+        		var nRow2 = objTarget.objGrid2.currentrow;
+        		var sTyStatus = objTarget.objDsList2.getColumn(nRow2, "TY_STATUS");
+
+        		if(nRow2 > 0 && (sTyStatus == "01" || sTyStatus == "02")){
+        			this.gfnAlert("결재중이거나 결재가 완료된 건은 삭제할 수 없습니다.");
+        			return;
+        		}
+
+        		var objDs = objTarget.objGrid2.getBindDataset();
+        		var rows = objTarget.objGrid2.getSelectedDatasetRows();
+        		if(rows.length > 0) {
+        			for(var i =0; i < rows.length; i++) {
+        				var nrow = rows[i];
+        				if(this.gfnNvl(objDs.getColumn(nrow, "FILE_CNT"), 0) > 0){
+        					this.gfnAlert("첨부파일 먼저 삭제하세요!");
+        					return;
+        				}
+        			}
+        		}
+
+        		this.gfnGridDel(objTarget.objGrid2);
+
+        	}else if(nTabIdx == 0 || nTabIdx == 6){
+
+        		if(objTarget.objDsList2.rowcount > 0){
+        			var NO_SEQ = this.gfnNvl(objTarget.objDsList2.getColumn(0, "NO_SEQ"), 0);
+        			if(NO_SEQ == 0){
+        				objTarget.objDsList2.clearData();
+        			}else{
+        				var sTyStatus = objTarget.objDsList2.getColumn(0, "TY_STATUS");
+        				if(sTyStatus == "01" || sTyStatus == "02"){
+        					this.gfnAlert("결재중이거나 결재가 완료된 건은 삭제할 수 없습니다.");
+        					return;
+        				}
+
+        				if(nTabIdx == 0){
+        					this.fnSave1("D");
+        				}else if(nTabIdx == 6){
+        					this.fnSave7("D");
+        				}
+        			}
+        		}
+        	}
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+        	var nTabIdx = this.divData.form.tabData.tabindex;	// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+
+        	if (nTabIdx == 1 || nTabIdx == 2 || nTabIdx == 3 || nTabIdx == 4 || nTabIdx == 5 || nTabIdx == 7) {
+        		this.fnGridSave(); // Grid 모양의 ...
+        	}
+        	else if (nTabIdx == 0) {
+        		// 인사기본정보
+        		this.fnSave1();
+        	}
+        	else if (nTabIdx == 6) {
+        		// 기타
+        		this.fnSave7();
+        	}
+        }
+
+        //그리드형식 저장
+        this.fnGridSave = function(){
+        	var nTabIdx = this.divData.form.tabData.tabindex;	// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+        	var sTabNm = this.arrTabNm[nTabIdx];
+
+        	if (!this.fnGridSaveValid(objTarget.objGrid2)) return;
+
+        	objTarget.objGrid2.updateToDataset();
+        	objTarget.objDsSave.clearData();
+
+        	for (var i = 0; i < objTarget.objDsList2.rowcount; i++) {
+        		var flag = this.gfnGetFlag(objTarget.objDsList2, i);
+        		switch(flag) {
+        			case "I":
+        			case "U":
+        			case "D":
+        				var nrow = objTarget.objDsSave.addRow();
+        				objTarget.objDsSave.copyRow(nrow, objTarget.objDsList2, i); // 같은 ID 를 가진 모든 Column 의 값을 복사
+        				objTarget.objDsSave.setColumn(nrow, "TY_SAVE", flag);
+        				objTarget.objDsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+
+        				if(nTabIdx == 2){	// 가족
+        					objTarget.objDsSave.setColumn(nrow, "ID_RESIDENT", objTarget.objDsList2.getColumn(i, "ID_RESIDENT").replace(/-/g,""));
+        				}
+
+        // 				if(nTabIdx == 3){	// 학력
+        // 					var DS_SCHOOL_COL = (objTarget.objDsList2.getColumn(i, "CD_SCHOOL") == "ZZZZZZ") ? "DS_SCHOOL_ETC" : "DS_SCHOOL";	// 변경 학교명
+        // 					var DS_MAJOR_COL = (objTarget.objDsList2.getColumn(i, "CD_MAJOR") == "ZZZZ") ? "DS_MAJOR_ETC" : "DS_MAJOR";	// 변경 전공
+        // 					var DS_DOUBLE_MAJOR_COL = (objTarget.objDsList2.getColumn(i, "CD_DOUBLE_MAJOR") == "ZZZZ") ? "DS_DOUBLE_MAJOR_ETC" : "DS_DOUBLE_MAJOR";	// 복수전공
+        // 					objTarget.objDsSave.setColumn(nrow, "DS_SCHOOL", objTarget.objDsList2.getColumn(i, DS_SCHOOL_COL));
+        // 					objTarget.objDsSave.setColumn(nrow, "DS_MAJOR", objTarget.objDsList2.getColumn(i, DS_MAJOR_COL));
+        // 					objTarget.objDsSave.setColumn(nrow, "DS_DOUBLE_MAJOR", objTarget.objDsList2.getColumn(i, DS_DOUBLE_MAJOR_COL));
+        // 				}
+        //
+        // 				if(nTabIdx == 4){	// 자격
+        // 					var DS_LICENSE_COL = (objTarget.objDsList2.getColumn(i, "CD_LICENSE") == "ZZZZ") ? "DS_LICENSE_ETC" : "DS_LICENSE";
+        // 					objTarget.objDsSave.setColumn(nrow, "DS_LICENSE", objTarget.objDsList2.getColumn(i, DS_LICENSE_COL));
+        // 				}
+        		}
+        	}
+
+        	if (objTarget.objDsSave.rowcount == 0) return;
+
+        	var strSvcId    = "save_"+(nTabIdx+1);
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData 		= "save" + sTabNm + "=" + objTarget.objDsSave.name;
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); 	// 통신방법 정의 [생략가능]
+
+        }
+
+        this.fnSave1 = function(callType){
+
+        	this.gfnUpdateToDataset(this);
+        	if(!this.fnSaveValid6()) return;
+
+         	this.dsBaseSave.clearData();
+
+        	var nrow = this.dsBaseSave.addRow();
+
+        	var flag = "";
+        	if(this.gfnIsNull(callType)){
+        		flag = this.gfnNvl(this.dsBaseList2.getColumn(0, "NO_SEQ"), 0) == 0 ? "I" : "U";
+        	}else{
+        		flag = callType;
+        	}
+        	this.dsBaseSave.setColumn(nrow, "TY_SAVE", flag);
+        	this.dsBaseSave.setColumn(nrow, "ID_PERSON", this.dsBaseList2.getColumn(0, "ID_PERSON"));
+        	this.dsBaseSave.setColumn(nrow, "NO_SEQ", this.dsBaseList2.getColumn(0, "NO_SEQ"));
+        	this.dsBaseSave.setColumn(nrow, "CD_CORP", this.dsBaseList2.getColumn(0, "CD_CORP"));
+        	this.dsBaseSave.setColumn(nrow, "ID_SABUN", this.dsBaseList2.getColumn(0, "ID_SABUN"));
+        	this.dsBaseSave.setColumn(nrow, "TY_GUBUN", this.gfnNvl(this.dsBaseList2.getColumn(0, "TY_GUBUN"), ""));
+        	this.dsBaseSave.setColumn(nrow, "TY_STATUS", this.gfnNvl(this.dsBaseList2.getColumn(0, "TY_STATUS"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_HNAME", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_HNAME"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_CNAME", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_CNAME"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_ENAME", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_ENAME"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_EMAIL", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_EMAIL"), ""));
+        	this.dsBaseSave.setColumn(nrow, "ID_RESIDENT", this.gfnNvl(this.dsBaseList2.getColumn(0, "ID_RESIDENT"), "").replace(/-/g,""));
+        	this.dsBaseSave.setColumn(nrow, "DT_BIRTH", this.gfnNvl(this.dsBaseList2.getColumn(0, "DT_BIRTH"), "").replace(/-/g,""));
+        	this.dsBaseSave.setColumn(nrow, "YN_SOLAR", this.gfnNvl(this.dsBaseList2.getColumn(0, "YN_SOLAR"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_HANDPHONE", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_HANDPHONE"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_OFFICEPHONE", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_OFFICEPHONE"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_EXTENSION", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_EXTENSION"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_HOMEPHONE", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_HOMEPHONE"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_RELIGION", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_RELIGION"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_HOBBY", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_HOBBY"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_SPECIAL", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_SPECIAL"), ""));
+        	this.dsBaseSave.setColumn(nrow, "YN_SUPPORTED", this.gfnNvl(this.dsBaseList2.getColumn(0, "YN_SUPPORTED"), ""));
+        	this.dsBaseSave.setColumn(nrow, "NO_SUPPORTED", this.gfnNvl(this.dsBaseList2.getColumn(0, "NO_SUPPORTED"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_SUPPORTED", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_SUPPORTED"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_SUPPORTED", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_SUPPORTED"), ""));
+        	this.dsBaseSave.setColumn(nrow, "YN_FOREIGNER", this.gfnNvl(this.dsBaseList2.getColumn(0, "YN_FOREIGNER"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_FOREIGNER", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_FOREIGNER"), ""));
+        	this.dsBaseSave.setColumn(nrow, "YN_HANDICAP", this.gfnNvl(this.dsBaseList2.getColumn(0, "YN_HANDICAP"), ""));
+        	this.dsBaseSave.setColumn(nrow, "NO_DISABILITY", this.gfnNvl(this.dsBaseList2.getColumn(0, "NO_DISABILITY"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_DISABILITY", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_DISABILITY"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_DISABILITY_GRADE", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_DISABILITY_GRADE"), ""));
+        	this.dsBaseSave.setColumn(nrow, "YN_MARRIAGE", this.gfnNvl(this.dsBaseList2.getColumn(0, "YN_MARRIAGE"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DT_MARRIAGE", this.gfnNvl(this.dsBaseList2.getColumn(0, "DT_MARRIAGE"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_BIRTHPLACE", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_BIRTHPLACE"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_FAMILYPLACE", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_FAMILYPLACE"), ""));
+        	this.dsBaseSave.setColumn(nrow, "YN_GENDER", this.gfnNvl(this.dsBaseList2.getColumn(0, "YN_GENDER"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_FAMILY_HEAD", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_FAMILY_HEAD"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_FAMILY_HEADNAME", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_FAMILY_HEADNAME"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_HOUSEHOLDER", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_HOUSEHOLDER"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_HOUSEHOLDER_NAME", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_HOUSEHOLDER_NAME"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_BUSINESS", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_BUSINESS"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_RESOURCE", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_RESOURCE"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_SERVICESTS", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_SERVICESTS"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_BRANCH", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_BRANCH"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_MILITARY", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_MILITARY"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_DISCHARGE", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_DISCHARGE"), ""));
+        	this.dsBaseSave.setColumn(nrow, "CD_MILITARYRANK", this.gfnNvl(this.dsBaseList2.getColumn(0, "CD_MILITARYRANK"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DT_CHARGE", this.gfnNvl(this.dsBaseList2.getColumn(0, "DT_CHARGE"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DT_DISCHARGE", this.gfnNvl(this.dsBaseList2.getColumn(0, "DT_DISCHARGE"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_SERVICENO", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_SERVICENO"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_REASON", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_REASON"), ""));
+        	this.dsBaseSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        	this.dsBaseSave.setColumn(nrow, "DS_EMAIL_ETC", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_EMAIL_ETC"), ""));
+        	this.dsBaseSave.setColumn(nrow, "DS_FAX", this.gfnNvl(this.dsBaseList2.getColumn(0, "DS_FAX"), ""));
+
+        	if (this.dsBaseSave.rowcount == 0) return;
+
+        	var strSvcId    = "save_1";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save1=dsBaseSave";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        this.fnSaveValid6 = function(){
+
+        	if(this.gfnIsNull(this.divData.form.tabData.tab1.form.tclDT_BIRTH.value)){
+        		this.fnValidCallback = function() {
+        			this.divData.form.tabData.tab1.form.tclDT_BIRTH.setFocus();
+        		}
+        		this.gfnAlert("생년월일을 입력하세요.", "fnValidCallback");
+        		return false;
+        	}
+        	if(this.gfnIsNull(this.divData.form.tabData.tab1.form.txtID_RESIDENT.value)){
+        		this.fnValidCallback = function() {
+        			this.divData.form.tabData.tab1.form.txtID_RESIDENT.setFocus();
+        		}
+        		this.gfnAlert("주민번호를 입력하세요.", "fnValidCallback");
+        		return false;
+        	}
+
+        	if(!this.gfnIsNull(this.divData.form.tabData.tab1.form.txtDS_EMAIL.value)){
+        		if (!this.gfnIsEmail(this.divData.form.tabData.tab1.form.txtDS_EMAIL.value)) {
+        			this.fnVaidateCallback = function() {
+        				this.divData.form.tabData.tab1.form.txtDS_EMAIL.setFocus();
+        			}
+        			this.gfnAlert("E-Mail의 이메일 형식이 맞지 않습니다.", "fnVaidateCallback");
+        			return false;
+        		}
+        	}
+
+        	if(!this.gfnIsNull(this.divData.form.tabData.tab1.form.txtDS_EMAIL_ETC.value)){
+        		if (!this.gfnIsEmail(this.divData.form.tabData.tab1.form.txtDS_EMAIL_ETC.value)) {
+        			this.fnVaidateCallback = function() {
+        				this.divData.form.tabData.tab1.form.txtDS_EMAIL_ETC.setFocus();
+        			}
+        			this.gfnAlert("외부E-Mail의 이메일 형식이 맞지 않습니다.", "fnVaidateCallback");
+        			return false;
+        		}
+        	}
+
+        	return true;
+        }
+
+        this.fnSave7 = function(callType){
+        	this.gfnUpdateToDataset(this);
+        	if(!this.fnSaveValid7()) return;
+
+         	this.dsEtcSave.clearData();
+        	var nrow = this.dsEtcSave.addRow();
+
+        	var flag = "";
+        	if(this.gfnIsNull(callType)){
+        		flag = this.gfnNvl(this.dsEtcList2.getColumn(0, "NO_SEQ"), 0) == 0 ? "I" : "U";
+        	}else{
+        		flag = callType;
+        	}
+        	this.dsEtcSave.setColumn(nrow, "TY_SAVE", flag);
+        	this.dsEtcSave.setColumn(nrow, "ID_PERSON", this.dsEtcList2.getColumn(0, "ID_PERSON"));
+        	this.dsEtcSave.setColumn(nrow, "NO_SEQ", this.gfnNvl(this.dsEtcList2.getColumn(0, "NO_SEQ"), 0));
+        	this.dsEtcSave.setColumn(nrow, "CD_CORP", this.gfnNvl(this.dsEtcList2.getColumn(0, "CD_CORP"), ""));
+        	this.dsEtcSave.setColumn(nrow, "ID_SABUN", this.gfnNvl(this.dsEtcList2.getColumn(0, "ID_SABUN"), ""));
+        	this.dsEtcSave.setColumn(nrow, "TY_GUBUN", this.gfnNvl(this.dsEtcList2.getColumn(0, "TY_GUBUN"), ""));
+        	this.dsEtcSave.setColumn(nrow, "TY_STATUS", this.gfnNvl(this.dsEtcList2.getColumn(0, "TY_STATUS"), ""));
+        	this.dsEtcSave.setColumn(nrow, "DS_RECOM_HNAME", this.gfnNvl(this.dsEtcList2.getColumn(0, "DS_RECOM_HNAME"), ""));
+        	this.dsEtcSave.setColumn(nrow, "DS_RECOM_RELATION", this.gfnNvl(this.dsEtcList2.getColumn(0, "DS_RECOM_RELATION"), ""));
+        	this.dsEtcSave.setColumn(nrow, "DS_RECOM_JOB", this.gfnNvl(this.dsEtcList2.getColumn(0, "DS_RECOM_JOB"), ""));
+        	this.dsEtcSave.setColumn(nrow, "DS_RECOM_ADDRESS", this.gfnNvl(this.dsEtcList2.getColumn(0, "DS_RECOM_ADDRESS"), ""));
+        	this.dsEtcSave.setColumn(nrow, "QT_HEIGHT", this.dsEtcList2.getColumn(0, "QT_HEIGHT"));
+        	this.dsEtcSave.setColumn(nrow, "QT_WEIGHT", this.dsEtcList2.getColumn(0, "QT_WEIGHT"));
+        	this.dsEtcSave.setColumn(nrow, "RT_LEFTEYE", this.dsEtcList2.getColumn(0, "RT_LEFTEYE"));
+        	this.dsEtcSave.setColumn(nrow, "RT_RIGHTEYE", this.dsEtcList2.getColumn(0, "RT_RIGHTEYE"));
+        	this.dsEtcSave.setColumn(nrow, "DS_ALCOHOL", this.gfnNvl(this.dsEtcList2.getColumn(0, "DS_ALCOHOL"), ""));
+        	this.dsEtcSave.setColumn(nrow, "YN_SMOKING", this.gfnNvl(this.dsEtcList2.getColumn(0, "YN_SMOKING"), ""));
+        	this.dsEtcSave.setColumn(nrow, "CD_BLOOD", this.gfnNvl(this.dsEtcList2.getColumn(0, "CD_BLOOD"), ""));
+        	this.dsEtcSave.setColumn(nrow, "DS_HEALTH_REMARK", this.gfnNvl(this.dsEtcList2.getColumn(0, "DS_HEALTH_REMARK"), ""));
+        	this.dsEtcSave.setColumn(nrow, "DS_MOVABLES", this.gfnNvl(this.dsEtcList2.getColumn(0, "DS_MOVABLES"), ""));
+        	this.dsEtcSave.setColumn(nrow, "DS_IMMOVABLES", this.gfnNvl(this.dsEtcList2.getColumn(0, "DS_IMMOVABLES"), ""));
+        	this.dsEtcSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+
+        	if (this.dsEtcSave.rowcount == 0) return;
+
+        	var strSvcId    = "save_7";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save7=dsEtcSave";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        this.fnSaveValid7 = function(){
+        	//나중에 추가하기
+        	return true;
+        }
+
+
+        // 개인정보 변경 요청
+        this.fnUpdateAskAll = function() {
+
+        	this.dsUpdateSP.clearData();
+
+        	var nrow = this.dsUpdateSP.addRow();
+
+        	var ID_PERSON = this.dsSearch.getColumn(0, "ID_PERSON");
+        	var CD_CORP = this.dsSearch.getColumn(0, "CD_CORP");
+        	var ID_SABUN = this.dsSearch.getColumn(0, "ID_SABUN");
+
+        	// 요청구분 A :주소 F: 가족  S:학력  L:자격 C:경력
+        	this.dsUpdateSP.setColumn(nrow,"ID_PERSON", ID_PERSON);
+        	this.dsUpdateSP.setColumn(nrow,"CD_CORP", CD_CORP);
+        	this.dsUpdateSP.setColumn(nrow,"ID_SABUN", ID_SABUN);
+        	this.dsUpdateSP.setColumn(nrow,"ID_USER", this.AuthClient.ID_USER);
+
+          	if (this.dsUpdateSP.rowcount == 0 ) return;
+
+        	var strSvcId    = "updateAll";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "updateAll=dsUpdateSP";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	var nTabIdx = this.divData.form.tabData.tabindex; // 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+        	if(nTabIdx == 0 || nTabIdx == 6){
+        		;
+        	}else{
+
+        		var objTarget = this.fnGetTabInfo(nTabIdx);
+        		var tabObj = this.divData.form.tabData.tabpages[nTabIdx];
+
+        		var sFileName = this.gfnGetArgument("NM_FORM")+"_"+tabObj.text+"_"+this.gfnGetDate();
+
+        		this.gfnExcelExport(objTarget.objGrid2,  null, sFileName);
+        	}
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        };
+
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+         */
+        this.fnSelectValid = function() {
+        	if (this.gfnIsNull(this.dsSearch.getColumn(0, "ID_SABUN"))) {
+        		this.gfnAlert("사번이 입력되지 않았습니다.");
+        		this.ccfID_SABUN.form.CDTextBox.setFocus();
+        		return false;
+        	}
+        	return true;
+        };
+
+        /*
+         *	그리드 필수입력 컬럼 검사
+         */
+        this.fnGridSaveValid = function(objGrid) {
+        	var nTabIdx = this.divData.form.tabData.tabindex; // 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+        	var objDs = objGrid.getBindDataset();
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+        	var sTabNm = this.arrTabNm[nTabIdx];
+        	var msg = "";
+        	var strDsField = "";
+        	var strDsHeader = "";
+
+        	for (var i = 0; i < objDs.rowcount; i++) {
+        		var flag = this.gfnGetFlag(objDs, i);
+        		var TY_GUBUN = objDs.getColumn(i,"TY_GUBUN");	// I: 추가|U: 변경|D: 삭제
+        		switch(flag) {
+        			case "I":
+        			case "U":
+        				var arrRequired = objGrid.usRequired;
+        				for(var j = 0; j < arrRequired.length; j++) {
+        					var spl_req = arrRequired[j].split(';');
+        					var colnm = spl_req[0];
+        					var header = spl_req[1];
+        					if (this.gfnIsNull(objDs.getColumn(i, colnm))) {
+        						msg += (i + 1) + "행: [" + header + "] 필수입력값입니다.\n";
+        					}
+        				}
+
+        				if(TY_GUBUN == "I"){
+        				// 입력 필수항목 체크
+        					var strFilterExpr = "TY_DATA == '"+sTabNm+"'";	// 주소,가족,학력,자격,경력
+        					this.dsRequiredList.filter(strFilterExpr);
+        					for (var k = 0; k < this.dsRequiredList.rowcount; k++) {
+        						strDsField = this.dsRequiredList.getColumn(k, "DS_FIELD");
+        						strDsHeader = this.dsRequiredList.getColumn(k, "DS_HEADER");
+        						if (this.gfnIsNull(objDs.getColumn(i, strDsField))) {
+        							msg += (i + 1) + "행: [" + strDsHeader + "] 필수입력값입니다.\n";
+        						}
+        					}
+        					this.dsRequiredList.filter("");
+        				}
+
+        			break;
+        		}
+
+        		var NO_SEQ_ORG = (nTabIdx == 0)? objDs.getColumn(i, "CD_ADDRESS_ORG") : objDs.getColumn(i, "NO_SEQ_ORG") ;
+        		if( (TY_GUBUN == "U" || TY_GUBUN == "D") && this.gfnIsNull(NO_SEQ_ORG)){
+        			msg += (i + 1) + "행 현재정보 입력하셔야합니다. \n";
+        		}
+        		// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+        		switch(nTabIdx) {
+        			case 1:	// 주소
+        				break;
+        			case 2:	// 가족
+        				var ID_RESIDENT = objDs.getColumn(i,"ID_RESIDENT").replace(/-/g,"");
+        				if(ID_RESIDENT.length < 7){
+        					msg += (i + 1) + "가족주민번호는 앞6자리 + 뒷자리 앞1자리까지 입력하셔야합니다. \n";
+        				}
+        				break;
+        			case 3:	// 학력
+        				var YM_SCHOOLFROM = objDs.getColumn(i,"YM_SCHOOLFROM")	// 변경정보	입학년월
+        				var YM_SCHOOLTO = objDs.getColumn(i,"YM_SCHOOLTO")		// 변경정보	졸업년월
+        				if(!this.gfnIsNull(YM_SCHOOLFROM) || !this.gfnIsNull(YM_SCHOOLTO)){
+        					if (YM_SCHOOLTO < YM_SCHOOLFROM) {
+        						msg += (i + 1) + "행 [졸업년월]은 [입학년월] 이후로 입력하셔야합니다. \n";
+        					}
+        				}
+        				break;
+        			case 4:	// 자격
+        				var DT_ACQUIRE = objDs.getColumn(i,"DT_ACQUIRE")	// 변경정보	취득일자
+        				var DT_EXPIRE = objDs.getColumn(i,"DT_EXPIRE")	// 변경정보	만료일
+
+        				trace("취득일자->" + DT_ACQUIRE + " / 만료일->" + DT_EXPIRE)
+
+        				if(!this.gfnIsNull(DT_ACQUIRE) && !this.gfnIsNull(DT_EXPIRE)){
+        					if (DT_EXPIRE < DT_ACQUIRE) {
+        						msg += (i + 1) + "행 [만료일]는 [취득일자] 이후로 입력하셔야합니다. \n";
+        					}
+        				}
+
+        				break;
+        			case 5:	// 경력
+        				var DT_CAREERFROM = objDs.getColumn(i,"DT_CAREERFROM")	// 변경정보	근무기간From
+        				var DT_CAREERTO = objDs.getColumn(i,"DT_CAREERTO")		// 변경정보	근무기간To
+        				if(!this.gfnIsNull(DT_CAREERFROM) && !this.gfnIsNull(DT_CAREERTO)){
+        					if (DT_CAREERTO < DT_CAREERFROM) {
+        						msg += (i + 1) + "행 [근무기간종료일]은 [근무기간시작일] 이후로 입력하셔야합니다. \n";
+        					}
+        				}
+        				break;
+        			case 7:	// 외국어
+        				var DT_LANGUAGE = objDs.getColumn(i,"DT_LANGUAGE")	// 변경정보	평가일자
+        				var DT_EXPIRE = objDs.getColumn(i,"DT_EXPIRE")		// 변경정보	만료일자
+        				if(!this.gfnIsNull(DT_LANGUAGE) && !this.gfnIsNull(DT_EXPIRE)){
+        					if (DT_EXPIRE < DT_LANGUAGE) {
+        						msg += (i + 1) + "행 [만료일자]은 [평가일자] 이후로 입력하셔야합니다. \n";
+        					}
+        				}
+        				break;
+        		}
+        	}// for
+
+
+        	if(this.gfnIsNull(msg)) {
+        		return true;
+        	}
+        	else {
+        		var arrError = [msg];
+        		this.gfnAlert("msg.err.validator", arrError);
+        		return false;
+        	}
+        };
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	if(svcID.startsWith("select_")){
+        		var arrSvcID = svcID.split("_");
+
+        		if(arrSvcID[1] == "1"){
+        			this.fnSetSingleForm(0); //인사기본정보
+        		}
+        		else if(arrSvcID[1] == "7"){
+        			this.fnSetSingleForm(6); //기타
+        		}
+        		else{
+        			var nTabIdx = parseInt(arrSvcID[1])-1;
+        			var objTarget = this.fnGetTabInfo(nTabIdx);
+
+        			this.gfnGridAfterSelect(objTarget.objGrid1);
+        			this.gfnGridAfterSelect(objTarget.objGrid2);
+        		}
+        	}
+        	else if(svcID == "selectAskCnt"){
+        		;
+        	}
+        	else if(svcID.startsWith("save_")){
+        		if (errorCode == 0) {
+        			this.gfnAlert('개인정보가 저장되었습니다. 변경요청을 하시려면 우측상단의 [변경요청]버튼을 눌러주세요.');
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        	else if(svcID == "updateAll"){
+        		if (errorCode == 0) {
+        			this.gfnAlert('변경요청이 완료되었습니다.');
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+        this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+        	trace("fnBeforeUserDataSetParam>111", id);
+
+        	//조회조건
+        	if (id == "ccfID_SABUN") {	// 성명
+        		dsUserParam.setColumn(nrow, "CD_CORP", this.gfnNvl(this.ccfCD_CORP.form.CDTextBox.value) , "%");
+        		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);	// 사용자 권한
+        		dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);	// 로그인부서
+        		dsUserParam.setColumn(nrow, "YN_CORP", "N");	// 법인무관(Y: 법인에 관계없이 직원검색 N:조건의 법인의 임직원만 검색)
+        		dsUserParam.setColumn(nrow, "TY_RETIRE", "");	// 01 재직 02 휴직 04 퇴직 % :전체
+        	}
+        	// 기본정보 관련
+        	else if (id == "cfCD_RELIGION") {	//종교
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "RA");
+        	}
+        	else if (id == "ccfCD_SUPPORTED") {	//보훈관계
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "FA")
+        	}
+        	else if (id == "ccfDS_FOREIGNER") { // 외국인 국적
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "NT");
+        	}
+        	else if (id == "ccfDS_DISABILITY") { // 장애종류
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "HS");
+        	}
+        	else if (id == "ccfDS_DISABILITY_GRADE") { // 장애등급
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "HD");
+        	}
+        	else if (id == "cfCD_FAMILY_HEAD") { //호주
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "FA");
+        	}
+        	else if (id == "cfCD_HOUSEHOLDER") { //세대주
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "FA");
+        	}
+        	// 병역관련
+        	else if (id == "cfCD_RESOURCE") { //군필종류
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "ME");
+        	}
+        	else if (id == "cfCD_SERVICESTS") { //역종
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "MF");
+        	}
+        	else if (id == "cfCD_BRANCH") { //병과
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "MC");
+        	}
+        	else if (id == "cfCD_MILITARY") { //군별
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "MA");
+        	}
+        	else if (id == "cfCD_DISCHARGE") { //제대구분
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "MD");
+        	}
+        	else if (id == "cfCD_MILITARYRANK") { //계급
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "MB");
+        	}
+        	//기타탭(tab15)
+        	else if (id == "ccfTY_BLOOD") {
+        		dsUserParam.setColumn(nrow, "CD_PREFIX", "AC");
+        	}
+
+        	return true;
+        }
+
+        this.fnAfterCDTextChanged = function(id,codeFindData) {
+        	console.log("fnAfterCDTextChanged",id,codeFindData);
+           	if(id == "ccfID_SABUN") {
+        		var arr = codeFindData;
+        		if(arr.length > 0) {
+        			this.txtID_PERSON.set_value(arr[0]["ID_PERSON"]);
+        			this.ccfCD_CORP.form.CDTextBox.set_value(arr[0]["CD_CORP"]);
+        			this.ccfCD_CORP.form.DSTextBox.set_value(arr[0]["DS_CORP"]);
+
+        			this.FormBtns.Select.click();
+        		}else{
+        			this.txtID_PERSON.set_value("");
+        		}
+        	} else if (id == "ccfCD_CORP") {
+        		this.ccfID_SABUN.form.CDTextBox.set_value("");
+        		this.ccfID_SABUN.form.DSTextBox.set_value("");
+        		this.txtID_PERSON.set_value("");
+        	}
+        }
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+         this.fnGrid_BeforuserDataSetParam = function(id, dsUserParam, nrow) {
+        	switch(id) {
+        		//DAX_CFCOMMONCODE
+        	    case "AA":	// 2주소_주소구분(변경)
+        		case "AB":	// 2주소_지역코드
+        		case "FA":	// 3가족_관계코드
+        		case "SA":	// 3가족_학력코드
+        		case "SA2":	// 4학력_학력구분
+        		case "SD":	// 4학력_학교코드
+        		case "SB":	// 4학력_졸업여부
+        		case "SE":	// 4학력_전공코드
+        		case "SC":	// 4학력_학위코드
+        		case "LA":	// 5자격_자격증코드
+        			dsUserParam.setColumn(nrow, "CD_PREFIX", id);
+        			break;
+
+        		case "SE2":	// 4학력_복수전공코드
+        			dsUserParam.setColumn(nrow, "CD_PREFIX", "SE");
+        			break;
+
+        		//tab2 주소
+        		case "DAX_CFADDRESS":	// 2주소_주소코드,주소구분,주소(현재)
+        			var TY_GUBUN = this.dsAddrList2.getColumn(this.dsAddrList2.rowposition, "TY_GUBUN");
+        			if(this.gfnIsNull(TY_GUBUN)) {
+        				this.gfnAlert("구분을 먼저 입력하세요.");
+        				return false;
+        			}
+        			dsUserParam.setColumn(nrow, "ID_PERSON", this.dsSearch.getColumn(0, "ID_PERSON"));
+        			break;
+
+        		//tab3 가족
+        		case "DAX_CFFAMILY_CODEFIND":	//3가족_순번,관계코드,관계명,가족생년월일,가족성명
+        			var TY_GUBUN = this.dsFmyList2.getColumn(this.dsFmyList2.rowposition, "TY_GUBUN");
+        			if(this.gfnIsNull(TY_GUBUN)) {
+        				this.gfnAlert("구분을 먼저 입력하세요.");
+        				return false;
+        			}
+        			dsUserParam.setColumn(nrow, "ID_PERSON", this.dsSearch.getColumn(0, "ID_PERSON"));
+        			break;
+
+        		//tab4 학력
+        		case "DAX_CFSCHOOL":	//4학력_순번,학력구분,학력구분,학교코드,학교명,
+        			var TY_GUBUN = this.dsSchList2.getColumn(this.dsSchList2.rowposition, "TY_GUBUN");
+        			if(this.gfnIsNull(TY_GUBUN)) {
+        				this.gfnAlert("구분을 먼저 입력하세요.");
+        				return false;
+        			}
+        			dsUserParam.setColumn(nrow, "ID_PERSON", this.dsSearch.getColumn(0, "ID_PERSON"));
+        			break;
+
+        		//tab5 자격
+        		case "DAX_CFLICENSE":	//5자격_순번,자격증코드,자격증명,자격번호
+        			var TY_GUBUN = this.dsLicList2.getColumn(this.dsLicList2.rowposition, "TY_GUBUN");
+        			if(this.gfnIsNull(TY_GUBUN)) {
+        				this.gfnAlert("구분을 먼저 입력하세요.");
+        				return false;
+        			}
+        			dsUserParam.setColumn(nrow, "ID_PERSON", this.dsSearch.getColumn(0, "ID_PERSON"));
+        			break;
+
+        		//tab6 경력
+        		case "DAX_CFCAREER":	// 6경력_근무처
+        			var TY_GUBUN = this.dsCrrList2.getColumn(this.dsCrrList2.rowposition, "TY_GUBUN");
+        			if(this.gfnIsNull(TY_GUBUN)) {
+        				this.gfnAlert("구분을 먼저 입력하세요.");
+        				return false;
+        			}
+        			dsUserParam.setColumn(nrow, "ID_PERSON", this.dsSearch.getColumn(0, "ID_PERSON"));
+        			break;
+
+        		//tab8 외국어
+        		case "DAX_CFLANGUAGE":	// 개인외국어정보
+        			var TY_GUBUN = this.dsLangList2.getColumn(this.dsLangList2.rowposition, "TY_GUBUN");
+        			if(this.gfnIsNull(TY_GUBUN)) {
+        				this.gfnAlert("구분을 먼저 입력하세요.");
+        				return false;
+        			}
+        			dsUserParam.setColumn(nrow, "ID_PERSON", this.dsSearch.getColumn(0, "ID_PERSON"));
+        			break;
+        		case "H2": //어학구분
+        			var TY_GUBUN = this.dsLangList2.getColumn(this.dsLangList2.rowposition, "TY_GUBUN");
+        			if(this.gfnIsNull(TY_GUBUN)) {
+        				this.gfnAlert("구분을 먼저 입력하세요.");
+        				return false;
+        			}
+        			dsUserParam.setColumn(nrow, "CD_PREFIX", "H2");
+        			break;
+        		case "H3": //시험종류
+        			dsUserParam.setColumn(nrow, "CD_PREFIX", "H3");
+        			break;
+
+        		default:
+        		}
+        		return true;
+        }
+
+        this.fnGrid_AfterCDTextChanged = function(id, codeFindData) {
+
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+        	var arr = codeFindData;
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+        	var nRow1 = objTarget.objGrid1.currentrow;
+        	var nRow2 = objTarget.objGrid2.currentrow;
+
+        	var sTyGubun = objTarget.objDsList2.getColumn(nRow2, "TY_GUBUN");
+        	var nx_flag = objTarget.objDsList2.getColumn(nRow2, "nx_flag");
+        	var nx_sort = objTarget.objDsList2.getColumn(nRow2, "nx_sort");
+
+        	switch(id) {
+        		//tab2 주소
+        		case "DAX_CFADDRESS":	// 현재 주소구분
+        			if(sTyGubun == "U" && arr.length > 0){
+        				objTarget.objDsList2.setColumn(nRow2, "CD_ADDRESS" , arr[0]["CD_ADDRESS"]);
+        				objTarget.objDsList2.setColumn(nRow2, "NM_ADDRESS" , arr[0]["NM_ADDRESS"]);
+        			}else{
+        				objTarget.objDsList2.setColumn(nRow2, "CD_ADDRESS" , "");
+        				objTarget.objDsList2.setColumn(nRow2, "NM_ADDRESS" , "");
+        			}
+
+        			break;
+
+        		//tab3 가족
+        		case "DAX_CFFAMILY_CODEFIND":	//3가족_순번,관계코드,관계명,가족생년월일,가족성명
+        			if(sTyGubun == "U" && arr.length > 0){
+        				objTarget.objDsList2.setColumn(nRow2, "CD_FAMILY" , arr[0]["CD_FAMILY"]);	// 관계코드
+        				objTarget.objDsList2.setColumn(nRow2, "DS_FAMILY" , arr[0]["DS_FAMILY"]);	// 관계명
+        				objTarget.objDsList2.setColumn(nRow2, "DS_HNAME" , arr[0]["DS_HNAME"]);	// 가족성명
+        				objTarget.objDsList2.setColumn(nRow2, "ID_RESIDENT" , arr[0]["ID_RESIDENT"]);	// 가족생년월일
+        				objTarget.objDsList2.setColumn(nRow2, "CD_SCHOLARSHIP" , arr[0]["CD_SCHOLARSHIP"]);	// 학력코드
+        				objTarget.objDsList2.setColumn(nRow2, "DS_SCHOLARSHIP" , arr[0]["DS_SCHOLARSHIP"]);	// 학력명칭
+        			}else{
+        				objTarget.objDsList2.setColumn(nRow2, "CD_FAMILY" , "");	// 관계코드
+        				objTarget.objDsList2.setColumn(nRow2, "DS_FAMILY" , "");	// 관계명
+        				objTarget.objDsList2.setColumn(nRow2, "DS_HNAME" , "");	// 가족성명
+        				objTarget.objDsList2.setColumn(nRow2, "ID_RESIDENT" , "");	// 가족생년월일
+        				objTarget.objDsList2.setColumn(nRow2, "CD_SCHOLARSHIP" , "");	// 학력코드
+        				objTarget.objDsList2.setColumn(nRow2, "DS_SCHOLARSHIP" , "");	// 학력명칭
+        			}
+
+        		break;
+
+        		//tab4 학력
+        		case "DAX_CFSCHOOL":	//4학력_순번,학력구분,학력구분,학교코드,학교명,
+        			if(sTyGubun == "U" && arr.length > 0){
+        				objTarget.objDsList2.setColumn(nRow2, "CD_LEVEL" , arr[0]["CD_LEVEL"]);	// 학력코드
+        				objTarget.objDsList2.setColumn(nRow2, "DS_LEVEL" , arr[0]["DS_LEVEL"]);	// 학력명
+        				objTarget.objDsList2.setColumn(nRow2, "CD_SCHOOL" , arr[0]["CD_SCHOOL"]);	// 학교코드
+
+        				var DS_SCHOOL = (arr[0]["CD_SCHOOL"] == "ZZZZZZ")? "기타" : arr[0]["DS_SCHOOL"];
+        				var DS_SCHOOL_ETC = (arr[0]["CD_SCHOOL"] == "ZZZZZZ")? arr[0]["DS_SCHOOL"] : "";
+
+        				//objTarget.objDsList2.setColumn(nRow2, "DS_SCHOOL_ETC" , DS_SCHOOL_ETC);	// 학교명
+        				objTarget.objDsList2.setColumn(nRow2, "DS_SCHOOL" , DS_SCHOOL);			// 학교명
+
+        				objTarget.objDsList2.setColumn(nRow2, "YM_SCHOOLFROM" , arr[0]["YM_SCHOOLFROM"]);	// 입학년월
+        				objTarget.objDsList2.setColumn(nRow2, "YM_SCHOOLTO" , arr[0]["YM_SCHOOLTO"]);	// 졸업년월
+
+        			}else{
+        				objTarget.objDsList2.setColumn(nRow2, "CD_LEVEL" , "");
+        				objTarget.objDsList2.setColumn(nRow2, "DS_LEVEL" , "");
+        				objTarget.objDsList2.setColumn(nRow2, "CD_SCHOOL" , "");
+        				objTarget.objDsList2.setColumn(nRow2, "DS_SCHOOL" , "");
+        				objTarget.objDsList2.setColumn(nRow2, "DS_SCHOOL_ETC" , "");
+        				objTarget.objDsList2.setColumn(nRow2, "YM_SCHOOLFROM" , "");
+        				objTarget.objDsList2.setColumn(nRow2, "YM_SCHOOLTO" , "");
+        			}
+        			break;
+
+        // 		case "SD": //학교코드
+        // 			objTarget.objDsList2.setColumn(nRow2, "DS_SCHOOL_ETC", ""); //학교명(기타) 초기화
+        // 			break;
+
+        		//tab5 자격
+        		case "DAX_CFLICENSE":	//5자격_순번,자격증코드,자격증명,자격번호
+        			if(sTyGubun == "U" && arr.length > 0){
+        				objTarget.objDsList2.setColumn(nRow2, "CD_LICENSE" , arr[0]["CD_LICENSE"]);	// 자격증코드
+        				objTarget.objDsList2.setColumn(nRow2, "DS_LICENSE" , arr[0]["DS_LICENSE"]);	// 자격증명
+        				objTarget.objDsList2.setColumn(nRow2, "NO_LICENSE" , arr[0]["NO_LICENSE"]);	// 자격번호
+        			}else{
+        				objTarget.objDsList2.setColumn(nRow2, "CD_LICENSE" , "");
+        				objTarget.objDsList2.setColumn(nRow2, "DS_LICENSE" , "");
+        				objTarget.objDsList2.setColumn(nRow2, "DS_LICENSE_ETC" , "");
+        				objTarget.objDsList2.setColumn(nRow2, "NO_LICENSE" , "");
+        			}
+        			break;
+
+        // 		case "LA": //자격코드
+        // 			objTarget.objDsList2.setColumn(nRow2, "DS_LICENSE_ETC", "");//자격증명(기타) 초기화
+        // 			break;
+
+        		//tab6 경력
+        		case "DAX_CFCAREER":	// 6경력_근무처
+        			if(sTyGubun == "U" && arr.length > 0){
+        				objTarget.objDsList2.setColumn(nRow2, "DS_COMPANY" , arr[0]["DS_COMPANY"]);	// 근무처
+        				objTarget.objDsList2.setColumn(nRow2, "DT_CAREERFROM" , arr[0]["DT_CAREERFROM"]);	// 근무기간From
+        				objTarget.objDsList2.setColumn(nRow2, "DT_CAREERTO" , arr[0]["DT_CAREERTO"]);	// 근무기간To
+        			}else{
+        				objTarget.objDsList2.setColumn(nRow2, "DS_COMPANY" , "");
+        				objTarget.objDsList2.setColumn(nRow2, "DT_CAREERFROM" , "");
+        				objTarget.objDsList2.setColumn(nRow2, "DT_CAREERTO" , "");
+        			}
+        			break;
+
+        		//tab8 외국어
+        		case "DAX_CFLANGUAGE":	// 외국어정보
+        			if(sTyGubun == "U" && arr.length > 0){
+        				objTarget.objDsList2.setColumn(nRow2, "CD_LANGUAGE" , arr[0]["CD_LANGUAGE"]);	// 어학구분
+        				objTarget.objDsList2.setColumn(nRow2, "DS_LANGUAGE" , arr[0]["DS_LANGUAGE"]);	// 어학명
+        				objTarget.objDsList2.setColumn(nRow2, "CD_EXAM" , arr[0]["CD_EXAM"]);	// 시험종류
+        				objTarget.objDsList2.setColumn(nRow2, "DS_EXAM" , arr[0]["DS_EXAM"]);	// 시험종류명
+        				objTarget.objDsList2.setColumn(nRow2, "DT_LANGUAGE" , arr[0]["DS_EXAM"]);	// 평가일자
+        			}else{
+        				objTarget.objDsList2.setColumn(nRow2, "CD_LANGUAGE" , "");	// 어학구분
+        				objTarget.objDsList2.setColumn(nRow2, "DS_LANGUAGE" , "");	// 어학명
+        				objTarget.objDsList2.setColumn(nRow2, "CD_EXAM" , "");	// 시험종류
+        				objTarget.objDsList2.setColumn(nRow2, "DS_EXAM" , "");	// 시험종류명
+        				objTarget.objDsList2.setColumn(nRow2, "DT_LANGUAGE" , "");	// 평가일자
+        			}
+        			break;
+
+        		default:
+        	}
+
+        	if(sTyGubun == "U" && arr.length > 0){
+        		// 구분이 변경일때 현재정보 -> 변경정보 셋팅
+        		var NO_SEQ_ORG = (nTabIdx == 0)? arr[0]["CD_ADDRESS"] : arr[0]["NO_SEQ"] ;
+        		var sColumnNm = (nTabIdx == 0)? "CD_ADDRESS" : "NO_SEQ";
+
+        		nRow1 = objTarget.objDsList1.findRow( sColumnNm, NO_SEQ_ORG );
+        		var bSucc = objTarget.objDsList2.copyRow(nRow2, objTarget.objDsList1, nRow1); //동일한 컬럼만 갱신됨
+        		objTarget.objDsList2.setColumn(nRow2, "nx_flag", nx_flag);
+        		objTarget.objDsList2.setColumn(nRow2, "nx_sort", nx_sort);
+        	}
+        	return true;
+        };
+
+        // DataSet 의 Column 값이 변경될 때
+        this.dsList2_cancolumnchange = function(obj,e){
+        	var sColumnId = e.columnid;
+        	return true;
+        };
+
+        //  DataSet 의 Column 값이 변경된 후
+        //그리드2 dataset oncolumnchanged 이벤트 모두 해당됨
+        this.dsList2_oncolumnchanged = function(obj,e){
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+        	var nRow1 = objTarget.objGrid1.currentrow;
+        	var nRow2 = objTarget.objGrid2.currentrow;
+
+        	if(e.columnid == "TY_GUBUN"){	// 구분(공통 - 주소, 가족 학력, 자격, 경력)
+        		if(e.oldvalue != e.newvalue){
+        			this.fnSetTyGubunChanged(e.newvalue);
+        		}
+        	}
+        };
+
+        // 변경정보 Grid의 구분(TY_GUBUN)이 변경 되었을때
+        this.fnSetTyGubunChanged = function(sTyGubun){
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+        	var nRow1 = objTarget.objGrid1.currentrow;
+        	var nRow2 = objTarget.objGrid2.currentrow;
+
+        	// (ID_PERSON, NO_SEQ, CD_CORP, ID_SABUN) 값 제외 후 리셋
+        	objTarget.objDsList2.set_enableevent(false);
+        	for ( var i = objTarget.objDsList2.colcount-1; -1 < i ; i--){
+        		var sColId = objTarget.objDsList2.getColID(i);
+        		if( sColId != "nx_flag" && sColId != "nx_sort" && sColId != "TY_GUBUN" &&
+        			sColId != "ID_PERSON" && sColId != "NO_SEQ" && sColId != "CD_CORP" && sColId != "ID_SABUN"){
+        			objTarget.objDsList2.setColumn(nRow2, sColId ,"");
+        		}
+        	}
+        	objTarget.objDsList2.set_enableevent(true);
+
+        	// 필수입력 표시
+        	this.fnSetHeadRequired();
+        }
+
+        // 셀 수정가능 여부
+        this.fnGrid_EnterCell = function(obj, row, cell)
+        {
+        	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, cell);
+        	var objDs = obj.getBindDataset();
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+
+        	// TY_STATUS
+        	// Grid의 상태(TY_STATUS) 값이 '1' 또는 '2' 일 경우에는 해당 ROW 가 수정/삭제가 불가 합니다.
+        	var sTyStatus = objDs.getColumn(row, "TY_STATUS");
+        	//trace("Grid의 상태(TY_STATUS) 값이 '1' 또는 '2' 일 경우에는 해당 ROW 가 수정/삭제가 불가 합니다. ->" + sTyStatus)
+        	if(sTyStatus == "01" || sTyStatus == "02"){
+        		//alert("Grid의 상태(TY_STATUS) 값이 '1' 또는 '2' 일 경우에는 해당 ROW 가 수정/삭제가 불가 합니다.");
+        		//this.gfnAlert("결재중이거나 결재가 완료된 건은 수정/삭제가 불가 합니다.");
+        		return false;
+        	}
+
+        	switch(nTabIdx){ // 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+        		case 1:
+        			/* ========================== 주소 ========================== */
+        			if(colnm != "TY_GUBUN"){
+        				var TY_GUBUN = this.gfnNvl(objDs.getColumn(row, "TY_GUBUN"),"");
+        				if (TY_GUBUN == "") {
+        					this.gfnAlert('변경정보의 구분을 먼저 선택해주시기 바랍니다.');
+        					objDs.setColumn(row, "TY_GUBUN", "");
+        					return false;
+        				}
+        			}
+        		break;
+
+        		case 2:
+        			/* ========================== 가족 ========================== */
+        			if(colnm != "TY_GUBUN"){
+        				var TY_GUBUN = this.gfnNvl(objDs.getColumn(row, "TY_GUBUN"),"");
+        				if (TY_GUBUN == "") {
+        					this.gfnAlert('변경정보의 구분을 먼저 선택해주시기 바랍니다.');
+        					objDs.setColumn(row, "TY_GUBUN", "");
+        					return false;
+        				}
+        			}
+        		break;
+
+        		case 3:
+        			if(colnm != "TY_GUBUN"){
+        				var TY_GUBUN = this.gfnNvl(objDs.getColumn(row, "TY_GUBUN"),"");
+        				if (TY_GUBUN == "") {
+        					this.gfnAlert('변경정보의 구분을 먼저 선택해주시기 바랍니다.');
+        					objDs.setColumn(row, "TY_GUBUN", "");
+        					return false;
+        				}
+        			}
+        // 			//학력
+        // 			var CD_SCHOOL = this.gfnNvl(objDs.getColumn(row,"CD_SCHOOL"), ""); //학교코드
+        // 			var CD_MAJOR = this.gfnNvl(objDs.getColumn(row,"CD_MAJOR"), ""); //전공코드
+        // 			var CD_DOUBLE_MAJOR = this.gfnNvl(objDs.getColumn(row,"CD_DOUBLE_MAJOR"), ""); //복수전공코드
+        //
+        // 			//학교명기타
+        // 			if(colnm == "DS_SCHOOL_ETC"){
+        // 				if(CD_SCHOOL != "ZZZZZZ"){
+        // 					return false;
+        // 				}
+        // 			}
+        // 			//전공명(기타)
+        // 			if(colnm == "DS_MAJOR_ETC"){
+        // 				if(CD_MAJOR != "ZZZZ"){
+        // 					return false;
+        // 				}
+        // 			}
+        // 			//복수전공명(기타)
+        // 			if(colnm == "DS_DOUBLE_MAJOR_ETC"){
+        // 				if(CD_DOUBLE_MAJOR != "ZZZZ"){
+        // 					return false;
+        // 				}
+        // 			}
+        		break;
+
+        		case 4:
+        			//자격
+        			if(colnm != "TY_GUBUN"){
+        				var TY_GUBUN = this.gfnNvl(objDs.getColumn(row, "TY_GUBUN"),"");
+        				if (TY_GUBUN == "") {
+        					this.gfnAlert('변경정보의 구분을 먼저 선택해주시기 바랍니다.');
+        					objDs.setColumn(row, "TY_GUBUN", "");
+        					return false;
+        				}
+        			}
+
+        // 			if(colnm == "DS_LICENSE_ETC"){
+        // 				// 면허코드가 기타[ ZZZZ ] 인 경우에는 자격증(기타) 활성화, 그외에는 비활성화
+        // 				if( this.gfnNvl(objDs.getColumn(row,"CD_LICENSE"),"") != "ZZZZ"){
+        // 					return false;
+        // 				}
+        // 			}
+
+        		break;
+
+        		case 5:
+        			/* ========================== 경력 ========================== */
+        			if(colnm != "TY_GUBUN"){
+        				var TY_GUBUN = this.gfnNvl(objDs.getColumn(row, "TY_GUBUN"),"");
+        				if (TY_GUBUN == "") {
+        					this.gfnAlert('변경정보의 구분을 먼저 선택해주시기 바랍니다.');
+        					objDs.setColumn(row, "TY_GUBUN", "");
+        				}
+        			}
+        		break;
+
+        		case 7:
+        			/* ========================== 외국어 ========================== */
+        			if(colnm != "TY_GUBUN"){
+        				var TY_GUBUN = this.gfnNvl(objDs.getColumn(row, "TY_GUBUN"),"");
+        				if (TY_GUBUN == "") {
+        					this.gfnAlert('변경정보의 구분을 먼저 선택해주시기 바랍니다.');
+        					objDs.setColumn(row, "TY_GUBUN", "");
+        				}
+        			}
+        		break;
+
+        	}
+        	return;
+        }
+
+        // 첨부파일
+        this.fnGrid_ExpandUp = function(obj, e) {
+        	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, e.cell);
+        	var objDs = obj.getBindDataset();
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+        	var aTabDir = ["","ADDRESS", "FAMILY", "SCHOOL", "LICENSE", "CAREER","","LANGUAGE"];	// 기본정보, 주소,가족,학력,자격,경력, 기타, 외국어
+        	var sCdDir = "";
+
+        	if(colnm == "NM_FILE") {
+        		// 최초 작성시엔 NO_SEQ가 없기 때문에 저장 후에 파일 첨부를 진행하여야 함.
+        		// CD_DIR에 넣어줄 값이 없기에 저장 후 진행!
+        		if(this.gfnGetFlag(objDs, e.row) == "I"){
+        			this.gfnAlert("저장 후 파일첨부 진행.");
+        			return false;
+        		}
+        		/*
+        			주소 >>	ADDRESS	/임직원ID_PERSON / 해당ROW의 NO_SEQ
+        			가족 >>	FAMILY	/임직원ID_PERSON / 해당ROW의 NO_SEQ
+        			학력 >>	SCHOOL	/임직원ID_PERSON / 해당ROW의 NO_SEQ
+        			자격 >>	LICENSE	/임직원ID_PERSON / 해당ROW의 NO_SEQ
+        			경력 >>	CAREER	/임직원ID_PERSON / 해당ROW의 NO_SEQ
+        		*/
+
+        		var fileManager = {};
+        		fileManager.CD_GUBUN = "DA40";
+        		//fileManager.CD_DIR = [this.dsList.getColumn(e.row, "CD_OWNER")];
+        		fileManager.CD_DIR = [aTabDir[nTabIdx], objDs.getColumn(e.row, "ID_PERSON"), objDs.getColumn(e.row, "NO_SEQ")];
+        		fileManager.IS_READONLY = false;
+
+        		this.gfnFileManager(fileManager, "fnFileCallback");
+        	}
+        }
+
+        this.fnFileCallback = function(strID, val) {
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+        	var objDs1 = objTarget.objGrid1.getBindDataset();
+        	var objDs2 = objTarget.objGrid2.getBindDataset();
+
+        	// val.IsChange : 변경여부, val.Cnt : 파일개수
+
+        	// 파일개수를 다시 셋팅
+        	objDs2.set_enableevent(false);
+        	if(val.Cnt == 0) {
+        		//objDs2.setColumn(objDs2.rowposition, "NM_FILE", "첨부");
+        	}
+        	objDs2.setColumn(objDs2.rowposition, "NM_FILE", "첨부(" + val.Cnt + ")");
+        	objDs2.setColumn(objDs2.rowposition, "FILE_CNT", val.Cnt );
+        	objDs2.set_enableevent(true);
+        };
+
+        // 첨부파일 일단 2로 바꿔놓음 -사용안함
+        this.fnGrid_ExpandUp2 = function(obj,e) {
+        	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, e.cell);
+        	var objDs = obj.getBindDataset();
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+
+        	switch(nTabIdx){ // 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+        		case 1:
+        			/* ========================== 주소 ========================== */
+        		break;
+
+        		case 2:
+        			/* ========================== 가족 ========================== */
+        			if(colnm == "NM_FILE") {
+        				var fileid = "fileup_"+e.row+"_"+this.id;
+        				var fileup = new FileUpload();
+        				fileup.init(fileid, 0,0,0,0);
+        				if(this.lookup(fileid)) {
+        					delete this.fileuploads[fileid];
+        					this.removeChild(fileid);
+        				}
+        				this.addChild(fileid, fileup);
+        				fileup.show();
+        				fileup.row = e.row;
+        				fileup.addEventHandler("onitemchanged", this.fileup_onitemchanged, this);
+        				fileup.addEventHandler("onsuccess", this.fileup_onsuccess, this);
+        				fileup.addEventHandler("onerror", this.fileup_onerror, this);
+
+        				this.fileuploads[fileid] = fileup;
+        				fileup.filefindbuttons.upfile0.click();
+
+        				this.id++;
+        			}
+        		break;
+
+        		case 3:
+        			/* ========================== 학력 ========================== */
+
+        		break;
+
+        		case 4:
+        			/* ========================== 자격 ========================== */
+        		break;
+
+        		case 5:
+        			/* ========================== 경력 ========================== */
+        		break;
+        	}
+        }
+
+        this.fileup_onitemchanged = function(obj,e) {
+        	var row = obj.row;
+        	if(obj.filelist.length > 0) {
+
+        		var rowIdx = this.dsList.rowposition;
+        		var key = this.dsList.getColumn(rowIdx, "ID_PERSON");
+        		this.dsList.setColumn(row, "DS_PATH", this.filepath + key);
+        		this.dsList.setColumn(row, "NM_FILE", obj.filelist[0].filename);
+        	}
+        }
+
+        this.fileup_onsuccess = function(obj,e) {
+        	this.filecnt += 1;
+        	if(this.keys.length == this.filecnt) {
+        		//this.fnSaveProc();
+        	}
+        }
+
+        this.fileup_onerror = function(obj,e) {
+        	this.filecnt += 1;
+        	if(this.keys.length == this.filecnt) {
+        		//this.fnSaveProc();
+        	}
+        }
+
+        // 파일다운로드 - 사용안함
+        this.fnGrid_CellDblclick = function(obj,e)
+        {
+        	// 첨부파일 식대승인 DGB_FOODPAY 참고
+        	var colId = this.gfnGridGetBindColumnNameByIndex(obj, e.cell);
+        	var objDs = obj.getBindDataset();
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+        	this.fileConfig.downloadUrl = "/file/downloadFile.do";
+
+        	if(colId != "NM_FILE"){
+        		return;
+        	}
+
+
+        	// 파일경로
+        	if (this.gfnIsNull(objDs.getColumn(e.row, "NM_FILE"))) { return false; }
+        	var DS_FILE_PATH = objDs.getColumn(e.row, "DS_PATH");
+        	if(this.gfnIsNull(DS_FILE_PATH)){
+        		this.gfnAlert("첨부파일 경로 확인하세요");
+        		return false;
+        	}
+
+        	var sFilename = objDs.getColumn(e.row, "NM_FILE");
+        	var encodeFileName = encodeURIComponent(sFilename);
+
+        	var svrPath = objDs.getColumn(e.row, "DS_PATH").replace(/\//g, "\\") + "\\";
+        	var filePath = svrPath.replace(/\\\\/g, "\\");
+
+        	var surl = this.fileConfig.host + this.fileConfig.downloadUrl;
+        	// svrPath->DA\DAA_LICENSE\1237\
+        	// surl->http://localhost:8080/file/downloadFile.do
+
+        	this.FileDownTransfer00.set_url(surl);
+        	this.FileDownTransfer00.setPostData("path", filePath);
+        	this.FileDownTransfer00.setPostData("fileName", sFilename);
+
+        	if( system.navigatorname =="nexacro"){
+        		this.FileDownTransfer00.set_downloadfilename(sFilename);
+        	}
+
+        	this.FileDownTransfer00.download();
+        	switch(nTabIdx){	// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+        		case 1:
+        			/* ========================== 주소 ========================== */
+        		break;
+
+        		case 2:
+        			/* ========================== 가족 ========================== */
+        		break;
+
+        		case 3:
+        			/* ========================== 학력 ========================== */
+        		break;
+
+        		case 4:
+        			/* ========================== 자격 ========================== */
+        		break;
+
+        		case 5:
+        			/* ========================== 경력 ========================== */
+        		break;
+        	}
+        };
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        /*
+         *	조회 조건 변경시 초기화
+         */
+        this.dsSearch_onvaluechanged = function(obj,e){
+        	if(e.oldvalue != e.newvalue){
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.fnDataClear("Y");
+        	}
+        };
+
+        //allYN : Y, N
+        this.fnDataClear = function(allYN){
+        	if(allYN == "Y"){
+        		this.dsListAskCnt.clearData();
+        	}
+
+        	var nTabIdx = this.divData.form.tabData.tabindex; // 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+
+        	if(nTabIdx == 1 || nTabIdx == 2 || nTabIdx == 3 || nTabIdx == 4 || nTabIdx == 5 || nTabIdx == 7){
+        		this.gfnGridClear(objTarget.objGrid1);
+        		this.gfnGridClear(objTarget.objGrid2);
+        	}
+        	else if(nTabIdx == 0 || nTabIdx == 6){
+        		objTarget.objDsList2.clearData();
+        	}
+        }
+
+        // 탭변경 전
+        this.divData_tabData_canchange = function(obj,e){
+        	if(e.postindex != e.preindex){
+
+        		this.gfnUpdateToDataset(this); //포커스이동전 dataset 에 바로 반영
+
+        		//callback 에서 사용
+        		this.preTabIdx = e.preindex;
+        		this.postTabIdx = e.postindex;
+
+
+        		var objTarget = this.fnGetTabInfo(e.preindex);
+        		var objDS2 = objTarget.objDsList2;
+
+        		var bIsUpdated = this.fnIsUpdated(objDS2, e.preindex);
+        		if( bIsUpdated) {
+        			this.gfnConfirm("변경된 데이터가 있습니다.\r\n계속 진행하시겠습니까?", "tabData_canchange_callback");
+        			return false;
+        		}
+        	}
+        };
+
+        this.fnIsUpdated = function(objDs, nTabIdx){
+        	var bIsUpdated = false;
+        	// 0: 인사기본정보, 1: 주소, 2: 가족, 3: 학력, 4: 자격, 5: 경력, 6:기타, 7:외국어
+        	if(nTabIdx == 1 || nTabIdx == 2 || nTabIdx == 3 || nTabIdx == 4 || nTabIdx == 5 || nTabIdx == 7){
+
+        		var nICnt = objDs.findRow(this.ucFlag,"I");
+        		var nUCnt = objDs.findRow(this.ucFlag,"U");
+        		var nDCnt = objDs.findRow(this.ucFlag,"D");
+
+        		if( nICnt > -1|| nUCnt > -1 || nDCnt > -1) {
+        			bIsUpdated = true;
+        		}
+        	}
+        	else if(nTabIdx == 0 //인사기본정보
+        			|| nTabIdx == 6 //기타
+        			){
+        		bIsUpdated = this.gfnDsIsUpdated(objDs);
+        	}
+
+        	return bIsUpdated;
+        }
+
+        this.tabData_canchange_callback = function(strId, val) {
+        	if(val == true) {
+        		//기존탭에서 수정했던 dataset reset
+        		var objPre = this.fnGetTabInfo(this.preTabIdx);
+        		//objPre.objDsList2.reset(); 이걸로 안되어서
+        		this.fnDataClear("N");
+
+        		//새롭게 클릭한 탭으로 진행~
+        		this.divData.form.tabData.set_tabindex(this.postTabIdx);	//탭변경
+        	}
+        }
+
+        this.divData_tabData_onchanged = function(obj,e){
+
+        	this.fnSetButton();
+
+        	// 그리드 셋팅
+        	this.fnSetGridCellProperty(e.postindex);
+        	this.fnSelectAskData();	// 데이터 조회
+        	//this.FormBtns.Select.click();
+        };
+
+
+        // 사진변경
+        this.fnChangePic= function(obj,e) {
+        	var param = {
+        		ID_SABUN: this.ccfID_SABUN.form.CDTextBox.value,
+        		DS_HNAME: this.ccfID_SABUN.form.DSTextBox.value,
+        		ID_PERSON: this.txtID_PERSON.value,
+        	};
+        	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DAA_BASETEMP", "fnChangePic_callback", param);
+        }
+
+        // 사진변경 콜백
+        this.fnChangePic_callback = function(svcID, value){
+        	if(value == true){
+        		// 변경 요청전,진행,완료 건수 조회
+        		if (!this.fnSelectValid()) return false;
+        		this.fnSelectAskCnt();
+        	}
+        }
+
+        // 인사정보변경 요청
+        this.fnChangeAsk = function(obj,e) {
+
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+        	var sTabNm = this.arrTabNm[nTabIdx];
+
+        	//주소변경 요청시 첨부파일은 필수 입니다. 확인바랍니다.
+
+        	if (this.gfnIsNull(this.ccfID_SABUN.form.CDTextBox.value)) {
+        		this.gfnAlert("사번이 입력되지 않았습니다.");
+        		this.ccfID_SABUN.form.CDTextBox.setFocus();
+        		return false;
+        	}
+
+        	// 개인정보 변경 요청
+        	//this.fnUpdateAsk();
+        	this.fnUpdateAskAll();
+        }
+
+        // 그리드 필수입력 컬럼 표시
+        this.fnSetHeadRequired = function(){
+
+        	var nTabIdx = this.divData.form.tabData.tabindex;
+        	var sTabNm = this.arrTabNm[nTabIdx];
+        	var strFilterExpr = "TY_DATA == '"+sTabNm+"'";
+        	var objTarget = this.fnGetTabInfo(nTabIdx);
+        	var nRow2 = objTarget.objGrid2.currentrow;
+        	var TY_GUBUN = objTarget.objDsList2.getColumn(nRow2, "TY_GUBUN");
+        	var strDsField = "";
+        	var strDsHeader = "";
+        	this.dsRequiredList.filter(strFilterExpr);
+        	for (var i = 0; i < this.dsRequiredList.rowcount; i++) {
+        		strDsField = this.dsRequiredList.getColumn(i, "DS_FIELD");
+        		strDsHeader = this.dsRequiredList.getColumn(i, "DS_HEADER");
+        		var strTextDeco = (TY_GUBUN == "I" || TY_GUBUN == "U") ? "underline" : "";
+        		objTarget.objGrid2.setCellProperty("head", this.gfnGetHeadRowCellIndex(objTarget.objGrid2, 2, strDsField), "textDecoration", strTextDeco);
+        	}
+        	this.dsRequiredList.filter("");
+        }
+
+
+        this.dsBaseList2_onvaluechanged = function(obj,e){
+        	var status = this.gfnGetFormStatus(this);
+
+        	if(e.oldvalue != e.newvalue) {
+        		if(status == "Q" && status != "I"){
+        			this.gfnSetFormStatus(this, "U");
+        		}
+
+        		//trace("e.columnid", e.columnid);
+
+        		//********************
+        		//주민번호
+        		//********************
+        		if(e.columnid == "ID_RESIDENT"){
+        			var newID_RESIDENT = e.newvalue.replace("-","");
+
+        			if(newID_RESIDENT.length == 13){
+        				var gender = newID_RESIDENT.substr(6,1);
+        				// 성별 구분
+        				if(gender == '1' || gender == '3' || gender == '5' || gender == '7'){
+        					this.divData.form.tabData.tab1.form.rdoYN_GENDER.set_value("M");
+        				}else if(gender == '2' || gender == '4' || gender == '6' || gender == '8'){
+        					this.divData.form.tabData.tab1.form.rdoYN_GENDER.set_value("W");
+        				}else{
+        					this.divData.form.tabData.tab1.form.rdoYN_GENDER.set_value("");
+        				}
+
+        				//생년월일 구분
+        				var birth = newID_RESIDENT.substr(0,6);
+
+        				//1900년대 생
+        				if(gender == '1' || gender == '2' || gender == '5' || gender == '6'){
+        					this.divData.form.tabData.tab1.form.tclDT_BIRTH.set_value("19"+birth);
+        				}else if(gender == '3' || gender == '4' || gender == '7' || gender == '8'){
+        					this.divData.form.tabData.tab1.form.tclDT_BIRTH.set_value("20"+birth);
+        				}else{
+        					this.divData.form.tabData.tab1.form.tclDT_BIRTH.set_value("");
+        				}
+        			}else{
+        				this.divData.form.tabData.tab1.form.rdoYN_GENDER.set_value(this.dsBaseList2.getOrgColumn(0, "YN_GENDER"));
+        				this.divData.form.tabData.tab1.form.tclDT_BIRTH.set_value(this.dsBaseList2.getOrgColumn(0, "DT_BIRTH"));
+        			}
+        		}
+        		else if(e.columnid == "YN_SUPPORTED"){
+        			//********************
+        			//보훈여부
+        			//********************
+        			if(e.newvalue == "Y"){
+        				this.divData.form.tabData.tab1.form.txtNO_SUPPORTED.set_value(this.dsBaseList2.getOrgColumn(0, "NO_SUPPORTED"));
+        			}else{
+        				this.divData.form.tabData.tab1.form.txtNO_SUPPORTED.set_value("");
+        				this.ccfCD_SUPPORTED.form.CDTextBox.set_value("");
+        				this.ccfCD_SUPPORTED.form.DSTextBox.set_value("");
+        				this.divData.form.tabData.tab1.form.txtDS_SUPPORTED.set_value("");
+        			}
+        		}
+        		else if(e.columnid == "YN_FOREIGNER"){
+        			//********************
+        			//외국인여부
+        			//********************
+        			if(e.newvalue == "Y"){
+        				this.ccfDS_FOREIGNER.form.fnCodeFindClear();
+        			}else{
+        				this.ccfDS_FOREIGNER.form.CDTextBox.set_value("KR");
+        				this.ccfDS_FOREIGNER.form.DSTextBox.set_value("대한민국");
+        			}
+        		}
+        		else if(e.columnid == "YN_HANDICAP"){
+        			//********************
+        			//장애인여부
+        			//********************
+        			if(e.newvalue == "Y"){
+        				;
+        			}else{
+        				this.divData.form.tabData.tab1.form.ctxtNO_DISABILITY.set_value("");
+        				this.divData.form.tabData.tab1.form.ccfDS_DISABILITY.form.fnCodeFindClear();
+        				this.divData.form.tabData.tab1.form.ccfDS_DISABILITY_GRADE.form.fnCodeFindClear();
+        			}
+        		}
+        		else if(e.columnid == "YN_MARRIAGE"){
+        			//********************
+        			//결혼여부
+        			//********************
+        			if(e.newvalue == "Y"){
+        				this.divData.form.tabData.tab1.form.tclDT_MARRIAGE.set_value(this.dsBaseList2.getOrgColumn(0, "DT_MARRIAGE"));
+        			}else{
+        				this.divData.form.tabData.tab1.form.tclDT_MARRIAGE.set_value("");
+        			}
+        		}
+
+        		this.fnSetSingleForm(0);
+        	}
+        };
+
+        this.dsEtcList2_onvaluechanged = function(obj,e){
+        	var status = this.gfnGetFormStatus(this);
+
+        	if(e.oldvalue != e.newvalue) {
+        		if(status == "Q" && status != "I"){
+        			this.gfnSetFormStatus(this, "U");
+        		}
+        	}
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divData.form.tabData.addEventHandler("onchanged",this.divData_tabData_onchanged,this);
+            this.divData.form.tabData.addEventHandler("canchange",this.divData_tabData_canchange,this);
+            this.divData.form.tabData.tab1.form.rdoYN_SUPPORTED.addEventHandler("onitemchanged",this.divData_tabData_tab1_rdoYN_SUPPORTED_onitemchanged,this);
+            this.divData.form.tabData.tab1.form.rdoYN_HANDICAP.addEventHandler("onitemchanged",this.divData_tabData_tab1_rdoYN_HANDICAP_onitemchanged,this);
+            this.divData.form.tabData.tab1.form.txtID_RESIDENT.addEventHandler("onchanged",this.divData_tabData_tab1_txtID_RESIDENT_onchanged,this);
+            this.divData.form.tabData.tab1.form.rdoYN_FOREIGNER.addEventHandler("onitemchanged",this.divData_tabData_tab1_rdoYN_FOREIGNER_onitemchanged,this);
+            this.divData.form.tabData.tab1.form.rdoYN_MARRIAGE.addEventHandler("onitemchanged",this.divData_tabData_tab1_rdoYN_MARRIAGE_onitemchanged,this);
+            this.dsList.addEventHandler("onvaluechanged",this.fnSetButton,this);
+            this.dsAddrList2.addEventHandler("oncolumnchanged",this.dsList2_oncolumnchanged,this);
+            this.dsAddrList2.addEventHandler("cancolumnchange",this.dsList2_cancolumnchange,this);
+            this.dsFmyList2.addEventHandler("cancolumnchange",this.dsList2_cancolumnchange,this);
+            this.dsFmyList2.addEventHandler("oncolumnchanged",this.dsList2_oncolumnchanged,this);
+            this.dsLicList2.addEventHandler("cancolumnchange",this.dsList2_cancolumnchange,this);
+            this.dsLicList2.addEventHandler("oncolumnchanged",this.dsList2_oncolumnchanged,this);
+            this.dsSchList2.addEventHandler("cancolumnchange",this.dsList2_cancolumnchange,this);
+            this.dsSchList2.addEventHandler("oncolumnchanged",this.dsList2_oncolumnchanged,this);
+            this.dsCrrList2.addEventHandler("oncolumnchanged",this.dsList2_oncolumnchanged,this);
+            this.dsCrrList2.addEventHandler("cancolumnchange",this.dsList2_cancolumnchange,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+            this.dsListAskCnt.addEventHandler("onvaluechanged",this.fnSetButton,this);
+            this.dsBaseList2.addEventHandler("onvaluechanged",this.dsBaseList2_onvaluechanged,this);
+            this.dsEtcList2.addEventHandler("onvaluechanged",this.dsEtcList2_onvaluechanged,this);
+            this.dsLangList2.addEventHandler("cancolumnchange",this.dsList2_cancolumnchange,this);
+            this.dsLangList2.addEventHandler("oncolumnchanged",this.dsList2_oncolumnchanged,this);
+        };
+        this.loadIncludeScript("DAA_BASEINFO_ASK2.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

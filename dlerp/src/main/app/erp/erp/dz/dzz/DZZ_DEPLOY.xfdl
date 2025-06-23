@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="리소스배포" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="45" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staNM_DEV" taborder="0" text="대상" left="39" top="9" width="70" height="25"/>
+              <Combo id="cboTY_GUBUN" taborder="1" left="119" top="9" width="140" height="25" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" text="ERP" value="ERP" onitemchanged="divSearch_cboTY_GUBUN_onitemchanged">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">ERP</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">2</Col>
+                      <Col id="datacolumn">B2B</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">3</Col>
+                      <Col id="datacolumn">OZ레포트</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">4</Col>
+                      <Col id="datacolumn">전자결재문서</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" width="615"/>
+              <Grid id="objGrid2" taborder="1" left="665" top="0" bottom="0" right="0"/>
+              <Button id="btnRight" taborder="2" text=" ▶" left="622" top="242" width="34" height="34" onclick="divData_btnRight_onclick"/>
+              <Button id="btnLeft" taborder="3" text="◀" left="622" top="282" width="34" height="34" onclick="divData_btnLeft_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnDeploy = this.gfnFormButtonAdd("btnDeploy", "fnDeploy");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() 
+{	
+	this.dxGrid = this.divData.form.objGrid;
+	this.dxGrid2 = this.divData.form.objGrid2;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() 
+{	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DZ", "DZZ_DEPLOY");
+	this.gfnGridInit(this.dxGrid2, this.dsDeploy, "DZ", "DZZ_DEPLOY");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	var nRow = this.dsSearch.addRow();
+	this.dsSearch.setColumn(nRow, "TY_GUBUN", "1");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "deployList";
+	var inProc		= "";
+	var inData      = "dsSearch=dsSearch";
+	var outData     = "dsServer=dsServer dsList=dsDeploy";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+};
+
+/*
+ *	배포 버튼
+ */
+this.fnSave = function() 
+{
+	
+};
+
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.dsDeploy.clearData();
+		if (errorCode != 0) {
+			this.gfnAlert(errorMsg);
+			this.dsList.clearData();
+		} else {
+			this.dsList.set_keystring("S:-nx_sort-LAST_MODIFIED");
+			this.dsList.updateSortGroup();
+		}
+		this.gfnGridAfterSelect(this.dxGrid);
+	}
+	else if(svcID == "deploy") {
+		if (errorCode == 0) {		
+			this.gfnAlert("배포가 완료되었습니다.", [], "deployAlert", function() {
+				this.FormBtns.Select.click();
+			});
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.divSearch_cboTY_GUBUN_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.FormBtns.Select.click();
+};
+
+this.divData_btnRight_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nSelectRow = this.dsList.rowposition;
+	if (nSelectRow > -1)
+	{
+		var nRow = this.gfnGridAdd(this.dxGrid2);
+		this.dsDeploy.copyRow(nRow, this.dsList, nSelectRow);
+		this.dsDeploy.setColumn(nRow, "OLD_IDX", nSelectRow);
+		this.dsList.deleteRow(nSelectRow);	
+	}
+};
+
+this.divData_btnLeft_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nSelectRow = this.dsDeploy.rowposition;
+	if (nSelectRow > -1)
+	{
+		
+		this.dsList.copyRow(nRow, this.dsDeploy, nSelectRow);
+		this.gfnGridDel(this.dxGrid2);
+	}
+};
+
+
+this.fnDeploy = function()
+{
+	if(this.dsDeploy.rowcount == 0) return;
+	
+	var strSvcId    = "deploy";
+	var strSvcType  = "deploy";
+	var inProc		= "";
+	var inData      = "dsServer=dsSearch dsDeploy=dsDeploy";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, strSvcType, inProc, inData, outData, strArg, callBackFnc);
+}]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DZZPR_FORM_FILE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DZZPR_FORM_FILE_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">download</Col>
+            <Col id="SP">DZZPR_FORM_FILE_DOWNLOAD</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsServer" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+          <Column id="NM_SERVER" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TY_GUBUN"/>
+            <Col id="NM_SERVER"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDeploy">
+        <ColumnInfo>
+          <Column id="FULL_PATH" type="STRING" size="256"/>
+          <Column id="FILE_PATH" type="STRING" size="256"/>
+          <Column id="FILE_NAME" type="STRING" size="256"/>
+          <Column id="FILE_SIZE" type="BIGDECIMAL" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsIds">
+        <ColumnInfo>
+          <Column id="OLD" type="STRING" size="256"/>
+          <Column id="NEW" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cboTY_GUBUN" propid="value" datasetid="dsSearch" columnid="TY_GUBUN"/>
+    </Bind>
+  </Form>
+</FDL>

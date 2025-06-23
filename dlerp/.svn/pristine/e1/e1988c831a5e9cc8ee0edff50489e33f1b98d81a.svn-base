@@ -1,0 +1,1161 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("cmmCodeFind_Pop");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(420,316);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DXXPR_CDFIND_PROPERTY_SELECT</Col></Row><Row><Col id=\"TARGET\">create</Col><Col id=\"SP\">DQZPR_SEARCHDATA_CREATE</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProcSize", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">update</Col><Col id=\"SP\">DXXPR_CODEFINDMST_SIZE</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsParam", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CDMST\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListA", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListB", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListC", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListD", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsUserParam", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListN", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsParamSize", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CFMST\" type=\"STRING\" size=\"256\"/><Column id=\"DLG_WIDTH\" type=\"INT\" size=\"256\"/><Column id=\"DLG_HEIGHT\" type=\"INT\" size=\"256\"/><Column id=\"ID_UPDATE\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearchData", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODEFINDE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_SEARCH\" type=\"STRING\" size=\"256\"/><Column id=\"CD_RESULT\" type=\"STRING\" size=\"256\"/><Column id=\"DS_RESULT\" type=\"STRING\" size=\"256\"/><Column id=\"ID_SEARCH\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Static("staBG","0","0",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_background("#ffffff");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
+
+            obj = new Edit("txtSearch","20","20",null,"25","77",null,null,null,null,null,this);
+            obj.set_taborder("1");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnSearch","txtSearch:5","20","52","25",null,null,null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_text("검색");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnNext","btnSearch:5","20","25","25",null,null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_visible("false");
+            obj.set_cssclass("btn_WF_last");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("grd","20","txtSearch:10",null,null,"20","66",null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_binddataset("dsList");
+            obj.set_selecttype("area");
+            obj.set_selectscrollmode("default");
+            obj._setContents("<Formats><Format id=\"default\"/></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divBtns",null,"grd:20","126","26","19",null,null,null,null,null,this);
+            obj.set_taborder("4");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnConfirm","0","0","60","26",null,null,null,null,null,null,this.divBtns.form);
+            obj.set_taborder("3");
+            obj.set_text("확인");
+            obj.set_cssclass("btn_WF_action");
+            this.divBtns.addChild(obj.name, obj);
+
+            obj = new Button("btnCancel","btnConfirm:4","0","60","26",null,null,null,null,null,null,this.divBtns.form);
+            obj.set_taborder("4");
+            obj.set_text("취소");
+            this.divBtns.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("cmmCodeFind_Pop.xfdl", function() {
+        this.Page = 1;
+        this.MinValue = "";
+        this.IsSize = false;
+        this.SearchField = [];
+        this.IsChk = false;
+        this.ChkCol = "";
+        this.IsSearchData = true;
+        this.IsSaveSearchData = false;
+        this.objApp = this.gfnGetApplication();
+
+        // 유사어 검색 데이터 수집 기능 사용여부 (HDC적용)
+        this.UseSaveSearchData = false;
+
+        this.cmmCodeFind_Pop_onload = function(obj,e)
+        {
+        	this.grd.addEventHandler("onheadclick", this.gfnGrid_onheadclick, this); 	//헤드클릭이벤트추가
+
+        	if(new String(this.getOwnerFrame().Search).valueOf() != "undefined") {
+        		this.txtSearch.set_value(this.getOwnerFrame().Search);
+        		this.Keyword = this.txtSearch.text;
+        		this.MityCheckValue = this.Keyword.split(",");
+
+        	}
+        	if(new String(this.getOwnerFrame().CodeFindName).valueOf() != "undefined") {
+        		this._CD_CDMST = this.getOwnerFrame().CodeFindName;
+        		this.fnCodefind(this._CD_CDMST);
+        	}
+        };
+
+        this.fnCodefind = function(cd_cdmst) {
+        	if(this.objApp["arrCodeFindProps"] != null && this.objApp.arrCodeFindProps[this._CD_CDMST] != null && this.objApp.arrCodeFindProps[this._CD_CDMST].length == 4) {
+        		this.dsListA.copyData(this.objApp.arrCodeFindProps[this._CD_CDMST][0]);
+        		this.dsListB.copyData(this.objApp.arrCodeFindProps[this._CD_CDMST][1]);
+        		this.dsListC.copyData(this.objApp.arrCodeFindProps[this._CD_CDMST][2]);
+        		this.dsListD.copyData(this.objApp.arrCodeFindProps[this._CD_CDMST][3]);
+        		this.fnCodefindCallbackForce("codefind", 0);
+        	} else {
+        		this._dsParam.clearData();
+        		this._dsParam.addRow();
+        		this._dsParam.setColumn(0, "CD_CDMST", cd_cdmst);
+
+        		var strSvcId    = "codefind";
+        		var strSvcType  = "select";
+        		var inProc		= "_dsProc";
+        		var inData      = "select=_dsParam";
+        		var outData     = "dsListA=select0 dsListB=select1 dsListC=select2 dsListD=select3";
+        		var strArg      = "";
+        		var callBackFnc = "fnCodefindCallbackForce";
+
+        		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        							strSvcType , 	// transaction을 요청할 구분
+        							inProc,			// Procedure 정보 Dataset 이름
+        							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        							callBackFnc,
+        							(this.getOwnerFrame().Manual==true && this.getOwnerFrame().Async!=true?false:true) ); // 통신방법 정의 [생략가능]
+        	}
+        };
+
+
+        this.fnCodefindCallbackForce = function(svcID, errorCode, errorMsg) {
+        	if(errorCode != 0) {
+        		this.getOwnerFrame().parent.form.gfnAlert(errorMsg);
+        		this.close();
+        		return;
+        	}
+        	if(svcID == "codefind") {
+        		var objGrid = this.grd;
+
+        		objGrid.set_enableevent(false);
+        		objGrid.set_enableredraw(false);
+
+        		if (this.dsListA.rowcount > 0) {
+        			var sp = this.dsListA.getColumn(0, "SPNAME");
+        			var title = this.dsListA.getColumn(0, "TITLE");
+        			var maxrow = this.dsListA.getColumn(0, "DIALOGNUMBEROFDATAONGRID");
+        			var yn_multiselect = this.dsListA.getColumn(0, "YN_MULTISELECT");
+        			var yn_tree = this.dsListA.getColumn(0, "YN_TREE");
+        			var tree_expand_level = this.dsListA.getColumn(0, "NO_EXPANDLEVEL");
+        			var dlg_width = this.dsListA.getColumn(0, "DLG_WIDTH");
+        			var dlg_height = this.dsListA.getColumn(0, "DLG_HEIGHT");
+        			var no_search_idx = this.dsListA.getColumn(0, "NO_SEARCH_IDX");
+        			var ds_keyfield = this.dsListA.getColumn(0, "DS_KEYFIELD");
+        			//var ds_parentfield = this.dsListA.getColumn(0, "DS_PARENTFIELD");
+        			var ds_level_field = this.dsListA.getColumn(0, "DS_LEVEL_FIELD");
+        			var yn_treeselect = this.dsListA.getColumn(0, "YN_TREESELECT"); // 트리선택 가능여부 컬럼
+        			this._YN_CACHE = this.dsListA.getColumn(0, "YN_CACHE");
+
+        			this._NM_CFMST = title;
+        			this._NM_SP = sp;
+
+        			var popInfo = JSON.parse(this.getOwnerFrame().id);
+        			var isBtn = popInfo.IsBtn;
+
+        			//trace(" IsBtn=>" + isBtn);
+        			if (yn_multiselect == "Y" || isBtn) // 멀티 select 일때는 조회 값을 넣지 않음.
+        			{
+        				this.Keyword = "";
+        				this.txtSearch.set_value("");
+        			}
+
+        			if(this.getOwnerFrame().Title == null) {
+        				this.getOwnerFrame().set_titletext(title);
+        			}
+
+        			if (this.gfnIsNull(this.getOwnerFrame().arguments))
+        			{
+        				this.getOwnerFrame().arguments = {'NM_FORM' : title};
+        			}
+        			else
+        			{
+        				this.getOwnerFrame().arguments['NM_FORM'] = title;
+        			}
+
+        			this.getOwnerFrame().Area.Width = dlg_width;
+        			this.getOwnerFrame().Area.Height = dlg_height;
+
+        			this._dsProc.setColumn(0, "TARGET", "select");
+        			this._dsProc.setColumn(0, "SP", sp);
+
+        			if(!this.gfnIsNull(this.getOwnerFrame().MultiSelect)) {
+        				yn_multiselect = this.getOwnerFrame().MultiSelect;
+        			}
+
+        // 			if (yn_multiselect == "Y") {
+        // 				objGrid.set_selecttype("multirow");
+        // 			} else {
+        // 				objGrid.set_selecttype("row");
+        // 			}
+
+        			this.SP = sp;
+        			this.MaxRow = nexacro.toNumber(maxrow);
+        			if (maxrow > 0) {
+        				this.grd.set_binddataset(this.dsListN);
+        				this.txtSearch.set_right(100);
+        				this.btnNext.set_visible(true);
+        			}
+        		}
+
+        		// 검색 컬럼
+        		this.SearchField = [];
+        		for (var i = 0; i < this.dsListB.rowcount; i++) {
+        			var cd_field = this.dsListB.getColumn(i, "CD_FIELD");
+        			this.SearchField.push(cd_field);
+        		}
+
+        		objGrid.set_cellsizingtype("col");
+        		objGrid.set_cellmovingtype("none"); //col
+        		objGrid.set_treeusecheckbox(false);
+        		if (yn_tree == "Y" && !this.gfnIsNull(ds_keyfield) && !this.gfnIsNull(ds_level_field)) {
+        			objGrid.IsTree = true;
+        			objGrid.tree_level_column = ds_level_field;
+        			objGrid.tree_select_column = yn_treeselect;
+        			objGrid.tree_expand_level = tree_expand_level;
+        			if (tree_expand_level == 0) {
+        				objGrid.set_treeinitstatus("expand,all");
+        			}
+        		}
+
+        		objGrid.addEventHandler("onkeydown", this._grd_onkeydown, this);
+        		objGrid.addEventHandler("oncelldblclick", this._grd_oncelldblclick, this);
+
+        		var nrow = objGrid.appendContentsRow("head");
+        		objGrid.appendContentsRow("body");
+
+        		// 컬럼
+        		var start_col = 0;
+        		for (var i = 0; i < this.dsListC.rowcount; i++) {
+        			var cd_field = this.dsListC.getColumn(i, "CD_FIELD");
+        			var ds_field = this.dsListC.getColumn(i, "DS_FIELD");
+        			var sz_width = this.dsListC.getColumn(i, "SZ_WIDTH");
+        			var ty_align = this.dsListC.getColumn(i, "TY_ALIGN").toLowerCase();
+        			var yn_visible = this.dsListC.getColumn(i, "YN_VISIBLE");
+        			var col_type = this.dsListC.getColumn(i, "COL_TYPE");
+        			var col_format = this.dsListC.getColumn(i, "COL_FORMAT");
+
+        			var displaytype = "text";
+        			var edittype = "none";
+        			var ncol = 0;
+        			if (i > 0) {
+        				ncol = objGrid.appendContentsCol();
+        			}
+        			if (yn_visible == "N") {
+        				sz_width = 0;
+        			}
+        			if (col_type == "decimal") {
+        				displaytype = "mask";
+        				objGrid.setCellProperty("body", i, "maskeditformat", col_format);
+        				objGrid.setCellProperty("body", i, "maskedittrimtype", "both");
+        			}
+        			else if(col_type == "bool") {
+        				displaytype = "checkboxcontrol";
+        				edittype = "checkbox";
+
+        				if(ds_field == "체크" || ds_field == "선택") {
+        					this.IsChk = true;
+        					this.ChkCol = cd_field;
+        					start_col = 1;
+        					ds_field = "";
+        					objGrid.setCellProperty("head", ncol, "displaytype", displaytype);
+        					objGrid.setCellProperty("head", ncol, "edittype", edittype);
+        				}
+        			}
+
+        			if(objGrid.IsTree && cd_field == ds_keyfield) {
+        				displaytype = "treeitemcontrol";
+        				edittype = "tree";
+        				objGrid.setCellProperty("body", ncol, "treelevel", "bind:" + ds_level_field);
+        			}
+
+        			if (i == start_col) {
+        				this.getOwnerFrame().Area.CDTextFieldName = cd_field;
+        			} else if (i == (start_col+1)) {
+        				this.getOwnerFrame().Area.DSTextFieldName = cd_field;
+        			}
+
+        			// 선택불가 트리 색상 표시
+        			if (!this.gfnIsNull(yn_treeselect)) {
+        				objGrid.setCellProperty("body", i, "cssclass", "expr:" + yn_treeselect + "!='Y'?'BACK_Frozen':''");
+        			}
+
+        			objGrid.setCellProperty("head", ncol, "text", ds_field);
+        			objGrid.setFormatColProperty(ncol, "size", sz_width);
+        			objGrid.setCellProperty("body", ncol, "text", "bind:" + cd_field);
+        			objGrid.setCellProperty("body", ncol, "textAlign", ty_align);
+        			objGrid.setCellProperty("body", ncol, "displaytype", displaytype);
+        			objGrid.setCellProperty("body", ncol, "edittype", edittype);
+        		}
+
+        		if(!this.IsChk && yn_multiselect == "Y") {
+        			this.IsChk = true;
+        			this.ChkCol = "nx_chk";
+        			var ncol = objGrid.insertContentsCol("body", 0);
+        			objGrid.setCellProperty("head", ncol, "displaytype", "checkboxcontrol");
+        			objGrid.setCellProperty("head", ncol, "edittype", "checkbox");
+        			objGrid.setCellProperty("head", ncol, "text", "");
+        			objGrid.setFormatColProperty(ncol, "size", 25);
+        			objGrid.setCellProperty("body", ncol, "text", "bind:nx_chk");
+        			objGrid.setCellProperty("body", ncol, "textAlign", "center");
+        			objGrid.setCellProperty("body", ncol, "displaytype", "checkboxcontrol");
+        			objGrid.setCellProperty("body", ncol, "edittype", "checkbox");
+        		}
+
+        		//objGrid.setFormatRowProperty(0, "size", 30);
+        		//objGrid.setFormatRowProperty(1, "size", 24);
+
+        		this.fnMakeGridPopupMenu(objGrid);
+
+        		objGrid.set_enableevent(true);
+        		objGrid.set_enableredraw(true);
+
+        		if(this.objApp["arrCodeFindProps"] == null) {
+        			this.objApp["arrCodeFindProps"] = {};
+        		}
+        		if(this.objApp.arrCodeFindProps[this._CD_CDMST] == null) {
+        			this.objApp.arrCodeFindProps[this._CD_CDMST] = new Array(4);
+        			this.objApp.arrCodeFindProps[this._CD_CDMST][0] = new Dataset();
+        			this.objApp.arrCodeFindProps[this._CD_CDMST][1] = new Dataset();
+        			this.objApp.arrCodeFindProps[this._CD_CDMST][2] = new Dataset();
+        			this.objApp.arrCodeFindProps[this._CD_CDMST][3] = new Dataset();
+
+        			this.objApp.arrCodeFindProps[this._CD_CDMST][0].copyData(this.dsListA);
+        			this.objApp.arrCodeFindProps[this._CD_CDMST][1].copyData(this.dsListB);
+        			this.objApp.arrCodeFindProps[this._CD_CDMST][2].copyData(this.dsListC);
+        			this.objApp.arrCodeFindProps[this._CD_CDMST][3].copyData(this.dsListD);
+        		}
+
+        		this.dsList.bindgrid  = objGrid;
+        		this.dsListN.bindgrid = objGrid;
+
+        		this._grd_head_onmouseover(this.grd, this, 0);
+
+        		this.fnSelect();
+        	}
+        };
+
+        this.fnSelect = function() {
+
+        	if (this.SP == "API_POST") {
+        		this.IsSearchData = false;
+        		if (this.Page == 1) {
+        			this.dsList.clear();
+        			this.dsList.addColumn("ZIPCODE", "string");
+        			this.dsList.addColumn("ADDRESS", "string");
+        			this.dsList.addColumn("ADDRESS2", "string");
+        		}
+
+        		if (this.gfnIsNull(this.Keyword)) {
+        			this.Keyword = "서초구 반포대로 13";
+        		}
+
+
+        		var strServiceUrl = "http://www.juso.go.kr/addrlink/addrLinkApiJsonp.do" ;
+        		if (nexacro.getEnvironment().services["svcUrl"].url.indexOf("https://") > -1) {
+        			strServiceUrl = "https://www.juso.go.kr/addrlink/addrLinkApiJsonp.do" ;
+        		}
+
+        		var confmKey = "U01TX0FVVEgyMDE5MDIyNTE0NTU1MTEwODUzOTM=";	// juso.go.kr 신청
+        		var parameter = "currentPage=" + this.Page + "&countPerPage=" + this.MaxRow + "&resultType=json&confmKey=" + confmKey + "&keyword=" + this.Keyword;
+
+        		this.gfnTransactionJsonP("ZIP", strServiceUrl, parameter, "fnPostCallback");
+        	}
+        	else {
+
+        		this._dsUserParam.clear();
+
+        		this._dsUserParam.addColumn("TY_GUBUN", "string");
+        		this._dsUserParam.addColumn("CN_ROW", "int");
+        		this._dsUserParam.addColumn("VALUE", "string");
+        		this._dsUserParam.addColumn("MIN_VALUE", "string");
+
+
+        		var isCodeValue = false;
+        		for(var c = 0; c < this.dsListD.colinfos.length; c++) {
+        			// 정의된 코드파인드 값 체크
+        			if(this.dsListD.colinfos[c].name == "CODE_VALUE") {
+        				isCodeValue = true;
+        				break;
+        			}
+        		}
+        		for (var c = 0; c < this.dsListD.rowcount; c++) {
+        			var cd_field = this.dsListD.getColumn(c, "CD_FIELD");
+        			var ds_field = this.dsListD.getColumn(c, "DS_FIELD");
+        			this._dsUserParam.addColumn(cd_field, "string");
+        		}
+
+        		var nrow = this._dsUserParam.addRow();
+        		if (this.MaxRow > 0) {
+        			this._dsUserParam.setColumn(nrow, "TY_GUBUN", "1");
+        			this._dsUserParam.setColumn(nrow, "CN_ROW", this.MaxRow);
+        			this._dsUserParam.setColumn(nrow, "VALUE", this.Keyword);
+        			this._dsUserParam.setColumn(nrow, "MIN_VALUE", this.MinValue);
+        		}
+        		else {
+        			this._dsUserParam.setColumn(nrow, "TY_GUBUN", "1");
+        			this._dsUserParam.setColumn(nrow, "CN_ROW", "1000000");
+        			this._dsUserParam.setColumn(nrow, "VALUE", "");
+        			this._dsUserParam.setColumn(nrow, "MIN_VALUE", "");
+        		}
+
+        		var objGrid = this.getOwnerFrame().Grid;
+        		if (objGrid != null) {
+        			objGrid._cacheCodeInfoLastParam = "";
+        			if(objGrid._cacheCodeInfoColID != null) {
+        				objGrid._cacheCodeInfoParamList[objGrid._cacheCodeInfoColID] = this.dsListD.saveXML();
+        			}
+        		}
+
+        		var lastUserParam = "";
+        		if(isCodeValue == true) {
+        			// 정의된 값으로 BeforeUserDataSet 자동 설정
+        			for(var c = 0; c < this.dsListD.colinfos.length; c++) {
+        				var cd_field = this.dsListD.getColumn(c, "CD_FIELD");
+        				var code_value = this.dsListD.getColumn(c, "CODE_VALUE");
+        				this._dsUserParam.setColumn(nrow, cd_field, code_value);
+        				lastUserParam += code_value;
+        			}
+        			if (objGrid != null) {
+        				objGrid._cacheCodeInfoLastParam = lastUserParam;
+        			}
+        			this.fnSelectProc();
+        		} else {
+        			if (new String(this.getOwnerFrame().BeforeUserDataSetParam).valueOf() != "undefined") {
+        				var oForm = this.gfnGetWorkForm(this.getOwnerFrame().parent); //this.getOwnerFrame().parent.form.divWork.form;
+        				var func = oForm.lookupFunc(this.getOwnerFrame().BeforeUserDataSetParam);
+        				var rtn = false;
+        				if (func != null) {
+        					var popInfo = JSON.parse(this.getOwnerFrame().id);
+        					var nm_codefind = popInfo.CodeFind;
+        					if (nm_codefind.endsWith("_pop") == true) {
+        						nm_codefind = nm_codefind.substring(0, nm_codefind.lastIndexOf("_pop"));
+        					} else {
+        						var curRow = popInfo.Row;
+        						//var objGrid = this.getOwnerFrame().Grid; //this.getOwnerFrame().parent.form.divWork.form.fvGridInfo;
+        						var objDs = objGrid.getBindDataset();
+        						objDs.rowposition = curRow;
+        					}
+        					rtn = func.call(nm_codefind, this._dsUserParam, nrow);
+        				} else {
+        					if (this.dsListD.rowcount > 0) {
+        						this.gfnAlert("코드파인드 BeforeUserDataSetParam 지정된 함수가 없습니다.", "div00_btnCancel_onclick");
+        						return;
+        					} else {
+        						rtn = true;
+        					}
+        				}
+
+        				if (rtn) {
+        					var isUserSet = true;
+        					for (var i = 0; i < this.dsListD.rowcount; i++) {
+        						var cd_field = this.dsListD.getColumn(i, "CD_FIELD");
+        						if(this.dsListD.getColumn(i, "YN_REQUIRED") == "Y"){
+        							if (this._dsUserParam.getColumn(nrow, cd_field) == null) {
+        								isUserSet = false;
+        								break;
+        							}
+        						}
+        						lastUserParam += this._dsUserParam.getColumn(nrow, cd_field);
+        					}
+
+        					if (objGrid != null) {
+        						objGrid._cacheCodeInfoLastParam = lastUserParam;
+        					}
+        					if (isUserSet == false) {
+        						this.gfnAlert("코드파인드 Parameter 셋팅이 잘못되었습니다.", "div00_btnCancel_onclick");
+        						return;
+        					}
+        				}
+
+        				if (rtn) {
+        					this.fnSelectProc();
+        				} else {
+        					this.close();
+        				}
+        			} else {
+        				if (this.dsListD.rowcount > 0) {
+        					this.gfnAlert("코드파인드 BeforeUserDataSetParam 지정된 함수가 없습니다.", "div00_btnCancel_onclick");
+        				} else {
+        					this.fnSelectProc();
+        				}
+        			}
+        		}
+        	}
+        };
+        this.fnPostCallbackJSON = function(svcID,errorCode,jsonStr) {
+        	if (svcID == "ZIP") {
+        		if (errorCode == 0) {
+        			this.fnPostCallback(JSON.parse(jsonStr));
+        		} else {
+        			this.close();
+        		}
+        	}
+        };
+        this.fnPostCallback = function(json) {
+        	if(!this.gfnIsNull(json["results"])) {
+        		var isNext = true;
+        		if (json.results.common.errorCode == "0") {
+        			var arrList = json.results.juso;
+        			if (arrList.length > 0) {
+        				var common = json.results.common;
+        				var tot = nexacro.toNumber(common.totalCount);
+        				var page = Math.ceil(tot / this.MaxRow);
+        				if (this.Page == page) isNext = false;
+
+        				this.dsList.set_enableevent(false);
+        				this.dsList.clearData();
+        				for (var i = 0; i < arrList.length; i++) {
+        					var nrow = this.dsList.addRow();
+        // 					arrList[i].siNm		// 시도명
+        // 					arrList[i].sggNm	// 시군구명
+        // 					arrList[i].emdNm	// 읍면동명
+        // 					arrList[i].rn		// 도로명
+        // 					arrList[i].roadAddrPart1	// 도로명주소(참고제외)
+        // 					arrList[i].roadAddrPart2	// 도로명주소 참고항목
+        					this.dsList.setColumn(nrow, "ZIPCODE", arrList[i].zipNo);
+        					this.dsList.setColumn(nrow, "ADDRESS", arrList[i].roadAddr);
+        					this.dsList.setColumn(nrow, "ADDRESS2", arrList[i].jibunAddr);
+        				}
+        				this.dsList.set_enableevent(true);
+        			} else {
+        				isNext = false;
+        			}
+
+        			if (!isNext) {
+        				this.btnNext.set_enable(false);
+        			}
+        		} else {
+        			this.gfnAlert(json.results.common.errorMessage);
+        		}
+        	}
+        	this.fnCallbackForce("codefindselect", 0);
+        };
+
+        this.fnSelectProc = function() {
+        	if (this.objApp["gds"+this._CD_CDMST] != null) { // this._YN_CACHE == "Y"
+        		this.dsList.copyData(this.objApp["gds"+this._CD_CDMST]);
+        		this.fnCallbackForce("codefindselect", 0);
+        	} else {
+        		var strSvcId    = "codefindselect";
+        		var strSvcType  = "select";
+        		var inProc		= "_dsProc";
+        		var inData      = "select=_dsUserParam";
+        		var outData     = "dsList=select0";
+        		var strArg      = "";
+        		var callBackFnc = "fnCallbackForce";
+
+        		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        							strSvcType , 	// transaction을 요청할 구분
+        							inProc,			// Procedure 정보 Dataset 이름
+        							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        							callBackFnc,
+        							(this.getOwnerFrame().Manual==true && this.getOwnerFrame().Async!=true?false:true) ); // 통신방법 정의 [생략가능]
+        	}
+        };
+
+        this.fnCallbackForce = function(svcID, errorCode, errorMsg, isSize) {
+        	//this.Keyword = this.txtSearch.text;
+
+        	if(errorCode != 0) {
+        		this.getOwnerFrame().parent.form.gfnAlert(errorMsg);
+        		this.close();
+        		return;
+        	}
+
+        	if (this._YN_CACHE == "Y" && this.objApp["gds"+this._CD_CDMST] == null) { // this._YN_CACHE == "Y"
+        		this.objApp["gds"+this._CD_CDMST] = new Dataset();
+        		this.objApp["gds"+this._CD_CDMST].copyData(this.dsList);
+        	}
+
+        	if(this.IsChk && this.ChkCol == "nx_chk") {
+        		this.dsList.addColumn(this.ChkCol, "int");
+        	}
+
+        	if (this.MaxRow > 0) {
+        		if (this.Page == 1) {
+        			this.dsListN.clear();
+        			for(var c = 0; c < this.dsList.colcount; c++) {
+        				var ci = this.dsList.getColumnInfo(c);
+        				this.dsListN.addColumnInfo(ci.name, ci);
+        			}
+        		}
+
+        		this.dsListN.appendData(this.dsList);
+        		if (this.btnNext.enable == true) {
+        			if (this.MaxRow > this.dsList.rowcount) {
+        				this.btnNext.set_enable(false);
+        			}
+        		}
+        	}
+        	else {
+        		if(this.grd.IsTree && this.grd.tree_expand_level > 0) {
+        			this._gfnGridTreeOpen(this.grd, this.grd.tree_expand_level);
+        		}
+
+        		if (this.gfnIsNull(this.Keyword)) {
+        			this.dsList.set_filterstr("");
+        		} else {
+        			var strSearch = this.Keyword.toLowerCase();
+
+        			if(this.getOwnerFrame().Manual) {
+        				// 수동 로딩인 경우 유사어 저장 사용안함.
+        				this.UseSaveSearchData = false;
+
+        				if(this.getOwnerFrame().Grid != null) {
+        					this.getOwnerFrame().Grid._cacheCodeInfoList = this.dsList.saveXML();
+        					this.getOwnerFrame().Grid._cacheCodeInfoListCode = this.getOwnerFrame().Area.CDTextFieldName;
+        				}
+
+
+        				// 수동 로딩인 경우 코드값으로만 조회 (명칭조회만을 위함)
+        				if (strSearch.startsWith('*')) {
+        					this.dsList.set_filterstr("String(" + this.getOwnerFrame().Area.CDTextFieldName + ").toLowerCase().endsWith('" + strSearch.replace('*', '') + "')");
+        				} else if (strSearch.endsWith('*')) {
+        					this.dsList.set_filterstr("String(" + this.getOwnerFrame().Area.CDTextFieldName + ").toLowerCase().startsWith('" + strSearch.replace('*', '') + "')");
+        				} else {
+        					this.dsList.set_filterstr("String(" + this.getOwnerFrame().Area.CDTextFieldName + ").toLowerCase() == '" + strSearch + "'");
+        				}
+        			} else {
+        				if (this.SearchField.length > 0) {
+        					var arrSearch = [];
+        					for(var s = 0; s < this.SearchField.length; s++) {
+        						if (strSearch.startsWith('*')) {
+        							arrSearch.push("String(" + this.SearchField[s] + ").toLowerCase().endsWith('" + strSearch.replace('*', '') + "')");
+        						} else if (strSearch.endsWith('*')) {
+        							arrSearch.push("String(" + this.SearchField[s] + ").toLowerCase().startsWith('" + strSearch.replace('*', '') + "')");
+        						} else {
+        							arrSearch.push("String(" + this.SearchField[s] + ").toLowerCase().indexOf('" + strSearch + "') > -1");
+        						}
+        					}
+        					this.dsList.set_filterstr(arrSearch.join(" || "));
+        				} else {
+        					if (strSearch.startsWith('*')) {
+        						this.dsList.set_filterstr("String(" + this.getOwnerFrame().Area.CDTextFieldName + ").toLowerCase().endsWith('" + strSearch + "') || "
+        											+ "String(" + this.getOwnerFrame().Area.DSTextFieldName + ").toLowerCase().endsWith('" + strSearch + "')");
+        					} else if (strSearch.endsWith('*')) {
+        						this.dsList.set_filterstr("String(" + this.getOwnerFrame().Area.CDTextFieldName + ").toLowerCase().startsWith('" + strSearch + "') || "
+        											+ "String(" + this.getOwnerFrame().Area.DSTextFieldName + ").toLowerCase().startsWith('" + strSearch + "')");
+        					} else {
+        						this.dsList.set_filterstr("String(" + this.getOwnerFrame().Area.CDTextFieldName + ").toLowerCase().indexOf('" + strSearch + "') > -1 || "
+        											+ "String(" + this.getOwnerFrame().Area.DSTextFieldName + ").toLowerCase().indexOf('" + strSearch + "') > -1");
+        					}
+        				}
+        			}
+        		}
+        	}
+
+        	var ds = this.grd.getBindDataset();
+
+        	if (ds.rowcount > 0) {
+        		// 코드파인드 행 높이
+        		this.grd.setRealRowSize(0, 29);
+        		this.grd.setCellPos(1, 0);
+
+        		if(ds.colinfos["MIN_VALUE"] != null) {
+        			this.MinValue = ds.getColumn(ds.rowcount-1, "MIN_VALUE");
+        		} else {
+        			this.MinValue = ds.getColumn(ds.rowcount-1, this.getOwnerFrame().Area.CDTextFieldName);
+        		}
+        	}
+
+        	if (ds.rowcount == 1 && this.getOwnerFrame().IsBtn != true) {
+        		this.fnConfirm(true);
+        	}
+        	else {
+        		if (this.Page > 1) {
+        			this.grd.vscrollbar.set_pos(this.grd.oldpos);
+        		}
+
+        		if (ds.rowcount == 0) {
+        			// fnCodeFindLoad 시 0건이면 팝업창 안열리도록..
+        			if(this.getOwnerFrame().Manual) {
+        				this.close("[]");	// 코드 명칭 초기화를 위함
+        				return;
+        			}
+
+        			if(!this.gfnIsNull(this.Keyword)) {
+        				var nrow = this.dsSearchData.addRow();
+        				this.dsSearchData.setColumn(nrow, "DS_SEARCH", this.Keyword);
+        			}
+        			this.Keyword = "";
+        			this.txtSearch.set_value("");
+        			ds.set_filterstr("");
+        		}
+
+        		//멀티 체크 이고 멀티 값을 넘겻을경우 넘긴값에 체크 처리
+        		if (this.dsListA.getColumn(0, "YN_MULTISELECT")=="Y" && !this.gfnIsNull(this.MityCheckValue))
+        		{
+        			this.fnMultyCheck();
+        		}
+
+        		if (this.IsSize == false) {
+        			this.IsSize = true;
+        			var dlg_width = this.getOwnerFrame().Area.Width;
+        			var dlg_height = this.getOwnerFrame().Area.Height;
+        			if (dlg_width == "0") {
+        				dlg_width = 420;
+        			}
+        			if (dlg_height == "0") {
+        				dlg_height = 356;
+        			}
+
+        			dlg_width = nexacro.toNumber(dlg_width);
+        			// 우측 정렬
+        			if (this.objApp.mainframe.getOffsetWidth() < (this.getOwnerFrame().getOffsetLeft() + dlg_width) ) {
+        				this.getOwnerFrame().set_left(this.objApp.mainframe.getOffsetWidth() - dlg_width);
+        			}
+        			// 하단 정렬
+        			if (this.objApp.mainframe.getOffsetHeight() < (this.getOwnerFrame().getOffsetBottom() + dlg_height) ) {
+        				this.getOwnerFrame().set_top(this.objApp.mainframe.getOffsetHeight() - dlg_height);
+        			}
+        			this.getOwnerFrame().set_width(dlg_width);
+        			this.getOwnerFrame().set_height(dlg_height);
+        		}
+
+        		if(this.getOwnerFrame().Grid != null) {
+        			this.getOwnerFrame().Grid._clearFocus();
+        		}
+        		this.txtSearch.setFocus();
+        		this.txtSearch.setSelect();
+        	}
+        };
+        // 멀티 체크 처리
+        this.fnMultyCheck = function(){
+
+        	var ds = this.grd.getBindDataset();
+
+        	for (var i = 0; i < this.MityCheckValue.length ; i++) {
+        		for (var j = 0; j < ds.rowcount; j++) {
+        			var column = this.dsListB.getColumn(j, "CD_FIELD");
+        			var nrow = ds.findRow(column, this.MityCheckValue[i].replace(" ", ""));
+        			if (nrow != -1)
+        			{
+        				ds.setColumn(nrow, "nx_chk" , 1);
+        			}
+        		}
+        	}
+        	this.MityCheckValue = [];
+        }
+
+        this.div00_btnCancel_onclick = function(obj,e)
+        {
+        	/* 취소는 검색어 저장 필요없음
+        	if(!this.gfnIsNull(this.Keyword) && this.dsSearchData.rowcount == 0) {
+        		var nrow = this.dsSearchData.addRow();
+        		this.dsSearchData.setColumn(nrow, "DS_SEARCH", this.Keyword);
+        	}
+        	this._fnSaveSearchData();
+        	*/
+        	this.close();
+        };
+
+        this.div00_btnConfirm_onclick = function(obj,e)
+        {
+        	this.fnConfirm(true);
+        };
+
+        this._grd_onkeydown = function(obj,e)
+        {
+        	if (e.keycode == 13) {
+        		this.fnConfirm(false);
+        	}
+        };
+        this._grd_oncelldblclick = function(obj,e)
+        {
+        // 	if(!this.IsChk) {
+        // 		if(obj.getCellProperty("body", e.col, "displaytype") != "checkboxcontrol") {
+        			this.fnConfirm(false);
+        // 		}
+        // 	}
+        };
+
+        this.txtSearch_onkeydown = function(obj,e)
+        {
+        	if (e.keycode == 13) {
+        		this.btnSearch_onclick(null, null);
+        	}
+        	else if (e.keycode == 40) {
+        		this.grd.setFocus();
+        	}
+        };
+
+        this.fnConfirm = function(forceClose) {
+        	var ds = this.grd.getBindDataset();
+
+        	var arr = [];
+        	if(this.IsChk == true && ds.rowcount > 1) {
+        		for(var r = 0; r < ds.rowcount; r++) {
+        			if(ds.getColumn(r, this.ChkCol) == 1) {
+        				var json = {};
+        				for(var c = 0; c < ds.colcount; c++) {
+        					if(ds.getColID(c) == this.ChkCol) continue;
+        					if(ds.getColumn(r, c) instanceof nexacro.Decimal) {
+        						json[ds.getColID(c)] = ds.getColumn(r, c).hi;
+        					} else {
+        						json[ds.getColID(c)] = ds.getColumn(r, c);
+        					}
+        				}
+        				arr.push(json);
+        			}
+        		}
+        // 		if(arr.length == 0) {
+        // 			this.gfnAlert("체크된 항목이 없습니다.");
+        // 			return;
+        // 		}
+        	}
+
+        	if(arr.length == 0) {
+        		var rows = this.grd.getSelectedDatasetRows();
+
+        		for(var r = 0; r < rows.length; r++) {
+        			var row = rows[r];
+        			if(this.grd.IsTree == true) {
+        				//row = this.grd.getDatasetRow(row);
+        				if(!this.gfnIsNull(this.grd.tree_select_column) && ds.getColumn(row, this.grd.tree_select_column) != "Y") {
+        					continue;
+        				}
+        			}
+
+        			var json = {};
+        			for(var c = 0; c < ds.colcount; c++) {
+        				if(ds.getColumn(row, c) instanceof nexacro.Decimal) {
+        					json[ds.getColID(c)] = ds.getColumn(row, c).hi;
+        				} else {
+        					json[ds.getColID(c)] = ds.getColumn(row, c);
+        				}
+        			}
+
+        			arr.push(json);
+        		}
+        	}
+
+        	if(forceClose && !this.gfnIsNull(this.grd.tree_select_column) && arr.length == 0) {
+        		this.gfnAlert("선택 가능한 항목이 아닙니다.");
+        		return;
+        	}
+
+        	if (forceClose || arr.length > 0) {
+        		if (arr.length == 0) {
+        			return false;
+        		}
+
+        		// 우선 첫번째건에 한해서 검색어 저장
+        		var cd_result = arr[0][this.getOwnerFrame().Area.CDTextFieldName];
+        		var ds_result = arr[0][this.getOwnerFrame().Area.DSTextFieldName];
+
+        		// 이전 검색건에 대해 현재 선택한 결과를 저장
+        		for(var i = 0; i < this.dsSearchData.rowcount; i++) {
+        			this.dsSearchData.setColumn(i, "CD_RESULT", cd_result);
+        			this.dsSearchData.setColumn(i, "DS_RESULT", ds_result);
+        		}
+
+        		if(!this.gfnIsNull(this.Keyword)) {
+        			var nrow = this.dsSearchData.addRow();
+        			this.dsSearchData.setColumn(nrow, "DS_SEARCH", this.Keyword);
+        			this.dsSearchData.setColumn(nrow, "CD_RESULT", cd_result);
+        			this.dsSearchData.setColumn(nrow, "DS_RESULT", ds_result);
+        		}
+        		this._fnSaveSearchData();
+
+        		this.close(JSON.stringify(arr));
+        	}
+        };
+        this.cmmCodeFind_Pop_onsize = function(obj,e)
+        {
+        	var nLeft = (this.width - this.divBtns.width) / 2;
+        	//this.divBtns.left = nLeft;
+        };
+
+        this.cmmCodeFind_Pop_onkeydown = function(obj,e)
+        {
+        	if (e.keycode == 27) // esc
+        	{
+        		this.close();
+        	}
+        	else if (e.shiftkey == true && e.keycode == 123) { // shift + F12
+        		if(this.objApp.gvUserInfo.CD_ROLE == "R99" || this.objApp.gvUserInfo.CD_ROLE == "R98" || this.objApp.gvUserInfo.CD_ROLE == "R81") {
+        			var param = {};
+        			param.CD_CFMST = this._CD_CDMST;
+        			param.NM_CFMST = this._NM_CFMST;
+        			param.NM_SP = this._NM_SP;
+        			this.gfnFormOpen("DZO", "DZU_CDFINDDTL", "", param);
+        		}
+        	}
+        	else if (e.ctrlkey == true && e.keycode == 123) { // ctrl + F12
+        		if(this.objApp.gvUserInfo.CD_ROLE == "R99" || this.objApp.gvUserInfo.CD_ROLE == "R98" || this.objApp.gvUserInfo.CD_ROLE == "R81") {
+        			this._fnCodeFindSizeUpdate(this._CD_CDMST, this.getOwnerFrame().width, this.getOwnerFrame().height, this.objApp.gvUserInfo.ID_USER);
+        		}
+        	}
+        };
+
+        this.btnSearch_onclick = function(obj,e)
+        {
+        	// 기존 검색키워드가 존재하고 새로운 키워드 검색시 이전키워드 데이터 입력
+        	if(!this.gfnIsNull(this.Keyword) && this.Keyword != this.txtSearch.text) {
+        		var nrow = this.dsSearchData.addRow();
+        		this.dsSearchData.setColumn(nrow, "DS_SEARCH", this.Keyword);
+        	}
+
+        	if (this.MaxRow > 0) {
+        		this.Page = 1;
+        		this.MinValue = "";
+        		this.Keyword = this.txtSearch.text;
+        		this.btnNext.set_enable(true);
+        		this.fnSelect();
+        	} else {
+        		this.Keyword = this.txtSearch.text;
+        		this.fnCallbackForce("codefindselect", 0);
+        	}
+        };
+
+        this.btnNext_onclick = function(obj,e)
+        {
+        	this.Page += 1;
+        	this.grd.oldpos = this.grd.vscrollbar.pos;
+        	this.fnSelect();
+        };
+
+        this._fnCodeFindSizeUpdate = function(cd_cdmst, width, height, id_user) {
+
+        	if(this.objApp["arrCodeFindProps"] != null && this.objApp.arrCodeFindProps[cd_cdmst] != null) {
+        		delete this.objApp.arrCodeFindProps[cd_cdmst];
+        	}
+
+        	this._dsParamSize.clearData();
+        	this._dsParamSize.addRow();
+        	this._dsParamSize.setColumn(0, "CD_CFMST", cd_cdmst);
+        	this._dsParamSize.setColumn(0, "DLG_WIDTH", width);
+        	this._dsParamSize.setColumn(0, "DLG_HEIGHT", height);
+        	this._dsParamSize.setColumn(0, "ID_UPDATE", id_user);
+
+        	var strSvcId    = "codefindsize";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProcSize";
+        	var inData      = "update=_dsParamSize";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "_fnCodefindSizeCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        this._fnCodefindSizeCallback = function(svcID, errorCode, errorMsg) {
+        	if(errorCode == 0) {
+        		trace("코드파인드 창 사이즈 수정 완료.");
+        	}
+        };
+
+        this._fnSaveSearchData = function() {
+        	if(this.UseSaveSearchData == false) return;
+
+        	this.IsSaveSearchData = true;
+        	if(this.IsSearchData && this.dsSearchData.rowcount > 0) {
+
+        		for(var i = 0; i < this.dsSearchData.rowcount; i++) {
+        			this.dsSearchData.setColumn(i, "CD_CODEFINDE", this._CD_CDMST);
+        			this.dsSearchData.setColumn(i, "ID_SEARCH", this.objApp.gvUserInfo.ID_USER);
+        		}
+
+        		var strSvcId    = "codefind";
+        		var strSvcType  = "save";
+        		var inProc		= "_dsProc";
+        		var inData      = "create=dsSearchData";
+        		var outData     = "";
+        		var strArg      = "";
+        		var callBackFnc = "";
+
+        		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        							strSvcType , 	// transaction을 요청할 구분
+        							inProc,			// Procedure 정보 Dataset 이름
+        							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        							callBackFnc, false); // 통신방법 정의 [생략가능]
+        	}
+        };
+
+        // 사용안함 - 취소는 검색어 저장 안함.
+        this.cmmCodeFind_Pop_onbeforeclose = function(obj,e)
+        {
+        	// 창 x 닫기 버튼 클릭시 검색어 저장유무 체크해서 저장.
+        	if(!this.IsSaveSearchData) {
+        		if(!this.gfnIsNull(this.Keyword) && this.dsSearchData.rowcount == 0) {
+        			var nrow = this.dsSearchData.addRow();
+        			this.dsSearchData.setColumn(nrow, "DS_SEARCH", this.Keyword);
+        		}
+        		this._fnSaveSearchData();
+        	}
+        };
+
+
+        this.fnMakeGridPopupMenu = function (objGrid) //, arrProp)
+        {
+        	var objApp 		 = pForm.gfnGetApplication();
+        	var objMenuDs 	 = objApp.gdsGridPopupMenu;
+        	var objParentForm= objGrid.parent;
+
+        	var sPopupDsMenu = "dsPopupMenu_"+objGrid.name+"_"+this.name;
+        	var objPopupDs 	 = new Dataset(sPopupDsMenu);
+        	objParentForm.addChild(sPopupDsMenu, objPopupDs);
+
+        	objApp.gdsGridPopupMenu.filter('id=="export"'); //엑셀다운로드 필터
+        	objPopupDs.copyData(objApp.gdsGridPopupMenu, true);
+        	objApp.gdsGridPopupMenu.filter(''); //엑셀다운로드 필터해제
+
+        	var sPopMenu = "popMenu_"+objGrid.name+"_"+this.name;
+        	var objPopMenu = new PopupMenu(sPopMenu, 0, 0, 100, 100);
+
+        	var oEnvLang = nexacro.getEnvironmentVariable("evLanguage");
+        	objParentForm.addChild(objPopMenu.name, objPopMenu);
+
+        	objPopMenu.set_innerdataset(sPopupDsMenu);
+        	objPopMenu.set_captioncolumn("caption");
+        	objPopMenu.set_enablecolumn("enable");
+        	objPopMenu.set_idcolumn("id");
+        	objPopMenu.set_levelcolumn("level");
+        	objPopMenu.set_userdatacolumn("userdata");
+         	objPopMenu.addEventHandler("onmenuclick", this.gfnPopupmenu_onmenuclick, objParentForm);
+        	objPopMenu.show();
+
+        	objPopMenu.set_itemheight(34);
+
+        	objPopMenu.grid = objGrid;
+        	objGrid.popupMenu = objPopMenu;
+
+        	objGrid.addEventHandler("onrbuttondown", this.gfnGrid_onrbuttondown, this);
+        };
+
+        this.grd_onkeyup = function(obj,e)
+        {
+        	if(e.ctrlkey && e.keycode == 67) //ctrl + c
+        	{
+        		var sBrowser = system.navigatorname;
+        		//copy
+        		if ( sBrowser == "nexacro" || (sBrowser == "IE" && nexacro._BrowserType != "Edge"))
+        		{
+        			this._gfnGridCopyEventForRuntime(obj, e);
+        		}
+         		else if ( sBrowser == "Chrome" || sBrowser == "Gecko" || sBrowser == "Opera" )
+        		{
+        			//this._gfnGridCopyEventForChrome(obj, e);
+        			this._gfnGridCopyEventForEtc(obj, e);
+        		}
+        		else
+        		{
+        			this._gfnGridCopyEventForEtc(obj, e);
+        		}
+        	}
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.cmmCodeFind_Pop_onload,this);
+            this.addEventHandler("onsize",this.cmmCodeFind_Pop_onsize,this);
+            this.addEventHandler("onkeydown",this.cmmCodeFind_Pop_onkeydown,this);
+            this.txtSearch.addEventHandler("onkeydown",this.txtSearch_onkeydown,this);
+            this.btnSearch.addEventHandler("onclick",this.btnSearch_onclick,this);
+            this.btnNext.addEventHandler("onclick",this.btnNext_onclick,this);
+            this.grd.addEventHandler("onkeyup",this.grd_onkeyup,this);
+            this.divBtns.form.btnConfirm.addEventHandler("onclick",this.div00_btnConfirm_onclick,this);
+            this.divBtns.form.btnCancel.addEventHandler("onclick",this.div00_btnCancel_onclick,this);
+        };
+        this.loadIncludeScript("cmmCodeFind_Pop.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

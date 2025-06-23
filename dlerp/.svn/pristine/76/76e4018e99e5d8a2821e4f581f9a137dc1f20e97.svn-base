@@ -1,0 +1,565 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="생일자조회" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_CORP00" taborder="0" text="법인" left="0" top="10.0" width="66" height="24.0" onclick="Common_onclick" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_CORP" CDTextWidth="50" taborder="1" left="staCD_CORP00:0.0" top="10.0" width="200" height="24.0" url="cmm::cmmCodeFind.xfdl" onclick="Common_onclick" text="" CodeFindName="DAX_CFCORP_CODEFIND"/>
+              <Static id="staYM_BASE" taborder="2" text="조회년월" left="ccfCD_CORP:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYM_BASE" taborder="3" left="staYM_BASE:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalMM.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Tab id="tabData" taborder="0" tabindex="0" left="0" top="0" bottom="0" right="0" onchanged="divData_tabData_onchanged">
+                <Tabpages>
+                  <Tabpage id="tab1" text="달력">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab2" text="내역">
+                    <Layouts>
+                      <Layout>
+                        <Grid id="objGrid2" taborder="1" left="5" top="5" bottom="5" right="5"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.fnMakeCol();
+	
+	var today = this.gfnGetDate();
+	this.dsSearch.setColumn(0, "YM_BASE", today.substr(0,6));
+	
+	this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);	
+	this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);	
+	
+	this.fnSetCellProperty();
+	
+	this.dxGrid.set_autosizingtype("none");
+	this.dxGrid.set_autosizingtype("row");
+	
+	this.FormBtns.Select.click();
+};
+
+this.fnSetCellProperty = function(){
+	this.dxGrid2.set_enableredraw(false);
+	this.dsList2.set_enableevent(false);
+	this.dxGrid2.setCellProperty("body", this.dxGrid2.getBindCellIndex("body", "DT_DAY"), "cssclass", "expr:dataset.parent.fnSetColor(dataset, rowidx)"); //날짜
+	this.dxGrid2.setCellProperty("body", this.dxGrid2.getBindCellIndex("body", "DS_DAY"), "cssclass", "expr:dataset.parent.fnSetColor(dataset, rowidx)"); //요일
+	this.dsList2.set_enableevent(true);	
+	this.dxGrid2.set_enableredraw(true);
+}
+
+this.fnSetColor = function(dataset, rowidx){
+	var rtnStr = "";
+	if (dataset.getColumn(rowidx, this.ucFlag) == "#"){
+		rtnStr = "filter";
+	}else{
+		var DS_DAY = dataset.getColumn(rowidx, "DS_DAY"); //요일
+		if(DS_DAY == "토요일"){
+			rtnStr = "Blue";
+		}
+		else if(DS_DAY == "일요일"){
+			rtnStr = "Red";
+		}
+	}
+	return rtnStr;
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+	
+	this.dxGrid = this.divData.form.tabData.tab1.form.objGrid;
+	this.dxGrid2 = this.divData.form.tabData.tab2.form.objGrid2;
+
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAA_BIRTHDAY_C");
+	this.gfnGridInit(this.dxGrid2, this.dsList2, "DA", "DAA_BIRTHDAY");
+	
+	this.dxGrid.set_selecttype("cell");	
+	
+	var nColCnt = this.dxGrid.getCellCount("body");
+	trace("nColCnt", nColCnt);
+	for(var i=0;i<nColCnt;i++){
+		this.dxGrid.setCellProperty("body",i,"displaytype","decoratetext"); // 컬럼안에 일부 글자만 굵게 처리하기위해 컬럼 타입을 변경한다.
+		this.dxGrid.setCellProperty("body",i,"verticalAlign","top"); //컬럼안 top 정렬
+		this.dxGrid.setCellProperty("body",i,"edittype","readonly"); //연차자 많을 경우 컬럼안 그리드 생기게
+		this.dxGrid.setCellProperty("body",i,"textareascrolltype","vertical"); //연차자 많을 경우 컬럼안 그리드 생겼을때 스크롤 vertical 만..
+	}
+
+
+	// 컬럼안에 일부 글자만 굵게 처리하기위해 컬럼 타입을 변경한다.
+	var colMON = this.dxGrid.getBindCellIndex("body", "MON");
+	var colTUE = this.dxGrid.getBindCellIndex("body", "TUE");
+	var colWED = this.dxGrid.getBindCellIndex("body", "WED");
+	var colTHU = this.dxGrid.getBindCellIndex("body", "THU");
+	var colFRI = this.dxGrid.getBindCellIndex("body", "FRI");
+	var colSAT = this.dxGrid.getBindCellIndex("body", "SAT");
+	var colSUN = this.dxGrid.getBindCellIndex("body", "SUN");
+
+	//tooltiptext
+	this.dxGrid.setCellProperty("body",colMON,"tooltiptext","bind:MON_TTP");
+	this.dxGrid.setCellProperty("body",colTUE,"tooltiptext","bind:TUE_TTP");
+	this.dxGrid.setCellProperty("body",colWED,"tooltiptext","bind:WED_TTP");
+	this.dxGrid.setCellProperty("body",colTHU,"tooltiptext","bind:THU_TTP");
+	this.dxGrid.setCellProperty("body",colFRI,"tooltiptext","bind:FRI_TTP");
+	this.dxGrid.setCellProperty("body",colSAT,"tooltiptext","bind:SAT_TTP");
+	this.dxGrid.setCellProperty("body",colSUN,"tooltiptext","bind:SUN_TTP");
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("TY_GRID", "string");
+	this.dsSelect.addColumn("CD_CORP", "string");
+	this.dsSelect.addColumn("YM_BASE", "string");
+	this.dsSelect.addColumn("GR_SEARCH", "string");
+	this.dsSelect.addColumn("GR_CORP", "string");
+	this.dsSelect.addColumn("GR_DEPT", "string");
+	this.dsSelect.addColumn("ID_USER", "string");
+}
+
+this.fnMakeCol = function(){
+	this.dsList.addColumn("SUN", "string");// SUN	일
+	this.dsList.addColumn("MON", "string");// MON	월
+	this.dsList.addColumn("TUE", "string");// TUE	화
+	this.dsList.addColumn("WED", "string");// WED	수
+	this.dsList.addColumn("THU", "string");// THU	목
+	this.dsList.addColumn("FRI", "string");// FRI	금
+	this.dsList.addColumn("SAT", "string");// SAT	토
+	
+	this.dsList.addColumn("SUN_YMD", "string");// SUN	일	
+	this.dsList.addColumn("MON_YMD", "string");// MON	월
+	this.dsList.addColumn("TUE_YMD", "string");// TUE	화
+	this.dsList.addColumn("WED_YMD", "string");// WED	수
+	this.dsList.addColumn("THU_YMD", "string");// THU	목
+	this.dsList.addColumn("FRI_YMD", "string");// FRI	금
+	this.dsList.addColumn("SAT_YMD", "string");// SAT	토
+	
+	this.dsList.addColumn("SUN_TTP", "string");// SUN	일
+	this.dsList.addColumn("MON_TTP", "string");// MON	월
+	this.dsList.addColumn("TUE_TTP", "string");// TUE	화
+	this.dsList.addColumn("WED_TTP", "string");// WED	수
+	this.dsList.addColumn("THU_TTP", "string");// THU	목
+	this.dsList.addColumn("FRI_TTP", "string");// FRI	금
+	this.dsList.addColumn("SAT_TTP", "string");// SAT	토
+		
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValid()) return false;
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();	
+	
+	var nTabIdx = this.divData.form.tabData.tabindex;
+	var outData = "";
+	if(nTabIdx == 0) {
+		this.dsList.clearData();
+		this.dsSelect.setColumn(0, "TY_GRID", "C"); //C:캘린터타입 / G:그리드타입	
+		outData     = "dsListTemp=select0";
+	}else{
+		this.dsList2.clearData();
+		this.dsSelect.setColumn(0, "TY_GRID", "G"); //C:캘린터타입 / G:그리드타입	
+		outData     = "dsList2=select0";
+		
+	}
+	this.dsSelect.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));	
+	this.dsSelect.setColumn(0, "YM_BASE", this.dsSearch.getColumn(0, "YM_BASE"));
+	this.dsSelect.setColumn(0, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	this.dsSelect.setColumn(0, "GR_CORP", this.AuthClient.CD_CORP);	
+	this.dsSelect.setColumn(0, "GR_DEPT", this.AuthClient.CD_DEPT);
+	this.dsSelect.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	
+	
+	var strSvcId    = "select_"+(nTabIdx+1);
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	//var outData     = "dsListTemp=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	switch(this.divData.form.tabData.tabindex) {
+		case 0:
+			this.gfnExcelExport(this.dxGrid);
+			break;
+		case 1:
+			this.gfnExcelExport(this.dxGrid2);
+			break;
+	}
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValid = function() {
+	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_CORP"))) {
+		this.fnValidCallback = function() {
+			this.ccfCD_CORP.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("법인을 입력하세요.", "fnValidCallback");
+		return false;
+	}
+	else if (this.gfnIsNull(this.dsSearch.getColumn(0,"YM_BASE"))) {
+		this.fnValidCallback = function() {
+			this.ctclYM_BASE.form.TextBox.setFocus();
+		}
+		this.gfnAlert("조회년월을 입력하세요.", "fnValidCallback");
+		return false;
+	}
+	
+	return true;
+};
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if(svcID.startsWith("select_")){
+		
+		var arrSvcID = svcID.split("_");
+		trace("arrSvcID[1]", arrSvcID[1]);
+		
+		if(arrSvcID[1] == 1){
+			this.fnMakeDisplay();
+		}
+		else if(arrSvcID[1] == 2){
+			this.gfnGridAfterSelect(this.dxGrid2);	
+		}
+	}		
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {	
+	if(id == "ccfCD_CORP") {
+		dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	}	
+	return true;
+};
+
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData; 
+	
+	if(id == "ccfCD_CORP") {
+		;
+	}
+};
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo){
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		this.gfnGridClear(this.dxGrid2);	
+	}
+};
+
+this.divData_tabData_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo){
+	//탭 변경시 조회처리시
+	if(e.preindex != e.postindex) {
+		this.FormBtns.Select.click();
+	}
+};
+
+this.fnMakeDisplay = function(){
+	console.log('fnMakeDisplay 1');
+	if(this.dsListTemp.rowcount < 1) return;
+	
+	console.log('fnMakeDisplay 2 count: ', this.dsListTemp.rowcount);
+	this.dsList.clearData();
+	
+	var dayRow = "";
+	var gubunRow1 = "";
+	
+	var arrDay = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+	var arrDayNm = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+
+	var sFilterStr = "";
+	var sFilterStr2 = "";
+	var sStr = "";
+	
+	this.dsList.set_enableevent(false);
+	for(var nWeekIdx = 1 ;nWeekIdx <= 6 ;nWeekIdx++){
+		sFilterStr = "DS_WEEK == '"+ nWeekIdx + "'";
+		this.dsListTemp.set_filterstr( sFilterStr );
+		
+		if(this.dsListTemp.rowcount == 0){
+			break;
+		}
+		
+		var gubunRow1 = this.dsList.addRow();
+		for(var nDayIdx = 0; nDayIdx < arrDayNm.length ; nDayIdx++){
+			var sDayCd = arrDay[nDayIdx];
+			var sDayNm = arrDayNm[nDayIdx];
+			
+			sFilterStr2 = sFilterStr + " && DS_DAY == '"+ sDayNm + "'";
+			this.dsListTemp.set_filterstr(sFilterStr2);
+			if(this.dsListTemp.rowcount == 0) continue;
+			
+			var rtnObj = this.fnGetNameList(this.dsListTemp);
+			var sStr = rtnObj.text;
+			var sTooltiptext = rtnObj.tooltiptext;
+			
+			this.dsList.setColumn(gubunRow1, sDayCd, sStr);
+			this.dsList.setColumn(gubunRow1, sDayCd+"_TTP", sTooltiptext);
+			
+			if(nDayIdx == arrDayNm.length -1){
+				//trace("요일 end===========================");
+			}
+		}
+		//trace("nWeekIdx>>"+nWeekIdx+"===============================end");
+	}
+	this.dsList.set_enableevent(true);
+	
+	this.dsListTemp.set_filterstr(""); //필터해제
+		
+	// 그리드 높이 조절
+	for(var i=0;i < this.dsList.rowcount;i++){
+		this.dxGrid.setRealRowSize(i, 135);	
+	}
+}
+
+this.fnGetNameList = function(dataset){
+	var rtnObj = new Object();
+
+	var sStr = "";
+	var nCnt = dataset.getCaseCount( "ID_SABUN != null" ); //dataset.rowcount;
+	var sDT_DAY = dataset.getColumn(0, "DT_DAY");
+	var sMM = this.gfnIsNull(sDT_DAY) ? "" : sDT_DAY.substring(4,6);
+	var sDD = this.gfnIsNull(sDT_DAY) ? "" : sDT_DAY.substring(6,9);
+	
+	//trace("fnGetNameList>>nCnt", nCnt);
+	//trace("fnGetNameList>>DT_DAY", sDT_DAY);
+	//trace("fnGetNameList>>sMM", sMM);
+	//trace("fnGetNameList>>sDD", sDD);
+	
+	
+	var sNameList = "";
+	for(var i=0;i<dataset.rowcount;i++){
+		var sDS_NAME = this.gfnNvl(dataset.getColumn(i, "DS_NAME"),"");
+		sDS_NAME =  this.fnRpad(sDS_NAME, 25, " ");
+		
+		//trace(i, sDS_REMARK);
+		sNameList = sNameList +  sDS_NAME + "\n\n";
+	}
+
+	var sLine1 = this.gfnIsNull(sDT_DAY) ? "" : this.fnLpad(sMM+"월 "+sDD+"일", 20, " ");
+	var sLine2 = this.gfnIsNull(sDT_DAY) ? "" : this.fnRpad("("+nCnt+"명)", 20, " ");
+	
+	if(nCnt == 0){
+		sStr =        sLine1 + "\n\n";
+	}else{
+		sStr =        sLine1 + "\n\n";
+		sStr = sStr + sLine2 + "\n\n";
+		sStr = sStr + sNameList;
+	}
+	
+	rtnObj.text = sStr;
+	rtnObj.tooltiptext = sNameList;
+	
+	return rtnObj;
+}
+
+this.fnLpad = function(str, padLen, padStr) {
+    if (padStr.length > padLen) {
+        console.log("오류 : 채우고자 하는 문자열이 요청 길이보다 큽니다");
+        return str;
+    }
+    if (str.length > padLen) {
+        return str + "";
+    }		
+    str += ""; // 문자로
+    padStr += ""; // 문자로
+    while (str.length < padLen)
+        str = padStr + str;
+    str = str.length >= padLen ? str.substring(0, padLen) : str;
+    return str;
+}
+
+this.fnRpad = function(str, padLen, padStr) {
+    if (padStr.length > padLen) {
+        console.log("오류 : 채우고자 하는 문자열이 요청 길이보다 큽니다");
+        return str + "";
+    }
+    if (str.length > padLen) {
+        return str + "";
+    }	
+    str += ""; // 문자로
+    padStr += ""; // 문자로
+    while (str.length < padLen)
+        str += padStr;
+    str = str.length >= padLen ? str.substring(0, padLen) : str;
+    return str;
+}
+]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256" prop="TEXT"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DAAPR_BIRTHDAY_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="YM_BASE" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="YM_BASE"/>
+            <Col id="CD_CORP"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListTemp">
+        <ColumnInfo>
+          <Column id="DT_DAY" type="string" size="32"/>
+          <Column id="DS_WEEK" type="string" size="32"/>
+          <Column id="DS_DAY" type="string" size="32"/>
+          <Column id="DS_LIST" type="string" size="32"/>
+          <Column id="DS_REMARK" type="string" size="32"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList2">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256" prop="TEXT"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+      <BindItem id="item2" compid="divSearch.form.ctclYM_BASE.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_BASE"/>
+    </Bind>
+  </Form>
+</FDL>

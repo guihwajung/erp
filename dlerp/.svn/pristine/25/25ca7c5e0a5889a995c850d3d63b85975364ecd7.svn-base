@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="800" height="380" titletext="본사계약입고송장" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" ondragmove="divData_ondragmove" text="" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staBg00_00_00" taborder="7" left="86" top="63" height="30" cssclass="sta_WF_tablebg" width="234"/>
+              <Static id="staDS_SITE00_00" taborder="0" text="계정구분" left="0" top="34" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="center"/>
+              <Static id="staBg00_00" taborder="4" left="86" top="34" height="30" cssclass="sta_WF_tablebg" width="234"/>
+              <Combo id="cboTY_ACCOUNT" taborder="1" left="95" top="39" width="219" height="20" innerdataset="dsTY_ACCOUNT" codecolumn="CD_CODE" datacolumn="DS_CODE" onitemchanged="divData_divDataTop_cboTY_ACCOUNT_onitemchanged"/>
+              <Static id="staDS_SITE00_00_00" taborder="2" text="차변계정" left="0" top="63" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="center"/>
+              <Combo id="cboCD_ACCOUNT_D" taborder="3" left="94" top="69" width="219" height="20" innerdataset="dsCD_ACCOUNT_D" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+              <Button id="btnConfirm" taborder="5" left="95" width="60" onclick="fnConfirm" height="20" top="107" text="확인"/>
+              <Button id="btnCancel" taborder="6" text="닫기" width="60" height="20" onclick="fnCloseForm" top="107" left="177"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta02" taborder="1" text="송장정보" left="7" top="8" width="165" height="22" cssclass="sta_TITLE_Bg"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj: nexacro.Form, e: nexacro.LoadEventInfo) {
+    // -- 필수 -------------------//
+    this.gfnFormOnLoad(this);
+    this.gfnFormInfo(this);
+    // ---------------------------//
+
+    this.fnSetButton();
+    this.fnSetExtendButton();
+    this.fnSetVariable();
+    this.fnSetEvent();
+    this.fnSetParameter();
+	
+	this.fnSetCombo();
+};
+
+this.fnSetCombo = function()
+{
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	this.dsCombo.addRow();	
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DM");
+	this.dsCombo.setColumn(0, "CD_TYPE", "M01");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_ACCOUNT=combo0";// dsCD_ACCOUNT_D=combo1";
+	var strArg      = "";
+	var callBackFnc = "fnCallbackCombo";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+    // Select, Add, Del, Save, Excel, Print
+    // SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+    //this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btn1 = this.gfnFormButtonAdd("btnConfirm", "fnConfirm");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+/*
+ *	조회 버튼
+ */
+this.fnSelect = function() {
+}
+
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnValidate = function() {
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+
+}
+
+
+this.fnCloseForm = function() {
+    this.getParentContext().close(null);
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+//코드파인드의 파라미터 값을 넘겨줄때 사용하는 함수
+
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회1 버튼
+ */
+ 
+ this.fnConfirm = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var json = {};
+	json.TY_ACCOUNT 	= this.dsSearch.getColumn(0,"TY_ACCOUNT");
+	json.CD_ACCOUNT_D 	= this.dsSearch.getColumn(0,"CD_ACCOUNT_D");
+	json.STRID			= this.getOwnerFrame().STRID;
+	
+	if(this.gfnIsNull(json.TY_ACCOUNT)) {
+		this.gfnAlert("계정구분을 선택하세요!!");
+		return;
+	};
+	
+	if(this.gfnIsNull(json.CD_ACCOUNT_D)) {
+		this.gfnAlert("차변계정을 선택하세요!!");
+		return;
+	};
+
+	this.getParentContext().close(JSON.stringify(json));
+ };
+
+this.divData_divDataTop_cboTY_ACCOUNT_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.fnTyAccountDSelect(obj.value);
+};
+
+this.fnTyAccountDSelect = function(cd)
+{
+	this.dsCombo.clearData();
+	this.dsCombo.addRow();	
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DM");
+	this.dsCombo.setColumn(0, "CD_TYPE", cd);
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsCD_ACCOUNT_D=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallbackCombo";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DMBPR_INVOBAS_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DMBPR_INVOMST_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select1</Col>
+            <Col id="SP">DMBPR_INVOITEMFORGGPM_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save1</Col>
+            <Col id="SP">DMBPR_INVODTL_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">exec</Col>
+            <Col id="SP">DMBPR_INVOSTK_ACT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">exec1</Col>
+            <Col id="SP">DMBPR_INVOMST_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="TY_ACCOUNT" type="STRING" size="256"/>
+          <Column id="CD_ACCOUNT_D" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TY_ACCOUNT"/>
+            <Col id="CD_ACCOUNT_D"> </Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_ACCOUNT">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="DATA" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">01</Col>
+            <Col id="DATA">과세</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">면세</Col>
+            <Col id="DATA">면세</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">공존</Col>
+            <Col id="DATA">공존</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCD_ACCOUNT_D">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="DATA" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">과세</Col>
+            <Col id="DATA">과세</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">면세</Col>
+            <Col id="DATA">면세</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">공존</Col>
+            <Col id="DATA">공존</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.cboTY_ACCOUNT" propid="value" datasetid="dsSearch" columnid="TY_ACCOUNT"/>
+      <BindItem id="item1" compid="divData.form.cboCD_ACCOUNT_D" propid="value" datasetid="dsSearch" columnid="CD_ACCOUNT_D"/>
+    </Bind>
+  </Form>
+</FDL>

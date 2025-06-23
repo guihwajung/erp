@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SITE" taborder="1" text="현장코드" left="0.0" top="10.0" width="92.0" height="24.0" textDecoration="none" textAlign="center" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFSITE" AutoSet="false" FitToContents="true" CDTextWidth="80" taborder="0" left="staCD_SITE:0.0" top="10.0" width="200" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staNO_BID" taborder="2" text="입찰번호" left="ccfCD_SITE:0.0" top="10.0" width="92.0" height="24.0" textAlign="center" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfNO_BID" CodeFindName="DCX_CFORDERPLAN_01" FitToContents="true" CDTextWidth="120" taborder="0" left="staNO_BID:0.0" top="10.0" width="300" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staNO_BID00" taborder="4" text="유찰일자" left="ccfNO_BID:0.0" top="10.0" width="92.0" height="24.0" textAlign="center" cssclass="sta_WF_SchLabel"/>
+              <Calendar id="ctclSTDT_WORK" taborder="5" left="staNO_BID00:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true"/>
+              <Static id="staNO_BID01" taborder="6" text="~" left="ctclSTDT_WORK:0.0" top="10.0" width="30.0" height="24.0" textAlign="center" cssclass="sta_WF_AC"/>
+              <Calendar id="ctclEDDT_WORK" taborder="7" left="staNO_BID01:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnDetail = this.gfnFormButtonAdd("btnDetail", "fnDetail");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ccfNO_BID = this.divSearch.form.ccfNO_BID;
+
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_SITE.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfNO_BID.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DC", "DCB_REBID_LIST");
+	this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("NO_BID", "string");
+	this.dsSelect.addColumn("DT_YOUCHAL_FR", "string");
+	this.dsSelect.addColumn("DT_YOUCHAL_TO", "string");
+	this.dsSelect.addColumn("ID_DAM", "string");
+	this.dsSelect.addColumn("TY_SYS", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "NO_BID", this.dsSearch.getColumn(0, "NO_BID"));
+	this.dsSelect.setColumn(0, "DT_YOUCHAL_FR", this.dsSearch.getColumn(0, "ST_DT"));
+	this.dsSelect.setColumn(0, "DT_YOUCHAL_TO", this.dsSearch.getColumn(0, "ED_DT"));
+	this.dsSelect.setColumn(0, "TY_SYS", this.FormInfo.DS_PARAM);
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+		this.fnBtnCheckAll();
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+	if (id == "ccfNO_BID") {
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE")))
+		{
+			this.gfnAlert("현장코드를 입력해주세요.");
+			return false;
+		}
+	
+		dsUserParam.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	}
+
+	return true;
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	if(id == "ccfCD_SITE") {
+		// 현장코드 변경시 입찰번호 초기화
+		this.ccfNO_BID.form.fnCodeFindClear();
+	}
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ this.fnGrid_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+	 if ((obj.oldrow > -1 && obj.oldrow == e.row)
+		|| (obj.oldrow == -1 && e.oldrow != e.row)) {
+		this.fnBtnCheckAll();
+		obj.oldrow = -1;
+	}
+}
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+
+this.fnDetail = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var param = {};
+	
+	param.CD_SITE = this.dsList.getColumn(this.dsList.rowposition, "CD_SITE");
+	param.DS_SITE = this.dsList.getColumn(this.dsList.rowposition, "DS_SITE");
+	param.NO_BID = this.dsList.getColumn(this.dsList.rowposition, "NO_BID");
+	param.DS_SUBCON = this.dsList.getColumn(this.dsList.rowposition, "DS_SUBCON");
+	param.CT_BID = this.dsList.getColumn(this.dsList.rowposition, "CT_BID");
+
+	this.gfnFormOpen("DCB", "DCB_HADOESTIMATIONDAEBIQRY_REBID", "", param); 
+}
+
+this.fnBtnCheckAll = function()
+{
+	this.gfnBtnCheck(this.btnDetail, this.dsList);
+}]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DCBPR_REBID_LIST_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="NO_BID" type="STRING" size="256"/>
+          <Column id="ST_DT" type="STRING" size="256"/>
+          <Column id="ED_DT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_SITE"/>
+            <Col id="NO_BID"/>
+            <Col id="ST_DT"/>
+            <Col id="ED_DT"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divSearch.form.ccfNO_BID.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="NO_BID"/>
+      <BindItem id="item2" compid="divSearch.form.ctclSTDT_WORK" propid="value" datasetid="dsSearch" columnid="DT_WORK"/>
+      <BindItem id="item3" compid="divSearch.form.ctclEDDT_WORK" propid="value" datasetid="dsSearch" columnid="DT_WORK"/>
+    </Bind>
+  </Form>
+</FDL>

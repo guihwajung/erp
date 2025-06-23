@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="500" height="230" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staTITLE" taborder="0" text="일용근로소득지급조서(원천징수영수증)" left="0" top="0" height="22" cssclass="sta_TITLE_Bg" textAlign="left" right="0"/>
+        <Div id="divSearch" taborder="0" left="0.0" top="staTITLE:10.0" right="0" height="46.0">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_COSTCLASS" taborder="0" text="현장코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staBgCD_COSTCLASS" taborder="1" left="staCD_COSTCLASS:0.0" top="10.0" right="0" height="24.0" cssclass="sta_WF_tablebg"/>
+              <Static id="staCD_COSTCLASS00" taborder="3" text="귀속연도" left="0.0" top="staCD_COSTCLASS:10.0" width="92.0" height="24.0" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staBgCD_COSTCLASS00" taborder="4" left="0.0" top="staBgCD_COSTCLASS:10.0" right="0" height="24.0" cssclass="sta_WF_tablebg"/>
+              <Static id="staCD_COSTCLASS02" taborder="5" text="분기" left="0.0" top="staCD_COSTCLASS:10.0" width="92.0" height="24.0" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staBgCD_COSTCLASS02" taborder="6" left="staCD_COSTCLASS02:0.0" top="staCD_COSTCLASS:10.0" right="0" height="24.0" cssclass="sta_WF_tablebg"/>
+              <Static id="staCD_COSTCLASS03" taborder="7" text="선택" left="0.0" top="staCD_COSTCLASS00:10.0" width="92.0" height="24.0" cssclass="sta_WF_tablelabel" textAlign="left" onclick="divData_staDS_SITE_onclick"/>
+              <Static id="staBgCD_COSTCLASS03" taborder="8" left="0.0" top="staBgCD_COSTCLASS00:10.0" right="0" height="24.0" cssclass="sta_WF_tablebg"/>
+              <Edit id="ctxtCD_SITE" taborder="9" left="staCD_COSTCLASS:0.0" top="10.0" height="24.0" width="80" readonly="true"/>
+              <Combo id="ccboTY_GUBUN" taborder="10" left="staCD_COSTCLASS03:0.0" top="staBgCD_COSTCLASS00:10.0" width="80" height="24.0" innerdataset="dsTY_GUBUN" datacolumn="DS_CODE" codecolumn="CD_CODE" value="1" text="소득자용" index="0"/>
+              <Radio id="crdoTY_BUNGI" taborder="2" left="staCD_COSTCLASS02:0.0" top="staCD_COSTCLASS:10.0" height="24.0" innerdataset="dsTY_BUNGI" direction="vertical" fittocontents="width" width="200" datacolumn="DS_CODE" codecolumn="CD_CODE" value="1" text="1/4" index="0"/>
+              <Div id="ctclDT_YEAR" taborder="11" left="staCD_COSTCLASS00:0.0" top="staBgCD_COSTCLASS:10.0" width="60" height="24.0" url="cmm::cmmCalYY.xfdl"/>
+              <Edit id="ctxtDS_SITE" taborder="12" left="ctxtCD_SITE:0.0" top="10.0" height="24.0" width="320" readonly="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:0" width="0" height="0">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Button id="btn00" taborder="3" text="확인" left="181" top="191" width="69" height="27" onclick="btn00_onclick"/>
+        <Button id="btn01" taborder="4" text="취소" left="260" top="191" width="69" height="27" onclick="btn01_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	
+	this.dsSearch.setColumn(0, "DT_YEAR", this.gfnGetDate().substr(0,4));
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_SITE) && !this.gfnIsNull(this.getOwnerFrame().NO_IDS)) {
+		this.dsSearch.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+		this.dsSearch.setColumn(0, "DS_SITE", this.getOwnerFrame().DS_SITE);
+		this.dsSearch.setColumn(0, "NO_IDS", this.getOwnerFrame().NO_IDS);
+		this.dsSearch.setColumn(0, "DS_NAMES", this.getOwnerFrame().DS_NAMES.substr(0, this.getOwnerFrame().DS_NAMES.length-2));
+	}		
+};
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sitecd = this.dsSearch.getColumn(0, "CD_SITE");
+	var idnos = this.dsSearch.getColumn(0, "NO_IDS");
+	var yeardt = this.dsSearch.getColumn(0, "DT_YEAR");
+	var tybungi = this.dsSearch.getColumn(0, "TY_BUNGI");
+	var tygubun = this.dsSearch.getColumn(0, "TY_GUBUN");
+	
+	var strReportName = "/ds/DSA_ILYONG_SODUK_JIGUB.ozr";
+	
+	var param = {};
+	param.REPORT_NAME = strReportName;	
+	param.JSONPARAM = "{\"sitecd\":\""+ sitecd 
+				 + "\", \"idnos\":\"" + idnos 
+	             + "\", \"yeardt\":\"" + yeardt 
+				 + "\", \"tybungi\":\"" + tybungi 
+				 + "\", \"tygubun\":\"" + tygubun 
+				 + "\"}";
+				 
+	console.log(param);
+	this.gfnFormOpenNonAuth("DZU", "DZU_OZ", "", param, 960, 830);	
+	
+		
+};
+
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 취소
+	this.getParentContext().close();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">report</Col>
+            <Col id="SP">DSBPR_HDC_ILYONG_SODUK_JIGUB</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">report2</Col>
+            <Col id="SP">DSBPR_HDC_ILYONG_SODUK_JIGUB2</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="NO_IDS" type="STRING" size="256"/>
+          <Column id="DS_NAMES" type="STRING" size="256"/>
+          <Column id="DT_YEAR" type="STRING" size="256"/>
+          <Column id="TY_BUNGI" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TY_GUBUN">1</Col>
+            <Col id="TY_BUNGI">1</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_GUBUN">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">1</Col>
+            <Col id="DS_CODE">소득자용</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">2</Col>
+            <Col id="DS_CODE">지급자용</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_BUNGI">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">1</Col>
+            <Col id="DS_CODE">1/4</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">2</Col>
+            <Col id="DS_CODE">2/4</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">3</Col>
+            <Col id="DS_CODE">3/4</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">4</Col>
+            <Col id="DS_CODE">4/4</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctxtCD_SITE" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divSearch.form.ctclDT_YEAR.form.TextBox" propid="value" datasetid="dsSearch" columnid="DT_YEAR"/>
+      <BindItem id="item2" compid="divSearch.form.crdoTY_BUNGI" propid="value" datasetid="dsSearch" columnid="TY_BUNGI"/>
+      <BindItem id="item3" compid="divSearch.form.ccboTY_GUBUN" propid="value" datasetid="dsSearch" columnid="TY_GUBUN"/>
+      <BindItem id="item6" compid="divSearch.form.ctxtDS_SITE" propid="value" datasetid="dsSearch" columnid="DS_SITE"/>
+    </Bind>
+  </Form>
+</FDL>

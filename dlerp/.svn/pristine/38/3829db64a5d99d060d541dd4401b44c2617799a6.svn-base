@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="326" height="268" titletext="교육관리일괄등록-교육내용" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="1" text="일괄등록입력" left="0" top="-6" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <!-- 교육일정 -->
+              <Static id="staFR_EDUCATION" taborder="21" text="교육일정" left="0" top="staTITLE:0" width="87" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+              <Static id="staFR_EDUCATION_bg" taborder="24" left="staFR_EDUCATION:-1" top="staFR_EDUCATION:-30" width="240" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+              <Calendar id="ctclFR_EDUCATION" taborder="34" left="staFR_EDUCATION:5" top="staFR_EDUCATION:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staTO_EDUCATION" taborder="32" text="~" left="ctclFR_EDUCATION:0" top="staFR_EDUCATION:-25" width="30" height="20" cssclass="sta_WF_AC"/>
+              <Calendar id="ctclTO_EDUCATION" taborder="33" left="staTO_EDUCATION:0" top="staFR_EDUCATION:-25" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <!-- 사내외구분 -->
+              <Static id="staCD_EDU_INOUT" taborder="15" text="사내외구분" left="0" top="staFR_EDUCATION:-1" width="87" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_EDU_INOUT_bg" taborder="16" left="staCD_EDU_INOUT:-1" top="staCD_EDU_INOUT:-30" width="240" height="30" cssclass="sta_WF_tablebg"/>
+              <Combo id="cboCD_EDU_INOUT" taborder="27" text="cbo00" left="staCD_EDU_INOUT:5" top="staCD_EDU_INOUT:-25" width="132" height="18" innerdataset="dsEDU_INOUT" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+              <!-- 교육종류 -->
+              <Static id="staCD_EDU_TYPE" taborder="19" text="교육종류" left="0" top="staCD_EDU_INOUT:-1" width="87" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+              <Static id="staCD_EDU_TYPE_bg" taborder="20" left="staCD_EDU_TYPE:-1" top="staCD_EDU_TYPE:-30" width="240" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+              <Div id="ccfCD_EDU_TYPE" CDTextWidth="70" taborder="25" left="staCD_EDU_TYPE:5" top="staCD_EDU_TYPE:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="true" CodeFindName="DAX_CFCOMMONCODE"/>
+              <!-- 구분 -->
+              <Static id="staDS_EDU_GUBUN" taborder="22" text="구분" left="0" top="staCD_EDU_TYPE:-1" width="87" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+              <Static id="staDS_EDU_GUBUN_bg" taborder="23" left="staDS_EDU_GUBUN:-1" top="staDS_EDU_GUBUN:-30" width="240" height="30" cssclass="sta_WF_tablebg" text="" visible="true"/>
+              <Div id="ccfDS_EDU_GUBUN" CDTextWidth="70" taborder="12" left="staDS_EDU_GUBUN:5" top="staDS_EDU_GUBUN:-25" width="230" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="true" CodeFindName="DAX_CFCOMMONCODE"/>
+              <!-- 교육명 -->
+              <Static id="staDS_EDUCATION" taborder="25" text="교육명" left="0" top="staDS_EDU_GUBUN:-1" width="87" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+              <Static id="staDS_EDUCATION_bg" taborder="26" left="staDS_EDUCATION:-1" top="staDS_EDUCATION:-30" width="240" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+              <Edit id="edtDS_EDUCATION" left="staDS_EDUCATION:5" top="staDS_EDUCATION:-25" width="230" height="20" visible="true" taborder="31"/>
+              <!-- 교육기관명 -->
+              <Static id="staDS_EDU_ORGAN" taborder="28" text="교육기관명" left="0" top="staDS_EDUCATION:-1" width="87" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+              <Static id="staDS_EDU_ORGAN_bg" taborder="27" left="staDS_EDU_ORGAN:-1" top="staDS_EDU_ORGAN:-30" width="240" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+              <Edit id="edtDS_EDU_ORGAN" left="staDS_EDU_ORGAN:5" top="staDS_EDU_ORGAN:-25" width="230" height="20" visible="true" taborder="31"/>
+              <!-- 교육금액 -->
+              <Static id="staAM_EDUCATION" taborder="31" text="교육금액" left="0" top="staDS_EDU_ORGAN:-1" width="87" height="30" cssclass="sta_WF_tablelabel" visible="true"/>
+              <Static id="staAM_EDUCATION_bg" taborder="30" left="staAM_EDUCATION:-1" top="staAM_EDUCATION:-30" width="240" height="30" cssclass="sta_WF_tablebg" visible="true"/>
+              <MaskEdit id="mskAM_EDUCATION" taborder="28" left="staAM_EDUCATION:4" top="staAM_EDUCATION:-25" width="230" height="20" limitbymask="both" format="###,###,###,###,###" onchanged="divData_mskAM_PAYMENTAMT_onchanged"/>
+              <Div id="divBtns" left="100" top="staAM_EDUCATION:10" width="130" height="30">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnOK" taborder="0" text="확인" left="0" top="0" width="60" height="30" onclick="btnOK_onclick"/>
+                    <Button id="btnCANCLE" taborder="15" text="취소" left="btnOK:10" top="0" width="60" height="30" onclick="btnCANCLE_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form, e:nexacro.LoadEventInfo) {
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnInit();
+}
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	
+}
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ctclFR_EDUCATION = this.divData.form.ctclFR_EDUCATION;		// 교육일정(FROM)
+	this.ctclTO_EDUCATION = this.divData.form.ctclTO_EDUCATION;		// 교육일정(TO)
+	this.cboCD_EDU_INOUT  = this.divData.form.cboCD_EDU_INOUT;		// 사내외구분
+	this.ccfCD_EDU_TYPE   = this.divData.form.ccfCD_EDU_TYPE;		// 교육종류
+	this.ccfDS_EDU_GUBUN  = this.divData.form.ccfDS_EDU_GUBUN;		// 구분
+	this.edtDS_EDUCATION  = this.divData.form.edtDS_EDUCATION;		// 교육명
+	this.edtDS_EDU_ORGAN  = this.divData.form.edtDS_EDU_ORGAN;		// 교육기관명
+	this.mskAM_EDUCATION  = this.divData.form.mskAM_EDUCATION;		// 교육금액
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_EDU_TYPE.BeforeUserDataSetParam  = "fnBeforeUserDataSetParam";	// 교육종류
+	this.ccfCD_EDU_TYPE.AfterCDTextChanged      = "fnAfterCDTextChanged";
+	this.ccfDS_EDU_GUBUN.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	// 구분
+	this.ccfDS_EDU_GUBUN.AfterCDTextChanged     = "fnAfterCDTextChanged";
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+}
+
+/************************************************************************
+ * 화면 및 검색영역 초기화
+ ************************************************************************/
+this.fnInit = function() {
+	// 사내외구분
+	this.cboCD_EDU_INOUT.set_index(0);
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+/*
+ * 조회 버튼
+ */
+this.fnSelect = function() {
+	
+}
+
+/*
+ * 추가 버튼
+ */
+this.fnAdd = function() {
+	
+}
+
+/*
+ * 삭제 버튼
+ */
+this.fnDel = function() {
+    
+}
+
+/*
+ * 저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ * 엑셀 버튼
+ */
+this.fnExcel = function() {
+	
+}
+
+/*
+ * 출력 버튼
+ */
+this.fnPrint = function() {
+	return false;
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValid = function() {
+	return true;
+}
+
+/************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+// 확인 버튼
+this.btnOK_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) {
+	var json = {};
+	
+	json.FR_EDUCATION = this.dsData.getColumn(0, "FR_EDUCATION");
+	json.TO_EDUCATION = this.dsData.getColumn(0, "TO_EDUCATION");
+	json.CD_EDU_INOUT = this.dsData.getColumn(0, "CD_EDU_INOUT");
+	json.CD_EDU_TYPE  = this.dsData.getColumn(0, "CD_EDU_TYPE");
+	json.DS_EDU_TYPE  = this.dsData.getColumn(0, "DS_EDU_TYPE");
+	json.CD_EDU_GUBUN = this.dsData.getColumn(0, "CD_EDU_GUBUN");
+	json.DS_EDU_GUBUN = this.dsData.getColumn(0, "DS_EDU_GUBUN");
+	json.DS_EDUCATION = this.dsData.getColumn(0, "DS_EDUCATION");
+	json.DS_EDU_ORGAN = this.dsData.getColumn(0, "DS_EDU_ORGAN");
+	json.AM_EDUCATION = this.dsData.getColumn(0, "AM_EDUCATION");
+
+	this.getParentContext().close(JSON.stringify(json));
+}
+
+// 취소 버튼
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	this.getParentContext().close(false);
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ * 기본 콜백
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if (errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return;
+	}
+}
+
+// 달력
+this.dsSearch_onvaluechanged = function(obj:nexacro.CalendarDayClickEventInfo) {
+	// 교육일정(TO) 초기화
+	this.tclDT_PROVATION_TO.set_value("");
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if (id == "ccfCD_EDU_TYPE") {	// 교육종류
+		dsUserParam.setColumn(nrow, "CD_PREFIX", "S3");
+	}
+	else if (id == "ccfDS_EDU_GUBUN") {	// 교육구분
+		dsUserParam.setColumn(nrow, "CD_PREFIX", "S4");
+	}
+	
+	return true;
+} 
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	if (id == "ccfCD_EDU_TYPE") {
+		;
+	} else if (id == "ccfDS_EDU_GUBUN") {
+		;
+	}
+}
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGridBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	return true;
+}
+
+this.fnGridAfterCDTextChanged = function(id, codeFindData) {
+
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+]]></Script>
+    <Objects>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="FR_EDUCATION" type="STRING" size="256"/>
+          <Column id="TO_EDUCATION" type="STRING" size="256"/>
+          <Column id="CD_EDU_INOUT" type="STRING" size="256"/>
+          <Column id="CD_EDU_TYPE" type="STRING" size="256"/>
+          <Column id="DS_EDU_TYPE" type="STRING" size="256"/>
+          <Column id="CD_EDU_GUBUN" type="STRING" size="256"/>
+          <Column id="DS_EDU_GUBUN" type="STRING" size="256"/>
+          <Column id="DS_EDUCATION" type="STRING" size="256"/>
+          <Column id="DS_EDU_ORGAN" type="STRING" size="256"/>
+          <Column id="AM_EDUCATION" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="FR_EDUCATION"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsEDU_INOUT">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">사내</Col>
+            <Col id="DS_CODE">사내</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">사외</Col>
+            <Col id="DS_CODE">사외</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.ctclFR_EDUCATION" propid="value" datasetid="dsData" columnid="FR_EDUCATION"/>
+      <BindItem id="item1" compid="divData.form.ctclTO_EDUCATION" propid="value" datasetid="dsData" columnid="TO_EDUCATION"/>
+      <BindItem id="item2" compid="divData.form.cboCD_EDU_INOUT" propid="value" datasetid="dsData" columnid="CD_EDU_INOUT"/>
+      <BindItem id="item3" compid="divData.form.ccfCD_EDU_TYPE.form.CDTextBox" propid="value" datasetid="dsData" columnid="CD_EDU_TYPE"/>
+      <BindItem id="item4" compid="divData.form.ccfCD_EDU_TYPE.form.DSTextBox" propid="value" datasetid="dsData" columnid="DS_EDU_TYPE"/>
+      <BindItem id="item5" compid="divData.form.ccfDS_EDU_GUBUN.form.CDTextBox" propid="value" datasetid="dsData" columnid="CD_EDU_GUBUN"/>
+      <BindItem id="item6" compid="divData.form.ccfDS_EDU_GUBUN.form.DSTextBox" propid="value" datasetid="dsData" columnid="DS_EDU_GUBUN"/>
+      <BindItem id="item7" compid="divData.form.edtDS_EDUCATION" propid="value" datasetid="dsData" columnid="DS_EDUCATION"/>
+      <BindItem id="item8" compid="divData.form.edtDS_EDU_ORGAN" propid="value" datasetid="dsData" columnid="DS_EDU_ORGAN"/>
+      <BindItem id="item9" compid="divData.form.mskAM_EDUCATION" propid="value" datasetid="dsData" columnid="AM_EDUCATION"/>
+    </Bind>
+  </Form>
+</FDL>

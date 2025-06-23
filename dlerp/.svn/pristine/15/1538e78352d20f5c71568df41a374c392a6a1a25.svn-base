@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="500" height="170" maxwidth="500" maxheight="210" titletext="사업수지 항목 복사" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staTITLE" taborder="0" text="복사정보" left="0" top="0" width="100.00%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+        <Static id="sta04" taborder="6" left="114" top="37" width="356" height="30" cssclass="sta_WF_tablebg" text=""/>
+        <Static id="sta05" taborder="1" text="프로젝트(T)" left="8" top="66" width="107" height="30" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta00" taborder="3" text="프로젝트(F)" left="8" top="37" width="107" height="30" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta01" taborder="7" left="114" top="66" width="356" height="30" cssclass="sta_WF_tablebg" text=""/>
+        <Div id="ccfCD_PROJT" CodeFindName="DOS_CFPROJ" CDTextWidth="70" taborder="2" left="121" top="71" width="339" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+        <Div id="ccfCD_PROJF" CodeFindName="DOS_CFPROJ" CDTextWidth="70" taborder="4" left="121" top="42" width="339" height="20" url="cmm::cmmCodeFind.xfdl" text="" enable="true"/>
+        <Div id="divBtns" left="65" top="110" width="200" height="40" taborder="5">
+          <Layouts>
+            <Layout>
+              <Button id="btnOK" taborder="10" text="확인" left="30" top="10" width="60" height="27" onclick="btnOK_onclick"/>
+              <Button id="btnCANCLE" taborder="11" text="취소" left="btnOK:30" top="10" width="60" height="27" onclick="btnCANCLE_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	//this.fnSetCombo();
+
+	var frame = this.getOwnerFrame();
+	this.dsList.setColumn(0, "CD_PROJF", frame.CD_PROJF);
+	this.dsList.setColumn(0, "DS_PROJF", frame.DS_PROJF);
+	this.dsList.setColumn(0, "CD_PROJT", frame.CD_PROJF);
+	this.dsList.setColumn(0, "DS_PROJT", frame.DS_PROJF);
+};
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+	this.ccfID_PROJT = this.ccfID_PROJT;	//프로젝트T
+	this.ccfID_PROJF = this.ccfID_PROJF;	//프로젝트F
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	// 프로젝트T	
+	this.ccfCD_PROJT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_PROJT.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	//프로젝트F
+	this.ccfCD_PROJF.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";			
+
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("TO_PROJ", "string");
+	this.dsSave.addColumn("FR_PROJ", "string");
+	this.dsSave.addColumn("ID_USER", "string");
+}
+
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 확인
+	if(!this.fnSaveValidate()) return;	
+	this.dlgfnSave(); 
+	
+// 	var json = {};
+// 
+// 	json.CD_PROJ = this.dsList.getColumn(0, "CD_PROJT");
+// 	json.DS_PROJ = this.dsList.getColumn(0, "DS_PROJT");
+// 	
+// 	this.getParentContext().close(JSON.stringify(json));
+};
+
+this.dlgfnSave = function() {
+
+	this.dsSave.clearData();
+	var nrow = this.dsSave.addRow();
+
+	this.dsSave.setColumn(nrow, "TO_PROJ", this.dsList.getColumn(0, "CD_PROJT"));
+	this.dsSave.setColumn(nrow, "FR_PROJ", this.dsList.getColumn(0, "CD_PROJF"));
+	this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]	
+}
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 취소
+	this.getParentContext().close(false);
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	저장 Validate
+ */
+this.fnSaveValidate = function() {
+
+	if (this.gfnIsNull(this.dsList.getColumn(0, "CD_PROJT"))) {
+		this.ccfID_PROJT.form.CDTextBox.setFocus();
+		this.gfnAlert("프로젝트명을 입력하세요.");
+		return false;
+	}
+
+	if (this.gfnIsNull(this.dsList.getColumn(0, "CD_PROJF"))) {
+		this.ccfID_PROJF.form.CDTextBox.setFocus();
+		this.gfnAlert("프로젝트명을 입력하세요.");
+		return false;
+	}
+
+	return true;
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+	if (id == "ccfCD_PROJT") {	// 프로젝트T
+		dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+		dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+		dsUserParam.setColumn(nrow, "ID_GROUP", this.AuthClient.CD_CORP);
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);		
+	}	
+	else if  (id == "ccfCD_PROJF") {	// 프로젝트F
+		dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+		dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+		dsUserParam.setColumn(nrow, "ID_GROUP", this.AuthClient.CD_CORP);
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);	
+	}	
+
+	return true;
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{	
+// 	if (errorCode != 0) {
+// 		this.gfnAlert(errorMsg);
+// 		return;
+// 	} 
+// 	
+	if(svcID == "save") {
+		if (errorCode == 0) {
+		
+			var json = {};
+
+			json.CD_PROJ = this.dsList.getColumn(0, "CD_PROJT");
+			json.DS_PROJ = this.dsList.getColumn(0, "DS_PROJT");
+			
+			this.getParentContext().close(JSON.stringify(json));
+		
+// 			this.fnClose = function() {
+// 				this.getParentContext().close(true);
+// 			}
+			// 자기자신창 닫기
+//			this.getParentContext().close();
+			
+			this.gfnAlert("작업이 완료되었습니다.", "fnClose");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_PROJT" type="STRING" size="256"/>
+          <Column id="DS_PROJT" type="STRING" size="256"/>
+          <Column id="CD_PROJF" type="STRING" size="256"/>
+          <Column id="DS_PROJF" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DOSPR_ITEM_COPY</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="ccfCD_PROJT.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_PROJT"/>
+      <BindItem id="item1" compid="ccfCD_PROJT.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_PROJT"/>
+      <BindItem id="item2" compid="ccfCD_PROJF.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_PROJF"/>
+      <BindItem id="item3" compid="ccfCD_PROJF.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_PROJF"/>
+    </Bind>
+  </Form>
+</FDL>

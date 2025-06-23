@@ -1,0 +1,678 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("DBZ_M_AUTH");
+            this.set_titletext("모바일 권한 등록");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">select</Col><Col id=\"SP\">DBZPR_LOGIN_SELECT</Col></Row><Row><Col id=\"SP\">DBZPR_LOGIN_INSERT</Col><Col id=\"TARGET\">insert</Col></Row><Row><Col id=\"SP\">DBZPR_LOGIN_UPDATE</Col><Col id=\"TARGET\">update</Col></Row><Row><Col id=\"SP\">DBZPR_LOGIN_DELETE</Col><Col id=\"TARGET\">delete</Col></Row><Row><Col id=\"TARGET\">combo</Col><Col id=\"SP\">DZXPR_COMBO_SELECT</Col></Row><Row><Col id=\"TARGET\">pwInit</Col><Col id=\"SP\">DBZPR_PASSWORD_INIT</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_APP_REQUEST", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsTY_APP_CANCEL", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"TY_APP_REQUEST\" type=\"STRING\" size=\"256\"/><Column id=\"TY_APP_CANCEL\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TY_APP_REQUEST\"/><Col id=\"TY_APP_CANCEL\"/></Row></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divSearch","0.0","10.0",null,"46.0","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_SEARCH_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staTY_APP_REQUEST","0.0","10.0","118.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("2");
+            obj.set_text("신청결재상태");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("cboTY_APP_REQUEST","staTY_APP_REQUEST:0.0","10.0","119","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("0");
+            obj.set_innerdataset("dsTY_APP_REQUEST");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("0");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Static("staTY_APP_CANCEL","cboTY_APP_REQUEST:0.0","10.0","118.0","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("3");
+            obj.set_text("해지결재상태");
+            obj.set_cssclass("sta_WF_SchLabel");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Combo("cboTY_APP_CANCEL","staTY_APP_CANCEL:0.0","10.0","119","24.0",null,null,null,null,null,null,this.divSearch.form);
+            obj.set_taborder("1");
+            obj.set_innerdataset("dsTY_APP_REQUEST");
+            obj.set_datacolumn("DS_CODE");
+            obj.set_codecolumn("CD_CODE");
+            obj.set_text("");
+            obj.set_value("");
+            obj.set_index("0");
+            this.divSearch.addChild(obj.name, obj);
+
+            obj = new Div("divData","0","40",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.cboTY_APP_REQUEST","value","dsSearch","TY_APP_REQUEST");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divSearch.form.cboTY_APP_CANCEL","value","dsSearch","TY_APP_CANCEL");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("DBZ_M_AUTH.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e)
+        {
+
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	//this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+        	this.fnSetCombo();
+
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         ************************************************************************/
+        this.fnSetButton = function() {
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        	this.btnFormButton1 = this.gfnFormButtonAdd("WorkBtn1", "fnWorkBtn"); // 권한신청결재
+        	this.btnFormButton2 = this.gfnFormButtonAdd("WorkBtn2", "fnWorkBtn");  //권한해지결재
+        	this.btnFormButton3 = this.gfnFormButtonAdd("WorkBtn3", "fnWorkBtn");  //비밀번호초기화
+        	this.btnFormButton4 = this.gfnFormButtonAdd("WorkBtn4", "fnWorkBtn");  //신청결재조회
+        	this.btnFormButton5 = this.gfnFormButtonAdd("WorkBtn5", "fnWorkBtn");  //해지결재조회
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.cboTY_APP_REQUEST = this.divSearch.form.cboTY_APP_REQUEST;
+        	this.cboTY_APP_CANCEL = this.divSearch.form.cboTY_APP_CANCEL;
+        	this.dxGrid = this.divData.form.objGrid;
+        	this.dxGrid.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+        	this.dxGrid.AfterCDTextChanged = "fnAfterCDTextChanged";
+        	this.strIdGroup = "";
+        	this.strTyAuth = "";
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DB", "DBZ_M_AUTH");  // pForm.gfnGridInit = function(objGrid, objDs, cd_system, id_grid, tree_column, level_column, is_manual)
+
+        	this.dxGrid.set_selecttype("cell");	// IE경우만 multiarea모드에서 master선택후 마우스 이동 빠르게 할 경우 버그가 있어서 cell 모드로 변경
+        	this.dxGrid.setCellProperty( "body", this.dxGrid.getBindCellIndex( "body", "ID_GROUP"), "edittype", "expr:"+this.ucFlag+"=='I'?'text':'readonly'");
+        	this.dxGrid.setCellProperty( "body", this.dxGrid.getBindCellIndex( "body", "ID_GROUP"), "expandshow", "expr:"+this.ucFlag+"=='I'?'show':'hide'");
+        	this.dxGrid.setCellProperty( "body", this.dxGrid.getBindCellIndex( "body", "ID_GROUP"), "expandsize", "expr:"+this.ucFlag+"=='I'?'16':'0'");
+
+        }
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+
+        	this.dsSelect = new Dataset();
+        	this.dsSelect.addColumn("TY_APP_REQUEST", "string");
+        	this.dsSelect.addColumn("TY_APP_CANCEL", "string");
+
+        	this.dsInsert = new Dataset();
+        	this.dsInsert.addColumn("ID_GROUP", "string");
+        	this.dsInsert.addColumn("TY_AUTH", "string");
+        	this.dsInsert.addColumn("CD_SITE", "string");
+        	this.dsInsert.addColumn("ID_SABUN", "string");
+        	this.dsInsert.addColumn("DS_HNAME", "string");
+        	this.dsInsert.addColumn("DS_REASON", "string");
+        	this.dsInsert.addColumn("DS_REASON_CANCEL", "string");
+        	this.dsInsert.addColumn("DT_FROM", "string");
+        	this.dsInsert.addColumn("DT_TO", "string");
+        	this.dsInsert.addColumn("DS_BIGO", "string");
+        	this.dsInsert.addColumn("ID_INSERT", "string");
+        	this.dsInsert.addColumn("NO_SJC", "string");
+        	this.dsInsert.addColumn("SEQ", "int");
+
+        	this.dsUpdate = new Dataset();
+        	this.dsUpdate.addColumn("SN_SEQ", "int");
+        	this.dsUpdate.addColumn("ID_GROUP", "string");
+        	this.dsUpdate.addColumn("TY_AUTH", "string");
+        	this.dsUpdate.addColumn("CD_SITE", "string");
+        	this.dsUpdate.addColumn("ID_SABUN", "string");
+        	this.dsUpdate.addColumn("DS_HNAME", "string");
+        	this.dsUpdate.addColumn("DS_REASON", "string");
+        	this.dsUpdate.addColumn("DS_REASON_CANCEL", "string");
+        	this.dsUpdate.addColumn("DT_FROM", "string");
+        	this.dsUpdate.addColumn("DT_TO", "string");
+        	this.dsUpdate.addColumn("TY_APP_REQUEST", "string");
+        	this.dsUpdate.addColumn("DS_BIGO", "string");
+        	this.dsUpdate.addColumn("ID_UPDATE", "string");  // 최종변경자
+        	this.dsUpdate.addColumn("NO_SJC", "string");
+
+        	this.dsDelete = new Dataset();
+        	this.dsDelete.addColumn("SN_SEQ", "int");
+
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+        	this.dsSelect.setColumn(0, "TY_APP_REQUEST", this.dsSearch.getColumn(0, "TY_APP_REQUEST"));
+        	this.dsSelect.setColumn(0, "TY_APP_CANCEL", this.dsSearch.getColumn(0, "TY_APP_CANCEL"));
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// trabsaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+        	if (!this.gfnGridValidate(this.dxGrid)) return;
+        	if( !this.fnSaveValidate() ) return;
+        	//this.dxGrid.updateToDataset();
+
+        	this.dsInsert.clearData();
+        	this.dsUpdate.clearData();
+        	this.dsDelete.clearData();
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var flag = this.gfnGetFlag(this.dsList, i);
+        		switch(flag) {
+        			case "I":
+        				var nrow = this.dsInsert.addRow();
+        				this.dsInsert.setColumn(nrow, "ID_GROUP", this.dsList.getColumn(i, "ID_GROUP"));
+        				this.dsInsert.setColumn(nrow, "TY_AUTH", this.dsList.getColumn(i, "TY_AUTH"));
+        				this.dsInsert.setColumn(nrow, "CD_SITE", this.dsList.getColumn(i, "CD_SITE"));
+        				this.dsInsert.setColumn(nrow, "ID_SABUN", this.dsList.getColumn(i, "ID_SABUN"));
+        				this.dsInsert.setColumn(nrow, "DS_HNAME", this.dsList.getColumn(i, "DS_HNAME"));
+        				this.dsInsert.setColumn(nrow, "DS_REASON", this.dsList.getColumn(i, "DS_REASON"));
+        				this.dsInsert.setColumn(nrow, "DS_REASON_CANCEL", this.dsList.getColumn(i, "DS_REASON_CANCEL"));
+        				this.dsInsert.setColumn(nrow, "DT_FROM", this.dsList.getColumn(i, "DT_FROM"));
+        				this.dsInsert.setColumn(nrow, "DT_TO", this.dsList.getColumn(i, "DT_TO"));
+        				this.dsInsert.setColumn(nrow, "DS_BIGO", this.dsList.getColumn(i, "DS_BIGO"));
+        				this.dsInsert.setColumn(nrow, "NO_SJC", this.dsList.getColumn(i, "NO_SJC"));
+        				this.dsInsert.setColumn(nrow, "ID_INSERT", this.AuthClient.ID_USER);
+        				this.dsInsert.setColumn(nrow, "SEQ", i);
+
+        				break;
+
+        			case "U":
+        				var nrow = this.dsUpdate.addRow();
+        				this.dsUpdate.setColumn(nrow, "SN_SEQ", this.dsList.getColumn(i, "SN_SEQ"));
+        				this.dsUpdate.setColumn(nrow, "ID_GROUP", this.dsList.getColumn(i, "ID_GROUP"));
+        				this.dsUpdate.setColumn(nrow, "TY_AUTH", this.dsList.getColumn(i, "TY_AUTH"));
+        				this.dsUpdate.setColumn(nrow, "CD_SITE", this.dsList.getColumn(i, "CD_SITE"));
+        				this.dsUpdate.setColumn(nrow, "ID_SABUN", this.dsList.getColumn(i, "ID_SABUN"));
+        				this.dsUpdate.setColumn(nrow, "DS_HNAME", this.dsList.getColumn(i, "DS_HNAME"));
+        				this.dsUpdate.setColumn(nrow, "DS_REASON", this.dsList.getColumn(i, "DS_REASON"));
+        				this.dsUpdate.setColumn(nrow, "DS_REASON_CANCEL", this.dsList.getColumn(i, "DS_REASON_CANCEL"));
+        				this.dsUpdate.setColumn(nrow, "DT_FROM", this.dsList.getColumn(i, "DT_FROM"));
+        				this.dsUpdate.setColumn(nrow, "DT_TO", this.dsList.getColumn(i, "DT_TO"));
+        				this.dsUpdate.setColumn(nrow, "TY_APP_REQUEST", this.dsList.getColumn(i, "TY_APP_REQUEST"));
+        				this.dsUpdate.setColumn(nrow, "DS_BIGO", this.dsList.getColumn(i, "DS_BIGO"));
+        				this.dsUpdate.setColumn(nrow, "NO_SJC", this.dsList.getColumn(i, "NO_SJC"));
+        				this.dsUpdate.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+        				break;
+
+        			case "D":
+        				var nrow = this.dsDelete.addRow();
+        				this.dsDelete.setColumn(nrow, "SN_SEQ", this.dsList.getColumn(i, "SN_SEQ"));
+
+        				break;
+        		}
+        	}
+
+        	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "delete=dsDelete insert=dsInsert update=dsUpdate";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+        	var nrow = this.gfnGridAdd(this.dxGrid,"");
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+        	this.gfnGridDel(this.dxGrid);
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+         */
+        this.fnSelectValidate = function(id) {
+        	var validate = true;
+
+        	if(id == "DBX_CFAUTH") {
+        		if (this.gfnIsNull( this.dsList.getColumn(this.dsList.rowposition,"TY_AUTH") )) {
+        			validate = false;
+        			this.fnCdSiteVaidateCallback = function() {
+        				var nIndex = this.dxGrid.getBindCellIndex( "body", "TY_AUTH");
+        				this.dxGrid.selectCell(this.dxGrid.currentrow,nIndex);
+        				return false;
+        			}
+        			this.gfnAlert("권한유형코드를 입력하셔야 합니다.", "fnCdSiteVaidateCallback"); // gfnAlert = function (sMsgId, arrArg, sPopId, sCallback)
+        		}
+        	}
+        	else if(id == "DBX_CFMOBILEID") {
+        		if (this.gfnIsNull( this.dsList.getColumn(this.dsList.rowposition,"ID_GROUP") )) {
+        			validate = false;
+        			this.fnCdSiteVaidateCallback = function() {
+        				var nIndex = this.dxGrid.getBindCellIndex( "body", "ID_GROUP");
+        				this.dxGrid.selectCell(this.dxGrid.currentrow,nIndex);
+        				return false;
+        			}
+        			this.gfnAlert("권한그룹코드를 입력하셔야 합니다.", "fnCdSiteVaidateCallback"); // gfnAlert = function (sMsgId, arrArg, sPopId, sCallback)
+        		}
+        	}
+
+        	return validate;
+        }
+
+        /*
+         *	저장 Validate
+         */
+        this.fnSaveValidate = function(id) {
+        	var validate = true;
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var flag = this.gfnGetFlag(this.dsList, i);
+        		switch(flag) {
+        			case "I":
+        			case "U":
+        				if ( !this.gfnIsNull( this.dsList.getColumn(i, "DT_FROM") ) && !this.gfnIsNull( this.dsList.getColumn(i, "DT_TO") )) {
+        					if ( this.dsList.getColumn(i, "DT_FROM") > this.dsList.getColumn(i, "DT_TO") ) {
+        						validate = false;
+        						this.fnSaveVaidateCallback = function() {
+        							var nIndex = this.dxGrid.getBindCellIndex( "body", "DT_TO");
+        							this.dxGrid.selectCell(this.dxGrid.currentrow,nIndex);
+        							return false;
+        						}
+        						this.gfnAlert("시작일보다 종료일이 이전일수 없습니다.", "fnSaveVaidateCallback"); // gfnAlert = function (sMsgId, arrArg, sPopId, sCallback)
+        					}
+        				}
+        		}
+        	}
+
+
+        	return validate;
+        };
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+
+        	if (svcID == "select") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+        	} else if(svcID == "save") {
+        		if (errorCode == 0) {
+        			this.FormBtns.Select.click();
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	} else if (svcID == "combo") {
+        		this.dsTY_APP_REQUEST.insertRow(0);
+        		this.dsTY_APP_REQUEST.setColumn(0,"DS_CODE","선택");
+        		this.cboTY_APP_REQUEST.set_index(1);
+
+        		this.dsTY_APP_CANCEL.insertRow(0);
+        		this.dsTY_APP_CANCEL.setColumn(0,"DS_CODE","선택");
+        		this.cboTY_APP_CANCEL.set_index(0);
+        	} else if (svcID =="pwInit" ){
+        		this.gfnAlert("비밀번호 초기화가 완료되었습니다.");
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+         this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+        	if( !this.fnSelectValidate(id) ) return;
+
+        	if (id == "DBX_CFAUTH") {
+        		dsUserParam.setColumn(nrow, "TY_AUTH", this.dsList.getColumn(this.dsList.rowposition,"TY_AUTH"));
+        	}
+
+        	if ( id == "DBX_CFMOBILEID" ){
+        		dsUserParam.setColumn(nrow, "ID_GROUP", this.dsList.getColumn(this.dsList.rowposition,"ID_GROUP"));
+        	}
+        	return true;
+        };
+
+        this.fnAfterCDTextChanged = function(id, codeFindData) {
+
+        	if(id == "CF_CODE_DB_A1") {	//권한그룹코드
+        		if (codeFindData.length > 0) {
+        			if ( codeFindData[0]["CD_CODE"] != this.strIdGroup ){
+        				this.dsList.setColumn(this.dsList.rowposition,"ID_SABUN","");
+        				this.dsList.setColumn(this.dsList.rowposition,"DS_HNAME","");
+        				this.strIdGroup =codeFindData[0]["CD_CODE"];
+        			}
+        		}
+
+        	}
+
+        	if(id == "CF_CODE_DB_A2") {	//권한유형코드
+        		if ( codeFindData[0]["CD_CODE"] != this.strTyAuth ){
+        			this.dsList.setColumn(this.dsList.rowposition,"CD_SITE","");
+        			this.dsList.setColumn(this.dsList.rowposition,"DS_SITE","");
+        			this.strTyAuth =codeFindData[0]["CD_CODE"];
+        		}
+        	}
+        };
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+
+        /************************************************************************
+         * 확장버튼 이벤트
+         ************************************************************************/
+        /*
+         * 커스텀 버튼 이벤트
+         */
+        this.fnWorkBtn = function(obj,e) {
+        	if(!this.gfnGridIsRow(this.dxGrid)) return;
+
+        	if(obj.id == "btnExt_WorkBtn1" || obj.id == "btnExt_WorkBtn2"){
+
+        		var nICnt = this.dsList.findRow(this.ucFlag,"I");
+        		var nUCnt = this.dsList.findRow(this.ucFlag,"U");
+        		var nDCnt = this.dsList.findRow(this.ucFlag,"D");
+
+        		if( nICnt > -1|| nUCnt > -1 || nDCnt > -1) {
+        			this.gfnAlert("저장 후 "+obj.text+" 처리하세요.", "");
+        			return;
+        		}
+
+        		var strSnSeq = "";
+        		for(var i=0; i < this.dsList.rowcount; i++){
+        			if( this.gfnNvl(this.dsList.getColumn(i,"CHK"),"N") == "Y" ){
+        				strSnSeq += this.dsList.getColumn(i,"SN_SEQ")+",";
+
+        				// 신청결재상태 체크(0 : 상신전, 3 : 반려)
+        				if(obj.id == "btnExt_WorkBtn1" ){
+        					if( this.dsList.getColumn(i,"TY_APP_REQUEST") != "0" && this.dsList.getColumn(i,"TY_APP_REQUEST") != "3" ){
+        						this.gfnAlert("신청결재상태를 확인 바랍니다.");
+        						this.dsList.set_rowposition(i);
+        						return;
+        					}
+
+        					if( this.gfnIsNull(this.dsList.getColumn(i,"DT_FROM")) || this.gfnIsNull(this.dsList.getColumn(i,"DT_TO")) ){
+        						this.gfnAlert("신청기간(시작일,종료일)이 존재하지 않습니다.");
+        						this.dsList.set_rowposition(i);
+        						return;
+        					}
+        				}
+
+        				// 해지결제상태 체크(0 : 상신전, 3 : 반려)
+        				if(obj.id == "btnExt_WorkBtn2" ){
+        					if( this.dsList.getColumn(i,"TY_APP_CANCEL") != "0" && this.dsList.getColumn(i,"TY_APP_CANCEL") != "3" ){
+        						this.gfnAlert("해지결재상태를 확인 바랍니다.");
+        						return;
+        					}
+        				}
+        			}
+        		}
+
+        		if( strSnSeq == "" ){
+        			this.gfnAlert(obj.text+ " 할 행을 체크하세요.");
+        			return;
+        		}
+
+        		var strFormId = "";
+        		var strSubject = "";
+        		if(obj.id == "btnExt_WorkBtn1" ){
+        			strFormId = "WF_FORM_ERP_M_AUTH";
+        			strSubject = "하자 모바일 권한 신청";
+        		} else if(obj.id == "btnExt_WorkBtn2" ){
+        			strFormId = "WF_FORM_ERP_M_TERMINATION";
+        			strSubject = "하자 모바일 권한 해지";
+        		}
+        		var url = this.gfnGetConfig("DZ" , "GW_APROVAL_URL");
+        		url = url+"approval/legacy/goFormLink.do?mode=DRAFT&legacyFormID="+strFormId;
+        		url += "&subject="+encodeURI(strSubject);
+        		url += "&dataType=proc";
+        		url += "&empno="+this.AuthClient.ID_USER;
+        		//url += "&empno="+this.AuthClient.ID_USER; 현재 하나의 사번만가능하여 사번 고정
+        		url += "&P_DS_KEY1="+strSnSeq.substr(0,strSnSeq.length-1);
+        		url += "&P_DS_KEY2=&P_DS_KEY3=&P_DS_KEY4=&P_DS_KEY5=";
+        		window.open(url,"_blank", "width=790,height=1000,menubar=no,scrollbars=no,resizable=no,status=no");
+        	} else if(obj.id == "btnExt_WorkBtn3" ){     // 점검전후/완료사인 사진보기
+        		this.gfnConfirm("선택한 행의 비밀번호를 아이디와 동일한 값으로 초기화 하시겠습니까?", "fnPasswordInit");
+        	} else if(obj.id == "btnExt_WorkBtn4" || obj.id == "btnExt_WorkBtn5" ){     // 신청결제조회
+        		var url = this.gfnGetConfig("DZ" , "GW_APROVAL_URL");
+        		url = url+"approval/approval_Form.do?";
+
+        		if(obj.id == "btnExt_WorkBtn4" ){
+        			if(this.gfnIsNull(this.dsList.getColumn(this.dsList.rowposition , "GW_LINK"))){
+        				this.gfnAlert("신청결재 정보가 존재하지 않습니다.");
+        				return;
+        			}
+        			url +="forminstanceID="+this.dsList.getColumn(this.dsList.rowposition , "NO_GROUPWARE");
+        			url +="&processID="+this.dsList.getColumn(this.dsList.rowposition , "GW_LINK");
+        		} else if(obj.id == "btnExt_WorkBtn5" ){
+        			if(this.gfnIsNull(this.dsList.getColumn(this.dsList.rowposition , "GW_LINK_CANCEL"))){
+        				this.gfnAlert("해지결재 정보가 존재하지 않습니다.");
+        				return;
+        			}
+        			url +="forminstanceID="+this.dsList.getColumn(this.dsList.rowposition , "NO_GROUPWARE_CANCEL");
+        			url +="&processID="+this.dsList.getColumn(this.dsList.rowposition , "GW_LINK_CANCEL");
+        		}
+
+        		window.open(url,"_blank", "width=790,height=1000,menubar=no,scrollbars=no,resizable=no,status=no");
+        	}
+        };
+
+         /*
+          *	비밀번호 초기화
+          */
+        this.fnPasswordInit = function(svcID, value){
+
+        	if(value) {
+        		this.dsUpdate.clearData();
+        		var nrow = this.dsUpdate.addRow();
+        		this.dsUpdate.setColumn(nrow, "SN_SEQ", this.dsList.getColumn( this.dsList.rowposition, "SN_SEQ"));
+        		this.dsUpdate.setColumn(nrow, "ID_UPDATE", this.AuthClient.ID_USER);
+
+        		var strSvcId    = "pwInit";
+        		var strSvcType  = "save";
+        		var inProc		= "_dsProc";
+        		var inData      = "pwInit=dsUpdate";
+        		var outData     = "";
+        		var strArg      = "";
+        		var callBackFnc = "fnCallback";
+
+        		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        							strSvcType , 	// trabsaction을 요청할 구분
+        							inProc,			// Procedure 정보 Dataset 이름
+        							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        							callBackFnc); // 통신방법 정의 [생략가능]
+        	}
+
+        }
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        /*
+         *	콤보박스 값 설정
+         */
+        this.fnSetCombo = function() {
+        	this.dsCombo = new Dataset();
+        	this.dsCombo.addColumn("CD_SYSTEM", "string");
+        	this.dsCombo.addColumn("CD_TYPE", "string");
+
+        	this.dsCombo.addRow();
+        	this.dsCombo.setColumn(0, "CD_SYSTEM", "DB");
+        	this.dsCombo.setColumn(0, "CD_TYPE", "A3");
+
+        	var strSvcId    = "combo";
+        	var strSvcType  = "select";
+        	var inProc		= "_dsProc";
+        	var inData      = "combo=dsCombo";
+        	var outData     = "dsTY_APP_REQUEST=combo0 dsTY_APP_CANCEL=combo0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+
+        };
+        this.divData_btn00_onclick = function(obj,e)
+        {
+        	window.open("http://localhost:8080/_web_/TEST.html");
+        };
+
+        this.fnApprovalReturn = function(){
+        	trace("fnApprovalReturn CALL OK");
+        };
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.dsTY_APP_REQUEST.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+            this.dsTY_APP_CANCEL.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+        };
+        this.loadIncludeScript("DBZ_M_AUTH.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

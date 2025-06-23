@@ -1,0 +1,2802 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="기성청구내역" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0.0" top="10.0" height="78.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none" text="">
+          <Layouts>
+            <Layout>
+              <CheckBox id="cchkHADOGS_VNDR" taborder="3" text="협력사청구" top="10.0" width="89" height="24.0" value="true" onchanged="divSearch_cchkHADOGS_VNDR_onchanged" left="0.0" visible="false"/>
+              <CheckBox id="cchkHADOGS_CONTAMT" taborder="12" text="계약금액" top="cchkHADOGS_VNDR:10.0" width="89" height="24.0" value="true" left="0.0" onchanged="divSearch_cchkHADOGS_CONTAMT_onchanged" visible="false"/>
+              <CheckBox id="cchkHADOGS_PRETOT" taborder="13" text="전회누계" top="cchkHADOGS_VNDR:10.0" width="89" height="24.0" value="false" left="cchkHADOGS_CONTAMT:0.0" onchanged="divSearch_cchkHADOGS_PRETOT_onchanged" visible="false"/>
+              <CheckBox id="cchkHADOGS_GISUNGTOT" taborder="14" text="누계기성" top="cchkHADOGS_VNDR:10.0" width="89" height="24.0" value="true" left="cchkHADOGS_PRETOT:0.0" onchanged="divSearch_cchkHADOGS_GISUNGTOT_onchanged" visible="false"/>
+              <CheckBox id="cchkHADOGS_REMGISUNG" taborder="15" text="잔여기성" top="cchkHADOGS_VNDR:10.0" width="89" height="24.0" value="false" left="cchkHADOGS_GISUNGTOT:0.0" onchanged="divSearch_cchkHADOGS_REMGISUNG_onchanged" visible="false"/>
+              <Static id="staCD_SITE" taborder="10" text="현장코드" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_SITE" CodeFindName="DZX_CFSITE" CDTextWidth="80" taborder="0" left="staCD_SITE:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Combo id="cb_Nodgr" taborder="11" left="ccfCD_SITE:0.0" top="10.0" width="100" height="24.0" innerdataset="dsNodgr" datacolumn="DS_DGR" codecolumn="NO_DGR"/>
+              <Static id="staYM_WORK" taborder="6" text="기성년월" left="cb_Nodgr:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYM_WORK" taborder="7" left="staYM_WORK:0.0" top="10.0" width="80" height="24.0" dateformat="yyyy-mm" editformat="yyyymm" url="cmm::cmmCalMM.xfdl"/>
+              <Static id="staNO_HADOCONT" taborder="8" text="계약번호" left="ctclYM_WORK:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfNO_HADOCONT" CodeFindName="DWX_CFHADO_01" CDTextWidth="100" taborder="4" left="staNO_HADOCONT:0.0" top="10.0" width="300" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staCD_VENDOR" taborder="9" text="업체코드" left="ccfNO_HADOCONT:0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_VENDOR" CodeFindName="DWX_CFHADOVENDOR_01" CDTextWidth="80" taborder="1" left="staCD_VENDOR:0.0" top="10.0" width="300" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <CheckBox id="cchkHADOGS_PMIS" taborder="5" text="PMIS" top="10.0" width="55" height="24.0" onchanged="divSearch_cchkHADOGS_PMIS_onchanged" visible="false" right="-76"/>
+              <Edit id="ctxtCD_VENDOR_SAP" taborder="2" top="10.0" right="0" width="30" height="24.0" value="" visible="false" readonly="true"/>
+              <Edit id="ctxtDS_STATUS1" taborder="16" left="0.0" top="cchkHADOGS_VNDR:10.0" width="69" height="24.0" value="" readonly="true"/>
+              <Static id="staDS_STATUS" taborder="17" text="상태" top="cchkHADOGS_VNDR:10.0" width="92.0" height="24.0" textAlign="left" left="ctxtDS_STATUS1:0.0" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtDS_STATUS2" taborder="18" left="staDS_STATUS:0.0" top="cchkHADOGS_VNDR:10.0" width="69" height="24.0" value="" readonly="true"/>
+              <Edit id="ctxtDS_STATUS3" taborder="19" left="ctxtDS_STATUS2:0.0" top="cchkHADOGS_VNDR:10.0" width="69" height="24.0" value="" readonly="true" visible="false"/>
+              <Static id="staPRGSSTATS" taborder="20" text="" left="ctxtDS_STATUS3:0.0" top="cchkHADOGS_VNDR:10.0" textDecoration="none" right="0" background="" bottom="-26" font="normal 12pt/normal &quot;Arial&quot;" textAlign="center" usedecorate="true" verticalAlign="middle" cssclass="sta_WF_SchLabel"/>
+              <Static id="sta00" taborder="21" text="[청구요청건]만 협력업체가 기성청구 가능하며 현장에서 기성작업 가능, 기성당회 입력 " left="ctxtDS_STATUS2:0.0" top="cchkHADOGS_VNDR:10.0" width="92.0" height="24.0" color="red" cssclass="sta_WF_SchLabel"/>
+              <CheckBox id="chkTY_CONTS" taborder="22" text="전체잔여(공동수급사)" left="sta00:0.0" top="cchkHADOGS_VNDR:10.0" width="136" height="24.0" truevalue="Y" falsevalue="N" onchanged="divSearch_chkTY_CONTS_onchanged" value="N" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:0" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="10" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.YN_B2B = "";
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().CD_SITE) 
+		&& !this.gfnIsNull(this.getOwnerFrame().YM_WORK)
+		&& !this.gfnIsNull(this.getOwnerFrame().NO_HADOCONT)
+		&& !this.gfnIsNull(this.getOwnerFrame().NO_DGR)
+		&& !this.gfnIsNull(this.getOwnerFrame().CD_VENDOR)
+	)
+	{
+		this.dsSearch.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+		this.divSearch.form.ccfCD_SITE.form.DSTextBox.set_value(this.getOwnerFrame().DS_SITE);
+		this.dsSearch.setColumn(0, "NO_HADOCONT", this.getOwnerFrame().NO_HADOCONT);
+		this.divSearch.form.ccfNO_HADOCONT.form.DSTextBox.set_value(this.getOwnerFrame().DS_HADOCONT);
+		
+		//this.divSearch.form.ccfNO_HADOCONT.form.fnCodeFindLoad();
+		
+		this.dsSearch.setColumn(0, "YM_WORK", this.getOwnerFrame().YM_WORK);
+		this.dsSearch.setColumn(0, "NO_DGR", this.getOwnerFrame().NO_DGR);
+		
+		this.dsSearch.setColumn(0, "CD_VENDOR", this.getOwnerFrame().CD_VENDOR);
+		this.ccfCD_VENDOR.form.DSTextBox.set_value(this.getOwnerFrame().DS_VENDOR);
+		this.divSearch.form.chkTY_CONTS.set_value(this.getOwnerFrame().TY_CONTS);
+		
+		this.FormBtns.Select.click();
+	}else{
+		var dt = new Date();
+		this.dsSearch.setColumn(0, "YM_WORK", dt.getFullYear().toString()+this.inZero((dt.getMonth() + 1),2));
+	
+		this.fnNodgrInit();
+	}
+	
+	// 기성차수 조회조건 보이기/숨기기
+	this.YN_DGR = this.gfnGetConfig("DW" , "YN_DGR");
+	if(this.YN_DGR != "Y")
+	{
+		this.divSearch.form.cb_Nodgr.set_readonly(true);
+		this.divSearch.form.cb_Nodgr.set_width(0);
+		this.divSearch.form.resetScroll();
+	}
+	else if(this.YN_DGR == "Y")
+	{
+		this.divSearch.form.cb_Nodgr.set_width(100);
+		this.divSearch.form.cb_Nodgr.set_readonly(false);
+		this.divSearch.form.resetScroll();
+	}
+	
+	this.FormBtns.Add.set_enable(false);
+	this.FormBtns.Del.set_enable(false);
+	
+	//this.divSearch_cchkHADOGS_VNDR_onchanged(this.divSearch.form.cchkHADOGS_VNDR, {postvalue:this.divSearch.form.cchkHADOGS_VNDR.value});
+	//this.divSearch_cchkHADOGS_PMIS_onchanged(this.divSearch.form.cchkHADOGS_PMIS, {postvalue:this.divSearch.form.cchkHADOGS_PMIS.value});
+	
+	//this.divSearch_cchkHADOGS_CONTAMT_onchanged(this.divSearch.form.cchkHADOGS_CONTAMT, {postvalue:this.divSearch.form.cchkHADOGS_CONTAMT.value});
+	//this.divSearch_cchkHADOGS_PRETOT_onchanged(this.divSearch.form.cchkHADOGS_PRETOT, {postvalue:this.divSearch.form.cchkHADOGS_PRETOT.value});
+	//this.divSearch_cchkHADOGS_GISUNGTOT_onchanged(this.divSearch.form.cchkHADOGS_GISUNGTOT, {postvalue:this.divSearch.form.cchkHADOGS_GISUNGTOT.value});
+	//this.divSearch_cchkHADOGS_REMGISUNG_onchanged(this.divSearch.form.cchkHADOGS_REMGISUNG, {postvalue:this.divSearch.form.cchkHADOGS_REMGISUNG.value});
+	this.divSearch_chkTY_CONTS_onchanged(this.divSearch.form.chkTY_CONTS, {postvalue:this.divSearch.form.chkTY_CONTS.value});
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnCopyVndr = this.gfnFormButtonAdd("btnCopyVndr", "fnSelectCopy");
+	//this.btnCopyVndr = this.gfnFormButtonAdd("btnCopyVndr", "fnCopyVndr");
+	this.btnCopyPmis = this.gfnFormButtonAdd("btnCopyPmis", "fnCopyPmis");
+	this.btnCostTuja = this.gfnFormButtonAdd("btnCostTuja", "fnCostTuja");
+	this.btnReqB2b   = this.gfnFormButtonAdd("btnReqB2b", "fnReqB2b");
+	this.btnAtchB2b  = this.gfnFormButtonAdd("btnAtchB2b", "fnAtchB2b");
+	this.btnCncB2b   = this.gfnFormButtonAdd("btnCncB2b", "fnCncB2b");
+	this.btnDeleteAll   = this.gfnFormButtonAdd("btnDeleteAll", "fnDeleteAll");
+	this.btnAttachFileSite   = this.gfnFormButtonAdd("btnAttachFileSite", "fnAttachFileSite");
+	this.btnAttachFileVndr   = this.gfnFormButtonAdd("btnAttachFileVndr", "fnAttachFileVndr");
+	this.btnRstorDlg   = this.gfnFormButtonAdd("btnRstorDlg", "fnRstorDlg");
+	this.btnChgRsnDlg   = this.gfnFormButtonAdd("btnChgRsnDlg", "fnChgRsnDlg");
+};
+
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ccfNO_HADOCONT = this.divSearch.form.ccfNO_HADOCONT;
+	this.ctclYM_WORK = this.divSearch.form.ctclYM_WORK;
+	this.ccfCD_VENDOR = this.divSearch.form.ccfCD_VENDOR;
+	this.chkTY_CONTS = this.divSearch.form.chkTY_CONTS;
+	
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCD_SITE.AfterCDTextChanged = "ccfCD_SITE_AfterCDTextChanged";
+	this.ccfNO_HADOCONT.AfterCDTextChanged = "ccfNO_HADOCONT_AfterCDTextChanged";
+	this.ccfNO_HADOCONT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_VENDOR.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DW", "DWB_HDGISUNGMONTH_M_DETAIL", "DS_COST", "GR_COST");
+
+	this.dxGrid.EnterCell = "fnGrid_EnterCell";
+	
+	this.dxGrid.addEventHandler("onselectchanged", this.dxGrid_RowCellChanged, this);
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("YM_WORK", "string");
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("NO_HADOCONT", "string");
+	this.dsSelect.addColumn("NO_DGR", "string");
+	this.dsSelect.addColumn("CD_VENDOR", "string");
+
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("TY_WRK", "string");
+	this.dsSave.addColumn("ID_USER", "string");
+	this.dsSave.addColumn("CD_SITE", "string");
+	this.dsSave.addColumn("YM_WORK", "string");
+	this.dsSave.addColumn("NO_DGR", "string");
+	this.dsSave.addColumn("NO_HADOCONT", "string");
+	this.dsSave.addColumn("CD_COST", "string");
+	this.dsSave.addColumn("QN_DOKUBGS", "bigdecimal");
+	this.dsSave.addColumn("QN_SILHENGGS", "bigdecimal");
+	this.dsSave.addColumn("QN_HADOGS", "bigdecimal");
+	this.dsSave.addColumn("AM_DOKUBGS", "bigdecimal");
+	this.dsSave.addColumn("AM_SILHENGGS", "bigdecimal");
+	this.dsSave.addColumn("AM_HADOGS", "bigdecimal");
+	this.dsSave.addColumn("CD_VENDOR", "string");
+	
+	this.dsCopy = new Dataset();
+	this.dsCopy.addColumn("YM_WORK", "string");
+	this.dsCopy.addColumn("CD_SITE", "string");
+	this.dsCopy.addColumn("NO_HADOCONT", "string");
+	this.dsCopy.addColumn("NO_DGR", "string");
+	
+	this.dsSelNodgr = new Dataset();
+	this.dsSelNodgr.addColumn("CD_SITE", "string");
+	this.dsSelNodgr.addColumn("YM_WORK", "string");
+	this.dsSelNodgr.addColumn("DS_CONTMETHOD", "string");
+	
+	this.dsExec = new Dataset();
+	this.dsExec.addColumn("TY_WRK", "string");
+	this.dsExec.addColumn("ID_USER", "string");
+	this.dsExec.addColumn("CD_SITE", "string");
+	this.dsExec.addColumn("NO_HADOCONT", "string");
+	this.dsExec.addColumn("YM_WORK", "string");
+	this.dsExec.addColumn("NO_DGR", "string");
+	this.dsExec.addColumn("CD_VENDOR", "string");
+	
+	this.dsExecGisung = new Dataset();
+	this.dsExecGisung.addColumn("TY_WRK", "string");
+	this.dsExecGisung.addColumn("ID_USER", "string");
+	this.dsExecGisung.addColumn("CD_SITE", "string");
+	this.dsExecGisung.addColumn("YM_WORK", "string");
+	this.dsExecGisung.addColumn("NO_DGR", "string");
+	this.dsExecGisung.addColumn("NO_HADOCONT", "string");
+	this.dsExecGisung.addColumn("CD_VENDOR", "string");
+	
+	this.dsDeleteAll = new Dataset();
+	this.dsDeleteAll.addColumn("TY_WRK", "string");
+	this.dsDeleteAll.addColumn("ID_USER", "string");
+	this.dsDeleteAll.addColumn("CD_SITE", "string");
+	this.dsDeleteAll.addColumn("YM_WORK", "string");
+	this.dsDeleteAll.addColumn("NO_DGR", "string");
+	this.dsDeleteAll.addColumn("NO_HADOCONT", "string");
+	this.dsDeleteAll.addColumn("CD_VENDOR", "string");
+
+}
+
+this.dsList_onload = function(obj:nexacro.NormalDataset,e:nexacro.DSLoadEventInfo)
+{
+	//24 : 수량 , 25 : 금액
+// 	this.divData.form.objGrid.setCellProperty("body", 24, "edittype", "expr:DS_UNIT=='식' || DS_UNIT=='LS' || DS_UNIT=='L/S'?'none':'text'");
+// 	this.divData.form.objGrid.setCellProperty("body", 25, "edittype", "expr:DS_UNIT=='식' || DS_UNIT=='LS' || DS_UNIT=='L/S'?'text':'none'");
+	
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "NO_HADOCONT", this.dsSearch.getColumn(0, "NO_HADOCONT"));
+	this.dsSelect.setColumn(0, "NO_DGR", this.dsSearch.getColumn(0, "NO_DGR"));
+	this.dsSelect.setColumn(0, "CD_VENDOR", this.dsSearch.getColumn(0, "CD_VENDOR"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0 dsYN_B2B=select1 dsStatus=select2";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnSelectCopy = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsCopy.clearData();
+	this.dsCopy.addRow();
+	
+	this.dsCopy.setColumn(0, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+	this.dsCopy.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsCopy.setColumn(0, "NO_HADOCONT", this.dsSearch.getColumn(0, "NO_HADOCONT"));
+	this.dsCopy.setColumn(0, "NO_DGR", this.dsSearch.getColumn(0, "NO_DGR"));
+	
+	var strSvcId    = "selectcopy";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "selectcopy=dsCopy";
+	var outData     = "dsList=selectcopy0 dsYN_B2B=selectcopy1 dsStatus=selectcopy2";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	var nrow = this.gfnGridAdd(this.dxGrid); // top (default), bottom, current
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	// 그리드 필수항목 체크
+	if (!this.gfnGridValidate(this.dxGrid)) return;	
+	var flag = true;
+	
+	if(this.gfnIsNull(this.dsStatus.getColumn(0,"DS_APPROVAL"))){
+		this.gfnAlert("기성청구 요청한 건만 저장 할수 있습니다.", "fnValidateCallback");
+		return;
+	}
+	
+	this.fnExec();
+	
+	/*
+	if(this.gfnIsNull(this.dsStatus.getColumn(0,"CHG_RSN"))){
+		this.dsList.set_enableevent(false);
+		for(var i = 0; i < this.dsList.rowcount; i++) {
+			var am_hadogs_vendorn = this.dsList.getColumn(i,"AM_HADOGS_VNDR").toString().trim();
+			var am_hadogs = this.dsList.getColumn(i,"AM_HADOGS").toString().trim();
+			var yn_cost = this.dsList.getColumn(i,"YN_COST").toString().trim();
+			
+			if(yn_cost == "Y" && am_hadogs_vendorn != am_hadogs){
+				flag = false;
+				this.fnChgRsnDlg();
+				break;
+			}
+		}
+		this.dsList.set_enableevent(true);
+		if(flag){
+			//저장실행
+			this.fnExec();
+		}
+
+// 		var sum_am_hadogs_vendorn = this.dsList.getSum("AM_HADOGS_VNDR").toString().trim();
+// 		var sum_am_hadogs = this.dsList.getSum("AM_HADOGS").toString().trim();
+// 
+// 		if(sum_am_hadogs_vendorn != sum_am_hadogs){
+// 			//확정사유팝업 호출
+// 			this.fnChgRsnDlg();
+// 		}else{
+// 			//저장실행
+// 			this.fnExec();
+// 		}
+	}else{
+		//저장실행
+		this.fnExec();
+	}
+	*/
+	
+}
+
+
+this.fnExec = function() {
+	this.dxGrid.updateToDataset();
+	
+	// save SP 한개로 사용하는 경우
+	this.dsSave.clearData();
+
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+			case "I":
+			case "U":
+			case "D":
+				var nrow = this.dsSave.addRow();
+				this.dsSave.setColumn(nrow, "TY_WRK", flag);
+				this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+				this.dsSave.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+				this.dsSave.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+				this.dsSave.setColumn(nrow, "NO_DGR", this.dsSearch.getColumn(0, "NO_DGR"));
+				this.dsSave.setColumn(nrow, "NO_HADOCONT", this.dsSearch.getColumn(0, "NO_HADOCONT"));
+				this.dsSave.setColumn(nrow, "CD_COST", this.dsList.getColumn(i, "CD_COST"));
+				this.dsSave.setColumn(nrow, "QN_DOKUBGS", this.dsList.getColumn(i, "QN_DOKUBGS"));
+				this.dsSave.setColumn(nrow, "QN_SILHENGGS", this.dsList.getColumn(i, "QN_SILHENGGS"));
+				this.dsSave.setColumn(nrow, "QN_HADOGS", this.dsList.getColumn(i, "QN_HADOGS"));
+				this.dsSave.setColumn(nrow, "AM_DOKUBGS", this.dsList.getColumn(i, "AM_DOKUBGS"));
+				this.dsSave.setColumn(nrow, "AM_SILHENGGS", this.dsList.getColumn(i, "AM_SILHENGGS"));
+				this.dsSave.setColumn(nrow, "AM_HADOGS", this.dsList.getColumn(i, "AM_HADOGS"));
+				this.dsSave.setColumn(nrow, "CD_VENDOR", this.dsSearch.getColumn(0, "CD_VENDOR"));
+				break;
+		}
+	}
+		
+	if (this.dsSave.rowcount == 0) return;
+	
+	// 트랜잭션 처리를 위해 DWBPR_HDGISUNG_EXECUTE 같이 보낸다.
+	this.dsExecGisung.clearData();
+	var nrow = this.dsExecGisung.addRow();
+	
+	this.dsExecGisung.setColumn(nrow, "TY_WRK", "CALC");
+	this.dsExecGisung.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	this.dsExecGisung.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsExecGisung.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+	this.dsExecGisung.setColumn(nrow, "NO_DGR", this.dsSearch.getColumn(0, "NO_DGR"));
+	this.dsExecGisung.setColumn(nrow, "NO_HADOCONT", this.dsSearch.getColumn(0, "NO_HADOCONT"));
+	this.dsExecGisung.setColumn(nrow, "CD_VENDOR", this.dsSearch.getColumn(0, "CD_VENDOR"));
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave exec_gisung=dsExecGisung";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg,			// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	var validate = true;
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnValidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드를 입력하세요.", "fnValidateCallback");
+	}
+	else if (this.gfnIsNull(this.dsSearch.getColumn(0, "NO_HADOCONT"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnValidateCallback = function() {
+			this.ccfNO_HADOCONT.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("하도계약번호를 입력하세요.", "fnValidateCallback");
+	}
+	else if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_VENDOR"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnValidateCallback = function() {
+			this.ccfCD_VENDOR.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("업체코드를 입력하세요.", "fnValidateCallback");
+	}
+	else if (this.gfnIsNull(this.dsSearch.getColumn(0, "YM_WORK"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnValidateCallback = function() {
+			this.ctclYM_WORK.form.TextBox.setFocus();
+		}
+		this.gfnAlert("기성년월를 입력하세요.", "fnValidateCallback");
+	}
+	
+	
+	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);	
+
+		// 닷넷 화면에 입력/삭제 버튼 미존재.
+		this.FormBtns.Add.set_enable(false);
+		this.FormBtns.Del.set_enable(false);
+		
+		this.YN_B2B = this.dsYN_B2B.getColumn(0, "YN_B2B");
+		this.divSearch.form.ctxtDS_STATUS1.set_value(this.dsStatus.getColumn(0,"DS_APPROVAL"));
+		this.divSearch.form.ctxtDS_STATUS2.set_value(this.dsStatus.getColumn(0,"DS_PERMIT"));
+		this.divSearch.form.ctxtDS_STATUS3.set_value(this.dsStatus.getColumn(0,"DS_PERMITPM"));
+		
+		//if(""){
+			var msg = this.dsStatus.getColumn(0,"CHG_RSN");
+			//alert(msg);
+			//this.divData.form.divData01.form.staPRGSSTATS00.set_text(msg);
+			
+		//}
+	}
+	else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.fnAfterExecute();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "selnodgr"){
+		if(this.gfnIsNull(this.getOwnerFrame().NO_DGR)){
+			this.divSearch.form.cb_Nodgr.set_index(0);
+		}
+		
+	}
+	else if(svcID == "exec"){
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}	 
+	}
+	else if(svcID == "exec_ReqB2B"){
+		if (errorCode == 0) {
+			this.fnExecReqB2B_callback();
+		} else {
+			this.gfnAlert(errorMsg);
+		}	 
+	}
+	else if(svcID == "deleteAll") {
+		if (errorCode == 0) {			
+			this.fndeleteAllCallback = function() {
+				this.FormBtns.Select.click();
+			}
+			this.gfnAlert("기성내역일괄삭제가 정상 처리되었습니다.", "fndeleteAllCallback");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	if (svcID == "selectcopy") {
+		this.FormBtns.Save.set_enable(true);
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if (id == "ccfNO_HADOCONT") {
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE")))
+		{
+			this.gfnAlert("현장코드를 먼저 입력하십시오.");
+			return false;
+		}
+		
+		dsUserParam.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+		dsUserParam.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+		dsUserParam.setColumn(nrow, "TY_DIV", "DWB01");
+		if(!this.gfnIsNull(this.getOwnerFrame().DS_CONTMETHOD)){
+			dsUserParam.setColumn(nrow, "DS_CONTMETHOD", this.getOwnerFrame().DS_CONTMETHOD);		
+		}else{
+			dsUserParam.setColumn(nrow, "DS_CONTMETHOD", "");			
+		}	
+		dsUserParam.setColumn(nrow, "CD_VENDOR", "");
+	}
+	else if(id == "ccfCD_VENDOR") {
+		if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE")))
+		{
+			this.gfnAlert("현장코드를 먼저 입력하십시오.");
+			return false;
+		}
+		else if(this.gfnIsNull(this.dsSearch.getColumn(0, "YM_WORK")))
+		{
+			this.gfnAlert("기성년월을 먼저 입력하십시오.");
+			return false;
+		}
+		else if(this.gfnIsNull(this.dsSearch.getColumn(0, "NO_HADOCONT")))
+		{
+			this.gfnAlert("계약번호를 먼저 입력하십시오.");
+			return false;
+		}
+		
+	
+		dsUserParam.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+		dsUserParam.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+		dsUserParam.setColumn(nrow, "NO_HADOCONT", this.dsSearch.getColumn(0, "NO_HADOCONT"));
+	}
+	return true;
+}
+
+this.ccfCD_SITE_AfterCDTextChanged = function(id, codeFindData) {
+
+	this.dsSearch.setColumn(0, "NO_HADOCONT", "");
+	this.divSearch.form.ccfNO_HADOCONT.form.DSTextBox.set_value("");
+	this.divSearch.form.ctxtCD_VENDOR_SAP.set_value("");
+
+	this.fnSearchInit();
+}
+
+this.ccfNO_HADOCONT_AfterCDTextChanged = function(id, codeFindData) {
+	
+	var arr = this.ccfNO_HADOCONT.form.SelectedData;
+	
+	if(arr.length > 0)
+	{
+		this.divSearch.form.ctxtCD_VENDOR_SAP.set_value(arr[0]["CD_VENDOR_SAP"]);
+		this.dsSearch.setColumn(0, "CD_VENDOR", arr[0]["CD_VENDOR"]);
+		this.ccfCD_VENDOR.form.DSTextBox.set_value(arr[0]["DS_VENDOR"]);
+	}
+	else
+	{
+		this.divSearch.form.ctxtCD_VENDOR_SAP.set_value("");
+		this.dsSearch.setColumn(0, "CD_VENDOR", "");
+		this.ccfCD_VENDOR.form.DSTextBox.set_value("");
+	}
+}
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+ /*this.fnGrid_EnterCell = function(obj:nexacro.Grid, row, cell){
+	var colnm = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, cell);
+	if(colnm == "QN_HADOGS"){
+		if(this.dsList.getColumn(row, "DS_UNIT")=='식'){
+			return false;
+		}
+		if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+			if(this.dsList.getColumn(row, "YN_EDIT") == "Y"){
+				return true;
+			}
+		}
+	}else if(colnm == "AM_HADOGS"){
+		//if(this.dsList.getColumn(row, "YN_EDIT") == "Y"){
+		if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+			return false;
+		}else{
+			return true;
+		}
+	}else if(colnm == "QN_DOKUBGS"){
+		if(this.dsList.getColumn(row, "DS_UNIT")=='식'){
+			return false;
+		}
+		if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+			if(this.dsList.getColumn(row, "YN_EDIT") == "Y"){
+				return true;
+			}
+		}
+	}else if(colnm == "AM_DOKUBGS"){
+		//if(this.dsList.getColumn(row, "YN_EDIT") == "Y"){
+		if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+			return false;
+		}else{
+			return true;
+		}
+	}else if(colnm == "QN_SILHENGGS"){
+		if(this.dsList.getColumn(row, "DS_UNIT")=='식'){
+			return false;
+		}
+		if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+			if(this.dsList.getColumn(row, "YN_EDIT") == "Y"){
+				return true;
+			}
+		}
+	
+	}else if(colnm == "AM_SILHENGGS"){
+		//if(this.dsList.getColumn(row, "YN_EDIT") == "Y"){
+		if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	
+	//그리드 수정가능하도록 주석처리
+	//return false;
+ };*/
+ 
+ this.fnGrid_EnterCell = function(obj:nexacro.Grid, row, cell){
+	var colnm = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, cell);
+	
+	switch(colnm){
+		case "QN_TTHADOGS":
+			if(this.FormInfo.CD_MODULE == "DWN"){
+				return false;
+			}else{
+				if(this.dsList.getColumn(row, "DS_UNIT")=='식'){
+					return false;
+				}
+				if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+					if(this.dsList.getColumn(row, "YN_EDIT") == "Y"){
+						return true;
+					}
+				}
+			}
+		break;
+		case "AM_TTHADOGS":
+			if(this.FormInfo.CD_MODULE == "DWN"){
+				return false;
+			}else{
+				if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+					return false;
+				}else{
+					return true;
+				}
+			}
+		break;
+		case "QN_TTDOKUBGS":
+			if(this.dsList.getColumn(row, "DS_UNIT")=='식'){
+				return false;
+			}
+			if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+				if(this.dsList.getColumn(row, "YN_EDIT") == "Y"){
+					return true;
+				}
+			}
+		break;
+		case "AM_TTDOKUBGS":
+			if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+				return false;
+			}else{
+				return true;
+			}
+		break;
+		case "QN_TTSILHENGGS":
+			if(this.dsList.getColumn(row, "DS_UNIT")=='식'){
+				return false;
+			}
+			if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+				if(this.dsList.getColumn(row, "YN_EDIT") == "Y"){
+					return true;
+				}
+			}
+		break;
+		case "AM_TTSILHENGGS":
+			if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+				return false;
+			}else{
+				return true;
+			}
+		break;
+		case "QN_HADOGS":
+			if(this.dsList.getColumn(row, "DS_UNIT") == '식'){
+				return false;
+			}else{
+				if(this.FormInfo.CD_MODULE == "DWN"){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		break;
+		case "AM_HADOGS":
+			if(this.FormInfo.CD_MODULE == "DWN"){
+				return true;
+			}else{
+				return false;
+			}
+		break;
+	}
+ };
+ 
+ this.dxGrid_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+	var colnm = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, e.cell);	// 컬럼 인덱스로 컬럼명 가져오기
+
+	var rows = obj.getSelectedDatasetRows();
+	var sum = 0;
+	var bRet = "";
+	for(var i = 0; i < rows.length; i++) {
+		//var am = this.dsList.getColumn(rows[i], e.selectstartcol);
+		var am = this.dsList.getColumn(rows[i], colnm);		
+		
+		//bRet = nexacro.isNumeric(am); 
+		bRet = isNaN(am); // 문자:true, 숫자:false
+		
+		//alert(am+":::"+bRet);
+		if(bRet){
+			break;
+		}
+		
+		if(!this.gfnIsNull(am)) {
+			sum += am;
+		}
+	}
+	
+	var colDS_COST = this.dxGrid.getBindCellIndex("body", "DS_COST");
+
+	if(!bRet){	// 숫자면 합계표시, 문자면 null
+		this.dxGrid.setCellProperty("summ", colDS_COST, "text", "선택합계=" + this.gfnAppendComma(sum));
+	}else{
+		this.dxGrid.setCellProperty("summ", colDS_COST, "text", "");
+	}
+	/*
+	var colAM_HADOGS = this.dxGrid.getBindCellIndex("body", "AM_HADOGS");
+	var colAM_TTHADOGS = this.dxGrid.getBindCellIndex("body", "AM_TTHADOGS");
+
+	if(!bRet){	// 숫자면 합계표시, 문자면 null
+		// 동시에 보여지게 하는 방식 
+		this.dxGrid.setCellProperty("summ", colAM_HADOGS, "text", this.gfnAppendComma(sum));
+		this.dxGrid.setCellProperty("summ", colAM_TTHADOGS, "text", this.gfnAppendComma(sum));
+		
+		//아래는 각각 보여지게끔 하는 방식
+// 		if(e.col == colAM_HADOGS){
+// 			this.dxGrid.setCellProperty("summ", colAM_HADOGS, "text", this.gfnAppendComma(sum));
+// 		}
+// 		else if(e.col == colAM_TTHADOGS)
+// 		{
+// 			this.dxGrid.setCellProperty("summ", colAM_TTHADOGS, "text", this.gfnAppendComma(sum));
+// 		}
+// 		else
+// 		{
+// 		}
+	}else{
+		this.dxGrid.setCellProperty("summ", colAM_HADOGS, "text", "");
+		this.dxGrid.setCellProperty("summ", colAM_TTHADOGS, "text", "");
+	}
+	*/
+}
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);
+		if(e.columnid =="CD_SITE" || e.columnid =="YM_WORK"){
+			this.fnNodgrInit();
+		}
+		else if(e.columnid == "NO_HADOCONT")
+		{
+			this.dsSearch.setColumn(0, "CD_VENDOR", "");
+			this.divSearch.form.ccfCD_VENDOR.form.DSTextBox.set_value("");
+		}
+	}
+};
+
+this.fnSearchInit = function(obj,e) {
+   if(e == null || (e.pretext != e.posttext)) {
+      this.gfnSetFormStatus(this);
+      this.gfnGridClear(this.dxGrid);
+   }
+}
+
+this.fnNodgrInit = function(){
+	if(this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE")) || this.gfnIsNull(this.dsSearch.getColumn(0, "YM_WORK"))){
+		this.dsNodgr.clearData();
+	}else{
+		this.dsSelNodgr.clearData();
+		this.dsSelNodgr.addRow();
+		this.dsSelNodgr.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+		this.dsSelNodgr.setColumn(0, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+		if(!this.gfnIsNull(this.getOwnerFrame().DS_CONTMETHOD)){
+			this.dsSelNodgr.setColumn(0, "DS_CONTMETHOD", this.getOwnerFrame().DS_CONTMETHOD);
+		}else{
+			this.dsSelNodgr.setColumn(0, "DS_CONTMETHOD", this.FormInfo.DS_PARAM);
+		}
+	
+		var strSvcId    = "selnodgr";
+		var strSvcType  = "grid";
+		var inProc		= "_dsProc";
+		var inData      = "selectno=dsSelNodgr";
+		var outData     = "dsNodgr=selectno0";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+};
+
+this.inZero = function(p1,p2){
+	var zero ="";
+	for(var i = 0; i  <p2; i++) zero +="0";
+	return zero.toString().concat(p1).match(new RegExp("\\d{"+p2+"}$"));
+};
+
+this.fnAfterExecute = function(){
+	this.dsExec.clearData();
+	var nrow = this.dsExec.addRow();
+	
+	this.dsExec.setColumn(nrow, "TY_WRK", "CRT");
+	this.dsExec.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	this.dsExec.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsExec.setColumn(nrow, "NO_HADOCONT", this.dsSearch.getColumn(0, "NO_HADOCONT"));
+	this.dsExec.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+	this.dsExec.setColumn(nrow, "NO_DGR", this.dsSearch.getColumn(0, "NO_DGR"));
+	this.dsExec.setColumn(nrow, "CD_VENDOR", this.dsSearch.getColumn(0, "CD_VENDOR"));
+				
+	var strSvcId    = "exec";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "exec=dsExec";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg,			// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+this.dsList_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{	
+	if(e.oldvalue != e.newvalue){
+		this.fnCalcRow(e.columnid, e.row);
+	}
+};
+
+//20200330 금회기성 계산을 누계기성 계산으로 변경으로 인한 주석처리
+/*this.fnCalcRow = function(colnm, row) {
+	if(colnm == "AM_HADOGS" ||colnm == "AM_DOKUBGS" ||colnm == "AM_SILHENGGS" ||colnm == "QN_HADOGS" ||colnm == "QN_DOKUBGS" ||colnm == "QN_SILHENGGS"){
+		this.dsList.set_enableevent(false);
+		 //해당컬럼 조회하고있지않아서 임시로 추가
+		 this.dsList.addColumn("QN_DOKUBGS", "bigdecimal");
+		 this.dsList.addColumn("AM_DOKUBGS", "bigdecimal");
+		 this.dsList.addColumn("QN_SILHENGGS", "bigdecimal");
+		 this.dsList.addColumn("AM_SILHENGGS", "bigdecimal");
+		 
+		 this.dsList.addColumn("QN_TTDOKUBGS", "bigdecimal");
+		 this.dsList.addColumn("AM_TTDOKUBGS", "bigdecimal");
+		 this.dsList.addColumn("QN_TTSILHENGGS", "bigdecimal");
+		 this.dsList.addColumn("AM_TTSILHENGGS", "bigdecimal");
+		 //this.dsList.addColumn("J_QN_TTDOKUBGS", "bigdecimal");
+		 //this.dsList.addColumn("J_AM_TTDOKUBGS", "bigdecimal");
+		
+		
+		//금회기성(금액) 변경 시
+		if(colnm == "AM_HADOGS"){
+			 this.dsList.setColumn(row, "AM_TTHADOGS", nexacro.floor(this.dsList.getColumn(row, "PRE_AM_TTHADOGS") + this.dsList.getColumn(row, "AM_HADOGS")));
+			 this.dsList.setColumn(row, "J_AM_TTHADOGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_HADO") - this.dsList.getColumn(row, "AM_TTHADOGS")));
+
+			 //금회기성율
+			 this.dsList.setColumn(row, "RT_HADOGS", nexacro.floor((this.dsList.getColumn(row, "AM_HADOGS") / this.dsList.getColumn(row, "AM_TT_HADO")) * 100,2));
+			 
+			 //누계기성율
+			 this.dsList.setColumn(row, "RT_TTHADOGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTHADOGS") / this.dsList.getColumn(row, "AM_TT_HADO") * 100),2));
+			 
+			 //누계기성금액(도급)
+			 // 도급금액 : AM_TT_DOKUB, 실행금액 : AM_TT_SILHENG
+			 var amTtDokub = nexacro.floor((this.dsList.getColumn(row, "AM_TT_DOKUB")/100)  * this.dsList.getColumn(row, "RT_TTHADOGS") )    // 도급금액 / 누계기성율
+			 var amTtSilheng = nexacro.floor((this.dsList.getColumn(row, "AM_TT_SILHENG")/100)  * this.dsList.getColumn(row, "RT_TTHADOGS") ) // 실행금액 / 누계기성율
+
+			 //AM_DOKUBGS : 도급기성금회 , AM_SILHENGGS : 실행기성금회
+			 this.dsList.setColumn(row, "AM_DOKUBGS", amTtDokub);
+			 this.dsList.setColumn(row, "AM_SILHENGGS", amTtSilheng);
+			 
+			 
+			 //도급,실행기성 금회(진행중)
+			 if(amTtDokub -  this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")> 0){
+				this.dsList.setColumn(row, "AM_DOKUBGS", amTtDokub - this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS"));
+			 }
+			 
+			 if(amTtSilheng - this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS") > 0){
+				this.dsList.setColumn(row, "AM_SILHENGGS", amTtSilheng - this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS"));
+			 }
+			  
+			 
+			 //도급기성(누계) 변경
+			 this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_DOKUBGS") + this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+			 
+			 //실행기성(누계) 변경
+			 this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_SILHENGGS") + this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS")));
+			 
+			 //도급기성(잔여) 변경
+			 this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_DOKUB") - this.dsList.getColumn(row, "AM_TTDOKUBGS")));
+			 
+			 //실행기성(잔여)
+			 this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_SILHENG") - this.dsList.getColumn(row, "AM_TTSILHENGGS")));
+			  
+			 
+			 
+			 //잔여기성율
+			 this.dsList.setColumn(row, "J_RT_TTHADOGS", nexacro.floor(100 - this.dsList.getColumn(row, "RT_TTHADOGS")),2);
+			 
+			 //도급기성율(누계)
+			 this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTDOKUBGS") / this.dsList.getColumn(row, "AM_TT_DOKUB") * 100),2));
+			
+			 //실행기성율(누계)
+			 this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTSILHENGGS") / this.dsList.getColumn(row, "AM_TT_SILHENG") * 100),2));
+		//도급기성(금액) 변경 시
+		}else if(colnm == "AM_DOKUBGS"){
+			 //도급기성(누계) 변경
+			 this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_DOKUBGS") + this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+			 
+			 //도급기성(잔여) 변경
+			 this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_DOKUB") - this.dsList.getColumn(row, "AM_TTDOKUBGS")));
+			 
+			 //도급기성율(누계)
+			 this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTDOKUBGS") / this.dsList.getColumn(row, "AM_TT_DOKUB") * 100),2));
+		//실행기성(금액) 변경 시
+		}else if(colnm == "AM_SILHENGGS"){
+			
+			 //실행기성(누계) 변경
+			 this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_SILHENGGS") + this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS")));
+			
+			 //실행기성(잔여)
+			 this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_SILHENG") - this.dsList.getColumn(row, "AM_TTSILHENGGS")));
+		
+			 //실행기성율(누계)
+			 this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTSILHENGGS") / this.dsList.getColumn(row, "AM_TT_SILHENG") * 100),2));
+		
+		//금회기성(수량) 변경 시
+		}else if(colnm == "QN_HADOGS"){
+		  if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+			 this.dsList.setColumn(row, "AM_HADOGS", nexacro.floor(this.dsList.getColumn(row, "QN_HADOGS") * this.dsList.getColumn(row, "UP_TT_HADO")));
+			 this.dsList.setColumn(row, "QN_TTHADOGS", nexacro.floor(this.dsList.getColumn(row, "PRE_QN_TTHADOGS") + this.dsList.getColumn(row, "QN_HADOGS")));
+			 this.dsList.setColumn(row, "J_QN_TTHADOGS", nexacro.floor(this.dsList.getColumn(row, "QN_TT_HADO") - this.dsList.getColumn(row, "QN_TTHADOGS")));
+			 this.dsList.setColumn(row, "AM_TTHADOGS", nexacro.floor(this.dsList.getColumn(row, "PRE_AM_TTHADOGS") + this.dsList.getColumn(row, "AM_HADOGS")));
+			 this.dsList.setColumn(row, "J_AM_TTHADOGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_HADO") - this.dsList.getColumn(row, "AM_TTHADOGS")));
+
+			 //도급기성 변경
+			 this.dsList.setColumn(row, "QN_DOKUBGS", this.dsList.getColumn(row, "QN_HADOGS"));
+			 this.dsList.setColumn(row, "AM_DOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_HADOGS") * this.dsList.getColumn(row, "UP_TT_DOKUB")));
+			 
+			 
+			 //실행기성 변경
+			 this.dsList.setColumn(row, "QN_SILHENGGS", this.dsList.getColumn(row, "QN_HADOGS"));
+			 this.dsList.setColumn(row, "AM_SILHENGGS", nexacro.floor(this.dsList.getColumn(row, "QN_HADOGS") * this.dsList.getColumn(row, "UP_TT_SILHENG")));
+			 
+			 //도급기성(누계) 변경
+			 this.dsList.setColumn(row, "QN_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_DOKUBGS") + this.dsList.getColumn(row, "PRE_QN_TTDOKUBGS")));
+			 this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_DOKUBGS") * nexacro.floor(this.dsList.getColumn(row, "UP_TT_DOKUB")) + this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+			 
+			 //실행기성(누계) 변경
+			 this.dsList.setColumn(row, "QN_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "QN_SILHENGGS") + this.dsList.getColumn(row, "PRE_QN_TTSILHENGGS")));
+			 this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_SILHENGGS") + this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS")));
+			 
+			 //도급기성(잔여) 변경
+			 this.dsList.setColumn(row, "J_QN_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_TT_DOKUB") - this.dsList.getColumn(row, "QN_TTDOKUBGS")));
+			 this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_DOKUB") - this.dsList.getColumn(row, "AM_TTDOKUBGS")));
+			 
+			 //실행기성(잔여)
+			 this.dsList.setColumn(row, "J_QN_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "QN_TT_SILHENG") - this.dsList.getColumn(row, "QN_TTSILHENGGS")));
+			 this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_SILHENG") - this.dsList.getColumn(row, "AM_TTSILHENGGS")));
+			  
+			 //금회기성율
+			 this.dsList.setColumn(row, "RT_HADOGS", nexacro.floor((this.dsList.getColumn(row, "AM_HADOGS") / this.dsList.getColumn(row, "AM_TT_HADO")) * 100),2);
+			 
+			 //누계기성율
+			 this.dsList.setColumn(row, "RT_TTHADOGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTHADOGS") / this.dsList.getColumn(row, "AM_TT_HADO")) * 100),2);
+			 
+			 //잔여기성율
+			 this.dsList.setColumn(row, "J_RT_TTHADOGS", nexacro.floor(100 - this.dsList.getColumn(row, "RT_TTHADOGS")),2);
+			 
+			 //도급기성율(누계)
+			 this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTDOKUBGS") / this.dsList.getColumn(row, "AM_TT_DOKUB")) * 100),2);
+			
+			 //실행기성율(누계)
+			 this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTSILHENGGS") / this.dsList.getColumn(row, "AM_TT_SILHENG")) * 100),2);
+		  }
+		//도급기성(금회) 수량	  
+		}else if(colnm == "QN_DOKUBGS"){	
+			//도급기성(금회) 금액
+			this.dsList.setColumn(row, "AM_DOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_DOKUBGS") * this.dsList.getColumn(row, "UP_TT_DOKUB")));
+			
+			//도급기성(누계) 변경
+			this.dsList.setColumn(row, "QN_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_DOKUBGS") + this.dsList.getColumn(row, "PRE_QN_TTDOKUBGS")));
+			this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_DOKUBGS") * nexacro.floor(this.dsList.getColumn(row, "UP_TT_DOKUB")) + this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+			
+			//도급기성(잔여) 변경
+			this.dsList.setColumn(row, "J_QN_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_TT_DOKUB") - this.dsList.getColumn(row, "QN_TTDOKUBGS")));
+			this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_DOKUB") - this.dsList.getColumn(row, "AM_TTDOKUBGS")));
+			
+			//도급기성율(누계)
+			this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTDOKUBGS") / this.dsList.getColumn(row, "AM_TT_DOKUB")) * 100),2);
+	   
+		//실행기성(금회) 수량
+		}else if(colnm == "QN_SILHENGGS"){ 
+			//실행기성(금회) 금액
+			this.dsList.setColumn(row, "AM_SILHENGGS", nexacro.floor(this.dsList.getColumn(row, "QN_SILHENGGS") * this.dsList.getColumn(row, "UP_TT_SILHENG")));		 
+			
+			//실행기성(누계) 변경
+			this.dsList.setColumn(row, "QN_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "QN_SILHENGGS") + this.dsList.getColumn(row, "PRE_QN_TTSILHENGGS")));
+			this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_SILHENGGS") + this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS")));
+			 
+			//실행기성(잔여)
+			this.dsList.setColumn(row, "J_QN_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "QN_TT_SILHENG") - this.dsList.getColumn(row, "QN_TTSILHENGGS")));
+			this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_SILHENG") - this.dsList.getColumn(row, "AM_TTSILHENGGS")));
+			 
+			//실행기성율(누계)
+			this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTSILHENGGS") / this.dsList.getColumn(row, "AM_TT_SILHENG")) * 100),2);
+		}
+	   
+	   this.dsList.set_enableevent(true);
+   }
+}*/
+
+
+/* 20220125 Javascript 64bit 부동소수점 문제로 인하여 소스 변경
+this.fnCalcRow = function(colnm, row) {
+	if(colnm == "AM_TTHADOGS" ||colnm == "AM_TTDOKUBGS" ||colnm == "AM_TTSILHENGGS" ||colnm == "QN_TTHADOGS" ||colnm == "QN_TTDOKUBGS" ||colnm == "QN_TTSILHENGGS"){
+		this.dsList.set_enableevent(false);
+		//해당컬럼 조회하고있지않아서 임시로 추가
+		this.dsList.addColumn("QN_DOKUBGS", "bigdecimal");
+		this.dsList.addColumn("AM_DOKUBGS", "bigdecimal");
+		this.dsList.addColumn("QN_SILHENGGS", "bigdecimal");
+		this.dsList.addColumn("AM_SILHENGGS", "bigdecimal");
+		
+		this.dsList.addColumn("QN_TTDOKUBGS", "bigdecimal");
+		this.dsList.addColumn("AM_TTDOKUBGS", "bigdecimal");
+		this.dsList.addColumn("QN_TTSILHENGGS", "bigdecimal");
+		this.dsList.addColumn("AM_TTSILHENGGS", "bigdecimal");
+		//this.dsList.addColumn("J_QN_TTDOKUBGS", "bigdecimal");
+		//this.dsList.addColumn("J_AM_TTDOKUBGS", "bigdecimal");
+		
+		//금회기성(금액) 변경 시
+		if(colnm == "AM_TTHADOGS"){
+			//금회기성금
+			this.dsList.setColumn(row, "AM_HADOGS", nexacro.floor(this.dsList.getColumn(row, "AM_TTHADOGS") - this.dsList.getColumn(row, "PRE_AM_TTHADOGS"),0));
+			this.dsList.setColumn(row, "J_AM_TTHADOGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_HADO") - this.dsList.getColumn(row, "AM_TTHADOGS"),0));
+			
+			//금회기성율
+			this.dsList.setColumn(row, "RT_HADOGS", nexacro.floor((this.dsList.getColumn(row, "AM_HADOGS") / this.dsList.getColumn(row, "AM_TT_HADO")) * 100,2));
+			
+			//누계기성율
+			this.dsList.setColumn(row, "RT_TTHADOGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTHADOGS") / this.dsList.getColumn(row, "AM_TT_HADO") * 100),2));
+			
+			//누계기성금액(도급)
+			// 도급금액 : AM_TT_DOKUB, 실행금액 : AM_TT_SILHENG
+			var amTtDokub = nexacro.floor(nexacro.toNumber(this.dsList.getColumn(row, "AM_TT_DOKUB")/100,0)  * this.dsList.getColumn(row, "RT_TTHADOGS",0) )    // 도급금액 / 누계기성율
+			var amTtSilheng = nexacro.floor(nexacro.toNumber(this.dsList.getColumn(row, "AM_TT_SILHENG")/100,0)  * this.dsList.getColumn(row, "RT_TTHADOGS",0) ) // 실행금액 / 누계기성율
+			
+			//AM_DOKUBGS : 도급기성금회 , AM_SILHENGGS : 실행기성금회
+			this.dsList.setColumn(row, "AM_DOKUBGS", amTtDokub);
+			this.dsList.setColumn(row, "AM_SILHENGGS", amTtSilheng);
+			
+			//도급,실행기성 금회(진행중)
+			if(amTtDokub -  this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")> 0){
+				this.dsList.setColumn(row, "AM_DOKUBGS", amTtDokub - this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS"));
+			}
+			
+			if(amTtSilheng - this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS") > 0){
+				this.dsList.setColumn(row, "AM_SILHENGGS", amTtSilheng - this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS"));
+			}
+			
+			//도급기성(누계) 변경
+			this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_DOKUBGS") + this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS"),0));
+			
+			//실행기성(누계) 변경
+			this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_SILHENGGS") + this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS"),0));
+			
+			//도급기성(잔여) 변경
+			this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_DOKUB") - this.dsList.getColumn(row, "AM_TTDOKUBGS"),0));
+			
+			//실행기성(잔여)
+			this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_SILHENG") - this.dsList.getColumn(row, "AM_TTSILHENGGS"),0));
+			
+			//잔여기성율
+			this.dsList.setColumn(row, "J_RT_TTHADOGS", nexacro.floor(100 - this.dsList.getColumn(row, "RT_TTHADOGS")),2);
+			
+			//도급기성율(누계)
+			this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTDOKUBGS") / this.dsList.getColumn(row, "AM_TT_DOKUB") * 100),2));
+			
+			//실행기성율(누계)
+			this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTSILHENGGS") / this.dsList.getColumn(row, "AM_TT_SILHENG") * 100),2));
+		//도급기성(금액) 변경 시
+		}else if(colnm == "AM_TTDOKUBGS"){
+			 //도급기성(누계) 변경
+			 //this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_DOKUBGS") + this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+			 this.dsList.setColumn(row, "AM_DOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_TTDOKUBGS") - this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS"),0));
+			 
+			 //도급기성(잔여) 변경
+			 this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_DOKUB") - this.dsList.getColumn(row, "AM_TTDOKUBGS"),0));
+			 
+			 //도급기성율(누계)
+			 this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTDOKUBGS") / this.dsList.getColumn(row, "AM_TT_DOKUB") * 100),2));
+		//실행기성(금액) 변경 시
+		}else if(colnm == "AM_TTSILHENGGS"){
+			 //실행기성(누계) 변경
+			 //this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_SILHENGGS") + this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS")));
+			 this.dsList.setColumn(row, "AM_SILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_TTSILHENGGS") - this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS"),0));
+			
+			 //실행기성(잔여)
+			 this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_SILHENG") - this.dsList.getColumn(row, "AM_TTSILHENGGS"),0));
+		
+			 //실행기성율(누계)
+			 this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTSILHENGGS") / this.dsList.getColumn(row, "AM_TT_SILHENG") * 100),2));
+		
+		//금회기성(수량) 변경 시
+		}else if(colnm == "QN_TTHADOGS"){
+			if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+			this.dsList.setColumn(row, "QN_HADOGS", nexacro.toNumber(this.dsList.getColumn(row, "QN_TTHADOGS") - this.dsList.getColumn(row, "PRE_QN_TTHADOGS"),3));
+			this.dsList.setColumn(row, "AM_HADOGS", nexacro.floor(this.dsList.getColumn(row, "QN_HADOGS") * this.dsList.getColumn(row, "UP_TT_HADO"),0)); 
+			this.dsList.setColumn(row, "QN_TTHADOGS", nexacro.toNumber(this.dsList.getColumn(row, "PRE_QN_TTHADOGS") + this.dsList.getColumn(row, "QN_HADOGS"),3));
+			this.dsList.setColumn(row, "J_QN_TTHADOGS", nexacro.toNumber(this.dsList.getColumn(row, "QN_TT_HADO") - this.dsList.getColumn(row, "QN_TTHADOGS"),3));
+			this.dsList.setColumn(row, "AM_TTHADOGS", nexacro.floor(this.dsList.getColumn(row, "PRE_AM_TTHADOGS") + this.dsList.getColumn(row, "AM_HADOGS"),0));
+			this.dsList.setColumn(row, "J_AM_TTHADOGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_HADO") - this.dsList.getColumn(row, "AM_TTHADOGS"),0));
+
+			//도급기성(누계) 변경
+			if(this.dsList.getColumn(row, "QN_TT_DOKUB") == 0 || this.dsList.getColumn(row, "UP_TT_DOKUB") ==0){	//도급기성 수량이나 단가가 0일 경우 도급 누계 수량,금액 0으로 처리
+ 				this.dsList.setColumn(row, "QN_TTDOKUBGS",0);
+ 				this.dsList.setColumn(row, "AM_TTDOKUBGS",0);
+				this.dsList.setColumn(row, "QN_DOKUBGS",0);
+				this.dsList.setColumn(row, "AM_DOKUBGS",0);
+			 }else{
+				//도급기성 변경
+				this.dsList.setColumn(row, "QN_DOKUBGS", this.dsList.getColumn(row, "QN_HADOGS"));
+				this.dsList.setColumn(row, "AM_DOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_HADOGS") * this.dsList.getColumn(row, "UP_TT_DOKUB"),0));
+			 
+ 				this.dsList.setColumn(row, "QN_TTDOKUBGS", nexacro.toNumber(this.dsList.getColumn(row, "QN_DOKUBGS") + this.dsList.getColumn(row, "PRE_QN_TTDOKUBGS"),3));
+ 				this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_DOKUBGS") * nexacro.toNumber(this.dsList.getColumn(row, "UP_TT_DOKUB")) + this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS"),0));
+			 }
+			 
+			 //실행기성(누계) 변경
+			 if(this.dsList.getColumn(row, "QN_TT_SILHENG") == 0 || this.dsList.getColumn(row, "UP_TT_SILHENG") == 0){	//도급기성 수량이나 단가가 0일 경우 도급 누계 수량,금액 0으로 처리
+				this.dsList.setColumn(row, "QN_TTSILHENGGS",0);
+				this.dsList.setColumn(row, "QN_TTSILHENGGS",0);
+				this.dsList.setColumn(row, "QN_SILHENGGS",0);
+				this.dsList.setColumn(row, "AM_SILHENGGS",0);
+			 }else{
+				 //실행기성 변경
+				this.dsList.setColumn(row, "QN_SILHENGGS", this.dsList.getColumn(row, "QN_HADOGS"));
+ 				this.dsList.setColumn(row, "AM_SILHENGGS", nexacro.floor(this.dsList.getColumn(row, "QN_HADOGS") * this.dsList.getColumn(row, "UP_TT_SILHENG"),0));
+ 				this.dsList.setColumn(row, "QN_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "QN_SILHENGGS") + this.dsList.getColumn(row, "PRE_QN_TTSILHENGGS"),3));
+ 				this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_SILHENGGS") + this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS"),0));
+				
+			 }
+			 
+			 //도급기성(잔여) 변경
+			 this.dsList.setColumn(row, "J_QN_TTDOKUBGS", nexacro.toNumber(this.dsList.getColumn(row, "QN_TT_DOKUB") - this.dsList.getColumn(row, "QN_TTDOKUBGS"),3));
+			 this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_DOKUB") - this.dsList.getColumn(row, "AM_TTDOKUBGS"),0));
+			 
+			 //실행기성(잔여)
+			 this.dsList.setColumn(row, "J_QN_TTSILHENGGS", nexacro.toNumber(this.dsList.getColumn(row, "QN_TT_SILHENG") - this.dsList.getColumn(row, "QN_TTSILHENGGS"),3));
+			 this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_SILHENG") - this.dsList.getColumn(row, "AM_TTSILHENGGS"),0));
+			  
+			 //금회기성율
+			 this.dsList.setColumn(row, "RT_HADOGS", nexacro.floor((this.dsList.getColumn(row, "AM_HADOGS") / this.dsList.getColumn(row, "AM_TT_HADO")) * 100),2);
+			 
+			 //누계기성율
+			 this.dsList.setColumn(row, "RT_TTHADOGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTHADOGS") / this.dsList.getColumn(row, "AM_TT_HADO")) * 100),2);
+			 
+			 //잔여기성율
+			 this.dsList.setColumn(row, "J_RT_TTHADOGS", nexacro.floor(100 - this.dsList.getColumn(row, "RT_TTHADOGS")),2);
+			 
+			 //도급기성율(누계)
+			 this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTDOKUBGS") / this.dsList.getColumn(row, "AM_TT_DOKUB")) * 100),2);
+			
+			 //실행기성율(누계)
+			 this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTSILHENGGS") / this.dsList.getColumn(row, "AM_TT_SILHENG")) * 100),2);
+		  }
+		//도급기성(금회) 수량	  
+		}else if(colnm == "QN_TTDOKUBGS"){	
+			this.dsList.setColumn(row, "QN_DOKUBGS", nexacro.toNumber(this.dsList.getColumn(row, "QN_TTDOKUBGS") - this.dsList.getColumn(row, "PRE_QN_TTDOKUBGS"),3));
+			
+			//도급기성(금회) 금액
+			this.dsList.setColumn(row, "AM_DOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_DOKUBGS") * this.dsList.getColumn(row, "UP_TT_DOKUB"),0));
+			
+			//도급기성(누계) 변경
+			this.dsList.setColumn(row, "QN_TTDOKUBGS", nexacro.toNumber(this.dsList.getColumn(row, "QN_DOKUBGS") + this.dsList.getColumn(row, "PRE_QN_TTDOKUBGS"),3));
+			this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_DOKUBGS") * nexacro.toNumber(this.dsList.getColumn(row, "UP_TT_DOKUB")) + this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS"),0));
+			
+			//도급기성(잔여) 변경
+			this.dsList.setColumn(row, "J_QN_TTDOKUBGS", nexacro.toNumber(this.dsList.getColumn(row, "QN_TT_DOKUB") - this.dsList.getColumn(row, "QN_TTDOKUBGS"),3));
+			this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_DOKUB") - this.dsList.getColumn(row, "AM_TTDOKUBGS"),0));
+			
+			//도급기성율(누계)
+			this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTDOKUBGS") / this.dsList.getColumn(row, "AM_TT_DOKUB")) * 100),2);
+	   
+		//실행기성(금회) 수량
+		}else if(colnm == "QN_TTSILHENGGS"){ 
+			this.dsList.setColumn(row, "QN_SILHENGGS", nexacro.toNumber(this.dsList.getColumn(row, "QN_TTSILHENGGS") - this.dsList.getColumn(row, "PRE_QN_TTSILHENGGS"),3));		 
+			
+			//실행기성(금회) 금액
+			this.dsList.setColumn(row, "AM_SILHENGGS", nexacro.floor(this.dsList.getColumn(row, "QN_SILHENGGS") * this.dsList.getColumn(row, "UP_TT_SILHENG"),0));		 
+			
+			//실행기성(누계) 변경
+			this.dsList.setColumn(row, "QN_TTSILHENGGS", nexacro.toNumber(this.dsList.getColumn(row, "QN_SILHENGGS") + this.dsList.getColumn(row, "PRE_QN_TTSILHENGGS"),3));
+			this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_SILHENGGS") + this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS"),0));
+			 
+			//실행기성(잔여)
+			this.dsList.setColumn(row, "J_QN_TTSILHENGGS", nexacro.toNumber(this.dsList.getColumn(row, "QN_TT_SILHENG") - this.dsList.getColumn(row, "QN_TTSILHENGGS"),3));
+			this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "AM_TT_SILHENG") - this.dsList.getColumn(row, "AM_TTSILHENGGS"),0));
+			 
+			//실행기성율(누계)
+			this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor((this.dsList.getColumn(row, "AM_TTSILHENGGS") / this.dsList.getColumn(row, "AM_TT_SILHENG")) * 100),2);
+		}
+	   this.setLastJAmt(row);
+	   
+	   this.dsList.set_enableevent(true);
+   }
+}
+*/
+
+this.fnCalcRow = function(colnm, row) {
+	if(colnm == "AM_HADOGS" || colnm == "QN_HADOGS" || colnm == "AM_TTHADOGS" ||colnm == "AM_TTDOKUBGS" ||colnm == "AM_TTSILHENGGS" ||colnm == "QN_TTHADOGS" ||colnm == "QN_TTDOKUBGS" ||colnm == "QN_TTSILHENGGS"){
+		this.dsList.set_enableevent(false);
+		
+		//해당컬럼 조회하고있지않아서 임시로 추가
+		this.dsList.addColumn("QN_DOKUBGS", "bigdecimal");
+		this.dsList.addColumn("AM_DOKUBGS", "bigdecimal");
+		this.dsList.addColumn("QN_SILHENGGS", "bigdecimal");
+		this.dsList.addColumn("AM_SILHENGGS", "bigdecimal");
+		this.dsList.addColumn("QN_TTDOKUBGS", "bigdecimal");
+		this.dsList.addColumn("AM_TTDOKUBGS", "bigdecimal");
+		this.dsList.addColumn("QN_TTSILHENGGS", "bigdecimal");
+		this.dsList.addColumn("AM_TTSILHENGGS", "bigdecimal");
+		//this.dsList.addColumn("J_QN_TTDOKUBGS", "bigdecimal");
+		//this.dsList.addColumn("J_AM_TTDOKUBGS", "bigdecimal");
+		
+		switch (colnm){
+			// 누계-금액 수정 시
+			case "AM_TTHADOGS" :
+				// 당회-금액 연산
+				var am_hadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTHADOGS"));
+				
+				am_hadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTHADOGS"))); // 감산
+				
+				this.dsList.setColumn(row, "AM_HADOGS", nexacro.floor(am_hadogs, 0));
+				
+				// 잔여-금액 연산
+				var j_am_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO"));
+				
+				j_am_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTHADOGS")));
+				
+				this.dsList.setColumn(row, "J_AM_TTHADOGS", nexacro.floor(j_am_tthadogs, 0));
+				
+				// 당회-기성률 연산
+				var rt_hadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_HADOGS")); // 당회-금액
+				
+				rt_hadogs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO"))); // 나누기 연산
+				rt_hadogs.mulDecimal(nexacro.Decimal(100)); // 곱 연산
+				
+				this.dsList.setColumn(row, "RT_HADOGS", nexacro.floor(rt_hadogs, 2)); // 당회-기성율
+				
+				// 누계-기성률 연산
+				var rt_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTHADOGS")); // 누계-금액
+				
+				rt_tthadogs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO"))); // 나누기 연산
+				rt_tthadogs.mulDecimal(nexacro.Decimal(100)); // 곱 연산
+				
+				this.dsList.setColumn(row, "RT_TTHADOGS", nexacro.floor(rt_tthadogs, 2)); // 누계-기성률
+				
+				// 도급기성(금회)-금액 연산
+				var am_dokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB")); // 도급금액-금액
+
+				am_dokubgs.divDecimal(nexacro.Decimal(100)); // 나누기 연산
+				am_dokubgs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "RT_TTHADOGS"))); // 곱 연산
+				
+				this.dsList.setColumn(row, "AM_DOKUBGS", nexacro.floor(am_dokubgs, 0)); // 도급기성(금회)-금액
+				
+				// 도급기성(금회)-금액 - 도급기성(전회)-금액 : 소스 변경 금지 : 이후 금액 연산 시 결과값 달라질 수 있음
+				if(am_dokubgs - this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS") > 0){
+					var am_dokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_DOKUBGS"));
+					
+					am_dokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+					
+					this.dsList.setColumn(row, "AM_DOKUBGS",  am_dokubgs);
+				}
+				
+				// 실행기성(금회)-금액 연산
+				var am_silhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG")); // 실행금액-금액
+				
+				am_silhenggs.divDecimal(nexacro.Decimal(100)); // 나누기 연산
+				am_silhenggs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "RT_TTHADOGS"))); // 곱 연산 
+				
+				this.dsList.setColumn(row, "AM_SILHENGGS", nexacro.floor(am_silhenggs, 0)); // 실행기성(금회)-금액
+				
+				// 실행금액-금액 - 도급기성(전회)-금액 : 소스 변경 금지 : 이후 금액 연산 시 결과값 달라질 수 있음
+				if(am_silhenggs - this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS") > 0){
+					var am_silhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_SILHENGGS"));
+					
+					am_silhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+					
+					this.dsList.setColumn(row, "AM_SILHENGGS", am_silhenggs);
+				}
+				
+				// 도급기성(누계)-금액 연산
+				var am_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_DOKUBGS"));
+				
+				am_ttdokubgs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+				
+				this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(am_ttdokubgs, 0));
+				
+				// 도급기성(잔여)-금액 연산
+				var j_am_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB"));
+				
+				j_am_ttdokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS")));
+				
+				this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(j_am_ttdokubgs, 0));
+				
+				// 도급기성(누계)-기성율 연산
+				var rt_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS"));
+				
+				rt_ttdokubgs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB"))); // 나누기 연산
+				rt_ttdokubgs.mulDecimal(nexacro.Decimal(100)); // 곱 연산
+				
+				this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor(rt_ttdokubgs, 2));
+				
+				// 실행기성(누계)-금액 연산
+				var am_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_SILHENGGS"));
+				
+				am_ttsilhenggs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS")));
+				
+				this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(am_ttsilhenggs, 0));
+
+				// 실행기성(잔여)-금액 연산
+				var j_am_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG"));
+				
+				j_am_ttsilhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS")));
+				
+				this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(j_am_ttsilhenggs, 0));
+				
+				// 실행기성(누계)-기성율 연산
+				var rt_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS")); // 실행기성(누계)-금액
+				
+				rt_ttsilhenggs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG"))); // 나누기 연산
+				rt_ttsilhenggs.mulDecimal(nexacro.Decimal(100)); // 곱 연산
+				
+				this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor(rt_ttsilhenggs, 2)); // 실행기성(누계)-기성율
+				
+				// 잔여-기성율 연산
+				var j_rt_tthadogs = nexacro.Decimal(100);
+				
+				j_rt_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "RT_TTHADOGS")));
+				
+				this.dsList.setColumn(row, "J_RT_TTHADOGS", nexacro.floor(j_rt_tthadogs, 2));
+			break;
+			// 도급기성(누계)-금액 수정 시
+			case "AM_TTDOKUBGS" :
+				// 도급기성(금회)-금액 연산
+				var am_dokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS"));
+				
+				am_dokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+				
+				this.dsList.setColumn(row, "AM_DOKUBGS", nexacro.floor( am_dokubgs, 0));
+				
+				// 도급기성(잔여)-금액 연산
+				var j_am_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB"));
+				
+				j_am_ttdokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS")));
+				
+				this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor( j_am_ttdokubgs, 0));
+				
+				// 도급기성(누계)-기성율 연산
+				var rt_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS"));
+				
+				rt_ttdokubgs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB"))); // 나누기 연산
+				rt_ttdokubgs.mulDecimal(nexacro.Decimal(100)); // 곱 연산
+				
+				this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor(rt_ttdokubgs, 2)); // 도급기성(누계)-기성율
+			break;
+			// 실행기성(누계)-금액 수정 시
+			case "AM_TTSILHENGGS" :
+				// 실행기성(금회)-금액 연산
+				var am_silhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS"));
+				
+				am_silhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS")));
+				
+				this.dsList.setColumn(row, "AM_SILHENGGS", nexacro.floor(am_silhenggs, 0));
+				
+				// 실행기성(잔여)-금액 연산
+				var j_am_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG"));
+				
+				j_am_ttsilhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS")));
+				
+				this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(j_am_ttsilhenggs, 0));
+				
+				// 실행기성(누계)-기성율 연산
+				var rt_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS")); // 실행기성(누계)-금액
+				
+				rt_ttsilhenggs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG"))); // 나누기 연산
+				rt_ttsilhenggs.mulDecimal(nexacro.Decimal(100)); // 곱 연산
+				
+				this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor(rt_ttsilhenggs, 2)); // 실행기성(누계)-기성율
+			break;
+			// 누계-수량 수정 시
+			case "QN_TTHADOGS" :
+				// 식공종여부가 Y가 아닌 경우
+				if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+					// 당회-수량 연산
+					var qn_hadogs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TTHADOGS"));
+					/*var qn_hadogs = nexacro.Decimal(this.dsList.getColumn(row, "QN_ALL_TTHADOGS"));*/
+					
+					qn_hadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTHADOGS"))); // 감산
+					// QN_HADOGS 선택업체	기성당회	수량 =  QN_ALL_TTHADOGS (공동수급사) 전체	기성누계 수량 -  PRE_QN_TTHADOGS 선택업체	기성전회 수량
+					// QN_HADOGS =  QN_ALL_TTHADOGS - PRE_QN_TTHADOGS
+									
+					this.dsList.setColumn(row, "QN_HADOGS", qn_hadogs);
+
+					// 당회-금액 연산
+					var am_hadogs = nexacro.Decimal(this.dsList.getColumn(row, "QN_HADOGS")); // 당회-수량
+					
+					am_hadogs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "UP_TT_HADO"))); // 곱 연산
+					
+					this.dsList.setColumn(row, "AM_HADOGS", nexacro.floor(am_hadogs, 0)); // 당회-금액
+					
+					// 누계-수량 연산
+					var qn_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTHADOGS"));
+					
+					qn_tthadogs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_HADOGS"))); //합산
+					
+					// 선택업체 기성전회 수량 + 선택업체 기성당회 수량
+					
+					this.dsList.setColumn(row, "QN_TTHADOGS", qn_tthadogs);
+
+					// 잔여-수량 연산
+					var j_qn_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TT_HADO"));
+					
+					j_qn_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_TTHADOGS")));
+					
+					this.dsList.setColumn(row, "J_QN_TTHADOGS", nexacro.floor(j_qn_tthadogs, 3));
+					
+					// 누계-금액 연산
+					var am_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTHADOGS"));
+					
+					am_tthadogs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_HADOGS")));
+					
+					this.dsList.setColumn(row, "AM_TTHADOGS", nexacro.floor(am_tthadogs, 0));
+					
+					// 공동수급사 전체기성-금액
+					var am_all_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_HADOGS"));
+					
+					am_all_tthadogs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_ALL_TTHADOGS_ORI")));
+					
+					this.dsList.setColumn(row, "AM_ALL_TTHADOGS", nexacro.floor(am_all_tthadogs));
+					
+					// 공동수급사 전체잔여-금액
+					var j_am_all_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO"));
+					
+					j_am_all_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_ALL_TTHADOGS")));
+					
+					this.dsList.setColumn(row, "J_AM_ALL_TTHADOGS", nexacro.floor(j_am_all_tthadogs));
+					
+					// 잔여-금액 연산
+					var j_am_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO"));
+					
+					j_am_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTHADOGS")));
+					
+					this.dsList.setColumn(row, "J_AM_TTHADOGS", nexacro.floor(j_am_tthadogs, 0));
+					
+					// 도급금액-수량이나 도급금액-단가가 0일 경우 도급기성(누계, 금회)-수량, 도급기성(누계, 금회)-금액 0으로 처리
+					if(this.dsList.getColumn(row, "QN_TT_DOKUB") == 0 || this.dsList.getColumn(row, "UP_TT_DOKUB") == 0){	
+						this.dsList.setColumn(row, "QN_TTDOKUBGS", 0); // 도급기성(누계)-수량
+						this.dsList.setColumn(row, "AM_TTDOKUBGS", 0); // 도급기성(누계)-금액
+						this.dsList.setColumn(row, "QN_DOKUBGS", 0); // 도급기성(금회)-수량
+						this.dsList.setColumn(row, "AM_DOKUBGS", 0); // 도급기성(금회)-금액
+					}else{
+						// 도급기성(금회)-수량 연산
+						this.dsList.setColumn(row, "QN_DOKUBGS", this.dsList.getColumn(row, "QN_HADOGS"));
+						
+						// 도급기성(금회)-금액 연산
+						var am_dokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_HADOGS"));
+						
+						am_dokubgs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "UP_TT_DOKUB")));
+						
+						this.dsList.setColumn(row, "AM_DOKUBGS", nexacro.floor(am_dokubgs, 0));
+						
+						// 도급기성(누계)-수량 연산
+						var qn_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_DOKUBGS"));
+						
+						qn_ttdokubgs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTDOKUBGS")));
+						
+						this.dsList.setColumn(row, "QN_TTDOKUBGS", nexacro.toNumber(qn_ttdokubgs, 3));
+						
+						// 도급기성(누계)-금액 연산
+						var am_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_DOKUBGS"));
+						
+						am_ttdokubgs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "UP_TT_DOKUB")));
+						am_ttdokubgs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+						
+						this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(am_ttdokubgs, 0));
+					}
+					
+					// 실행금액-수량이나 실행금액-단가가 0일 경우 실행기성(누계, 금회)-수량, 실행기성(누계, 금회)-금액 0으로 처리
+					if(this.dsList.getColumn(row, "QN_TT_SILHENG") == 0 || this.dsList.getColumn(row, "UP_TT_SILHENG") == 0){
+						this.dsList.setColumn(row, "QN_TTSILHENGGS", 0); // 실행기성(누계)-수량
+						this.dsList.setColumn(row, "AM_TTSILHENGGS", 0); // 실행기성(누계)-금액
+						this.dsList.setColumn(row, "QN_SILHENGGS", 0); // 실행기성(금회)-수량
+						this.dsList.setColumn(row, "AM_SILHENGGS", 0); // 실행기성(금회)-금액
+					}else{
+						// 실행기성(금회)-수량 연산
+						this.dsList.setColumn(row, "QN_SILHENGGS", this.dsList.getColumn(row, "QN_HADOGS"));
+						
+						// 실행기성(금회)-금액 연산
+						var am_silhenggs = nexacro.Decimal(this.dsList.getColumn(row, "QN_HADOGS")); // 당회-수량
+						
+						am_silhenggs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "UP_TT_SILHENG"))); // 곱 연산
+						
+						this.dsList.setColumn(row, "AM_SILHENGGS", nexacro.floor(am_silhenggs, 0)); // 실행기성(금회)-금액
+						
+						// 실행기성(누계)-수량 연산
+						var qn_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "QN_SILHENGGS"));
+						
+						qn_ttsilhenggs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTSILHENGGS")));
+						
+						this.dsList.setColumn(row, "QN_TTSILHENGGS", nexacro.floor(qn_ttsilhenggs, 3));
+						
+						// 실행기성(누계)-금액 연산
+						var am_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_SILHENGGS"));
+						
+						am_ttsilhenggs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS")));
+						
+						this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(am_ttsilhenggs, 0));
+					}
+					
+					// 도급기성(잔여)-수량 연산
+					var j_qn_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TT_DOKUB"));
+					
+					j_qn_ttdokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_TTDOKUBGS")));
+					
+					this.dsList.setColumn(row, "J_QN_TTDOKUBGS", nexacro.toNumber(j_qn_ttdokubgs, 3));
+					
+					// 도급기성(잔여)-금액 연산
+					var j_am_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB"));
+					
+					j_am_ttdokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS")));
+					
+					this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(j_am_ttdokubgs, 0));
+					
+					// 실행기성(잔여)-수량 연산
+					var j_qn_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TT_SILHENG"));
+					
+					j_qn_ttsilhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_TTSILHENGGS")));
+					
+					this.dsList.setColumn(row, "J_QN_TTSILHENGGS", nexacro.floor(j_qn_ttsilhenggs, 3));
+					
+					// 실행기성(잔여)-금액 연산
+					var j_am_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG"));
+					
+					j_am_ttsilhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS")));
+					
+					this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(j_am_ttsilhenggs, 0));
+					
+					// 당회-기성율 연산
+					var rt_hadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_HADOGS")); // 당회-금액
+					
+					rt_hadogs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO"))); // 나누기 연산
+					rt_hadogs.mulDecimal(nexacro.Decimal(100)); // 곱 연산
+					
+					this.dsList.setColumn(row, "RT_HADOGS", nexacro.floor(rt_hadogs, 2)); // 당회-기성율
+					
+					// 누계-기성율 연산
+					var rt_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTHADOGS")); // 누계-금액
+					
+					rt_tthadogs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO"))); // 나누기 연산
+					rt_tthadogs.mulDecimal(nexacro.Decimal(100)); // 곱 연산
+					
+					this.dsList.setColumn(row, "RT_TTHADOGS", nexacro.floor(rt_tthadogs, 2)); // 누계-기성율
+					
+					// 잔여-기성율 연산
+					var j_rt_tthadogs = nexacro.Decimal(100);
+					
+					j_rt_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "RT_TTHADOGS")));
+					
+					this.dsList.setColumn(row, "J_RT_TTHADOGS", nexacro.floor(j_rt_tthadogs, 2));
+					
+					// 도급기성(누계)-기성율 연산
+					var rt_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS")); // 도급기성(누계)
+					
+					rt_ttdokubgs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB"))); // 나누기 연산
+					rt_ttdokubgs.mulDecimal(nexacro.Decimal(100)); // 곱 연산
+					
+					this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor(rt_ttdokubgs, 2)); // 도급기성(누계)-기성율
+					
+					// 실행기성(누계)-기성율 연산
+					var rt_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS")); // 실행기성(누계)-금액
+					
+					rt_ttsilhenggs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG"))); // 나누기 연산
+					rt_ttsilhenggs.mulDecimal(nexacro.Decimal(100)); // 곱 연산
+					
+					this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor(rt_ttsilhenggs, 2));	// 실행기성(누계)-기성율
+				}
+			break;
+			// 도급기성(누계)-수량 수정 시
+			case "QN_TTDOKUBGS" :
+				// 도급기성(금회)-수량 연산
+				var qn_dokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TTDOKUBGS"));
+				
+				qn_dokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTDOKUBGS")));
+				
+				this.dsList.setColumn(row, "QN_DOKUBGS", nexacro.floor(qn_dokubgs, 3));
+				
+				// 도급기성(금회)-금액 연산
+				var am_dokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_DOKUBGS")); // 도급기성(금회)-수량
+				
+				am_dokubgs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "UP_TT_DOKUB"))); // 곱 연산
+				
+				this.dsList.setColumn(row, "AM_DOKUBGS", nexacro.floor(am_dokubgs, 0)); // 도급기성(금회)-금액
+				
+				// 도급기성(누계)-수량 연산
+				var qn_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_DOKUBGS"));
+				
+				qn_ttdokubgs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTDOKUBGS")));
+				
+				this.dsList.setColumn(row, "QN_TTDOKUBGS", nexacro.floor(qn_ttdokubgs, 3));
+				
+				// 도급기성(누계)-금액 연산
+				var am_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_DOKUBGS")); // 도급기성(금회)-수량
+				
+				am_ttdokubgs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "UP_TT_DOKUB"))); // 곱 연산
+				am_ttdokubgs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+				
+				this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(am_ttdokubgs, 0));
+				
+				// 도급기성(잔여)-수량 연산
+				var j_qn_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TT_DOKUB"));
+				
+				j_qn_ttdokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_TTDOKUBGS")));
+				
+				this.dsList.setColumn(row, "J_QN_TTDOKUBGS", nexacro.toNumber(j_qn_ttdokubgs, 3));
+				
+				// 도급기성(잔여)-금액 연산
+				var j_am_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB"));
+				
+				j_am_ttdokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS")));
+				
+				this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(j_am_ttdokubgs, 0));
+				
+				// 도급기성(누계)-기성율 연산
+				var rt_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS")); // 도급기성(누계)-금액
+				
+				rt_ttdokubgs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB"))); // 나누기 연산
+				rt_ttdokubgs.mulDecimal(nexacro.Decimal(100)); // 곱 연산
+				
+				this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor(rt_ttdokubgs, 2)); // 도급기성(누계)-기성율
+			break;
+			// 실행기성(누계)-수량 수정 시
+			case "QN_TTSILHENGGS" :
+				// 실행기성(금회)-수량 연산
+				var qn_silhenggs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TTSILHENGGS"));
+				
+				qn_silhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTSILHENGGS")));
+				
+				this.dsList.setColumn(row, "QN_SILHENGGS", nexacro.floor(qn_silhenggs, 3));
+				
+				// 실행기성(금회)-금액 연산
+				var am_silhenggs = nexacro.Decimal(this.dsList.getColumn(row, "QN_SILHENGGS")); // 실행기성(금회)-수량
+				
+				am_silhenggs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "UP_TT_SILHENG"))); // 곱 연산
+				
+				this.dsList.setColumn(row, "AM_SILHENGGS", nexacro.floor(am_silhenggs, 0)); // 실행기성(금회)-금액
+
+				// 실행기성(누계)-수량 연산
+				var qn_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "QN_SILHENGGS"));
+				
+				qn_ttsilhenggs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTSILHENGGS")));
+				
+				this.dsList.setColumn(row, "QN_TTSILHENGGS", nexacro.toNumber(qn_ttsilhenggs, 3));
+				
+				// 실행기성(누계)-금액 연산
+				var am_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_SILHENGGS"));
+				
+				am_ttsilhenggs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS")));
+				
+				this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(am_ttsilhenggs, 0));
+				
+				// 실행기성(잔여)-수량 연산
+				var j_qn_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TT_SILHENG"));
+				
+				j_qn_ttsilhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_TTSILHENGGS")));
+				
+				this.dsList.setColumn(row, "J_QN_TTSILHENGGS", nexacro.floor(j_qn_ttsilhenggs, 3));
+				
+				// 실행기성(잔여)-금액 연산
+				var j_am_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG"));
+				
+				j_am_ttsilhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS")));
+				
+				this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(j_am_ttsilhenggs, 0));
+				
+				// 실행기성(누계)-기성율 연산
+				var rt_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS")); // 실행기성(누계)-금액
+				
+				rt_ttsilhenggs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG"))); // 나누기 연산
+				rt_ttsilhenggs.mulDecimal(nexacro.Decimal(100)); // 곱 연산
+				
+				this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor(rt_ttsilhenggs, 2)); // 실행기성(누계)-기성율
+			break;
+			// 당회 수량 수정 시
+			case "QN_HADOGS" :
+				if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+					// 당회-금액
+					var am_hadogs = nexacro.Decimal(this.dsList.getColumn(row, "QN_HADOGS"));
+					
+					am_hadogs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "UP_TT_HADO")));
+					
+					this.dsList.setColumn(row, "AM_HADOGS", nexacro.floor(am_hadogs));
+					
+					// 누계-수량
+					var qn_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTHADOGS"));
+					
+					qn_tthadogs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_HADOGS")));
+					
+					this.dsList.setColumn(row, "QN_TTHADOGS", nexacro.floor(qn_tthadogs, 3));
+					
+					// 누계-금액
+					var am_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTHADOGS"));
+					
+					am_tthadogs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_HADOGS")));
+					
+					this.dsList.setColumn(row, "AM_TTHADOGS", nexacro.floor(am_tthadogs));
+					
+					// 잔여-수량
+					var j_qn_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TT_HADO"));
+					
+					j_qn_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_TTHADOGS")));
+					
+					this.dsList.setColumn(row, "J_QN_TTHADOGS", nexacro.floor(j_qn_tthadogs));
+					
+					// 잔여-금액
+					var j_am_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO"));
+					
+					j_am_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTHADOGS")));
+					
+					this.dsList.setColumn(row, "J_AM_TTHADOGS", nexacro.floor(j_am_tthadogs));
+					
+					// 도급기성(금회)-수량
+					this.dsList.setColumn(row, "QN_DOKUBGS", this.dsList.getColumn(row, "QN_HADOGS"));
+					
+					// 도급기성(금회)-금액
+					var am_dokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_HADOGS"));
+					
+					am_dokubgs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "UP_TT_DOKUB")));
+					
+					this.dsList.setColumn(row, "AM_DOKUBGS", nexacro.floor(am_dokubgs));
+					
+					// 실행기성(금회)-수량
+					this.dsList.setColumn(row, "QN_SILHENGGS", this.dsList.getColumn(row, "QN_HADOGS"));
+					
+					// 실행기성(금회)-금액
+					var am_silhenggs = nexacro.Decimal(this.dsList.getColumn(row, "QN_HADOGS"));
+					
+					am_silhenggs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "UP_TT_SILHENG")));
+					
+					this.dsList.setColumn(row, "AM_SILHENGGS", nexacro.floor(am_silhenggs));
+					
+					// 도급기성(누계)-수량
+					var qn_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_DOKUBGS"));
+					
+					qn_ttdokubgs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTDOKUBGS")));
+					
+					this.dsList.setColumn(row, "QN_TTDOKUBGS", nexacro.floor(qn_ttdokubgs));
+					
+					// 도급기성(누계)-금액
+					var am_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_DOKUBGS"));
+					
+					am_ttdokubgs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "UP_TT_DOKUB")));
+					am_ttdokubgs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+					
+					this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(am_ttdokubgs));
+					
+					// 실행기성(누계)-수량
+					var qn_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "QN_SILHENGGS"));
+					
+					qn_ttsilhenggs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTSILHENGGS")));
+					
+					this.dsList.setColumn(row, "QN_TTSILHENGGS", nexacro.floor(qn_ttsilhenggs));
+					
+					// 실행기성(누계)-금액
+					var am_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_SILHENGGS"));
+					
+					am_ttsilhenggs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS")));
+					
+					this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(am_ttsilhenggs));
+					
+					// 도급기성(잔여)-수량
+					var j_qn_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TT_DOKUB"));
+					
+					j_qn_ttdokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_TTDOKUBGS")));
+					
+					this.dsList.setColumn(row, "J_QN_TTDOKUBGS", nexacro.floor(j_qn_ttdokubgs));
+					
+					// 도급기성(잔여)-금액
+					var j_am_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB"));
+					
+					j_am_ttdokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS")));
+					
+					this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(j_am_ttdokubgs));
+					
+					// 실행기성(잔여)-수량
+					var j_qn_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TT_SILHENG"));
+					
+					j_qn_ttsilhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_TTSILHENGGS")));
+					
+					this.dsList.setColumn(row, "J_QN_TTSILHENGGS", nexacro.floor(j_qn_ttsilhenggs));
+					
+					// 실행기성(잔여)-금액
+					var j_am_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG"));
+					
+					j_am_ttsilhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS")));
+					
+					this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(j_am_ttsilhenggs));
+					
+					// 당회-기성율
+					var rt_hadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_HADOGS"));
+					
+					rt_hadogs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO")));
+					rt_hadogs.mulDecimal(nexacro.Decimal(100));
+					
+					this.dsList.setColumn(row, "RT_HADOGS", nexacro.floor(rt_hadogs, 2));
+					
+					// 누계-기성율
+					var rt_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTHADOGS"));
+					
+					rt_tthadogs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO")));
+					rt_tthadogs.mulDecimal(nexacro.Decimal(100));
+					
+					this.dsList.setColumn(row, "RT_TTHADOGS", nexacro.floor(rt_tthadogs, 2));
+					
+					// 잔여-기성율
+					var j_rt_tthadogs = nexacro.Decimal(100);
+					
+					j_rt_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "RT_TTHADOGS")));
+					
+					this.dsList.setColumn(row, "J_RT_TTHADOGS", nexacro.floor(j_rt_tthadogs, 2));
+					
+					// 도급기성(누계)-기성율
+					var rt_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS"));
+					
+					rt_ttdokubgs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB")));
+					rt_ttdokubgs.mulDecimal(nexacro.Decimal(100));
+					
+					this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor(rt_ttdokubgs, 2));
+					
+					// 실행기성(누계)-기성율
+					var rt_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS"));
+					
+					rt_ttsilhenggs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG")));
+					rt_ttsilhenggs.mulDecimal(nexacro.Decimal(rt_ttsilhenggs));
+					
+					this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor(rt_ttsilhenggs, 2));
+					
+					// 공동수급사 전체기성-수량
+					var qn_all_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "QN_HADOGS"));
+					
+					qn_all_tthadogs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_ALL_TTHADOGS_ORI")));
+					
+					
+					// QN_ALL_TTHADOGS (공동수급사) 전체	기성누계 수량
+
+					this.dsList.setColumn(row, "QN_ALL_TTHADOGS", nexacro.floor(qn_all_tthadogs, 3));
+					
+					// 공동수급사 전체기성-금액
+					var am_all_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_HADOGS"));
+					
+					am_all_tthadogs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_ALL_TTHADOGS_ORI")));
+					
+					this.dsList.setColumn(row, "AM_ALL_TTHADOGS", nexacro.floor(am_all_tthadogs));
+					
+					// 공동수급사 전체잔여-수량
+					var j_qn_all_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TT_HADO"));
+					
+					j_qn_all_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_ALL_TTHADOGS")));
+					
+					this.dsList.setColumn(row, "J_QN_ALL_TTHADOGS", nexacro.floor(j_qn_all_tthadogs, 3));
+					
+					// 공동수급사 전체잔여-금액
+					var j_am_all_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO"));
+					
+					j_am_all_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_ALL_TTHADOGS")));
+					
+					this.dsList.setColumn(row, "J_AM_ALL_TTHADOGS", nexacro.floor(j_am_all_tthadogs));
+				}
+			break;
+			// 당회 금액 수정 시
+			case "AM_HADOGS" :
+				if(this.dsList.getColumn(row, "YN_LSUNIT") != "Y"){
+					// 당회 수량
+// 					var qn_hadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_HADOGS"));
+// 					
+// 					qn_hadogs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "UP_TT_HADO")));
+// 					
+// 					this.dsList.setColumn(row, "QN_HADOGS", nexacro.floor(qn_hadogs, 3));
+						
+					// 누계-수량
+					var qn_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTHADOGS"));
+					
+					qn_tthadogs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_HADOGS")));
+					
+					this.dsList.setColumn(row, "QN_TTHADOGS", nexacro.floor(qn_tthadogs));					
+					
+					// 도급기성(금회)-금액
+					var am_dokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB"));
+					
+					am_dokubgs.divDecimal(nexacro.Decimal(100));
+					am_dokubgs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "RT_TTHADOGS")));
+					
+					this.dsList.setColumn(row, "AM_DOKUBGS", nexacro.floor(am_dokubgs, 0));
+					
+					// 도급기성(금회)-금액 - 도급기성(전회)-금액 : 소스 변경 금지 : 이후 금액 연산 시 결과값 달라질 수 있음
+					if(am_dokubgs - this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")> 0){
+						var am_dokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_DOKUBGS"));
+						
+						am_dokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+						
+						this.dsList.setColumn(row, "AM_DOKUBGS", am_dokubgs);
+					}
+					
+					// 실행기성(금회)-금액
+					var am_silhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG"));
+					
+					am_silhenggs.divDecimal(nexacro.Decimal(100));
+					am_silhenggs.mulDecimal(nexacro.Decimal(this.dsList.getColumn(row, "RT_TTHADOGS")));
+					
+					this.dsList.setColumn(row, "AM_SILHENGGS", nexacro.floor(am_silhenggs, 0));
+					
+					// 실행금액-금액 - 도급기성(전회)-금액 : 소스 변경 금지 : 이후 금액 연산 시 결과값 달라질 수 있음
+					if(am_silhenggs - this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS") > 0){
+						var am_silhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_SILHENGGS"));
+						
+						am_silhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+						
+						this.dsList.setColumn(row, "AM_SILHENGGS",  am_silhenggs);
+					}
+					
+					// 도급기성(누계)-금액
+					var am_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_DOKUBGS"));
+					
+					am_ttdokubgs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS")));
+					
+					this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.floor(am_ttdokubgs));
+					
+					// 실행기성(누계)-금액
+					var am_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_SILHENGGS"));
+					
+					am_ttsilhenggs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS")));
+					
+					this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.floor(am_ttsilhenggs));
+					
+					// 도급기성(잔여)-금액
+					var j_am_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB"));
+					
+					j_am_ttdokubgs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS")));
+					
+					this.dsList.setColumn(row, "J_AM_TTDOKUBGS", nexacro.floor(j_am_ttdokubgs));
+					
+					// 실행기성(잔여)-금액
+					var j_am_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG"));
+					
+					j_am_ttsilhenggs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS")));
+					
+					this.dsList.setColumn(row, "J_AM_TTSILHENGGS", nexacro.floor(j_am_ttsilhenggs));
+					
+					// 잔여-수량
+					var j_qn_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "QN_TT_HADO"));
+					
+					j_qn_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_TTHADOGS")));
+					
+					this.dsList.setColumn(row, "J_QN_TTHADOGS", nexacro.floor(j_qn_tthadogs));
+					
+					// 도급기성(누계)-기성율
+					var rt_ttdokubgs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTDOKUBGS"));
+					
+					rt_ttdokubgs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_DOKUB")));
+					rt_ttdokubgs.mulDecimal(nexacro.Decimal(100));
+					
+					this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.floor(rt_ttdokubgs, 2));
+					
+					// 실행기성(누계)-기성율
+					var rt_ttsilhenggs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTSILHENGGS"));
+					
+					rt_ttsilhenggs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_SILHENG")));
+					rt_ttsilhenggs.mulDecimal(nexacro.Decimal(100));
+					
+					this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.floor(rt_ttsilhenggs, 2));
+				}
+				
+				// 누계-금액
+				var am_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTHADOGS"));
+				
+				am_tthadogs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_HADOGS")));
+				
+				this.dsList.setColumn(row, "AM_TTHADOGS", nexacro.floor(am_tthadogs, 0));
+				
+				// 잔여-금액
+				var j_am_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO"));
+				
+				j_am_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TTHADOGS")));
+				
+				this.dsList.setColumn(row, "J_AM_TTHADOGS", nexacro.floor(j_am_tthadogs, 0));
+				
+				// 당회-기성율
+				var rt_hadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_HADOGS"));
+				
+				rt_hadogs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO")));
+				rt_hadogs.mulDecimal(nexacro.Decimal(100));
+				
+				this.dsList.setColumn(row, "RT_HADOGS", nexacro.floor(rt_hadogs, 2));
+				
+				// 누계-기성율(%)
+				var rt_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TTHADOGS"));
+				
+				rt_tthadogs.divDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO")));
+				rt_tthadogs.mulDecimal(nexacro.Decimal(100));
+				
+				this.dsList.setColumn(row, "RT_TTHADOGS", nexacro.floor(rt_tthadogs, 2));
+				
+				// 잔여-기성율
+				var j_rt_tthadogs = nexacro.Decimal(100);
+				
+				j_rt_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "RT_TTHADOGS")));
+				
+				this.dsList.setColumn(row, "J_RT_TTHADOGS", nexacro.floor(j_rt_tthadogs, 2));
+					
+				// 공동수급사 전체기성-금액
+				var am_all_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_HADOGS"));
+				
+				am_all_tthadogs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_ALL_TTHADOGS_ORI")));
+				
+				this.dsList.setColumn(row, "AM_ALL_TTHADOGS", nexacro.floor(am_all_tthadogs));
+				
+				// 공동수급사 전체잔여-금액
+				var j_am_all_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO"));
+				
+				j_am_all_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "AM_ALL_TTHADOGS")));
+				
+				this.dsList.setColumn(row, "J_AM_ALL_TTHADOGS", nexacro.floor(j_am_all_tthadogs));
+			break;
+		}
+		
+		this.setLastJAmt(row);
+		
+		this.dsList.set_enableevent(true);
+	}
+}
+
+this.setLastJAmt = function(row){
+	if(this.dsList.getColumn(row, "DS_UNIT") != "식"){
+		trace("식 아님");
+		//도급누계 수량 초과 시
+		if(nexacro.floor(this.dsList.getColumn(row, "QN_TTDOKUBGS"), 3) > nexacro.floor(this.dsList.getColumn(row, "QN_TT_DOKUB"), 3) ){
+			this.dsList.setColumn(row, "QN_TTDOKUBGS", nexacro.floor(this.dsList.getColumn(row, "QN_TT_DOKUB"), 3));
+			this.fnCalcRow("QN_TTDOKUBGS", row);
+		}
+		//실행누계 수량 초과 시
+// 		if(nexacro.floor(this.dsList.getColumn(row, "QN_TTSILHENGGS"), 3) > nexacro.floor(this.dsList.getColumn(row, "QN_TT_SILHENG"), 3) ){
+// 			trace("QN_TTSILHENGGS =====> ", this.dsList.getColumn(row, "QN_TTSILHENGGS"));
+// 			trace("QN_TT_SILHENG =====> ", this.dsList.getColumn(row, "QN_TT_SILHENG"));
+// 			
+// 			this.dsList.setColumn(row, "QN_TTSILHENGGS", nexacro.floor(this.dsList.getColumn(row, "QN_TT_SILHENG"), 3));
+// 			this.fnCalcRow("QN_TTSILHENGGS", row);
+// 		}
+		
+		// (공동수급사) 전체기성 기성누계 수량 > 계약전체	수량
+		if(nexacro.floor(this.dsList.getColumn(row, "QN_ALL_TTHADOGS"), 3) > nexacro.floor(this.dsList.getColumn(row, "QN_TT_HADO"), 3)){
+
+			this.dsList.setColumn(row, "QN_ALL_TTHADOGS", nexacro.floor(this.dsList.getColumn(row, "QN_TT_HADO"), 3));
+			
+
+			var qn_tthadogs = nexacro.Decimal(this.dsList.getColumn(row, "QN_ALL_TTHADOGS"));
+			var qn_tt_hado = nexacro.Decimal(this.dsList.getColumn(row, "QN_TT_HADO"));
+			
+			//선택업체 기성누계 수량 = (공동수급사) 전체기성 기성누계 수량 - 전체기성(초기값) 수량
+			//qn_tthadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_ALL_TTHADOGS_ORI")));
+			qn_tt_hado.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_ALL_TTHADOGS_ORI")));
+			
+			//this.dsList.setColumn(row, "QN_TTHADOGS", nexacro.floor(qn_tthadogs, 3));
+			this.dsList.setColumn(row, "QN_HADOGS", qn_tt_hado);	
+			
+			var pre_qn_tthadogs  = nexacro.Decimal(this.dsList.getColumn(row, "PRE_QN_TTHADOGS"));			
+			pre_qn_tthadogs.addDecimal(nexacro.Decimal(this.dsList.getColumn(row, "QN_HADOGS")));
+			this.dsList.setColumn(row, "QN_TTHADOGS", pre_qn_tthadogs);			
+
+			// (공동수급사) 전체잔여	잔여기성 수량
+			this.dsList.setColumn(row, "J_QN_ALL_TTHADOGS", 0);
+			
+			this.fnCalcRow("QN_TTHADOGS", row);
+			
+		}
+		
+		if(this.dsList.getColumn(row, "AM_TTHADOGS") > this.dsList.getColumn(row, "AM_TT_HADO")){
+			if(this.FormInfo.CD_MODULE == "DWB"){
+				this.dsList.setColumn(row, "AM_TTHADOGS", this.dsList.getColumn(row, "AM_TT_HADO"));
+				this.dsList.setColumn(row, "AM_HADOGS", this.dsList.getColumn(row, "AM_TT_HADO") - this.dsList.getColumn(row, "PRE_AM_TTHADOGS"));
+				this.fnCalcRow("AM_TTHADOGS", row);
+			}
+		}
+
+		//외주_누계기성 수량과 외주_계약수량이 같을 시
+		if(nexacro.floor(this.dsList.getColumn(row, "QN_TTHADOGS"), 3) == nexacro.floor(this.dsList.getColumn(row, "QN_TT_HADO"), 3)){
+			//외주_누계기성 금액
+			/*this.dsList.setColumn(row, "AM_TTHADOGS", this.dsList.getColumn(row, "AM_TT_HADO"));*/
+			//외주_금회기성 수량
+			/*this.dsList.setColumn(row, "QN_HADOGS", this.dsList.getColumn(row, ""));*/
+			//외주_금회기성 금액
+			if(this.FormInfo.CD_MODULE == "DWB"){
+				this.dsList.setColumn(row, "AM_HADOGS", nexacro.toNumber(this.dsList.getColumn(row, "AM_TT_HADO") - this.dsList.getColumn(row, "PRE_AM_TTHADOGS"), 0));
+			}
+			//외주_잔여기성 수량
+			this.dsList.setColumn(row, "J_QN_TTHADOGS", 0);
+			//외주_잔여기성 금액
+			this.dsList.setColumn(row, "J_AM_TTHADOGS", 0);
+			
+			//누계기성율
+			this.dsList.setColumn(row, "RT_TTHADOGS", nexacro.Decimal(100));
+
+			//잔여기성율
+			this.dsList.setColumn(row, "J_RT_TTHADOGS", 0);
+		}
+		
+		//도급 수량 금액 있을 경우에만 동작하도록 한다.
+		if(this.dsList.getColumn(row, "QN_TT_DOKUB") > 0 && this.dsList.getColumn(row, "UP_TT_DOKUB") > 0){
+			//도급_누계기성 수량과 도급수량이 같을 시
+			if(nexacro.floor(this.dsList.getColumn(row, "QN_TTDOKUBGS"), 3) == nexacro.floor(this.dsList.getColumn(row, "QN_TT_DOKUB"), 3)){
+				//도급_누계기성 금액
+				this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.toNumber(this.dsList.getColumn(row, "AM_TT_DOKUB"), 0));
+				//도급_금회기성 수량
+				/*this.dsList.setColumn(row, "QN_DOKUBGS", "");*/
+				//도급_금회기성 금액
+				this.dsList.setColumn(row, "AM_DOKUBGS", nexacro.toNumber(this.dsList.getColumn(row, "AM_TT_DOKUB") - this.dsList.getColumn(row, "PRE_AM_TTDOKUBGS"), 0));
+				//도급_잔여기성 수량
+				this.dsList.setColumn(row, "J_QN_TTDOKUBGS", 0);
+				//도급_잔여기성 금액
+				this.dsList.setColumn(row, "J_AM_TTDOKUBGS", 0);
+				//도급기성율(누계)
+				this.dsList.setColumn(row, "RT_TTDOKUBGS", nexacro.Decimal(100));
+			}
+		}	
+		
+		//실행 수량 금액 있을 경우에만 동작하도록 한다.
+		if(this.dsList.getColumn(row, "QN_TT_SILHENG") > 0 && this.dsList.getColumn(row, "UP_TT_SILHENG") > 0){
+			//실행_누계기성 수량과 실행수량이 같을 시
+			if(nexacro.floor(this.dsList.getColumn(row, "QN_TTSILHENGGS"), 3) == nexacro.floor(this.dsList.getColumn(row, "QN_TT_SILHENG"), 3)){
+				//실행_누계기성 금액
+				this.dsList.setColumn(row, "AM_TTSILHENGGS",nexacro.toNumber(this.dsList.getColumn(row, "AM_TT_SILHENG"), 0));
+				//실행_금회기성 수량
+				/*this.dsList.setColumn(row, "QN_SILHENGGS", "");*/
+				//실행_금회기성 금액
+				this.dsList.setColumn(row, "AM_SILHENGGS", nexacro.toNumber(this.dsList.getColumn(row, "AM_TT_SILHENG") - this.dsList.getColumn(row, "PRE_AM_TTSILHENGGS"), 0));
+				//실행_잔여기성 수량
+				this.dsList.setColumn(row, "J_QN_TTSILHENGGS", 0);
+				//실행_잔여기성 금액
+				this.dsList.setColumn(row, "J_AM_TTSILHENGGS", 0);
+				//실행기성율(누계)
+				this.dsList.setColumn(row, "RT_TTSILHENGGS", nexacro.Decimal(100));
+			}
+		}
+	}else{
+		trace("식");
+		//도급누계 금액 초과 시
+// 		if(nexacro.floor(this.dsList.getColumn(row, "AM_TTDOKUBGS"),0) > nexacro.floor(this.dsList.getColumn(row, "AM_TT_DOKUB"),0) ){
+// 			this.dsList.setColumn(row, "AM_TTDOKUBGS", nexacro.toNumber(this.dsList.getColumn(row, "AM_TT_DOKUB"),0));
+// 			this.fnCalcRow("AM_TTDOKUBGS", row);
+// 		}
+		//실행누계 금액 초과 시
+// 		if(nexacro.floor(this.dsList.getColumn(row, "AM_TTSILHENGGS"),0) > nexacro.floor(this.dsList.getColumn(row, "AM_TT_SILHENG"),0) ){
+// 			this.dsList.setColumn(row, "AM_TTSILHENGGS", nexacro.toNumber(this.dsList.getColumn(row, "AM_TT_SILHENG"),3));
+// 			this.fnCalcRow("AM_TTSILHENGGS", row);
+// 		}
+		
+		if((nexacro.floor(this.dsList.getColumn(row, "AM_HADOGS"), 3) > nexacro.floor(this.dsList.getColumn(row, "AM_TT_HADO"), 3)) && this.dsList.getColumn(row, "AM_TT_HADO") > 0){
+			var am_hadogs = nexacro.Decimal(this.dsList.getColumn(row, "AM_TT_HADO"));
+			
+			am_hadogs.subDecimal(nexacro.Decimal(this.dsList.getColumn(row, "PRE_AM_TTHADOGS")));
+			if(this.FormInfo.CD_MODULE == "DWB"){
+				this.dsList.setColumn(row, "AM_HADOGS", nexacro.floor(am_hadogs, 3));
+			}
+			
+			this.fnCalcRow("AM_HADOGS", row);
+		}
+	}
+}
+
+//내역자료복사(전자조달)
+this.fnCopyVndr = function(obj:nexacro.Button, e:nexacro.ClickEventInfo){
+//alert(this.ucFlag);
+	this.copyFlag = false;
+	if(this.dsStatus.getColumn(0,"TY_APPROVALB2B") == '1' || this.dsStatus.getColumn(0,"TY_APPROVALB2B") == '2'){
+		if(this.dsStatus.getColumn(0,"YN_PERMIT") == "N"){
+			this.copyFlag = true;	
+		}
+	}
+	if(!this.copyFlag){
+		this.gfnAlert("업체청구상태가 [청구완료]이고 기성확정상태가 [미확정]인 기성건만 복사할 수 있습니다.");
+		return;
+	}
+  
+   //this.imgLoading.set_visible(true);
+
+   this.dsList.set_enableevent(false);
+   for(var i = 0; i < this.dsList.rowcount; i++) {
+
+		if(this.dsList.getColumn(i, "YN_COST") == "Y" && this.dsList.getColumn(i, "YN_EDIT") == "Y")  {
+		this.dsList.setColumn(i, "QN_HADOGS", this.dsList.getColumn(i, "QN_HADOGS_VNDR"));
+		this.dsList.setColumn(i, "AM_HADOGS", this.dsList.getColumn(i, "AM_HADOGS_VNDR"));
+		 
+		if(this.dsList.getColumn(i, "DS_UNIT") != "식" ){
+			this.dsList.setColumn(i, "QN_TTHADOGS", nexacro.toNumber(this.dsList.getColumn(i, "PRE_QN_TTHADOGS") + this.dsList.getColumn(i, "QN_HADOGS_VNDR"),3));
+		}
+		
+		this.dsList.setColumn(i, "AM_TTHADOGS", nexacro.floor(this.dsList.getColumn(i, "PRE_AM_TTHADOGS") + this.dsList.getColumn(i, "AM_HADOGS_VNDR"),0));
+		this.dsList.setColumn(i, this.ucFlag, "U");
+	  }
+   }
+   this.dsList.set_enableevent(true);
+   for(var i = 0; i < this.dsList.rowcount; i++) {
+		if(this.dsList.getColumn(i, "YN_COST") == "Y" && this.dsList.getColumn(i, "YN_EDIT") == "Y")  {
+  			
+
+			if(this.dsList.getColumn(i, "DS_UNIT") != "식" ){
+				this.fnCalcRow("QN_TTHADOGS", i);
+			}else{
+				this.fnCalcRow("AM_TTHADOGS", i);
+			}
+	  }
+   }
+   
+   this.FormBtns.Save.set_enable(true);
+   
+};
+
+
+//내역자료복사(PMIS)
+this.fnCopyPmis = function(obj:nexacro.Button, e:nexacro.ClickEventInfo){
+  //[청구완료] AND 기성확정상태 = [미확정]) SP Validation [MSG]
+  
+   //this.dsList.set_enableevent(false);
+   for(var i = 0; i < this.dsList.rowcount; i++) {
+     if(this.dsList.getColumn(i, "YN_COST") == "Y" && this.dsList.getColumn(i, "YN_EDIT") == "Y") {
+         this.dsList.setColumn(i, "QN_HADOGS", this.dsList.getColumn(i, "QN_HADOGS_PMIS"));
+         this.dsList.setColumn(i, "AM_HADOGS", this.dsList.getColumn(i, "AM_HADOGS_PMIS"));
+         this.fnCalcRow("QN_HADOGS", i);
+         this.fnCalcRow("AM_HADOGS", i);
+      }
+   }
+   //this.dsList.set_enableevent(true);
+};
+
+//예산현황
+this.fnCostTuja = function(obj:nexacro.Button, e:nexacro.ClickEventInfo){
+
+	if(!this.gfnGridIsRow(this.dxGrid))
+	{
+		this.gfnAlert("데이터를 선택해주세요.");
+		return false;
+	}
+
+	var param = {};
+	param.CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+	param.DS_SITE =  this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+	param.CD_COST = this.dsList.getColumn(this.dsList.rowposition, "CD_COST");
+	param.CD_DKCOST = this.dsList.getColumn(this.dsList.rowposition, "CD_DKCOST");
+	param.DS_COST = this.dsList.getColumn(this.dsList.rowposition, "DS_COST");
+	param.SZ_SIZE = this.dsList.getColumn(this.dsList.rowposition, "SZ_SIZE");
+	param.DS_UNIT = this.dsList.getColumn(this.dsList.rowposition, "DS_UNIT");
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DWX_COSTTUJA", "", param);
+};
+
+// 기성청구요청통보
+this.fnReqB2b = function(obj:nexacro.Button, e:nexacro.ClickEventInfo){
+	this.dsExecGisung.clearData();
+	var nrow = this.dsExecGisung.addRow();
+	
+	this.dsExecGisung.setColumn(nrow, "TY_WRK", "REQ");
+	this.dsExecGisung.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	this.dsExecGisung.setColumn(nrow, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsExecGisung.setColumn(nrow, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK"));
+	this.dsExecGisung.setColumn(nrow, "NO_DGR", this.dsSearch.getColumn(0, "NO_DGR"));
+	this.dsExecGisung.setColumn(nrow, "NO_HADOCONT", this.dsSearch.getColumn(0, "NO_HADOCONT"));
+	this.dsExecGisung.setColumn(nrow, "CD_VENDOR", this.dsSearch.getColumn(0, "CD_VENDOR"));
+	
+	var strSvcId    = "exec_ReqB2B";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "exec_gisung=dsExecGisung";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg,			// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnExecReqB2B_callback = function()
+{
+	var url = "/buyer/earned/earned_edit_notice_pop.do";
+	var param = "";
+	param += "&poNo=" + this.dsSearch.getColumn(0, "NO_HADOCONT");
+	param += "&aeDate=" + this.gfnGetLastDate(this.dsSearch.getColumn(0, "YM_WORK"));
+	param += "&vendorCd=" + this.divSearch.form.ctxtCD_VENDOR_SAP.text;
+	param += "&siteCd=" + this.dsSearch.getColumn(0, "CD_SITE");
+	
+	this.gfnOpenEPS(url, param);
+}
+
+this.fnAtchB2b = function(obj:nexacro.Button, e:nexacro.ClickEventInfo){
+	if(this.YN_B2B == "Y")
+	{
+		var url = "/buyer/earned/earned_edit_pop.do";
+		var param = "";
+		param += "&poNo=" + this.dsSearch.getColumn(0, "NO_HADOCONT");
+		param += "&aeDate=" + this.gfnGetLastDate(this.dsSearch.getColumn(0, "YM_WORK"));
+		param += "&vendorCd=" + this.divSearch.form.ctxtCD_VENDOR_SAP.text;
+		param += "&siteCd=" + this.dsSearch.getColumn(0, "CD_SITE");
+		
+		this.gfnOpenEPS(url, param);
+	}
+}
+
+this.fnCncB2b = function(obj:nexacro.Button, e:nexacro.ClickEventInfo){
+	if(this.YN_B2B == "Y")
+	{
+		var url = "/buyer/earned/earned_edit_notice_pop.do";
+		var param = "";
+		param += "&poNo=" + this.dsSearch.getColumn(0, "NO_HADOCONT");
+		param += "&aeDate=" + this.gfnGetLastDate(this.dsSearch.getColumn(0, "YM_WORK"));
+		param += "&vendorCd=" + this.divSearch.form.ctxtCD_VENDOR_SAP.text;
+		param += "&siteCd=" + this.dsSearch.getColumn(0, "CD_SITE");
+		
+		this.gfnOpenEPS(url, param);
+	}
+}
+
+this.fnDeleteAll = function(obj:nexacro.Button, e:nexacro.ClickEventInfo){
+	this.gfnConfirm("해당 기성내역을 일괄삭제하시겠습니까?", "fnDeleteAll_Confirm");
+}
+
+this.fnDeleteAll_Confirm = function(strId, val) {
+	if(val == true) {
+		this.dsDeleteAll.clearData();
+	
+		this.dsDeleteAll.addRow();
+		
+		this.dsDeleteAll.setColumn(0, "TY_WRK", "DD");
+		this.dsDeleteAll.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+		this.dsDeleteAll.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+		this.dsDeleteAll.setColumn(0, "YM_WORK", this.dsSearch.getColumn(0, "YM_WORK").substr(0,6));
+		this.dsDeleteAll.setColumn(0, "NO_DGR", this.dsSearch.getColumn(0, "NO_DGR"));
+		this.dsDeleteAll.setColumn(0, "NO_HADOCONT", this.dsSearch.getColumn(0, "NO_HADOCONT"));
+		this.dsDeleteAll.setColumn(0, "CD_VENDOR", this.dsSearch.getColumn(0, "CD_VENDOR"));
+		
+		if (this.dsDeleteAll.rowcount == 0) return;		
+		
+		var strSvcId    = "deleteAll";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "save=dsDeleteAll";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}	
+
+/*
+// 협력사 청구 체크박스 이벤트
+this.divSearch_cchkHADOGS_VNDR_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	if(e.prevalue != e.postvalue)
+	{
+		var temp = this.dsChangeColumn.getColumn(0, "HADOGS_VNDR");
+		var columnNames = temp.split('|');
+		
+		this.fnSetGridSize(e.postvalue, columnNames, 100);
+	}	
+};
+*/
+/*
+// PMIS 체크박스 이벤트
+this.divSearch_cchkHADOGS_PMIS_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	if(e.prevalue != e.postvalue)
+	{
+		var temp = this.dsChangeColumn.getColumn(0, "HADOGS_PMIS");
+		var columnNames = temp.split('|');
+		
+		this.fnSetGridSize(e.postvalue, columnNames, 100);
+	}
+};
+*/
+/*
+// 계약금액 체크박스 이벤트
+this.divSearch_cchkHADOGS_CONTAMT_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	if(e.prevalue != e.postvalue)
+	{
+		var temp = this.dsChangeColumn.getColumn(0, "HADOGS_HADO");
+		var columnNames = temp.split('|');
+		
+		this.fnSetGridSize(e.postvalue, columnNames, 100);
+	}	
+};
+*/
+/*
+// 전회누계 체크박스 이벤트
+this.divSearch_cchkHADOGS_PRETOT_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	if(e.prevalue != e.postvalue)
+	{
+		var temp = this.dsChangeColumn.getColumn(0, "HADOGS_PRETOT");
+		var columnNames = temp.split('|');
+		
+		//기성률 60
+		//PRE_RT_TTHADOGS
+
+		
+		this.fnSetGridSize(e.postvalue, columnNames, 100);
+	}	
+};
+*/
+/*
+// 누계기성 체크박스 이벤트
+this.divSearch_cchkHADOGS_GISUNGTOT_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	if(e.prevalue != e.postvalue)
+	{
+		var temp = this.dsChangeColumn.getColumn(0, "HADOGS_GISUNGTOT");
+		var columnNames = temp.split('|');
+		
+		//외주,도급,실행 기성율 60
+		//RT_TTHADOGS RT_TTDOKUBGS RT_TTSILHENGGS
+
+
+
+		this.fnSetGridSize(e.postvalue, columnNames, 100);
+	}	
+};
+*/
+/*
+// 잔여기성 체크박스 이벤트
+this.divSearch_cchkHADOGS_REMGISUNG_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	if(e.prevalue != e.postvalue)
+	{
+		var temp = this.dsChangeColumn.getColumn(0, "HADOGS_REMGISUNG");
+		var columnNames = temp.split('|');
+		
+		//외주기성 잔여 기성율 60
+		//J_RT_TTHADOGS
+
+		this.fnSetGridSize(e.postvalue, columnNames, 100);
+	}	
+};
+*/
+
+// 그리드 변경 함수.
+this.fnSetGridSize = function(check, columnNames, width)
+{	
+	for(var k = 0; k < this.dxGrid.getFormatColCount(); k++){
+      var ds_field = this.dxGrid.getCellProperty("body", k, "text");
+      if(ds_field.indexOf("bind:") > -1) {
+         ds_field = ds_field.replace("bind:", "");
+
+		 for(var i=0; i < columnNames.length; i++)
+		 {
+			 if(ds_field == columnNames[i])
+			 {
+				if(ds_field == "PRE_RT_TTHADOGS" || ds_field == "RT_TTHADOGS" || ds_field == "RT_TTDOKUBGS" || ds_field == "RT_TTSILHENGGS" || ds_field == "J_RT_TTHADOGS"){
+					width = 60;
+				}else if(ds_field == "QN_TT_HADO" ||"PRE_QN_TTHADOGS"||"QN_HADOGS_VNDR" ||"QN_TTHADOGS_VNDR" ||"QN_HADOGS" ||"J_QN_TTHADOGS" ||"QN_TT_SILHENG" ||"PRE_QN_TTSILHENGGS" ||"QN_SILHENGGS" ||"QN_TTSILHENGGS" ||"J_QN_TTSILHENGGS"){
+					width = 70;
+				
+			    }
+				
+				if(check == false) width = 0;
+				
+				this.dxGrid.setFormatColProperty(k, "size", width);
+				
+				break;
+			 }
+		 }
+      }
+   }
+}	
+
+
+// 첨부파일(현장)
+this.fnAttachFileSite = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+
+    var cd_site = this.dsSearch.getColumn(0, "CD_SITE");
+	var no_dgr = this.dsSearch.getColumn(0, "NO_DGR");
+	var no_hadocont = this.dsSearch.getColumn(0, "NO_HADOCONT");
+	var cd_vendor = this.dsSearch.getColumn(0, "CD_VENDOR");
+	
+    var fileManager = {};
+    fileManager.CD_GUBUN = "DWB1";
+	fileManager.CD_DIR = [ cd_site, no_dgr, no_hadocont, cd_vendor, 'SITE' ];
+
+	if(this.FormInfo.TY_AUTH == "R") {
+		fileManager.IS_READONLY = true;
+	} else {
+		fileManager.IS_READONLY = false;
+	}
+
+    this.gfnFileManager(fileManager, "fnFileCallback");
+}
+
+// 첨부파일(업체)
+this.fnAttachFileVndr = function(obj: nexacro.Button, e: nexacro.ClickEventInfo) {
+
+    var cd_site = this.dsSearch.getColumn(0, "CD_SITE");
+	var no_dgr = this.dsSearch.getColumn(0, "NO_DGR");
+	var no_hadocont = this.dsSearch.getColumn(0, "NO_HADOCONT");
+	var cd_vendor = this.dsSearch.getColumn(0, "CD_VENDOR");
+	var ym_work = this.dsSearch.getColumn(0, "YM_WORK");
+	var cdRef2 = (ym_work <= "202204")? no_dgr : (ym_work + no_dgr + "");
+	
+    var fileManager = {};
+    fileManager.CD_GUBUN = "DWB2";
+	fileManager.CD_DIR = [ cd_site, cdRef2, no_hadocont, cd_vendor, 'VNDR' ];
+	fileManager.IS_READONLY = false;
+
+    this.gfnFileManager(fileManager, "fnFileCallback");
+}
+
+//기성청구반려 버튼 이벤트
+this.fnRstorDlg = function(obj:nexacro.Button, e:nexacro.ClickEventInfo){
+	var param = {};
+	param.CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+	param.DS_SITE =  this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+	param.YM_WORK = this.dsSearch.getColumn(0, "YM_WORK");
+	param.NO_DGR = this.dsSearch.getColumn(0, "NO_DGR");
+	param.NO_HADOCONT = this.dsSearch.getColumn(0, "NO_HADOCONT");
+	param.DS_HADOCONT = this.divSearch.form.ccfNO_HADOCONT.form.DSTextBox.text;
+	param.CD_VENDOR = this.dsSearch.getColumn(0, "CD_VENDOR");
+	param.DS_VENDOR = this.divSearch.form.ccfCD_VENDOR.form.DSTextBox.text;
+	param.DS_CONTMETHOD = this.getOwnerFrame().DS_CONTMETHOD;
+	
+	this.gfnFormOpenNonAuth("DWB", "DWB_HDGISUNGRSTORDLG", "fnDialogCallback", param);
+};
+
+this.fnDialogCallback = function()
+{
+	this.FormBtns.Select.click();
+}
+
+
+//변경사유 버튼 이벤트
+this.fnChgRsnDlg = function(){
+	var param = {};
+	param.CD_SITE = this.dsSearch.getColumn(0, "CD_SITE");
+	param.DS_SITE =  this.divSearch.form.ccfCD_SITE.form.DSTextBox.text;
+	param.YM_WORK = this.dsSearch.getColumn(0, "YM_WORK");
+	param.NO_DGR = this.dsSearch.getColumn(0, "NO_DGR");
+	param.NO_HADOCONT = this.dsSearch.getColumn(0, "NO_HADOCONT");
+	param.DS_HADOCONT = this.divSearch.form.ccfNO_HADOCONT.form.DSTextBox.text;
+	param.CD_VENDOR = this.dsSearch.getColumn(0, "CD_VENDOR");
+	param.DS_VENDOR = this.divSearch.form.ccfCD_VENDOR.form.DSTextBox.text;
+	param.DS_CONTMETHOD = this.getOwnerFrame().DS_CONTMETHOD;
+	var msg = this.dsStatus.getColumn(0,"CHG_RSN");
+	param.CHG_RSN = msg;
+	
+	
+	this.gfnFormOpenNonAuth("DWB", "DWB_HDGISUNGCHGRSN", "fnChgRsnDlg_callback", param);
+};
+
+this.fnChgRsnDlg_callback = function(rtn,gubun){
+	if(gubun == true){
+		this.fnExec();
+		this.FormBtns.Select.click();
+	}
+}
+
+// 전체잔여(공동수급사) 체크박스
+this.divSearch_chkTY_CONTS_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	var QN_ALL_TTHADOGS_Index = this.dxGrid.getBindCellIndex("body", "QN_ALL_TTHADOGS");
+	var AM_ALL_TTHADOGS_Index = this.dxGrid.getBindCellIndex("body", "AM_ALL_TTHADOGS");
+	var J_QN_ALL_TTHADOGS_Index = this.dxGrid.getBindCellIndex("body", "J_QN_ALL_TTHADOGS");
+	var J_AM_ALL_TTHADOGS_Index = this.dxGrid.getBindCellIndex("body", "J_AM_ALL_TTHADOGS");
+	
+	if(obj.isChecked())
+	{
+		this.dxGrid.setRealColSize("body", QN_ALL_TTHADOGS_Index, 80);
+		this.dxGrid.setRealColSize("body", AM_ALL_TTHADOGS_Index, 100);
+		this.dxGrid.setRealColSize("body", J_QN_ALL_TTHADOGS_Index, 80);
+		this.dxGrid.setRealColSize("body", J_AM_ALL_TTHADOGS_Index, 100);
+	}
+	else
+	{
+		this.dxGrid.setRealColSize("body", QN_ALL_TTHADOGS_Index, 0);
+		this.dxGrid.setRealColSize("body", AM_ALL_TTHADOGS_Index, 0);
+		this.dxGrid.setRealColSize("body", J_QN_ALL_TTHADOGS_Index, 0);
+		this.dxGrid.setRealColSize("body", J_AM_ALL_TTHADOGS_Index, 0);
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" oncolumnchanged="dsList_oncolumnchanged" onload="dsList_onload"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DWBPR_HDGISUNGDOWN_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DWBPR_HDGISUNG_SAVE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectno</Col>
+            <Col id="SP">DWBPR_HDGISUNGMONTH_MAX_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">exec</Col>
+            <Col id="SP">DWBPR_HDLEDGER_EXECUTE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">exec_gisung</Col>
+            <Col id="SP">DWBPR_HDGISUNG_EXECUTE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectcopy</Col>
+            <Col id="SP">DWBPR_HDGISUNG_VNDR_COPY_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="NO_HADOCONT" type="STRING" size="256"/>
+          <Column id="YM_WORK" type="STRING" size="256"/>
+          <Column id="NO_DGR" type="STRING" size="256"/>
+          <Column id="CD_VENDOR" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsNodgr"/>
+      <Dataset id="dsChangeColumn">
+        <ColumnInfo>
+          <Column id="HADOGS_VNDR" type="STRING" size="256"/>
+          <Column id="HADOGS_PMIS" type="STRING" size="256"/>
+          <Column id="HADOGS_HADO" type="STRING" size="256"/>
+          <Column id="HADOGS_PRETOT" type="STRING" size="256"/>
+          <Column id="HADOGS_GISUNGTOT" type="STRING" size="256"/>
+          <Column id="HADOGS_REMGISUNG" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="HADOGS_VNDR">QN_HADOGS_VNDR|AM_HADOGS_VNDR</Col>
+            <Col id="HADOGS_PMIS">QN_HADOGS_PMIS|AM_HADOGS_PMIS</Col>
+            <Col id="HADOGS_HADO">QN_TT_HADO|UP_TT_HADO|AM_TT_HADO|QN_TT_SILHENG|UP_TT_SILHENG|AM_TT_SILHENG</Col>
+            <Col id="HADOGS_PRETOT">PRE_QN_TTHADOGS|PRE_AM_TTHADOGS|PRE_RT_TTHADOGS|PRE_QN_TTSILHENGGS|PRE_AM_TTSILHENGGS</Col>
+            <Col id="HADOGS_GISUNGTOT">QN_TTHADOGS|AM_TTHADOGS|RT_TTHADOGS|QN_TTSILHENGGS|AM_TTSILHENGGS|RT_TTSILHENGGS</Col>
+            <Col id="HADOGS_REMGISUNG">J_RT_TTHADOGS</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYN_B2B">
+        <ColumnInfo>
+          <Column id="YN_B2B" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsStatus" oncolumnchanged="dsList_oncolumnchanged" onload="dsList_onload"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divSearch.form.ccfNO_HADOCONT.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="NO_HADOCONT"/>
+      <BindItem id="item2" compid="divSearch.form.ctclYM_WORK.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_WORK"/>
+      <BindItem id="item3" compid="divSearch.form.cb_Nodgr" propid="value" datasetid="dsSearch" columnid="NO_DGR"/>
+      <BindItem id="item4" compid="divSearch.form.ccfCD_VENDOR.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_VENDOR"/>
+    </Bind>
+  </Form>
+</FDL>

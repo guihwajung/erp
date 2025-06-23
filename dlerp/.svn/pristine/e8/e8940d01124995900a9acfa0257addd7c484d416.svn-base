@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="470" height="450" titletext="부외자산관리" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="46.0" right="0" cssclass="div_SEARCH_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCD_SYSTEM" taborder="0" text="자산번호" left="0.0" top="10.0" width="92.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtNO_ASSET" taborder="1" top="10.0" width="90" height="24.0" readonly="true" left="staCD_SYSTEM:0.0" textAlign="center"/>
+              <Edit id="edtDS_ASSET" taborder="2" top="10.0" width="234" height="24.0" readonly="true" left="edtNO_ASSET:0.0"/>
+              <Edit id="edtNO_KEY" taborder="3" top="10.0" width="30" height="24.0" readonly="true" left="edtDS_ASSET:0.0" textAlign="center" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" right="0" cssclass="div_DATA_Bg" bottom="0">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="ImageViewer" taborder="13" left="0" top="0" stretch="fixaspectratio" right="0" bottom="50"/>
+              <Button id="btnClose" taborder="2" text="닫기" top="ImageViewer:10" height="25" right="10" width="70" onclick="divData_btnClose_onclick"/>
+              <Button id="btnDelete" taborder="3" text="사진삭제" height="25" right="btnClose:5" top="ImageViewer:10" width="75" onclick="divData_btnDelete_onclick"/>
+              <Button id="btnUploadP" taborder="12" text="사진등록" height="25" onclick="divData_btnUploadP_onclick" right="btnDelete:5" top="ImageViewer:10" width="75"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.filepath = "/DM/ASSET_OUT/";
+this.fileuploads0 = {};
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	var today = this.gfnGetDate();
+	
+	this.divSearch.form.edtNO_ASSET.set_value(this.getOwnerFrame().NO_ASSET);
+	this.divSearch.form.edtDS_ASSET.set_value(this.getOwnerFrame().DS_ASSET);
+	this.divSearch.form.edtNO_KEY.set_value(this.getOwnerFrame().NO_KEY);
+	
+	this.fileConfig = this.gfnGetFileConfig();
+	this.fileConfig.allowTypes = ["jpg","jpeg","gif","png"]; // 넥사브라우저 전용, 웹은 적용불가
+	this.fileConfig.uploadUrl = this.fileConfig.uploadUrl.replace("path=", "path=" + this.filepath);
+	this.fileConfig.downloadUrl = this.fileConfig.downloadUrl.replace("path=", "path=" + this.filepath);
+	console.log(this.fileConfig.uploadUrl);
+	console.log(this.filepath);
+	console.log(this.fileConfig.downloadUrl);
+	
+	var fileid1 = "fileup_0";
+	this.fileup0 = new FileUpload();
+	this.fileup0.init(fileid1, 0,0,0,0);
+		if(this.lookup(fileid1)) {
+			delete this.fileuploads0[fileid1];
+			this.removeChild(fileid1);
+		}
+	this.addChild(fileid1, this.fileup0);
+	this.fileup0.show();
+	this.fileup0.row = 0;
+	this.fileup0.addEventHandler("onitemchanged", this.fileup1_onitemchanged, this);
+	this.fileup0.addEventHandler("onsuccess", this.fileup1_onsuccess, this);
+	this.fileup0.addEventHandler("onerror", this.fileup1_onerror, this);
+	
+	this.fileuploads0[fileid1] = this.fileup0;
+	
+	this.fnSelect();
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+ 	var id_group = this.FormInfo.ID_GROUP;
+ 	var gr_search = this.FormInfo.GR_SEARCH;
+ 	var cd_role = this.FormInfo.CD_ROLE;
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	// this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	// this.gfnGridInit(this.dxGrid, this.dsList, "DM", "DMB_ASSET_OUT_HISTORY");
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("NO_ASSET","string");
+	this.dsSelect.addColumn("NO_KEY","string");
+	
+	this.dsFileUp2 = new Dataset();
+	this.dsFileUp2.addColumn("NO_ASSET", "string");
+	this.dsFileUp2.addColumn("NO_KEY", "string");
+	this.dsFileUp2.addColumn("IMG_NM", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0,"NO_ASSET",this.dsSearch.getColumn(0, "NO_ASSET"));
+	this.dsSelect.setColumn(0,"NO_KEY",this.dsSearch.getColumn(0, "NO_KEY"));
+
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	// this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+  */
+this.fnSelectValidate = function() {
+	var validate = true;
+	
+	return validate;
+};
+
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.fnImageView();
+	}
+	else if(svcID == "update"){
+		if (errorCode == 0) {
+			this.fnSelect();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "imagefile"){
+		var key = this.dsSearch.getColumn(0, "NO_KEY");
+		var fullpath = this.filepath + key;
+		
+		console.log("여기");
+		console.log(this.filepath);
+		console.log(key);
+		console.log(this.dsImageFile.saveXML());
+		console.log(this.dsImageFile.rowcount);
+		
+		if(this.dsImageFile.rowcount == 0)
+		{
+			console.log("여기1");
+			this.divData.form.ImageViewer.set_image(null);
+		}
+		else if(this.dsImageFile.rowcount > 0){
+			console.log("여기2");
+			for(var i=0;i<this.dsImageFile.rowcount;i++)
+			{
+				if(this.dsImageFile.getColumn(i, "filename") == this.dsList.getColumn(0, "DS_ASSET_IMG") && this.dsImageFile.getColumn(i, "filepath") == fullpath){
+					this.divData.form.ImageViewer.set_image(this.dsImageFile.getColumn(i, "filereturn"));
+				}
+			}
+		}
+	}
+}
+
+this.fnImageView = function() {
+
+	this.dsImageFile.clearData();
+	if(!this.gfnIsNull(this.dsList.getColumn(0, "DS_ASSET_IMG"))){
+		var nrow = this.dsImageFile.addRow();
+		var key = this.dsSearch.getColumn(0, "NO_KEY");
+		this.dsImageFile.setColumn(nrow, "filepath", this.filepath + key);
+		this.dsImageFile.setColumn(nrow, "filename", this.dsList.getColumn(0, "DS_ASSET_IMG"));
+	}
+	
+	// console.log(this.dsImageFile.saveXML());
+	
+	// 서버 이미지파일 base64 로 받아오기		
+	var strSvcId    = "imagefile";
+	var strSvcType  = "file/imageFile";
+	var inProc		= "";
+	var inData      = "input=dsImageFile";
+	var outData     = "dsImageFile=input";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+ 
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGrid_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+	 
+}
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	/*
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+	*/
+};
+
+this.fnAPP = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	
+}
+
+this.fnAPPCANCEL = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	
+}
+
+this.fnAPP_callback = function(strId, val) 
+{
+	if(val == true) {
+		
+	}	
+}
+
+this.divData_btnUploadP_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var fileup0 = this.fileup0;
+	fileup0.filefindbuttons.upfile0.click();
+};
+
+this.fileup1_onitemchanged = function(obj:nexacro.FileUpload,e:nexacro.FileUploadItemChangeEventInfo) {
+	var row = obj.row;
+
+	if(obj.filelist.length > 0) {
+
+		var filename = obj.filelist[0].filename;
+		var fileext = filename.toLocaleLowerCase().substring(filename.lastIndexOf('.')+1);
+		
+		if(!this.gfnIsExistInArray(this.fileConfig.allowTypes, fileext)) {
+			this.gfnAlert("이미지 파일(" + this.fileConfig.allowTypes.join(',') + ")을 선택하세요.");
+			return;
+		}
+		
+		this.keys = Object.keys(this.fileuploads0);
+		for(var i = 0; i < this.keys.length; i++) {
+			var fileup = this.fileuploads0[this.keys[i]];
+			var sFilePath = fileup.value;
+			var dirExpt = sFilePath.lastIndexOf("\\")+1;
+			var sFileName = sFilePath.substr(dirExpt);
+					
+			var key = this.dsSearch.getColumn(0, "NO_KEY");
+			var sUploadUrl = this.fileConfig.host + this.fileConfig.uploadUrl;
+			fileup.upload(sUploadUrl + "?path=" + this.filepath + key);
+		}
+	}
+}
+
+this.fileup1_onsuccess = function(obj:nexacro.FileUpload,e:nexacro.FileUploadEventInfo) {
+	if(!this.gfnIsNull(this.dsList.getColumn(0, "DS_ASSET_IMG"))){
+		this.dsDeleteFile.clearData(); 
+		var nrow = this.dsDeleteFile.addRow();	
+		var key = this.dsSearch.getColumn(nrow, "NO_KEY");
+		this.dsDeleteFile.setColumn(nrow, "filepath", this.filepath + key);
+		this.dsDeleteFile.setColumn(nrow, "filename", this.dsList.getColumn(0, "DS_ASSET_IMG"));	
+	}
+	this.fnFileUploadGo("1",  obj.filelist[0].filename);
+};
+
+this.fileup1_onerror = function(obj:nexacro.FileUpload,e:nexacro.FileUploadErrorEventInfo) {
+
+};
+
+this.fnFileUploadGo = function(str, filenm)
+{
+	this.dsFileUp2.clearData();
+	this.dsFileUp2.addRow();
+	this.dsFileUp2.setColumn(0, "NO_ASSET", this.dsSearch.getColumn(0, "NO_ASSET"));
+	this.dsFileUp2.setColumn(0, "NO_KEY", this.dsSearch.getColumn(0, "NO_KEY"));
+	this.dsFileUp2.setColumn(0, "IMG_NM", filenm);
+	
+	var strSvcId    = "update";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "fileup=dsFileUp2";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+						
+	if(this.dsDeleteFile.rowcount > 0) {
+		
+		var strSvcId    = "deletefile";
+		var strSvcType  = "file/deleteFile";
+		var inProc		= "";
+		var inData      = "input=dsDeleteFile";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc);   // 통신방법 정의 [생략가능]
+	}
+};
+
+this.divData_btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+
+this.divData_btnDelete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(!this.gfnIsNull(this.dsList.getColumn(0, "DS_ASSET_IMG"))){
+		this.dsDeleteFile.clearData(); 
+		var nrow = this.dsDeleteFile.addRow();	
+		var key = this.dsSearch.getColumn(nrow, "NO_KEY");
+		this.dsDeleteFile.setColumn(nrow, "filepath", this.filepath + key);
+		this.dsDeleteFile.setColumn(nrow, "filename", this.dsList.getColumn(0, "DS_ASSET_IMG"));	
+		
+		this.fnFileUploadGo("1",  "");
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" oncolumnchanged="dsList_oncolumnchanged"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DMBPR_ASSET_OUT_IMG_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">fileup</Col>
+            <Col id="SP">DMBPR_ASSET_OUT_IMG_UPDATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="NO_ASSET" type="STRING" size="256"/>
+          <Column id="DS_ASSET" type="STRING" size="256"/>
+          <Column id="NO_KEY" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="NO_ASSET"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDeleteFile">
+        <ColumnInfo>
+          <Column id="filepath" type="STRING" size="256"/>
+          <Column id="filename" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsImageFile">
+        <ColumnInfo>
+          <Column id="filepath" type="STRING" size="256"/>
+          <Column id="filename" type="STRING" size="256"/>
+          <Column id="filereturn" type="STRING" size="2000000"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtNO_ASSET" propid="value" datasetid="dsSearch" columnid="NO_ASSET"/>
+      <BindItem id="item1" compid="divSearch.form.edtNO_KEY" propid="value" datasetid="dsSearch" columnid="NO_KEY"/>
+      <BindItem id="item2" compid="divSearch.form.edtDS_ASSET" propid="value" datasetid="dsSearch" columnid="DS_ASSET"/>
+    </Bind>
+  </Form>
+</FDL>

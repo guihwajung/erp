@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1400" height="720" titletext="자동전표 코드등록" onload="form_onload">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="78.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="1" text="회계년월" left="0.0" top="10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYM_ACCOUNT" taborder="6" left="sta00:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalMM.xfdl"/>
+              <Static id="sta01" taborder="0" text="현장코드" left="0.0" top="sta00:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCD_SITE" CodeFindName="DHX_CFDHM_SITE1" CDTextWidth="80" taborder="2" left="sta01:0.0" top="sta00:10.0" width="350" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="sta02" taborder="1" text="용지구분" left="ccfCD_SITE:0.0" top="sta00:10.0" width="92.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfTY_GUBUN" CodeFindName="DHX_CFAREAGUBUN" CDTextWidth="60" taborder="2" left="sta02:0.0" top="sta00:10.0" width="350" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" right="0" bottom="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsSearch.setColumn(0, "YM_ACCOUNT", this.gfnGetDate().substr(0, 6));
+};
+
+this.fnSetButton = function() {
+}
+
+this.fnSetExtendButton = function() {
+	this.btnDataCreate = this.gfnFormButtonAdd("DataCreate", "fnDataCreate");
+};
+
+this.fnSetVariable = function() {
+	this.dxGrid = this.divData.form.objGrid;
+	
+	this.ctclYM_ACCOUNT = this.divSearch.form.ctclYM_ACCOUNT;
+	this.ccfCD_SITE = this.divSearch.form.ccfCD_SITE;
+	this.ccfTY_GUBUN = this.divSearch.form.ccfTY_GUBUN;
+};
+
+this.fnSetEvent = function() {
+	this.gfnGridInit(this.dxGrid, this.dsList, "DH", "DHM_BUNCOSTMNG");
+	
+	this.ccfCD_SITE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+}
+
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_SITE", "string");
+	this.dsSelect.addColumn("TY_GUBUN", "string");
+	this.dsSelect.addColumn("YM_ACCOUNT", "string");
+
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("CD_DEPT_ACNT", "string");
+	this.dsInsert.addColumn("TY_GUBUN", "string");
+	this.dsInsert.addColumn("YM_ACCOUNT", "string");
+	this.dsInsert.addColumn("ID_TRANS", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+this.fnSelect = function() {
+	if (!this.fnSelectValidation()) return;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_SITE", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsSelect.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+	this.dsSelect.setColumn(0, "YM_ACCOUNT", this.dsSearch.getColumn(0, "YM_ACCOUNT"));
+
+		
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect"; 
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnAdd = function() {
+}
+
+this.fnDel = function() {
+}
+
+this.fnSave = function() {
+}
+
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+this.fnPrint = function() {
+
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidation = function() {
+	var validate = true;
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE"))) {
+		this.fnVaidateCallback = function() {
+			this.ccfCD_SITE.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("현장코드는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+		validate = false;
+	}
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "TY_GUBUN"))) {
+		this.fnVaidateCallback = function() {
+			this.ccfTY_GUBUN.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("용지구분은 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+		validate = false;
+	}
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "YM_ACCOUNT"))) {
+		this.fnVaidateCallback = function() {
+			this.ctclYM_ACCOUNT.form.TextBox.setFocus();
+		}
+		this.gfnAlert("회계년월은 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+		validate = false;
+	}
+	return validate;
+}
+
+this.fnSaveValidate = function() {
+	var strMsg = "";
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "CD_SITE"))) {
+		strMsg += "현장코드는 반드시 입력 하셔야 합니다.\n";
+	}
+	
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "YM_ACCOUNT"))) {
+		strMsg += "회계년월은 반드시 입력 하셔야 합니다.\n";
+	}
+	
+	if (strMsg.length > 0) {
+		this.gfnAlert(strMsg);
+		return false;
+	}
+	
+	return true;
+}
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	if(svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+
+		if (this.dsList.rowcount > 0) {
+			if (this.gfnGetDiffDate(this.dsSearch.getColumn(0, "YM_ACCOUNT")+"01", this.dsList.getColumn(0, "YM_PROG")+"01") > 0) {
+				this.btnDataCreate.set_enable(true);
+			}
+			else {
+				this.btnDataCreate.set_enable(false);
+			}
+		}
+		else {
+			this.btnDataCreate.set_enable(true);
+		}
+	}
+	else if(svcID == "create") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		}
+		else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+ 
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	if (id == "ccfCD_SITE") {
+		dsUserParam.setColumn(nrow, "CD_CORP", this.AuthClient.CD_CORP);
+	}	
+	return true;
+};
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);
+	}
+};
+
+this.fnDataCreate = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if (!this.fnSaveValidate()) return;
+	
+	this.dsInsert.clearData();
+	var nrow = this.dsInsert.addRow();
+	this.dsInsert.setColumn(nrow, "CD_DEPT_ACNT", this.dsSearch.getColumn(0, "CD_SITE"));
+	this.dsInsert.setColumn(nrow, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+	this.dsInsert.setColumn(nrow, "YM_ACCOUNT", this.dsSearch.getColumn(0, "YM_ACCOUNT"));
+	this.dsInsert.setColumn(nrow, "ID_TRANS", this.AuthClient.ID_USER);
+
+	var strSvcId    = "create";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DHMPR_BUNCOSTMNG_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DHMPR_BUNCOSTMNG_INSERT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="YM_ACCOUNT" type="STRING" size="256"/>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+          <Column id="DS_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="YM_ACCOUNT"/>
+            <Col id="CD_SITE"/>
+            <Col id="DS_SITE"/>
+            <Col id="TY_GUBUN"/>
+            <Col id="DS_GUBUN"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctclYM_ACCOUNT.form.TextBox" propid="value" datasetid="dsSearch" columnid="YM_ACCOUNT"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_SITE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SITE"/>
+      <BindItem id="item2" compid="divSearch.form.ccfCD_SITE.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_SITE"/>
+      <BindItem id="item3" compid="divSearch.form.ccfTY_GUBUN.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="TY_GUBUN"/>
+      <BindItem id="item4" compid="divSearch.form.ccfTY_GUBUN.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_GUBUN"/>
+    </Bind>
+  </Form>
+</FDL>

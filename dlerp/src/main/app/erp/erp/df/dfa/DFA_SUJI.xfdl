@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="자금수지 실적 집계" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0.0" top="10.0" height="78.0" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="6" text="법인코드" left="0.0" top="10.0" width="105.0" height="24.0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ccfCorpCd" CDTextWidth="70" taborder="0" left="sta00:0.0" top="10.0" width="269" height="24.0" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Static id="sta03" taborder="7" text="귀속부서" left="0.0" top="sta00:10.0" width="105.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfDeptCd" CDTextWidth="90" taborder="4" left="sta03:0.0" top="sta00:10.0" width="269" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staCD_PERIOD" taborder="8" text="기간구분" left="0.0" top="10.0" height="24.0" right="859" cssclass="sta_WF_SchLabelE"/>
+              <Calendar id="calDtFrom" taborder="2" left="staCD_PERIOD:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Static id="staCD_TILDE" taborder="9" text="~" left="calDtFrom:0.0" top="10.0" width="30.0" height="24.0" cssclass="sta_WF_AC"/>
+              <Calendar id="calDtTo" taborder="3" left="staCD_TILDE:0.0" top="10.0" width="105" height="24.0" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <Combo id="cboTyDate" taborder="1" text="자금집행일" left="calDtTo:0.0" top="10.0" width="90" height="24.0" innerdataset="dsTY_DATE" datacolumn="DS_CODE" codecolumn="CD_CODE" index="-1" value="자금집행일" onitemchanged="fnSearchInit"/>
+              <Static id="sta01" taborder="10" text="수지코드" left="0.0" top="sta00:10.0" width="105.0" height="24.0" textDecoration="none" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfSujiCd" CDTextWidth="90" taborder="5" left="sta01:0.0" top="sta00:10.0" width="269" height="24.0" url="cmm::cmmCodeFind.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="1" left="0" top="divSearch:10" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();				
+	this.fnSetCombo();
+
+	var frame = this.getOwnerFrame();	
+	if( !this.gfnIsNull(this.getOwnerFrame().CD_CORP) ) {
+	    this.ccfCorpCd.form.CDTextBox.set_value(this.getOwnerFrame().CD_CORP);				
+ 		this.ccfCorpCd.form.DSTextBox.set_value(this.getOwnerFrame().DS_CORP); 
+	    this.ccfSujiCd.form.CDTextBox.set_value(this.getOwnerFrame().CD_SUJI);				
+ 		this.ccfSujiCd.form.DSTextBox.set_value(this.getOwnerFrame().DS_SUJI); 		
+	    this.ccfDeptCd.form.CDTextBox.set_value(this.getOwnerFrame().CD_DEPT);				
+ 		this.ccfDeptCd.form.DSTextBox.set_value(this.getOwnerFrame().DS_DEPT); 
+		
+		this.cboTyDate.set_value("현금결제일");
+		this.calDtFrom.set_value(this.getOwnerFrame().FR_DATE);
+		this.calDtTo.set_value(this.getOwnerFrame().TO_DATE);
+
+		this.FormBtns.Select.click();
+	}	
+	
+}; 
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnChitSelect = this.gfnFormButtonAdd("btnChitSelect", "fnChitSelect", "전표조회");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+	this.ccfCorpCd = this.divSearch.form.ccfCorpCd;	// 법인코드
+	this.ccfDeptCd = this.divSearch.form.ccfDeptCd;	// 투자부서코드
+	this.ccfSujiCd = this.divSearch.form.ccfSujiCd;	// 수지코드
+	
+	this.cboTyDate = this.divSearch.form.cboTyDate;	// 기간구분
+	this.calDtFrom = this.divSearch.form.calDtFrom;	// 시작일자
+	this.calDtTo = this.divSearch.form.calDtTo;		// 종료일자
+	
+	this.dxGrid = this.divData.form.objGrid;		// 그리드
+	this.grSearch = this.FormInfo.GR_SEARCH;		// 권한?
+	this.idGroup = this.FormInfo.ID_GROUP;			// 그룹코드
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfCorpCd.CodeFindName = "DZX_CFCORP";		// 법인코드
+	this.ccfDeptCd.CodeFindName = "DFX_CFACNTUNIT";	// 투자부서코드
+	this.ccfSujiCd.CodeFindName = "DFX_CFSUJICODE";	// 수지코드
+	
+	this.ccfCorpCd.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfDeptCd.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfSujiCd.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	
+	this.ccfCorpCd.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfDeptCd.AfterCDTextChanged = "fnAfterCDTextChanged";
+	this.ccfSujiCd.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	
+	// 품의일자 15일전부터 현재까지 일단 설정.
+	var vToday = this.gfnGetDate();
+	this.calDtFrom.set_value(this.gfnAddDate(vToday, -15));
+	this.calDtTo.set_value(vToday);	
+	
+	// 그리드
+	this.gfnGridInit(this.dxGrid, this.dsList, "DF", "DFA_SUJI");
+	this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforuserDataSetParam";
+	this.dxGrid.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";	
+	
+	// 법인코드세션
+	if (this.gfnIsNull(this.ccfCorpCd.form.CDTextBox.value)) {
+		this.ccfCorpCd.form.DSTextBox.set_value(this.AuthClient.DS_CORP); 
+		this.ccfCorpCd.form.CDTextBox.set_value(this.AuthClient.CD_CORP);	
+	}		
+	
+	
+	// 권한체크 - 해당부서내역만 조회가능
+	if (nexacro.toNumber(this.grSearch) >= 2) {
+		this.ccfCorpCd.set_enable(false);
+	}	
+	
+	// 법인코드 포커스추가
+	this.ccfCorpCd.form.CDTextBox.setFocus();	
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP", "string");	// 법인코드
+	this.dsSelect.addColumn("TY_DATE", "string");	// 기간구분
+	this.dsSelect.addColumn("DT_FROM", "string");	// 시작일자
+	this.dsSelect.addColumn("DT_TO", "string");		// 종료일자
+	this.dsSelect.addColumn("CD_DEPT", "string");	// 투자부서
+	this.dsSelect.addColumn("CD_SUJI", "string");	// 수지코드
+
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("DT_TRADE", "string");
+	this.dsInsert.addColumn("DT_CASH", "string");
+	this.dsInsert.addColumn("CD_SUJI", "string");
+	this.dsInsert.addColumn("AM_SUJI", "bigdecimal");
+	this.dsInsert.addColumn("CD_CORP", "string");
+	this.dsInsert.addColumn("CD_DEPT", "string");
+	this.dsInsert.addColumn("TY_VENDOR", "string");
+	this.dsInsert.addColumn("CD_VENDOR", "string");
+	this.dsInsert.addColumn("CD_BANK", "string");
+	this.dsInsert.addColumn("NO_ACCOUNT", "string");
+	this.dsInsert.addColumn("RM_BIGO", "string");
+	this.dsInsert.addColumn("TY_TRADE", "string");
+	this.dsInsert.addColumn("ID_USER", "string");
+	
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("DT_TRADE", "string");
+	this.dsUpdate.addColumn("DT_CASH", "string");
+	this.dsUpdate.addColumn("CD_SUJI", "string");
+	this.dsUpdate.addColumn("AM_SUJI", "bigdecimal");
+	this.dsUpdate.addColumn("CD_CORP", "string");
+	this.dsUpdate.addColumn("CD_DEPT", "string");
+	this.dsUpdate.addColumn("TY_VENDOR", "string");
+	this.dsUpdate.addColumn("CD_VENDOR", "string");
+	this.dsUpdate.addColumn("CD_BANK", "string");
+	this.dsUpdate.addColumn("NO_ACCOUNT", "string");
+	this.dsUpdate.addColumn("RM_BIGO", "string");
+	this.dsUpdate.addColumn("TY_TRADE", "string");
+	this.dsUpdate.addColumn("NO_SUJI", "string");
+	this.dsUpdate.addColumn("ID_USER", "string");
+
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("NO_SUJI", "bigdecimal");
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_CORP", this.ccfCorpCd.form.CDTextBox.value);		// 법인코드
+	this.dsSelect.setColumn(0, "TY_DATE", this.cboTyDate.value);					// 기간구분
+	this.dsSelect.setColumn(0, "DT_FROM", this.calDtFrom.value);					// 시작일자
+	this.dsSelect.setColumn(0, "DT_TO", this.calDtTo.value);						// 종료일자
+	this.dsSelect.setColumn(0, "CD_DEPT", this.ccfDeptCd.form.CDTextBox.value);		// 투자부서
+	this.dsSelect.setColumn(0, "CD_SUJI", this.ccfSujiCd.form.CDTextBox.value);		// 수지코드
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	var nRow = this.gfnGridAdd(this.dxGrid);
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	if (!this.gfnGridValidate(this.dxGrid)) return;
+
+	this.dxGrid.updateToDataset();
+	
+	this.dsInsert.clearData();
+	this.dsUpdate.clearData();
+	this.dsDelete.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+			case "I":
+				var nrow = this.dsInsert.addRow();
+				this.dsInsert.setColumn(nrow, "DT_TRADE", this.dsList.getColumn(i, "DT_TRADE"));
+				this.dsInsert.setColumn(nrow, "DT_CASH", this.dsList.getColumn(i, "DT_CASH"));
+				this.dsInsert.setColumn(nrow, "CD_SUJI", this.dsList.getColumn(i, "CD_SUJI"));
+				this.dsInsert.setColumn(nrow, "AM_SUJI", this.dsList.getColumn(i, "AM_SUJI"));
+				this.dsInsert.setColumn(nrow, "CD_CORP", this.dsList.getColumn(i, "CD_CORP"));
+				this.dsInsert.setColumn(nrow, "CD_DEPT", this.dsList.getColumn(i, "CD_DEPT"));
+				this.dsInsert.setColumn(nrow, "TY_VENDOR", this.dsList.getColumn(i, "TY_VENDOR"));
+				this.dsInsert.setColumn(nrow, "CD_VENDOR", this.dsList.getColumn(i, "CD_VENDOR"));
+				this.dsInsert.setColumn(nrow, "CD_BANK", this.dsList.getColumn(i, "CD_BANK"));
+				this.dsInsert.setColumn(nrow, "NO_ACCOUNT", this.dsList.getColumn(i, "NO_ACCOUNT"));
+				this.dsInsert.setColumn(nrow, "RM_BIGO", this.dsList.getColumn(i, "RM_BIGO"));
+				this.dsInsert.setColumn(nrow, "TY_TRADE", this.dsList.getColumn(i, "TY_TRADE"));
+				this.dsInsert.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+				break;
+				
+			case "U":
+				var nrow = this.dsUpdate.addRow();
+				this.dsUpdate.setColumn(nrow, "DT_TRADE", this.dsList.getColumn(i, "DT_TRADE"));
+				this.dsUpdate.setColumn(nrow, "DT_CASH", this.dsList.getColumn(i, "DT_CASH"));
+				this.dsUpdate.setColumn(nrow, "CD_SUJI", this.dsList.getColumn(i, "CD_SUJI"));
+				this.dsUpdate.setColumn(nrow, "AM_SUJI", this.dsList.getColumn(i, "AM_SUJI"));
+				this.dsUpdate.setColumn(nrow, "CD_CORP", this.dsList.getColumn(i, "CD_CORP"));
+				this.dsUpdate.setColumn(nrow, "CD_DEPT", this.dsList.getColumn(i, "CD_DEPT"));
+				this.dsUpdate.setColumn(nrow, "TY_VENDOR", this.dsList.getColumn(i, "TY_VENDOR"));
+				this.dsUpdate.setColumn(nrow, "CD_VENDOR", this.dsList.getColumn(i, "CD_VENDOR"));
+				this.dsUpdate.setColumn(nrow, "CD_BANK", this.dsList.getColumn(i, "CD_BANK"));
+				this.dsUpdate.setColumn(nrow, "NO_ACCOUNT", this.dsList.getColumn(i, "NO_ACCOUNT"));
+				this.dsUpdate.setColumn(nrow, "RM_BIGO", this.dsList.getColumn(i, "RM_BIGO"));
+				this.dsUpdate.setColumn(nrow, "TY_TRADE", this.dsList.getColumn(i, "TY_TRADE"));
+				this.dsUpdate.setColumn(nrow, "NO_SUJI", this.dsList.getColumn(i, "NO_SUJI"));
+				this.dsUpdate.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+				break;
+				
+			case "D":
+				var nrow = this.dsDelete.addRow();
+				this.dsDelete.setColumn(nrow, "NO_SUJI", this.dsList.getColumn(i, "NO_SUJI"));
+				break;
+		}
+	}
+	
+	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+	if (this.gfnIsNull(this.ccfCorpCd.form.CDTextBox.text)) {
+		this.gfnAlert("법인코드를 입력 하세요.");
+		this.ccfCorpCd.form.CDTextBox.setFocus();
+		return false;
+	}
+	
+	if (this.gfnIsNull(this.cboTyDate.value)) {
+		this.gfnAlert("기간구분을 선택하세요.");
+		this.cboTyDate.setFocus();
+		return false;
+	}	
+	
+// 	if (this.gfnIsNull(this.calDtFrom.value)) {
+// 		this.gfnAlert("일자(FROM)을 입력 하세요.");
+// 		this.calDtFrom.setFocus();
+// 		return false;
+// 	}
+	
+	if (this.gfnIsNull(this.calDtTo.value)) {
+		this.gfnAlert("일자(TO)을 입력 하세요.");
+		this.calDtTo.setFocus();
+		return false;
+	}	
+	
+	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+	}
+	else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	} else if (svcID == "combo") {
+		this.cboTyDate.set_index(2);
+		if( !this.gfnIsNull(this.getOwnerFrame().CD_CORP) ) {
+			this.cboTyDate.set_value("현금결제일");
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	
+	var cdCorp = this.ccfCorpCd.form.CDTextBox.value;
+	
+	switch(id) {
+	case "ccfCorpCd": // 법인코드
+		dsUserParam.setColumn(nrow, "CD_GROUP", this.idGroup);	
+		break;
+		
+	case "ccfDeptCd": // 투자부서
+		if ( this.gfnIsNull(cdCorp) ) {
+			this.gfnAlert("법인코드를 먼저 입력하세요.");
+			return false;
+		}	
+		//dsUserParam.setColumn(nrow, "CD_GROUP", "");
+		dsUserParam.setColumn(nrow, "CD_GROUP", this.idGroup);
+		dsUserParam.setColumn(nrow, "CD_CORP", this.ccfCorpCd.form.CDTextBox.value);
+		break;
+		
+	case "ccfSujiCd": // 수지코드
+		dsUserParam.setColumn(nrow, "TY_INOUT", "");	
+		dsUserParam.setColumn(nrow, "YN_USE", "Y");
+		break;		
+		
+	default:
+	}	
+	return true;	
+	
+} 
+
+this.fnAfterCDTextChanged = function(id) {
+	switch(id) {
+	
+	case "ccfCorpCd": // 법인코드
+		this.gfnGridClear(this.dxGrid);
+		this.ccfAcntUnitCd.form.DSTextBox.set_value("");
+		this.ccfAcntUnitCd.form.CDTextBox.set_value("");
+		break;
+		
+	case "ccfDeptCd": // 품의부서코드
+		this.gfnGridClear(this.dxGrid);
+		break;
+
+	case "ccfSujiCd": // 수지코드
+		this.gfnGridClear(this.dxGrid);
+		break;
+	default:
+	}	
+	return true;
+} 
+
+ 
+this.fnGrid_BeforuserDataSetParam = function(id, dsUserParam, nrow) {
+	var cdCorp = this.dsList.getColumn(this.dsList.rowposition, "CD_CORP");
+	
+	// 법인코드
+	if (id == "DZX_CFCORP") {
+		dsUserParam.setColumn(nrow, "CD_GROUP", this.idGroup);	
+	} 
+	
+	// 계좌
+	if (id == "DFX_CFACCOUNTNO_SUJI") {
+		if ( this.gfnIsNull(cdCorp) ) {
+			dsUserParam.setColumn(nrow, "CD_CORP", "");	
+		} else {
+			dsUserParam.setColumn(nrow, "CD_CORP", cdCorp);		
+		}		
+	}
+	
+	// todo parameter 확인	
+	// 수지
+	if (id == "DFX_CFSUJICODE") {
+		dsUserParam.setColumn(nrow, "TY_INOUT", "");	
+		dsUserParam.setColumn(nrow, "YN_USE", "Y");		
+	}
+	
+	// 부서
+	if (id == "DFX_CFACNTUNIT") {
+		if ( !this.gfnIsNull(cdCorp) ) {
+			dsUserParam.setColumn(nrow, "CD_GROUP", this.idGroup);
+			dsUserParam.setColumn(nrow, "CD_CORP", cdCorp);				
+		} else {
+			this.gfnAlert("법인코드를 먼저 입력하세요.");
+			return false;		
+		}		
+	}
+	
+	// 거래처	
+	if (id == "DFX_CFVENDOR") {
+// 		var cdVendor = this.dsList.getColumn(this.dsList.rowposition, "CD_VENDOR");
+// 		var dsVendor = this.dsList.getColumn(this.dsList.rowposition, "DS_VENDOR");
+// 		trace("nrow :: " + nrow);
+// 		trace("this.dsList.rowposition :: " + this.dsList.rowposition);
+// 		trace("cdCorp :: " + cdCorp);
+// 		trace("cdCorp :: " + this.dsList.getColumn(this.dsList.rowposition, "CD_CORP"));
+		//trace("this.dsList :: " + this.dsList.saveXML());
+		if ( this.gfnIsNull(cdCorp) ) {
+			this.gfnAlert("법인코드를 먼저 입력하세요.");
+			return false;
+		}		
+		
+		// 2019.08.19 거래처 전체조회시 오류발생으로 인하여 거래처 필수입력으로 변경.
+// 		if ( this.gfnIsNull(this.gfnTrim(cdVendor)) && this.gfnIsNull(this.gfnTrim(cdVendor)) ) {
+// 			this.gfnAlert("거래처의 검색조건(코드/명칭)을 입력하세요.");
+// 			return false;
+// 		}
+		
+		dsUserParam.setColumn(nrow, "TY_VENDOR1", "전체");
+		dsUserParam.setColumn(nrow, "CD_CORP", cdCorp);	
+		//dsUserParam.setColumn(nrow, "VALUE",  this.gfnIsNull(cdVendor) ? true == dsVendor : cdVendor );
+	}
+	
+	return true;
+}
+
+this.fnGrid_AfterCDTextChanged = function(id, codeFindData) {
+		
+	switch(id) {
+	case "DZX_CFCORP": // 법인코드
+		break;
+		
+	case "DFX_CFACCOUNTNO_SUJI": // 계좌
+		//trace(this.dsList.saveXML());
+		break;
+		
+	case "DFX_CFSUJICODE": // 수지
+		break;
+		
+	case "DFX_CFACNTUNIT": // 부서
+		break;
+		
+	case "DFX_CFVENDOR": // 거래처	
+		break;	
+		
+	default:
+	}	
+	return true;
+};
+ 
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+	}
+};
+
+this.fnSetCombo = function() {
+	
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DF");
+	this.dsCombo.setColumn(0, "CD_TYPE", "A3");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_DATE=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+// 전표조회
+this.fnChitSelect = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(!this.gfnGridIsRow(this.dxGrid)) return;
+	
+	var noSlip = this.dsList.getColumn(this.dsList.rowposition, "NO_SLIP");
+	
+	if ( this.gfnIsNull(noSlip) ) {
+		this.gfnAlert("발행된 전표가 없습니다.");
+		return false;
+	}
+	
+	var param = {};
+	param.CD_TRADE = noSlip;
+	param.IUD_FLAG = "S";
+	param.strYN_JUNDO_START = "";
+	
+	this.gfnFormOpen("DHA", "DHA_ISSUESLIP", "fnPopCallBack", param);
+}
+
+
+this.fnPopCallBack = function(svcID, val) {
+	//if (val != false) {
+		//var json = JSON.parse(val);
+		
+		if (svcID.indexOf("DHA_ISSUESLIP") > -1) {
+			//this.FormBtns.Select.click();
+		}
+	//}
+}
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DFAPR_SUJI_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DFAPR_SUJI_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DFAPR_SUJI_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DFAPR_SUJI_DELETE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_DATE"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.calDtFrom" propid="value" datasetid="dsSearch" columnid="DT_FROM"/>
+      <BindItem id="item1" compid="divSearch.form.calDtTo" propid="value" datasetid="dsSearch" columnid="DT_TO"/>
+    </Bind>
+  </Form>
+</FDL>

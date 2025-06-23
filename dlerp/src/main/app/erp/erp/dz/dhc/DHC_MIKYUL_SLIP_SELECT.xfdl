@@ -1,0 +1,398 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="반제현황" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="1" left="0" top="0" height="46" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Static cssclass="sta_WF_SchLabel" id="staCD_CORP" taborder="0" text="법인코드" left="0" top="10" width="92" height="24"/>
+              <Div id="ccfCD_CORP" CDTextWidth="70" taborder="1" left="staCD_CORP:0" top="10" width="259" height="24" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DZX_CFCORP_STD" AutoSet="false" enable="true"/>
+              <Static id="staCD_SLIP" taborder="3" text="미결번호" left="ccfCD_CORP:0" top="10" width="92" height="24" cssclass="sta_WF_SchLabel"/>
+              <Edit id="ctxtCD_SLIP" taborder="2" left="staCD_SLIP:0" top="10" width="170" height="24" readonly="true" cssclass="borderBG"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:-3" bottom="0" right="0" cssclass="div_DATA_Bg" ondragmove="divData_ondragmove">
+          <Layouts>
+            <Layout>
+              <Div id="divSplitter" taborder="1" left="34.38%" top="17.30%" width="400" height="23" cursor="ns-resize" ondrag="divData_divSplitter_ondrag" edge="url('theme://images/slt_WF_SplitterH.png') 2px 0px"/>
+              <Div id="divDataBottom" taborder="0" left="0" top="divSplitter:0" bottom="0" right="0">
+                <Layouts>
+                  <Layout>
+                    <Static id="staGrdTitleSub" taborder="0" text="반제정보" left="0" top="-10" right="0" height="35" cssclass="sta_TITLE_Bg"/>
+                    <Grid id="objGridSub" sub="true" taborder="1" left="0" top="staGrdTitleSub:0" bottom="0" right="0" autofittype="col"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divDataTop" taborder="2" left="0" top="0" bottom="divSplitter:6" right="0">
+                <Layouts>
+                  <Layout>
+                    <Static id="staGrdTitle" taborder="0" text="미결정보" left="0" top="0" width="100%" height="35" cssclass="sta_TITLE_Bg"/>
+                    <Grid id="objGrid" taborder="0" left="0" top="staGrdTitle:0" bottom="1" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsSearch.setColumn(0, "CD_CORP", this.getOwnerFrame().CD_CORP);		//법인코드
+	this.dsSearch.setColumn(0, "DS_CORP", this.getOwnerFrame().DS_CORP);		//법인코드명
+	this.dsSearch.setColumn(0, "CD_SLIP", this.getOwnerFrame().CD_SLIP);		//반제번호
+	
+	this.ccfCD_CORP.form.set_readonly(true); 
+	
+	this.FormBtns.Select.click();
+};
+
+/************************************************************************
+ * 버튼 설정 
+ * 서브버튼 사용 처리. 공통 및 확장버튼 버튼관리화면에서 셋팅.
+ ************************************************************************/
+this.fnSetButton = function() {
+
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnSlipSearch   = this.gfnFormButtonAdd("SlipSearch"  , "fnSlipSearch");		//전표조회
+	this.btnBanjaeSearch = this.gfnFormButtonAdd("BanjaeSearch", "fnBanjaeSearch");		//반제전표조회
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.gfnSetElements();
+	
+	this.staGrdTitle    = this.divData.form.divDataTop.form.staGrdTitle;
+	this.staGrdTitleSub = this.divData.form.divDataBottom.form.staGrdTitleSub;
+	
+	this.dxGrid    = this.divData.form.divDataTop.form.objGrid;
+	this.dxGridSub = this.divData.form.divDataBottom.form.objGridSub;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid , this.dsList, "DH", "DHC_MIKYUL_SLIP_SELECT");
+	
+	this.dxGrid.addEventHandler("oncelldblclick" , this.fnGrid_OnCelldblclick, this);	
+	this.dxGrid.addEventHandler("onselectchanged", this.fnGrid_RowCellChanged, this);
+	
+	this.gfnGridInit(this.dxGridSub, this.dsListSub, "DH", "DHC_BOND_SELECT_DTL");
+	
+	this.dxGridSub.addEventHandler("oncelldblclick" , this.fnGridSub_OnCelldblclick, this);
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_CORP"	 , "string");
+	this.dsSelect.addColumn("CD_SLIP"	 , "string");
+		
+	this.dsSelectSub = new Dataset();
+	this.dsSelectSub.addColumn("CD_CORP"   , "string");
+	this.dsSelectSub.addColumn("CD_SLIP_MI", "string");
+	
+	this.dsResult = new Dataset();
+}
+
+/************************************************************************
+ * 버튼 이벤트
+ ************************************************************************/ 
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	var nRow = this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_CORP"	 , this.dsSearch.getColumn(0, "CD_CORP"));          // 법인코드	
+	this.dsSelect.setColumn(0, "CD_SLIP"	 , this.dsSearch.getColumn(0, "CD_SLIP"));          // 반제번호
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+};
+
+this.fnSelectSub = function() {
+	if (this.dxGrid.rowcount == 0) return false;
+	
+	this.dsListSub.clearData();
+	this.gfnGridBeforeSelect(this.dxGridSub);
+	
+	this.dsSelectSub.clearData();
+	var nRow = this.dsSelectSub.addRow();
+	this.dsSelectSub.setColumn(nRow, "CD_CORP"   , this.dsSearch.getColumn(0, "CD_CORP"));
+	this.dsSelectSub.setColumn(nRow, "CD_SLIP_MI", this.dsList.getColumn(this.dsList.rowposition, "CD_SLIP_MI"));
+
+	var strSvcId    = "selectSub";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "selectSub=dsSelectSub";
+	var outData     = "dsListSub=selectSub0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+};
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	var arrGrid = [], arrSheetName = [];
+	arrGrid[0] = this.dxGrid;
+	arrGrid[1] = this.dxGridSub;
+	
+	arrSheetName[0] = this.staGrdTitle.text;
+	arrSheetName[1] = this.staGrdTitleSub.text;
+	
+	this.gfnExcelExportMulti(arrGrid, arrSheetName, this.FormInfo.NM_FORM);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+
+
+	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	switch(svcID) {
+	case "select" :
+		this.gfnGridAfterSelect(this.dxGrid);
+
+		break;
+	case "selectSub" :
+		this.gfnGridAfterSelect(this.dxGridSub);
+		break;
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGrid_RowCellChanged = function(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo)
+{
+	//필터 로우일 경우 
+	if(this.dsList.getColumn(e.row, this.ucFlag) == "#"){
+		this.gfnGridClear(this.dxGridSub);
+	}
+
+    if ((obj.oldrow > -1 && obj.oldrow == e.row)
+		|| (obj.oldrow == -1 && e.oldrow != e.row)) {
+		this.fnSelectSub();
+		obj.oldrow = -1;
+	}
+}; 
+
+//그리드 더블클릭 이벤트
+this.fnGrid_OnCelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo){
+	var colnm = this.gfnGridGetBindColumnNameByIndex(obj, e.cell);
+
+	this.fnSlipSearch();
+};
+
+//상세그리드 더블클릭 이벤트
+this.fnGridSub_OnCelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo){
+	this.fnBanjaeSearch();
+};
+/************************************************************************
+ * 서브 버튼 이벤트
+ ************************************************************************/
+
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.divData_ondragmove = function(obj:nexacro.Div,e:nexacro.DragEventInfo){
+	if(e.userdata == "splitter") {
+		this.divData.form.divSplitter.set_top(e.clienty);
+		this.divData.form.resetScroll();	
+	}
+};
+
+this.divData_divSplitter_ondrag = function(obj:nexacro.Div,e:nexacro.DragEventInfo){
+	e.set_userdata("splitter");
+	return true;
+};
+
+//전표발행 팝업 콜백
+this.fnIssueSlipCallbak = function (strID, val){
+	if(!this.gfnIsNull(val)){
+		var json = JSON.parse(val);
+	
+		if(json.IsChange){
+			this.FormBtns.Select.click();
+		}
+	}		
+};
+
+//전표조회 
+this.fnSlipSearch = function (obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	if(!this.gfnGridIsRow(this.dxGrid)) return;
+	
+	if(this.gfnIsNull(this.dsList.getColumn(this.dsList.rowposition, "CD_SLIP_MI"))){
+		return;
+	}
+	
+	var param = {};
+	param.CD_CORP  = this.dsSearch.getColumn(0, "CD_CORP");
+	param.CD_TRADE = this.dsList.getColumn(this.dsList.rowposition, "CD_SLIP_MI");
+	
+	this.gfnPopIssueSlip(param);
+}
+
+//반제전표조회 
+this.fnBanjaeSearch = function (obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	if(!this.gfnGridIsRow(this.dxGridSub)) return;
+	
+	if(this.gfnIsNull(this.dsListSub.getColumn(this.dsListSub.rowposition, "CD_SLIP_JU"))){
+		return;
+	}
+	
+	var param = {};
+	param.CD_CORP  = this.dsSearch.getColumn(0, "CD_CORP");	
+	
+	// 환경변수에 법인코드의 전표번호 길이
+	var codeLen = this.gfnGetConfig(this.dsSearch.getColumn(0, "CD_CORP"), "CD_TRADE_LENGTH");
+	
+	param.CD_TRADE = this.dsListSub.getColumn(this.dsListSub.rowposition, "CD_SLIP_JU");
+	//환경변수에 값이 있을경우
+	if(!this.gfnIsNull(codeLen)){		
+		// 길이만큼 잘라서 다시 셋팅
+		param.CD_TRADE = this.gfnLeft(this.dsListSub.getColumn(this.dsListSub.rowposition, "CD_SLIP_JU"), codeLen);
+	}	
+	
+	this.gfnFormOpen("DHA", "DHA_ISSUESLIP_STD", "", param);
+	
+	//this.gfnPopIssueSlip(param);
+}
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DHCPR_MISUMIKYUL_SLIP_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">selectSub</Col>
+            <Col id="SP">DHCPR_MISUMIKYUL_SELECT_DTL</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList"/>
+      <Dataset id="dsListSub"/>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="CD_SLIP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item1" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+      <BindItem id="item12" compid="divSearch.form.ctxtCD_SLIP" propid="value" datasetid="dsSearch" columnid="CD_SLIP"/>
+    </Bind>
+  </Form>
+</FDL>

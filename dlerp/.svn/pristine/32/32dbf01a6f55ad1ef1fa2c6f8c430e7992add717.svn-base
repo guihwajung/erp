@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="360" height="470" maxwidth="390" maxheight="520" titletext="세대주변경" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="1" left="10" top="10" bottom="43" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="세대정보" left="0" top="20" width="100.00%" height="30" textAlign="left" cssclass="sta_TITLE_Bg"/>
+              <Static id="sta01" taborder="33" text="동" left="0" top="staTITLE:10" width="140" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_DONG" taborder="34" left="sta01:-1" top="staTITLE:10" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="edtCD_DONG" taborder="35" left="sta01:4" top="staTITLE:14" height="20" enable="false" width="190" readonly="true"/>
+              <Static id="sta02" taborder="33" text="호" left="0" top="sta01:-1" width="140" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staCD_HO" taborder="34" left="sta02:-1" top="sta01:-1" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="edtCD_HO" taborder="35" left="sta02:4" top="sta01:4" height="20" enable="false" width="190" readonly="true"/>
+              <Static id="sta03" taborder="33" text="세대주명" left="0" top="sta02:-1" width="140" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staPN_SDJ" taborder="34" left="sta03:-1" top="sta02:-1" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="edtPN_SDJ" taborder="35" left="sta03:4" top="sta02:4" height="20" width="190"/>
+              <Static id="sta04" taborder="33" text="전화번호" left="0" top="sta03:-1" width="140" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staNO_TEL_H" taborder="34" left="sta04:-1" top="sta03:-1" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="edtNO_TEL_H" taborder="35" left="sta04:4" top="sta03:4" height="20" width="190"/>
+              <Static id="sta05" taborder="33" text="휴대폰" left="0" top="sta04:-1" width="140" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staNO_TEL_M" taborder="34" left="sta05:-1" top="sta04:-1" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Edit id="edtNO_TEL_M" taborder="35" left="sta05:4" top="sta04:4" height="20" width="190"/>
+              <Static id="sta06" taborder="33" text="입주일" left="0" top="sta05:-1" width="140" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDT_IPJU" taborder="34" left="sta06:-1" top="sta05:-1" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Calendar id="calDT_IPJU" taborder="246" left="sta06:4" top="sta05:4" width="190" height="20" dateformat="yyyy-MM-dd"/>
+              <Static id="sta07" taborder="33" text="입주분류" left="0" top="sta06:-1" width="140" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staDS_GUBUN" taborder="34" left="sta07:-1" top="sta06:-1" width="200" height="30" cssclass="sta_WF_tablebg"/>
+              <Combo id="cboDS_GUBUN" taborder="1" left="sta07:4" top="sta06:4" width="190" height="20" codecolumn="CD_CODE" datacolumn="DS_CODE" innerdataset="dsTY_GUBUN"/>
+              <Static id="sta08" taborder="33" text="특기사항" left="0" top="sta07:-1" width="140" height="90" cssclass="sta_WF_tablelabel"/>
+              <Static id="staRM_SPECIAL" taborder="34" left="sta08:-1" top="sta07:-1" width="200" height="90" cssclass="sta_WF_tablebg"/>
+              <TextArea id="edtRM_SPECIAL" taborder="35" left="sta08:4" top="sta07:4" height="80" width="190"/>
+              <Button id="btnClose" taborder="2" text="확인" left="43.71%" width="45" onclick="btnClose_onclick" uWord="popup.ok" height="23" top="edtRM_SPECIAL:30"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ 
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);
+	// ---------------------------//
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.dsList.setColumn(0, "CD_SITE" , this.getOwnerFrame().CD_SITE);
+	this.dsList.setColumn(0, "CD_CORP" , this.getOwnerFrame().CD_CORP);
+	this.dsList.setColumn(0, "CD_DONG" , this.getOwnerFrame().CD_DONG);
+	this.dsList.setColumn(0, "CD_CUNG" , this.getOwnerFrame().CD_CUNG);
+	this.dsList.setColumn(0, "CD_HO"   , this.getOwnerFrame().CD_HO);
+	this.dsList.setColumn(0, "DS_GUBUN", "계약자");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	
+	this.edtPN_SDJ     = this.divData.form.edtPN_SDJ;
+	this.edtNO_TEL_H   = this.divData.form.edtNO_TEL_H;
+	this.edtNO_TEL_M   = this.divData.form.edtNO_TEL_M;
+	this.calDT_IPJU    = this.divData.form.calDT_IPJU;
+	this.cboDS_GUBUN   = this.divData.form.cboDS_GUBUN;
+	this.edtRM_SPECIAL = this.divData.form.edtRM_SPECIAL;
+
+};
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("CD_SITE"     , "string");		
+	this.dsSave.addColumn("DS_DONG"     , "string");		
+	this.dsSave.addColumn("DS_CUNG"     , "string");		
+	this.dsSave.addColumn("DS_HO"       , "string");
+	this.dsSave.addColumn("PN_SDJ"      , "string");
+	this.dsSave.addColumn("NO_TEL_H"    , "string");
+	this.dsSave.addColumn("NO_TEL_M"	, "string");
+	this.dsSave.addColumn("DT_IPJU"		, "string");
+	this.dsSave.addColumn("DS_GUBUN"	, "string");
+	this.dsSave.addColumn("RM_SPECIAL"	, "string");
+};
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {};
+
+ /*
+  *	저장 버튼
+  */
+this.fnSave = function() {
+	
+	this.dsSave.clearData();
+	this.dsSave.addRow();
+	
+	this.dsSave.setColumn(0, "CD_SITE"   , this.dsList.getColumn(0, "CD_SITE"));
+	this.dsSave.setColumn(0, "DS_DONG"   , this.dsList.getColumn(0, "CD_DONG"));
+	this.dsSave.setColumn(0, "DS_CUNG"   , this.dsList.getColumn(0, "CD_CUNG"));
+	this.dsSave.setColumn(0, "DS_HO"     , this.dsList.getColumn(0, "CD_HO"));
+	this.dsSave.setColumn(0, "PN_SDJ"    , this.dsList.getColumn(0, "PN_SDJ"));
+	this.dsSave.setColumn(0, "NO_TEL_H"  , this.dsList.getColumn(0, "NO_TEL_H"));
+	this.dsSave.setColumn(0, "NO_TEL_M"  , this.dsList.getColumn(0, "NO_TEL_M"));
+	this.dsSave.setColumn(0, "DT_IPJU"   , this.dsList.getColumn(0, "DT_IPJU"));
+	this.dsSave.setColumn(0, "DS_GUBUN"  , this.dsList.getColumn(0, "DS_GUBUN"));
+	this.dsSave.setColumn(0, "RM_SPECIAL", this.dsList.getColumn(0, "RM_SPECIAL"));
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId, 		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); 	// 통신방법 정의 [생략가능]
+};
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSaveValidate = function() {
+
+ 	// 세대주
+	if (this.gfnIsNull(this.dsList.getColumn(0, "PN_SDJ"))) {
+		this.gfnAlert("세대주를 반드시 입력 하셔야 합니다.");
+		this.edtPN_SDJ.setFocus();
+		return false;
+	}
+	
+	// 입주일
+	if (this.gfnIsNull(this.dsList.getColumn(0, "DT_IPJU"))) {
+		this.gfnAlert("입주일을 확인해 주시기 바랍니다.");
+		this.DT_IPJU.setFocus();
+		return false;
+	}
+
+ 	return true;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+
+	if(svcID == "save") {
+		if (errorCode == 0) {
+		    this.parent.parent.opener.divWork.form.fnSelect();
+			this.getParentContext().close(false);
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/**
+  *  확인버튼이벤트
+  */
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnSaveValidate()) return false;
+
+	this.gfnConfirm("등록 하시겠습니까?", function(strId, val) {
+		if(val) this.fnSave();
+	});
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_DONG" type="STRING" size="256"/>
+          <Column id="CD_CUNG" type="STRING" size="256"/>
+          <Column id="CD_HO" type="STRING" size="256"/>
+          <Column id="PN_SDJ" type="STRING" size="256"/>
+          <Column id="NO_TEL_H" type="STRING" size="256"/>
+          <Column id="NO_TEL_M" type="STRING" size="256"/>
+          <Column id="DT_IPJU" type="STRING" size="256"/>
+          <Column id="DS_GUBUN" type="STRING" size="256"/>
+          <Column id="RM_SPECIAL" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_SITE"/>
+            <Col id="CD_CORP"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DBSPR_HOUSEINFOCHANGEDLG_INSERT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_GUBUN">
+        <ColumnInfo>
+          <Column id="CD_CODE" type="STRING" size="256"/>
+          <Column id="DS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CODE">계약자</Col>
+            <Col id="DS_CODE">계약자</Col>
+          </Row>
+          <Row>
+            <Col id="CD_CODE">세대주</Col>
+            <Col id="DS_CODE">세대주</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.edtCD_DONG" propid="value" datasetid="dsList" columnid="CD_DONG"/>
+      <BindItem id="item1" compid="divData.form.edtCD_HO" propid="value" datasetid="dsList" columnid="CD_HO"/>
+      <BindItem id="item2" compid="divData.form.edtPN_SDJ" propid="value" datasetid="dsList" columnid="PN_SDJ"/>
+      <BindItem id="item3" compid="divData.form.edtNO_TEL_H" propid="value" datasetid="dsList" columnid="NO_TEL_H"/>
+      <BindItem id="item4" compid="divData.form.edtNO_TEL_M" propid="value" datasetid="dsList" columnid="NO_TEL_M"/>
+      <BindItem id="item5" compid="divData.form.calDT_IPJU" propid="value" datasetid="dsList" columnid="DT_IPJU"/>
+      <BindItem id="item6" compid="divData.form.cboDS_GUBUN" propid="value" datasetid="dsList" columnid="DS_GUBUN"/>
+      <BindItem id="item7" compid="divData.form.edtRM_SPECIAL" propid="value" datasetid="dsList" columnid="RM_SPECIAL"/>
+    </Bind>
+  </Form>
+</FDL>

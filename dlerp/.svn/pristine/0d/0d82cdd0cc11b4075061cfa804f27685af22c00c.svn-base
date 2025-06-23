@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1280" height="720" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearch" taborder="0" left="0" top="0" height="46" right="0" cssclass="div_SEARCH_Bg">
+          <Layouts>
+            <Layout>
+              <Static cssclass="sta_WF_SchLabelE" id="sta00" taborder="1" text="시스템" left="0" top="10" width="79" height="24"/>
+              <Div id="ccfMODULE" CDTextWidth="60" taborder="0" left="sta00:0" top="10" width="200" height="24" url="cmm::cmmCodeFind.xfdl"/>
+              <Static id="staNM_DB" taborder="2" text="배포DB" top="10.0" width="92" height="24.0" cssclass="sta_WF_SchLabel" right="150"/>
+              <Combo id="cboNM_DB" taborder="3" text="에코원에너지 개발" top="10" width="150" height="24" innerdataset="dsNmDatabase" codecolumn="CD_CODE" datacolumn="DS_CODE" index="2" value="DLECO_DEV" right="10"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="divSearch:20" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	this.fnCombo();
+	
+};
+
+/************************************************************************
+ * 버튼 설정 
+ ************************************************************************/
+this.fnSetButton = function() {
+// 	var id_group = this.FormInfo.ID_GROUP;
+// 	var gr_search = this.FormInfo.GR_SEARCH;
+// 	var cd_role = this.FormInfo.CD_ROLE;
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	//this.btn1 = this.gfnFormButtonAdd("Detail", "fnDetail");
+	this.btnDeploy = this.gfnFormButtonAdd("Deploy", "fnDeploy");
+	this.btnFormButton = this.gfnFormButtonAdd("FormButton", "fnFormButton"); 
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.ccfMODULE = this.divSearch.form.ccfMODULE;
+	this.cboNM_DB = this.divSearch.form.cboNM_DB;
+	this.dxGrid = this.divData.form.objGrid;
+}
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.ccfMODULE.CodeFindName = "DZX_CFMODULE";
+	this.ccfMODULE.AfterCDTextChanged = "codefind_AfterCDTextChanged";
+	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DZ", "DZU_FORMBUTTONMST");
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_MODULE", "string");
+	
+	// 콤보 조회
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	
+	// 배포
+	this.dsDeploy = new Dataset();
+	this.dsDeploy.addColumn("NM_DB", "string");
+	this.dsDeploy.addColumn("ID_FORM", "string");
+	//this.dsDeploy.addColumn("ID_USER", "string");
+
+}
+
+
+this.fnCombo = function() {
+	this.dsCombo.clearData();
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DZ");
+	this.dsCombo.setColumn(0, "CD_TYPE"  , "E1");
+	
+	var strSvcId    = "select_combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "select_combo=dsCombo";
+	var outData     = "dsNmDatabase=select_combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc,	// 통신방법 정의 [생략가능]
+						false);
+	
+	this.dsSearch.setColumn(0, "NM_DB", "DLECO_DEV");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	if (!this.fnSelectValidate()) return false;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	this.dsSelect.setColumn(0, "CD_MODULE", this.ccfMODULE.form.CDTextBox.text);
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+
+}
+
+/*
+ *	저장 버튼
+ */
+this.fnSave = function() {
+	
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * 확장버튼
+ ************************************************************************/
+ 
+ //배포처리 
+this.fnDeploy = function() 
+{	
+	var CD_MODULE = this.dsList.getColumn(this.dsList.rowposition, 'CD_MODULE');
+	var ID_FORM = this.dsList.getColumn(this.dsList.rowposition, 'ID_FORM');
+	var NM_FORM = this.dsList.getColumn(this.dsList.rowposition, 'NM_FORM');
+	
+	if (this.gfnIsNull(CD_MODULE) || this.gfnIsNull(ID_FORM))
+	{
+		this.gfnAlert('배포화면을 선택하세요.');
+		return false;
+	}
+	
+	var msg = "BUTTON '" + NM_FORM + 
+			  "' [" + ID_FORM + "] 정보를 " + this.cboNM_DB.text + "에 배포하시겠습니까?";
+	this.gfnConfirm(msg, function(svcId, val) {
+		if (val) {
+		this.dsDeploy.clearData();
+		
+		var nRow = this.dsDeploy.addRow();
+		this.dsDeploy.setColumn(nRow, 'NM_DB',  this.dsSearch.getColumn(0, "NM_DB"));
+		this.dsDeploy.setColumn(nRow, 'ID_FORM', ID_FORM);
+		//this.dsDeploy.setColumn(nRow, 'ID_USER', this.AuthClient.ID_USER);
+			
+		var strSvcId    = "deploy";
+		var strSvcType  = "select";
+		var inProc		= "_dsProc";
+		var inData      = "deploy=dsDeploy";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+		}
+	});
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSelectValidate = function() {
+ 	var validate = true;
+// 	if (this.gfnIsNull(this.ccfMODULE.form.CDTextBox.text)) {
+// 		validate = false;
+// 		this.fnVaidateCallback = function() {
+// 			this.ccfMODULE.form.CDTextBox.setFocus();
+// 		}
+// 		//this.gfnAlert("서브모듈을 입력하세요.");
+// 	}
+ 	return validate;
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+	}
+	else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID =="deploy") {
+		if (errorCode == 0) {
+		var msg = "BUTTON '" + this.dsList.getColumn(this.dsList.rowposition, 'NM_FORM') + 
+		          "' [" +this.dsList.getColumn(this.dsList.rowposition, 'ID_FORM') +  
+				  "] 정보가 '" + this.cboNM_DB.text + "'에 배포되었습니다.";
+		this.gfnAlert(msg);
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.codefind_AfterCDTextChanged = function(id) {
+	this.fnSearchInit();
+}
+ 
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		this.gfnSetFormStatus(this);
+		this.gfnGridClear(this.dxGrid);
+	}
+};
+
+
+this.fnDetailCallback = function(strId, val) {
+	//this.FormBtns.Select.click();
+};
+
+this.fnFormButton = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var row = this.dsList.rowposition;
+	if( !this.gfnIsNull(this.dsList.getColumn(row, "ID_FORM"))) {	
+		var param = {};
+		param.CD_MODULE = this.dsList.getColumn(row, "CD_MODULE");
+		param.ID_FORM = this.dsList.getColumn(row, "ID_FORM");
+		param.NM_FORM = this.dsList.getColumn(row, "NM_FORM");
+		this.gfnFormOpen("DZB", "DZU_FORMBUTTON", "", param);
+	}
+}
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+		if (e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+		}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DZZPR_FORMBUTTONMST_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select_combo</Col>
+            <Col id="SP">DZXPR_COMBO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">deploy</Col>
+            <Col id="SP">DZZPR_FORMBUTTON_DEPLOY</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsNmDatabase"/>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SYSTEM" type="STRING" size="256"/>
+          <Column id="NM_DB" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfMODULE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_SYSTEM"/>
+      <BindItem id="item2" compid="divSearch.form.cboNM_DB" propid="value" datasetid="dsSearch" columnid="NM_DB"/>
+    </Bind>
+  </Form>
+</FDL>

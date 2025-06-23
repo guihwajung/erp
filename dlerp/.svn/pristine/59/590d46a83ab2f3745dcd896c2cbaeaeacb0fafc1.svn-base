@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="410" height="420" maxwidth="410" maxheight="420" titletext="선급금관리(담당자처리)" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="30" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="선급금담당자처리" left="-10" top="0" width="102.44%" height="30" cssclass="sta_TITLE_Bg" textAlign="center"/>
+              <Static id="staCD_SITE" taborder="1" text="현장코드" left="0" top="staTITLE:10" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staNO_HADOCONT" taborder="2" text="계약번호" left="0" top="staCD_SITE:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staCD_VENDOR" taborder="3" text="업체코드" left="0" top="staNO_HADOCONT:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staNO_SEQ" taborder="4" text="선급금차수" left="0" top="staCD_VENDOR:-1" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staCD_PROCDIV" taborder="5" text="처리구분" left="0" top="staNO_SEQ:-1" width="87" height="30" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staDS_RTNRSN" taborder="6" text="반려사유" left="0" top="staCD_PROCDIV:-1" width="87" height="70" textAlign="right" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg1" taborder="7" left="staCD_SITE:-1" top="staTITLE:10" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg2" taborder="8" left="staNO_HADOCONT:-1" top="staBg1:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg3" taborder="9" left="staCD_VENDOR:-1" top="staBg2:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg4" taborder="10" left="staNO_SEQ:-1" top="staBg3:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg5" taborder="11" left="staCD_PROCDIV:-1" top="staBg4:-1" right="0%" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg6" taborder="12" left="staDS_RTNRSN:-1" top="staBg5:-1" right="0%" height="70" cssclass="sta_WF_tablebg"/>
+              <Edit id="edtCD_SITE" taborder="13" left="staCD_SITE:5" top="staTITLE:15" width="90" height="20" readonly="true"/>
+              <Edit id="edtDS_SITE" taborder="14" left="edtCD_SITE:3" top="staTITLE:15" right="5" height="20" readonly="true"/>
+              <Edit id="edtCD_HADOCONT" taborder="15" left="staNO_HADOCONT:5" top="edtCD_SITE:9" width="90" height="20" readonly="true"/>
+              <Edit id="edtDS_HADOCONT" taborder="16" left="edtCD_HADOCONT:3" top="edtCD_SITE:9" right="5" height="20" readonly="true"/>
+              <Edit id="edtCD_VENDOR" taborder="17" left="staCD_VENDOR:5" top="edtCD_HADOCONT:9" width="90" height="20" readonly="true"/>
+              <Edit id="edtDS_VENDOR" taborder="18" left="edtCD_VENDOR:3" top="edtCD_HADOCONT:9" right="5" height="20" readonly="true"/>
+              <Edit id="edtNO_SEQ" taborder="19" left="staCD_VENDOR:5" top="edtCD_VENDOR:9" width="90" height="20" readonly="true"/>
+              <Combo id="ccboCD_PROCDIV" taborder="20" left="staCD_PROCDIV:5" top="edtNO_SEQ:10" width="120" height="19" innerdataset="dsCD_PROCDIV" codecolumn="CD_CODE" datacolumn="DS_CODE"/>
+              <TextArea id="ctxtDS_RTNRSN" taborder="21" left="staDS_RTNRSN:5" top="ccboCD_PROCDIV:9" right="5" height="60" value=""/>
+              <Button id="btnOk" taborder="22" text="확인" left="35%" top="staDS_RTNRSN:20" width="60" height="20" onclick="divData_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="23" text="취소" left="55%" top="staDS_RTNRSN:20" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.fnSetCombo();
+	
+	// 이전 화면에서 데이터 받기.
+	this.dsData.setColumn(0, "CD_SITE", this.getOwnerFrame().CD_SITE);
+	this.dsData.setColumn(0, "DS_SITE", this.getOwnerFrame().DS_SITE);
+	this.dsData.setColumn(0, "NO_HADOCONT", this.getOwnerFrame().NO_HADOCONT);
+	this.dsData.setColumn(0, "DS_HADOCONT", this.getOwnerFrame().DS_HADOCONT);
+	this.dsData.setColumn(0, "CD_VENDOR", this.getOwnerFrame().CD_VENDOR);
+	this.dsData.setColumn(0, "DS_VENDOR",  this.getOwnerFrame().DS_VENDOR);
+	this.dsData.setColumn(0, "NO_SEQ", this.getOwnerFrame().NO_SEQ);
+	this.dsData.setColumn(0, "CD_PROCDIV", this.getOwnerFrame().CD_PROCDIV);
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+	this.dsFileSelect = new Dataset();
+	this.dsFileSelect.addColumn("TY_WRK", "string");
+	this.dsFileSelect.addColumn("CD_VENDOR", "string");
+	this.dsFileSelect.addColumn("CD_SITE", "string");
+	this.dsFileSelect.addColumn("NO_HADOCONT", "string");
+	this.dsFileSelect.addColumn("NO_SEQ", "string");
+
+	this.dsExecute = new Dataset();
+	this.dsExecute.addColumn("TY_WRK", "string");
+	this.dsExecute.addColumn("ID_USER", "string");
+	this.dsExecute.addColumn("CD_SITE", "string");
+	this.dsExecute.addColumn("NO_HADOCONT", "string");
+	this.dsExecute.addColumn("CD_VENDOR", "string");
+	this.dsExecute.addColumn("NO_SEQ", "string");
+	this.dsExecute.addColumn("CD_DEPT", "string");
+	this.dsExecute.addColumn("NO_SLIP", "string");
+	this.dsExecute.addColumn("DS_RTNRSN", "string");
+	
+	this.dsExec = new Dataset();
+	this.dsExec.addColumn("TY_WRK", "string");
+	this.dsExec.addColumn("ID_USER", "string");
+	this.dsExec.addColumn("CD_SITE", "string");
+	this.dsExec.addColumn("NO_CONT", "string");
+	this.dsExec.addColumn("CD_VENDOR", "string");
+	this.dsExec.addColumn("NO_SEQ", "string");
+	
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("TY_WRK", "string");
+	this.dsSave.addColumn("ID_USER", "string");
+	this.dsSave.addColumn("CD_SITE", "string");
+	this.dsSave.addColumn("NO_CONT", "string");
+	this.dsSave.addColumn("CD_VENDOR", "string");
+	this.dsSave.addColumn("NO_SEQ", "string");
+	this.dsSave.addColumn("ADDFILE_NO", "int");
+	this.dsSave.addColumn("SEQNO", "int");
+	this.dsSave.addColumn("DS_SIGNVAL", "string");
+	this.dsSave.addColumn("DN_CERTORGNAME", "string");
+	this.dsSave.addColumn("DN_SIGNNAME", "string");
+	this.dsSave.addColumn("DS_HASHVAL", "string");
+
+	// 본사서명시 넘긴 dataset에 그대로 담아서 리턴.
+	// DS_HASHVAL, DS_SIGNVAL, DN_CERTORGNAME, DN_SIGNNAME 컬럼은 필수. 
+	this.dsSign = new Dataset();
+	this.dsSign.addColumn("ADDFILE_NO", "int");
+	this.dsSign.addColumn("SEQNO", "int");
+	this.dsSign.addColumn("DS_HASHVAL", "string");
+	this.dsSign.addColumn("DS_SIGNVAL", "string");
+	this.dsSign.addColumn("DN_CERTORGNAME", "string");
+	this.dsSign.addColumn("DN_SIGNNAME", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ 
+ /************************************************************************
+ * 콤보 이벤트
+ ************************************************************************/
+ this.fnSetCombo = function()
+ {
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("CD_SYSTEM", "string");
+	this.dsCombo.addColumn("CD_TYPE", "string");
+	this.dsCombo.addColumn("YN_USE", "string");
+	this.dsCombo.addColumn("YN_MAND", "string");
+	
+	this.dsCombo.addRow();	
+	this.dsCombo.setColumn(0, "CD_SYSTEM", "DW");
+	this.dsCombo.setColumn(0, "CD_TYPE", "45");
+	this.dsCombo.setColumn(0, "YN_USE", "Y");
+	this.dsCombo.setColumn(0, "YN_MAND", "Y");
+	
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsCD_PROCDIV=combo0";	
+	var strArg      = "";
+	var callBackFnc = "fnCallbackCombo";
+
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+ }
+ 
+this.fnCallbackCombo = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "combo") {
+ 		this.divData.form.ccboCD_PROCDIV.set_index(0);
+		//this.dsData.setColumn(0, "NO_DGR", this.getOwnerFrame().NO_DGR);
+	}
+};
+ 
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnApproveValidate = function() {
+	var validate = true;
+	
+	if (this.gfnIsNull(this.dsData.getColumn(0, "DS_RTNRSN")) && this.dsData.getColumn(0, "CD_PROCDIV") == "RTN") {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.divData.form.ctxtDS_RTNRSN.setFocus();
+		}
+		this.gfnAlert("반려사유를 입력하세요.", "fnVaidateCallback");
+	}
+	
+	return validate;
+}
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "approve") {
+		if(errorCode == 0)
+		{
+			if(this.dsData.getColumn(0, "CD_PROCDIV") == "TRANS"){
+				// 처리구분이 '협럭업체송부'인 경우에만 프로세스 처리
+				this.fnExec();
+			}else{
+				this.fnApprove_callback = function()
+				{
+					this.getParentContext().close(true);
+				}
+				
+				this.gfnAlert(this.divData.form.ccboCD_PROCDIV.text + " 정상 처리되었습니다.", "fnApprove_callback");
+			}
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}else if (svcID == "exec") {
+		if(errorCode == 0)
+		{
+			// Global Dataset 사용이므로 반드시 clearData
+			var dsAutoForm = this.objApp.gdsAutoForm;
+			dsAutoForm.clearData();
+			
+			var nrow = dsAutoForm.addRow();
+			dsAutoForm.setColumn(nrow, "TY_WORK", "DW-03");
+			dsAutoForm.setColumn(nrow, "ATTR01", this.dsData.getColumn(0, "CD_SITE"));
+			dsAutoForm.setColumn(nrow, "ATTR02", this.dsData.getColumn(0, "NO_HADOCONT"));
+			dsAutoForm.setColumn(nrow, "ATTR03", this.dsData.getColumn(0, "CD_VENDOR"));
+			dsAutoForm.setColumn(nrow, "ATTR04", this.dsData.getColumn(0, "NO_SEQ"));
+			dsAutoForm.setColumn(nrow, "ATTR05", "");
+			dsAutoForm.setColumn(nrow, "ATTR06", "");
+			dsAutoForm.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+			
+			this.gfnAutoForm("fnAutoFile_Callback");	// callback 생략가능
+			
+			
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}else if (svcID == "fileSelect") {
+		this.fnBonsaSign();
+	}else if(svcID == "sign") {
+		if (errorCode == 0) {
+			this.fnSaveSign();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+	else if(svcID == "save") {
+		if (errorCode == 0) {
+			this.fnExecute();
+			
+			//this.gfnAlert("본사서명이 완료되었습니다.");
+			//this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+
+this.fnAutoFile_Callback = function(svcID, errorCode, errorMsg, strArg) {
+	if(errorCode == 0) {
+		this.fnApprove_callback = function()
+		{
+			this.getParentContext().close(true);
+		}
+		
+		this.gfnAlert(this.divData.form.ccboCD_PROCDIV.text + " 정상 처리되었습니다.", "fnApprove_callback");
+	} else {
+		this.gfnAlert(errorMsg);
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+// 확인 버튼 클릭
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(!this.fnApproveValidate()) return;
+	
+	// 처리구분이 담당자승인 이면 따로 처리 나머진 같음
+	if(this.dsData.getColumn(0, "CD_PROCDIV") == "APRV"){
+		this.fnFileSelect();
+	}else{
+		this.fnExecute();
+	}	
+};
+
+ /*
+  *	처리구분이 담당자승인일때 파일관련 조회
+  */
+this.fnFileSelect = function() {
+	//if (!this.fnSelectValidate()) return false;
+
+	this.dsFileSelect.clearData();
+	this.dsFileSelect.addRow();
+	
+	this.dsFileSelect.setColumn(0, "TY_WRK", "Q");
+	this.dsFileSelect.setColumn(0, "CD_VENDOR", this.dsData.getColumn(0, "CD_VENDOR"));
+	this.dsFileSelect.setColumn(0, "CD_SITE", this.dsData.getColumn(0, "CD_SITE"));
+	this.dsFileSelect.setColumn(0, "NO_HADOCONT", this.dsData.getColumn(0, "NO_HADOCONT"));
+	this.dsFileSelect.setColumn(0, "NO_SEQ", this.dsData.getColumn(0, "NO_SEQ"));
+	
+	var strSvcId    = "fileSelect";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "fileSelect=dsFileSelect";
+	var outData     = "dsFileList=fileSelect0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+// 확인 처리
+this.fnExecute = function() {
+
+	this.dsExecute.clearData();
+	var nrow = this.dsExecute.addRow();
+	
+	this.dsExecute.setColumn(nrow, "TY_WRK", this.dsData.getColumn(0, "CD_PROCDIV"));
+	this.dsExecute.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+	this.dsExecute.setColumn(nrow, "CD_SITE", this.dsData.getColumn(0, "CD_SITE"));
+	this.dsExecute.setColumn(nrow, "NO_HADOCONT", this.dsData.getColumn(0, "NO_HADOCONT"));
+	this.dsExecute.setColumn(nrow, "CD_VENDOR", this.dsData.getColumn(0, "CD_VENDOR"));
+	this.dsExecute.setColumn(nrow, "NO_SEQ", this.dsData.getColumn(0, "NO_SEQ"));
+	this.dsExecute.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+	this.dsExecute.setColumn(nrow, "NO_SLIP", "");
+	this.dsExecute.setColumn(nrow, "DS_RTNRSN", this.dsData.getColumn(0, "DS_RTNRSN"));
+				
+	var strSvcId    = "approve";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "approve_ok=dsExecute";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	서명파일 생성
+ */
+this.fnExec = function() {
+
+	this.dsExec.clearData();
+	
+	this.dsExec.addRow();
+		
+	this.dsExec.setColumn(0, "TY_WRK", "CRT");
+	this.dsExec.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+	this.dsExec.setColumn(0, "CD_SITE", this.dsData.getColumn(0, "CD_SITE"));
+	this.dsExec.setColumn(0, "NO_CONT", this.dsData.getColumn(0, "NO_HADOCONT"));
+	this.dsExec.setColumn(0, "CD_VENDOR", this.dsData.getColumn(0, "CD_VENDOR"));
+	this.dsExec.setColumn(0, "NO_SEQ", this.dsData.getColumn(0, "NO_SEQ"));
+	
+	if (this.dsExec.rowcount == 0) return;
+	
+	var strSvcId    = "exec";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "exec=dsExec";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnBonsaSign = function() {
+	this.dsSign.clearData();
+	for (var i = 0; i < this.dsFileList.rowcount; i++) {
+		var nrow = this.dsSign.addRow();
+		this.dsSign.setColumn(nrow, "ADDFILE_NO", this.dsFileList.getColumn(i, "ADDFILE_NO"));
+		this.dsSign.setColumn(nrow, "SEQNO", this.dsFileList.getColumn(i, "ADDFILE_SEQNO"));
+		this.dsSign.setColumn(nrow, "DS_HASHVAL", this.dsFileList.getColumn(i, "FILE_HASH"));
+	}
+	
+	
+	if (this.dsSign.rowcount == 0){
+		this.gfnAlert("지급요청제출 시에 만 담당자 승인 하실 수 있습니다.", "fnVaidateCallback");
+		return;
+	}
+		
+	var strSvcId    = "sign";
+	var strSvcType  = "pki/sign";
+	var inProc		= "";
+	var inData      = "input=dsSign";
+	var outData     = "dsSign=output0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnSaveSign = function() {
+	this.dsSave.clearData();
+	for (var i = 0; i < this.dsSign.rowcount; i++) {
+		var nrow = this.dsSave.addRow();
+		this.dsSave.setColumn(nrow, "TY_WRK", "APRV");
+		this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+		this.dsSave.setColumn(nrow, "CD_SITE", this.dsData.getColumn(0, "CD_SITE"));
+		this.dsSave.setColumn(nrow, "NO_CONT", this.dsData.getColumn(0, "NO_CONT"));
+		this.dsSave.setColumn(nrow, "CD_VENDOR", this.dsData.getColumn(0, "CD_VENDOR"));
+		this.dsSave.setColumn(nrow, "NO_SEQ", this.dsData.getColumn(0, "NO_SEQ"));
+		this.dsSave.setColumn(nrow, "ADDFILE_NO", this.dsSign.getColumn(i, "ADDFILE_NO"));
+		this.dsSave.setColumn(nrow, "SEQNO", this.dsSign.getColumn(i, "SEQNO"));
+		this.dsSave.setColumn(nrow, "DS_SIGNVAL", this.dsSign.getColumn(i, "DS_SIGNVAL"));
+		this.dsSave.setColumn(nrow, "DN_CERTORGNAME", this.dsSign.getColumn(i, "DN_CERTORGNAME"));
+		this.dsSave.setColumn(nrow, "DN_SIGNNAME", this.dsSign.getColumn(i, "DN_SIGNNAME"));
+		this.dsSave.setColumn(nrow, "DS_HASHVAL", this.dsSign.getColumn(i, "DS_HASHVAL"));
+	}
+	
+	if (this.dsSave.rowcount == 0) return;
+
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+
+this.dsData_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.oldvalue != e.newvalue)
+	{
+		if(e.columnid == "CD_PROCDIV")
+		{
+			if(e.newvalue == "RTN")
+			{
+				this.divData.form.staDS_RTNRSN.set_height(70);
+				this.divData.form.staBg6.set_height(70);
+				this.divData.form.ctxtDS_RTNRSN.set_height(60);
+				
+				this.divData.form.resetScroll();
+			}
+			else
+			{
+				this.divData.form.staDS_RTNRSN.set_height(0);
+				this.divData.form.staBg6.set_height(0);
+				this.divData.form.ctxtDS_RTNRSN.set_height(0);
+				this.dsData.setColumn(0, "DS_RTNRSN", "");
+				
+				this.divData.form.resetScroll();
+			}
+			
+			
+		}
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">approve_ok</Col>
+            <Col id="SP">DWBPR_PREPAY_EXECUTE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DZXPR_COMBO_COMMON_SAVE_01</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DWBPR_PREPAYFILE_EXECUTE</Col>
+            <Col id="TARGET">exec</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">fileSelect</Col>
+            <Col id="SP">DPGPR_XPREPAYFILE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DWBPR_PREPAYFILE_EXECUTE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData" onvaluechanged="dsData_onvaluechanged">
+        <ColumnInfo>
+          <Column id="CD_SITE" type="STRING" size="256"/>
+          <Column id="DS_SITE" type="STRING" size="256"/>
+          <Column id="NO_HADOCONT" type="STRING" size="256"/>
+          <Column id="DS_HADOCONT" type="STRING" size="256"/>
+          <Column id="CD_VENDOR" type="STRING" size="256"/>
+          <Column id="DS_VENDOR" type="STRING" size="256"/>
+          <Column id="NO_SEQ" type="STRING" size="256"/>
+          <Column id="CD_PROCDIV" type="STRING" size="256"/>
+          <Column id="DS_RTNRSN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCD_PROCDIV">
+        <ColumnInfo>
+          <Column id="NO_DGR" type="STRING" size="256"/>
+          <Column id="DS_DGR" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsFileList">
+        <ColumnInfo>
+          <Column id="ADDFILE_NO" type="STRING" size="256"/>
+          <Column id="ADDFILE_SEQNO" type="STRING" size="256"/>
+          <Column id="FILE_HASH" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.edtCD_SITE" propid="value" datasetid="dsData" columnid="CD_SITE"/>
+      <BindItem id="item1" compid="divData.form.edtDS_SITE" propid="value" datasetid="dsData" columnid="DS_SITE"/>
+      <BindItem id="item2" compid="divData.form.ctclYM_WORK.form.TextBox" propid="value" datasetid="dsData" columnid="YM_WORK"/>
+      <BindItem id="item4" compid="divData.form.edtCD_HADOCONT" propid="value" datasetid="dsData" columnid="NO_HADOCONT"/>
+      <BindItem id="item5" compid="divData.form.edtDS_HADOCONT" propid="value" datasetid="dsData" columnid="DS_HADOCONT"/>
+      <BindItem id="item6" compid="divData.form.edtCD_VENDOR" propid="value" datasetid="dsData" columnid="CD_VENDOR"/>
+      <BindItem id="item7" compid="divData.form.edtDS_VENDOR" propid="value" datasetid="dsData" columnid="DS_VENDOR"/>
+      <BindItem id="item9" compid="divData.form.ccboCD_PROCDIV" propid="value" datasetid="dsData" columnid="CD_PROCDIV"/>
+      <BindItem id="item10" compid="divData.form.edtNO_SEQ" propid="value" datasetid="dsData" columnid="NO_SEQ"/>
+      <BindItem id="item3" compid="divData.form.ctxtDS_RTNRSN" propid="value" datasetid="dsData" columnid="DS_RTNRSN"/>
+    </Bind>
+  </Form>
+</FDL>

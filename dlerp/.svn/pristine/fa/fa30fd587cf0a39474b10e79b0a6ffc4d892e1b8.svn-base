@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="sampleSketch" width="1050" height="818" titletext="sketch" onload="Form_onload">
+    <Layouts>
+      <Layout height="818" mobileorientation="landscape" width="1050">
+        <Sketch id="Sketch00" taborder="0" left="20" top="172" width="580" height="248" text="마우스로 그림을 그려보세요~"/>
+        <Combo id="Combo00" taborder="1" text="black" left="694" top="175" width="178" height="33" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" value="01" onitemchanged="Combo00_onitemchanged">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">01</Col>
+                <Col id="datacolumn">black</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">02</Col>
+                <Col id="datacolumn">blue</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">03</Col>
+                <Col id="datacolumn">red</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">04</Col>
+                <Col id="datacolumn">yellow</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Radio id="Radio00" taborder="2" left="694" top="268" width="289" height="33" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" onitemchanged="Radio00_onitemchanged" index="1">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">01</Col>
+                <Col id="datacolumn">none</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">02</Col>
+                <Col id="datacolumn">stoke</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">03</Col>
+                <Col id="datacolumn">text</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">04</Col>
+                <Col id="datacolumn">erase</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Spin id="Spin00" taborder="3" left="694" top="218" width="178" height="36" min="1" max="20" onchanged="Spin00_onchanged" value="4"/>
+        <Static id="sta00" taborder="4" text="Sketch" left="20" top="17" width="221" height="33"/>
+        <Static id="stc" taborder="5" text="Sketch Component 기능 예시입니다." left="20" top="60" height="80" right="23" background="cornsilk" verticalAlign="top"/>
+        <Static id="Static30" taborder="6" text="색상" left="625" top="177" width="71" height="29" cssclass="sta_WF_Label"/>
+        <Static id="Static00" taborder="7" text="굵기" left="626" top="222" width="71" height="29" cssclass="sta_WF_Label"/>
+        <Static id="Static01" taborder="8" text="edit Mode" left="627" top="270" width="71" height="29" cssclass="sta_WF_Label"/>
+        <Button id="btnSave" taborder="9" text="Image Viewer로 저장" left="246" top="437" width="140" height="50" onclick="btnSave_onclick"/>
+        <ImageViewer id="img00" taborder="10" left="20" top="502" width="580" height="204"/>
+        <Static id="Static02" taborder="11" text="1) Sketch" left="20" top="147" width="218" height="28" font="bold 10pt &quot;맑은 고딕&quot;"/>
+        <Static id="Static03" taborder="12" text="2) Image Viewer" left="21" top="468" width="218" height="28" font="bold 10pt &quot;맑은 고딕&quot;"/>
+        <Button id="btn00" taborder="13" text="btn00" left="631" top="328" width="83" height="35" onclick="btn00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    샘플 > Sketch
+*  @FileName 	sampleSketch.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.11.13
+*  @Desction    Sketch 예제
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.11.13     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this);
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* Combo00_onitemchanged : 콤보아이템변경이벤트
+* @param  : obj		   - [object]Combo
+* @param  : e		   - [string]ItemChangeEventInfo
+* @return : N/A
+* @example : 
+*/
+this.Combo00_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.Sketch00.setBrushColor(obj.text);
+};
+
+/**
+* Spin00_onchanged : 스핀아이템변경이벤트
+* @param  : obj		   - [object]Spin
+* @param  : e		   - [string]ChangeEventInfo
+* @return : N/A
+* @example : 
+*/
+this.Spin00_onchanged = function(obj:nexacro.Spin,e:nexacro.ChangeEventInfo)
+{
+	this.Sketch00.setBrushSize(obj.text);
+};
+
+/**
+* Radio00_onitemchanged : 라디오아이템변경이벤트
+* @param  : obj		   - [object]Radio
+* @param  : e		   - [string]ItemChangeEventInfo
+* @return : N/A
+* @example : 
+*/
+this.Radio00_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	trace(obj.value);
+	trace(obj.text);
+	this.Sketch00.set_editmode(obj.text);
+};
+
+this.btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var imgSkt = this.Sketch00.saveSketch();
+	//trace("imgSkt : " + JSON.stringify(this.Sketch00.value));
+	
+	this.img00.set_image(this.Sketch00.value);
+	// 오류 발생
+	//this.Sketch00.saveSketchToFile("sketchimg.jpg", "JPG");
+};
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.Sketch00.clear();
+};
+
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.div00.form.Sketch00.clear();
+};
+]]></Script>
+  </Form>
+</FDL>

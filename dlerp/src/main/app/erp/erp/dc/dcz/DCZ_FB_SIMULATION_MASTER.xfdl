@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="1280" height="720" titletext="C/F(건축)" onload="DWA_SILHENG_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DCZPR_FB_SIMULATION_MASTER_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">insert</Col>
+            <Col id="SP">DCZPR_FB_SIMULATION_MASTER_INSERT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DCZPR_FB_SIMULATION_MASTER_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">delete</Col>
+            <Col id="SP">DCZPR_FB_SIMULATION_MASTER_DELETE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.DWA_SILHENG_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	this.FormBtns.Select.click();	
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+ 	//this.FormBtns.Add.set_enable(true);
+	//this.FormBtns.Save.set_enable(true);
+ 	//this.FormBtns.Del.set_enable(true);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	this.btnDetail = this.gfnFormButtonAdd("btnDetail", "fnDetail");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	this.gfnGridInit(this.dxGrid, this.dsList, "DC", "DCZ_FB_SIMULATION_MASTER");
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("NO_ID_FB", "string");
+	this.dsSelect.addColumn("DT_FEEDBACK", "string");
+	this.dsSelect.addColumn("CD_LICCOST", "string");
+
+	this.dsInsert = new Dataset();
+	this.dsInsert.addColumn("DS_FEEDBACK", "string");
+	this.dsInsert.addColumn("CD_LICCOST", "string");
+	this.dsInsert.addColumn("DS_LICCOST", "string");
+	this.dsInsert.addColumn("CD_SITE", "string");
+	this.dsInsert.addColumn("DS_SITE", "string");
+	this.dsInsert.addColumn("CD_VENDOR", "string");
+	this.dsInsert.addColumn("DS_VEDNOR", "string");
+	this.dsInsert.addColumn("NO_PO", "string");
+	this.dsInsert.addColumn("DT_BIDSUCCESS", "string");
+
+	this.dsUpdate = new Dataset();
+	this.dsUpdate.addColumn("NO_ID_FB", "bigdecimal");
+	this.dsUpdate.addColumn("DS_FEEDBACK", "string");
+	this.dsUpdate.addColumn("CD_LICCOST", "string");
+	this.dsUpdate.addColumn("DS_LICCOST", "string");
+	this.dsUpdate.addColumn("CD_SITE", "string");
+	this.dsUpdate.addColumn("DS_SITE", "string");
+	this.dsUpdate.addColumn("CD_VENDOR", "string");
+	this.dsUpdate.addColumn("DS_VEDNOR", "string");
+	this.dsUpdate.addColumn("NO_PO", "string");
+	this.dsUpdate.addColumn("DT_BIDSUCCESS", "string");
+
+	this.dsDelete = new Dataset();
+	this.dsDelete.addColumn("NO_ID_FB", "bigdecimal");
+
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+	this.gfnGridBeforeSelect(this.dxGrid);
+	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "NO_ID_FB", "");
+	this.dsSelect.setColumn(0, "DT_FEEDBACK", "");
+	this.dsSelect.setColumn(0, "CD_LICCOST", "");
+		
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	입력 버튼
+ */
+this.fnAdd = function() {
+	this.gfnGridAdd(this.dxGrid);
+	
+}
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	this.gfnGridDel(this.dxGrid);
+}
+
+
+/*
+ *	저장 버튼
+ */ 
+this.fnSave = function() {
+	if (!this.gfnGridValidate(this.dxGrid)) return;
+
+	this.dxGrid.updateToDataset();
+	
+	this.dsInsert.clearData();
+	this.dsUpdate.clearData();
+	this.dsDelete.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+			case "I":
+				var nrow = this.dsInsert.addRow();
+				this.dsInsert.setColumn(nrow, "DS_FEEDBACK", this.dsList.getColumn(i, "DS_FEEDBACK"));
+				this.dsInsert.setColumn(nrow, "CD_LICCOST", this.dsList.getColumn(i, "CD_LICCOST"));
+				this.dsInsert.setColumn(nrow, "DS_LICCOST", this.dsList.getColumn(i, "DS_LICCOST"));
+				this.dsInsert.setColumn(nrow, "CD_SITE", this.dsList.getColumn(i, "CD_SITE"));
+				this.dsInsert.setColumn(nrow, "DS_SITE", this.dsList.getColumn(i, "DS_SITE"));
+				this.dsInsert.setColumn(nrow, "CD_VENDOR", this.dsList.getColumn(i, "CD_VENDOR"));
+				this.dsInsert.setColumn(nrow, "DS_VEDNOR", this.dsList.getColumn(i, "DS_VEDNOR"));
+				this.dsInsert.setColumn(nrow, "NO_PO", this.dsList.getColumn(i, "NO_PO"));
+				this.dsInsert.setColumn(nrow, "DT_BIDSUCCESS", this.dsList.getColumn(i, "DT_BIDSUCCESS"));
+
+				break;
+				
+			case "U":
+				var nrow = this.dsUpdate.addRow();
+				this.dsUpdate.setColumn(nrow, "NO_ID_FB", this.dsList.getColumn(i, "NO_ID_FB"));
+				this.dsUpdate.setColumn(nrow, "DS_FEEDBACK", this.dsList.getColumn(i, "DS_FEEDBACK"));
+				this.dsUpdate.setColumn(nrow, "CD_LICCOST", this.dsList.getColumn(i, "CD_LICCOST"));
+				this.dsUpdate.setColumn(nrow, "DS_LICCOST", this.dsList.getColumn(i, "DS_LICCOST"));
+				this.dsUpdate.setColumn(nrow, "CD_SITE", this.dsList.getColumn(i, "CD_SITE"));
+				this.dsUpdate.setColumn(nrow, "DS_SITE", this.dsList.getColumn(i, "DS_SITE"));
+				this.dsUpdate.setColumn(nrow, "CD_VENDOR", this.dsList.getColumn(i, "CD_VENDOR"));
+				this.dsUpdate.setColumn(nrow, "DS_VEDNOR", this.dsList.getColumn(i, "DS_VEDNOR"));
+				this.dsUpdate.setColumn(nrow, "NO_PO", this.dsList.getColumn(i, "NO_PO"));
+				this.dsUpdate.setColumn(nrow, "DT_BIDSUCCESS", this.dsList.getColumn(i, "DT_BIDSUCCESS"));
+				break;
+				
+			case "D":
+				var nrow = this.dsDelete.addRow();
+				this.dsDelete.setColumn(nrow, "NO_ID_FB", this.dsList.getColumn(i, "NO_ID_FB"));
+				break;
+		}
+	}
+	trace(this.dsInsert.saveXML());
+	trace(this.dsUpdate.saveXML());
+	trace(this.dsDelete.saveXML());
+	
+	if (this.dsInsert.rowcount == 0 && this.dsUpdate.rowcount == 0 && this.dsDelete.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "insert=dsInsert update=dsUpdate delete=dsDelete";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *	엑셀 버튼
+ */
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+/*
+ *	출력 버튼
+ */
+this.fnPrint = function() {
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnValidate = function() {
+
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+
+	if (svcID == "select") {
+		this.gfnGridAfterSelect(this.dxGrid);
+		
+	}else if(svcID == "save") {
+	
+		if (errorCode == 0) {
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+ 
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+	if(e == null || (e.pretext != e.posttext)) {
+		// 폼상태 초기화
+		this.gfnSetFormStatus(this);	
+		this.gfnGridClear(this.dxGrid);
+	}
+};
+
+ this.fnDetail = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	// 선택된 row가 있을 경우에만 팝업을 띄움
+	if (!this.gfnGridIsRow(this.dxGrid)) { return false; }
+	
+	var nRow = this.dsList.rowposition;
+	var param = {};
+
+	param.NO_ID_FB = this.dsList.getColumn(nRow, "NO_ID_FB");
+	param.CD_LICCOST = this.dsList.getColumn(nRow, "CD_LICCOST");
+	param.DS_LICCOST = this.dsList.getColumn(nRow, "DS_LICCOST");
+
+	// 화면 오픈. 
+	// CD_MODULE은 보통 같은 모듈에서 호출하는 경우가 많으니 this.FormInfo.CD_MODULE 사용
+	// 타 모듈 화면 호출시 지정할것.
+	
+	this.gfnFormOpen(this.FormInfo.CD_MODULE, "DCZ_FB_SIMULATION_DETAIL2", "", param);
+}]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ccfCostClass.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_COSTCLASS"/>
+    </Bind>
+  </Form>
+</FDL>

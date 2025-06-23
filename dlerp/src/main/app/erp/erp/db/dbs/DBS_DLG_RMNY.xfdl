@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="500" height="290" onload="form_onload" onbeforeclose="form_onbeforeclose">
+    <Layouts>
+      <Layout height="290" width="500">
+        <Button id="btnCancle" taborder="0" text="취소" left="250" width="45" height="21" onclick="btnCancle_onclick" uWord="popup.cancel" top="256"/>
+        <Button id="btnOk" taborder="1" text="확인" left="202" width="45" onclick="btnOk_onclick" uWord="popup.ok" height="21" top="256"/>
+        <Static id="staTitle" taborder="2" text="하자내용 변경" left="20" top="10" width="470" height="22" cssclass="sta_TITLE_Bg"/>
+        <TextArea id="texRM_NY" taborder="3" left="20" top="40" wordWrap="char" width="470" height="206" maxlength="4000"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ 
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.objApp = this.parent.getForm().gfnGetApplication().gvWorkFrame.frames;
+	
+	this.gfnFormOnLoad(this); //초기화[필수]
+	
+	this.fnSetParameter();
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().CF_RM_NY)) {
+		this.texRM_NY.set_value(this.getOwnerFrame().CF_RM_NY);
+	}
+	
+	this.isUpdate = false;
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+	this.dsUpdate = new Dataset();
+	
+	this.dsUpdate.addColumn("CD_SITE", "string");
+	this.dsUpdate.addColumn("DT_JEOBSU", "string");	
+	this.dsUpdate.addColumn("CD_JOB", "string");
+	this.dsUpdate.addColumn("RM_NY", "string");
+	this.dsUpdate.addColumn("ID_USER", "string");
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	조회 Validate
+ */
+this.fnSaveValidate = function() {
+	var validate = true;
+	if (this.gfnIsNull(this.texRM_NY.value)) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.texRM_NY.setFocus();
+		}
+		this.gfnAlert("하자내용을 입력하세요.", "fnVaidateCallback");
+	}
+	
+	return validate;
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* @ OK버튼이벤트
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	if (!this.fnSaveValidate()) return false;
+	
+	this.dsUpdate.clearData();	
+	var nrow = this.dsUpdate.addRow();
+	this.dsUpdate.setColumn(nrow, "CD_SITE", this.getOwnerFrame().CF_CD_SITE);
+	this.dsUpdate.setColumn(nrow, "DT_JEOBSU", this.getOwnerFrame().CF_DT_JEOBSU);
+	this.dsUpdate.setColumn(nrow, "CD_JOB", this.getOwnerFrame().CF_CD_JOB);
+	this.dsUpdate.setColumn(nrow, "RM_NY", this.texRM_NY.value);
+	this.dsUpdate.setColumn(nrow, "ID_USER", this.getOwnerFrame().ID_USER);
+	
+	var strSvcId    = "update";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "";
+	if( this.getOwnerFrame().CF_TY_CODE == "AS" ) {
+		inData      = "updateAS=dsUpdate";
+	} else if( this.getOwnerFrame().CF_TY_CODE == "BS" ) {
+		inData      = "updateBS=dsUpdate";
+	}
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return;
+	}
+	if (svcID == "update") {
+		// Alert후 실행할 처리
+		this.fnClose = function() {
+			this.isUpdate = true;
+			this.close();
+		}
+		this.gfnAlert("정상적으로 처리되었습니다.", "fnClose");		
+	} 
+}
+
+this.form_onbeforeclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	this.getOwnerFrame()._close_argument = { isUpdate : this.isUpdate };
+};
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">updateAS</Col>
+            <Col id="SP">DBSPR_RMNY_UPDATE</Col>
+          </Row>
+          <Row>
+            <Col id="SP">DBSPR_BS_RMNY_UPDATE</Col>
+            <Col id="TARGET">updateBS</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

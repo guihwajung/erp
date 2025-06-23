@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DAC_MGTVACATION" width="1400" height="720" titletext="근태관리(인사)" onload="form_onload">
+    <Layouts>
+      <Layout stepcount="0">
+        <Div id="divSearch" left="0" top="0" height="110.0" right="0" cssclass="div_SEARCH_Bg" formscrolltype="none" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staYR_BASE" text="년도" left="0.0" top="10.0" width="79.0" height="24.0" taborder="0" cssclass="sta_WF_SchLabelE"/>
+              <Div id="ctclYR_BASE" taborder="1" left="staYR_BASE:0.0" top="10.0" width="80" height="24.0" url="cmm::cmmCalYY.xfdl" enableevent="true" text="2019"/>
+              <Static id="staCD_CORP" taborder="2" text="법인" left="ctclYR_BASE:0.0" top="10.0" width="79.0" height="24.0" onclick="Common_onclick" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfCD_CORP" CDTextWidth="70" taborder="3" left="staCD_CORP:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" onclick="Common_onclick" text=""/>
+              <Static id="staTY_RETIRE" taborder="7" text="구분" left="0.0" top="staYR_BASE:10.0" width="79.0" height="24.0" onclick="Common_onclick" cssclass="sta_WF_SchLabel"/>
+              <Combo id="ccfTY_RETIRE" taborder="8" text="재직자" left="staTY_RETIRE:0.0" top="ctclYR_BASE:10.0" width="80" height="24.0" innerdataset="dsTY_RETIRE" codecolumn="CODE" datacolumn="VALUE" index="1" value="01"/>
+              <Static id="staCD_ORG2" taborder="9" text="부서" left="ccfTY_RETIRE:0.0" top="staYR_BASE:10.0" width="79.0" height="24.0" onclick="Common_onclick" cssclass="sta_WF_SchLabel"/>
+              <Static id="staSABUN" text="사번" left="ccfCD_CORP:0.0" top="10.0" width="79.0" height="24.0" onclick="Common_onclick" taborder="4" cssclass="sta_WF_SchLabel"/>
+              <Div id="ccfID_SABUN" CDTextWidth="70" taborder="5" left="staSABUN:0.0" top="10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" onclick="Common_onclick" text=""/>
+              <Edit id="edtID_PERSON" taborder="6" left="ccfID_SABUN:0.0" top="10.0" width="60" height="24.0" visible="false"/>
+              <Div id="ccfCD_ORG2" CDTextWidth="70" taborder="10" left="staCD_ORG2:0.0" top="staYR_BASE:10.0" width="250" height="24.0" url="cmm::cmmCodeFind.xfdl" onitemchanged="fnSearchInit"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divData" taborder="0" left="0" top="70" right="0" cssclass="div_DATA_Bg" text="" bottom="0">
+          <Layouts>
+            <Layout>
+              <Grid id="objGrid" taborder="0" left="0" top="10" right="0" bottom="0"/>
+              <Radio id="rdoYN_DEP" taborder="1" left="75" top="-34" width="200" height="20" onitemchanged="rdo00_onitemchanged" index="-1" text="" value="" innerdataset="dsYN_DEP" datacolumn="VALUE" codecolumn="CODE" fittocontents="width" direction="vertical"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetVariable();
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetParameter();
+	this.fnSetEvent();
+	
+};
+
+this.fnSetExtendButton = function() {
+
+	this.btnYear2 = this.gfnFormButtonAdd("Year2", "fnYear2", "연차생성"); 
+	this.btnYear3 = this.gfnFormButtonAdd("Year3", "fnYear3", "1년미만연차생성(매일)"); 
+	this.btnYear4 = this.gfnFormButtonAdd("Year4", "fnYear4", "연차관리(1년미만자)"); 
+	this.btnYear1 = this.gfnFormButtonAdd("Year1", "fnYear1", "연차관리"); 
+	this.btnYear = this.gfnFormButtonAdd("Year", "fnYear", "연차일괄업로드"); 
+	
+	this.btnYear1.set_enable(true);
+	this.btnYear2.set_enable(true);
+	this.btnYear3.set_enable(true);
+	this.btnYear4.set_enable(true);
+	this.btnYear.set_enable(true);
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+
+	//조회
+	this.ctclYR_BASE = this.divSearch.form.ctclYR_BASE;
+	this.ccfID_SABUN = this.divSearch.form.ccfID_SABUN;
+	this.ccfTY_RETIRE = this.divSearch.form.ccfTY_RETIRE;
+	this.ccfCD_CORP = this.divSearch.form.ccfCD_CORP;
+	this.ccfCD_ORG2 = this.divSearch.form.ccfCD_ORG2;
+	this.edtID_PERSON = this.divSearch.form.edtID_PERSON;
+		
+	//그리드
+	this.dxGrid = this.divData.form.objGrid;
+};
+
+this.fnSetButton = function() {
+	
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	this.FormBtns.Reset.set_enable(true); 
+}
+
+this.fnSetParameter = function() {
+
+	this.dsSelect = new Dataset();	
+	this.dsSelect.addColumn("ID_PERSON", "string");
+	this.dsSelect.addColumn("YR_BASE", "string");
+	this.dsSelect.addColumn("CD_ORG2", "string");
+	this.dsSelect.addColumn("TY_RETIRE", "string");
+	this.dsSelect.addColumn("CD_CORP", "string");
+	
+	this.dsUpdate = new Dataset();		 
+	this.dsUpdate.addColumn("ID_PERSON", "string");
+	this.dsUpdate.addColumn("CD_CORP", "string");		
+	this.dsUpdate.addColumn("ID_SABUN", "string");			
+	this.dsUpdate.addColumn("YR_BASE", "string");			
+	this.dsUpdate.addColumn("QN_YEARLYBASE", "string");	
+	this.dsUpdate.addColumn("QN_YEARLYSERVICE", "string");
+	this.dsUpdate.addColumn("QN_YEARLYTRANSFER", "string");
+	this.dsUpdate.addColumn("ID_USER", "string");
+
+}
+
+this.fnSetEvent = function() {
+		
+	// 그리드 초기화
+	this.gfnGridInit(this.dxGrid, this.dsList, "DA", "DAC_MGTVACATION");	// DACPR_MGTVACATION_SELECT
+
+	this.ccfID_SABUN.CodeFindName = "DAX_CFBASEINFO_ALL";
+	this.ccfID_SABUN.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfID_SABUN.AfterCDTextChanged = "fnAfterCDTextChanged"; 
+	
+	this.ccfCD_CORP.CodeFindName = "DAX_CFCORP2";
+	this.ccfCD_CORP.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_CORP.AfterCDTextChanged = "fnAfterCDTextChanged";
+	
+	//this.ccfCD_ORG2.CodeFindName = "DAX_CFDEPT_MST1";	// DAX_CFDEPT
+	this.ccfCD_ORG2.CodeFindName = "DAX_CFDEPT";
+	this.ccfCD_ORG2.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.ccfCD_ORG2.AfterCDTextChanged = "fnAfterCDTextChanged";
+
+	this.fnReset();
+	this.FormBtns.Select.click();	
+}
+
+this.fnCallback = function(svcID, errorCode, errorMsg) {
+	
+	this.FormBtns.Reset.set_enable(true); 
+	
+	if(svcID == "select") {		
+		this.gfnGridAfterSelect(this.dxGrid);
+		
+		this.FormBtns.Add.set_enable(false);
+ 		this.FormBtns.Del.set_enable(false);
+		
+	} else if(svcID == "save") {
+	
+		if (errorCode == 0) {
+			this.gfnAlert("작업이 완료되었습니다.");	
+			this.FormBtns.Select.click();
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+		
+	}
+	  
+}
+
+this.fnSelectValidation = function() {
+	
+	if(this.gfnIsNull(this.ctclYR_BASE.form.TextBox.value)) {		
+		this.ctclYR_BASE.form.TextBox.setFocus();
+		this.gfnAlert("년도를 입력해주세요");
+		return false;
+	}
+	
+	return true;
+} 
+
+this.fnSelect = function() {
+
+	if (!this.fnSelectValidation()) return;
+	
+	this.gfnGridBeforeSelect(this.dxGrid);
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow(); 
+	this.dsSelect.setColumn(0, "ID_PERSON", this.dsSearch.getColumn(0, "ID_PERSON"));
+	this.dsSelect.setColumn(0, "YR_BASE", this.dsSearch.getColumn(0, "YR_BASE"));
+	this.dsSelect.setColumn(0, "CD_ORG2", this.dsSearch.getColumn(0, "CD_ORG2"));
+	this.dsSelect.setColumn(0, "TY_RETIRE", this.dsSearch.getColumn(0, "TY_RETIRE"));
+	this.dsSelect.setColumn(0, "CD_CORP", this.dsSearch.getColumn(0, "CD_CORP"));
+		
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect"; 
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnAdd = function() {
+	
+}
+
+this.fnDel = function() {
+	
+}
+
+this.fnSave = function() {
+
+	if (!this.gfnGridValidate(this.dxGrid)) return;
+
+	this.dxGrid.updateToDataset();
+	
+	this.dsUpdate.clearData();
+	
+	for (var i = 0; i < this.dsList.rowcount; i++) {
+		var flag = this.gfnGetFlag(this.dsList, i);
+		switch(flag) {
+			case "U":
+			var nrow = this.dsUpdate.addRow();			
+			this.dsUpdate.setColumn(nrow, "ID_PERSON", this.dsList.getColumn(i, "ID_PERSON"));
+			this.dsUpdate.setColumn(nrow, "CD_CORP", this.dsList.getColumn(i, "CD_CORP") );
+			this.dsUpdate.setColumn(nrow, "ID_SABUN", this.dsList.getColumn(i, "ID_SABUN"));
+			this.dsUpdate.setColumn(nrow, "YR_BASE", this.dsSearch.getColumn(0, "YR_BASE"));
+			this.dsUpdate.setColumn(nrow, "QN_YEARLYBASE", this.dsList.getColumn(i, "QN_YEARLYBASE"));
+			this.dsUpdate.setColumn(nrow, "QN_YEARLYSERVICE", this.dsList.getColumn(i, "QN_YEARLYSERVICE"));
+			this.dsUpdate.setColumn(nrow, "QN_YEARLYTRANSFER", this.dsList.getColumn(i, "QN_YEARLYTRANSFER"));
+			this.dsUpdate.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+			break;
+		}
+	}
+	
+	if (this.dsUpdate.rowcount == 0) return;
+		
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "update=dsUpdate";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+this.fnExcel = function() {
+	this.gfnExcelExport(this.dxGrid);
+}
+
+this.fnPrint = function() {
+
+}
+
+/*
+ *	초기화 버튼
+ */
+this.fnReset = function() { 
+	this.dsSearch.clearData();
+	this.dsSearch.addRow();
+
+	var nowYear = this.gfnGetDate().substring(0,4);
+	this.divSearch.form.ctclYR_BASE.form.TextBox.set_value(nowYear);	
+	this.ccfTY_RETIRE.set_index(1);
+	//this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+	//this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+} 
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+		
+	if(id == "ccfID_SABUN") {
+// 		if(this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {		
+// 			this.ccfCD_CORP.form.CDTextBox.setFocus();
+// 			this.gfnAlert("먼저 법인을 선택해주세요.");
+// 			return false;
+// 		}
+		
+		dsUserParam.setColumn(nrow, "CD_CORP", this.gfnIsNull(this.gfnTrim(this.ccfCD_CORP.form.CDTextBox.value)) ? "%" : this.gfnTrim(this.ccfCD_CORP.form.CDTextBox.value));
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+		dsUserParam.setColumn(nrow, "CD_DEPT", "%");
+		dsUserParam.setColumn(nrow, "YN_CORP", "Y");
+		dsUserParam.setColumn(nrow, "TY_RETIRE", this.ccfTY_RETIRE.value);   // 재직구분
+	}
+		
+	if(id == "ccfCD_CORP") {
+		dsUserParam.setColumn(nrow, "GR_SEARCH", "");
+		dsUserParam.setColumn(nrow, "CD_DEPT", this.gfnTrim(this.ccfCD_ORG2.form.CDTextBox.value));
+	}
+	
+	if(id == "ccfCD_ORG2") {
+	/*
+		dsUserParam.setColumn(nrow, "GR_SEARCH", "");
+		dsUserParam.setColumn(nrow, "CD_DEPT", this.gfnTrim(this.ccfCD_ORG2.form.CDTextBox.value));
+		dsUserParam.setColumn(nrow, "CD_CORP", this.gfnTrim(this.ccfCD_CORP.form.CDTextBox.value));
+		dsUserParam.setColumn(nrow, "YN_CURRENT", "");
+
+		var cd_corp = this.ccfCD_CORP.form.CDTextBox.text;
+		if(this.gfnIsNull(cd_corp)) {
+			this.gfnAlert("법인코드를 먼저 입력하세요.");
+			return false;
+		}
+	*/
+		dsUserParam.setColumn(nrow, "GR_SEARCH",  this.FormInfo.GR_SEARCH);	// 사용자 권한
+		dsUserParam.setColumn(nrow, "CD_DEPT",  this.AuthClient.CD_DEPT);	// 로그인부서
+		dsUserParam.setColumn(nrow, "CD_CORP",  this.ccfCD_CORP.form.CDTextBox.value);	// 조회조건에 있는 소속법인
+		dsUserParam.setColumn(nrow, "YN_CURRENT",  "");
+	}
+	
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arr = codeFindData; 
+	
+	if(id == "ccfCD_CORP"){
+		this.ccfCD_ORG2.form.CDTextBox.set_value("");
+		this.ccfCD_ORG2.form.DSTextBox.set_value("");
+		this.ccfID_SABUN.form.CDTextBox.set_value("");
+		this.ccfID_SABUN.form.DSTextBox.set_value("");
+		this.edtID_PERSON.set_value("");
+	}else if(id == "ccfCD_ORG2" ){
+// 		this.ccfCD_CORP.form.CDTextBox.set_value(arr[0]["CD_CORP"]);
+// 		this.ccfCD_CORP.form.DSTextBox.set_value(arr[0]["DS_CORP"]);
+		this.ccfID_SABUN.form.CDTextBox.set_value("");
+		this.ccfID_SABUN.form.DSTextBox.set_value("");
+		this.edtID_PERSON.set_value("");
+	}else if(id == "ccfID_SABUN") {
+		//this.ccfCD_CORP.form.CDTextBox.set_value(arr[0]["CD_CORP"]);
+		//this.ccfCD_CORP.form.DSTextBox.set_value(arr[0]["DS_CORP"]);
+		//this.ccfCD_ORG2.form.CDTextBox.set_value(arr[0]["CD_DEPT"]);
+		//this.ccfCD_ORG2.form.DSTextBox.set_value(arr[0]["DS_DEPT"]);
+		if(arr.length > 0) {
+			this.edtID_PERSON.set_value(arr[0]["ID_PERSON"]);
+		}else{
+			this.edtID_PERSON.set_value("");
+		}
+	}
+};
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.fnSearchInit = function(obj,e) {
+
+	if(e == null || (e.pretext != e.posttext)) {
+		// 폼상태 초기화
+		this.gfnSetFormStatus(this);	
+		this.gfnGridClear(this.dxGrid);
+	}
+};
+
+this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+
+	if(e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);	// 폼상태 초기화
+		this.gfnGridClear(this.dxGrid);	
+	}
+};
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+this.fnGrid_EnterCell = function(obj:nexacro.Grid, row, cell) {
+	return true; 
+}
+
+this.dsInsertMake = function(nrow, i) {
+
+}
+
+this.dsDeleteMake = function(nrow, i) {
+	
+}
+
+// 연차생성
+this.fnYear2 = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(!this.gfnGridIsRow(this.dxGrid)) {return false;}
+	
+	var param = {};
+	
+	param.rboYear = true;
+	param.rboMonthEnable = false;
+	param.setItems = "Year";
+	param.idPerson = this.dsList.getColumn(this.dsList.rowposition, "ID_PERSON");
+	param.sabun = this.dsList.getColumn(this.dsList.rowposition, "ID_SABUN");
+	param.hname = this.dsList.getColumn(this.dsList.rowposition, "DS_HNAME");
+	param.cdcorp = this.dsSearch.getColumn(0, "CD_CORP");
+	param.dscorp = this.dsSearch.getColumn(0, "DS_CORP");
+	param.text1 = false;
+	param.text2 = false;
+	param.dateformat = "YYYY";
+	param.textCal = this.dsSearch.getColumn(0, "YR_BASE");
+	param.text1Color = "";
+	param.text2Color = "";
+	
+	this.gfnFormOpen("DAC", "DAC_CREATEVACATIONDLG", "fnYearCallback", param);
+}
+
+// 1년미만연차생성(매일)
+this.fnYear3 = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(!this.gfnGridIsRow(this.dxGrid)) {return false;}
+	
+	var param = {};
+	
+	param.rboYear = false;
+	param.rboMonthEnable = true;
+	param.setItems = "Month";
+	param.idPerson = this.dsList.getColumn(this.dsList.rowposition, "ID_PERSON");
+	param.sabun = this.dsList.getColumn(this.dsList.rowposition, "ID_SABUN");
+	param.hname = this.dsList.getColumn(this.dsList.rowposition, "DS_HNAME");
+	param.cdcorp = this.dsSearch.getColumn(0, "CD_CORP");
+	param.dscorp = this.dsSearch.getColumn(0, "DS_CORP");
+	param.text1 = false;
+	param.text2 = false;
+	param.dateformat = "YYYYMM";
+	param.textCal = this.ctclYR_BASE.form.TextBox.value;
+	param.text1Color = "";
+	param.text2Color = "";
+	
+	this.gfnFormOpen("DAC", "DAC_CREATEVACATIONDLG", "fnYearCallback", param);
+}
+
+// 연차관리 (1년미만자)
+this.fnYear4 = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(!this.gfnGridIsRow(this.dxGrid)) {return false;}
+	
+	var param = {};  
+	
+	param.ID_PERSON = this.dsList.getColumn(this.dsList.rowposition, "ID_PERSON");
+	param.ID_SABUN = this.dsList.getColumn(this.dsList.rowposition, "ID_SABUN");
+	param.DS_HNAME = this.dsList.getColumn(this.dsList.rowposition, "DS_HNAME");
+	param.CD_CORP = this.dsList.getColumn(this.dsList.rowposition, "CD_CORP");
+	param.DS_CORP = this.dsList.getColumn(this.dsList.rowposition, "DS_CORP");
+	param.YY_YEAR = this.ctclYR_BASE.form.TextBox.value;
+	
+	this.gfnFormOpen("DAC", "DAC_MONTHLYVACATION", "fnYearCallback", param);
+}
+
+// 연차관리
+this.fnYear1 = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if(!this.gfnGridIsRow(this.dxGrid)) {return false;}
+	
+	var param = {};
+	
+	param.cdcorp = this.dsList.getColumn(this.dsList.rowposition, "CD_CORP"); //this.gfnTrim(this.ccfCD_CORP.form.CDTextBox.value);
+	param.dscorp = this.dsList.getColumn(this.dsList.rowposition, "DS_CORP"); //this.gfnTrim(this.ccfCD_CORP.form.DSTextBox.value);
+	param.idPerson = this.dsList.getColumn(this.dsList.rowposition, "ID_PERSON");
+	param.sabun = this.dsList.getColumn(this.dsList.rowposition, "ID_SABUN");
+	param.hname = this.dsList.getColumn(this.dsList.rowposition, "DS_HNAME");
+	param.textCal = this.ctclYR_BASE.form.TextBox.value;
+	
+	this.gfnFormOpen("DAC", "DAC_MGTYEARLYVACA", "", param);
+}
+
+this.fnYear = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	//연차 일괄업로드 화면 연결
+	if(!this.gfnGridIsRow(this.dxGrid)) {return false;}
+	
+	var param = {};
+	
+	param.textCal = this.ctclYR_BASE.form.TextBox.value;
+	
+	this.gfnFormOpen("DAC", "DAC_VACAANNUAL", "", param);	
+	
+}
+
+this.fnYearCallback = function(strId, val) {
+	this.FormBtns.Select.click();
+};
+
+this.dsData_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	this.FormBtns.Add.set_enable(false);
+ 	this.FormBtns.Del.set_enable(false);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsTable"/>
+      <Dataset id="dsList" onvaluechanged="dsData_onvaluechanged"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DACPR_MGTVACATION_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">update</Col>
+            <Col id="SP">DACPR_YEARLYVACATION_SAVE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_RETIRE">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">%</Col>
+            <Col id="VALUE">전체</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">01</Col>
+            <Col id="VALUE">재직자</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">02</Col>
+            <Col id="VALUE">휴직자</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">04</Col>
+            <Col id="VALUE">퇴직자</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="YR_BASE" type="STRING" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="ID_PERSON" type="STRING" size="256"/>
+          <Column id="TY_RETIRE" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="CD_ORG2" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="DS_ORG2" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="YR_BASE"/>
+            <Col id="ID_SABUN"/>
+            <Col id="ID_PERSON"/>
+            <Col id="TY_RETIRE"/>
+            <Col id="CD_CORP"/>
+            <Col id="CD_ORG2"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.ctclYR_BASE.form.TextBox" propid="value" datasetid="dsSearch" columnid="YR_BASE"/>
+      <BindItem id="item3" compid="divSearch.form.ccfTY_RETIRE" propid="value" datasetid="dsSearch" columnid="TY_RETIRE"/>
+      <BindItem id="item4" compid="divSearch.form.ccfCD_CORP.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_CORP"/>
+      <BindItem id="item1" compid="divSearch.form.ccfID_SABUN.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="ID_SABUN"/>
+      <BindItem id="item6" compid="divSearch.form.ccfCD_CORP.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_CORP"/>
+      <BindItem id="item7" compid="divSearch.form.ccfID_SABUN.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_HNAME"/>
+      <BindItem id="item8" compid="divSearch.form.edtID_PERSON" propid="value" datasetid="dsSearch" columnid="ID_PERSON"/>
+      <BindItem id="item2" compid="divSearch.form.ccfCD_ORG2.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="CD_ORG2"/>
+      <BindItem id="item5" compid="divSearch.form.ccfCD_ORG2.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="DS_ORG2"/>
+    </Bind>
+  </Form>
+</FDL>

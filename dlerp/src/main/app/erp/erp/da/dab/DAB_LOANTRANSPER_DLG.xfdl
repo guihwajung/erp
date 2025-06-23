@@ -1,0 +1,502 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="380" height="260" maxwidth="415" maxheight="340" titletext="사내대출 급여이관" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staTitle" taborder="2" text="사내대출 급여이관" left="0" top="-10" height="35" cssclass="sta_TITLE_Bg" textAlign="left" right="0"/>
+        <Div id="divData" taborder="0" left="0" top="25" cssclass="div_DATA_Bg" right="0" height="185">
+          <Layouts>
+            <Layout>
+              <Static id="staYM_SALARY" taborder="12" text="급여년월" left="0" top="29" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staYmSalaryBg" taborder="13" left="99" top="29" height="30" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Static id="staDT_REPAYMENT" taborder="8" left="0" top="0" width="100" height="30" cssclass="sta_WF_tablelabelTE" text="대출상환일자"/>
+              <Static id="staTyGubunBg" taborder="9" left="99" top="0" height="30" cssclass="sta_WF_tablebgT" right="0"/>
+              <!-- 지급구분 -->
+              <Static id="staTY_SALARY" taborder="4" text="지급구분" left="0" top="staYM_SALARY:-1" width="100" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staTY_SALARY_bg" taborder="7" left="staTY_SALARY:-1" top="staTY_SALARY:-30" height="30" cssclass="sta_WF_tablebg" right="0"/>
+              <Combo id="cboTY_SALARY" taborder="1" left="staTY_SALARY:4" top="staTY_SALARY:-26" width="70" height="20" innerdataset="dsTY_SALARY" datacolumn="DS_CODE" codecolumn="CD_CODE" index="-1" value="1" onitemchanged="fnSearchInit" readonly="false"/>
+              <Combo id="cboSN_SALARY" taborder="2" left="cboTY_SALARY:4" top="staTY_SALARY:-26" width="50" height="20" innerdataset="dsSN_SALARY" datacolumn="VALUE" codecolumn="CODE" index="-1" value="1" onitemchanged="fnSearchInit" readonly="false"/>
+              <Static id="staCD_CORP" taborder="10" text="법인" left="0" top="staTY_SALARY:-1" width="100" height="30" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staCdCorpBg" taborder="11" left="99" top="staCD_CORP:-30" height="30" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Div id="cfCD_CORP" CodeFindName="DAX_CFCORP" CDTextWidth="50" FitToContents="false" taborder="3" left="staCD_CORP:4" top="92" height="20" url="cmm::cmmCodeFind.xfdl" right="4"/>
+              <Static id="staTY_FLAG" taborder="14" text="대상자" left="0" top="staCD_CORP:-1" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staTyFlagBg" taborder="15" left="99" top="staTY_FLAG:-30" height="30" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Radio id="rdoTY_FLAG" taborder="5" left="104" top="staTY_FLAG:-24" height="20" codecolumn="CODE" datacolumn="VALUE" direction="vertical" fittocontents="width" width="231" index="0" value="03" innerdataset="dsTY_FLAG"/>
+              <Static id="staID_SABUN" taborder="16" text="특정사번" left="0" top="145" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <Static id="staIdSabunBg" taborder="17" left="99" top="staID_SABUN:-30" height="30" cssclass="sta_WF_tablebg" textAlign="right" right="0"/>
+              <Div id="cfID_SABUN" CodeFindName="DAX_CFBASEINFO_ALL" CDTextWidth="90" FitToContents="false" taborder="6" left="104" top="staID_SABUN:-25" height="20" url="cmm::cmmCodeFind.xfdl" right="4"/>
+              <Div id="tclYM_SALARY" taborder="0" left="104" top="35" width="90" height="20" url="cmm::cmmCalMM.xfdl"/>
+              <Calendar id="tclDT_REPAYMENT" taborder="18" left="104" top="5" width="95" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtns" height="27" taborder="1" right="140" width="110" top="divData:20">
+          <Layouts>
+            <Layout>
+              <Button id="btnCancle" taborder="0" text="취소" top="0" width="52" height="26" onclick="btnCancle_onclick" right="0"/>
+              <Button id="btnOk" taborder="1" text="확인" left="0" top="0" width="52" height="26" onclick="btnOk_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+
+	this.fnSetVariable();
+ 	this.fnSetEvent();
+ 	this.fnSetParameter();
+	this.fnSetCombo();
+	
+	this.dsList.setColumn(0, "CD_CORP", this.AuthClient.CD_CORP);
+	this.dsList.setColumn(0, "DS_CORP", this.AuthClient.DS_CORP);
+	this.dsList.setColumn(0, "DT_REPAYMENT"   , this.getOwnerFrame().DT_REPAYMENT);	// 대출상환일자  
+	this.dsList.setColumn(0, "TY_FLAG"   , this.getOwnerFrame().TY_FLAG);	// 대상자 ('':전체, S : 특정사번)
+	this.dsList.setColumn(0, "YM_SALARY" , this.getOwnerFrame().DT_REPAYMENT.substr(0,6));	// 급여년월
+	this.dsList.setColumn(0, "TY_SALARY" , "S");	// 지급구분
+	this.dsList.setColumn(0, "SN_SALARY" , "1");	// 지급차수
+	this.dsList.setColumn(0, "ID_SABUN"  , this.getOwnerFrame().ID_SABUN);	// 사번
+	this.dsList.setColumn(0, "DS_HNAME"  , this.getOwnerFrame().DS_HNAME);	// 성명
+	
+	this.cfID_SABUN.form.set_readonly(true);
+	
+    if(this.getOwnerFrame().TY_FLAG == "S"){
+		
+		this.cfID_SABUN.form.set_readonly(false);
+	}else{
+		this.cfID_SABUN.form.set_readonly(true);
+		
+		this.dsList.setColumn(0, "ID_SABUN", "");	
+		this.dsList.setColumn(0, "DS_HNAME", "");	
+	}	
+};
+
+/************************************************************************
+ * 변수 선언  
+ ************************************************************************/
+this.fnSetVariable = function() {
+	//this.rdoSN_GUBUN = this.divData.form.rdoSN_GUBUN; 	// 구분 (1차, 2차)
+
+	this.cfCD_CORP   = this.divData.form.cfCD_CORP;	    //법인코드
+	this.cfID_SABUN  = this.divData.form.cfID_SABUN;	//특정사번	
+	this.tclDT_REPAYMENT  = this.divData.form.tclDT_REPAYMENT; 
+	this.tclYM_SALARY = this.divData.form.tclYM_SALARY;
+	this.cboTY_SALARY = this.divData.form.cboTY_SALARY;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	//코드파인드
+	this.cfCD_CORP.AfterCDTextChanged       = "fnAfterCDTextChanged";
+	this.cfID_SABUN.BeforeUserDataSetParam  = "fnBeforeUserDataSetParam";
+	this.cfID_SABUN.AfterCDTextChanged      = "fnAfterCDTextChanged";	
+	
+	this.dsList.addEventHandler("onvaluechanged", this.dsList_onvaluechanged, this);			
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+
+}
+
+/************************************************************************
+ * 콤보 설정
+ ************************************************************************/
+this.fnSetCombo = function() {
+	this.dsCombo = new Dataset();
+	this.dsCombo.addColumn("TY_SEL", "string");
+	this.dsCombo.addColumn("CD_PREFIX", "string");
+	this.dsCombo.addColumn("CD_UPPREFIX", "string");
+
+	this.dsCombo.addRow();
+	this.dsCombo.setColumn(0, "TY_SEL"     , "P");
+	this.dsCombo.setColumn(0, "CD_PREFIX"  , "GS");
+	this.dsCombo.setColumn(0, "CD_UPPREFIX", "");
+
+	var strSvcId    = "combo";
+	var strSvcType  = "select";
+	var inProc		= "_dsProc";
+	var inData      = "combo=dsCombo";
+	var outData     = "dsTY_SALARY=combo0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+
+	this.gfnTransaction(strSvcId,		// transaction을 구분하기 위한 svc id값
+						strSvcType, 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData, 		// 입력값으로 보낼 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						outData, 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc);	// 통신방법 정의 [생략가능]
+}
+
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//if(!this.gfnSearchValidate(this.divData, this.dsList)) return false;
+	// 확인
+	if (this.gfnNvl(this.dsList.getColumn(0, "DT_REPAYMENT")) =="")
+	{
+		this.gfnAlert("대출상환일자를 입력하세요");
+		this.tclDT_REPAYMENT.setFocus();
+		return;
+	}
+	if (this.gfnNvl(this.dsList.getColumn(0, "YM_SALARY")) =="")
+	{
+		this.gfnAlert("급여지급년월을 입력하세요");
+		this.tclYM_SALARY.setFocus();
+		return;
+	}
+	if (this.gfnNvl(this.dsList.getColumn(0, "TY_SALARY")) =="")
+	{
+		this.gfnAlert("지급구분을 입력하세요");
+		this.cboTY_SALARY.setFocus();
+		return;
+	}
+	if (this.gfnNvl(this.dsList.getColumn(0, "SN_SALARY")) =="")
+	{
+		this.gfnAlert("지급차수를 입력하세요");
+		this.cfID_SABUN.setFocus();
+		return;
+	}
+	if(this.dsList.getColumn(0, "TY_GUBUN") == "S"){
+		if (this.gfnNvl(this.dsList.getColumn(0,"ID_SABUN"), "") =="")
+		{
+			this.gfnAlert("사번을 입력하세요");
+			this.cfID_SABUN.setFocus();
+			return;
+		}
+	}
+	this.gfnConfirm("급여이관 처리 하시겠습니까?", "fnOK_callback" );
+};
+
+this.fnOK_callback = function (svcId, value)
+{
+	if (value)
+	{
+		this.dsTransfer = new Dataset();
+		this.dsTransfer.addColumn("TY_WORK", "string");
+		this.dsTransfer.addColumn("DT_REPAYMENT", "string");
+		this.dsTransfer.addColumn("CD_CORP", "string");
+		this.dsTransfer.addColumn("ID_SABUN", "string");
+		this.dsTransfer.addColumn("YM_SALARY", "string");
+		this.dsTransfer.addColumn("TY_SALARY", "string");
+		this.dsTransfer.addColumn("SN_SALARY", "int");
+		this.dsTransfer.addColumn("ID_USER", "string");
+		this.dsTransfer.clearData();
+		
+		var nrow = this.dsTransfer.addRow(); 
+		this.dsTransfer.setColumn(nrow, "TY_WORK", "T");
+		this.dsTransfer.setColumn(nrow, "DT_REPAYMENT", this.dsList.getColumn(0, "DT_REPAYMENT"));
+		this.dsTransfer.setColumn(nrow, "CD_CORP", this.dsList.getColumn(0, "CD_CORP"));
+		this.dsTransfer.setColumn(nrow, "ID_SABUN", this.dsList.getColumn(0, "ID_SABUN"));
+		this.dsTransfer.setColumn(nrow, "YM_SALARY",this.dsList.getColumn(0, "YM_SALARY"));
+		this.dsTransfer.setColumn(nrow, "TY_SALARY", this.dsList.getColumn(0, "TY_SALARY"));
+		this.dsTransfer.setColumn(nrow, "SN_SALARY", this.dsList.getColumn(0, "SN_SALARY"));
+		this.dsTransfer.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+
+		if (this.dsTransfer.rowcount == 0) return;
+
+		var strSvcId    = "save";
+		var strSvcType  = "savesel";
+		var inProc		= "_dsProc";
+		var inData      = "save=dsTransfer";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+							callBackFnc);   // 통신방법 정의 [생략가능]
+	}
+};
+
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if(svcID == "save") {
+		if (errorCode == 0) {							
+			this.getParentContext().close(true);	
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 취소
+	this.getParentContext().close(false);
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+/*
+ *	저장 Validate
+ */
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+//trace("코드파인드 id :["+id+"] nrow :["+nrow+"]"); 
+	switch(id){
+		case "cfID_SABUN" :	
+			dsUserParam.setColumn(nrow, "CD_CORP", this.dsList.getColumn(0, "CD_CORP"));
+			dsUserParam.setColumn(nrow, "CD_DEPT", this.dsList.getColumn(0, "CD_DEPT"));
+			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+			dsUserParam.setColumn(nrow, "YN_CORP", "N");
+			dsUserParam.setColumn(nrow, "TY_RETIRE", "");
+			
+			break;
+	}
+
+	return true;
+}
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	
+	var arr = codeFindData; 
+
+	switch(id){
+		case "cfCD_CORP" :
+			this.dsList.setColumn(0,"ID_SABUN","");
+			this.dsList.setColumn(0,"DS_HNAME","");
+			
+		break;
+	}	
+};
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	//trace("fnCallback >>>> svcID:["+svcID+"] errorMsg:["+errorMsg+"]");
+	
+	if (errorCode != 0) {
+		this.gfnAlert(errorMsg);
+		return;
+	} 
+	
+	if(svcID == "save") {
+		if (errorCode == 0) {
+			this.fnClose = function() {
+				this.getParentContext().close(true);
+			}
+			this.gfnAlert("작업이 완료되었습니다.", "fnClose");
+		} else {
+			this.gfnAlert(errorMsg);
+		}
+	}	
+	else if(svcID == "combo"){
+ 	}
+	
+}
+
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+
+/*
+ *	조회 조건 변경시 초기화
+ */
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	//trace("dsList_onvaluechanged >>>"+ e.columnid);
+	if(e.oldvalue != e.newvalue) {
+		
+		this.dsList.set_enableevent(false);
+		if(e.columnid == "TY_FLAG"){
+			/*
+				%	전체
+				D	특정부서
+				S	특정사번
+			*/
+			this.dsList.set_enableevent(false);
+			
+			if(e.newvalue == "S"){				
+				this.cfID_SABUN.form.set_readonly(false);
+			}else{				
+				this.cfID_SABUN.form.set_readonly(true);
+			}
+			this.dsList.setColumn(0, "ID_SABUN", "");	
+			this.dsList.setColumn(0, "DS_HNAME", "");	
+			this.dsList.set_enableevent(true);
+		}
+		this.dsList.set_enableevent(true);
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="TY_FLAG" type="STRING" size="256"/>
+          <Column id="ID_SABUN" type="STRING" size="256"/>
+          <Column id="DS_HNAME" type="STRING" size="256"/>
+          <!--
+          <Column id="CD_ALLOW" type="STRING" size="256"/>
+          <Column id="DS_ALLOW" type="STRING" size="256"/>
+-->
+          <Column id="YM_SALARY" type="STRING" size="256"/>
+          <Column id="TY_SALARY" type="STRING" size="256"/>
+          <Column id="SN_SALARY" type="STRING" size="256"/>
+          <Column id="DT_REPAYMENT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_CORP"/>
+            <Col id="DS_CORP"/>
+            <Col id="TY_FLAG"/>
+            <Col id="ID_SABUN"/>
+            <Col id="DS_HNAME"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DABPR_LOANSALARY_TRANSFER</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">combo</Col>
+            <Col id="SP">DAZPR_COMMONCODE_COMBO</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_SALARY">
+        <ColumnInfo>
+          <Column id="TY_SALARY" type="STRING" size="256"/>
+          <Column id="DS_SALARY" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSN_SALARY">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">1</Col>
+            <Col id="VALUE">1</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2</Col>
+            <Col id="VALUE">2</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">3</Col>
+            <Col id="VALUE">3</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">4</Col>
+            <Col id="VALUE">4</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">5</Col>
+            <Col id="VALUE">5</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">6</Col>
+            <Col id="VALUE">6</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">7</Col>
+            <Col id="VALUE">7</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">8</Col>
+            <Col id="VALUE">8</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">9</Col>
+            <Col id="VALUE">9</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">10</Col>
+            <Col id="VALUE">10</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTY_FLAG">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE"/>
+            <Col id="VALUE">전체</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">S</Col>
+            <Col id="VALUE">특정사번</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRequired">
+        <ColumnInfo>
+          <Column id="CD_FIELD" type="STRING" size="256"/>
+          <Column id="DS_FIELD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_FIELD">TY_GUBUN</Col>
+            <Col id="DS_FIELD">구분</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">YY_BASE</Col>
+            <Col id="DS_FIELD">대상년도</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">YM_SALARY</Col>
+            <Col id="DS_FIELD">급여년월</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">TY_SALARY</Col>
+            <Col id="DS_FIELD">지급구분</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">SN_SALARY</Col>
+            <Col id="DS_FIELD">지급차수</Col>
+          </Row>
+          <Row>
+            <Col id="CD_FIELD">CD_CORP</Col>
+            <Col id="DS_FIELD">법인</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item3" compid="divData.form.cfCD_CORP.form.CDTextBox" propid="value" datasetid="dsList" columnid="CD_CORP"/>
+      <BindItem id="item4" compid="divData.form.cfCD_CORP.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_CORP"/>
+      <BindItem id="item5" compid="divData.form.rdoTY_FLAG" propid="value" datasetid="dsList" columnid="TY_FLAG"/>
+      <BindItem id="item8" compid="divData.form.cfID_SABUN.form.CDTextBox" propid="value" datasetid="dsList" columnid="ID_SABUN"/>
+      <BindItem id="item9" compid="divData.form.cfID_SABUN.form.DSTextBox" propid="value" datasetid="dsList" columnid="DS_HNAME"/>
+      <BindItem id="item11" compid="divData.form.cboTY_SALARY" propid="value" datasetid="dsList" columnid="TY_SALARY"/>
+      <BindItem id="item12" compid="divData.form.cboSN_SALARY" propid="value" datasetid="dsList" columnid="SN_SALARY"/>
+      <BindItem id="item0" compid="divData.form.tclDT_REPAYMENT" propid="value" datasetid="dsList" columnid="DT_REPAYMENT"/>
+      <BindItem id="item1" compid="divData.form.tclYM_SALARY.form.TextBox" propid="value" datasetid="dsList" columnid="YM_SALARY"/>
+    </Bind>
+  </Form>
+</FDL>

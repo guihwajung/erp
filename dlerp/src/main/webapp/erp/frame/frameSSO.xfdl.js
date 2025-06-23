@@ -1,0 +1,307 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("frameSSO");
+            this.set_titletext("frameSSO");
+            this.set_background("#f1f1f1");
+            this.set_scrolltype("none");
+            this.set_scrollbartype("none none");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(240,293);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsUserInfo", this);
+            obj._setContents("<ColumnInfo><Column id=\"ID_USER\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HNAME\" type=\"STRING\" size=\"256\"/><Column id=\"CD_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"ID_SABUN\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsDeptList", this);
+            obj._setContents("<ColumnInfo><Column id=\"ID_USER\" type=\"STRING\" size=\"256\"/><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"DS_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"CD_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"DS_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"DT_PWDCHG\" type=\"STRING\" size=\"256\"/><Column id=\"TY_PASSWORD\" type=\"STRING\" size=\"256\"/><Column id=\"MM_PASSWORD\" type=\"STRING\" size=\"256\"/><Column id=\"DT_CURRENT\" type=\"STRING\" size=\"256\"/><Column id=\"YN_INIT\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsLogin", this);
+            obj._setContents("<ColumnInfo><Column id=\"ID_USER\" type=\"STRING\" size=\"256\"/><Column id=\"CD_CORP\" type=\"STRING\" size=\"256\"/><Column id=\"CD_DEPT\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Static("sta00","0","0",null,null,"-10","-10",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("sta_LOGIN_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divLogin","5","5","241","295",null,null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("");
+            obj.set_background("");
+            obj.set_border("1px none transparent");
+            this.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",240,293,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("frameSSO.xfdl", function() {
+        /**
+        *  컨설팅 표준화 작업
+        *  @MenuPath    frame > frameLogin
+        *  @FileName 	frameLogin.xfdl
+        *  @Creator 	consulting
+        *  @CreateDate 	2017.03.09
+        *  @Desction
+        ************** 소스 수정 이력 ***********************************************
+        *  date          		Modifier                Description
+        *******************************************************************************
+        *  2017.03.09     	consulting 	            	최초 생성
+        *  2017.10.17     	consulting       	       	주석 정비
+        *  2018.01.16		consulting			        gfnGetApplication 공통함수 변경
+        *******************************************************************************
+        */
+
+        /************************************************************************************************
+         * FORM 변수 선언 영역
+         ************************************************************************************************/
+        this.objApp 	  = this.gfnGetApplication();
+        this.objMainframe = this.objApp.mainframe;
+
+        /************************************************************************************************
+         * FORM EVENT 영역(onload, onbeforeclose)
+         ************************************************************************************************/
+        this.form_onload = function(obj,e)
+        {
+        	this.objApp.gdsUserInfo.clearData();
+            this.divLogin.form.set_scrollbartype("none");
+        	this.form_onsize();
+
+        	this.fnLogin();
+        };
+
+        /**
+        * form onsize 변경시
+        * @return
+        * @example
+        * @memberOf public
+        */
+        this.form_onsize = function()
+        {
+        };
+
+        /************************************************************************************************
+         * CALLBACK 콜백 처리부분(Transaction, Popup)
+         ************************************************************************************************/
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	switch(svcID)
+        	{
+        		case "login":
+        			this.dsLogin.clearData();
+        			this.objApp.gdsUserInfo.clearData();
+        			this.objApp.gdsDeptInfo.clearData();
+
+        			if (this.dsDeptList.rowcount > 0 ) {
+        				if (this.dsDeptList.rowcount == 1 ) {
+        					var nRow = this.dsLogin.addRow();
+        					this.dsLogin.setColumn(nRow , "ID_USER", this.dsDeptList.getColumn(this.dsDeptList.rowposition, "ID_USER"));
+        					this.dsLogin.setColumn(nRow , "CD_CORP", this.dsDeptList.getColumn(this.dsDeptList.rowposition, "CD_CORP"));
+        					this.dsLogin.setColumn(nRow , "CD_DEPT", this.dsDeptList.getColumn(this.dsDeptList.rowposition, "CD_DEPT"));
+
+        					this.fnUserInfo();
+        				} else {
+        					this.gfnGyumjikOpen(this.dsDeptList);
+        				}
+        				return;
+        			}
+
+        			window.location.href = "/sso/check.do";
+        			break;
+
+        		case "loginInfo":
+        			if (this.dsUserInfo.rowcount == 1 ) {
+        				// 사용자 정보 글로벌데이타셋에 저장
+        				this.objApp.gdsUserInfo.copyData(this.dsUserInfo);
+        				this.objApp.gdsDeptInfo.copyData(this.dsDeptList);
+
+        				var userInfo = this.objApp.gvUserInfo;
+        				for(var i = 0; i < this.dsUserInfo.colinfos.length; i++) {
+        					var col = this.dsUserInfo.colinfos[i].name;
+        					userInfo[col] = this.dsUserInfo.getColumn(0, col);
+        				}
+
+        				this.dsUserInfo.clearData();
+        				this.dsDeptList.clearData();
+
+        				//gloval variable 세팅
+        				nexacro.setEnvironmentVariable("evUserId", this.objApp.gdsUserInfo.getColumn(0,"ID_USER"));
+        				nexacro.setEnvironmentVariable("evUserNm", this.objApp.gdsUserInfo.getColumn(0,"DS_HNAME"));
+
+        				// 프레임 변경
+        				this.fnSetSeprateFrame();
+        				return;
+        			}
+        	}
+        };
+
+        this.gfnGyumjikOpen = function(ds, change) {
+        	if(change == true) {
+        		this.dsLogin.clearData();
+        		this.dsDeptList.copyData(ds);
+        	}
+        	var sTitle = "부서선택";
+        	var oArg = {deptList:ds};
+        	var oOption = {title:sTitle};	//top, left를 지정하지 않으면 가운데정렬 //"top=20,left=370"
+
+        	this.gfnOpenPopup("pop_gyumjik","cmm::cmmGyumjik.xfdl",oArg,"fnGyumjikCallback",oOption);
+        };
+
+        this.fnGyumjikCallback = function(strId, val) {
+        	if (val != null) {
+
+        		for(var i = this.objApp.gvWorkFrame.frames.length - 1; i >= 0; i--) {
+        			this.objApp.gvMdiFrame.form.fnTabOnClose(this.objApp.gvWorkFrame.frames[i].name);
+        		}
+
+        		var json = JSON.parse(val);
+        		var nRow = this.dsLogin.addRow();
+        		this.dsLogin.setColumn(nRow , "ID_USER", json.ID_USER);
+        		this.dsLogin.setColumn(nRow , "CD_CORP", json.CD_CORP);
+        		this.dsLogin.setColumn(nRow , "CD_DEPT", json.CD_DEPT);
+
+        		this.fnUserInfo();
+        	}
+        };
+
+        /************************************************************************************************
+         * CRUD 및 TRANSACTION 서비스 호출 처리
+         ************************************************************************************************/
+
+        /************************************************************************************************
+         * 사용자 FUNCTION 영역
+         ************************************************************************************************/
+        /**
+         * 로그인 transaction
+         * @param {string} reLoginYn
+         * @return
+         * @example
+         *
+         * @memberOf
+         */
+        this.fnLogin = function()
+        {
+        	var strSvcId    = "login";
+        	var strSvcType  = "/sso/info";
+
+        	var inProc		= "";
+        	var inData      = "";
+        	var outData     = "dsDeptList=output0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// trabsaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        this.fnUserInfo = function(rowIndex)
+        {
+        	var strSvcId    = "loginInfo";
+        	var strSvcType  = "loginInfo";
+
+        	var inProc		= "";
+        	var inData      = "dsLogin=dsLogin";
+        	var outData     = "dsUserInfo=output0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// trabsaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        };
+
+        /**
+        * 로그인 성공시 처리 프레임 변경 등...
+        * @return
+        * @example
+        * @memberOf
+        */
+        this.fnSetSeprateFrame = function()
+        {
+        	if(nexacro.getEnvironmentVariable("evRunMode") == "2") {
+        		if (this.objApp.mainframe.width < this.objApp.gvMaxWidth) {
+        			this.objApp.mainframe.set_width(this.objApp.gvMaxWidth);
+        		}
+        	}
+
+        	var url;
+        	if(system.navigatorname == "nexacro") {
+        		url = nexacro.getApplication().xadl;
+        	} else {
+        		url = window.location.href;
+        	}
+        	var param = this.gfnGetUrlParam(url);
+        	if (param.ID_FORM != null) {
+        		// 외부에서 화면으로 직접 링크
+        		this.objApp.gvVFrameSet.set_separatesize("0,*,0");
+        		this.objApp.gvHFrame.set_separatesize("0,*");
+        		this.objApp.gvVFrameSet1.set_separatesize("0,0,*,0");
+        		this.objApp.gvMainFrame.set_formurl("frame::frameWorkDirect.xfdl");
+
+        	} else {
+        		this.objApp.gvVFrameSet.set_separatesize("0,*,0");
+        	}
+
+        	// topframe argument setting
+        	this.objApp.gvTopFrame.form.fnLoad();
+        	this.objApp.gvTopFrame.form.fnSetName();
+
+        	this.objApp.gvLeftFrame.form.fnSetModule();
+
+        };
+
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.addEventHandler("onsize",this.form_onsize,this);
+        };
+        this.loadIncludeScript("frameSSO.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

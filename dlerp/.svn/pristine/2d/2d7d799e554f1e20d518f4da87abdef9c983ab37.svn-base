@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="950" height="450" maxwidth="950" maxheight="450" titletext="예상수납안내" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="1" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="1" left="0" top="0" height="22" cssclass="sta_TITLE_Bg" text="예상수납안내" right="0"/>
+              <Static id="sta01" taborder="2" left="0" top="32" height="22" text="수납내역" right="210"/>
+              <Static id="sta02" taborder="3" text="수납기준일자" left="0" width="100" height="30" top="60" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta03" taborder="4" width="150" height="30" cssclass="sta_WF_tablebg" left="sta02:-1" top="60"/>
+              <Static id="sta04" taborder="5" text="입금액" left="sta03:-1" width="80" height="30" top="60" cssclass="sta_WF_tablelabelE"/>
+              <Static id="sta05" taborder="6" width="180" height="30" cssclass="sta_WF_tablebg" left="sta04:-1" top="60"/>
+              <Static id="sta06" taborder="7" height="30" cssclass="sta_WF_tablebg" left="sta05:-1" top="60" right="0"/>
+              <Calendar id="tclDT_RECEIPT" taborder="8" left="105" top="65" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="fnSearchInit"/>
+              <MaskEdit id="txtAM_RECEIPT" taborder="9" left="335" top="65" width="150" height="20" format="#,##0"/>
+              <Button id="btnSelectRowSum" taborder="12" text="선택행 합계보기" top="65" width="100" height="20" right="10" onclick="divData_btnSelectRowSum_onclick"/>
+              <Button id="btnExit" taborder="11" text="닫기" top="65" width="70" height="20" right="btnSelectRowSum:10" onclick="divData_btnExit_onclick"/>
+              <Button id="btnConf" taborder="10" text="확인" top="65" width="70" height="20" right="btnExit:10" onclick="divData_btnConf_onclick"/>
+              <Grid id="objGrid" taborder="0" left="0" top="100" right="0" bottom="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	
+// 	this.dsSearch.setColumn(0, "DT_RECEIPT", this.gfnGetDate());
+// 	this.dsSearch.setColumn(0, "AM_RECEIPT", 0);
+// 	this.dsSearch.setColumn(0, "CD_ACNTUNIT", this.getOwnerFrame().CD_ACNTUNIT);
+// 	this.dsSearch.setColumn(0, "NO_DONG", this.getOwnerFrame().NO_DONG);
+// 	this.dsSearch.setColumn(0, "NO_FLOOR", this.getOwnerFrame().NO_FLOOR);
+// 	this.dsSearch.setColumn(0, "NO_HO", this.getOwnerFrame().NO_HO);
+// 	this.dsSearch.setColumn(0, "NO_UNIONMEMBER", this.getOwnerFrame().NO_UNIONMEMBER);
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	this.dsSearch.setColumn(0, "DS_CONTRACTOR", this.getOwnerFrame().DS_CONTRACTOR);
+	this.dsSearch.setColumn(0, "DT_BIRTH", this.getOwnerFrame().DT_BIRTH);
+	this.dsSearch.setColumn(0, "NO_DONG", this.getOwnerFrame().NO_DONG);
+	this.dsSearch.setColumn(0, "NO_HOSU", this.getOwnerFrame().NO_HOSU);
+	this.dsSearch.setColumn(0, "CD_ACNTUNIT", this.getOwnerFrame().CD_ACNTUNIT);
+	this.dsSearch.setColumn(0, "DS_ACNTUNIT", this.getOwnerFrame().DS_ACNTUNIT);
+	this.dsSearch.setColumn(0, "TY_GUBUN", this.getOwnerFrame().TY_GUBUN);
+	this.dsSearch.setColumn(0, "NO_CHASU", this.getOwnerFrame().NO_CHASU);
+
+	if (!this.gfnIsNull(this.dsSearch.getColumn(0, "CD_ACNTUNIT"))) {
+		this.fnSelect();
+	}
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ ************************************************************************/
+this.fnSetButton = function() {		
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+	this.dxGrid = this.divData.form.objGrid;
+	
+	this.tclDT_RECEIPT = this.divData.form.tclDT_RECEIPT;
+	this.txtAM_RECEIPT = this.divData.form.txtAM_RECEIPT;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {	
+	this.gfnGridInit(this.dxGrid, this.dsList, "DR", "DRD_DLGESTRECEIPT");
+	
+ 	this.gfnGridColumnColor(this.dxGrid, "", "BACK_GangJo", "[TY_NAPIP]=='납부금액' || [TY_NAPIP]=='미수금' || [TY_NAPIP]=='합계'", true);
+ 	this.gfnGridColumnColor(this.dxGrid, "", "BACK_Title", "[TY_NAPIP]==''", true);
+}
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("CD_ACNTUNIT", "string");
+	this.dsSelect.addColumn("TY_GUBUN", "string");
+	this.dsSelect.addColumn("NO_CHASU", "string");
+	this.dsSelect.addColumn("NO_DONG", "string");
+	this.dsSelect.addColumn("NO_HOSU", "string");
+
+	this.dsSelect2 = new Dataset();
+	this.dsSelect2.addColumn("CD_ACNTUNIT", "string");
+	this.dsSelect2.addColumn("TY_GUBUN", "string");
+	this.dsSelect2.addColumn("NO_CHASU", "string");
+	this.dsSelect2.addColumn("NO_DONG", "string");
+	this.dsSelect2.addColumn("NO_HOSU", "string");
+	this.dsSelect2.addColumn("DT_RECEIVED", "string");
+	
+	this.dsSelect3 = new Dataset();
+	this.dsSelect3.addColumn("CD_ACNTUNIT", "string");
+	this.dsSelect3.addColumn("TY_GUBUN", "string");
+	this.dsSelect3.addColumn("NO_CHASU", "string");
+	this.dsSelect3.addColumn("NO_DONG", "string");
+	this.dsSelect3.addColumn("NO_HOSU", "string");
+	this.dsSelect3.addColumn("DT_RECEIVED", "string");
+	this.dsSelect3.addColumn("AM_RECEIVED", "string");
+}
+
+/************************************************************************
+ * 버튼 이벤트
+ ************************************************************************/
+this.fnSelect = function() {	
+	this.gfnGridBeforeSelect(this.dxGrid);	
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+// 	this.dsSelect.setColumn(0, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0, 6));
+// 	this.dsSelect.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6, 1));
+// 	this.dsSelect.setColumn(0, "NO_CHASU", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7, 2));
+// 	this.dsSelect.setColumn(0, "NO_DONG", this.dsSearch.getColumn(0, "NO_DONG"));
+// 	this.dsSelect.setColumn(0, "NO_FLOOR", this.dsSearch.getColumn(0, "NO_FLOOR"));
+// 	this.dsSelect.setColumn(0, "NO_HO", this.dsSearch.getColumn(0, "NO_HO"));
+// 	this.dsSelect.setColumn(0, "NO_UNIONMEMBER", this.dsSearch.getColumn(0, "NO_UNIONMEMBER"));
+	
+	this.dsSelect.setColumn(0, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT"));
+	this.dsSelect.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+	this.dsSelect.setColumn(0, "NO_CHASU", this.dsSearch.getColumn(0, "NO_CHASU"));
+	this.dsSelect.setColumn(0, "NO_DONG", this.dsSearch.getColumn(0, "NO_DONG"));
+	this.dsSelect.setColumn(0, "NO_HOSU", this.dsSearch.getColumn(0, "NO_HOSU"));
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]	
+}
+
+this.fnSelect2 = function() {	
+	this.gfnGridBeforeSelect(this.dxGrid);	
+	this.dsSelect2.clearData();
+	this.dsSelect2.addRow();
+// 	this.dsSelect2.setColumn(0, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0, 6));
+// 	this.dsSelect2.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6, 1));
+// 	this.dsSelect2.setColumn(0, "NO_CHASU", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7, 2));
+// 	this.dsSelect2.setColumn(0, "NO_DONG", this.dsSearch.getColumn(0, "NO_DONG"));
+// 	this.dsSelect2.setColumn(0, "NO_FLOOR", this.dsSearch.getColumn(0, "NO_FLOOR"));
+// 	this.dsSelect2.setColumn(0, "NO_HO", this.dsSearch.getColumn(0, "NO_HO"));
+// 	this.dsSelect2.setColumn(0, "NO_UNIONMEMBER", this.dsSearch.getColumn(0, "NO_UNIONMEMBER"));
+// 	this.dsSelect2.setColumn(0, "DT_RECEIVED", this.dsSearch.getColumn(0, "DT_RECEIPT"));
+	
+	this.dsSelect2.setColumn(0, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT"));
+	this.dsSelect2.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+	this.dsSelect2.setColumn(0, "NO_CHASU", this.dsSearch.getColumn(0, "NO_CHASU"));
+	this.dsSelect2.setColumn(0, "NO_DONG", this.dsSearch.getColumn(0, "NO_DONG"));
+	this.dsSelect2.setColumn(0, "NO_HOSU", this.dsSearch.getColumn(0, "NO_HOSU"));
+	this.dsSelect2.setColumn(0, "DT_RECEIVED", this.dsSearch.getColumn(0, "DT_RECEIPT"));
+	
+	var strSvcId    = "select2";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select2=dsSelect2";
+	var outData     = "dsList=select20";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]	
+}
+
+this.fnSelect3 = function() {	
+	this.gfnGridBeforeSelect(this.dxGrid);	
+	this.dsSelect3.clearData();
+	this.dsSelect3.addRow();
+// 	this.dsSelect3.setColumn(0, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(0, 6));
+// 	this.dsSelect3.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(6, 1));
+// 	this.dsSelect3.setColumn(0, "NO_CHASU", this.dsSearch.getColumn(0, "CD_ACNTUNIT").substr(7, 2));
+// 	this.dsSelect3.setColumn(0, "NO_DONG", this.dsSearch.getColumn(0, "NO_DONG"));
+// 	this.dsSelect3.setColumn(0, "NO_FLOOR", this.dsSearch.getColumn(0, "NO_FLOOR"));
+// 	this.dsSelect3.setColumn(0, "NO_HO", this.dsSearch.getColumn(0, "NO_HO"));
+// 	this.dsSelect3.setColumn(0, "NO_UNIONMEMBER", this.dsSearch.getColumn(0, "NO_UNIONMEMBER"));
+// 	this.dsSelect3.setColumn(0, "DT_RECEIVED", this.dsSearch.getColumn(0, "DT_RECEIPT"));
+// 	this.dsSelect3.setColumn(0, "AM_RECEIVED", this.dsSearch.getColumn(0, "AM_RECEIPT"));
+	
+	this.dsSelect3.setColumn(0, "CD_ACNTUNIT", this.dsSearch.getColumn(0, "CD_ACNTUNIT"));
+	this.dsSelect3.setColumn(0, "TY_GUBUN", this.dsSearch.getColumn(0, "TY_GUBUN"));
+	this.dsSelect3.setColumn(0, "NO_CHASU", this.dsSearch.getColumn(0, "NO_CHASU"));
+	this.dsSelect3.setColumn(0, "NO_DONG", this.dsSearch.getColumn(0, "NO_DONG"));
+	this.dsSelect3.setColumn(0, "NO_HOSU", this.dsSearch.getColumn(0, "NO_HOSU"));
+	this.dsSelect3.setColumn(0, "DT_RECEIVED", this.dsSearch.getColumn(0, "DT_RECEIPT"));
+	this.dsSelect3.setColumn(0, "AM_RECEIVED", this.dsSearch.getColumn(0, "AM_RECEIPT"));
+	
+	var strSvcId    = "select3";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select3=dsSelect3";
+	var outData     = "dsList=select30";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// trabsaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]	
+}
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+ 
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "select") {		
+		this.gfnGridAfterSelect(this.dxGrid);
+		
+		if (this.dsList.rowcount > 0) {
+			this.dsSearch.setColumn(0, "DT_RECEIPT", this.gfnGetDate());
+			this.dsSearch.setColumn(0, "AM_RECEIPT", 0);
+			
+			this.fnGridSetting();
+		}
+	}
+	else if (svcID == "select2" || svcID == "select3") {		
+		this.gfnGridAfterSelect(this.dxGrid);
+		
+		if (this.dsList.rowcount > 0) {			
+			this.fnGridSetting();
+		}
+		else {
+			this.fnGridRemoveSetting();
+			this.gfnAlert("자료가 존재하지 않습니다.");
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+ this.dsSearch_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo) {
+	if (e.oldvalue != e.newvalue) {
+		this.gfnSetFormStatus(this);
+	}
+}
+
+this.fnGridRemoveSetting = function() {
+	this.gfnSetFormStatus(this);
+	this.gfnGridClear(this.dxGrid);
+
+	this.dsSearch.setColumn(0, "DT_RECEIPT", "");
+	this.dsSearch.setColumn(0, "AM_RECEIPT", 0);
+}
+
+this.fnGridSetting = function() {
+	if (this.dsList.rowcount <= 0) return;
+	
+	this.dsList.set_enableevent(false);
+	for (var i=0; i<this.dsList.rowcount; i++) {
+		var strNapip = this.dsList.getColumn(i, "TY_NAPIP");
+		switch (strNapip) {
+			case "납부금액":
+			case "미수금":
+			case "합계":
+				this.dsList.setColumn(i, "AM_SELLING", "");
+				this.dsList.setColumn(i, "DD_DAY", 0);
+				break;
+			case "":
+				for (var j=1; j<=11; j++) {
+					if (this.dsList.colinfos[j].name == "DD_DAY")
+						this.dsList.setColumn(i, this.dsList.colinfos[j].name, 0);
+					else
+						this.dsList.setColumn(i, this.dsList.colinfos[j].name, "");
+				}
+				break;
+		}
+	}
+	this.dsList.set_enableevent(true);
+}
+ 
+ 
+this.divData_btnConf_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if (this.gfnIsNull(this.dsSearch.getColumn(0, "DT_RECEIPT"))) {
+		this.fnVaidateCallback = function() {
+			this.tclDT_RECEIPT.setFocus();
+		}
+		this.gfnAlert("수납기준일자를 입력하지 않았습니다!", "fnVaidateCallback");
+	}
+	
+	if (nexacro.toNumber(this.dsSearch.getColumn(0, "AM_RECEIPT")) == 0) {
+		this.fnSelect2();
+	}
+	else if(nexacro.toNumber(this.dsSearch.getColumn(0, "AM_RECEIPT")) > 0) {
+		this.fnSelect3();
+	}
+};
+
+this.divData_btnExit_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	this.getParentContext().close(false);
+};
+
+this.divData_btnSelectRowSum_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	if (this.dsList.rowcount -1 <= 1) return;
+	
+	var amSelling = 0;
+	var amReceipt = 0;
+	var amDiscount = 0;
+	var amDelay = 0;
+	var amBunyang = 0;
+	var bTotal = false;
+	var strBeforeText = "";
+	
+	var rows = this.dxGrid.getSelectedDatasetRows();
+	for (var i=0; i<rows.length; i++) {
+		var nrow = rows[i];
+		if (this.dsList.getColumn(nrow, "TY_NAPIP") == "합계") return;
+		
+		if (!bTotal || strBeforeText != this.dsList.getColumn(nrow, "TY_NAPIP")) {
+			amSelling += nexacro.toNumber(this.dsList.getColumn(nrow, "AM_SELLING"));
+		}
+		
+		amReceipt += nexacro.toNumber(this.dsList.getColumn(nrow, "AM_RECEIPT"));
+		amDiscount += nexacro.toNumber(this.dsList.getColumn(nrow, "AM_DISCOUNT"));
+		amDelay += nexacro.toNumber(this.dsList.getColumn(nrow, "AM_DELAY"));
+		amBunyang += nexacro.toNumber(this.dsList.getColumn(nrow, "AM_BUNYANG"));
+		
+		bTotal = true;
+		strBeforeText = this.dsList.getColumn(nrow, "TY_NAPIP");
+	}
+	
+	if (bTotal) {
+		var lastrow = this.dsList.rowcount-1;
+		if (this.dsList.getColumn(lastrow, "TY_NAPIP") != "합계") {
+			lastrow = this.gfnGridAdd(this.dxGrid, "bottom");
+		}
+		
+		this.dsList.setColumn(lastrow, "AM_SELLING", amSelling);
+		this.dsList.setColumn(lastrow, "AM_RECEIPT", amReceipt);
+		this.dsList.setColumn(lastrow, "AM_DISCOUNT", amDiscount);
+		this.dsList.setColumn(lastrow, "AM_DELAY", amDelay);
+		this.dsList.setColumn(lastrow, "AM_BUNYANG", amBunyang);
+		this.dsList.setColumn(lastrow, "TY_NAPIP", "합계");
+	}
+	
+	this.gfnSetFormStatus(this, "Q");
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DRCPR_WEB_RECEIPTINFO_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select2</Col>
+            <Col id="SP">DRCPR_WEB_RECEIPTINFO_DATE_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">select3</Col>
+            <Col id="SP">DRCPR_WEB_RECEIPTINFO_CALULATE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" onvaluechanged="dsSearch_onvaluechanged">
+        <ColumnInfo>
+          <Column id="DT_RECEIPT" type="STRING" size="256"/>
+          <Column id="AM_RECEIPT" type="BIGDECIMAL" size="256"/>
+          <Column id="CD_ACNTUNIT" type="STRING" size="256"/>
+          <Column id="NO_DONG" type="STRING" size="256"/>
+          <Column id="NO_HOSU" type="STRING" size="256"/>
+          <Column id="DT_BIRTH" type="STRING" size="256"/>
+          <Column id="TY_GUBUN" type="STRING" size="256"/>
+          <Column id="NO_CHASU" type="STRING" size="256"/>
+          <Column id="DS_CONTRACTOR" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.tclDT_RECEIPT" propid="value" datasetid="dsSearch" columnid="DT_RECEIPT"/>
+      <BindItem id="item1" compid="divData.form.txtAM_RECEIPT" propid="value" datasetid="dsSearch" columnid="AM_RECEIPT"/>
+    </Bind>
+  </Form>
+</FDL>

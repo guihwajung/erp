@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="400" height="310" maxwidth="430" maxheight="350" titletext="별도계약 약정일변경" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="별도계약 약정일변경" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staDS_SITE" taborder="1" text="사업지코드" left="0" top="55" width="112" height="30" textAlign="left" onclick="divData_staDS_SITE_onclick" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staDS_SILHENG" taborder="2" text="납입구분|차수" left="0" top="staDS_SITE:-1" width="112" height="30" textAlign="left" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staTY_APPROVAL" taborder="3" text="변경전 약정일자" left="0" top="staDS_SILHENG:-1" width="112" height="30" textAlign="left" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staDT_CONFIRM" taborder="4" text="변경후 약정일자" left="0" top="staTY_APPROVAL:-1" width="112" height="30" textAlign="left" cssclass="sta_WF_tablelabelE"/>
+              <Static id="staBg1" taborder="5" left="staDS_SITE:-1" top="55" height="30" cssclass="sta_WF_tablebg" width="289"/>
+              <Static id="staBg2" taborder="6" left="staDS_SILHENG:-1" top="staBg1:-1" height="30" cssclass="sta_WF_tablebg" width="289"/>
+              <Static id="staBg3" taborder="7" left="staTY_APPROVAL:-1" top="staBg2:-1" height="30" cssclass="sta_WF_tablebg" width="289"/>
+              <Static id="staBg4" taborder="8" left="staDT_CONFIRM:-1" top="staBg3:-1" height="30" cssclass="sta_WF_tablebg" width="289"/>
+              <Edit id="edtTY_NAPIP" taborder="9" left="staDS_SILHENG:4" top="89" height="20" readonly="true" maxlength="50" width="150"/>
+              <Button id="btnOk" taborder="10" text="확인" left="32.50%" top="266" width="60" height="20" onclick="divData_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="11" text="취소" left="52.50%" top="266" width="60" height="20" onclick="divData_btnCancel_onclick"/>
+              <Div id="cfCD_ACNTUNIT" CodeFindName="DRX_CFACNTUNIT_OPT" CDTextWidth="80" taborder="12" left="116" top="60" width="280" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+              <Calendar id="tclDT_STARTAGREE" taborder="13" left="116" top="118" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="true"/>
+              <Static id="staYM_IMPUTE_FROM00" taborder="15" text="~" left="tclDT_STARTAGREE:5" top="119" width="10" height="20" onclick="Common_onclick"/>
+              <Calendar id="tclDT_ENDAGREE" taborder="14" left="staYM_IMPUTE_FROM00:5" top="118" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value="" readonly="true"/>
+              <Calendar id="tclDT_STARTAGREE_CHG" taborder="17" left="116" top="147" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Static id="staYM_IMPUTE_FROM01" taborder="16" text="~" left="tclDT_STARTAGREE_CHG:5" top="148" width="10" height="20" onclick="Common_onclick"/>
+              <Calendar id="tclDT_ENDAGREE_CHG" taborder="18" left="staYM_IMPUTE_FROM01:5" top="147" width="100" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" value=""/>
+              <Static id="sta00" taborder="19" text="약정일자를 납입구분, 차수별로 일괄변경합니다." left="12" top="32" width="337" height="20"/>
+              <Static id="sta01" taborder="20" text="해당 납입구분|차수에 수납을 한 계약자가 있으면" left="13" top="182" width="337" height="20"/>
+              <Static id="sta02" taborder="21" text="해당계약자는 약정일자를 변경하지 않습니다." left="13" top="202" width="337" height="20"/>
+              <Div id="cfNO_NAPCHA" CodeFindName="DRX_CFAGREEMENT_CHANGE_OPT_CODEFIND" CDTextWidth="75" taborder="22" left="edtTY_NAPIP:5" top="89" width="98" height="20" url="cmm::cmmCodeFind.xfdl" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();	
+	
+	// 차수 비활성화 처리
+	this.cfNO_NAPCHA.form.CDTextBox.set_readonly(true);
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	//this.FormBtns.Select.set_enable(false);
+}
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {	
+	//this.dxGrid = this.divData.form.objGrid;
+	this.cfCD_ACNTUNIT = this.divData.form.cfCD_ACNTUNIT;
+	this.edtTY_NAPIP = this.divData.form.edtTY_NAPIP;	
+	this.cfNO_NAPCHA = this.divData.form.cfNO_NAPCHA;
+	this.tclDT_STARTAGREE = this.divData.form.tclDT_STARTAGREE;
+	this.tclDT_ENDAGREE = this.divData.form.tclDT_ENDAGREE;
+	this.tclDT_STARTAGREE_CHG = this.divData.form.tclDT_STARTAGREE_CHG;
+	this.tclDT_ENDAGREE_CHG = this.divData.form.tclDT_ENDAGREE_CHG;
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+	this.cfCD_ACNTUNIT.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfNO_NAPCHA.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";
+	this.cfNO_NAPCHA.AfterCDTextChanged = "fnAfterCDTextChanged";	
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {	
+	this.dsSave = new Dataset();
+	this.dsSave.addColumn("CD_ACNTUNIT", "string");
+	this.dsSave.addColumn("TY_GUBUN", "string");
+	this.dsSave.addColumn("NO_CHASU", "string");
+	this.dsSave.addColumn("TY_NAPIP", "string");
+	this.dsSave.addColumn("NO_NAPCHA", "string");
+	this.dsSave.addColumn("DT_STARTAGREE", "string");
+	this.dsSave.addColumn("DT_ENDAGREE", "string");
+	this.dsSave.addColumn("DT_STARTAGREE_CHG", "string");
+	this.dsSave.addColumn("DT_ENDAGREE_CHG", "string");
+	this.dsSave.addColumn("ID_UPDATE", "string");
+}
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg)
+{
+	if (svcID == "save") {
+		if(errorCode == 0)
+		{
+			// this.close()가 작동하지 않았고, 
+			// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+			this.getParentContext().close(true);
+		}else
+		{
+			this.gfnAlert(errorMsg);
+		}
+	}
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+	
+	if(id == "cfCD_ACNTUNIT") { 
+		dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+		dsUserParam.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+		dsUserParam.setColumn(nrow, "ID_GROUP", this.FormInfo.ID_GROUP);
+		dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+	}
+	if(id == "cfNO_NAPCHA") { 
+		var CD_ACNTUNIT = this.dsData.getColumn(0, "CD_ACNTUNIT");
+		if(this.gfnIsNull(CD_ACNTUNIT)){
+			this.gfnAlert("사업지코드를 먼저 선택하세요.");
+			return false;
+		}
+		
+		dsUserParam.setColumn(nrow, "CD_ACNTUNIT", this.dsData.getColumn(0, "CD_ACNTUNIT"));
+	}
+	
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+	var arrData = codeFindData;
+	if(id == "cfCD_ACNTUNIT") {		
+		this.cfNO_NAPCHA.form.fnCodeFindClear();
+		this.dsData.setColumn(0, "TY_NAPIP", "");
+		this.dsData.setColumn(0, "DT_STARTAGREE", "");
+		this.dsData.setColumn(0, "DT_ENDAGREE", "");
+		this.dsData.setColumn(0, "DT_STARTAGREE_CHG", "");
+		this.dsData.setColumn(0, "DT_ENDAGREE_CHG", "");
+	}else if(id == "cfNO_NAPCHA") {
+		this.dsData.setColumn(0, "TY_NAPIP", arrData[0]["DS_NAPIP"]);	
+		this.dsData.setColumn(0, "NO_NAPCHA", arrData[0]["NO_NAPCHA"]);	
+		this.dsData.setColumn(0, "DT_STARTAGREE", nexacro.replaceAll(arrData[0]["DT_STARTAGREE"], "-", ""));	
+		this.dsData.setColumn(0, "DT_ENDAGREE", nexacro.replaceAll(arrData[0]["DT_ENDAGREE"], "-", ""));	
+		this.dsData.setColumn(0, "DT_STARTAGREE_CHG", nexacro.replaceAll(arrData[0]["DT_STARTAGREE"], "-", ""));	
+		this.dsData.setColumn(0, "DT_ENDAGREE_CHG", nexacro.replaceAll(arrData[0]["DT_ENDAGREE"], "-", ""));	
+		//this.ccfCD_DEPT_ACNT.form.fnCodeFindClear();		
+	}
+}
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+// 확인 버튼 클릭
+this.divData_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnSaveValidate()) return false;
+	
+	this.dsSave.clearData();
+	this.dsSave.addRow();	
+	
+	var tyNapip = "";
+	
+	if(this.dsData.getColumn(0, "TY_NAPIP") == "계약금"){
+		tyNapip = "C";
+	}else if(this.dsData.getColumn(0, "TY_NAPIP") == "중도금"){
+		tyNapip = "J";
+	}else if(this.dsData.getColumn(0, "TY_NAPIP") == "잔금"){
+		tyNapip = "R";
+	}else if(this.dsData.getColumn(0, "TY_NAPIP") == "재계약"){
+		tyNapip = "S";
+	}else if(this.dsData.getColumn(0, "TY_NAPIP") == "분양전환계약금"){
+		tyNapip = "T";
+	}else if(this.dsData.getColumn(0, "TY_NAPIP") == "분양전환중도금"){
+		tyNapip = "V";
+	}else if(this.dsData.getColumn(0, "TY_NAPIP") == "분양전환잔금"){
+		tyNapip = "X";
+	}
+	
+	this.dsSave.setColumn(0, "CD_ACNTUNIT", this.dsData.getColumn(0, "CD_ACNTUNIT").substr(0, 6));
+	this.dsSave.setColumn(0, "TY_GUBUN", this.dsData.getColumn(0, "CD_ACNTUNIT").substr(6, 1));
+	this.dsSave.setColumn(0, "NO_CHASU", this.dsData.getColumn(0, "CD_ACNTUNIT").substr(7, 2));
+	this.dsSave.setColumn(0, "TY_NAPIP", tyNapip);
+	this.dsSave.setColumn(0, "NO_NAPCHA", this.dsData.getColumn(0, "NO_NAPCHA"));
+	this.dsSave.setColumn(0, "DT_STARTAGREE", nexacro.replaceAll(this.dsData.getColumn(0, "DT_STARTAGREE"), "-", ""));
+	this.dsSave.setColumn(0, "DT_ENDAGREE", nexacro.replaceAll(this.dsData.getColumn(0, "DT_ENDAGREE"), "-", ""));
+	this.dsSave.setColumn(0, "DT_STARTAGREE_CHG", nexacro.replaceAll(this.dsData.getColumn(0, "DT_STARTAGREE_CHG"), "-", ""));
+	this.dsSave.setColumn(0, "DT_ENDAGREE_CHG", nexacro.replaceAll(this.dsData.getColumn(0, "DT_ENDAGREE_CHG"), "-", ""));
+	this.dsSave.setColumn(0, "ID_UPDATE", this.AuthClient.ID_USER);
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsSave";
+	var outData     = "";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+	
+	
+};
+
+// 취소 버튼 클릭
+this.divData_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.close()가 작동하지 않았고, 
+	// 부모의 callback 함수로 데이터를 넘겨주기 위해 작성되었습니다.
+	this.getParentContext().close(false);
+};
+
+
+this.fnSaveValidate = function() {	
+	var validate = true;
+	
+	if (this.gfnIsNull(this.dsData.getColumn(0,"CD_ACNTUNIT"))) {
+		validate = false;
+		// Alert후 실행할 처리
+		this.fnVaidateCallback = function() {
+			this.cfCD_ACNTUNIT.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("사업지코드는 반드시 입력 하셔야 합니다.", "fnVaidateCallback");
+	}else if (this.gfnIsNull(this.dsData.getColumn(0,"TY_NAPIP"))) {
+		validate = false;
+		this.gfnAlert("납입구분은 반드시 입력 하셔야 합니다.");
+	}else if (this.gfnIsNull(this.dsData.getColumn(0,"DT_STARTAGREE")) || this.gfnIsNull(this.dsData.getColumn(0,"DT_ENDAGREE"))) {
+		validate = false;		
+		this.gfnAlert("변경전 약정일자는 반드시 입력 하셔야 합니다.");
+	}else if (this.gfnIsNull(this.dsData.getColumn(0,"DT_STARTAGREE_CHG")) || this.gfnIsNull(this.dsData.getColumn(0,"DT_ENDAGREE_CHG"))) {
+		validate = false;		
+		this.gfnAlert("변경후 약정일자는 반드시 입력 하셔야 합니다.");
+	}
+	
+	return validate;	
+}
+]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DRFPR_AGREEMENT_CHANGE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="CD_ACNTUNIT" type="STRING" size="256"/>
+          <Column id="TY_NAPIP" type="STRING" size="256"/>
+          <Column id="NO_NAPCHA" type="STRING" size="256"/>
+          <Column id="DT_STARTAGREE" type="STRING" size="256"/>
+          <Column id="DT_ENDAGREE" type="STRING" size="256"/>
+          <Column id="DT_STARTAGREE_CHG" type="STRING" size="256"/>
+          <Column id="DT_ENDAGREE_CHG" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CD_ACNTUNIT"/>
+            <Col id="TY_NAPIP"/>
+            <Col id="NO_NAPCHA"/>
+            <Col id="DT_STARTAGREE"/>
+            <Col id="DT_ENDAGREE"/>
+            <Col id="DT_STARTAGREE_CHG"/>
+            <Col id="DT_ENDAGREE_CHG"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item3" compid="divData.form.cfCD_ACNTUNIT.form.CDTextBox" propid="value" datasetid="dsData" columnid="CD_ACNTUNIT"/>
+      <BindItem id="item8" compid="divData.form.edtTY_NAPIP" propid="value" datasetid="dsData" columnid="TY_NAPIP"/>
+      <BindItem id="item0" compid="divData.form.tclDT_STARTAGREE" propid="value" datasetid="dsData" columnid="DT_STARTAGREE"/>
+      <BindItem id="item1" compid="divData.form.tclDT_ENDAGREE" propid="value" datasetid="dsData" columnid="DT_ENDAGREE"/>
+      <BindItem id="item2" compid="divData.form.tclDT_STARTAGREE_CHG" propid="value" datasetid="dsData" columnid="DT_STARTAGREE_CHG"/>
+      <BindItem id="item4" compid="divData.form.tclDT_ENDAGREE_CHG" propid="value" datasetid="dsData" columnid="DT_ENDAGREE_CHG"/>
+      <BindItem id="item5" compid="divData.form.cfNO_NAPCHA.form.CDTextBox" propid="value" datasetid="dsData" columnid="NO_NAPCHA"/>
+    </Bind>
+  </Form>
+</FDL>

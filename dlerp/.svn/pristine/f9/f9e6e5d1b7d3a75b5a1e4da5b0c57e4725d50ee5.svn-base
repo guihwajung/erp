@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="DAV_HOUSESUBMIT_DLG" width="370" height="260" maxwidth="400" maxheight="300" titletext="거주자간 주택임차차입금 원리금 상환액 소득공제 명세" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="staTITLE" taborder="4" text="거주자간 주택임차차입금 원리금 상환액 소득공제 명세" left="0" top="10" width="360" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+        <Div id="divBtns" left="2" top="200" width="368" height="40" taborder="3">
+          <Layouts>
+            <Layout>
+              <Button id="btnCANCLE" taborder="1" text="취소" left="198" top="10" width="60" height="27" onclick="btnCANCLE_onclick"/>
+              <Button id="btnOK" taborder="0" text="확인" left="108" top="10" width="60" height="27" onclick="btnOK_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staCD_CORP" taborder="9" text="법인코드" left="0" top="103" width="80" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta06" taborder="10" left="79" top="103" height="30" cssclass="sta_WF_tablebg" visible="true" right="0"/>
+        <Div id="ccfCD_CORP" CodeFindName="DAX_CFCORP2" CDTextWidth="70" taborder="2" left="staCD_CORP:4" top="108" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" visible="true" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+        <Static id="staYN_MID" taborder="5" text="작업구분" left="0" top="45" width="80" height="30" visible="true" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta03" taborder="6" left="79" top="45" height="30" cssclass="sta_WF_tablebg" visible="true" right="0"/>
+        <Static id="staWORK_BASE" taborder="7" text="적용년도" left="0" top="74" width="80" height="30" cssclass="sta_WF_tablelabelE"/>
+        <Static id="sta07" taborder="8" left="79" top="74" height="30" cssclass="sta_WF_tablebg" right="0"/>
+        <Combo id="cboYN_MID" taborder="0" left="84" top="50" width="129" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="N" text="연말정산" index="1" readonly="true">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="datacolumn">중도정산</Col>
+                <Col id="codecolumn">Y</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">연말정산</Col>
+                <Col id="codecolumn">N</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Div id="ctclWORK_BASE" taborder="1" left="84" top="79" width="80" height="20" onchanged="fnSearchInit" async="false"/>
+        <Static id="staID_RESIDENT" taborder="11" text="주민번호" left="0" top="132" width="80" height="30" cssclass="sta_WF_tablelabel"/>
+        <Static id="sta08" taborder="12" left="79" top="132" height="30" cssclass="sta_WF_tablebg" right="0"/>
+        <Div id="ccfID_RESIDENT" CDTextWidth="130" taborder="13" left="84" top="137" width="250" height="20" url="cmm::cmmCodeFind.xfdl" text="" CodeFindName="DAX_CFEMP" BeforeUserDataSetParam="fnBeforeUserDataSetParam" AfterCDTextChanged="fnAfterCDTextChanged"/>
+        <Radio id="rdoTY_MONEY" taborder="14" left="65" top="167" width="268" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" value="0" text="금전소비대차 계약" index="0">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="datacolumn">금전소비대차 계약</Col>
+                <Col id="codecolumn">0</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">임대차 계약</Col>
+                <Col id="codecolumn">1</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Edit id="edtID_SABUN" taborder="15" left="205" top="80" width="127" height="20" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);
+	this.gfnFormInfo(this);
+	// ---------------------------//
+
+	this.fnSetButton();
+	//this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().WORK_BASE)){
+		//작업구분
+		this.cboYN_MID.set_value(this.getOwnerFrame().YN_MID);
+		
+		//적용년도(현재)
+		this.ctclWORK_BASE.set_url(this.cboYN_MID.value == "Y"?"cmm::cmmCalMM.xfdl":"cmm::cmmCalYY.xfdl");
+		this.ctclWORK_BASE.form.TextBox.set_value(this.getOwnerFrame().WORK_BASE);
+		this.staWORK_BASE.set_text(this.cboYN_MID.value=="Y"?"적용년월":"적용년도"); 
+		
+		// 법인코드 및 법인명 기본세팅
+		this.ccfCD_CORP.form.CDTextBox.set_value(this.getOwnerFrame().CD_CORP);
+		this.ccfCD_CORP.form.DSTextBox.set_value(this.getOwnerFrame().DS_CORP);
+		
+		//주민번호
+		this.ccfID_RESIDENT.form.CDTextBox.set_value(this.getOwnerFrame().ID_RESIDENT);
+		this.ccfID_RESIDENT.form.DSTextBox.set_value(this.getOwnerFrame().DS_HNAME);
+		
+		//사번
+		this.edtID_SABUN.set_value(this.getOwnerFrame().ID_SABUN);
+		
+		//READONLY
+		this.ccfCD_CORP.form.set_enable(false);
+		this.ccfID_RESIDENT.form.set_enable(false);		
+	
+	}else{
+		//적용년도(현재)
+		this.ctclWORK_BASE.set_url("cmm::cmmCalMM.xfdl");
+		this.ctclWORK_BASE.form.TextBox.set_value(this.gfnGetDate().substr(0,6));
+		this.divSearch.form.staWORK_BASE.set_text("적용년월");
+
+		// 법인코드 및 법인명 기본세팅
+		this.ccfCD_CORP.form.CDTextBox.set_value(this.AuthClient.CD_CORP);
+		this.ccfCD_CORP.form.DSTextBox.set_value(this.AuthClient.DS_CORP);
+	}
+
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+this.fnSetButton = function() {
+	// Select, Add, Del, Save, Excel, Print
+	// SubSelect, SubAdd, SubDel, SuubSave, SubExcel
+	// this.FormBtns.Add.set_enable(false);
+	// this.FormBtns.Del.set_enable(false);
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+
+	this.grSearch = this.FormInfo.GR_SEARCH;					          // 권한
+	this.cdGroup = this.AuthClient.CD_GROUP;					          // 그룹코드
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnSelectValidate = function() {
+
+ 	var validate = true;
+	
+	//적용년도
+	if (this.gfnIsNull(this.ctclYY_BASE.form.TextBox.value)) {
+		this.fnVaidateCallback = function() {
+			this.ctclYY_BASE.form.TextBox.setFocus();
+		}
+		this.gfnAlert("적용년도를 입력하세요.");
+		return false;
+	}
+	
+	//법인
+	if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+		validate = false;
+		this.fnVaidateCallback = function() {
+			this.ccfCD_CORP.form.CDTextBox.setFocus();
+		}
+		this.gfnAlert("법인코드를 입력하세요.", "fnVaidateCallback");
+	}
+
+ 	return validate;
+};
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg, args)
+{
+	if (svcID == "select") {
+		//this.gfnGridAfterSelect(this.dxGrid);
+	}
+};
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+ 	switch(id) {
+		case "ccfCD_CORP": // 법인코드
+			dsUserParam.setColumn(nrow, "GR_SEARCH", this.FormInfo.GR_SEARCH);
+			dsUserParam.setColumn(nrow, "CD_DEPT", this.AuthClient.CD_DEPT);
+			break;
+		
+		case "ccfID_RESIDENT":
+			if (this.gfnIsNull(this.ccfCD_CORP.form.CDTextBox.value)) {
+				this.fnBeforeUserCallback = function() {
+						this.ccfCD_CORP.form.CDTextBox.setFocus();
+					}
+					this.gfnAlert("법인코드를 입력하세요.", "fnBeforeUserCallback");
+					return false;
+			}
+			dsUserParam.setColumn(nrow, "GUBUN", "%");
+			dsUserParam.setColumn(nrow, "CD_CORP", this.ccfCD_CORP.form.CDTextBox.value);
+			break;
+		
+		default:
+ 	}
+ 	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+
+};
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ /************************************************************************
+ * 확장버튼 이벤트
+ ************************************************************************/
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+
+this.btnOK_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	var json = {OPEN_URL : this.rdoTY_MONEY.value == 0?"DAV_HOUSEMONEY":"DAV_HOUSERENT"};
+	this.getParentContext().close(JSON.stringify(json));
+};
+
+this.btnCANCLE_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};]]></Script>
+    <Dataset id="dsList"/>
+    <Objects>
+      <Dataset id="dsList"/>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

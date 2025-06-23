@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="form" width="760" height="540" titletext="공지사항관리" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divData" taborder="0" left="0" top="0" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTITLE" taborder="0" text="자료실관리" left="0" top="0" width="100%" height="30" cssclass="sta_TITLE_Bg" textAlign="left"/>
+              <Static id="staDS_GONGJI" taborder="1" text="제목" left="0" top="40" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staDT_CONFIRM" taborder="3" text="작성자" left="0" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right" onclick="divData_staTY_APPROVAL_onclick" bottom="29"/>
+              <Static id="staDS_CONTENT" taborder="2" text="내용" left="0" width="87" cssclass="sta_WF_tablelabel" textAlign="right" top="98" bottom="staDT_CONFIRM:-1"/>
+              <Static id="staTY_APPROVAL" taborder="4" text="등록일시" left="0" width="87" cssclass="sta_WF_tablelabel" textAlign="right" height="30" bottom="0"/>
+              <Static id="staBg1" taborder="5" left="staDS_GONGJI:-1" top="40" right="0" height="30" cssclass="sta_WF_tablebg"/>
+              <Static id="staBg3" taborder="7" right="0" height="30" cssclass="sta_WF_tablebg" bottom="29" left="86"/>
+              <Static id="staBg2" taborder="6" left="staDS_CONTENT:-1" right="0" cssclass="sta_WF_tablebg" top="98" bottom="staBg3:-1"/>
+              <Static id="staBg4" taborder="8" right="0" height="30" cssclass="sta_WF_tablebg" bottom="0" left="86"/>
+              <Edit id="edtDS_GONGJI" taborder="9" left="staDS_GONGJI:5" top="45" right="5" height="20"/>
+              <Static id="staDT_CONFIRM00" taborder="13" text="첨부파일" left="50.00%" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right" onclick="divData_staTY_APPROVAL_onclick" bottom="29"/>
+              <Edit id="edtDS_HNAME" taborder="11" left="92" right="staDT_CONFIRM00:5" height="20" readonly="true" bottom="34"/>
+              <Static id="staTY_APPROVAL00" taborder="14" text="수정일시" left="50.00%" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right" bottom="0"/>
+              <Edit id="edtDT_INSERT" taborder="12" left="92" right="staTY_APPROVAL00:5" height="20" readonly="true" bottom="5"/>
+              <TextArea id="edtDS_CONTENT" taborder="10" left="staDS_CONTENT:5" top="edtDS_GONGJI:39" right="5" autoselect="false" enableevent="true" accessibilitydesclevel="all" bottom="staDT_CONFIRM00:5"/>
+              <Edit id="edtDT_UPDATE" taborder="15" left="staTY_APPROVAL00:5" right="5" height="20" readonly="true" bottom="5"/>
+              <Edit id="edtFILE_CNT" taborder="16" left="staDT_CONFIRM00:5" right="5" height="20" readonly="true" bottom="34"/>
+              <Static id="staDS_GONGJI00" taborder="17" text="옵션" left="0" top="69" width="87" height="30" cssclass="sta_WF_tablelabel" textAlign="right"/>
+              <Static id="staBg00" taborder="18" left="86" top="69" right="0" height="30" cssclass="sta_WF_tablebg"/>
+              <CheckBox id="chkTY_ISTOP" taborder="19" text="최상단" left="93" top="74" width="70" height="20" onchanged="divData_chkYN_POPUP_onchanged"/>
+              <Calendar id="ctclDT_SHOW_FR" taborder="20" left="252" top="74" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="divData_onchanged"/>
+              <Static id="sta00" taborder="21" text="공지기간" left="193" top="73" width="55" height="20"/>
+              <Static id="sta01" taborder="22" text="~" left="363" top="74" width="10" height="20"/>
+              <Calendar id="ctclDT_SHOW_TO" taborder="23" left="382" top="74" width="105" height="20" dateformat="yyyy-MM-dd" editformat="yyyyMMdd" autoselect="true" onchanged="divData_onchanged"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.objApp = this.gfnGetApplication();
+this.bClose = false;
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// -- 필수 -------------------//
+	this.gfnFormOnLoad(this);	
+	this.gfnFormInfo(this);		
+	// ---------------------------//
+	
+	this.fnSetButton();
+	this.fnSetExtendButton();
+	this.fnSetVariable();
+	this.fnSetEvent();
+	this.fnSetParameter();
+	
+	if(!this.gfnIsNull(this.getOwnerFrame().SN_SEQ)) {
+		this.dsSearch.setColumn(0, "SN_SEQ", this.getOwnerFrame().SN_SEQ);
+		this.FormBtns.Select.click();
+	} else {
+		this.fnAdd();	
+	}
+};
+
+/************************************************************************
+ * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+ * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+ ************************************************************************/
+ 
+this.fnSetButton = function() {
+	  this.FormBtns.Select.set_enable(true);
+      this.FormBtns.Add.set_enable(true);
+      this.FormBtns.Del.set_enable(true);
+	  this.FormBtns.Save.set_enable(true);
+	  this.FormBtns.Excel.set_enable(false);
+	  this.FormBtns.Print.set_enable(false);
+};
+
+/************************************************************************
+ * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+ ************************************************************************/
+this.fnSetExtendButton = function() {
+	 this.btn = this.gfnFormButtonAdd("btnFile", "fnFile");
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+this.fnSetVariable = function() {
+};
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+};
+
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	this.dsSelect = new Dataset();
+	this.dsSelect.addColumn("SN_SEQ", "bigdecimal");
+	this.dsSelect.addColumn("TY_SEARCH", "string");
+	this.dsSelect.addColumn("DS_SEARCH", "string");
+	this.dsSelect.addColumn("TY_SHOW", "string");
+	
+};
+
+/************************************************************************
+ * 컨트롤 이벤트
+ ************************************************************************/
+ /*
+  *	조회 버튼
+  */
+this.fnSelect = function() {
+
+	this.dsSelect.clearData();
+	this.dsSelect.addRow();
+	
+	this.dsSelect.setColumn(0, "SN_SEQ", this.dsSearch.getColumn(0, "SN_SEQ"));
+	this.dsSelect.setColumn(0, "TY_SEARCH", "");
+	this.dsSelect.setColumn(0, "DS_SEARCH", "");
+	this.dsSelect.setColumn(0, "TY_SHOW", "");
+	
+	var strSvcId    = "select";
+	var strSvcType  = "grid";
+	var inProc		= "_dsProc";
+	var inData      = "select=dsSelect";
+	var outData     = "dsList=select0";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+}
+
+/*
+ *   입력 버튼
+ */
+this.fnAdd = function() {
+	this.dsSearch.setColumn(0, "SN_SEQ", "");
+	
+	this.dsList.clearData();
+	this.dsList.addRow();
+	this.dsList.setColumn(0, "ID_USER", 	this.AuthClient.ID_USER);
+	this.dsList.setColumn(0, "NM_USER", 	this.AuthClient.DS_HNAME);
+	this.dsList.setColumn(0, "TY_ISTOP", 	0);
+	this.dsList.setColumn(0, "DT_SHOW_FR", 	this.gfnGetDate());
+	this.dsList.setColumn(0, "DT_SHOW_TO", 	this.gfnGetDate());
+	
+	this.FormBtns.Del.set_enable(false);
+	this.FormBtns.Save.set_enable(false);
+	this.btn.set_enable(false);
+}
+
+/*
+	저장
+*/
+this.fnSave = function() {
+	if(this.dsList.rowcount == 0) return;
+
+	if (this.gfnIsNull(this.dsList.getColumn(0, "NM_TITLE"))) {
+		this.gfnAlert("제목은 반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	this.dsList.setColumn(0,"TY_SAVE",this.dsList.getRowType(0));
+	this.dsList.setColumn(0,"ID_USER",this.AuthClient.ID_USER);
+	
+	var strSvcId    = "save";
+	var strSvcType  = "save";
+	var inProc		= "_dsProc";
+	var inData      = "save=dsList";
+	var outData     = "dsList=save";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	
+	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+						strSvcType , 	// transaction을 요청할 구분
+						inProc,			// Procedure 정보 Dataset 이름
+						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+						strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+						callBackFnc); // 통신방법 정의 [생략가능]
+};
+
+/*
+ *	삭제 버튼
+ */
+this.fnDel = function() {
+	if(this.dsList.getColumn(0,"FILE_CNT") > 0) {
+		this.gfnAlert("첨부파일이 있습니다! 삭제 후 진행하세요!");
+		return;
+	};
+	
+	this.gfnConfirm("삭제하시겠습니까?","fnDel_callback");
+}
+
+this.fnClose = function() {
+	this.getParentContext().close(this.bClose);
+};
+/************************************************************************
+ * Validate
+ ************************************************************************/
+
+/************************************************************************
+ * 콜백 이벤트
+ ************************************************************************/
+/*
+ *	콜백 처리
+ */
+this.fnCallback = function(svcID, errorCode, errorMsg, strArg)
+{
+	if (svcID == "select") {
+		if(this.dsList.rowcount == 0)
+			this.fnAdd();
+	}
+ 	else if (svcID == "save") {
+		this.gfnAlert("저장이 완료되었습니다.");
+		
+		this.btn.set_enable(true);
+		this.bClose = true;
+		
+		this.dsSearch.setColumn(0,"SN_SEQ",this.dsList.getColumn(0,"SN_SEQ"));
+		this.fnSelect();
+ 	}
+	else if (svcID == "delete") {
+		this.gfnAlert("삭제가 되었습니다.", "fnClose_callback");
+ 	}
+}
+
+
+this.fnDel_callback = function(strId, val) 
+{
+	if(val == true)
+	{		
+		this.dsList.setColumn(0,"TY_SAVE", 8);
+	
+		var strSvcId    = "delete";
+		var strSvcType  = "save";
+		var inProc		= "_dsProc";
+		var inData      = "save=dsList";
+		var outData     = "";
+		var strArg      = "";
+		var callBackFnc = "fnCallback";
+		
+		this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+							strSvcType , 	// transaction을 요청할 구분
+							inProc,			// Procedure 정보 Dataset 이름
+							inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+							outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+							strArg, 		// 입력값으로 보낼 arguments, strFormData="20120607"
+							callBackFnc); // 통신방법 정의 [생략가능]
+	}
+}
+
+// 삭제 메시지 후 창을 닫기 위한 콜백함수.
+this.fnClose_callback = function(strID)
+{
+	this.getParentContext().close(true);
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+
+/************************************************************************
+ * 그리드 이벤트
+ ************************************************************************/
+ 
+/************************************************************************
+ * 기타 이벤트
+ ************************************************************************/
+this.fnFile = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	
+	var fileManager = {};
+	
+    fileManager.CD_GUBUN = "DC01";
+	fileManager.CD_DIR = [this.dsList.getColumn(0, "SN_SEQ")];
+    fileManager.IS_READONLY = false;
+    this.gfnFileManager(fileManager, "fnFileCallback");
+	
+};
+
+
+this.fnFileCallback = function() {
+	this.fnSelect();
+};
+
+
+this.dsList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+ 	if(e.oldvalue != e.newvalue) {
+		this.FormBtns.Save.set_enable(true);
+ 	};	
+};]]></Script>
+    <Objects>
+      <Dataset id="_dsProc">
+        <ColumnInfo>
+          <Column id="TARGET" type="STRING" size="256"/>
+          <Column id="SP" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TARGET">select</Col>
+            <Col id="SP">DCZPR_BOARD_SELECT</Col>
+          </Row>
+          <Row>
+            <Col id="TARGET">save</Col>
+            <Col id="SP">DCZPR_BOARD_SAVE</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" onvaluechanged="dsList_onvaluechanged" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="TY_SAVE" type="STRING" size="1"/>
+          <Column id="SN_SEQ" type="STRING" size="10"/>
+          <Column id="NM_TITLE" type="STRING" size="300"/>
+          <Column id="RM_CONTENT" type="STRING" size="4000"/>
+          <Column id="ID_USER" type="STRING" size="10"/>
+          <Column id="NM_USER" type="STRING" size="20"/>
+          <Column id="NO_HIT" type="INT" size="4"/>
+          <Column id="DT_SHOW_FR" type="STRING" size="8"/>
+          <Column id="DT_SHOW_TO" type="STRING" size="8"/>
+          <Column id="TY_ISTOP" type="INT" size="4"/>
+          <Column id="TY_POPUP" type="STRING" size="1"/>
+          <Column id="ID_INSERT" type="STRING" size="20"/>
+          <Column id="DT_INSERT" type="STRING" size="10"/>
+          <Column id="ID_UPDATE" type="STRING" size="20"/>
+          <Column id="DT_UPDATE" type="STRING" size="10"/>
+          <Column id="FILE_CNT" type="INT" size="4"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="SN_SEQ" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="SN_SEQ"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.edtDS_GONGJI" propid="value" datasetid="dsList" columnid="NM_TITLE"/>
+      <BindItem id="item1" compid="divData.form.edtDS_CONTENT" propid="value" datasetid="dsList" columnid="RM_CONTENT"/>
+      <BindItem id="item2" compid="divData.form.edtDS_HNAME" propid="value" datasetid="dsList" columnid="NM_USER"/>
+      <BindItem id="item3" compid="divData.form.edtDT_INSERT" propid="value" datasetid="dsList" columnid="DT_INSERT"/>
+      <BindItem id="item4" compid="divData.form.edtDT_UPDATE" propid="value" datasetid="dsList" columnid="DT_UPDATE"/>
+      <BindItem id="item5" compid="divData.form.edtFILE_CNT" propid="value" datasetid="dsList" columnid="FILE_CNT"/>
+      <BindItem id="item6" compid="divData.form.chkTY_ISTOP" propid="value" datasetid="dsList" columnid="TY_ISTOP"/>
+      <BindItem id="item7" compid="divData.form.ctclDT_SHOW_FR" propid="value" datasetid="dsList" columnid="DT_SHOW_FR"/>
+      <BindItem id="item8" compid="divData.form.ctclDT_SHOW_TO" propid="value" datasetid="dsList" columnid="DT_SHOW_TO"/>
+    </Bind>
+  </Form>
+</FDL>

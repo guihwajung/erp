@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="410" height="420" maxwidth="480" maxheight="480" titletext="전표발행(대체)" onload="form_onload">
+    <Layouts>
+      <Layout height="420" width="410">
+        <Div id="divData" taborder="1" left="30" top="5" bottom="0" right="0" cssclass="div_DATA_Bg" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staBar04_00" taborder="35" left="99" top="255" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staTitle00" taborder="16" text="입금/출금 정보" left="0" top="229" height="22" cssclass="sta_TITLE_Bg" width="350"/>
+              <Static id="staBar00_00" taborder="30" left="99" top="106" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staBar02" taborder="19" left="99" top="313" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staBar00" taborder="3" left="99" top="36" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staBar03" taborder="9" left="99" top="164" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staBar04" taborder="12" left="99" top="193" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staBar01" taborder="15" left="99" top="284" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staBar53" taborder="26" left="99" top="135" height="30" cssclass="sta_WF_tablebg" width="251"/>
+              <Static id="staTitle" taborder="0" text="가입(출금)금액" left="0" top="6" height="22" cssclass="sta_TITLE_Bg" width="350"/>
+              <Static id="staItem00" taborder="1" text="가입금액" left="0" top="36" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <MaskEdit id="mskAM_INTRADE" taborder="2" left="105" top="40" width="195" height="20" format="#,##0.##" limitbymask="integer" enable="false"/>
+              <Static id="staItem55" taborder="4" text="이자" left="0" top="135" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <MaskEdit id="mskAM_EZA" taborder="5" left="105" top="140" width="195" height="20" format="#,##0.##" limitbymask="integer" enable="false"/>
+              <Static id="sta00" taborder="6" text="원" left="306" top="140" width="20" height="20"/>
+              <Static id="staItem03" taborder="7" text="법인세/주민세" left="0" top="164" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <MaskEdit id="mskAM_CORP_JUMIN" taborder="8" left="105" top="169" width="195" height="20" format="#,###,###,###,###,###,##0.##" limitbymask="integer" enable="false"/>
+              <Static id="staItem04" taborder="10" text="부대비용" left="0" top="193" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <MaskEdit id="mskAM_ETC" taborder="11" left="105" top="198" width="195" height="20" format="#,##0.##" limitbymask="integer" enable="false"/>
+              <Static id="staItem01" taborder="13" text="입금예상금액" left="0" top="284" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <MaskEdit id="mskAM_INCOME" taborder="14" left="105" top="289" width="195" height="20" format="#,##0.##" limitbymask="integer" enable="false"/>
+              <Static id="staItem02" taborder="17" text="입금거래내역" left="0" top="313" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <Div id="cfLST_TRADE" CDTextWidth="100" taborder="18" left="105" top="317" width="238" height="20" url="cmm::cmmCodeFind.xfdl" text="" enable="true"/>
+              <Button id="btnOk" taborder="20" text="확인" left="123" width="45" height="21" onclick="btnOk_onclick" uWord="popup.ok" top="366"/>
+              <Button id="btnCancle" taborder="21" text="취소" left="173" width="45" height="21" onclick="btnCancle_onclick" uWord="popup.cancel" top="366"/>
+              <Static id="sta01" taborder="22" text="원" left="306" top="169" width="20" height="20"/>
+              <Static id="sta02" taborder="23" text="원" left="306" top="40" width="20" height="20"/>
+              <Static id="sta04" taborder="24" text="원" left="306" top="198" width="20" height="20"/>
+              <Static id="sta03" taborder="25" text="원" left="306" top="289" width="20" height="20"/>
+              <Static id="staTitle01" taborder="27" text="만기/해약(입금)금액" left="0" top="76" height="22" cssclass="sta_TITLE_Bg" width="350"/>
+              <Static id="staItem00_00" taborder="28" text="거래금액" left="0" top="106" width="100" height="30" cssclass="sta_WF_tablelabel"/>
+              <MaskEdit id="mskAM_OUTTRADE" taborder="29" left="105" top="110" width="195" height="20" format="#,##0.##" limitbymask="integer" enable="false"/>
+              <Static id="sta02_00" taborder="31" text="원" left="306" top="110" width="20" height="20"/>
+              <Static id="staItem04_00" taborder="32" left="0" top="255" width="100" height="30" cssclass="sta_WF_tablelabel" text="출금예상금액"/>
+              <MaskEdit id="mskAM_OUT" taborder="33" left="105" top="260" width="195" height="20" format="#,##0.##" limitbymask="integer" enable="false"/>
+              <Static id="sta04_00" taborder="34" text="원" left="306" top="260" width="20" height="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    cmm > cmmPopup.xfdl (공통 팝업페이지)
+*  @FileName 	cmmPopup.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2017.10.19
+*  @Desction         스크립트 표준 및 주석 표준 정의
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.pv_AM_INTRADE;
+this.pv_AM_OUTTRADE;
+this.pv_AM_EZA;
+this.pv_AM_CORP_JUMIN;
+this.pv_AM_ETC;
+this.pv_AM_INCOME;
+this.pv_CD_CORP;
+this.pv_NO_ACCOUNT;
+this.pv_DT_TRADE;
+this.pv_CT_INCOME;
+this.pv_AM_EZAINCOME;
+this.pv_AM_OUT;
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this); //초기화[필수]
+	this.gfnFormInfo(this);
+	this.fnSetParameter();
+	this.fnSetEvent();
+
+	
+	// 타화면에서 오픈시 넘어오는 파라미터 처리
+	var frame = this.getOwnerFrame();	
+		
+	this.pv_AM_INTRADE = frame.AM_INTRADE;			// 거래금액
+	this.pv_AM_OUTTRADE = frame.AM_OUTTRADE;		// 거래금액	
+	this.pv_AM_EZA = frame.AM_EZA;					// 이자금액
+	this.pv_AM_CORP_JUMIN = frame.AM_CORP_JUMIN;	// 법인/주민세
+	this.pv_AM_ETC = frame.AM_ETC;					// 부대비용
+	this.pv_AM_INCOME = frame.AM_INCOME;			// 입금예상금액
+	this.pv_CD_CORP = frame.CD_CORP;				// 법인코드
+	this.pv_NO_ACCOUNT = frame.NO_ACCOUNT;			// 계좌번호
+	this.pv_DT_TRADE = frame.DT_TRADE;				// 거래일자	
+	this.pv_CT_INCOME = frame.CT_INCOME;			// 입금분류건수 
+	this.pv_AM_EZAINCOME = frame.AM_EZAINCOME;      // 이자 입금액 (입금예상액) 
+	this.pv_AM_OUT = frame.AM_OUT;				    // 출금예상액 
+	
+	//trace("차입금액 :: " + this.pv_AM_TRADE);
+	//trace("이자금액 :: " + this.pv_AM_EZA);
+	//trace("부대비용 :: " + this.pv_AM_ETC);
+	//trace("법인세/주민세 ::: " + this.pv_AM_CORP_JUMIN);
+	//trace("입금예상금액 :: " + this.pv_AM_TOTAL);
+	//trace("법인코드 :: " + this.pv_CD_CORP);
+	
+	this.mskAM_INTRADE.set_value(this.pv_AM_INTRADE);			// 거래금액
+	this.mskAM_OUTTRADE.set_value(this.pv_AM_OUTTRADE);			// 거래금액
+	this.mskAM_EZA.set_value(this.pv_AM_EZA);				// 이자금액
+	this.mskAM_CORP_JUMIN.set_value(this.pv_AM_CORP_JUMIN);	// 법인세/주민세
+	this.mskAM_ETC.set_value(this.pv_AM_ETC);				// 부대비용
+	this.mskAM_INCOME.set_value(this.pv_AM_INCOME + this.pv_AM_EZAINCOME);			// 입금예상금액
+	this.mskAM_OUT.set_value(this.pv_AM_OUT); 
+	
+	trace("이자금액 :: " + this.pv_AM_EZAINCOME);
+	if (this.pv_AM_INCOME == 0) 
+	{
+		this.mskAM_INCOME.set_value(this.pv_AM_EZAINCOME);	
+		//this.cfLST_TRADE.set_enable(false);
+	}
+	
+	if (this.pv_CT_INCOME == -1 || this.pv_AM_INCOME + this.pv_AM_EZAINCOME == 0 )
+	{	this.cfLST_TRADE.set_enable(false);	}
+};
+
+/************************************************************************
+ * 변수 선언
+ ************************************************************************/
+
+/************************************************************************
+ * 이벤트 설정
+ ************************************************************************/
+this.fnSetEvent = function() {
+
+	this.cfLST_TRADE.CodeFindName = "DFX_CFNO_INCOMELIST";
+	this.cfLST_TRADE.BeforeUserDataSetParam = "fnBeforeUserDataSetParam";	
+	this.cfLST_TRADE.AfterCDTextChanged = "fnAfterCDTextChanged";
+};
+/************************************************************************
+ * 파라미터 설정
+ ************************************************************************/
+this.fnSetParameter = function() {
+	
+	this.mskAM_INTRADE = this.divData.form.mskAM_INTRADE;			// 거래금액
+	this.mskAM_OUTTRADE = this.divData.form.mskAM_OUTTRADE;			// 거래금액
+	this.mskAM_EZA = this.divData.form.mskAM_EZA;					// 이자금액
+	this.mskAM_CORP_JUMIN = this.divData.form.mskAM_CORP_JUMIN;		// 법인세/주민세
+	this.mskAM_ETC = this.divData.form.mskAM_ETC;					// 부대비용
+	
+	this.mskAM_INCOME = this.divData.form.mskAM_INCOME;				// 입금예상금액
+	this.mskAM_OUT = this.divData.form.mskAM_OUT;                   // 출금예상금액 
+	this.cfLST_TRADE = this.divData.form.cfLST_TRADE;
+};
+
+/************************************************************************
+ * Validate
+ ************************************************************************/
+this.fnValidation = function() {
+	if (this.gfnIsNull(this.cfLST_TRADE.form.CDTextBox.value) && this.pv_CT_INCOME != -1 && this.pv_AM_INCOME > 0) {
+		this.gfnAlert("입금 거래내역을 입력하십시오.");
+		this.cfLST_TRADE.form.CDTextBox.setFocus();
+		return false;
+	}
+	
+	return true;
+}
+
+/************************************************************************
+ * 코드파인드 이벤트
+ ************************************************************************/
+this.fnBeforeUserDataSetParam = function(id, dsUserParam, nrow) {
+
+	if (id == "cfLST_TRADE") {
+		dsUserParam.setColumn(nrow, "CD_DEPT", "");	
+		dsUserParam.setColumn(nrow, "CD_CORP", this.pv_CD_CORP);	
+		dsUserParam.setColumn(nrow, "NO_ACCOUNT", this.pv_NO_ACCOUNT);	
+		dsUserParam.setColumn(nrow, "DT_TRADE", this.pv_DT_TRADE);			
+	}
+	return true;
+};
+
+this.fnAfterCDTextChanged = function(id, codeFindData) {
+    var arrData = codeFindData;
+	if (arrData.length > 0) {
+		var strCdCode = "";
+		var strDsCode = "";
+		for(var r = 0; r < arrData.length; r++) {
+			strCdCode += arrData[r]["NO_INCONFIRM"]+",";
+			strDsCode += arrData[r]["AM_IN"]+",";
+		}
+		
+		strCdCode = strCdCode.substr(0,strCdCode.length-1);
+		strDsCode = strDsCode.substr(0,strDsCode.length-1);
+		
+		this.cfLST_TRADE.form.CDTextBox.set_value(strCdCode);
+		this.cfLST_TRADE.form.DSTextBox.set_value(strDsCode);
+
+	}
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* @ OK버튼이벤트
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnValidation()) return false;
+
+	// 확인
+	var json = {};
+	
+	json.AM_INTRADE = this.mskAM_INTRADE.value;				// 차입금액
+	json.AM_OUTTRADE = this.mskAM_OUTTRADE.value;			// 차입금액
+	json.AM_EZA = this.mskAM_EZA.value;						// 이자금액
+	json.AM_CORP_JUMIN = this.mskAM_CORP_JUMIN.value;		// 법인세/주민세
+	json.AM_ETC = this.mskAM_ETC.value;						// 부대비용
+	json.AM_INCOME = this.mskAM_INCOME.value;				// 입금예상금액
+	json.NO_TRADE = this.cfLST_TRADE.form.CDTextBox.value;	// 거래내역번호(입금번호)
+	json.CT_INCOME = this.pv_CT_INCOME;
+	
+	this.getParentContext().close(JSON.stringify(json));
+};
+
+/**
+* @ 취소버튼이벤트
+*/
+this.btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getParentContext().close(false);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="NO_TRADE" type="FLOAT" size="256"/>
+          <Column id="NO_ACCOUNT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divData.form.cfLST_TRADE.form.CDTextBox" propid="value" datasetid="dsSearch" columnid="NO_TRADE"/>
+      <BindItem id="item1" compid="divData.form.cfLST_TRADE.form.DSTextBox" propid="value" datasetid="dsSearch" columnid="NO_ACCOUNT"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.0">
+  <Form id="cmmGyumjik" width="500" height="350" onload="cmmGyumjik_onload" onsize="cmmGyumjik_onsize">
+    <Layouts>
+      <Layout>
+        <Static id="staBG" taborder="0" left="0" top="0" bottom="0" right="0" background="#ffffff" text=""/>
+        <Grid id="grd" taborder="1" left="20" top="44" right="20" binddataset="dsDeptList" oncelldblclick="_grd_oncelldblclick" height="246" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="0"/>
+                <Column size="124"/>
+                <Column size="69"/>
+                <Column size="185"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="29"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="법인코드"/>
+                <Cell col="1" text="법인명"/>
+                <Cell col="2" text="부서코드"/>
+                <Cell col="3" text="부서명"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:CD_CORP"/>
+                <Cell col="1" text="bind:DS_CORP"/>
+                <Cell col="2" text="bind:CD_DEPT"/>
+                <Cell col="3" text="bind:DS_DEPT"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divBtns" taborder="2" top="grd:20" width="130" height="26" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnConfirm" taborder="3" text="확인" left="22" top="0" height="26" onclick="div00_btnConfirm_onclick" cssclass="btn_WF_action" width="52"/>
+              <Button id="btnCancel" taborder="4" text="취소" left="btnConfirm:4" top="0" height="26" onclick="div00_btnCancel_onclick" width="52"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta00" taborder="3" text="다음 부서중 로그인할 부서를 선택하세요." left="20" top="12" height="25" right="19" cssclass="sta_WF_notice"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.cmmGyumjik_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{	
+	if(new String(this.getOwnerFrame().deptList).valueOf() != "undefined") {
+		var deptList = this.getOwnerFrame().deptList;
+		if(deptList.rowcount > 0) {
+			for(var i = 0; i < deptList.rowcount; i++) {
+				var nrow = this.dsDeptList.addRow();
+				this.dsDeptList.setColumn(nrow, "ID_USER", deptList.getColumn(i, "ID_USER"));
+				this.dsDeptList.setColumn(nrow, "CD_CORP", deptList.getColumn(i, "CD_CORP"));
+				this.dsDeptList.setColumn(nrow, "DS_CORP", deptList.getColumn(i, "DS_CORP"));
+				this.dsDeptList.setColumn(nrow, "CD_DEPT", deptList.getColumn(i, "CD_DEPT"));
+				this.dsDeptList.setColumn(nrow, "DS_DEPT", deptList.getColumn(i, "DS_DEPT"));
+			}
+			this.grd.setCellPos(0, 0);
+		}
+	}
+};
+
+this.div00_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+this.div00_btnConfirm_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnConfirm();
+};
+
+this._grd_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnConfirm();	
+};
+
+this.fnConfirm = function() {
+	var json = {};
+	json.ID_USER = this.dsDeptList.getColumn(this.dsDeptList.rowposition, "ID_USER");
+	json.CD_CORP = this.dsDeptList.getColumn(this.dsDeptList.rowposition, "CD_CORP");
+	json.CD_DEPT = this.dsDeptList.getColumn(this.dsDeptList.rowposition, "CD_DEPT");
+
+	var objApp = this.gfnGetApplication();	
+	objApp.DW_SPACE98 = null;
+	objApp.DW_SPACE99 = null;
+	this.close(JSON.stringify(json));	
+};
+
+this.cmmGyumjik_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	var nLeft = (this.width - this.divBtns.width) / 2;
+	this.divBtns.left = nLeft;
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsDeptList">
+        <ColumnInfo>
+          <Column id="ID_USER" type="STRING" size="256"/>
+          <Column id="CD_CORP" type="STRING" size="256"/>
+          <Column id="DS_CORP" type="STRING" size="256"/>
+          <Column id="CD_DEPT" type="STRING" size="256"/>
+          <Column id="DS_DEPT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

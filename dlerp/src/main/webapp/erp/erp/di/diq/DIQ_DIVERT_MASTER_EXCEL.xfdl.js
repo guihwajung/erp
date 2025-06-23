@@ -1,0 +1,535 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("예산변경(엑셀)");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsList", this);
+            obj._setContents("<ColumnInfo><Column id=\"SEQ_MST\" type=\"STRING\" size=\"256\"/><Column id=\"YR_BUDGET\" type=\"STRING\" size=\"256\"/><Column id=\"CD_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"CD_ACCOUNT\" type=\"STRING\" size=\"256\"/><Column id=\"CD_ACTIVE\" type=\"STRING\" size=\"256\"/><Column id=\"AM_DIVERT\" type=\"STRING\" size=\"256\"/><Column id=\"AM_JAN\" type=\"STRING\" size=\"256\"/><Column id=\"AM_FEB\" type=\"STRING\" size=\"256\"/><Column id=\"AM_MAR\" type=\"STRING\" size=\"256\"/><Column id=\"AM_APR\" type=\"STRING\" size=\"256\"/><Column id=\"AM_MAY\" type=\"STRING\" size=\"256\"/><Column id=\"AM_JUN\" type=\"STRING\" size=\"256\"/><Column id=\"AM_JUL\" type=\"STRING\" size=\"256\"/><Column id=\"AM_AUG\" type=\"STRING\" size=\"256\"/><Column id=\"AM_SEP\" type=\"STRING\" size=\"256\"/><Column id=\"AM_OCT\" type=\"STRING\" size=\"256\"/><Column id=\"AM_NOV\" type=\"STRING\" size=\"256\"/><Column id=\"AM_DEC\" type=\"STRING\" size=\"256\"/><Column id=\"DS_REM\" type=\"STRING\" size=\"256\"/><Column id=\"nx_flag\" type=\"STRING\" size=\"256\"/><Column id=\"nx_sort\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">save</Col><Col id=\"SP\">DIQPR_DIVERT_DTL_EXCEL_SAVE</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListExcel", this);
+            obj._setContents("<ColumnInfo><Column id=\"SEQ_MST\" type=\"STRING\" size=\"256\"/><Column id=\"YR_BUDGET\" type=\"STRING\" size=\"256\"/><Column id=\"CD_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"CD_ACCOUNT\" type=\"STRING\" size=\"256\"/><Column id=\"CD_ACTIVE\" type=\"STRING\" size=\"256\"/><Column id=\"AM_DIVERT\" type=\"STRING\" size=\"256\"/><Column id=\"AM_JAN\" type=\"STRING\" size=\"256\"/><Column id=\"AM_FEB\" type=\"STRING\" size=\"256\"/><Column id=\"AM_MAR\" type=\"STRING\" size=\"256\"/><Column id=\"AM_APR\" type=\"STRING\" size=\"256\"/><Column id=\"AM_MAY\" type=\"STRING\" size=\"256\"/><Column id=\"AM_JUN\" type=\"STRING\" size=\"256\"/><Column id=\"AM_JUL\" type=\"STRING\" size=\"256\"/><Column id=\"AM_AUG\" type=\"STRING\" size=\"256\"/><Column id=\"AM_SEP\" type=\"STRING\" size=\"256\"/><Column id=\"AM_OCT\" type=\"STRING\" size=\"256\"/><Column id=\"AM_NOV\" type=\"STRING\" size=\"256\"/><Column id=\"AM_DEC\" type=\"STRING\" size=\"256\"/><Column id=\"DS_REM\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"SEQ_MST\"/><Col id=\"YR_BUDGET\"/><Col id=\"CD_DEPT\"/><Col id=\"CD_ACCOUNT\">52050210</Col><Col id=\"CD_ACTIVE\">2560</Col><Col id=\"AM_DIVERT\">1000</Col><Col id=\"AM_OCT\">1000</Col><Col id=\"DS_REM\">추가예산</Col><Col id=\"AM_FEB\">0</Col><Col id=\"AM_MAR\">0</Col><Col id=\"AM_APR\">0</Col><Col id=\"AM_MAY\">0</Col><Col id=\"AM_JUN\">0</Col><Col id=\"AM_JUL\">0</Col><Col id=\"AM_AUG\">0</Col><Col id=\"AM_SEP\">0</Col><Col id=\"AM_NOV\">0</Col><Col id=\"AM_DEC\">0</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divData","0","55",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("objGrid","0","0",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj._setContents("");
+            this.divData.addChild(obj.name, obj);
+
+            obj = new Grid("objGridExcel","22","176","976","209",null,null,null,null,null,null,this.divData.form);
+            obj.set_taborder("1");
+            obj.set_enable("true");
+            obj.set_visible("false");
+            obj.set_tooltiptype("default");
+            obj._setContents("");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSearch.form.ctclYR_BUDGET.form.TextBox","value","dsSearch","YR_BUDGET");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("DIQ_DIVERT_MASTER_EXCEL.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+
+        	//this.FormBtns.Select.click();
+
+        	if(!this.gfnIsNull(this.getOwnerFrame().SEQ_MST)) {
+        		this.dsListExcel.setColumn(0, "SEQ_MST", this.getOwnerFrame().SEQ_MST);
+        		this.dsListExcel.setColumn(0, "YR_BUDGET", this.getOwnerFrame().YR_BUDGET);
+        		this.dsListExcel.setColumn(0, "CD_DEPT", this.getOwnerFrame().CD_DEPT);
+        	}
+
+        	this.fnSetButton();
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         * 서브버튼 사용 및 공통버튼 강제 제어시 여기서 처리
+         ************************************************************************/
+        this.fnSetButton = function() {
+        	this.FormBtns.Select.set_enable(false);
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결 (화면버튼관리)
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        	this.btnExcelDownload = this.gfnFormButtonAdd("ExcelDownload", "fnExcelDownload");   // 엑셀양식다운로드
+        	this.btnExcelUpload = this.gfnFormButtonAdd("ExcelUpload", "fnExcelUpload");	  // 엑셀업로드
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.dxGrid = this.divData.form.objGrid;
+        	this.dxGrid_Excel = this.divData.form.objGridExcel;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	// 그리드 초기화
+        	this.gfnGridInit(this.dxGrid, this.dsList, "DI", "DIQ_DIVERT_MASTER_EXCEL");
+
+        	// 셀 수정가능 여부
+        	this.dxGrid.EnterCell = "fnGrid_EnterCell";
+
+        	// 셀 변경 후 이벤트
+        	this.dxGrid.AfterEdit = "fnGrid_AfterEdit";
+
+        	// 그리드 코드파인드 설정
+        	this.dxGrid.BeforeUserDataSetParam = "fnGrid_BeforeUserDataSetParam";
+
+        	// 그리드 코드파인드 값 변경
+        	this.dxGrid.AfterCDTextChanged = "fnGrid_AfterCDTextChanged";
+
+        	// BUTTON, BUTTON-IN 처리
+        	this.dxGrid.ExpandUp = "fnGrid_ExpandUp";
+
+        	this.gfnGridInit(this.dxGrid_Excel, this.dsListExcel, "DI", "DIQ_DIVERT_MASTER_EXCEL");
+        };
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+
+        	// SAVE
+        	this.dsSave = new Dataset();
+        	this.dsSave.addColumn("SEQ_MST", "int");
+        	this.dsSave.addColumn("YR_BUDGET", "string");
+        	this.dsSave.addColumn("CD_DEPT", "string");
+        	this.dsSave.addColumn("CD_ACCOUNT", "string");
+        	this.dsSave.addColumn("CD_ACTIVE", "string");
+        	this.dsSave.addColumn("AM_DIVERT","bigdecimal");
+        	this.dsSave.addColumn("AM_JAN","bigdecimal");
+        	this.dsSave.addColumn("AM_FEB","bigdecimal");
+        	this.dsSave.addColumn("AM_MAR","bigdecimal");
+        	this.dsSave.addColumn("AM_APR","bigdecimal");
+        	this.dsSave.addColumn("AM_MAY","bigdecimal");
+        	this.dsSave.addColumn("AM_JUN","bigdecimal");
+        	this.dsSave.addColumn("AM_JUL","bigdecimal");
+        	this.dsSave.addColumn("AM_AUG","bigdecimal");
+        	this.dsSave.addColumn("AM_SEP","bigdecimal");
+        	this.dsSave.addColumn("AM_OCT","bigdecimal");
+        	this.dsSave.addColumn("AM_NOV","bigdecimal");
+        	this.dsSave.addColumn("AM_DEC","bigdecimal");
+        	this.dsSave.addColumn("DS_REM","string");
+        	this.dsSave.addColumn("ID_USER","string");
+        }
+
+        /************************************************************************
+         * 컨트롤 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+        	if (!this.fnSelectValidate()) return false;
+
+        	this.gfnGridBeforeSelect(this.dxGrid);
+
+        	this.dsSelect.clearData();
+        	this.dsSelect.addRow();
+
+        	//this.dsSelect.setColumn(0, "YR_BUDGET", this.gfnGetDate().substr(0,4));
+
+        	var strSvcId    = "select";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "select=dsSelect";
+        	var outData     = "dsList=select0";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+        	var nrow = this.gfnGridAdd(this.dxGrid); // top (default), bottom, current
+
+        	this.dsList.set_enableevent(false);
+        	this.dsList.setColumn(nrow, "SEQ_MST", this.getOwnerFrame().SEQ_MST);
+        	this.dsList.setColumn(nrow, "YR_BUDGET", this.getOwnerFrame().YR_BUDGET);
+        	this.dsList.setColumn(nrow, "CD_DEPT", this.getOwnerFrame().CD_DEPT);
+        	this.dsList.set_enableevent(true);
+
+        	this.fnSetButton();
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+        	this.gfnGridDel(this.dxGrid);
+
+        	this.fnSetButton();
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+        	// 그리드 필수항목 체크
+        	if (!this.gfnGridValidate(this.dxGrid)) return;
+
+        	if(!this.fnDataValidate()) return false;
+
+        	this.dxGrid.updateToDataset();
+
+        	this.dsSave.clearData();
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var flag = this.gfnGetFlag(this.dsList, i);
+        		switch(flag) {
+        			case "I":
+        			case "U":
+        			case "D":
+        				var nrow = this.dsSave.addRow();
+        				this.dsSave.setColumn(nrow, "SEQ_MST", this.dsList.getColumn(i, "SEQ_MST"));
+         				this.dsSave.setColumn(nrow, "YR_BUDGET", this.dsList.getColumn(i, "YR_BUDGET"));
+         				this.dsSave.setColumn(nrow, "CD_DEPT", this.dsList.getColumn(i, "CD_DEPT"));
+        				this.dsSave.setColumn(nrow, "CD_ACCOUNT", this.dsList.getColumn(i, "CD_ACCOUNT"));
+        				this.dsSave.setColumn(nrow, "CD_ACTIVE", this.dsList.getColumn(i, "CD_ACTIVE"));
+
+        				this.dsSave.setColumn(nrow, "AM_DIVERT", this.dsList.getColumn(i, "AM_DIVERT"));
+        				this.dsSave.setColumn(nrow, "AM_JAN", this.dsList.getColumn(i, "AM_JAN"));
+        				this.dsSave.setColumn(nrow, "AM_FEB", this.dsList.getColumn(i, "AM_FEB"));
+        				this.dsSave.setColumn(nrow, "AM_MAR", this.dsList.getColumn(i, "AM_MAR"));
+        				this.dsSave.setColumn(nrow, "AM_APR", this.dsList.getColumn(i, "AM_APR"));
+        				this.dsSave.setColumn(nrow, "AM_MAY", this.dsList.getColumn(i, "AM_MAY"));
+        				this.dsSave.setColumn(nrow, "AM_JUN", this.dsList.getColumn(i, "AM_JUN"));
+        				this.dsSave.setColumn(nrow, "AM_JUL", this.dsList.getColumn(i, "AM_JUL"));
+
+        				this.dsSave.setColumn(nrow, "AM_AUG", this.dsList.getColumn(i, "AM_AUG"));
+        				this.dsSave.setColumn(nrow, "AM_SEP", this.dsList.getColumn(i, "AM_SEP"));
+        				this.dsSave.setColumn(nrow, "AM_OCT", this.dsList.getColumn(i, "AM_OCT"));
+        				this.dsSave.setColumn(nrow, "AM_NOV", this.dsList.getColumn(i, "AM_NOV"));
+        				this.dsSave.setColumn(nrow, "AM_DEC", this.dsList.getColumn(i, "AM_DEC"));
+        				this.dsSave.setColumn(nrow, "DS_REM", this.dsList.getColumn(i, "DS_REM"));
+         				this.dsSave.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        				break;
+        		}
+        	}
+
+        	if (this.dsSave.rowcount == 0 ) return;
+
+        	// save SP 한개로 사용하는 경우
+        	/*
+        	this.dsSave.clearData();
+
+        	for (var i = 0; i < this.dsList.rowcount; i++) {
+        		var flag = this.gfnGetFlag(this.dsList, i);
+        		switch(flag) {
+        			case "I":
+        			case "U":
+        			case "D":
+        				var nrow = this.dsSave.addRow();
+        				this.dsSave.setColumn(nrow, "TY_FLAG", flag);
+        				this.dsSave.setColumn(nrow, "NO_IDX", this.dsList.getColumn(i, "NO_IDX"));
+        				break;
+        		}
+        	}
+
+        	if (this.dsSave.rowcount == 0) return;
+        	*/
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "save=dsSave";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGrid);
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+        /*
+         *	조회 Validate
+         */
+        this.fnSelectValidate = function() {
+        	var validate = true;
+        	/*
+        	if (this.gfnIsNull(this.dsSearch.getColumn(0,"CD_SYSTEM"))) {
+        		validate = false;
+        		// Alert후 실행할 처리
+        		this.fnVaidateCallback = function() {
+        			this.ccfCD_SYSTEM.form.CDTextBox.setFocus();
+        		}
+        		this.gfnAlert("시스템을 입력하세요.", "fnVaidateCallback");
+        	}
+        	*/
+        	return validate;
+        };
+
+        this.fnDataValidate = function() {
+        	var validate = true;
+        	var nDuplicate = 0;
+        	var msg = "";
+
+        	for(var i=0;i<this.dsList.rowcount;i++){
+        		var CD_DEPT = this.gfnNvl(this.dsList.getColumn(i, "CD_DEPT"),"");
+        		var CD_ACCOUNT = this.gfnNvl(this.dsList.getColumn(i, "CD_ACCOUNT"),"");
+        		var CD_ACTIVE = this.gfnNvl(this.dsList.getColumn(i, "CD_ACTIVE"),"");
+        		var DATA1 = CD_DEPT + CD_ACCOUNT + CD_ACTIVE;
+
+        		// 중복된 부서, 비목, 세목코드 확인
+        		for(var c=0;c<this.dsList.rowcount;c++){
+        			if( i == c ) continue;
+        			var CD_DEPT2 = this.gfnNvl(this.dsList.getColumn(c, "CD_DEPT"),"");
+        			var CD_ACCOUNT2 = this.gfnNvl(this.dsList.getColumn(c, "CD_ACCOUNT"),"");
+        			var CD_ACTIVE2 = this.gfnNvl(this.dsList.getColumn(c, "CD_ACTIVE"),"");
+        			var DATA2 = CD_DEPT2 + CD_ACCOUNT2 + CD_ACTIVE2;
+
+        			if(DATA1 == DATA2) nDuplicate++;
+        			if(nDuplicate > 1){
+        				//this.gfnAlert("중복된 활동코드가 존재합니다 데이터를 확인하세요");
+        				//return false;
+        				msg += (i + 1) + "열: 중복된 세목코드("+CD_ACTIVE+")가 존재합니다 데이터를 확인하세요!\n";
+        				validate = false;
+        				nDuplicate = 0;
+        			}
+        		}
+
+        		// 변경금액 <> 월별변경금액
+        		var amSum = 0;
+        		var nAmDifference = 0;
+        		var AM_DIVERT = nexacro.toNumber(this.gfnNvl(this.dsList.getColumn(i, "AM_DIVERT"),0));
+        		var s = this.dxGrid.getBindCellIndex("body","AM_JAN");
+        		var e = this.dxGrid.getBindCellIndex("body","AM_DEC");
+        		for (var j = s; j <= e; j++) {
+        			var colnm = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, j);
+        			amSum += nexacro.toNumber(this.gfnNvl(this.dsList.getColumn(i, colnm),0));
+        		}
+
+        		if (amSum != AM_DIVERT) {
+        			msg += (i + 1) + "열: 변경금액("+this.gfnAppendComma(AM_DIVERT)+")과 월별변경금액("+this.gfnAppendComma(amSum)+")이 다릅니다!\n";
+        			validate = false;
+        		}
+        	}
+
+        	if (!validate) {
+        		this.gfnAlert(msg);
+        		return validate;
+        	}
+        	return validate;
+        };
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	if (svcID == "select") {
+        		this.gfnGridAfterSelect(this.dxGrid);
+        	}
+        	else if(svcID == "save") {
+        		if (errorCode == 0) {
+        //			this.FormBtns.Select.click();
+        			this.getParentContext().close(true);
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        }
+
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+
+         /************************************************************************
+         * 확장버튼 이벤트
+         ************************************************************************/
+
+         // 엑셀양식다운로드
+         this.fnExcelDownload = function(obj,e) {
+        	this.gfnExcelExport(this.dxGrid_Excel);
+
+        	this.fnSetButton();
+        }
+
+         // 엑셀업로드
+         this.fnExcelUpload = function (obj,e)
+         {
+        	if (!this.fnSelectValidate()) return false;
+
+        	// this.gfnExcelImport("적용할Dataset명","sheet명","데이터시작좌표","콜백함수명","구분ID",현재폼);
+        	// sheet명 없으면 첫번째 sheet
+        	this.gfnExcelImport("dsList","sheet1","A2","fnExcelImportCallback","import",this);
+         };
+
+         /*
+         *	엑셀업로드 Callback
+         */
+         this.fnExcelImportCallback = function(sImportId, dsOut, dsSheet) {
+        	trace(dsOut.saveXML());
+        	//trace(this.ucFlag);
+        	this.gfnGridAfterSelect(this.dxGrid);
+        		if (dsOut.rowcount == 0)  {
+        		this.gfnAlert("엑셀파일에 내용이 없습니다.");
+        		return false;
+        	}
+
+        	// 엑셀 양식과 그리드 컬럼이 그대로 일치 하는 경우
+        	// 아닌경우는 이부분 주석처리
+        	for (var i = 0; i < this.dsList.getColCount(); ++i)
+        	{
+        		sColumnId = "Column" + i;
+        		var sColumnNm = this.gfnGridGetBindColumnNameByIndex(this.dxGrid, i);
+        		if (sColumnNm != "" && sColumnId != sColumnNm)
+        		{
+        			dsOut.updateColID(sColumnId, sColumnNm);
+        		}
+        	}
+
+        	// 양식이 일치하고 엑셀내역을 기존데이터에 Insert하지 않고
+        	// 엑셀내역 그대로 그리드 반영할 시 copyData
+        	//this.dsListSub.copyData(dsOut);
+
+        	//this.dsList.set_enableevent(false);
+        	for (var i = 0; i < dsOut.rowcount; ++i) {
+        		var nrow = this.dsList.addRow();
+        		this.dsList.setColumn(nrow, this.ucFlag, "I");
+
+        		// 양식이 일치하는 경우 copyRow
+        		this.dsList.copyRow(nrow, dsOut, i);
+        		this.dsList.setColumn(nrow, "SEQ_MST", this.getOwnerFrame().SEQ_MST);
+        		this.dsList.setColumn(nrow, "YR_BUDGET", this.getOwnerFrame().YR_BUDGET);
+
+        		// 양식과 일치하지 않는 경우 아래와 같이 컬럼별로 처리.
+        	   //this.dsList.setColumn(nrow, "CD_SYSTEM", dsOut.getColumnNF(i, "Column1"));
+        	   //this.dsList.setColumn(nrow, "CD_TYPE", dsOut.getColumnNF(i, "Column2"));
+
+        	}
+        	//this.dsList.set_enableevent(true);
+        	this.gfnSetFormStatus(this, "I");
+
+        	this.fnSetButton();
+        }
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        this.dsSearch_onvaluechanged = function(obj,e)
+        {
+        	if(e.oldvalue != e.newvalue) {
+        		this.gfnSetFormStatus(this);	// 폼상태 초기화
+        		this.gfnGridClear(this.dxGrid);
+        	}
+        };
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.dsSearch.addEventHandler("onvaluechanged",this.dsSearch_onvaluechanged,this);
+        };
+        this.loadIncludeScript("DIQ_DIVERT_MASTER_EXCEL.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

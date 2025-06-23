@@ -1,0 +1,600 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("form");
+            this.set_titletext("공통코드관리(자재)");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("_dsProc", this);
+            obj._setContents("<ColumnInfo><Column id=\"TARGET\" type=\"STRING\" size=\"256\"/><Column id=\"SP\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"TARGET\">d_select</Col><Col id=\"SP\">DZZPR_MDM_DETAIL_SELECT_WITH_USER</Col></Row><Row><Col id=\"TARGET\">d_insert</Col><Col id=\"SP\">DZZPR_MDM_DETAIL_INSERT</Col></Row><Row><Col id=\"TARGET\">d_update</Col><Col id=\"SP\">DZZPR_MDM_DETAIL_UPDATE</Col></Row><Row><Col id=\"TARGET\">d_delete</Col><Col id=\"SP\">DZZPR_MDM_DETAIL_DELETE</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSubInfo", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsGridInfoSub", this);
+            obj._setContents("<ColumnInfo><Column id=\"YN_READONLY\" type=\"STRING\" size=\"256\"/><Column id=\"NO_FIXEDROWS\" type=\"STRING\" size=\"256\"/><Column id=\"NO_FROZENCOL\" type=\"STRING\" size=\"256\"/><Column id=\"YN_AUTOFILTER\" type=\"STRING\" size=\"256\"/><Column id=\"TY_GROUP\" type=\"STRING\" size=\"256\"/><Column id=\"YN_GROUPPANNEL\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"YN_READONLY\">N</Col><Col id=\"NO_FIXEDROWS\">1</Col><Col id=\"NO_FROZENCOL\">0</Col><Col id=\"YN_AUTOFILTER\">Y</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsGridSpecSub", this);
+            obj._setContents("<ColumnInfo><Column id=\"NO_WIDTH\" type=\"INT\" size=\"256\"/><Column id=\"YN_READONLY\" type=\"STRING\" size=\"256\"/><Column id=\"YN_ESSENTIAL\" type=\"STRING\" size=\"256\"/><Column id=\"TY_CELLTYPE\" type=\"STRING\" size=\"256\"/><Column id=\"TY_ALIGN\" type=\"STRING\" size=\"256\"/><Column id=\"TY_INPUT\" type=\"STRING\" size=\"256\"/><Column id=\"DS_FIELD\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HEADER1\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HEADER2\" type=\"STRING\" size=\"256\"/><Column id=\"DS_HEADER3\" type=\"STRING\" size=\"256\"/><Column id=\"DS_COMBOLIST\" type=\"STRING\" size=\"256\"/><Column id=\"CD_CODEFIND\" type=\"STRING\" size=\"256\"/><Column id=\"NM_CODEFIND\" type=\"STRING\" size=\"256\"/><Column id=\"DS_RESULTALIAS\" type=\"STRING\" size=\"256\"/><Column id=\"NO_MAXLENGTH\" type=\"INT\" size=\"256\"/><Column id=\"NO_GROUP\" type=\"INT\" size=\"256\"/><Column id=\"NO_MERGE\" type=\"INT\" size=\"256\"/><Column id=\"TY_SUMMARY\" type=\"STRING\" size=\"256\"/><Column id=\"AT_COLBACK\" type=\"STRING\" size=\"256\"/><Column id=\"AT_COLFORE\" type=\"STRING\" size=\"256\"/><Column id=\"AT_READONLY\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsListSub", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSearch", this);
+            obj._setContents("<ColumnInfo><Column id=\"CD_SYSTEM\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CD_SYSTEM\"/></Row></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divData","0","0",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("div_DATA_Bg");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("objGridSub","0","0",null,null,"0","0",null,null,null,null,this.divData.form);
+            obj.set_taborder("0");
+            obj.set_binddataset("dsListSub");
+            obj._setContents("<Formats><Format id=\"default\"/></Formats>");
+            this.divData.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("DSZ_RATE_MONTH.xfdl", function() {
+        this.objApp = this.gfnGetApplication();
+
+        this.cd_system = "DS";
+        this.cd_master = "02";
+
+        this.form_onload = function(obj,e)
+        {
+        	// -- 필수 -------------------//
+        	this.gfnFormOnLoad(this);
+        	this.gfnFormInfo(this);
+        	// ---------------------------//
+
+        	this.fnSetButton();
+        	this.fnSetExtendButton();
+        	this.fnSetVariable();
+        	this.fnSetEvent();
+        	this.fnSetParameter();
+
+        	//if(!this.gfnIsNull(this.FormInfo.DS_PARAM)) {
+        		this.FormBtns.Select.click();
+        		//this.fnSelectSub();
+        	//}
+        };
+
+        /************************************************************************
+         * 버튼 설정 : 화면(Tab) 전환시 마다 호출
+         ************************************************************************/
+        this.fnSetButton = function() {
+        }
+
+        /************************************************************************
+         * 확장 버튼 : 화면별 버튼 설정 ID, function 연결
+         ************************************************************************/
+        this.fnSetExtendButton = function() {
+        	//this.btnExcelUpload = this.gfnFormButtonAdd("ExcelUpload", "fnExcelUpload");
+        };
+
+        /************************************************************************
+         * 변수 선언
+         ************************************************************************/
+        this.fnSetVariable = function() {
+        	this.dxGridSub = this.divData.form.objGridSub;
+        };
+
+        /************************************************************************
+         * 이벤트 설정
+         ************************************************************************/
+        this.fnSetEvent = function() {
+        	// sub그리드 dataset을 셋팅정보와 같이 받아오다보니
+        	// 처음 sub 그리드 셋팅시만 dataset onload 이벤트가 안타는 문제가 있어서 빈 그리드 셋팅
+        	this.fnAddFlagRow();
+        	this.gfnGridSet(this, this.dxGridSub, this.dsGridInfoSub, this.dsGridSpecSub);
+        }
+
+        /************************************************************************
+         * 파라미터 설정
+         ************************************************************************/
+        this.fnSetParameter = function() {
+
+        	this.dsSelectSub = new Dataset();
+        	this.dsSelectSub.addColumn("CD_SYSTEM", "string");
+        	this.dsSelectSub.addColumn("CD_MASTER", "string");
+        	this.dsSelectSub.addColumn("ID_USER", "string");
+        	this.dsSelectSub.addColumn("CD_DEPT", "string");
+
+        	this.dsInsertSub = new Dataset();
+        	this.dsInsertSub.addColumn("CD_SYSTEM", "string");
+        	this.dsInsertSub.addColumn("CD_MASTER", "string");
+        	this.dsInsertSub.addColumn("Values", "string");
+        	this.dsInsertSub.addColumn("Keys", "string");
+        	this.dsInsertSub.addColumn("ID_USER", "string");
+
+        	this.dsUpdateSub = new Dataset();
+        	this.dsUpdateSub.addColumn("CD_SYSTEM", "string");
+        	this.dsUpdateSub.addColumn("CD_MASTER", "string");
+        	this.dsUpdateSub.addColumn("Values", "string");
+        	this.dsUpdateSub.addColumn("Keys", "string");
+        	this.dsUpdateSub.addColumn("ID_USER", "string");
+
+        	this.dsDeleteSub = new Dataset();
+        	this.dsDeleteSub.addColumn("CD_SYSTEM", "string");
+        	this.dsDeleteSub.addColumn("CD_MASTER", "string");
+        	this.dsDeleteSub.addColumn("Keys", "string");
+        	this.dsDeleteSub.addColumn("ID_USER", "string");
+
+
+        }
+
+        /************************************************************************
+         * 버튼 이벤트
+         ************************************************************************/
+         /*
+          *	조회 버튼
+          */
+        this.fnSelect = function() {
+        	this.dsSelectSub.clearData();
+        	this.dsSelectSub.addRow();
+        	this.dsSelectSub.setColumn(0, "CD_SYSTEM", this.cd_system);
+        	this.dsSelectSub.setColumn(0, "CD_MASTER", this.cd_master);
+        	this.dsSelectSub.setColumn(0, "ID_USER", this.AuthClient.ID_USER);
+        	this.dsSelectSub.setColumn(0, "CD_DEPT", this.AuthClient.CD_DEPT);
+
+        	this.dsListSub.clear();
+        	this.dsListSub.set_filterstr("");
+
+        	var strSvcId    = "detail";
+        	var strSvcType  = "grid";
+        	var inProc		= "_dsProc";
+        	var inData      = "d_select=dsSelectSub";
+        	var outData     = "dsSubInfo=d_select0 dsListSub=d_select1";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	입력 버튼
+         */
+        this.fnAdd = function() {
+        	var nrow = this.gfnGridAdd(this.dxGridSub); // top (default), bottom, current
+        	this.dsListSub.setColumn(nrow, "CD_SYSTEM", this.cd_system);
+        	this.dsListSub.setColumn(nrow, "CD_TYPE", this.cd_master);
+
+        	this.serverTime = "";
+        	this.gfnGetServerTime("serverTime");
+        	var serverTimeStr = this.gfnGetDigit(this.serverTime.substring(0, 10)).substring(0,6);
+
+        	this.dsListSub.copyRow(nrow, this.dsListSub, nrow+1);
+        	this.dsListSub.setColumn(nrow, "DT_YEARMONTH", serverTimeStr);
+        	this.dsListSub.setColumn(nrow, "nx_flag", "I");
+
+        	this.dxGridSub.set_enableredraw(false);
+        	this.dxGridSub.setFocus();
+        	this.dxGridSub.clearSelect();
+        	this.dxGridSub.set_enableredraw(true);
+        }
+
+        /*
+         *	삭제 버튼
+         */
+        this.fnDel = function() {
+        	this.gfnGridDel(this.dxGridSub);
+        }
+
+        /*
+         *	저장 버튼
+         */
+        this.fnSave = function() {
+        	if (!this.gfnGridValidate(this.dxGridSub)) return;
+
+        	this.dxGridSub.updateToDataset();
+
+        	this.dsInsertSub.clearData();
+        	this.dsUpdateSub.clearData();
+        	this.dsDeleteSub.clearData();
+
+        	for (var i = 0; i < this.dsListSub.rowcount; i++) {
+        		var flag = this.gfnGetFlag(this.dsListSub, i);
+        		switch(flag) {
+        			case "I":
+        				var insert_keys = [];
+        				var insert_values = [];
+        				for(var c = 0; c < this.dsListSub.colcount; c++) {
+        					var colnm = this.dsListSub.colinfos[c].name;
+        					var type = this.dsListSub.colinfos[c].type.toUpperCase();
+        					if(colnm == this.ucFlag || colnm == this.ucSort) continue;
+        					var val = this.dsListSub.getColumn(i, colnm);
+        					if(this.gfnIsNull(val)) {
+        						val = "NULL";
+        					}
+        					if(colnm == "CD_SYSTEM") {
+        						val = this.cd_system;
+        					}
+        					if(colnm == "CD_TYPE") {
+        						val = this.cd_master;
+        					}
+
+        					if(val == "NULL" || type == "INT" || type == "BIGDECIMAL" || type == "FLOAT") {
+        						insert_values.push(val);
+        					} else {
+        						// 따옴표 들어간 경우 문제가 있을듯.. ' -> '' or '''' 변환처리필요
+        						insert_values.push("'" + val.replace(/\'/g, "''") + "'");
+        					}
+
+        					insert_keys.push(colnm);
+        				}
+
+        				var nrow = this.dsInsertSub.addRow();
+        				this.dsInsertSub.setColumn(nrow, "CD_SYSTEM", this.cd_system);
+        				this.dsInsertSub.setColumn(nrow, "CD_MASTER", this.cd_master);
+        				this.dsInsertSub.setColumn(nrow, "Values", insert_values.join(','));
+        				this.dsInsertSub.setColumn(nrow, "Keys", insert_keys.join(','));
+        				this.dsInsertSub.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        				break;
+
+        			case "U":
+        				var update_keys = [];
+        				var update_values = [];
+        				for(var c = 0; c < this.dsListSub.colcount; c++) {
+        					var colnm = this.dsListSub.colinfos[c].name;
+        					var type = this.dsListSub.colinfos[c].type.toUpperCase();
+        					if(colnm == this.ucFlag || colnm == this.ucSort) continue;
+
+        					// PK 키 체크
+        					if(this.gfnIsExistInArray(this.SUB_GRID_PK, colnm)) {
+        						//if(update_keys.length == 0) update_keys.push("");
+        						if(type == "INT" || type == "BIGDECIMAL" || type == "FLOAT") {
+        							update_keys.push(colnm + " = " + this.dsListSub.getColumn(i, colnm));
+        						} else {
+        							update_keys.push(colnm + " = '" + this.dsListSub.getColumn(i, colnm) + "'");
+        						}
+        					} else {
+        						var val = this.dsListSub.getColumn(i, colnm);
+        						if(this.gfnIsNull(val)) {
+        							val = "NULL";
+        						}
+        						if(val == "NULL" || type == "INT" || type == "BIGDECIMAL" || type == "FLOAT") {
+        							update_values.push(colnm + " = " + val);
+        						} else {
+        							update_values.push(colnm + " = '" + val.replace(/\'/g, "''") + "'");
+        						}
+
+        					}
+        				}
+
+        				var nrow = this.dsUpdateSub.addRow();
+        				this.dsUpdateSub.setColumn(nrow, "CD_SYSTEM", this.cd_system);
+        				this.dsUpdateSub.setColumn(nrow, "CD_MASTER", this.cd_master);
+        				this.dsUpdateSub.setColumn(nrow, "Values", update_values.join(','));
+        				this.dsUpdateSub.setColumn(nrow, "Keys", update_keys.join(' AND '));
+        				this.dsUpdateSub.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        				break;
+
+        			case "D":
+        				var delete_keys = [];
+        				for(var c = 0; c < this.dsListSub.colcount; c++) {
+        					var colnm = this.dsListSub.colinfos[c].name;
+        					var type = this.dsListSub.colinfos[c].type.toUpperCase();
+        					if(colnm == this.ucFlag || colnm == this.ucSort) continue;
+        					// PK 키 체크
+        					if(this.gfnIsExistInArray(this.SUB_GRID_PK, colnm)) {
+        						//if(delete_keys.length == 0) delete_keys.push("");
+        						if(type == "INT" || type == "BIGDECIMAL" || type == "FLOAT") {
+        							delete_keys.push(colnm + " = " + this.dsListSub.getColumn(i, colnm));
+        						} else {
+        							delete_keys.push(colnm + " = '" + this.dsListSub.getColumn(i, colnm) + "'");
+        						}
+        					}
+        				}
+
+        				var nrow = this.dsDeleteSub.addRow();
+        				this.dsDeleteSub.setColumn(nrow, "CD_SYSTEM", this.cd_system);
+        				this.dsDeleteSub.setColumn(nrow, "CD_MASTER", this.cd_master);
+        				this.dsDeleteSub.setColumn(nrow, "Keys", delete_keys.join(' AND '));
+        				this.dsDeleteSub.setColumn(nrow, "ID_USER", this.AuthClient.ID_USER);
+        				break;
+        		}
+        	}
+
+        	if (this.dsInsertSub.rowcount == 0 && this.dsUpdateSub.rowcount == 0 && this.dsDeleteSub.rowcount == 0) return;
+
+        	var strSvcId    = "save";
+        	var strSvcType  = "save";
+        	var inProc		= "_dsProc";
+        	var inData      = "d_insert=dsInsertSub d_update=dsUpdateSub d_delete=dsDeleteSub";
+        	var outData     = "";
+        	var strArg      = "";
+        	var callBackFnc = "fnCallback";
+
+        	this.gfnTransaction( strSvcId , 	// transaction을 구분하기 위한 svc id값
+        						strSvcType , 	// transaction을 요청할 구분
+        						inProc,			// Procedure 정보 Dataset 이름
+        						inData , 		// 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+        						outData , 		// 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+        						strArg, 			// 입력갑스로 보낼 arguments, strFormData="20120607"
+        						callBackFnc); // 통신방법 정의 [생략가능]
+        }
+
+        /*
+         *	엑셀 버튼
+         */
+        this.fnExcel = function() {
+        	this.gfnExcelExport(this.dxGridSub);
+        }
+
+        /*
+         *	출력 버튼
+         */
+        this.fnPrint = function() {
+        }
+
+
+        /************************************************************************
+         * Validate
+         ************************************************************************/
+
+        /************************************************************************
+         * 콜백 이벤트
+         ************************************************************************/
+        /*
+         *	콜백 처리
+         */
+        this.fnCallback = function(svcID, errorCode, errorMsg)
+        {
+        	if (svcID == "select") {
+        	}
+        	else if (svcID == "detail") {
+        		this.fnSetSubGrid();
+        	}
+        	else if(svcID == "save") {
+        		if (errorCode == 0) {
+        			//this.FormBtns.Select.click();
+        			this.fnSaveAfter = function() {
+        				this.FormBtns.Select.click();
+        			}
+        			this.gfnAlert("저장되었습니다", "fnSaveAfter");
+        		} else {
+        			this.gfnAlert(errorMsg);
+        		}
+        	}
+        }
+
+
+        this.fnSelectSub = function() {
+
+        }
+
+        this.fnSetSubGrid = function() {
+        	this.dsGridSpecSub.clearData();
+        	this.SUB_GRID_PK = [];
+
+        	var no_fixedrows = 1;
+        	if (this.dsSubInfo.rowcount > 0) {
+        		var ds = this.dsSubInfo;
+
+        		// Flag
+        		this.fnAddFlagRow();
+
+        		for(var i = 0; i < ds.rowcount; i++) {
+        			var CD_COLID = ds.getColumn(i, "CD_COLID");
+        			var DS_COLID = ds.getColumn(i, "DS_COLID");
+
+        			if(this.gfnIsNull(CD_COLID) && this.gfnIsNull(DS_COLID)) continue;
+
+        			var DS_COLID2 = ds.getColumn(i, "DS_COLID2");
+        			var DS_COLID3 = ds.getColumn(i, "DS_COLID3");
+        			var LN_COL = ds.getColumn(i, "LN_COL");
+        			var DS_ORICOL = ds.getColumn(i, "DS_ORICOL");
+        			var TY_PK = ds.getColumn(i, "TY_PK");
+        			var TY_TYPE = ds.getColumn(i, "TY_TYPE");
+        			var TY_NOTNULL = ds.getColumn(i, "TY_NOTNULL");
+        			var CD_LEN = ds.getColumn(i, "CD_LEN");
+        			var CD_REGEXP1 = ds.getColumn(i, "CD_REGEXP1");
+        			var TY_INPUT = ds.getColumn(i, "TY_INPUT");
+        			var TY_ALIGN = ds.getColumn(i, "TY_ALIGN");
+        			var DS_COMBOLIS = ds.getColumn(i, "DS_COMBOLIS");
+        			var CD_CODEFIND = ds.getColumn(i, "CD_CODEFIND");
+        			var NM_CODEFIND = ds.getColumn(i, "NM_CODEFIND");
+        			var DS_RESULTALIAS = ds.getColumn(i, "DS_RESULTALIAS");
+        			var YN_SHOW = ds.getColumn(i, "YN_SHOW");
+        			var YN_UPDATE = ds.getColumn(i, "YN_UPDATE");
+        			var YN_READONLY = "Y";
+
+        			if (no_fixedrows < 2 && !this.gfnIsNull(DS_COLID2)) {
+        				no_fixedrows = 2;
+        			}
+        			if (no_fixedrows < 3 && !this.gfnIsNull(DS_COLID3)) {
+        				no_fixedrows = 3;
+        			}
+
+        			if(TY_PK == "Y") {
+        				this.SUB_GRID_PK.push(CD_COLID);
+        			}
+
+        			if(YN_SHOW == "N") {
+        				LN_COL = 0;
+        			}
+        			if(YN_UPDATE == "Y") {
+        				YN_READONLY = "N";
+        			} else if(YN_UPDATE == "U") {
+        				YN_READONLY = "U";
+        			}
+        			if(TY_INPUT == "CHECKBOX") {
+        				TY_INPUT = "CHECKBOX_YN";
+        			}
+
+        			var nrow = this.dsGridSpecSub.addRow();
+        			this.dsGridSpecSub.setColumn(nrow, "NO_WIDTH", LN_COL);
+        			this.dsGridSpecSub.setColumn(nrow, "YN_READONLY", YN_READONLY);
+        			this.dsGridSpecSub.setColumn(nrow, "YN_ESSENTIAL", TY_NOTNULL);
+        			this.dsGridSpecSub.setColumn(nrow, "TY_CELLTYPE", TY_TYPE);
+        			this.dsGridSpecSub.setColumn(nrow, "TY_ALIGN", TY_ALIGN);
+        			this.dsGridSpecSub.setColumn(nrow, "TY_INPUT", TY_INPUT);
+        			this.dsGridSpecSub.setColumn(nrow, "DS_FIELD", CD_COLID);
+        			this.dsGridSpecSub.setColumn(nrow, "DS_HEADER1", DS_COLID);
+        			this.dsGridSpecSub.setColumn(nrow, "DS_HEADER2", DS_COLID2);
+        			this.dsGridSpecSub.setColumn(nrow, "DS_HEADER3", DS_COLID3);
+        			this.dsGridSpecSub.setColumn(nrow, "DS_COMBOLIST", (this.gfnIsNull(CD_REGEXP1) ? DS_COMBOLIS : CD_REGEXP1));
+        			this.dsGridSpecSub.setColumn(nrow, "CD_CODEFIND", CD_CODEFIND);
+        			this.dsGridSpecSub.setColumn(nrow, "NM_CODEFIND", NM_CODEFIND);
+        			this.dsGridSpecSub.setColumn(nrow, "DS_RESULTALIAS", DS_RESULTALIAS);
+        			//this.dsGridSpecSub.setColumn(nrow, "NO_MAXLENGTH", CD_LEN);
+        			//this.dsGridSpecSub.setColumn(nrow, "NO_GROUP", );
+        			//this.dsGridSpecSub.setColumn(nrow, "NO_MERGE", );
+        			//this.dsGridSpecSub.setColumn(nrow, "TY_SUMMARY", );
+        			//this.dsGridSpecSub.setColumn(nrow, "AT_COLBACK", );
+        			//this.dsGridSpecSub.setColumn(nrow, "AT_COLFORE", );
+        			//this.dsGridSpecSub.setColumn(nrow, "AT_READONLY", );
+        		}
+        	}
+        	this.dsGridInfoSub.setColumn(0, "NO_FIXEDROWS", no_fixedrows);
+        	this.gfnGridSet(this, this.dxGridSub, this.dsGridInfoSub, this.dsGridSpecSub);
+        }
+
+        this.fnAddFlagRow = function() {
+        	var nrow = this.dsGridSpecSub.addRow();
+        	this.dsGridSpecSub.setColumn(nrow, "NO_WIDTH", 20);
+        	this.dsGridSpecSub.setColumn(nrow, "YN_READONLY", "Y");
+        	this.dsGridSpecSub.setColumn(nrow, "YN_ESSENTIAL", "N");
+        	this.dsGridSpecSub.setColumn(nrow, "TY_CELLTYPE", "TEXT");
+        	this.dsGridSpecSub.setColumn(nrow, "TY_ALIGN", "CENTER");
+        	this.dsGridSpecSub.setColumn(nrow, "TY_INPUT", "KEYIN");
+        	this.dsGridSpecSub.setColumn(nrow, "DS_FIELD", this.ucFlag);
+        };
+        /************************************************************************
+         * 코드파인드 이벤트
+         ************************************************************************/
+
+        /************************************************************************
+         * 그리드 이벤트
+         ************************************************************************/
+
+        /************************************************************************
+         * 기타 이벤트
+         ************************************************************************/
+        this.divData_ondragmove = function(obj,e)
+        {
+           if(e.userdata == "splitter") {
+              this.divData.form.divSplitter.set_left(e.clientx);
+              this.divData.form.resetScroll();
+           }
+        };
+
+        this.divData_divSplitter_ondrag = function(obj,e)
+        {
+           e.set_userdata("splitter");
+           return true;
+        };
+
+        /*
+         *	엑셀업로드
+         */
+        this.fnExcelUpload = function() {
+        	// this.gfnExcelImport("적용할Dataset명","sheet명","데이터시작좌표","콜백함수명","구분ID",현재폼);
+        	// sheet명 없으면 첫번째 sheet
+        	this.gfnExcelImport("dsListSub","","A2","fnExcelImportCallback","import",this);
+        	//this.gfnExcelImport("dsListSub","sheet1","A2","fnExcelImportCallback","import",this);
+        }
+
+        this.fnExcelImportCallback = function(sImportId, dsOut, dsSheet) {
+        	// 다중 시트 처리시 양식의 해당 시트여부를 체크하고자 할땐 dsSheet 시트명 체크
+        // 	if (dsSheet.rowcount > 1) {
+        // 		trace(dsSheet.getColumn(1, "sheetname"));
+        // 	}
+
+        	// 엑셀 양식과 그리드 컬럼이 그대로 일치 하는경우 아래와 같이 처리.
+        	// 아닌경우는 이부분 주석처리
+        	for (var i=0; i< this.dsListSub.getColCount(); i++)
+        	{
+        		sColumnId = "Column"+i;
+        		var sColumnNm = this.gfnGridGetBindColumnNameByIndex(this.dxGridSub, i);
+        		if (sColumnNm != "" && sColumnId != sColumnNm)
+        		{
+        			dsOut.updateColID(sColumnId, sColumnNm);
+        		}
+        	}
+
+        	// 양식이 일치하고 엑셀내역을 기존데이터에 Insert하지 않고
+        	// 엑셀내역 그대로 그리드 반영할 시 copyData
+        	//this.dsListSub.copyData(dsOut);
+
+        	this.dsListSub.set_enableevent(false);
+        	for (var i=0; i<dsOut.rowcount; i++) {
+        		var nrow = this.dsListSub.addRow();
+        		this.dsListSub.setColumn(nrow, this.ucFlag, "I");
+
+        		// 양식이 일치하는 경우 copyRow
+        		this.dsListSub.copyRow(nrow, dsOut, i);
+
+        		// 양식과 일치하지 않는 경우 아래와 같이 컬럼별로 처리.
+        // 		this.dsListSub.setColumn(nrow, "CD_SYSTEM", dsOut.getColumn(i, "Column1"));
+        // 		this.dsListSub.setColumn(nrow, "CD_TYPE", dsOut.getColumn(i, "Column2"));
+
+        	}
+        	this.dsListSub.set_enableevent(true);
+
+        	this.gfnSetFormStatus(this, "I");
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divData.addEventHandler("ondragmove",this.divData_ondragmove,this);
+        };
+        this.loadIncludeScript("DSZ_RATE_MONTH.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

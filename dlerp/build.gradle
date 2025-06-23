@@ -1,0 +1,90 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.13.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group = 'com.goodcen'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+	//maven { url 'https://repo1.maven.org/maven2/' }
+	//maven { url 'http://mangosteen.tobesoft.co.kr/nexus/repository/maven-public/' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:2.1.2'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'javax.servlet:jstl'
+	implementation 'commons-beanutils:commons-beanutils:1.9.4'
+	implementation 'org.apache.commons:commons-lang3'
+	implementation 'commons-io:commons-io:2.11.0'
+	implementation 'commons-fileupload:commons-fileupload:1.4'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'org.apache.poi:poi-ooxml:3.13'
+	implementation 'net.coobird:thumbnailator:0.4.14'
+	providedCompile 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	
+	implementation fileTree(dir: 'libs', include: '*.jar')
+	implementation 'com.microsoft.sqlserver:mssql-jdbc:8.2.2.jre8'
+
+	implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+	implementation 'org.apache.httpcomponents:httpmime:4.5.14'
+	implementation 'org.jdom:jdom2:2.0.6'
+	implementation files(dir: 'libs', include: 'fcrypt.jar')
+	
+	//implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+	//implementation 'com.google.code.findbugs:jsr305:3.0.2'
+	//implementation 'org.apache.cxf:cxf-rt-frontend-jaxws:3.5.5'
+	//implementation 'org.apache.cxf:cxf-rt-transports-http:3.5.5'
+	//implementation 'javax.jws:javax.jws-api:1.1'
+	//implementation 'jakarta.xml.ws:jakarta.xml.ws-api:2.3.3'
+	//annotationProcessor 'jakarta.annotation:jakarta.annotation-api:1.3.5'
+	//implementation 'org.apache.cxf:cxf-spring-boot-starter-jaxws:3.4.10'
+	
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+configurations.all {
+	exclude module: 'spring-boot-starter-tomcat'
+	exclude module: 'hibernate-validator'
+	exclude module: 'log4j-api'
+	exclude module: 'log4j-to-slf4j'
+	exclude module: 'tomcat-annotations-api'
+	exclude module: 'xml-apis'
+	exclude module: 'jstl'
+	//exclude module: 'fcrypt'
+	//exclude module: 'mssql-jdbc'	
+}
+
+bootRun {
+    String activeProfile = System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
+}
+
+bootWar { 
+	archiveFileName = 'ROOT.war'
+	exclude '/excel'
+	exclude '/erp'
+	exclude '/b2b'
+	exclude '/_deploy_'
+	exclude '/pdfviewer'
+	rootSpec.exclude '**/com/goodcen/cenerp/config/TomcatConfiguration*'
+}
+
+processResources {
+	exclude 'nexacro17_server_license.xml'
+}
+
